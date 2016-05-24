@@ -112,11 +112,12 @@ dtPolyRef PathFinder::getPathPolyByPosition(const dtPolyRef *polyPath, uint32 po
     dtPolyRef nearestPoly = INVALID_POLYREF;
     float minDist2d = FLT_MAX;
     float minDist3d = 0.0f;
+    bool polyBool = true;
 
     for (uint32 i = 0; i < polyPathSize; ++i)
     {
         float closestPoint[VERTEX_SIZE];
-        if (DT_SUCCESS != m_navMeshQuery->closestPointOnPoly(polyPath[i], point, closestPoint))
+        if (DT_SUCCESS != m_navMeshQuery->closestPointOnPoly(polyPath[i], point, closestPoint, &polyBool))
             continue;
 
         float d = dtVdist2DSqr(point, closestPoint);
@@ -132,7 +133,7 @@ dtPolyRef PathFinder::getPathPolyByPosition(const dtPolyRef *polyPath, uint32 po
     }
 
     if (distance)
-        *distance = dtSqrt(minDist3d);
+        *distance = dtMathSqrtf(minDist3d);
 
     return (minDist2d < 3.0f) ? nearestPoly : INVALID_POLYREF;
 }
@@ -178,6 +179,7 @@ void PathFinder::BuildPolyPath(const Vector3 &startPos, const Vector3 &endPos)
     float distToStartPoly, distToEndPoly;
     float startPoint[VERTEX_SIZE] = {startPos.y, startPos.z, startPos.x};
     float endPoint[VERTEX_SIZE] = {endPos.y, endPos.z, endPos.x};
+    bool polyBool = true;
 
     dtPolyRef startPoly = getPolyByLocation(startPoint, &distToStartPoly);
     dtPolyRef endPoly = getPolyByLocation(endPoint, &distToEndPoly);
@@ -244,7 +246,7 @@ void PathFinder::BuildPolyPath(const Vector3 &startPos, const Vector3 &endPos)
         {
             float closestPoint[VERTEX_SIZE];
             // we may want to use closestPointOnPolyBoundary instead
-            if (DT_SUCCESS == m_navMeshQuery->closestPointOnPoly(endPoly, endPoint, closestPoint))
+            if (DT_SUCCESS == m_navMeshQuery->closestPointOnPoly(endPoly, endPoint, closestPoint, &polyBool))
             {
                 dtVcopy(endPoint, closestPoint);
                 setActualEndPosition(Vector3(endPoint[2],endPoint[0],endPoint[1]));
@@ -334,13 +336,13 @@ void PathFinder::BuildPolyPath(const Vector3 &startPos, const Vector3 &endPos)
 
         // we need any point on our suffix start poly to generate poly-path, so we need last poly in prefix data
         float suffixEndPoint[VERTEX_SIZE];
-        if (DT_SUCCESS != m_navMeshQuery->closestPointOnPoly(suffixStartPoly, endPoint, suffixEndPoint))
+        if (DT_SUCCESS != m_navMeshQuery->closestPointOnPoly(suffixStartPoly, endPoint, suffixEndPoint, &polyBool))
         {
             // we can hit offmesh connection as last poly - closestPointOnPoly() don't like that
             // try to recover by using prev polyref
             --prefixPolyLength;
             suffixStartPoly = m_pathPolyRefs[prefixPolyLength-1];
-            if (DT_SUCCESS != m_navMeshQuery->closestPointOnPoly(suffixStartPoly, endPoint, suffixEndPoint))
+            if (DT_SUCCESS != m_navMeshQuery->closestPointOnPoly(suffixStartPoly, endPoint, suffixEndPoint, &polyBool))
             {
                 // suffixStartPoly is still invalid, error state
                 BuildShortcut();
@@ -587,7 +589,7 @@ bool PathFinder::HaveTile(const Vector3 &p) const
     float point[VERTEX_SIZE] = {p.y, p.z, p.x};
 
     m_navMesh->calcTileLoc(point, &tx, &ty);
-    return (m_navMesh->getTileAt(tx, ty) != NULL);
+    return (m_navMesh->getTileAt(tx, ty, 0) != NULL);
 }
 
 uint32 PathFinder::fixupCorridor(dtPolyRef* path, uint32 npath, uint32 maxPath,
@@ -712,7 +714,7 @@ dtStatus PathFinder::findSmoothPath(const float* startPos, const float* endPos,
         // Find movement delta.
         float delta[VERTEX_SIZE];
         dtVsub(delta, steerPos, iterPos);
-        float len = dtSqrt(dtVdot(delta,delta));
+        float len = dtMathSqrtf(dtVdot(delta,delta));
         // If the steer target is end of path or off-mesh link, do not move past the location.
         if ((endOfPath || offMeshConnection) && len < SMOOTH_PATH_STEP_SIZE)
             len = 1.0f;

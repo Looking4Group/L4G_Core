@@ -1165,7 +1165,7 @@ void World::SetInitialWorldSettings()
     ///- Initialize the random number generator
     srand((unsigned int)time(NULL));
 
-    dtAllocSetCustom(dtCustomAlloc, dtCustomFree);
+    dtAllocSetCustom(dtAlloc, dtCustomFree);
 
     ///- Initialize config settings
     LoadConfigSettings();
