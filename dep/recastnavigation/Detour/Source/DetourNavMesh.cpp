@@ -193,13 +193,11 @@ dtNavMesh::dtNavMesh() :
 	m_tileLutMask(0),
 	m_posLookup(0),
 	m_nextFree(0),
-	m_tiles(0)
+	m_tiles(0),
+	m_saltBits(0),
+	m_tileBits(0),
+	m_polyBits(0)
 {
-#ifndef DT_POLYREF64
-	m_saltBits = 0;
-	m_tileBits = 0;
-	m_polyBits = 0;
-#endif
 	memset(&m_params, 0, sizeof(dtNavMeshParams));
 	m_orig[0] = 0;
 	m_orig[1] = 0;
@@ -250,16 +248,10 @@ dtStatus dtNavMesh::init(const dtNavMeshParams* params)
 		m_nextFree = &m_tiles[i];
 	}
 	
-	// Init ID generator values.
-#ifndef DT_POLYREF64
-	m_tileBits = dtIlog2(dtNextPow2((unsigned int)params->maxTiles));
-	m_polyBits = dtIlog2(dtNextPow2((unsigned int)params->maxPolys));
-	// Only allow 31 salt bits, since the salt mask is calculated using 32bit uint and it will overflow.
-	m_saltBits = dtMin((unsigned int)31, 32 - m_tileBits - m_polyBits);
-
-	if (m_saltBits < 10)
-		return DT_FAILURE | DT_INVALID_PARAM;
-#endif
+    // Edited by TC
+    m_tileBits = STATIC_TILE_BITS;
+    m_polyBits = STATIC_POLY_BITS; 
+    m_saltBits = STATIC_SALT_BITS; 
 	
 	return DT_SUCCESS;
 }
@@ -1245,11 +1237,8 @@ dtStatus dtNavMesh::removeTile(dtTileRef ref, unsigned char** data, int* dataSiz
 	tile->offMeshCons = 0;
 
 	// Update salt, salt should never be zero.
-#ifdef DT_POLYREF64
-	tile->salt = (tile->salt+1) & ((1<<DT_SALT_BITS)-1);
-#else
 	tile->salt = (tile->salt+1) & ((1<<m_saltBits)-1);
-#endif
+
 	if (tile->salt == 0)
 		tile->salt++;
 
