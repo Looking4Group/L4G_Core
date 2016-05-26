@@ -1,0 +1,87 @@
+#!/bin/bash
+ 
+######################
+GDB_ENABLED=1
+GDB="trinity.gdb"
+WORLDSERVER="core.pid" ### Put here the pid you configured on your worldserver.conf file ###
+AUTHSERVER="realm.pid"   ### Put here the pid you configured on your authserver.conf file ###
+ 
+### If you want to have more realms runing, just uncoment or copy this line ###
+# EXTRAWORLDSERVER="world.pid" ### Put here the pid you configured on your worldserver.conf file ###
+ 
+ 
+WORLD_CONFIG="../etc/trinitycore.conf"
+REALM_CONFIG="../etc/trinityrealm.conf"
+ 
+### If you want to have more realms runing, just uncoment or copy this line ###
+# EXTRAWORLD_CONFIG="../etc/extraworldserver.conf"
+ 
+WORLD_SCREEN_NAME="world"
+REALM_SCREEN_NAME="realm"
+ 
+### If you want to have more realms runing, just uncoment or copy this line ###
+# EXTRAWORLD_SCREEN_NAME="world"
+ 
+ 
+TRACE_BEGIN_STRING="SIGSEGV"
+TRACE_FILE="trace.log"
+ERR_FILE="error.log"
+SYSLOG="system.log"
+SYSERR="system.err"
+LINKS_FILE="crash_links.link"
+######################
+ 
+function checkStatus() {
+        if [ -d "/proc/"$1 ]; then
+                eval "TEST=1"
+        else
+                eval "TEST=0"
+        fi
+}
+ 
+while :
+do
+        PID=$(cat $WORLDSERVER)
+        checkStatus $PID
+        if [ $TEST -eq 0 ]; then
+                DATE=$(date)
+                echo "Restarting Trinity Core ($DATE)"
+                if [ $GDB_ENABLED -eq 1 ]; then
+                        grep -B 10 -A 1800 "$TRACE_BEGIN_STRING" "$SYSLOG" >> "$TRACE_FILE"
+                        echo "------------------($DATE)------------------" >> "$TRACE_FILE"
+                        cat "$SYSERR" > "$ERR_FILE"
+                        screen -A -m -d -S $WORLD_SCREEN_NAME ./start trinitycore $GDB "$WORLD_CONFIG" "$SYSLOG" "$SYSERR" 1
+                fi
+                
+                if [ $GDB_ENABLED -eq 0 ]; then
+                        screen -A -m -d -S $WORLD_SCREEN_NAME ./start trinitycore null "$WORLD_CONFIG" null null 0
+                fi
+        fi
+ 
+### If you want to have more realms runing, just uncoment or copy those lines ###
+#       PID=$(cat $EXTRAWORLDSERVER)
+#       checkStatus $PID
+#       if [ $TEST -eq 0 ]; then
+#               DATE=$(date)
+#               echo "Restarting Trinity Core ($DATE)"
+#               if [ $GDB_ENABLED -eq 1 ]; then
+#                       grep -B 10 -A 1800 "$TRACE_BEGIN_STRING" "$SYSLOG" > "$TRACE_FILE"
+#                       echo "------------------($DATE)------------------" >> "$TRACE_FILE"
+#                       cat "$SYSERR" > "$ERR_FILE"
+#                       screen -A -m -d -S $EXTRAWORLD_SCREEN_NAME ./start trinitycore $GDB "$EXTRAWORLD_CONFIG" "$SYSLOG" "$SYSERR" 1
+#               fi
+#               
+#               if [ $GDB_ENABLED -eq 0 ]; then
+#                       screen -A -m -d -S $EXTRAWORLD_SCREEN_NAME ./start trinitycore null "$EXTRAWORLD_CONFIG" null null 0
+#               fi
+#       fi
+        
+        PID=$(cat "$AUTHSERVER")
+        checkStatus $PID
+        if [ $TEST -eq 0 ]; then
+                DATE=$(date)
+                echo "Restarting Trinity Realm ($DATE)"
+                screen -A -m -d -S $REALM_SCREEN_NAME ./start trinityrealm null "$REALM_CONFIG"
+        fi
+        sleep 45
+done

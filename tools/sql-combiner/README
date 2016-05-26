@@ -1,0 +1,4 @@
+Windows only:
+*Copy the combine_sql.bat File to the database Folder
+*Run the combine_sql.bat
+*Import combined_*.sql to your Database

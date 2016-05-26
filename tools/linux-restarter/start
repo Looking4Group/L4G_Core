@@ -1,0 +1,29 @@
+#!/bin/bash
+ 
+#GDB_FILE=$2
+#CONFIG=$3
+#SYSLOG=$4
+#SYSERR=$5
+#GBD_ENABLED=$6
+ 
+case $1 in
+        trinitycore)
+                if [ $6 -eq 1 ]; then
+                        echo "run -c $3" > $2
+                        echo "bt" >> $2
+                        echo "bt full" >> $2
+                        echo "info thread" >> $2
+                        echo "thread apply all backtrace full" >> $2
+ 
+                        gdb ./trinitycore -x $2 --batch >$4 2>$5
+                fi
+                
+                if [ $6 -eq 0 ]; then
+                        ./trinitycore -c $3
+                fi
+        ;;
+ 
+        trinityrealm)
+                ./trinityrealm -c $3
+        ;;
+esac
