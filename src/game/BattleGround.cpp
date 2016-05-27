@@ -1881,7 +1881,7 @@ void BattleGround::SetHoliday(bool is_holiday)
 
 int32 BattleGround::GetObjectType(uint64 guid)
 {
-    for (uint32 i = 0;i <= m_BgObjects.size(); i++)
+    for (uint64 i = 0;i < m_BgObjects.size(); i++)
         if (m_BgObjects[i] == guid)
             return i;
     sLog.outLog(LOG_DEFAULT, "ERROR: BattleGround: cheating? a player used a gameobject which isnt supposed to be a usable object!");

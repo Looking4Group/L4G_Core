@@ -342,7 +342,7 @@ struct boss_fathomlord_karathressAI : public ScriptedAI
             BlessingOfTidesCounter = 0;
             bool continueTriggering = false;
             Creature* Advisor;
-            for(uint8 i = 0; i < 4; ++i)
+            for(uint8 i = 0; i < 3; ++i)
             {
                 if(Advisors[i])
                 {

@@ -314,6 +314,7 @@ namespace VMAP
             else
             {
                 std::cout << "error: model '" << spawn.name << "' has no geometry!" << std::endl;
+                fclose(rf);
                 return false;
             }
 

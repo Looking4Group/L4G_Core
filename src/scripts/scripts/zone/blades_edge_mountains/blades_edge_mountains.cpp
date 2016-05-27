@@ -2531,7 +2531,7 @@ struct npc_bashir_landingAI : public ScriptedAI
                     me->SummonCreature(NPC_SUBPRIMAL, AssaultPosone[i].x, AssaultPosone[i].y, AssaultPosone[i].z,  AssaultPosone[i].o, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 1500000);
 
                 for (int i = 0; i < 7; i++)
-                    me->SummonCreature(NPC_SSLAVE, AssaultPosone[i].x+(rand()%6), AssaultPosone[i].y+(rand()%6), AssaultPosone[i].z,  AssaultPos[i].o, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 1500000);
+                    me->SummonCreature(NPC_SSLAVE, AssaultPosone[i].x+(rand()%6), AssaultPosone[i].y+(rand()%6), AssaultPosone[i].z,  AssaultPosone[i].o, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 1500000);
 
                 Next = true;
                 break;

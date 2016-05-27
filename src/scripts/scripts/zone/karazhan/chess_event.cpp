@@ -3014,7 +3014,7 @@ void boss_MedivhAI::SetOrientation(uint64 piece, ChessOrientation ori)
     if (ori == CHESS_ORI_CHOOSE)
     {
         float tmpN = 99, tmpS = 99, tmpE = 99, tmpW = 99;
-        float pieceOri;
+        float pieceOri = 0;
 
         Creature * tmpPiece = m_creature->GetCreature(piece);
         if (tmpPiece)

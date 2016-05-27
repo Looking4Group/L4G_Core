@@ -13088,7 +13088,7 @@ void Player::RewardQuest(Quest const *pQuest, uint32 reward, Object* questGiver,
 	actualQuestId = pQuest->GetQuestId();
 
     uint32 SWPQuests_new[21] = {11488, 11514, 11515, 11516, 11521, 11523, 11525, 11526, 11533, 11536, 11537, 11540, 11541, 11543, 11544, 11546, 11547, 11548, 11549, 11875, 11877};
-    for (uint32 i=0; i<22; i++)
+    for (uint32 i=0; i<21; i++)
     {
         if (actualQuestId == SWPQuests_new[i])
         {
@@ -13107,7 +13107,7 @@ void Player::RewardQuest(Quest const *pQuest, uint32 reward, Object* questGiver,
         }
     }
 
-	for (uint32 i=0; i<20; i++)
+	for (uint32 i=0; i<19; i++)
 	{
 		if (actualQuestId == SWPQuests[i])
 		{
@@ -22421,7 +22421,7 @@ void Player::ResetMonthlyQuestStatus()
 Unit* Player::GetNearBossInCombat()
 {
     uint32 BossEntrys[61] = {18728, 17711, 16179, 16180, 16181, 15550, 15687, 16457, 17533, 17534, 17521, 18168, 15691, 15688, 16524, 15689, 17225, 15690, 18831, 19044, 17257, 21216, 21217, 21215, 21214, 21213, 21212, 19514, 18805, 19516, 19622, 23576, 23574, 23577, 23578, 24239, 23863, 17767, 17808, 17888, 17842, 17968, 22887, 22898, 22871, 22948, 22841, 23420, 22947, 22949, 22950, 22951, 22952, 22917, 24850, 24882, 25038, 25166, 25165, 25741, 25608};
-    for (uint32 i=0; i<62; i++)
+    for (uint32 i=0; i<61; i++)
     {
         if (Unit *boss = FindCreature2(BossEntrys[i], 100, this))
         {
