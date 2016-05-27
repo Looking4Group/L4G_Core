@@ -348,6 +348,7 @@ int Master::Run()
     AccountsDatabase.HaltDelayThread();
 
     // Exit the process with specified return value
+    delete freeze_thread;
     return World::GetExitCode();
 }
 

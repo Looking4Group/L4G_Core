@@ -872,7 +872,7 @@ namespace Looking4group
     class AllGameObjectsInRange
     {
     public:
-        AllGameObjectsInRange(Unit const * pUn, uint32 ran) : pUnit(pUn), range(range) {}
+        AllGameObjectsInRange(Unit const * pUn, uint32 ran) : pUnit(pUn), range(ran) {}
         bool operator() (GameObject* g)
         {
             return pUnit->IsWithinDistInMap(g, range);

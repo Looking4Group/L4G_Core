@@ -3618,7 +3618,7 @@ void SpellMgr::LoadSpellCustomAttr()
             case 42489:
                 spellInfo->Effect[2] = SPELL_EFFECT_DUMMY;
                 spellInfo->EffectBasePoints[2] = 1;
-                spellInfo->EffectImplicitTargetA[3] = TARGET_UNIT_TARGET_ENEMY;
+                spellInfo->EffectImplicitTargetA[2] = TARGET_UNIT_TARGET_ENEMY;
                 break;
             case 26194: //AQ 40 boss skeram earthshock
                 spellInfo->EffectBasePoints[0] = 140;

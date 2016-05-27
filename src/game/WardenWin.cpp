@@ -446,6 +446,10 @@ void WardenWin::HandleData(ByteBuffer &buff)
 
                     found = true;
                     buff.rpos(buff.rpos() + rd->Length);
+
+                    delete[] tmpContentsRev;
+                    delete[] tmpContents;
+
                     continue;
                 }
 

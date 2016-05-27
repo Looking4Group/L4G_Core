@@ -117,12 +117,12 @@ void BattleGroundAV::HandleKillUnit(Creature *unit, Player *killer)
     else if (entry == BG_AV_CreatureInfo[AV_NPC_N_MINE_N_4][0] || entry == BG_AV_CreatureInfo[AV_NPC_N_MINE_A_4][0] || entry == BG_AV_CreatureInfo[AV_NPC_N_MINE_H_4][0])
     {
         ChangeMineOwner(AV_NORTH_MINE,killer->GetBGTeam());
-        SendObjectiveComplete(BG_AV_MINE_CREDITMARKER, killer->GetBGTeam(),BG_AV_CreaturePos[AV_CPLACE_MINE_N_3][1],BG_AV_ObjectPos[AV_CPLACE_MINE_N_3][2]);
+        SendObjectiveComplete(BG_AV_MINE_CREDITMARKER, killer->GetBGTeam(),BG_AV_CreaturePos[AV_CPLACE_MINE_N_3][1],BG_AV_CreaturePos[AV_CPLACE_MINE_N_3][2]);
     }
     else if (entry == BG_AV_CreatureInfo[AV_NPC_S_MINE_N_4][0] || entry == BG_AV_CreatureInfo[AV_NPC_S_MINE_A_4][0] || entry == BG_AV_CreatureInfo[AV_NPC_S_MINE_H_4][0])
     {
         ChangeMineOwner(AV_SOUTH_MINE,killer->GetBGTeam());
-        SendObjectiveComplete(BG_AV_MINE_CREDITMARKER, killer->GetBGTeam(),BG_AV_CreaturePos[AV_CPLACE_MINE_S_3][1],BG_AV_ObjectPos[AV_CPLACE_MINE_S_3][2]);
+        SendObjectiveComplete(BG_AV_MINE_CREDITMARKER, killer->GetBGTeam(),BG_AV_CreaturePos[AV_CPLACE_MINE_S_3][1],BG_AV_CreaturePos[AV_CPLACE_MINE_S_3][2]);
     }
 }
 

@@ -159,7 +159,7 @@ struct boss_nothAI : public BossAI
         for (int i = 0; i < champCount; ++i)
             m_creature->SummonCreature(PLAGUED_CHAMPION, NothSummonLocations[i][0], NothSummonLocations[i][1], NothSummonLocations[i][2], NothSummonLocations[i][3], TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 1000);
 
-        for (int i = 0; i < guardCount; ++i)
+        for (int i = 1; i < guardCount; ++i)
             m_creature->SummonCreature(PLAGUED_GUARDIAN, NothSummonLocations[3-i][0], NothSummonLocations[3-i][1], NothSummonLocations[3-i][2], NothSummonLocations[3-i][3], TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 1000);
     }
 
