@@ -248,7 +248,7 @@ namespace VMAP
 
     bool VMapManager2::GetLiquidLevel(uint32 pMapId, float x, float y, float z, uint8 ReqLiquidType, float &level, float &floor, uint32 &type) const
     {
-        if (!MapManager::IsValidMapCoord(mapid,x,y,z))
+        if (!MapManager::IsValidMapCoord(pMapId,x,y,z))
             return false;
 
         InstanceTreeMap::const_iterator instanceTree = iInstanceMapTrees.find(pMapId);
