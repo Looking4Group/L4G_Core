@@ -463,7 +463,7 @@ struct boss_nightbaneAI : public ScriptedAI
 
                 Flying = true;
 
-				// Set flying speed to x6.5 so doesnt take so long to land
+				// Set flying speed to x6.0 so doesnt take so long to land
 				m_creature->SetSpeed(MOVE_FLIGHT, 6.0f);
 
             }else FlyTimer -= diff;
