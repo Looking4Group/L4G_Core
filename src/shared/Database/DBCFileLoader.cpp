@@ -1,7 +1,7 @@
 /*
- * Copyright (C) 2005-2008 MaNGOS <http://www.mangosproject.org/>
- *
- * Copyright (C) 2008 Trinity <http://www.trinitycore.org/>
+ * Copyright (C) 2005-2008 MaNGOS <http://getmangos.com/>
+ * Copyright (C) 2008 TrinityCore <http://www.trinitycore.org/>
+ * Copyright (C) 2008-2014 Hellground <http://hellground.net/>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -10,12 +10,12 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
 #include <stdio.h>
@@ -41,53 +41,32 @@ bool DBCFileLoader::Load(const char *filename, const char *fmt)
 
     FILE * f=fopen(filename, "rb");
     if (!f)
-    {
-        fclose(f);
         return false;
-    }
 
     if (fread(&header, 4, 1, f) != 1)                             // Number of records
-    {
-        fclose(f);
         return false;
-    }
 
     EndianConvert(header);
-    if (header!=0x43424457)                                       //'WDBC'
-    {
-        fclose(f);
-        return false;
-    }
+    if (header!=0x43424457)
+        return false;                                       //'WDBC'
 
     if (fread(&recordCount, 4, 1, f) != 1)                        // Number of records
-    {
-        fclose(f);
         return false;
-    }
 
     EndianConvert(recordCount);
 
     if (fread(&fieldCount, 4, 1, f) !=1)                         // Number of fields
-    {
-        fclose(f);
         return false;
-    }
 
     EndianConvert(fieldCount);
 
     if (fread(&recordSize, 4, 1, f) != 1)                         // Size of a record
-    {
-        fclose(f);
         return false;
-    }
 
     EndianConvert(recordSize);
 
     if (fread(&stringSize, 4, 1, f) != 1)                         // String size
-    {
-        fclose(f);
         return false;
-    }
 
     EndianConvert(stringSize);
 
@@ -106,10 +85,7 @@ bool DBCFileLoader::Load(const char *filename, const char *fmt)
     stringTable = data + recordSize*recordCount;
 
     if (fread(data, recordSize*recordCount+stringSize, 1, f) != 1)
-    {
-        fclose(f);
         return false;
-    }
 
     fclose(f);
     return true;
