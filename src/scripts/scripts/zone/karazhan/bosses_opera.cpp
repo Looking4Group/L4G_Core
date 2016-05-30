@@ -108,7 +108,13 @@ struct boss_operaAI : public ScriptedAI
             checkTimer -= diff;
 
         CastNextSpellIfAnyAndReady();
-        DoMeleeAttackIfReady();
+
+        // If boss is Dorothee, return (Do not auto attack)
+        if (m_creature->GetEntry() == 17535) {
+            return;
+        }
+
+		DoMeleeAttackIfReady();
     }
 };
 
@@ -205,7 +211,7 @@ struct boss_dorotheeAI : public boss_operaAI
 
     void Reset()
     {
-        AggroTimer = 500;
+        AggroTimer = 12000;
 
         WaterBoltTimer = 5000;
         FearTimer = 15000;
@@ -353,7 +359,7 @@ struct boss_strawmanAI : public boss_operaAI
 
     void Reset()
     {
-        AggroTimer = 13000;
+        AggroTimer = 26000;
         BrainBashTimer = 5000;
         BrainWipeTimer = 7000;
 
@@ -367,7 +373,8 @@ struct boss_strawmanAI : public boss_operaAI
 
     void SpellHit(Unit* caster, const SpellEntry *Spell)
     {
-        if ((Spell->SchoolMask == SPELL_SCHOOL_MASK_FIRE) && (!(rand()%10)))
+		// Set chance to Disorient to 20%
+        if ((Spell->SchoolMask == SPELL_SCHOOL_MASK_FIRE) && (!(rand()%5)))
             DoCast(m_creature, SPELL_BURNING_STRAW, true);
     }
 
@@ -437,7 +444,7 @@ struct boss_tinheadAI : public boss_operaAI
 
     void Reset()
     {
-        AggroTimer = 15000;
+        AggroTimer = 35000;
         CleaveTimer = 5000;
         RustTimer   = 30000;
 
@@ -520,7 +527,7 @@ struct boss_roarAI : public boss_operaAI
 
     void Reset()
     {
-        AggroTimer = 20000;
+        AggroTimer = 17000;
         MangleTimer = 5000;
         ShredTimer  = 10000;
         ScreamTimer = 15000;
