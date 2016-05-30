@@ -128,7 +128,7 @@ struct boss_nightbaneAI : public ScriptedAI
         FlyCount = 0;
         MovePhase = 0;
 
-		// Set speeds to default
+        // Set speeds to default
         m_creature->SetSpeed(MOVE_RUN, 2.0f);
         m_creature->SetLevitate(true);
         m_creature->SetWalk(false);
@@ -268,8 +268,8 @@ struct boss_nightbaneAI : public ScriptedAI
         (*m_creature).GetMotionMaster()->Clear(false);
         (*m_creature).GetMotionMaster()->MovePoint(0,IntroWay[2][0],IntroWay[2][1],IntroWay[2][2]);
 
-		// Set Flight Speed to normal at begin of takeoff
-		m_creature->SetSpeed(MOVE_FLIGHT, 1.0f);
+        // Set Flight Speed to normal at begin of takeoff
+        m_creature->SetSpeed(MOVE_FLIGHT, 1.0f);
 
         Flying = true;
 
@@ -462,8 +462,8 @@ struct boss_nightbaneAI : public ScriptedAI
 
                 Flying = true;
 
-				// Set flying speed to x6.0 so doesnt take so long to land
-				m_creature->SetSpeed(MOVE_FLIGHT, 6.0f);
+                // Set flying speed to x6.0 so doesnt take so long to land
+                m_creature->SetSpeed(MOVE_FLIGHT, 6.0f);
 
             }else FlyTimer -= diff;
         }

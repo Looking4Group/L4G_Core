@@ -109,10 +109,10 @@ struct boss_operaAI : public ScriptedAI
 
         CastNextSpellIfAnyAndReady();
 
-		// If boss is Dorothee, return (Do not auto attack)
-		if (m_creature->GetEntry() == 17535) {
-			return;
-		}
+        // If boss is Dorothee, return (Do not auto attack)
+        if (m_creature->GetEntry() == 17535) {
+            return;
+        }
 
 		DoMeleeAttackIfReady();
     }
