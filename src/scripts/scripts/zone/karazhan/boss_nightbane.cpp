@@ -128,8 +128,7 @@ struct boss_nightbaneAI : public ScriptedAI
         FlyCount = 0;
         MovePhase = 0;
 
-		// Edit Flight Speed
-		m_creature->SetSpeed(MOVE_FLIGHT, 10.0f);
+		// Set speeds to default
         m_creature->SetSpeed(MOVE_RUN, 2.0f);
         m_creature->SetLevitate(true);
         m_creature->SetWalk(false);
