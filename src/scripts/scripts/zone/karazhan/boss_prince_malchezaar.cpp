@@ -393,7 +393,10 @@ struct boss_malchezaarAI : public ScriptedAI
         }
         else
         {
-            std::vector<InfernalPoint*>::iterator itr = positions.begin()+rand()%positions.size();
+            // Generate new seed (For some reason, rand() was generating same number... casusing infernals to spawn same point)
+            // Infernals spawning together is still possible 1/19 chance of happening
+            srand(time(NULL));
+            std::vector<InfernalPoint*>::iterator itr = positions.begin() + rand() % positions.size();
             point = *itr;
             positions.erase(itr);
 
@@ -402,7 +405,8 @@ struct boss_malchezaarAI : public ScriptedAI
             posZ = INFERNAL_Z;
         }
 
-        Creature *Infernal = m_creature->SummonCreature(NETHERSPITE_INFERNAL, posX, posY, posZ, 0, TEMPSUMMON_TIMED_DESPAWN, 180000);
+        // Change infernal despawn to 180001 (for some reason respawn and despawn of infernal timing would only cause 1 to go off)
+        Creature *Infernal = m_creature->SummonCreature(NETHERSPITE_INFERNAL, posX, posY, posZ, 0, TEMPSUMMON_TIMED_DESPAWN, 180001);
 
         if (Infernal)
         {
