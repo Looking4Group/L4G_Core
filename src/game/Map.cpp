@@ -3086,6 +3086,9 @@ void Map::ForcedUnload()
 
 float Map::GetVisibilityDistance(WorldObject* obj, Player* invoker) const
 {
+    if (!obj)
+        return DEFAULT_VISIBILITY_DISTANCE;
+
     if (invoker && invoker->getWatchingCinematic() != 0)
         return MAX_VISIBILITY_DISTANCE;
 
