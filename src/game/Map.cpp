@@ -1205,10 +1205,16 @@ void Map::AddToActive(WorldObject* obj)
 
 void Map::RemoveFromActive(WorldObject* obj)
 {
+    if (!obj)
+        return;
+
     // Map::Update for active object in proccess
     if (m_activeNonPlayersIter != m_activeNonPlayers.end())
     {
         ActiveNonPlayers::iterator itr = m_activeNonPlayers.find(obj);
+        if (itr == m_activeNonPlayers.end())
+            return;
+
         if (itr == m_activeNonPlayersIter)
             ++m_activeNonPlayersIter;
 
