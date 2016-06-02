@@ -174,8 +174,11 @@ void BattleGround::Update(uint32 diff)
     // remove offline players from bg after 1 minutes && afk kick
     if (GetPlayersSize() && !m_Players.empty())
     {
-        for (BattleGroundPlayerMap::iterator itr = m_Players.begin(); itr != m_Players.end(); ++itr)
+        BattleGroundPlayerMap::iterator itr, next;
+        for (itr = m_Players.begin(); itr != m_Players.end(); itr = next)
         {
+            next = itr;
+            ++next;
             Player *plr = sObjectMgr.GetPlayer(itr->first);
             itr->second.LastOnlineTime += diff;
 
@@ -186,7 +189,7 @@ void BattleGround::Update(uint32 diff)
                     m_RemovedPlayers[itr->first] = 1;           // add to remove list (BG)
 
             if (plr && plr->HasAura(SPELL_AURA_PLAYER_INACTIVE))
-                RemovePlayerAtLeave(itr->first, true, true);
+                RemovePlayerAtLeave(itr->first, true, true); // itr is erased here! Do not change any battleground's private variables !
         }
     }
 
