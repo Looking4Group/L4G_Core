@@ -172,7 +172,7 @@ void BattleGround::Update(uint32 diff)
     }
 
     // remove offline players from bg after 1 minutes && afk kick
-    if (GetPlayersSize())
+    if (GetPlayersSize() && !m_Players.empty())
     {
         for (BattleGroundPlayerMap::iterator itr = m_Players.begin(); itr != m_Players.end(); ++itr)
         {
