@@ -22042,14 +22042,17 @@ void Player::AddItem(uint32 itemID, uint32 Count)
         }
 }
 
-bool Player::StopLevel(uint64 charid){
-    // Check if account premium
+bool Player::StopLevel(uint64 charid)
+{
+    if (!charid)
+        return false;
+
     QueryResultAutoPtr stoplevelresult = RealmDataDatabase.PQuery ("SELECT 1 "
      "FROM character_stop_level "
      "WHERE id = '%u' "
      "AND active = 1",
      charid);
-    if (stoplevelresult) // if account premium
+    if (stoplevelresult) // if char stopped gaining of xp
     {
         return true;
     }
