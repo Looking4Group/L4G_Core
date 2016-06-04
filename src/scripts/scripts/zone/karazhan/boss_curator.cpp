@@ -45,6 +45,7 @@ EndScriptData */
 #define SPELL_EVOCATION                 30254
 #define SPELL_ENRAGE                    30403               //Arcane Infusion: Transforms Curator and adds damage.
 #define SPELL_BERSERK                   26662
+#define SPELL_ASTRAL_ARMOR              29476
 
 struct boss_curatorAI : public ScriptedAI
 {
@@ -115,10 +116,17 @@ struct boss_curatorAI : public ScriptedAI
         {
             evocating = true;
             ForceSpellCastWithScriptText(SPELL_EVOCATION, CAST_SELF, SAY_EVOCATE);
+            // Remove astral armor during evocate!
+            me->RemoveAurasDueToSpell(SPELL_ASTRAL_ARMOR);
         }
 
         if (!enraged && !evocating)
         {
+            // Check if astral armor active, if not apply it!
+            if (me->HasAura(SPELL_ASTRAL_ARMOR) == false) {
+                ForceSpellCastWithScriptText(SPELL_ASTRAL_ARMOR, CAST_SELF, SAY_EVOCATE);
+            }
+
             if (addTimer < diff)
             {
                 //Summon Astral Flare
@@ -155,6 +163,8 @@ struct boss_curatorAI : public ScriptedAI
             {
                 enraged = true;
                 ForceSpellCastWithScriptText(SPELL_ENRAGE, CAST_SELF, SAY_ENRAGE);
+                // Remove astral armor during enrage!
+                me->RemoveAurasDueToSpell(SPELL_ASTRAL_ARMOR);
             }
         }
 

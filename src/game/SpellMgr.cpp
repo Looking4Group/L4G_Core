@@ -3654,6 +3654,9 @@ void SpellMgr::LoadSpellCustomAttr()
             case 33813: //Hurtful Strike
                 spellInfo->rangeIndex = 137;
                 break;
+            case 29476: // Astral Armor Curator Physical school
+                spellInfo->SchoolMask = 1;
+                break;
             default:
                 break;
         }
