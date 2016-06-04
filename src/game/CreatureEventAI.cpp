@@ -1415,8 +1415,6 @@ void CreatureEventAI::DoScriptText(int32 textEntry, WorldObject* pSource, Unit* 
 
 bool CreatureEventAI::CanCast(Unit* Target, SpellEntry const *Spell, bool Triggered)
 {
-    sLog.outString("School Lock : %d", me->HasSchoolLock(Spell->SchoolMask));
-
     //No target so we can't cast
     if (!Target || !Spell)
         return false;

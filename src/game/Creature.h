@@ -436,6 +436,8 @@ typedef std::list<GossipOption> GossipOptionList;
 
 typedef std::map<uint32,time_t> CreatureSpellCooldowns;
 
+typedef std::map<uint32,time_t> CreatureSchoolLock;
+
 extern std::map<uint32, uint32> CreatureAIReInitialize;
 
 // max different by z coordinate for creature aggro reaction
@@ -527,12 +529,14 @@ class LOOKING4GROUP_IMPORT_EXPORT Creature : public Unit
         void SetMeleeDamageSchool(SpellSchools school) { m_meleeDamageSchoolMask = SpellSchoolMask(1 << school); }
 
         void _AddCreatureSpellCooldown(uint32 spell_id, time_t end_time);
+        void _AddCreatureSchoolLock(uint32 idSchoolMask, time_t end_time);
         void _AddCreatureCategoryCooldown(uint32 category, time_t end_time);
         void AddCreatureSpellCooldown(uint32 spellid);
         bool HasSpellCooldown(uint32 spell_id) const;
         bool HasCategoryCooldown(uint32 spell_id) const;
         void LockSpellSchool(SpellSchoolMask idSchoolMask, uint32 unTimeMs) override;
         uint32 GetCreatureSpellCooldownDelay(uint32 spellId) const;
+        bool HasSchoolLock(uint32 idSpellSchool);
 
         bool HasSpell(uint32 spellID) const;
 
@@ -615,6 +619,7 @@ class LOOKING4GROUP_IMPORT_EXPORT Creature : public Unit
         uint32 m_spells[CREATURE_MAX_SPELLS];
         CreatureSpellCooldowns m_CreatureSpellCooldowns;
         CreatureSpellCooldowns m_CreatureCategoryCooldowns;
+        CreatureSchoolLock m_CreatureSchoolLock;
 
         bool canSeeOrDetect(Unit const* u, WorldObject const*, bool detect, bool inVisibleList = false, bool is3dDistance = true) const;
         bool IsWithinSightDist(Unit const* u) const;
