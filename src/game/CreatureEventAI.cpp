@@ -547,6 +547,8 @@ void CreatureEventAI::ProcessAction(CreatureEventAI_Action const& action, uint32
                         if (action.cast.castFlags & CAST_INTURRUPT_PREVIOUS && caster->IsNonMeleeSpellCasted(false))
                             caster->InterruptNonMeleeSpells(false);
 
+                        // Cast only if no school lock
+                        if (!me->HasSchoolLock(tSpell->SchoolMask))
                         caster->CastSpell(target, action.cast.spellId, (action.cast.castFlags & CAST_TRIGGERED));
                     }
 
@@ -1419,6 +1421,10 @@ bool CreatureEventAI::CanCast(Unit* Target, SpellEntry const *Spell, bool Trigge
 
     //Silenced so we can't cast
     if (!Triggered && me->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_SILENCED))
+        return false;
+
+    // Check School Lock
+    if (me->HasSchoolLock(Spell->SchoolMask))
         return false;
 
     //Check for power

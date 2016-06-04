@@ -721,4 +721,3 @@ void AddSC_boss_malchezaar()
     newscript->GetAI = &GetAI_netherspite_infernal;
     newscript->RegisterSelf();
 }
-
