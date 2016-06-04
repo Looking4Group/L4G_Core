@@ -22042,14 +22042,17 @@ void Player::AddItem(uint32 itemID, uint32 Count)
         }
 }
 
-bool Player::StopLevel(uint64 charid){
-    // Check if account premium
+bool Player::StopLevel(uint64 charid)
+{
+    if (!charid)
+        return false;
+
     QueryResultAutoPtr stoplevelresult = RealmDataDatabase.PQuery ("SELECT 1 "
      "FROM character_stop_level "
      "WHERE id = '%u' "
      "AND active = 1",
      charid);
-    if (stoplevelresult) // if account premium
+    if (stoplevelresult) // if char stopped gaining of xp
     {
         return true;
     }
@@ -22459,13 +22462,18 @@ void Player::_LoadInstanceTimeRestrictions(QueryResultAutoPtr result)
 
 void Player::_SaveInstanceTimeRestrictions()
 {
-    if (_instanceResetTimes.empty())
+    if (_instanceResetTimes.empty() || !GetSession())  
         return;
 
-    RealmDataDatabase.PQuery("DELETE FROM account_instance_times WHERE accountId = '%u'", GetSession()->GetAccountId());
+    static SqlStatementID deleteAccountInstance;
+    static SqlStatementID insertIntoAccountInstance;
 
+    SqlStatement stmt = RealmDataDatabase.CreateStatement(deleteAccountInstance, "DELETE FROM account_instance_times WHERE accountId = ?");
+    stmt.PExecute(GetSession()->GetAccountId());
+    
     for (InstanceTimeMap::const_iterator itr = _instanceResetTimes.begin(); itr != _instanceResetTimes.end(); ++itr)
     {
-        RealmDataDatabase.PQuery("INSERT INTO account_instance_times (accountId, instanceId, releaseTime) VALUES ('%u', '%u', '%u')", GetSession()->GetAccountId(), itr->first, itr->second);
+        SqlStatement stmt = RealmDataDatabase.CreateStatement(insertIntoAccountInstance, "INSERT INTO account_instance_times (accountId, instanceId, releaseTime) VALUES (?, ?, ?)");
+        stmt.PExecute(GetSession()->GetAccountId(), itr->first, itr->second);
     }
 }
