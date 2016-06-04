@@ -43,6 +43,9 @@ Pet * ObjectAccessor::GetPet(uint64 guid)
 
 Player* ObjectAccessor::FindPlayer(uint64 guid)
 {
+    if (!guid)
+        return NULL;
+
     Player * plr = GetPlayer(guid);
     if (!plr || !plr->IsInWorld())
         return NULL;
