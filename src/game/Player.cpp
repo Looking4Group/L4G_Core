@@ -18159,7 +18159,7 @@ void Player::CleanupAfterTaxiFlight()
     getHostilRefManager().setOnlineOfflineState(true);
 }
 
-void Player::ProhibitSpellSchool(SpellSchoolMask idSchoolMask, uint32 unTimeMs)
+void Player::LockSpellSchool(SpellSchoolMask idSchoolMask, uint32 unTimeMs)
 {
                                                             // last check 2.0.10
     WorldPacket data(SMSG_SPELL_COOLDOWN, 8+1+m_spells.size()*8);

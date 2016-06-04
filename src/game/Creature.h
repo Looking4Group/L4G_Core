@@ -531,6 +531,8 @@ class LOOKING4GROUP_IMPORT_EXPORT Creature : public Unit
         void AddCreatureSpellCooldown(uint32 spellid);
         bool HasSpellCooldown(uint32 spell_id) const;
         bool HasCategoryCooldown(uint32 spell_id) const;
+        void LockSpellSchool(SpellSchoolMask idSchoolMask, uint32 unTimeMs) override;
+        uint32 GetCreatureSpellCooldownDelay(uint32 spellId) const;
 
         bool HasSpell(uint32 spellID) const;
 

@@ -5388,7 +5388,7 @@ void Spell::EffectInterruptCast(uint32 i)
                 if (m_originalCaster)
                 {
                     int32 duration = m_originalCaster->CalculateSpellDuration(GetSpellInfo(), i, unitTarget);
-                    unitTarget->ProhibitSpellSchool(SpellMgr::GetSpellSchoolMask(curSpellInfo), duration /* GetSpellDuration(GetSpellInfo())? */);
+                    unitTarget->LockSpellSchool(SpellMgr::GetSpellSchoolMask(curSpellInfo), duration /* GetSpellDuration(GetSpellInfo())? */);
                 }
                 // has to be sent before InterruptSpell call
                 WorldPacket data(SMSG_SPELLLOGEXECUTE, (8+4+4+4+4+8+4));
