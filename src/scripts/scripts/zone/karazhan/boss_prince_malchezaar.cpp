@@ -23,7 +23,6 @@ EndScriptData */
 
 #include "precompiled.h"
 #include "def_karazhan.h"
-#include "time.h"
 
 #define SAY_AGGRO           -1532091
 #define SAY_AXE_TOSS1       -1532092
@@ -722,4 +721,3 @@ void AddSC_boss_malchezaar()
     newscript->GetAI = &GetAI_netherspite_infernal;
     newscript->RegisterSelf();
 }
-
