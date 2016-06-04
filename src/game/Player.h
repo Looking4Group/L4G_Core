@@ -1547,7 +1547,7 @@ class LOOKING4GROUP_EXPORT Player : public Unit
         }
         void AddSpellCooldown(uint32 spell_id, uint32 itemid, time_t end_time);
         void SendCooldownEvent(SpellEntry const *spellInfo);
-        void ProhibitSpellSchool(SpellSchoolMask idSchoolMask, uint32 unTimeMs);
+        void LockSpellSchool(SpellSchoolMask idSchoolMask, uint32 unTimeMs) override;
         void RemoveSpellCooldown(uint32 spell_id, bool update = false);
         void RemoveArenaSpellCooldowns();
         void RemoveAllSpellCooldown();
