@@ -45,6 +45,7 @@ EndScriptData */
 #define SPELL_EVOCATION                 30254
 #define SPELL_ENRAGE                    30403               //Arcane Infusion: Transforms Curator and adds damage.
 #define SPELL_BERSERK                   26662
+#define SPELL_ASTRAL_ARMOR              29476
 
 struct boss_curatorAI : public ScriptedAI
 {
@@ -61,6 +62,7 @@ struct boss_curatorAI : public ScriptedAI
     uint32 addTimer;
     uint32 hatefulBoltTimer;
     uint32 berserkTimer;
+    uint32 astralArmorTimer;
 
     WorldLocation wLoc;
 
@@ -72,12 +74,13 @@ struct boss_curatorAI : public ScriptedAI
         addTimer = 10000;
         hatefulBoltTimer = 15000;                           //This time may be wrong
         berserkTimer = 720000;                              //12 minutes
+        astralArmorTimer = 120000;
         enraged = false;
         evocating = false;
         me->ApplySpellImmune(0, IMMUNITY_SCHOOL, SPELL_SCHOOL_MASK_ARCANE, true);
         me->ApplySpellImmune(1, IMMUNITY_STATE, SPELL_AURA_PERIODIC_LEECH, true);
         me->ApplySpellImmune(2, IMMUNITY_STATE, SPELL_AURA_PERIODIC_MANA_LEECH, true);
-
+        m_creature->AddAura(SPELL_ASTRAL_ARMOR, m_creature);
         pInstance->SetData(DATA_CURATOR_EVENT, NOT_STARTED);
     }
 
@@ -115,10 +118,19 @@ struct boss_curatorAI : public ScriptedAI
         {
             evocating = true;
             ForceSpellCastWithScriptText(SPELL_EVOCATION, CAST_SELF, SAY_EVOCATE);
+            me->RemoveAurasDueToSpell(SPELL_ASTRAL_ARMOR);
         }
 
         if (!enraged && !evocating)
         {
+            if (astralArmorTimer < diff)
+            {
+                ForceSpellCast(SPELL_ASTRAL_ARMOR, CAST_SELF);
+//              m_creature->AddAura(SPELL_ASTRAL_ARMOR, m_creature)  - unsure with this one, both seem to work on my local core
+            }
+            else
+                astralArmorTimer -= diff;
+
             if (addTimer < diff)
             {
                 //Summon Astral Flare
@@ -155,6 +167,8 @@ struct boss_curatorAI : public ScriptedAI
             {
                 enraged = true;
                 ForceSpellCastWithScriptText(SPELL_ENRAGE, CAST_SELF, SAY_ENRAGE);
+                me->RemoveAurasDueToSpell(SPELL_ASTRAL_ARMOR);
+
             }
         }
 
