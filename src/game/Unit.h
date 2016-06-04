@@ -952,6 +952,7 @@ class LOOKING4GROUP_IMPORT_EXPORT Unit : public WorldObject
 
         uint32 GetHealth()    const { return GetUInt32Value(UNIT_FIELD_HEALTH); }
         uint32 GetMaxHealth() const { return GetUInt32Value(UNIT_FIELD_MAXHEALTH); }
+        float GetHealthPct()  const { return (GetHealth()*100)/GetMaxHealth(); }
 
         bool HealthBelowPct(uint32 pct) const { return GetHealth() *100 < GetMaxHealth() *pct; }
 
