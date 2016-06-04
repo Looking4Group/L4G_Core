@@ -344,6 +344,7 @@ void InstanceSaveManager::PackInstances()
             RealmDataDatabase.PExecute("UPDATE group_instance SET instance = '%u' WHERE instance = '%u'", InstanceNumber, *i);
             RealmDataDatabase.PExecute("UPDATE group_saved_loot SET instanceId = '%u' WHERE instanceId = '%u'", InstanceNumber, *i);
             RealmDataDatabase.PExecute("UPDATE characters SET instance_id = '%u' WHERE instance_id = '%u'", InstanceNumber, *i);
+            RealmDataDatabase.PExecute("UPDATE account_instance_times  SET instance_id = '%u' WHERE instance_id = '%u'", InstanceNumber, *i);
             RealmDataDatabase.CommitTransaction();
         }
 

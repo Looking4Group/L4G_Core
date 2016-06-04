@@ -1440,6 +1440,17 @@ void Player::Update(uint32 update_diff, uint32 p_time)
     UpdateEnchantTime(update_diff);
     UpdateHomebindTime(update_diff);
 
+    if (!_instanceResetTimes.empty())
+    {
+        for (InstanceTimeMap::iterator itr = _instanceResetTimes.begin(); itr != _instanceResetTimes.end();)
+        {
+            if (itr->second < now)
+                _instanceResetTimes.erase(itr++);
+            else
+                ++itr;
+        }
+    }
+
     // group update
     SendUpdateToOutOfRangeGroupMembers();
 
@@ -14651,6 +14662,7 @@ bool Player::LoadFromDB(uint32 guid, SqlQueryHolder *holder)
             SetUInt32Value(PLAYER_FIELD_ARENA_TEAM_INFO_1_1 + arena_slot * 6 + j, 0);
     }
 
+    _LoadInstanceTimeRestrictions(holder->GetResult(PLAYER_LOGIN_QUERY_LOADINSTANCELOCKTIMES));
     _LoadBoundInstances(holder->GetResult(PLAYER_LOGIN_QUERY_LOADBOUNDINSTANCES));
 
     if (!IsPositionValid())
@@ -16399,6 +16411,7 @@ void Player::SaveToDB()
     _SaveSpellCooldowns();
     _SaveActions();
     _SaveAuras();
+    _SaveInstanceTimeRestrictions();
     m_reputationMgr.SaveToDB(false);
 
     RealmDataDatabase.CommitTransaction();
@@ -22430,4 +22443,29 @@ Unit* Player::GetNearBossInCombat()
         }
     }
     return NULL;
+}
+
+void Player::_LoadInstanceTimeRestrictions(QueryResultAutoPtr result)
+{
+    if (!result)
+        return;
+
+    do 
+    {
+        Field* fields = result->Fetch();
+        _instanceResetTimes.insert(InstanceTimeMap::value_type(fields[0].GetUInt32(), fields[1].GetUInt64()));
+    } while (result->NextRow());
+}
+
+void Player::_SaveInstanceTimeRestrictions()
+{
+    if (_instanceResetTimes.empty())
+        return;
+
+    RealmDataDatabase.PQuery("DELETE FROM account_instance_times WHERE accountId = '%u'", GetSession()->GetAccountId());
+
+    for (InstanceTimeMap::const_iterator itr = _instanceResetTimes.begin(); itr != _instanceResetTimes.end(); ++itr)
+    {
+        RealmDataDatabase.PQuery("INSERT INTO account_instance_times (accountId, instanceId, releaseTime) VALUES ('%u', '%u', '%u')", GetSession()->GetAccountId(), itr->first, itr->second);
+    }
 }

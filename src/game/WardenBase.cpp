@@ -149,8 +149,8 @@ void WardenBase::Update()
             if (diff >= m_WardenCheckTimer)
             {
                 RequestData();
-                // 5-6 seconds
-                m_WardenCheckTimer = urand(5000, 6000);
+                // 1-2 seconds
+                m_WardenCheckTimer = urand(1000, 2000);
             }
             else
                 m_WardenCheckTimer -= diff;

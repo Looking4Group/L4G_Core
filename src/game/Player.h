@@ -151,6 +151,9 @@ struct SpellCooldown
 
 typedef std::map<uint32, SpellCooldown> SpellCooldowns;
 
+#define MAX_INSTANCES_PER_HOUR 5
+typedef UNORDERED_MAP<uint32 /*instanceId*/, time_t/*releaseTime*/> InstanceTimeMap;
+
 enum TrainerSpellState
 {
     TRAINER_SPELL_GREEN = 0,
@@ -837,6 +840,7 @@ enum PlayerLoginQueryIndex
     PLAYER_LOGIN_QUERY_LOADMAILS                = 18,
     PLAYER_LOGIN_QUERY_LOADMAILEDITEMS          = 19,
     PLAYER_LOGIN_QUERY_LOAD_MONTHLY_QUEST_STATUS= 20,
+    PLAYER_LOGIN_QUERY_LOADINSTANCELOCKTIMES    = 21,
 
     MAX_PLAYER_LOGIN_QUERY
 };
@@ -2206,6 +2210,19 @@ class LOOKING4GROUP_EXPORT Player : public Unit
         static void ConvertInstancesToGroup(Player *player, Group *group = NULL, uint64 player_guid = 0);
         bool Satisfy(AccessRequirement const*, uint32 target_map, bool report = false);
 
+        bool CheckInstanceCount(uint32 instanceId) const
+        {
+            if (_instanceResetTimes.size() < MAX_INSTANCES_PER_HOUR)
+                return true;
+            return _instanceResetTimes.find(instanceId) != _instanceResetTimes.end();
+        }
+
+        void AddInstanceEnterTime(uint32 instanceId, time_t enterTime)
+        {
+            if (_instanceResetTimes.find(instanceId) == _instanceResetTimes.end())
+                _instanceResetTimes.insert(InstanceTimeMap::value_type(instanceId, enterTime + HOUR));
+        }
+
         // last used pet number (for BG's)
         uint32 GetLastPetNumber() const { return m_lastpetnumber; }
         void SetLastPetNumber(uint32 petnumber) { m_lastpetnumber = petnumber; }
@@ -2337,6 +2354,7 @@ class LOOKING4GROUP_EXPORT Player : public Unit
         bool _LoadHomeBind(QueryResultAutoPtr result);
         void _LoadDeclinedNames(QueryResultAutoPtr result);
         void _LoadArenaTeamInfo(QueryResultAutoPtr result);
+        void _LoadInstanceTimeRestrictions(QueryResultAutoPtr result);
 
         /*********************************************************/
         /***                   SAVE SYSTEM                     ***/
@@ -2352,6 +2370,7 @@ class LOOKING4GROUP_EXPORT Player : public Unit
         void _SaveMonthlyQuestStatus();
         void _SaveSpells();
         void _SaveTutorials();
+        void _SaveInstanceTimeRestrictions();
 
         void _SetCreateBits(UpdateMask *updateMask, Player *target) const;
         void _SetUpdateBits(UpdateMask *updateMask, Player *target) const;
@@ -2552,6 +2571,8 @@ class LOOKING4GROUP_EXPORT Player : public Unit
         Camera m_camera;
 
         bool m_outdoors;
+
+        InstanceTimeMap _instanceResetTimes;
 };
 
 typedef std::set<Player*> PlayerSet;

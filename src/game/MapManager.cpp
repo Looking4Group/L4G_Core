@@ -202,6 +202,21 @@ bool MapManager::CanPlayerEnter(uint32 mapid, Player* player)
         if (!instance)
             return false;
 
+        // players are only allowed to enter 5 instances per hour
+        if (entry->IsDungeon())
+        {
+            uint32 instaceIdToCheck = 0;
+            if (InstanceSave* save = player->GetInstanceSave(mapid))
+                instaceIdToCheck = save->GetInstanceId();
+
+           // instanceId can never be 0 - will not be found
+            if (!player->CheckInstanceCount(instaceIdToCheck) && !player->isGameMaster())
+            {
+                player->SendTransferAborted(mapid, TRANSFER_ABORT_TOO_MANY_INSTANCES);
+                return false;
+            }
+        }
+
         return player->Satisfy(sObjectMgr.GetAccessRequirement(instance->access_id), mapid, true);
     }
     else

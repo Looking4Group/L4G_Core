@@ -2200,6 +2200,9 @@ bool InstanceMap::Add(Player *player)
         // Dungeon only code
         if(IsDungeon())
         {
+            // increase current instances (hourly limit)
+            player->AddInstanceEnterTime(GetInstanceId(), time(NULL));
+
             // get or create an instance save for the map
             InstanceSave *mapSave = sInstanceSaveManager.GetInstanceSave(GetInstanceId());
             if(!mapSave)
