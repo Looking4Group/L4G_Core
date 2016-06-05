@@ -43,7 +43,7 @@ static int sweepCircleCircle(const float* c0, const float r0, const float* v,
 	float d = b*b - a*c;
 	if (d < 0.0f) return 0; // no intersection.
 	a = 1.0f / a;
-	const float rd = dtMathSqrtf(d);
+	const float rd = dtSqrt(d);
 	tmin = (b - rd) * a;
 	tmax = (b + rd) * a;
 	return 1;
