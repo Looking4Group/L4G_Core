@@ -257,11 +257,15 @@ void BattleGroundAB::Update(uint32 diff)
             }
         }
 
-        // Test win condition
-        if (m_TeamScores[BG_TEAM_ALLIANCE] >= 2000)
+        // Reward Honor to winning team and End BG
+        if (m_TeamScores[BG_TEAM_ALLIANCE] >= 2000) {
+            BattleGround::RewardHonorToTeam(20, ALLIANCE);
             EndBattleGround(ALLIANCE);
-        if (m_TeamScores[BG_TEAM_HORDE] >= 2000)
+        }
+        if (m_TeamScores[BG_TEAM_HORDE] >= 2000) {
+            BattleGround::RewardHonorToTeam(20, HORDE);
             EndBattleGround(HORDE);
+        }
     }
 }
 

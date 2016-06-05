@@ -37,6 +37,9 @@ uint32 BG_EY_HonorScoreTicks[BG_HONOR_MODE_NUM] = {
     200  // holiday
 };
 
+uint32 winningHonor = 40;
+uint32 losingHonor = 20;
+
 BattleGroundEY::BattleGroundEY()
 {
     m_BuffChange = true;
@@ -327,6 +330,17 @@ void BattleGroundEY::UpdateTeamScore(uint32 Team)
     if (score >= EY_MAX_TEAM_SCORE)
     {
         score = EY_MAX_TEAM_SCORE;
+
+        // Check faction and reward honor to winner / loser
+        if (Team == ALLIANCE) {
+            BattleGround::RewardHonorToTeam(winningHonor, ALLIANCE);
+            BattleGround::RewardHonorToTeam(losingHonor, HORDE);
+        }
+        else {
+            BattleGround::RewardHonorToTeam(winningHonor, HORDE);
+            BattleGround::RewardHonorToTeam(losingHonor, ALLIANCE);
+        }
+
         EndBattleGround(Team);
     }
 
