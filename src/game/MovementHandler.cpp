@@ -236,6 +236,7 @@ void WorldSession::HandleMovementOpcodes(WorldPacket & recv_data)
 
     /* process position-change */
     HandleMoverRelocation(movementInfo);
+    SynchronizeMovement(movementInfo);
 
     if (plMover)
         plMover->UpdateFallInformationIfNeed(movementInfo, opcode);
@@ -246,9 +247,38 @@ void WorldSession::HandleMovementOpcodes(WorldPacket & recv_data)
     mover->BroadcastPacketExcept(&data, _player);
 }
 
+void WorldSession::SynchronizeMovement(MovementInfo &movementInfo)
+{
+    // Get time based on server
+    uint32 currMsTime = WorldTimer::getMSTime();
+
+    // Invalidate syncs older than 750ms (and start new one)
+    if (lastMoveTimeServer < currMsTime - 750)
+    {
+        lastMoveTimeServer = currMsTime;
+    }
+    else
+    {
+        // The time that is between last clients time and current client time gets applie to last server time
+        uint32 clientMsDiff = movementInfo.time - lastMoveTimeClient;
+        if (clientMsDiff > 750)
+            lastMoveTimeServer = currMsTime;
+        else 
+        {
+            uint32 serverDiffApplied = lastMoveTimeServer + clientMsDiff;
+            lastMoveTimeServer = serverDiffApplied;
+        }
+        if (lastMoveTimeServer > currMsTime)
+            lastMoveTimeServer = currMsTime;
+    }
+
+    lastMoveTimeClient = movementInfo.time;
+    movementInfo.UpdateTime(lastMoveTimeServer);
+}
+
 void WorldSession::HandleMoverRelocation(MovementInfo& movementInfo)
 {
-    movementInfo.UpdateTime(WorldTimer::getMSTime());
+    //movementInfo.UpdateTime(WorldTimer::getMSTime());
 
     Unit *mover = _player->GetMover();
 
