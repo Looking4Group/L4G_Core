@@ -1000,7 +1000,8 @@ GridMap* TerrainInfo::GetGrid(const float x, const float y)
         return NULL;
 
     //quick check if GridMap already loaded
-    GridMap * pMap = m_GridMaps[gx][gy];
+    GridMap * pMap;
+    pMap = m_GridMaps[gx][gy];
     if(!pMap)
          pMap = LoadMapAndVMap(gx, gy);
 
