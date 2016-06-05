@@ -875,6 +875,7 @@ struct boss_bigbadwolfAI : public boss_operaAI
                         DoModifyThreatPercent(target, -100);
                     HoodGUID = target->GetGUID();
                     m_creature->AddThreat(target, 1000000.0f);
+                    // Chase for 20 sec
                     ChaseTimer = 20000;
                     IsChasing = true;
                 }
@@ -895,7 +896,7 @@ struct boss_bigbadwolfAI : public boss_operaAI
                 m_creature->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_TAUNT, false);
                 m_creature->ApplySpellImmune(0, IMMUNITY_EFFECT,SPELL_EFFECT_ATTACK_ME, false);
 
-                ChaseTimer = 40000;
+                ChaseTimer = 30000;
             }
         }
         else
