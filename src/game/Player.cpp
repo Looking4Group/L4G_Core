@@ -5349,72 +5349,54 @@ bool Player::UpdateSkillPro(uint16 SkillId, int32 Chance, uint32 step)
     return false;
 }
 
-void Player::UpdateWeaponSkill (WeaponAttackType attType)
+void Player::UpdateWeaponSkill(WeaponAttackType attType)
 {
+    // no skill gain in pvp
+    Unit* pVictim = getVictim();
+    if (pVictim && pVictim->isCharmedOwnedByPlayerOrPlayer())
+        return;
 
-    if (IsInFeralForm(true))
+    if (IsInFeralForm())
         return;                                             // always maximized SKILL_FERAL_COMBAT in fact
 
-    if (m_form == FORM_TREE)
-        return;                                             // use weapon but not skill up
+    uint32 weaponSkillGain = sWorld.getConfig(CONFIG_SKILL_GAIN_WEAPON);
 
-    uint32 weapon_skill_gain = sWorld.getConfig(CONFIG_SKILL_GAIN_WEAPON);
+    Item* pWeapon = GetWeaponForAttack(attType, true);
+    if (pWeapon && pWeapon->GetProto()->SubClass != ITEM_SUBCLASS_WEAPON_FISHING_POLE)
+        UpdateSkill(pWeapon->GetSkill(), weaponSkillGain);
+    else if (!pWeapon && attType == BASE_ATTACK)
+        UpdateSkill(SKILL_UNARMED, weaponSkillGain);
 
-    switch (attType)
-    {
-        case BASE_ATTACK:
-        {
-            Item *tmpitem = GetWeaponForAttack(attType,true);
-
-            if (!tmpitem)
-                UpdateSkill(SKILL_UNARMED,weapon_skill_gain);
-            else if (tmpitem->GetProto()->SubClass != ITEM_SUBCLASS_WEAPON_FISHING_POLE)
-                UpdateSkill(tmpitem->GetSkill(),weapon_skill_gain);
-            break;
-        }
-        case OFF_ATTACK:
-        case RANGED_ATTACK:
-        {
-            Item *tmpitem = GetWeaponForAttack(attType,true);
-            if (tmpitem)
-                UpdateSkill(tmpitem->GetSkill(),weapon_skill_gain);
-            break;
-        }
-    }
     UpdateAllCritPercentages();
 }
 
-void Player::UpdateCombatSkills(Unit *pVictim, WeaponAttackType attType, bool defence) //if defense than pVictim == attacker
+void Player::UpdateCombatSkills(Unit* pVictim, WeaponAttackType attType, bool defence)
 {
-    if (pVictim->isCharmedOwnedByPlayerOrPlayer()) // no skill ups in pvp
-        return;
-
-    uint32 plevel = getLevel();
+    uint32 plevel = getLevel();                             // if defense than pVictim == attacker
+    uint32 greylevel = Looking4group::XP::GetGrayLevel(plevel);
     uint32 moblevel = pVictim->getLevelForTarget(this);
+    if (moblevel < greylevel)
+        return;
 
     if (moblevel > plevel + 5)
         moblevel = plevel + 5;
 
-    float lvldif = 1.5f;
-    if (moblevel >= plevel)
-    {
-        lvldif = moblevel - plevel;
-        if (lvldif < 3)
-            lvldif = 3;
-    }
+    uint32 lvldif = moblevel - greylevel;
+    if (lvldif < 3)
+        lvldif = 3;
 
-    uint32 skilldif = 5 * plevel - (defence ? GetBaseDefenseSkillValue() : GetBaseWeaponSkillValue(attType));
+    int32 skilldif = 5 * plevel - (defence ? GetBaseDefenseSkillValue() : GetBaseWeaponSkillValue(attType));
+
+    // Max skill reached for level.
+    // Can in some cases be less than 0: having max skill and then .level -1 as example.
     if (skilldif <= 0)
         return;
 
-    float chance = (float(3 * lvldif * skilldif) / plevel) * 0.5f;
+    float chance = float(3 * lvldif * skilldif) / plevel;
     if (!defence)
-        chance += 0.02f * GetStat(STAT_INTELLECT);
+        chance *= 0.1f * GetStat(STAT_INTELLECT);
 
-    chance = chance < 1.0f ? 1.0f : chance;                 //minimum chance to increase skill is 1%
-
-    if (!defence)
-        SendCombatStats("Weapon skill update [ skill: %u, chance %f, skilldif: %u ]", pVictim, attType, chance, skilldif);
+    chance = chance < 1.0f ? 1.0f : chance;                 // minimum chance to increase skill is 1%
 
     if (roll_chance_f(chance))
     {
@@ -5423,6 +5405,8 @@ void Player::UpdateCombatSkills(Unit *pVictim, WeaponAttackType attType, bool de
         else
             UpdateWeaponSkill(attType);
     }
+    else
+        return;
 }
 
 void Player::ModifySkillBonus(uint32 skillid,int32 val, bool talent)
