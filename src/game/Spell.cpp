@@ -4942,6 +4942,9 @@ SpellCastResult Spell::CheckRange(bool strict)
     float min_range = SpellMgr::GetSpellMinRange(srange);
     uint32 range_type = SpellMgr::GetSpellRangeType(srange);
 
+    // Adding 15% Range Buffer
+    max_range *= 1.15f;
+
     if (Player* modOwner = m_caster->GetSpellModOwner())
         modOwner->ApplySpellMod(GetSpellInfo()->Id, SPELLMOD_RANGE, max_range, this);
 
