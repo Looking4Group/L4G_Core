@@ -223,7 +223,7 @@ struct boss_olm_the_summonerAI : public BossAI
 
         events.ScheduleEvent(EVENT_DARK_DECAY, 10000);
         events.ScheduleEvent(EVENT_SUMMON, 15000);
-        events.ScheduleEvent(EVENT_DEATH_COIL, 20000);
+        events.ScheduleEvent(EVENT_DEATH_COIL, 8000);
     }
 
     void EnterCombat(Unit *who)
