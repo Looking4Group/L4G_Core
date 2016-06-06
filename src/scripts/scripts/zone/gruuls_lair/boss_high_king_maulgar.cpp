@@ -254,7 +254,7 @@ struct boss_olm_the_summonerAI : public BossAI
                 case EVENT_DARK_DECAY:
                 {
                     AddSpellToCast(SPELL_DARK_DECAY);
-                    events.ScheduleEvent(eventId, 20000);
+                    events.ScheduleEvent(eventId, urand(6000, 9000));
                     break;
                 }
                 case EVENT_SUMMON:
@@ -266,7 +266,7 @@ struct boss_olm_the_summonerAI : public BossAI
                 case EVENT_DEATH_COIL:
                 {
                     AddSpellToCast(SPELL_DEATH_COIL, CAST_RANDOM);
-                    events.ScheduleEvent(eventId, 20000);
+                    events.ScheduleEvent(eventId, 10000);
                     break;
                 }
             }
