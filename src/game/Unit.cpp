@@ -2305,6 +2305,11 @@ void Unit::RollMeleeHit(MeleeDamageLog *damageInfo, int32 crit_chance, int32 mis
         return;
     }
 
+    // Check if target is a totem, if so never miss/dodge/parry
+    if ( pVictim->GetTypeId() == TYPEID_UNIT && ((Creature*)pVictim)->isTotem()) {
+        return;
+    }
+
     int32 attackerMaxSkillValueForLevel = GetMaxSkillValueForLevel(pVictim);
     int32 victimMaxSkillValueForLevel = pVictim->GetMaxSkillValueForLevel(this);
 
