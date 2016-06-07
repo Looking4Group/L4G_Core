@@ -3091,10 +3091,10 @@ void Spell::finish(bool ok)
 
     if (Player* modOwner = m_caster->GetSpellModOwner())
     {
-        if (ok || m_spellState != SPELL_STATE_PREPARING || m_spellState != SPELL_STATE_DELAYED)
+        if (ok || m_spellState != SPELL_STATE_PREPARING)
             modOwner->RemoveSpellMods(this);
         else
-            modOwner->RestoreSpellMods(this);
+            modOwner->ResetSpellModsDueToCanceledSpell(this);
     }
 
     m_spellState = SPELL_STATE_FINISHED;
