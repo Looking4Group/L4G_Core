@@ -407,7 +407,7 @@ struct boss_nightbaneAI : public ScriptedAI
             {
                 if (!Skeletons)
                 {
-                    for (uint8 i = 0; i <= 3; ++i)
+                    for (uint8 i = 0; i <= 4; ++i)
                     {
                         DoCast(m_creature->getVictim(), SPELL_SUMMON_SKELETON);
                     }
