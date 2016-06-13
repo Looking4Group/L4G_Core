@@ -3091,10 +3091,10 @@ void Spell::finish(bool ok)
 
     if (Player* modOwner = m_caster->GetSpellModOwner())
     {
-        if (ok || m_spellState != SPELL_STATE_PREPARING || m_spellState != SPELL_STATE_DELAYED)
+        if (ok || m_spellState != SPELL_STATE_PREPARING)
             modOwner->RemoveSpellMods(this);
         else
-            modOwner->RestoreSpellMods(this);
+            modOwner->ResetSpellModsDueToCanceledSpell(this);
     }
 
     m_spellState = SPELL_STATE_FINISHED;
@@ -4941,6 +4941,9 @@ SpellCastResult Spell::CheckRange(bool strict)
     float max_range = SpellMgr::GetSpellMaxRange(srange); // + range_mod;
     float min_range = SpellMgr::GetSpellMinRange(srange);
     uint32 range_type = SpellMgr::GetSpellRangeType(srange);
+
+    // Adding 15% Range Buffer
+    max_range *= 1.15f;
 
     if (Player* modOwner = m_caster->GetSpellModOwner())
         modOwner->ApplySpellMod(GetSpellInfo()->Id, SPELLMOD_RANGE, max_range, this);

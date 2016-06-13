@@ -1531,6 +1531,7 @@ class LOOKING4GROUP_EXPORT Player : public Unit
         template <class T> T ApplySpellMod(uint32 spellId, SpellModOp op, T &basevalue, Spell const* spell = NULL);
         void RemoveSpellMods(Spell const* spell);
         void RestoreSpellMods(Spell const* spell);
+        void ResetSpellModsDueToCanceledSpell(Spell const* spell);
 
         CooldownMgr& GetCooldownMgr() { return m_CooldownMgr; }
 
