@@ -337,10 +337,6 @@ void CharmInfo::HandleAttackCommand(uint64 targetGUID)
     if (!m_unit->canAttack(pTarget))
          return;
 
-    // Not let attack through obstructions
-    if (sWorld.getConfig(CONFIG_PET_LOS) && !m_unit->IsWithinLOSInMap(pTarget))
-        return;
-
     if (Creature* pCharm = m_unit->ToCreature())
     {
         pCharm->AI()->AttackStart(pTarget);

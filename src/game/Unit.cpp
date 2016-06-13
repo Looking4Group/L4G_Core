@@ -1517,6 +1517,7 @@ void Unit::CalculateSpellDamageTaken(SpellDamageLog *damageInfo, int32 damage, S
     }
     else
         damage = 0;
+
     damageInfo->damage = damage;
 }
 
@@ -2301,6 +2302,11 @@ void Unit::RollMeleeHit(MeleeDamageLog *damageInfo, int32 crit_chance, int32 mis
         damageInfo->procEx |= PROC_EX_EVADE;
         damageInfo->damage = 0;
         damageInfo->rageDamage = 0;
+        return;
+    }
+
+    // Check if target is a totem, if so never miss/dodge/parry
+    if ( pVictim->GetTypeId() == TYPEID_UNIT && ((Creature*)pVictim)->isTotem()) {
         return;
     }
 
@@ -8461,6 +8467,19 @@ uint32 Unit::SpellDamageBonus(Unit *pVictim, SpellEntry const *spellProto, uint3
 
     if (GetObjectGuid().IsCreature())
         tmpDamage *= ((Creature*)this)->GetSpellDamageMod(((Creature*)this)->GetCreatureInfo()->rank);
+
+    // AoE Spell or Spell Radius not 0 and Target must be a pet!
+    if (((SpellMgr::IsAreaOfEffectSpell(spellProto)) || spellProto->EffectRadiusIndex[0] != 0) && ((Creature*)pVictim)->isPet()) {
+        // Pet has 25% damage avoidance buff
+        if (pVictim->HasAura(35694)) {
+            tmpDamage *= 0.75f;
+        }
+
+        // Pet has 50% damage avoidance buff or Felguard 50% avoidance
+        if (pVictim->HasAura(35698) || pVictim->HasAura(32233)) {
+            tmpDamage *= 0.5f;
+        }
+    }
 
     return tmpDamage > 0 ? uint32(tmpDamage) : 0;
 }
