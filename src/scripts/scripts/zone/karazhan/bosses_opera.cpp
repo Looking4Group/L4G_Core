@@ -813,7 +813,8 @@ struct boss_bigbadwolfAI : public boss_operaAI
 
     void Reset()
     {
-        ChaseTimer = 30000;
+    	// initial timer for chase
+        ChaseTimer = 5000;
         FearTimer = 25000 + rand()%10000;
         SwipeTimer = 5000;
 
@@ -895,8 +896,8 @@ struct boss_bigbadwolfAI : public boss_operaAI
 
                 m_creature->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_TAUNT, false);
                 m_creature->ApplySpellImmune(0, IMMUNITY_EFFECT,SPELL_EFFECT_ATTACK_ME, false);
-
-                ChaseTimer = 30000;
+		// Chase again after 10secs
+                ChaseTimer = 10000;
             }
         }
         else
