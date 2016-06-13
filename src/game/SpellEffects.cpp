@@ -4895,9 +4895,9 @@ void Spell::EffectSummonPet(uint32 i)
             // pet in corpse state can't be summoned
             if (OldSummon->isDead())
                 return;
-	    // if warlock allow summoning pet with same pet active
-+            if (owner->getClass() != CLASS_WARLOCK)
-+                OldSummon->GetMap()->Remove((Creature*)OldSummon,false);
+	        // if warlock allow summoning pet with same pet active
+            if (owner->getClass() != CLASS_WARLOCK)
+                OldSummon->GetMap()->Remove((Creature*)OldSummon,false);
             OldSummon->SetMapId(owner->GetMapId());
 
             float px, py, pz;
