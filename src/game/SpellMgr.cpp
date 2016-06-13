@@ -686,6 +686,8 @@ bool SpellMgr::IsPositiveEffect(uint32 spellId, uint32 effIndex)
 
     switch (spellId)
     {
+        case 6562:                                          // Heroic Presence
+        case 28878:                                         // Inspiring Presence
         case 23333:                                         // BG spell
         case 23335:                                         // BG spell
         case 24732:                                         // Bat Costume
