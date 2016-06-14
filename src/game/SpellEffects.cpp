@@ -3177,6 +3177,9 @@ void Spell::EffectSendEvent(uint32 EffectIndex)
             }
             break;
         }
+        // Summon Infernals
+        // TO-DO now the event is handled in stair_of_destiny.cpp
+        //case 33393: { break; }
         // Place Belmara's Tome
         case 34140:
         {
