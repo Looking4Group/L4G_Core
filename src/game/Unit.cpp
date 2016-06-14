@@ -10034,8 +10034,8 @@ void Unit::SetSpeed(UnitMoveType mtype, float rate, bool forced)
 
 void Unit::setDeathState(DeathState s)
 {
-+    // Death state needs to be updated before RemoveAllAurasOnDeath() is called, to prevent entering combat
-+    m_deathState = s;
+    // Death state needs to be updated before RemoveAllAurasOnDeath() is called, to prevent entering combat
+    m_deathState = s;
 
     if (s != ALIVE && s != JUST_ALIVED)
     {
