@@ -722,6 +722,7 @@
     <ClCompile Include="..\..\src\scripts\scripts\zone\hellfire_citadel\shattered_halls\instance_shattered_halls.cpp" />
     <ClCompile Include="..\..\src\scripts\scripts\zone\hellfire_peninsula\boss_doomlord_kazzak.cpp" />
     <ClCompile Include="..\..\src\scripts\scripts\zone\hellfire_peninsula\hellfire_peninsula.cpp" />
+    <ClCompile Include="..\..\src\scripts\scripts\zone\hellfire_peninsula\stair_of_destiny.cpp" />
     <ClCompile Include="..\..\src\scripts\scripts\zone\karazhan\boss_curator.cpp" />
     <ClCompile Include="..\..\src\scripts\scripts\zone\karazhan\boss_maiden_of_virtue.cpp" />
     <ClCompile Include="..\..\src\scripts\scripts\zone\karazhan\boss_midnight.cpp" />
