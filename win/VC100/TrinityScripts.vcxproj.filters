@@ -1101,6 +1101,9 @@
     <ClCompile Include="..\..\src\scripts\scripts\zone\hellfire_peninsula\hellfire_peninsula.cpp">
       <Filter>Scripts\zone\Hellfire Peninsula</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\scripts\scripts\zone\hellfire_peninsula\stair_of_destiny.cpp">
+      <Filter>Scripts\zone\Hellfire Peninsula</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\scripts\scripts\zone\karazhan\boss_curator.cpp">
       <Filter>Scripts\zone\Karazhan</Filter>
     </ClCompile>
@@ -1542,9 +1545,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\scripts\scripts\zone\hellfire_citadel\hellfire_ramparts\instance_hellfire_ramparts.cpp">
       <Filter>Scripts\zone\Hellfire Citadel\Hellfire Ramparts</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\scripts\scripts\zone\hellfire_peninsula\stair_of_destiny.cpp">
-      <Filter>Scripts\zone\Hellfire Peninsula</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\scripts\scripts\zone\dire_maul\dire_maul.cpp">
       <Filter>Scripts\zone\Dire Maul</Filter>
