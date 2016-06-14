@@ -3106,6 +3106,9 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             /* UNSORTED */
             /* Damage Corrections */
+            case 33627: // Rain of Fire (Pit Commander)
+                spellInfo->EffectBasePoints[0] = urand(48000, 58000); // Sure not correct WoWhead comments saying about 45 - 58k damage per tick
+                break;
             case 16785: // Flamebreak
                 spellInfo->EffectBasePoints[0] = 24;
                 break;
@@ -3474,6 +3477,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->EffectImplicitTargetA[1] = TARGET_UNIT_CASTER;
                 spellInfo->EffectImplicitTargetA[2] = TARGET_UNIT_TARGET_ENEMY;
                 break;
+            case 32785: // Infernal Rain
             case 30541: // Magtheridon's Blaze
                 spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ENEMY;
                 spellInfo->EffectImplicitTargetB[0] = 0;
