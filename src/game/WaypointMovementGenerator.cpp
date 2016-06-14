@@ -46,6 +46,9 @@ void WaypointMovementGenerator<Creature>::Initialize(Creature &creature)
     creature.StopMoving();
 
     creature.addUnitState(UNIT_STAT_ROAMING);
+    
+    // Set walk speed to 1.0 on waypoints, creatures should walk in that rate.
+    creature.SetSpeed(MOVE_WALK, 1.0f, true);
 
     _pathFinding = !creature.hasUnitState(UNIT_STAT_IGNORE_PATHFINDING) && creature.GetMap()->WaypointMovementPathfinding();
 

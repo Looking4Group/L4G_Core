@@ -74,7 +74,7 @@
     <IntDir>.\$(ProjectName)__$(Platform)_$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>..\..\..\..\..\bin\Win32_Release\lib</OutDir>
+    <OutDir>$(ProjectDir)\..\..\..\..\lib\$(Platform)_$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(ProjectDir)\..\..\..\..\lib\$(Platform)_$(Configuration)\</OutDir>

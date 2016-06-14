@@ -26,7 +26,7 @@
 #include "../../dep/recastnavigation/Detour/Include/DetourNavMeshQuery.h"
 
 //  memory management
-inline void* dtCustomAlloc(size_t size, dtAllocHint /*hint*/)
+inline void* dtCustomAlloc(int size, dtAllocHint /*hint*/)
 {
     return (void*)new unsigned char[size];
 }
