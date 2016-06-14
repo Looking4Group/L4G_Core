@@ -469,6 +469,7 @@
     <ClCompile Include="..\..\src\scripts\scripts\boss\boss_lethon.cpp" />
     <ClCompile Include="..\..\src\scripts\scripts\boss\boss_taerar.cpp" />
     <ClCompile Include="..\..\src\scripts\scripts\boss\boss_ysondre.cpp" />
+    <ClCompile Include="..\..\src\scripts\scripts\Outland\hellfire_peninsula\stair_of_destiny.cpp" />
     <ClCompile Include="..\..\src\scripts\scripts\creature\mob_generic_creature.cpp" />
     <ClCompile Include="..\..\src\scripts\scripts\creature\simple_ai.cpp" />
     <ClCompile Include="..\..\src\scripts\scripts\custom\barber.cpp" />
