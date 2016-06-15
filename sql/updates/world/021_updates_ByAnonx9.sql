@@ -318,7 +318,7 @@ INSERT INTO `spell_proc_event` (`entry`, `SchoolMask`, `SpellFamilyName`, `Spell
 -- (16246,0x00,11,0x00000000,0x00010000,0x0000000,0,0,0); -- Shaman Clearcasting V1 
 (16246, 0x00, 11, 0x90100003, 0x00, 0x0, 0, 0, 0); -- Shaman Clearcasting V2 PTBC SpellFamilyMask 0x90100003 -> spells that can procc it?
 --
-DELETE FROM `spell_proc_event` WHERE `entry` IN (11213,12574,12575,12576,12577,12536,12043,29976) 
+DELETE FROM `spell_proc_event` WHERE `entry` IN (11213,12574,12575,12576,12577,12536,12043,29976); 
 INSERT INTO `spell_proc_event` (`entry`, `SchoolMask`, `SpellFamilyName`, `SpellFamilyMask`, `procFlags`, `procEx`, `ppmRate`, `CustomChance`, `Cooldown`) VALUES
 --
 -- Mage
