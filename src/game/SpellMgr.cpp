@@ -3071,10 +3071,16 @@ void SpellMgr::LoadSpellCustomAttr()
             case 2094:                     // Blind
                 spellInfo->AttributesCu |= SPELL_ATTR_CU_FAKE_DELAY; // add const fake delay
                 break;
-            case 5171:
-            case 6774:                     // Slice'n'Dice
+            case 5171: // Slice and Dice (Rank 1)
+            case 6774: // Slice and Dice (Rank 2)
                 spellInfo->AttributesEx |= SPELL_ATTR_EX_NOT_BREAK_STEALTH;
 				spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
+                break;
+            case 33619: // Reflective Shield
+            case 13810: // Frost Trap
+            case 34919: // Vampiric Touch (Energize)
+            case 15290: // Vampiric Embrace (Healing)
+                spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO; // Do not put caster in combat after use
                 break;
             /* SHAMAN CUSTOM ATTRIBUTES */
             case 2895:                      // Wrath of Air Totem - disallow weird stacking
