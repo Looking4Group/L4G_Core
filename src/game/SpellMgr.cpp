@@ -3414,6 +3414,9 @@ void SpellMgr::LoadSpellCustomAttr()
             case 37936:
                 spellInfo->Attributes &= ~SPELL_ATTR_BREAKABLE_BY_DAMAGE;
                 break;
+            case 30129: // Nightbane: Charred Earth
+                spellInfo->EffectRadiusIndex[0] = 29;    // effect radius from 10 to 6 yd
+                break;
             case 37454: // Chess event: Bite
             case 37453: // Chess event: Smash
             case 37413: // Chess event: Visious Strike
