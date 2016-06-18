@@ -4592,7 +4592,7 @@ DiminishingGroup SpellMgr::GetDiminishingReturnsGroupForSpell(SpellEntry const* 
 				 spellproto->Mechanic == MECHANIC_POLYMORPH  || spellproto->EffectMechanic[i] == MECHANIC_POLYMORPH ||
 				 spellproto->Mechanic == MECHANIC_SHACKLE  || spellproto->EffectMechanic[i] == MECHANIC_SHACKLE ||
 				 spellproto->Mechanic == MECHANIC_KNOCKOUT  || spellproto->EffectMechanic[i] == MECHANIC_KNOCKOUT)
-+           return DIMINISHING_DISORIENT;
+            return DIMINISHING_DISORIENT;
     }
 
     return DIMINISHING_NONE;
