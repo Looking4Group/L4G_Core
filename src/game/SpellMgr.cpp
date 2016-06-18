@@ -4509,6 +4509,9 @@ DiminishingGroup SpellMgr::GetDiminishingReturnsGroupForSpell(SpellEntry const* 
             // Celestial Focus Id 16922
 			else if (spellproto->Id == 16922)
 			    return DIMINISHING_TRIGGER_STUN;
+			// Feral Charge Root Effect
+			else if (spellproto->Id == 45334)
+				return DIMINISHING_NONE;
             break;
         }
         case SPELLFAMILY_WARRIOR:
