@@ -4388,17 +4388,14 @@ DiminishingGroup SpellMgr::GetDiminishingReturnsGroupForSpell(SpellEntry const* 
             if (spellproto->SpellIconID == 193)
                 return DIMINISHING_CONTROL_ROOT;
             // Dragon's Breath
-			// else if (spellproto->SpellFamilyFlags & 0x800000LL) 
-            else if (spellproto->IsFitToFamilyMask(UI64LIT(0x00000800000)))
+			else if (spellproto->SpellFamilyFlags & 0x800000LL) 
                 return DIMINISHING_DRAGONS_BREATH;
 			// Frost Nova 524352
-            // else if (spellproto->SpellFamilyFlags & 0x80040LL)
-			else if (spellproto->IsFitToFamilyMask(UI64LIT(0x80040)))
+            else if (spellproto->SpellFamilyFlags & 0x80040LL)
                 return DIMINISHING_CONTROL_ROOT;
 			// Polymorph 16777216
             // if ((spellproto->SpellFamilyFlags & 0x00001000000LL) && spellproto->EffectApplyAuraName[0]==SPELL_AURA_MOD_CONFUSE)
 			// else if (spellproto->SpellFamilyFlags & 0x00001000000LL)
-			// else if (spellproto->IsFitToFamilyMask(UI64LIT(0x00001000000)))
             //    return DIMINISHING_DISORIENT;
             // Impact 0
             // else if (spellproto->Id == 12360 && spellproto->Attributes == 1D0)
@@ -4408,156 +4405,134 @@ DiminishingGroup SpellMgr::GetDiminishingReturnsGroupForSpell(SpellEntry const* 
         case SPELLFAMILY_ROGUE:
         {
             // Kidney Shot 2097152
-            //  if (spellproto->SpellFamilyFlags & 0x00000200000LL)
-				if (spellproto->IsFitToFamilyMask(UI64LIT(0x00000200000)))
+            if (spellproto->SpellFamilyFlags & 0x00000200000LL)
                 return DIMINISHING_KIDNEYSHOT;
 			// Blind 16777216
-            // else if (spellproto->SpellFamilyFlags & 0x00001000000LL)
-            else if (spellproto->IsFitToFamilyMask(UI64LIT(0x00001000000)))
+            else if (spellproto->SpellFamilyFlags & 0x00001000000LL)
                 return DIMINISHING_BLIND_CYCLONE;
 			// Gouge 8
-            // else if (spellproto->SpellFamilyFlags & 0x00000000008LL)
-			else if (spellproto->IsFitToFamilyMask(UI64LIT(0x00000000008)))
+            else if (spellproto->SpellFamilyFlags & 0x00000000008LL)
                 return DIMINISHING_DISORIENT;
 			// Mace Specialization 0 -> Id
             if (spellproto->Id == 5530)
                 return DIMINISHING_TRIGGER_STUN;
 			// Cheap Shot 1024
-            // else if (spellproto->SpellFamilyFlags & 0x400LL)
-			else if (spellproto->IsFitToFamilyMask(UI64LIT(0x400)))
+            else if (spellproto->SpellFamilyFlags & 0x400LL)
                 return DIMINISHING_CONTROL_STUN;
             // Riposte 2147483648
-            // else if (spellproto->SpellFamilyFlags & 0x80000000LL)
-			else if (spellproto->IsFitToFamilyMask(UI64LIT(0x80000000)))
+            else if (spellproto->SpellFamilyFlags & 0x80000000LL)
                 return DIMINISHING_DISARM;			
             // Sap 128
             // else if (spellproto->SpellFamilyFlags & 0x00000000080LL)
             //    return DIMINISHING_DISORIENT;
             break;
         }
-        case SPELLFAMILY_HUNTER:
+/*        case SPELLFAMILY_HUNTER:
         {
+			
             // Freezing trap
-			// if (spellproto->SpellFamilyFlags & 0x00000000008LL)
-			// else if (spellproto->IsFitToFamilyMask(UI64LIT(0x00000000008)))
-			//    return DIMINISHING_FREEZE;
+			if (spellproto->SpellFamilyFlags & 0x00000000008LL)
+			    return DIMINISHING_FREEZE;
 	        // Scare Beast icon 958
-			// if (spellproto->SpellIconID == 958)
-			//    return DIMINISHING_FEAR;
+			if (spellproto->SpellIconID == 958)
+			    return DIMINISHING_FEAR;
             // Wyvern Sting 4096
-			// if (spellproto->SpellFamilyFlags & 0x1000LL)
-			// if (spellproto->IsFitToFamilyMask(UI64LIT(0x1000)))
+			if (spellproto->SpellFamilyFlags & 0x1000LL)
 			//    return DIMINISHING_SLEEP;
             // Entrapment  0 Trigger Spell
             if (spellproto->Id == 19185 && spellproto->Attributes == 0x8000000)
                 return DIMINISHING_TRIGGER_ROOT;
             break;
-        }
+        }*/
         case SPELLFAMILY_WARLOCK:
         {
             // Death Coil 524288 
-            // if (spellproto->SpellFamilyFlags & 0x00000080000LL)
-			if (spellproto->IsFitToFamilyMask(UI64LIT(0x00000080000)))
+            if (spellproto->SpellFamilyFlags & 0x00000080000LL)
                 return DIMINISHING_DEATHCOIL;
             // Seduction 1073741824 
-            // else if (spellproto->SpellFamilyFlags & 0x00040000000LL)
-			else if (spellproto->IsFitToFamilyMask(UI64LIT(0x00010000000)))
+            else if (spellproto->SpellFamilyFlags & 0x40000000LL)
                 return DIMINISHING_FEAR;
             // Fear
             // else if (spellproto->SpellFamilyFlags & 0x40840000000LL)
             //    return DIMINISHING_WARLOCK_FEAR;
             // Curses/etc 2147483648
-            // else if (spellproto->SpellFamilyFlags & 0x00080000000LL)
-			if (spellproto->IsFitToFamilyMask(UI64LIT(0x00080000000)))
+            else if (spellproto->SpellFamilyFlags & 0x00080000000LL)
                 return DIMINISHING_LIMITONLY;
             // Unstable Affliction dispel silence
             // if (spellproto->Id == 31117)
 			if (spellproto->SpellIconID == 232)
                 return DIMINISHING_UNSTABLE_AFFLICTION;
             // Enslave Demon 2048
-            // else if(spellproto->SpellFamilyFlags & 0x800LL)
-			if (spellproto->IsFitToFamilyMask(UI64LIT(0x800)))	
+            else if(spellproto->SpellFamilyFlags & 0x800LL)
                 return DIMINISHING_LIMITONLY;
 			// Shadowfury Icon 1988
 			if (spellproto->SpellIconID == 1988)
                 return DIMINISHING_CONTROL_STUN;
             break;
         }
-//		case SPELLFAMILY_PRIEST:
-//        {
+/*		case SPELLFAMILY_PRIEST:
+        {
             // Psychic Scream 65536 SpellFamilyFlags
-//            else if (spellproto->SpellFamilyFlags & 0x10000LL)
-//                return DIMINISHING_FEAR;
+            else if (spellproto->SpellFamilyFlags & 0x10000LL)
+                return DIMINISHING_FEAR;
             // Mind Control 131072
-//            if (spellproto->SpellFamilyFlags & 0x20000LL)
-//                return DIMINISHING_CHARM;
+            if (spellproto->SpellFamilyFlags & 0x20000LL)
+                return DIMINISHING_CHARM;
             // Blackout Trigger Spell SpellFamilyFlags 2 4096
-            // no need for SpellFaimilyFlags2?
-//            if (spellproto->Id == 15269 && spellproto->SpellFamilyFlags2 == 0x1000)
-//                return DIMINISHING_TRIGGER_STUN;
-//            break;
-//        }
+            if (spellproto->Id == 15269 && spellproto->SpellFamilyFlags2 == 0x1000)
+                return DIMINISHING_TRIGGER_STUN;
+            break;
+        }*/
         case SPELLFAMILY_DRUID:
         {
             // Cyclone
-            // if (spellproto->SpellFamilyFlags & 0x02000000000LL)
-			if (spellproto->IsFitToFamilyMask(UI64LIT(0x02000000000)))
+            if (spellproto->SpellFamilyFlags & 0x02000000000LL)
                 return DIMINISHING_BLIND_CYCLONE;
 			// Entangling Roots 512 -> 0x200
-			// else if (spellproto->SpellFamilyFlags & 0x200LL)
-			else if (spellproto->IsFitToFamilyMask(UI64LIT(0x200)))
+			else if (spellproto->SpellFamilyFlags & 0x200LL)
                 return DIMINISHING_CONTROL_ROOT;
             // Nature's Grasp (trigger)
-			// if (spellproto->SpellFamilyFlags & 0x00000000200LL && spellproto->Attributes == 0x49010000)
-            else if (spellproto->IsFitToFamilyMask(UI64LIT(0x200)))
+			if (spellproto->SpellFamilyFlags & 0x00000000200LL && spellproto->Attributes == 0x49010000)
                 return DIMINISHING_CONTROL_ROOT;
 			// Bash 8192
-            // if (spellproto->SpellFamilyFlags & 0x2000LL)
-			else if (spellproto->IsFitToFamilyMask(UI64LIT(0x2000)))
+            if (spellproto->SpellFamilyFlags & 0x2000LL)
                 return DIMINISHING_CONTROL_STUN;
             // Pounce 131072
-            // if (spellproto->SpellFamilyFlags & 0x20000LL)
-			else if (spellproto->IsFitToFamilyMask(UI64LIT(0x20000)))
+            if (spellproto->SpellFamilyFlags & 0x20000LL)
                 return DIMINISHING_CONTROL_STUN;
             // Maim Icon 1681
 			if (spellproto->SpellIconID == 1681)
                 return DIMINISHING_DISORIENT;
             // Hibernate 16777216
-            // if (spellproto->SpellFamilyFlags & 0x1000000LL)
-			else if (spellproto->IsFitToFamilyMask(UI64LIT(0x1000000)))
+            if (spellproto->SpellFamilyFlags & 0x1000000LL)
                 return DIMINISHING_SLEEP;
-            // Celestial Focus 0
-			// else if (spellproto->Id == 16922)
-			//    return DIMINISHING_TRIGGER_STUN;
+            // Celestial Focus Id 16922
+			else if (spellproto->Id == 16922)
+			    return DIMINISHING_TRIGGER_STUN;
             break;
         }
         case SPELLFAMILY_WARRIOR:
         {
             // Hamstring - limit to 10s in PvP
-            // if (spellproto->SpellFamilyFlags & 0x00000000002LL)
-			if (spellproto->IsFitToFamilyMask(UI64LIT(0x00000000002)))
+            if (spellproto->SpellFamilyFlags & 0x00000000002LL)
                 return DIMINISHING_LIMITONLY;
 			// Mace Specialization 0 -> Id
             if (spellproto->Id == 5530)
                 return DIMINISHING_TRIGGER_STUN;
             // Charge Stun 16777216
-            // else if (spellproto->SpellFamilyFlags & 0x1000000LL)
-			else if (spellproto->IsFitToFamilyMask(UI64LIT(0x1000000)))
+            else if (spellproto->SpellFamilyFlags & 0x1000000LL)
                 return DIMINISHING_CONTROL_STUN;
             // Intercept Stun 0 -> Rank Ids other spells have same Icon
             else if (spellproto->Id == (20253 || 20614 || 30197 || 25273 || 25274))
                 return DIMINISHING_CONTROL_STUN;
             // Concussion Blow 69206016
-            // else if (spellproto->SpellFamilyFlags & 0x4200000LL)
-			else if (spellproto->IsFitToFamilyMask(UI64LIT(0x4200000)))
+            else if (spellproto->SpellFamilyFlags & 0x4200000LL)
                 return DIMINISHING_CONTROL_STUN;
             // Intimidating Shout 262144
-            // else if (spellproto->SpellFamilyFlags & 0x40000LL)
-			else if (spellproto->IsFitToFamilyMask(UI64LIT(0x40000)))
+            else if (spellproto->SpellFamilyFlags & 0x40000LL)
                 return DIMINISHING_FEAR;
             // Disarm 512
-            // else if (spellproto->SpellFamilyFlags & 0x200LL)
-			else if (spellproto->IsFitToFamilyMask(UI64LIT(0x200)))
+            else if (spellproto->SpellFamilyFlags & 0x200LL)
                 return DIMINISHING_DISARM;
             break;
         }
@@ -4569,14 +4544,12 @@ DiminishingGroup SpellMgr::GetDiminishingReturnsGroupForSpell(SpellEntry const* 
                 return DIMINISHING_FEAR;
 			// Hammer of Justice 2048
             if (spellproto->SpellFamilyFlags & 0x800LL)
-			else if (spellproto->IsFitToFamilyMask(UI64LIT(0x800)))
                 return DIMINISHING_CONTROL_STUN;
             // Seal of Justice (Seal) trigger ???
             else if (spellproto->Id == 20170 && spellproto->Attributes == 0x40000)
                 return DIMINISHING_TRIGGER_STUN;
             // Repentance 4
-            // else if (spellproto->SpellFamilyFlags & 0x4LL)
-			else if (spellproto->IsFitToFamilyMask(UI64LIT(0x4)))
+            else if (spellproto->SpellFamilyFlags & 0x4LL)
                 return DIMINISHING_DISORIENT;
             break;
         }
@@ -4587,67 +4560,39 @@ DiminishingGroup SpellMgr::GetDiminishingReturnsGroupForSpell(SpellEntry const* 
     }
 
     // Get by mechanic
-//    for (uint8 i=0;i<3;++i)
-//	
-//    {
-//        if (spellproto->Mechanic      == MECHANIC_STUN    || spellproto->EffectMechanic[i] == MECHANIC_STUN)
-//            return triggered ? DIMINISHING_TRIGGER_STUN : DIMINISHING_CONTROL_STUN;
-//        else if (spellproto->Mechanic == MECHANIC_SLEEP   || spellproto->EffectMechanic[i] == MECHANIC_SLEEP)
-//            return DIMINISHING_SLEEP;
-//        else if (spellproto->Mechanic == MECHANIC_ROOT    || spellproto->EffectMechanic[i] == MECHANIC_ROOT)
-//            return triggered ? DIMINISHING_TRIGGER_ROOT : DIMINISHING_CONTROL_ROOT;
-//        else if (spellproto->Mechanic == MECHANIC_FEAR    || spellproto->EffectMechanic[i] == MECHANIC_FEAR)
-//            return DIMINISHING_FEAR;
-//        else if (spellproto->Mechanic == MECHANIC_CHARM   || spellproto->EffectMechanic[i] == MECHANIC_CHARM)
-//            return DIMINISHING_CHARM;
+    for (uint8 i=0;i<3;++i)
+	
+    {
+        if (spellproto->Mechanic      == MECHANIC_STUN    || spellproto->EffectMechanic[i] == MECHANIC_STUN)
+            return triggered ? DIMINISHING_TRIGGER_STUN : DIMINISHING_CONTROL_STUN;
+        else if (spellproto->Mechanic == MECHANIC_SLEEP   || spellproto->EffectMechanic[i] == MECHANIC_SLEEP)
+            return DIMINISHING_SLEEP;
+        else if (spellproto->Mechanic == MECHANIC_ROOT    || spellproto->EffectMechanic[i] == MECHANIC_ROOT)
+            return triggered ? DIMINISHING_TRIGGER_ROOT : DIMINISHING_CONTROL_ROOT;
+        else if (spellproto->Mechanic == MECHANIC_FEAR    || spellproto->EffectMechanic[i] == MECHANIC_FEAR)
+            return DIMINISHING_FEAR;
+        else if (spellproto->Mechanic == MECHANIC_CHARM   || spellproto->EffectMechanic[i] == MECHANIC_CHARM)
+            return DIMINISHING_CHARM;
         /*
             Patch 3.0.8 (2009-01-20): All Silence spells now have diminishing returns.
             This includes: Arcane Torrent, Garrote silence effect, Improved Counterspell effect, Improved Kick effect, Silence, Gag Order, Silencing Shot, Spell Lock, and Strangulate.
-        */
-        //else if (spellproto->Mechanic == MECHANIC_SILENCE || spellproto->EffectMechanic[i] == MECHANIC_SILENCE)
-        //    return DIMINISHING_SILENCE;
-//        else if (spellproto->Mechanic == MECHANIC_DISARM  || spellproto->EffectMechanic[i] == MECHANIC_DISARM)
-//            return DIMINISHING_DISARM;
-//        else if (spellproto->Mechanic == MECHANIC_FREEZE  || spellproto->EffectMechanic[i] == MECHANIC_FREEZE)
-//            return DIMINISHING_FREEZE;
-//        else if (spellproto->Mechanic == MECHANIC_KNOCKOUT|| spellproto->EffectMechanic[i] == MECHANIC_KNOCKOUT ||
-//                 spellproto->Mechanic == MECHANIC_SAPPED  || spellproto->EffectMechanic[i] == MECHANIC_SAPPED)
-//            return DIMINISHING_KNOCKOUT;
-//        else if (spellproto->Mechanic == MECHANIC_BANISH  || spellproto->EffectMechanic[i] == MECHANIC_BANISH)
-//            return DIMINISHING_BANISH;
-//    }
-//
-//    return DIMINISHING_NONE;
-//}
-	    // Get by mechanic
-    uint32 mechanic = GetAllSpellMechanicMask(spellproto);
-    if (!mechanic)
-        return DIMINISHING_NONE;
- 
-    if (mechanic & (1 << (MECHANIC_STUN - 1)))
-        return triggered ? DIMINISHING_TRIGGER_STUN : DIMINISHING_CONTROL_STUN;
-    if (mechanic & (1 << (MECHANIC_SLEEP - 1)))
-        return DIMINISHING_SLEEP;
-    if (mechanic & ((1 << (MECHANIC_SAPPED - 1)) | (1 << (MECHANIC_POLYMORPH - 1)) | (1 << (MECHANIC_SHACKLE - 1)) | (1 << (MECHANIC_KNOCKOUT - 1))))
-        return DIMINISHING_DISORIENT;
-    if (mechanic & (1 << (MECHANIC_ROOT - 1)))
-        return triggered ? DIMINISHING_TRIGGER_ROOT : DIMINISHING_CONTROL_ROOT;
-    if (mechanic & (1 << (MECHANIC_FEAR - 1)))
-        return DIMINISHING_FEAR;
-    if (mechanic & (1 << (MECHANIC_CHARM - 1)))
-        return DIMINISHING_CHARM;
-    if (mechanic & (1 << (MECHANIC_SILENCE - 1)))
-        return DIMINISHING_SILENCE;
-    if (mechanic & (1 << (MECHANIC_DISARM - 1)))
-        return DIMINISHING_DISARM;
-    if (mechanic & (1 << (MECHANIC_FREEZE - 1)))
-        return DIMINISHING_FREEZE;
-    if (mechanic & (1 << (MECHANIC_BANISH - 1)))
-        return DIMINISHING_BANISH;
-    if (mechanic & (1 << (MECHANIC_HORROR - 1)))
-        return DIMINISHING_DEATHCOIL;
- 
-     return DIMINISHING_NONE;
+        else if (spellproto->Mechanic == MECHANIC_SILENCE || spellproto->EffectMechanic[i] == MECHANIC_SILENCE)
+            return DIMINISHING_SILENCE;
+		*/
+        else if (spellproto->Mechanic == MECHANIC_DISARM  || spellproto->EffectMechanic[i] == MECHANIC_DISARM)
+            return DIMINISHING_DISARM;
+        else if (spellproto->Mechanic == MECHANIC_FREEZE  || spellproto->EffectMechanic[i] == MECHANIC_FREEZE)
+            return DIMINISHING_FREEZE;
+        else if (spellproto->Mechanic == MECHANIC_BANISH  || spellproto->EffectMechanic[i] == MECHANIC_BANISH)
+            return DIMINISHING_BANISH;
+		else if (spellproto->Mechanic == MECHANIC_SAPPED || spellproto->EffectMechanic[i] == MECHANIC_SAPPED || 
+				 spellproto->Mechanic == MECHANIC_POLYMORPH  || spellproto->EffectMechanic[i] == MECHANIC_POLYMORPH ||
+				 spellproto->Mechanic == MECHANIC_SHACKLE  || spellproto->EffectMechanic[i] == MECHANIC_SHACKLE ||
+				 spellproto->Mechanic == MECHANIC_KNOCKOUT  || spellproto->EffectMechanic[i] == MECHANIC_KNOCKOUT)
++           return DIMINISHING_DISORIENT;
+    }
+
+    return DIMINISHING_NONE;
 }
 
 bool SpellMgr::IsDiminishingReturnsGroupDurationLimited(DiminishingGroup group)
