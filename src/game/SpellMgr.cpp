@@ -4376,6 +4376,7 @@ DiminishingGroup SpellMgr::GetDiminishingReturnsGroupForSpell(SpellEntry const* 
 		    // War Stomp
             else if (spellproto->Id == 20549)
                 return DIMINISHING_CONTROL_STUN;
+			// Stun (Stormherald/Deep Thunder) Needs Trigger Flag
             else if (spellproto->Id == 34510)
                 return DIMINISHING_TRIGGER_STUN;
 			break;
