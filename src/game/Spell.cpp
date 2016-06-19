@@ -3690,7 +3690,7 @@ void Spell::TakePower()
 			{
 				needDrop = false;
 				break;
-            }
+            		}
 			if (needDrop)
 			((Player*)m_caster)->ClearComboPoints();
 		}
