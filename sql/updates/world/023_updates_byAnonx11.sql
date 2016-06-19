@@ -75,16 +75,20 @@ UPDATE `creature_template` SET `dmgschool`='6' WHERE `Entry`='21267';
 --
 -- Fel Reaver
 SET @GUID := '67185';
-DELETE FROM `creature` WHERE `guid` IN ('67185','67185');
+DELETE FROM `creature` WHERE `guid` IN ('67185','67195');
 INSERT INTO `creature` (`guid`, `id`, `map`, `spawnMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES
 ('67185', '18733', '530', '1', '0', '0', '511.3207', '3043.288', '13.94431', '3.070376', '1800', '0', '0', '104790', '0', '0', '2'),
-('67001', '18733', '530', '1', '0', '0', '-32.4071', '1854.05', '59.763', '2.098692', '1800', '0', '0', '104790', '0', '0', '2');
+('67195', '18733', '530', '1', '0', '0', '-32.4071', '1854.05', '59.763', '2.098692', '1800', '0', '0', '104790', '0', '0', '2');
 
 -- Fel Reaver #2
 SET @GUID := '67185';
 SET @POINT := '0';
 
-DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid` IN ('67185');
+INSERT INTO `creature_addon` VALUES
+(67185,@GUID,0,16908544,0,4097,0,0,'');
+
+DELETE FROM `waypoint_data` WHERE `id`=@GUID*10;
 INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
 (@GUID, @POINT := @POINT + '1', '438.13560', '3048.522', '15.732090', '0', '0', '0', '100', '0'),
 (@GUID, @POINT := @POINT + '1', '403.75210', '3055.092', '15.002400', '0', '0', '0', '100', '0'),
@@ -314,8 +318,12 @@ INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`
 -- ---------------------------------------------------------------------------------------------------------------------------------
 
 -- Fel Reaver #3
-SET @GUID := '67001';
+SET @GUID := '67195';
 SET @POINT := '0';
+
+DELETE FROM `creature_addon` WHERE `guid` IN ('67195');
+INSERT INTO `creature_addon` VALUES
+(67195,@GUID,0,16908544,0,4097,0,0,'');
 
 DELETE FROM `waypoint_data` WHERE `id`=@GUID;
 INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
