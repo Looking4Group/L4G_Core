@@ -10034,9 +10034,6 @@ void Unit::SetSpeed(UnitMoveType mtype, float rate, bool forced)
 
 void Unit::setDeathState(DeathState s)
 {
-    // Death state needs to be updated before RemoveAllAurasOnDeath() is called, to prevent entering combat
-    m_deathState = s;
-
     if (s != ALIVE && s != JUST_ALIVED)
     {
         CombatStop();
@@ -10081,6 +10078,7 @@ void Unit::setDeathState(DeathState s)
     {
         //_ApplyAllAuraMods();
     }
+    m_deathState = s;
 }
 
 /*########################################
@@ -10088,14 +10086,14 @@ void Unit::setDeathState(DeathState s)
 ########       AGGRO SYSTEM       ########
 ########                          ########
 ########################################*/
-bool Unit::CanHaveThreatList(bool skipAliveCheck) const
+bool Unit::CanHaveThreatList() const
 {
     // only creatures can have threat list
     if (GetTypeId() != TYPEID_UNIT)
         return false;
 
     // only alive units can have threat list
-    if (!skipAliveCheck && !isAlive())
+    if (!isAlive() || isDying())
         return false;
 
     // totems can not have threat list
