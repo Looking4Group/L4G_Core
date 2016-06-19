@@ -8293,17 +8293,17 @@ uint32 Unit::SpellDamageBonus(Unit *pVictim, SpellEntry const *spellProto, uint3
             {
                 CastingTime = 5400;
             }
-            // Corruption 93%
+            // Corruption 93.6%
             else if ((spellProto->SpellFamilyFlags & 0x2LL) && spellProto->SpellIconID == 313)
             {
-                DotFactor = 0.93f;
+                DotFactor = 0.936f;
             }
             break;
         case SPELLFAMILY_PALADIN:
-            // Consecration - 95% of Holy Damage
+            // Consecration - 95.24f% of Holy Damage
             if ((spellProto->SpellFamilyFlags & 0x20LL) && spellProto->SpellIconID == 51)
             {
-                DotFactor = 0.95f;
+                DotFactor = 0.9524f;
                 CastingTime = 3500;
             }
             // Seal of Righteousness - 10.2%/9.8% (based on weapon type) of Holy Damage, multiplied by weapon speed
@@ -8383,10 +8383,10 @@ uint32 Unit::SpellDamageBonus(Unit *pVictim, SpellEntry const *spellProto, uint3
             {
                 CastingTime = 350;
             }
-            // Holy Nova - 14%
+            // Holy Nova - 16%
             else if ((spellProto->SpellFamilyFlags & 0x400000LL) && spellProto->SpellIconID == 1874)
             {
-                CastingTime = 500;
+                CastingTime = 560;
             }
             // Shadow Word: Death back damage - 0%
             else if (spellProto->Id == 32409)
