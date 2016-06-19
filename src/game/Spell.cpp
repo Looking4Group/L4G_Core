@@ -2236,6 +2236,7 @@ void Spell::SetTargetMap(uint32 i, uint32 cur)
                     break;
                 case 41376:     // Spite
                 case 46771:     // Flame Sear
+                case 43550:     // MC Hexlord
                     unitList.remove_if(Looking4group::ObjectGUIDCheck(m_caster->getVictimGUID()));
                     break;
                 case 45248:     // Shadow Blades
