@@ -3682,7 +3682,18 @@ void Spell::TakePower()
                 }
 
         if (hit && SpellMgr::NeedsComboPoints(GetSpellInfo()))
-            ((Player*)m_caster)->ClearComboPoints();
+		{
+			// Not drop combopoints if any miss exist
+			bool needDrop = true;
+			for(std::list<TargetInfo>::iterator ihit= m_UniqueTargetInfo.begin();ihit != m_UniqueTargetInfo.end();++ihit)
+			if (ihit->missCondition != SPELL_MISS_NONE)
+			{
+				needDrop = false;
+				break;
+            }
+			if (needDrop)
+			((Player*)m_caster)->ClearComboPoints();
+		}
     }
 
     if (!m_powerCost)
