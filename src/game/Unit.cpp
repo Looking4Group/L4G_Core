@@ -1411,6 +1411,10 @@ void Unit::CalculateSpellDamageTaken(SpellDamageLog *damageInfo, int32 damage, S
     if (!pVictim || !pVictim->isAlive())
         return;
 
+    // Make Target get up if hit by spell
+    if (!pVictim->IsStandState())
+        pVictim->SetStandState(PLAYER_STATE_NONE);
+
     if (damageInfo->schoolMask & SPELL_SCHOOL_MASK_NORMAL  && (spellInfo->AttributesCu & SPELL_ATTR_CU_IGNORE_ARMOR) == 0)
         damage = CalcArmorReducedDamage(pVictim, damage);
 
