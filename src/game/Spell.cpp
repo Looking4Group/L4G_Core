@@ -1166,6 +1166,10 @@ void Spell::DoSpellHitOnUnit(Unit *unit, const uint32 effectMask)
                 m_damage = 0;
                 return;
             }
+
+            if (!unit->IsStandState() && !unit->hasUnitState(UNIT_STAT_STUNNED))
+                    unit->SetStandState(UNIT_STAND_STATE_STAND);
+
             unit->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_HITBYSPELL);
             if (GetSpellInfo()->AttributesCu & SPELL_ATTR_CU_AURA_CC)
                 unit->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_CC);
@@ -2236,6 +2240,7 @@ void Spell::SetTargetMap(uint32 i, uint32 cur)
                     break;
                 case 41376:     // Spite
                 case 46771:     // Flame Sear
+                case 43550:     // MC Hexlord
                     unitList.remove_if(Looking4group::ObjectGUIDCheck(m_caster->getVictimGUID()));
                     break;
                 case 45248:     // Shadow Blades
@@ -3682,7 +3687,18 @@ void Spell::TakePower()
                 }
 
         if (hit && SpellMgr::NeedsComboPoints(GetSpellInfo()))
-            ((Player*)m_caster)->ClearComboPoints();
+		{
+			// Not drop combopoints if any miss exist
+			bool needDrop = true;
+			for(std::list<TargetInfo>::iterator ihit= m_UniqueTargetInfo.begin();ihit != m_UniqueTargetInfo.end();++ihit)
+			if (ihit->missCondition != SPELL_MISS_NONE)
+			{
+				needDrop = false;
+				break;
+            		}
+			if (needDrop)
+			((Player*)m_caster)->ClearComboPoints();
+		}
     }
 
     if (!m_powerCost)

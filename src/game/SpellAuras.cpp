@@ -5534,6 +5534,16 @@ void Aura::HandleAuraModResistance(bool apply, bool Real)
             case 7659:
             case 11717:
             case 27226:
+            case 770: // Faerie Fire 1-5
+            case 778:
+            case 9749:
+            case 9907:
+            case 26993:
+            case 16857: // Faerie Fire (Feral) 1-5
+            case 17390:
+            case 17391:
+            case 17392:
+            case 27011:
                 m_target->RemoveSpellsCausingAura(SPELL_AURA_MOD_STEALTH);
                 break;
     }
