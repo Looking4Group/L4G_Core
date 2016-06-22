@@ -619,7 +619,7 @@ bool SpellMgr::IsSingleFromSpellSpecificPerTarget(SpellSpecific spellSpec1, Spel
         case SPELL_FOOD:
         case SPELL_CHARM:
         case SPELL_WARRIOR_ENRAGE:
-		case SPELL_ARMOR_REDUCE:
+        case SPELL_ARMOR_REDUCE:
             return spellSpec1 == spellSpec2;
         case SPELL_BATTLE_ELIXIR:
             return spellSpec2 == SPELL_BATTLE_ELIXIR
