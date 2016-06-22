@@ -4442,7 +4442,7 @@ DiminishingGroup SpellMgr::GetDiminishingReturnsGroupForSpell(SpellEntry const* 
                 return DIMINISHING_UNSTABLE_AFFLICTION;
             // Enslave Demon 2048
             else if(spellproto->SpellFamilyFlags & 0x800LL)
-                return DIMINISHING_LIMITONLY;
+                return DIMINISHING_ENSLAVE;
 			// Shadowfury Icon 1988
 			else if (spellproto->SpellIconID == 1988) 
                 return DIMINISHING_CONTROL_STUN;
