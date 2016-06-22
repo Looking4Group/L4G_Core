@@ -329,12 +329,16 @@ void dtNavMesh::connectExtLinks(dtMeshTile* tile, dtMeshTile* target, int side)
 		dtPoly* poly = &tile->polys[i];
 
 		// Create new links.
-		unsigned short m = DT_EXT_LINK | (unsigned short)side;
 		const int nv = poly->vertCount;
 		for (int j = 0; j < nv; ++j)
 		{
-			// Skip edges which do not point to the right side.
-			if (poly->neis[j] != m) continue;
+			// Skip non-portal edges.
+			if ((poly->neis[j] & DT_EXT_LINK) == 0)
+				continue;
+
+			const int dir = (int)(poly->neis[j] & 0xff);
+			if (side != -1 && dir != side)
+				continue;
 			
 			// Create new links
 			const float* va = &tile->verts[poly->verts[j]*3];
@@ -342,7 +346,7 @@ void dtNavMesh::connectExtLinks(dtMeshTile* tile, dtMeshTile* target, int side)
 			dtPolyRef nei[4];
 			float neia[4*2];
 			int nnei = findConnectingPolys(va,vb, target, dtOppositeTile(side), nei,neia,4);
-			for (int k = 0; k < nnei; ++k)
+            for (int k = 0; k < nnei; ++k)
 			{
 				unsigned int idx = allocLink(tile);
 				if (idx != DT_NULL_LINK)
