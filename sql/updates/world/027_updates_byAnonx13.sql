@@ -13,7 +13,7 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('1760810','17608','0','0','100','1','8000','11000','9000','14000','11','31734','1','32','0','0','0','0','0','0','0','0','Sunhawk Pyromancer - Cast Mark of the Sunhawk'),
 ('1760811','17608','2','0','100','0','15','0','0','0','22','3','0','0','0','0','0','0','0','0','0','0','Sunhawk Pyromancer - Set Phase 3 at 15% HP'),
 ('1760812','17608','2','7','100','0','15','0','0','0','21','1','0','0','25','0','0','0','1','-47','0','0','Sunhawk Pyromancer - Start Combat Movement and Flee at 15% HP (Phase 3)'),
-('1760813','17608','7','0','100','0','0','0','0','0','22','0','0','0','0','0','0','0','0','0','0','0','Sunhawk Pyromancer - Set Phase to 0 on Evade
+('1760813','17608','7','0','100','0','0','0','0','0','22','0','0','0','0','0','0','0','0','0','0','0','Sunhawk Pyromancer - Set Phase to 0 on Evade');
 --
 -- Defias Pillager
 DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN ('589');
