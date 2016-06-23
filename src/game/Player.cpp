@@ -18761,6 +18761,15 @@ void Player::LeaveBattleground(bool teleportToEntryPoint)
             GetCamera().ResetView(true);
         }
 
+        if(bg->isArena() && bg->isRated() && bg->GetStatus() != STATUS_WAIT_LEAVE) //if game has not end then make sure that personal raiting is decreased
+ 		{
+ 		    //decrease private raiting here
+ 			Team Winner = GetTeam() == ALLIANCE ? HORDE : ALLIANCE;
+ 			Team Looser = GetTeam() == ALLIANCE ? ALLIANCE : HORDE;
+ 			ArenaTeam* WinnerTeam = sObjectMgr.GetArenaTeamById(bg->GetArenaTeamIdForTeam(Winner));
+ 			ArenaTeam* LooserTeam = sObjectMgr.GetArenaTeamById(bg->GetArenaTeamIdForTeam(Looser));
+ 			LooserTeam->MemberLost(this,WinnerTeam->GetStats().rating, 0);
+ 		}
         bg->RemovePlayerAtLeave(GetGUID(), teleportToEntryPoint, true);
 
         if (bg->isBattleGround() && sWorld.getConfig(CONFIG_BATTLEGROUND_CAST_DESERTER))
