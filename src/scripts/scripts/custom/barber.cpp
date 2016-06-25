@@ -146,7 +146,7 @@ bool GossipSelect_barber(Player *player, Creature *_Creature, uint32 sender, uin
 
     char const* FeatureGossipMenu2 = "I want to change my hair color.";
     if (player->getRace() == RACE_TAUREN)
-        FeatureGossipMenu1 = "I want to change my horn color color.";
+        FeatureGossipMenu1 = "I want to change my horn color.";
     
     char const* FeatureGossipMenu = "I want to change my facial hair style.";
     switch (player->getRace())
