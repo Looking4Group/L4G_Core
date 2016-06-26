@@ -31,6 +31,7 @@ enum TotemType
 };
 
 #define SENTRY_TOTEM_ENTRY  3968
+#define TREMOR_TOTEM_ENTRY 5913
 
 class Totem : public Creature
 {
