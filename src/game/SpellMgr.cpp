@@ -481,6 +481,9 @@ SpellSpecific SpellMgr::GetSpellSpecific(uint32 spellId)
         {
             if (spellInfo->SpellFamilyFlags & 0x00008000010000LL)
                 return SPELL_POSITIVE_SHOUT;
+            // Sunder Armor (vs Expose Armor)
+            if (spellInfo->SpellFamilyFlags & 0x00000000004000LL)
+                return SPELL_ARMOR_REDUCE;
 
             break;
         }
@@ -533,7 +536,13 @@ SpellSpecific SpellMgr::GetSpellSpecific(uint32 spellId)
 
             break;
         }
-
+        case SPELLFAMILY_ROGUE:
+        {
+            // Expose Armor (vs Sunder Armor)
+            if (spellInfo->SpellFamilyFlags & 0x00000000080000LL)
+                return SPELL_ARMOR_REDUCE;
+            break;
+        }
         case SPELLFAMILY_POTION:
             return sSpellMgr.GetSpellElixirSpecific(spellInfo->Id);
             break;
@@ -610,6 +619,7 @@ bool SpellMgr::IsSingleFromSpellSpecificPerTarget(SpellSpecific spellSpec1, Spel
         case SPELL_FOOD:
         case SPELL_CHARM:
         case SPELL_WARRIOR_ENRAGE:
+        case SPELL_ARMOR_REDUCE:
             return spellSpec1 == spellSpec2;
         case SPELL_BATTLE_ELIXIR:
             return spellSpec2 == SPELL_BATTLE_ELIXIR
@@ -4497,7 +4507,7 @@ DiminishingGroup SpellMgr::GetDiminishingReturnsGroupForSpell(SpellEntry const* 
             else if (spellproto->SpellFamilyFlags & 0x1000000LL)
                 return DIMINISHING_CONTROL_STUN;
             // Intercept Stun 0 -> Rank Ids other spells have same Icon
-            else if (spellproto->Id == (20253 || 20614 || 30197 || 25273 || 25274))
+            else if (spellproto->Id == 20253 || spellproto->Id == 20614 || spellproto->Id == 30197 || spellproto->Id == 25273 || spellproto->Id == 25273)
                 return DIMINISHING_CONTROL_STUN;
             // Concussion Blow 69206016
             else if (spellproto->SpellFamilyFlags & 0x4200000LL)
