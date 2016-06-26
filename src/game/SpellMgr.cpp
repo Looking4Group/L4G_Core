@@ -481,6 +481,9 @@ SpellSpecific SpellMgr::GetSpellSpecific(uint32 spellId)
         {
             if (spellInfo->SpellFamilyFlags & 0x00008000010000LL)
                 return SPELL_POSITIVE_SHOUT;
+            // Sunder Armor (vs Expose Armor)
+            if (spellInfo->SpellFamilyFlags & 0x00000000004000LL)
+                return SPELL_ARMOR_REDUCE;
 
             break;
         }
@@ -533,7 +536,13 @@ SpellSpecific SpellMgr::GetSpellSpecific(uint32 spellId)
 
             break;
         }
-
+        case SPELLFAMILY_ROGUE:
+        {
+            // Expose Armor (vs Sunder Armor)
+            if (spellInfo->SpellFamilyFlags & 0x00000000080000LL)
+                return SPELL_ARMOR_REDUCE;
+            break;
+        }
         case SPELLFAMILY_POTION:
             return sSpellMgr.GetSpellElixirSpecific(spellInfo->Id);
             break;
@@ -610,6 +619,7 @@ bool SpellMgr::IsSingleFromSpellSpecificPerTarget(SpellSpecific spellSpec1, Spel
         case SPELL_FOOD:
         case SPELL_CHARM:
         case SPELL_WARRIOR_ENRAGE:
+        case SPELL_ARMOR_REDUCE:
             return spellSpec1 == spellSpec2;
         case SPELL_BATTLE_ELIXIR:
             return spellSpec2 == SPELL_BATTLE_ELIXIR
@@ -4432,7 +4442,7 @@ DiminishingGroup SpellMgr::GetDiminishingReturnsGroupForSpell(SpellEntry const* 
                 return DIMINISHING_UNSTABLE_AFFLICTION;
             // Enslave Demon 2048
             else if(spellproto->SpellFamilyFlags & 0x800LL)
-                return DIMINISHING_LIMITONLY;
+                return DIMINISHING_ENSLAVE;
 			// Shadowfury Icon 1988
 			else if (spellproto->SpellIconID == 1988) 
                 return DIMINISHING_CONTROL_STUN;
