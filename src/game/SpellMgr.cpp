@@ -4507,7 +4507,6 @@ DiminishingGroup SpellMgr::GetDiminishingReturnsGroupForSpell(SpellEntry const* 
             else if (spellproto->SpellFamilyFlags & 0x1000000LL)
                 return DIMINISHING_CONTROL_STUN;
             // Intercept Stun 0 -> Rank Ids other spells have same Icon
-            else if (spellproto->Id == (20253 || 20614 || 30197 || 25273 || 25274))
                 return DIMINISHING_CONTROL_STUN;
             // Concussion Blow 69206016
             else if (spellproto->SpellFamilyFlags & 0x4200000LL)
