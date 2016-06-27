@@ -1411,7 +1411,7 @@ void Unit::CalculateSpellDamageTaken(SpellDamageLog *damageInfo, int32 damage, S
     if (!pVictim || !pVictim->isAlive())
         return;
 
-    // Make Target get up if hit by spell
+    // Make Target stand up if hit by spell
     if (!pVictim->IsStandState())
         pVictim->SetStandState(PLAYER_STATE_NONE);
 
@@ -4263,6 +4263,13 @@ void Unit::RemoveAurasDueToSpellByDispel(uint32 spellId, uint64 casterGUID, Unit
         Aura *aur = iter->second;
         if (aur->GetId() == spellId && aur->GetCasterGUID() == casterGUID)
         {
+
+            // Lifebloom
+            if(aur->GetSpellProto()->SpellFamilyName == SPELLFAMILY_DRUID && aur->GetSpellProto()->Id == 33763) {
+                Unit *target = aur->GetTarget();
+                CastSpell(target, 33778, false);
+            }
+
             // Custom dispel case
             // Unstable Affliction
             if (aur->GetSpellProto()->SpellFamilyName == SPELLFAMILY_WARLOCK && (aur->GetSpellProto()->SpellFamilyFlags & 0x010000000000LL) && aur->GetSpellProto()->SpellIconID == 2039)

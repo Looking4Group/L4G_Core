@@ -1582,6 +1582,9 @@ class LOOKING4GROUP_IMPORT_EXPORT Unit : public WorldObject
 
         void propagateSpeedChange() { GetMotionMaster()->propagateSpeedChange(); }
 
+        uint32 GetDamageTakenWithActiveAuraType(AuraType auraType) const { return m_damageTakenCounter[auraType]; }
+        void SetDamageTakenWithActiveAuraType(AuraType auraType, uint32 damageAmount) { m_damageTakenCounter[auraType] = damageAmount; }
+
         // reactive attacks
         void ClearAllReactives();
         void StartReactiveTimer(ReactiveType reactive) { m_reactiveTimer[reactive] = REACTIVE_TIMER_START;}
@@ -1703,6 +1706,8 @@ class LOOKING4GROUP_IMPORT_EXPORT Unit : public WorldObject
 
         uint32 m_CombatTimer;
         uint32 m_lastManaUse;                               // msecs
+        
+        uint32 m_damageTakenCounter[TOTAL_AURAS];
 
         UnitVisibility m_Visibility;
 
