@@ -3678,6 +3678,10 @@ void SpellMgr::LoadSpellCustomAttr()
             case 33813: //Hurtful Strike
                 spellInfo->rangeIndex = 137;
                 break;
+            case 33671: // Gruul Shatter Radius Reduction (From 20 to 19 yards)
+                // There was a slight range issue with shatter
+                spellInfo->EffectRadiusIndex[0] = 49;
+                break;
             default:
                 break;
         }
