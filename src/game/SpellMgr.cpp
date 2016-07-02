@@ -3678,6 +3678,10 @@ void SpellMgr::LoadSpellCustomAttr()
             case 33813: //Hurtful Strike
                 spellInfo->rangeIndex = 137;
                 break;
+            case 33671: // Gruul Shatter Radius Reduction (From 20 to 19 yards)
+                // There was a slight range issue with shatter
+                spellInfo->EffectRadiusIndex[0] = 49;
+                break;
             default:
                 break;
         }
@@ -4507,7 +4511,7 @@ DiminishingGroup SpellMgr::GetDiminishingReturnsGroupForSpell(SpellEntry const* 
             else if (spellproto->SpellFamilyFlags & 0x1000000LL)
                 return DIMINISHING_CONTROL_STUN;
             // Intercept Stun 0 -> Rank Ids other spells have same Icon
-            else if (spellproto->Id == (20253 || 20614 || 30197 || 25273 || 25274))
+            else if (spellproto->Id == 20253 || spellproto->Id == 20614 || spellproto->Id == 30197 || spellproto->Id == 25273 || spellproto->Id == 25274)
                 return DIMINISHING_CONTROL_STUN;
             // Concussion Blow 69206016
             else if (spellproto->SpellFamilyFlags & 0x4200000LL)

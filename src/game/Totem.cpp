@@ -106,6 +106,10 @@ void Totem::Summon(Unit* owner)
         default: break;
     }
 
+    // Tremor cast on summon
+    if(GetEntry() == TREMOR_TOTEM_ENTRY)
+        CastSpell(this, 8146, false);
+
     if (GetEntry() == SENTRY_TOTEM_ENTRY)
         SetReactState(REACT_AGGRESSIVE);
 
