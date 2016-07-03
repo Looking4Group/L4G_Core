@@ -200,6 +200,10 @@ class LOOKING4GROUP_IMPORT_EXPORT Map : public GridRefManager<NGridType>
         void MoveAllCreaturesInMoveList();
         void RemoveAllObjectsInRemoveList();
 
+
+        inline GridMap *Map::GetGrid(float x, float y);
+        float GetHeight(float x, float y, float z, bool pUseVmaps, float maxSearchDist) const;
+
         bool CreatureRespawnRelocation(Creature *c);        // used only in MoveAllCreaturesInMoveList and ObjectGridUnloader
 
         // assert print helper
@@ -299,6 +303,7 @@ class LOOKING4GROUP_IMPORT_EXPORT Map : public GridRefManager<NGridType>
     private:
         void SetTimer(uint32 t) { i_gridExpiry = t < MIN_GRID_DELAY ? MIN_GRID_DELAY : t; }
         //uint64 CalculateGridMask(const uint32 &y) const;
+        GridMap *GridMaps[MAX_NUMBER_OF_GRIDS][MAX_NUMBER_OF_GRIDS];
 
         void SendInitSelf(Player * player);
 
