@@ -7261,54 +7261,15 @@ void Spell::EffectLeapForward(uint32 i)
     if (unitTarget->IsTaxiFlying())
         return;
 
-    if (!m_targets.HasDst())
-        return;
-
-    uint32 mapid = m_caster->GetMapId();
-    float dist = SpellMgr::GetSpellRadius(m_spellInfo, i, false);
-
-    // src point
-    float *fx = new float[11], *fy = new float[11], *fz = new float[11];
-    unitTarget->GetPosition(fx[0], fy[0], fz[0]);
-
-    float orientation = unitTarget->GetOrientation(), itr_i, step = dist / 10.0, fx2, fy2, fz2, ground, floor;
-    int itr_j = 1, last_valid = 0;
-    bool hit = false;
-
-    for (itr_i = step; itr_i <= dist; itr_i += step)
+    if (GetSpellInfo()->rangeIndex == 1)                        //self range
     {
-        fx[itr_j] = fx[0] + itr_i * cos(orientation);
-        fy[itr_j] = fy[0] + itr_i * sin(orientation);
-        ground = unitTarget->GetMap()->GetHeight(fx[itr_j], fy[itr_j], fz[last_valid], true, MAX_HEIGHT);
-        floor = unitTarget->GetMap()->GetHeight(fx[itr_j], fy[itr_j], fz[last_valid], true, fz[last_valid]);
-        fz[itr_j] = fabs(ground - fz[last_valid]) <= fabs(floor - fz[last_valid]) ? ground : floor;
-        if (fabs(fz[itr_j] - fz[0]) <= 6.0)
-        {
-            if (VMAP::VMapFactory::createOrGetVMapManager()->getObjectHitPos(mapid, fx[last_valid], fy[last_valid], fz[last_valid] + 0.5, fx[itr_j], fy[itr_j], fz[itr_j] + 0.5, fx2, fy2, fz2, -0.5))
-            {
-                hit = true;
-                fx[itr_j] = fx2 - 0.6 * cos(orientation);
-                fy[itr_j] = fy2 - 0.6 * sin(orientation);
-                ground = unitTarget->GetMap()->GetHeight(fx[itr_j], fy[itr_j], fz[last_valid], true, MAX_HEIGHT);
-                floor = unitTarget->GetMap()->GetHeight(fx[itr_j], fy[itr_j], fz[last_valid], true, fz[last_valid]);
-                float tempz = fabs(ground - fz[last_valid]) <= fabs(floor - fz[last_valid]) ? ground : floor;
-                fz[itr_j] = fabs(tempz - fz[last_valid]) <= fabs(fz2 - fz[last_valid]) ? tempz : fz2;
-                break;
-            }
-            else
-                last_valid = itr_j;
-        }
-        itr_j++;
+        Position dest;
+        dest.x = m_targets.m_destX;
+        dest.y = m_targets.m_destY;
+        dest.z = m_targets.m_destZ;
+
+        unitTarget->NearTeleportTo(dest.x, dest.y, dest.z, unitTarget->GetOrientation(), unitTarget == m_caster);
     }
-    if (hit == false)
-        itr_j = last_valid;
-
-    if (unitTarget->GetTypeId() == TYPEID_PLAYER)
-        unitTarget->ToPlayer()->NearTeleportTo(fx[itr_j], fy[itr_j], fz[itr_j] + 0.07531, orientation, TELE_TO_NOT_LEAVE_COMBAT | TELE_TO_NOT_UNSUMMON_PET | (unitTarget == m_caster ? TELE_TO_SPELL : 0));
-    else
-        unitTarget->GetMap()->CreatureRelocation(unitTarget->ToCreature(), fx[itr_j], fy[itr_j], fz[itr_j] + 0.07531, orientation);
-
-    delete [] fx; delete [] fy; delete [] fz;
 }
 
 void Spell::EffectLeapBack(uint32 i)

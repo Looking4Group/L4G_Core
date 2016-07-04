@@ -4199,7 +4199,12 @@ uint32 SpellMgr::GetSpellRecoveryTime( SpellEntry const *spellInfo )
     return spellInfo->RecoveryTime > spellInfo->CategoryRecoveryTime ? spellInfo->RecoveryTime : spellInfo->CategoryRecoveryTime;
 }
 
-
+float SpellMgr::GetSpellRadius( SpellEntry const *spellInfo, uint32 effectIdx, bool positive )
+{
+    return positive
+        ? SpellMgr::GetSpellRadiusForFriend(sSpellRadiusStore.LookupEntry(spellInfo->EffectRadiusIndex[effectIdx]))
+        : SpellMgr::GetSpellRadiusForHostile(sSpellRadiusStore.LookupEntry(spellInfo->EffectRadiusIndex[effectIdx]));
+}
 
 bool SpellMgr::IsSealSpell( SpellEntry const *spellInfo )
 {

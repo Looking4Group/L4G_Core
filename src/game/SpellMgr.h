@@ -667,8 +667,6 @@ class LOOKING4GROUP_IMPORT_EXPORT SpellMgr
         static uint32 GetSpellCastTime(SpellEntry const* spellInfo, Spell const* spell = NULL);
         static SpellSpecific GetSpellSpecific(uint32);
 
-
-
         static float GetSpellRadiusForHostile(SpellRadiusEntry const*);
         static float GetSpellRadiusForFriend(SpellRadiusEntry const*);
         static float GetSpellMaxRange(SpellEntry const*);
@@ -684,13 +682,7 @@ class LOOKING4GROUP_IMPORT_EXPORT SpellMgr
         static int32 GetSpellDuration(SpellEntry const *spellInfo);
         static int32 GetSpellMaxDuration(SpellEntry const *spellInfo);
 
-        static inline float GetSpellRadius(SpellEntry const *spellInfo, uint32 effectIdx, bool positive)
-        {
-            return positive
-                ? GetSpellRadiusForFriend(sSpellRadiusStore.LookupEntry(spellInfo->EffectRadiusIndex[effectIdx]))
-                : GetSpellRadiusForHostile(sSpellRadiusStore.LookupEntry(spellInfo->EffectRadiusIndex[effectIdx]));
-        }
-
+        static float GetSpellRadius(SpellEntry const *spellInfo, uint32 effectIdx, bool positive);
 
         static bool IsSplashBuffAura(SpellEntry const* spellInfo);
 
@@ -760,7 +752,6 @@ class LOOKING4GROUP_IMPORT_EXPORT SpellMgr
         static bool CanSpellCrit(const SpellEntry* spellInfo);
 
         static SpellEntry const *GetHighestSpellRankForPlayer(uint32, Player*);
-
 
         // Modifiers
     public:
