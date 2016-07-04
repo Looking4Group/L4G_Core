@@ -3083,7 +3083,6 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 5171:
             case 6774:                     // Slice'n'Dice
-		spellInfo->AttributesEx |= SPELL_ATTR_EX_NOT_BREAK_STEALTH;
 		spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
                 break;
             /* SHAMAN CUSTOM ATTRIBUTES */
@@ -4197,13 +4196,6 @@ uint32 SpellMgr::GetSpellRangeType( SpellRangeEntry const *range )
 uint32 SpellMgr::GetSpellRecoveryTime( SpellEntry const *spellInfo )
 {
     return spellInfo->RecoveryTime > spellInfo->CategoryRecoveryTime ? spellInfo->RecoveryTime : spellInfo->CategoryRecoveryTime;
-}
-
-float SpellMgr::GetSpellRadius( SpellEntry const *spellInfo, uint32 effectIdx, bool positive )
-{
-    return positive
-        ? SpellMgr::GetSpellRadiusForFriend(sSpellRadiusStore.LookupEntry(spellInfo->EffectRadiusIndex[effectIdx]))
-        : SpellMgr::GetSpellRadiusForHostile(sSpellRadiusStore.LookupEntry(spellInfo->EffectRadiusIndex[effectIdx]));
 }
 
 bool SpellMgr::IsSealSpell( SpellEntry const *spellInfo )
