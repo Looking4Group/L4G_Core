@@ -1015,7 +1015,7 @@ class LOOKING4GROUP_IMPORT_EXPORT Unit : public WorldObject
         void Unmount();
 
         uint16 GetMaxSkillValueForLevel(Unit const* target = NULL) const { return (target ? getLevelForTarget(target) : getLevel()) * 5; }
-        void RemoveSpellbyDamageTaken(AuraType auratype, DamageLog *damageInfo, DamageEffectType damagetype, const SpellEntry *spellInfo);
+        void RemoveSpellbyDamageTaken(uint32 damage, uint32 spell);
 
         void SendDamageLog(DamageLog *damageInfo);
 
@@ -1582,9 +1582,6 @@ class LOOKING4GROUP_IMPORT_EXPORT Unit : public WorldObject
         ///----------End of Pet responses methods----------
 
         void propagateSpeedChange() { GetMotionMaster()->propagateSpeedChange(); }
-         void SetDamageTakenWithActiveAuraType(AuraType auraType, uint32 damageAmount) { m_damageTakenCounter[auraType] = damageAmount; }
-
-        uint32 GetDamageTakenWithActiveAuraType(AuraType auraType) const { return m_damageTakenCounter[auraType]; }
 
         // reactive attacks
         void ClearAllReactives();
@@ -1707,8 +1704,6 @@ class LOOKING4GROUP_IMPORT_EXPORT Unit : public WorldObject
 
         uint32 m_CombatTimer;
         uint32 m_lastManaUse;                               // msecs
-
-        uint32 m_damageTakenCounter[TOTAL_AURAS];
 
         UnitVisibility m_Visibility;
 
