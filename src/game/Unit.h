@@ -1015,7 +1015,7 @@ class LOOKING4GROUP_IMPORT_EXPORT Unit : public WorldObject
         void Unmount();
 
         uint16 GetMaxSkillValueForLevel(Unit const* target = NULL) const { return (target ? getLevelForTarget(target) : getLevel()) * 5; }
-        void Unit::RemoveSpellbyDamageTaken(AuraType auratype, DamageLog *damageInfo, DamageEffectType damagetype, const SpellEntry *spellInfo);
+        void RemoveSpellbyDamageTaken(AuraType auratype, DamageLog *damageInfo, DamageEffectType damagetype, const SpellEntry *spellInfo);
 
         void SendDamageLog(DamageLog *damageInfo);
 
