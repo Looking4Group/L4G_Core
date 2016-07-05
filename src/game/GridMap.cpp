@@ -934,7 +934,7 @@ GridMapLiquidStatus TerrainInfo::getLiquidStatus(float x, float y, float z, uint
 bool TerrainInfo::IsInWater(float x, float y, float pZ, GridMapLiquidData *data) const
 {
     if (!data)
-        return;
+        return false;
 
      // Check surface in x, y point for liquid
      if (const_cast<TerrainInfo*>(this)->GetGrid(x, y))
