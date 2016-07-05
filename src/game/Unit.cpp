@@ -57,6 +57,7 @@
 #include "movement/MoveSpline.h"
 #include "Guild.h"
 #include "GuildMgr.h"
+#include "PathFinder.h"
 
 #include <math.h>
 
@@ -279,6 +280,9 @@ Unit::Unit() :
     m_modAttackSpeedPct[BASE_ATTACK]   = 1.0f;
     m_modAttackSpeedPct[OFF_ATTACK]    = 1.0f;
     m_modAttackSpeedPct[RANGED_ATTACK] = 1.0f;
+
+    m_damageTakenCounter[SPELL_AURA_MOD_FEAR] = 0;
+    m_damageTakenCounter[SPELL_AURA_MOD_ROOT] = 0;
 
     m_extraAttacks = 0;
     m_canDualWield = false;
@@ -769,37 +773,77 @@ bool Unit::HasAuraByCasterWithFamilyFlags(uint64 pCaster, uint32 familyName,  ui
 }
 
 /* Called by DealDamage for auras that have a chance to be dispelled on damage taken. */
-void Unit::RemoveSpellbyDamageTaken(uint32 damage, uint32 spell)
+void Unit::RemoveSpellbyDamageTaken(AuraType auratype, DamageLog *damageInfo, DamageEffectType damagetype, const SpellEntry *spellInfo)
 {
-    // The chance to dispel an aura depends on the damage taken with respect to the casters level.
-    uint32 max_dmg = getLevel() > 8 ? 30 * getLevel() - 100 : 50;
-    float chance = float(damage) / max_dmg * 100.0f;
-    bool roll;
+    Unit *pVictim = damageInfo->target;
+    uint32 damage = damageInfo->damage;
+    bool directDamage = false;
 
-    std::list<std::pair<uint32, uint64> > aurasToRemove;
-    std::set<std::pair<uint32, uint64> > aurasDone;
-    for (AuraList::iterator i = m_ccAuras.begin(); i != m_ccAuras.end(); ++i)
+    // Mana burn multi
+    if (damagetype == SPELL_DIRECT_DAMAGE && spellInfo->Effect[0] == SPELL_EFFECT_POWER_BURN)
+        damage *= 3;
+
+    // Mana Leech multi
+    else if (spellInfo->EffectApplyAuraName[0] == SPELL_AURA_PERIODIC_MANA_LEECH)
     {
-        std::pair<uint32, uint64> auraPair((*i)->GetId(), (*i)->GetCasterGUID());
-        // prevent rolling twice for two effects of the same spell
-        if(aurasDone.find(auraPair) != aurasDone.end())
-            continue;
-
-        aurasDone.insert(auraPair);
-
-        if (*i && (!spell || (*i)->GetId() != spell))
-        {
-            if (SpellMgr::GetDiminishingReturnsGroupForSpell((*i)->GetSpellProto(), false) == DIMINISHING_ENSLAVE)
-                continue;
-
-            roll = roll_chance_f(chance);
-            if (roll)
-                aurasToRemove.push_back(auraPair);
-        }
+        // Viper Sting
+        if (spellInfo->SpellFamilyName == SPELLFAMILY_HUNTER)
+            damage = 2.0 * spellInfo->EffectBasePoints[0];
+        // Mana Leech
+        else if (spellInfo->SpellFamilyName == SPELLFAMILY_WARLOCK)
+            damage = 2.0 * damage;
     }
 
-    for (std::list<std::pair<uint32, uint64> >::iterator i = aurasToRemove.begin(); i != aurasToRemove.end(); ++i)
-        RemoveAurasByCasterSpell(i->first, i->second);
+    // Direct spell damage
+    else if (damagetype == SPELL_DIRECT_DAMAGE || damagetype == DIRECT_DAMAGE)
+    {
+        damage *= 1.25;
+        directDamage = true;
+    }
+
+    // Frost nova should never break itself with damage
+    if (spellInfo->SpellIconID == 193 && spellInfo->SpellFamilyName == SPELLFAMILY_MAGE)
+        return;
+
+    // Calculate chances to break aura
+    uint32 totalAuraDamage = damage + GetDamageTakenWithActiveAuraType(auratype);
+    uint32 chanceBreak = 0;
+
+    // 27.5% Life Break threshold for Players
+    if (pVictim->GetTypeId() == TYPEID_PLAYER)
+        chanceBreak = (totalAuraDamage / (pVictim->GetMaxHealth()  * 0.275)) * 100;
+
+    // 70% Life Break threshold for Mobs
+    else if (pVictim->GetTypeId() == TYPEID_UNIT)
+        chanceBreak = (totalAuraDamage / (pVictim->GetMaxHealth()  * 0.70)) * 100;
+
+    // Set minimum dmg
+    uint32 minDmg = pVictim->GetMaxHealth()  * 0.075;
+    bool canBreak = true;
+
+    // Special cases for dots
+    if (damagetype == DOT)
+    {
+        if (totalAuraDamage <= minDmg)
+            canBreak = false;
+        chanceBreak /= pVictim->GetAurasAmountByType(SPELL_AURA_PERIODIC_DAMAGE);
+    }
+
+    sLog.outString("Chance Break : %d", chanceBreak);
+
+    // Roll chance to break
+    if (canBreak && roll_chance_f(chanceBreak))
+    {
+        SetDamageTakenWithActiveAuraType(auratype, 0);
+        RemoveSpellsCausingAura(auratype);
+        return;
+    }
+
+
+    // Only sum up non direct damage (DOTS and Mana Burns)
+    if (!directDamage)
+        SetDamageTakenWithActiveAuraType(auratype, totalAuraDamage);
+
 }
 
 void Unit::SendDamageLog(DamageLog *damageInfo)
@@ -917,7 +961,10 @@ uint32 Unit::DealDamage(DamageLog *damageInfo, DamageEffectType damagetype, cons
         if (!spellProto || !(spellProto->AttributesEx4 & SPELL_ATTR_EX4_DAMAGE_DOESNT_BREAK_AURAS))
         {
             pVictim->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_DAMAGE, spellProto ? spellProto->Id : 0);
-            pVictim->RemoveSpellbyDamageTaken(damageInfo->damage, spellProto ? spellProto->Id : 0);
+            if (pVictim->HasAuraType(SPELL_AURA_MOD_FEAR))
+                pVictim->RemoveSpellbyDamageTaken(SPELL_AURA_MOD_FEAR, damageInfo, damagetype, spellProto);
+            else if (pVictim->HasAuraType(SPELL_AURA_MOD_ROOT))
+                pVictim->RemoveSpellbyDamageTaken(SPELL_AURA_MOD_ROOT, damageInfo, damagetype, spellProto);
         }
         else// if (spellProto->AttributesEx4 & SPELL_ATTR_EX4_DAMAGE_DOESNT_BREAK_AURAS) // if got here - 100% got this attribute
             pVictim->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_DAMAGE, spellProto->Id, true);
@@ -11437,6 +11484,7 @@ void Unit::ProcDamageAndSpellfor (bool isVictim, Unit * pTarget, uint32 procFlag
             }
         }
     }
+
     if (removedSpells.size())
     {
         // Sort spells and remove duplicates
