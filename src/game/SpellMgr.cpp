@@ -3681,6 +3681,22 @@ void SpellMgr::LoadSpellCustomAttr()
                 // There was a slight range issue with shatter
                 spellInfo->EffectRadiusIndex[0] = 49;
                 break;
+            case 30567: // Tormet of worgen has 3% chance to proc Torment of the Worgen (Transform)
+                spellInfo->procChance = 3;
+                spellInfo->Effect[0] = 0;
+                spellInfo->EffectTriggerSpell[0] = 0;
+                spellInfo->EffectApplyAuraName[0] = 0;
+                break;
+            case 30731: // Torment of the Worgen (Transform) has 100% chance to proc Worgen's Spite
+                spellInfo->procChance = 100;
+                spellInfo->Effect[0] = 6;
+                spellInfo->EffectTriggerSpell[0] = 30564;
+                spellInfo->EffectApplyAuraName[0] = 42;
+                spellInfo->EffectImplicitTargetA[0] = 1;
+                break;
+            case 30564: // Worgen's Spite has a duration of 1.1 seconds (Will fade once Transform fades)
+                spellInfo->DurationIndex = 555;
+                break;
             default:
                 break;
         }
