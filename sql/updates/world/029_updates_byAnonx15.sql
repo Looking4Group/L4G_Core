@@ -930,9 +930,6 @@ UPDATE `creature_template`  SET `type_flags`='0',`unit_flags`='512' WHERE `entry
 -- harbingers of shadowmoon 10643 
 UPDATE `creature_template` SET `type_flags`='0' WHERE `entry` IN ('10643');
 --
--- adding http://www.wowhead.com/spell=23486/dimensional-ripper-everlook#comments to npc trainer
-INSERT IGNORE INTO `npc_trainer` VALUES ('14742','23486','1050','202','260','0');
---
 DELETE FROM `npc_vendor` WHERE `item` IN ('34581','34582');
 -- INSERT IGNORE INTO `npc_vendor` VALUES
 -- (18255,34581,0,0,0),
