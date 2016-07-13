@@ -147,6 +147,7 @@ struct boss_high_king_maulgarAI : public BossAI
                 {
                     AddSpellToCast(SPELL_WHIRLWIND, CAST_SELF);
                     events.ScheduleEvent(eventId, 55000);
+                    events.RescheduleEvent(EVENT_ARCING_SMASH, 16500);
                     break;
                 }
                 case EVENT_MIGHTY_BLOW:
