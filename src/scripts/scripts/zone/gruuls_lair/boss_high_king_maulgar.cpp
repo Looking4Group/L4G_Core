@@ -343,8 +343,9 @@ struct boss_kiggler_the_crazedAI : public BossAI
             {
                 case EVENT_POLYMORPH:
                 {
-                    AddSpellToCast(SPELL_GREATER_POLYMORPH, CAST_RANDOM);
+					AddSpellToCast(SPELL_GREATER_POLYMORPH, CAST_TANK);
                     events.ScheduleEvent(eventId, 20000);
+					SetAutocast(SPELL_LIGHTNING_BOLT, 2200, true, CAST_THREAT_SECOND);
                     break;
                 }
                 case EVENT_ARCANE_SHOCK:
