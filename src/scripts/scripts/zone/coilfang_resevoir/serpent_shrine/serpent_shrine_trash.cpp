@@ -542,9 +542,10 @@ struct mob_greyheart_tidecallerAI : public ScriptedAI
     void Reset()
     {
         elemental_timer = 15000;
+        chain_lightning_timer = 5000;
         totem_timer = 7000;
         check_timer = 1000;
-        totem, elemental = false;
+        totem, elemental, cl = false;
     }
 
     void UpdateAI(const uint32 diff)
@@ -558,6 +559,13 @@ struct mob_greyheart_tidecallerAI : public ScriptedAI
             elemental = true;
         }
         else elemental_timer -= diff;
+        
+        if (chain_lighting_timer <= diff)
+        {
+            me->CastSpell(me->getVictim(), 38146, false); // find prenerf spell
+            cl = true;
+        }
+        else chain_lightning_timer -= diff;
 
         if (!totem && totem_timer <= diff)
         {
