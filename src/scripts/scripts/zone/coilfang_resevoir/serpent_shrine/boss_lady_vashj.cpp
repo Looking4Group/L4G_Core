@@ -49,7 +49,7 @@ EndScriptData */
 #define SPELL_STATIC_CHARGE_TRIGGER 38280
 #define SPELL_FORKED_LIGHTNING      40088
 #define SPELL_SHOOT                 40873
-#define SPELL_POISON_BOLT           40095
+#define SPELL_POISON_BOLT           38253
 #define SPELL_TOXIC_SPORES          38575
 #define SPELL_MAGIC_BARRIER         38112
 #define SPELL_PARALYZE              38132
@@ -778,7 +778,7 @@ struct mob_tainted_elementalAI : public Scripted_NoMovementAI
     void Reset()
     {
         PoisonBolt_Timer = 5000+rand()%5000;
-        Despawn_Timer = 16000;
+        Despawn_Timer = 15000;
     }
 
     void JustDied(Unit *killer)
