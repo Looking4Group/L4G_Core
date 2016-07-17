@@ -215,8 +215,8 @@ struct boss_gruulAI : public ScriptedAI
 
                 CaveIn_Timer = 27000-(ReduceCount*CaveInReduce);
                 ReduceCount++;
-                if (CaveIn_Timer <= 4000)
-                    CaveIn_Timer = 4000;
+                if (CaveIn_Timer <= 5000)
+                    CaveIn_Timer = 5000;
             }
             else
                 CaveIn_Timer -= diff;

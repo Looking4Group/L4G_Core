@@ -1088,7 +1088,11 @@ char const* GameEventMgr::getActiveEventsString()
     std::stringstream eventstring;
     eventstring << "Active events:\n";
     for (ActiveEvents::const_iterator active = m_ActiveEvents.begin(); active != m_ActiveEvents.end(); ++active)
-        eventstring << mGameEvent[*active].description.c_str() << "\n";
+    {
+        // Only display call to arms (too much spam otherwise)
+        if (strstr(mGameEvent[*active].description.c_str(), "Call to Arms"))
+            eventstring << mGameEvent[*active].description.c_str() << "\n";
+    }
     return eventstring.str().c_str();
 }
 
