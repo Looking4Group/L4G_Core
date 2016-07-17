@@ -21066,6 +21066,7 @@ bool Player::isTotalImmunity()
     return false;
 }
 
+
 void Player::BuildTeleportAckMsg(WorldPacket& data, float x, float y, float z, float ang) const
 {
     MovementInfo mi = m_movementInfo;

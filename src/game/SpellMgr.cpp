@@ -3083,7 +3083,6 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 5171:
             case 6774:                     // Slice'n'Dice
-		spellInfo->AttributesEx |= SPELL_ATTR_EX_NOT_BREAK_STEALTH;
 		spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
                 break;
             /* SHAMAN CUSTOM ATTRIBUTES */
@@ -3681,6 +3680,22 @@ void SpellMgr::LoadSpellCustomAttr()
             case 33671: // Gruul Shatter Radius Reduction (From 20 to 19 yards)
                 // There was a slight range issue with shatter
                 spellInfo->EffectRadiusIndex[0] = 49;
+                break;
+            case 30567: // Tormet of worgen has 3% chance to proc Torment of the Worgen (Transform)
+                spellInfo->procChance = 3;
+                spellInfo->Effect[0] = 0;
+                spellInfo->EffectTriggerSpell[0] = 0;
+                spellInfo->EffectApplyAuraName[0] = 0;
+                break;
+            case 30731: // Torment of the Worgen (Transform) has 100% chance to proc Worgen's Spite
+                spellInfo->procChance = 100;
+                spellInfo->Effect[0] = 6;
+                spellInfo->EffectTriggerSpell[0] = 30564;
+                spellInfo->EffectApplyAuraName[0] = 42;
+                spellInfo->EffectImplicitTargetA[0] = 1;
+                break;
+            case 30564: // Worgen's Spite has a duration of 1.1 seconds (Will fade once Transform fades)
+                spellInfo->DurationIndex = 555;
                 break;
             default:
                 break;
@@ -4511,7 +4526,7 @@ DiminishingGroup SpellMgr::GetDiminishingReturnsGroupForSpell(SpellEntry const* 
             else if (spellproto->SpellFamilyFlags & 0x1000000LL)
                 return DIMINISHING_CONTROL_STUN;
             // Intercept Stun 0 -> Rank Ids other spells have same Icon
-            else if (spellproto->Id == (20253 || 20614 || 30197 || 25273 || 25274))
+            else if (spellproto->Id == 20253 || spellproto->Id == 20614 || spellproto->Id == 30197 || spellproto->Id == 25273 || spellproto->Id == 25274)
                 return DIMINISHING_CONTROL_STUN;
             // Concussion Blow 69206016
             else if (spellproto->SpellFamilyFlags & 0x4200000LL)

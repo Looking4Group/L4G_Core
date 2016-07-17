@@ -200,6 +200,11 @@ class LOOKING4GROUP_IMPORT_EXPORT Map : public GridRefManager<NGridType>
         void MoveAllCreaturesInMoveList();
         void RemoveAllObjectsInRemoveList();
 
+
+        inline GridMap *GetGrid(float x, float y);
+        float GetHeight(float x, float y, float z, bool pUseVmaps, float maxSearchDist) const;
+
+
         bool CreatureRespawnRelocation(Creature *c);        // used only in MoveAllCreaturesInMoveList and ObjectGridUnloader
 
         // assert print helper
