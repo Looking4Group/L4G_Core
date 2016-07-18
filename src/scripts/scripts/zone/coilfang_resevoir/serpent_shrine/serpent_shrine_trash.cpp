@@ -231,7 +231,7 @@ struct mob_underbog_colossusAI : public ScriptedAI
             entry = NPC_COLOSSUS_LURKER;
             break;
         case 3:
-            count = urand(8, 10);
+            count = urand(10, 15);
             entry = NPC_COLOSSUS_RAGER;
             break;
         case 4:
