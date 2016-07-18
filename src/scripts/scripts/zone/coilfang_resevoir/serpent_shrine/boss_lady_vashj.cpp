@@ -891,7 +891,7 @@ struct mob_toxic_sporebatAI : public ScriptedAI
 
                 Unit *tar = ((boss_lady_vashjAI*)((Creature*)Vashj)->AI())->SelectUnit(SELECT_TARGET_RANDOM,0,300,true);
                 if (tar)
-                    if (Creature *tempsum = tar->SummonCreature(TOXIC_SPORES_TRIGGER,tar->GetPositionX(), tar->GetPositionY(), tar->GetPositionZ(),0,TEMPSUMMON_TIMED_DESPAWN, 30000))
+                    if (Creature *tempsum = tar->SummonCreature(TOXIC_SPORES_TRIGGER,tar->GetPositionX(), tar->GetPositionY(), tar->GetPositionZ(),0,TEMPSUMMON_TIMED_DESPAWN, urand(60000, 120000)))
                     {   
                         tempsum->setFaction(14); 
                         tempsum->CastSpell(tar, SPELL_TOXIC_SPORES,true);
