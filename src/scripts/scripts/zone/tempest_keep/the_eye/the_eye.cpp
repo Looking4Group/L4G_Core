@@ -216,8 +216,8 @@ CreatureAI* GetAI_mob_phoenixhawk_hatchling(Creature *_Creature)
 
 //Phoenix-Hawk
 
-#define SPELL_MANABURNE        37159
-#define SPELL_DIVE             37156
+#define SPELL_MANABURN        37159
+#define SPELL_DIVE            37156
 
 struct mob_phoenix_hawkAI : public ScriptedAI
 {
@@ -228,8 +228,8 @@ struct mob_phoenix_hawkAI : public ScriptedAI
 
     void Reset()
     {
-        ManaBurn_Timer = 15000;
-        Dive_Timer = 4000;
+        ManaBurn_Timer = 3000+rand()%3000;
+        Dive_Timer = 4000+rand()%6000;
     }
 
     void EnterCombat(Unit *who)
@@ -245,16 +245,16 @@ struct mob_phoenix_hawkAI : public ScriptedAI
         if(ManaBurn_Timer < diff)
         {
             if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, 30, true, 0))
-                DoCast(target,SPELL_MANABURNE);
+                DoCast(target,SPELL_MANABURN);
 
-            ManaBurn_Timer = 20000+rand()%14000;
+            ManaBurn_Timer = 11000+rand()%3000;
         }
         else
             ManaBurn_Timer -= diff;
 
         if(Dive_Timer < diff)
         {
-            if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, 30, true, 0))
+            if(Unit* target = SelectUnit(SELECT_TARGET_FARTHEST, 0, 45, true, 0))
                 DoCast(target,SPELL_DIVE);
 
             Dive_Timer = 16000+rand()%4000;
