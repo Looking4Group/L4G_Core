@@ -299,7 +299,7 @@ struct boss_attumenAI : public ScriptedAI
         {
             if (ChargeTimer < diff)
             {
-                if (Unit * target = SelectUnit(SELECT_TARGET_RANDOM, 0, 100.0f, true, 0, 5.0f))
+                if (Unit * target = SelectUnit(SELECT_TARGET_FARTHEST, 0, 100.0f, true, 0, 5.0f))
                     AddSpellToCast(target, SPELL_BERSERKER_CHARGE);
 
                 ChargeTimer = 20000;
