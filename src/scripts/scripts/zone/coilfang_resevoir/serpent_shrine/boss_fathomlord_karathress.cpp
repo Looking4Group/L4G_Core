@@ -624,8 +624,8 @@ struct boss_fathomguard_caribdisAI : public ScriptedAI
     void Reset()
     {
         WaterBoltVolley_Timer = 35000;
-        TidalSurge_Timer = 15000+rand()%5000;
-        Heal_Timer = 55000;
+        TidalSurge_Timer = 10000+rand()%5000;
+        Heal_Timer = 15000+rand()%5000;
         Cyclone_Timer = 3000+rand()%10000;
     }
 
@@ -699,7 +699,7 @@ struct boss_fathomguard_caribdisAI : public ScriptedAI
                 DoCast(target, SPELL_TIDAL_SURGE);
                 target->CastSpell( target, SPELL_TIDAL_SURGE_FREEZE, true );
             }
-            TidalSurge_Timer = 15000+rand()%5000;
+            TidalSurge_Timer = 10000+rand()%5000;
         }
         else
             TidalSurge_Timer -= diff;
@@ -734,7 +734,7 @@ struct boss_fathomguard_caribdisAI : public ScriptedAI
             if(pUnit && pUnit->isAlive())
                 DoCast(pUnit, SPELL_HEAL);
 
-            Heal_Timer = 60000;
+            Heal_Timer = 15000+rand()%5000;
         }
         else
             Heal_Timer -= diff;
