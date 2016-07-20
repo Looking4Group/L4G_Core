@@ -49,7 +49,7 @@ EndScriptData */
 #define SPELL_STATIC_CHARGE_TRIGGER 38280
 #define SPELL_FORKED_LIGHTNING      40088
 #define SPELL_SHOOT                 40873
-#define SPELL_POISON_BOLT           40095
+#define SPELL_POISON_BOLT           40095   // 38253
 #define SPELL_TOXIC_SPORES          38575
 #define SPELL_MAGIC_BARRIER         38112
 #define SPELL_PARALYZE              38132
@@ -778,7 +778,7 @@ struct mob_tainted_elementalAI : public Scripted_NoMovementAI
     void Reset()
     {
         PoisonBolt_Timer = 5000+rand()%5000;
-        Despawn_Timer = 16000;
+        Despawn_Timer = 15000;
     }
 
     void JustDied(Unit *killer)
@@ -891,7 +891,7 @@ struct mob_toxic_sporebatAI : public ScriptedAI
 
                 Unit *tar = ((boss_lady_vashjAI*)((Creature*)Vashj)->AI())->SelectUnit(SELECT_TARGET_RANDOM,0,300,true);
                 if (tar)
-                    if (Creature *tempsum = tar->SummonCreature(TOXIC_SPORES_TRIGGER,tar->GetPositionX(), tar->GetPositionY(), tar->GetPositionZ(),0,TEMPSUMMON_TIMED_DESPAWN, 30000))
+                    if (Creature *tempsum = tar->SummonCreature(TOXIC_SPORES_TRIGGER,tar->GetPositionX(), tar->GetPositionY(), tar->GetPositionZ(),0,TEMPSUMMON_TIMED_DESPAWN, urand(60000, 120000)))
                     {   
                         tempsum->setFaction(14); 
                         tempsum->CastSpell(tar, SPELL_TOXIC_SPORES,true);

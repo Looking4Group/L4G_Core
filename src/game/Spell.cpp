@@ -1166,6 +1166,23 @@ void Spell::DoSpellHitOnUnit(Unit *unit, const uint32 effectMask)
                 m_damage = 0;
                 return;
             }
+
+            // Make unit stand on spell hit
+            if (!unit->IsStandState() && !unit->hasUnitState(UNIT_STAT_STUNNED))
+                    unit->SetStandState(UNIT_STAND_STATE_STAND);
+
+            // Fearie fire break stealth
+            if(GetSpellInfo()->Id == 770 || GetSpellInfo()->Id == 778 || GetSpellInfo()->Id == 9749 || GetSpellInfo()->Id == 9907) {
+                unit->RemoveAuraTypeByCaster(SPELL_AURA_MOD_STEALTH, unit->GetGUID());
+            }
+
+            // DOT break stealth on application
+            for (int j=0; j<3; j++) {
+                if (GetSpellInfo()->EffectApplyAuraName[j] == SPELL_AURA_PERIODIC_DAMAGE) {
+                    unit->RemoveAuraTypeByCaster(SPELL_AURA_MOD_STEALTH, unit->GetGUID());
+                }
+            }
+
             unit->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_HITBYSPELL);
             if (GetSpellInfo()->AttributesCu & SPELL_ATTR_CU_AURA_CC)
                 unit->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_CC);

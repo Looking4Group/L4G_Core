@@ -1411,6 +1411,10 @@ void Unit::CalculateSpellDamageTaken(SpellDamageLog *damageInfo, int32 damage, S
     if (!pVictim || !pVictim->isAlive())
         return;
 
+    // Make Target get up if hit by spell
+    if (!pVictim->IsStandState())
+        pVictim->SetStandState(PLAYER_STATE_NONE);
+
     if (damageInfo->schoolMask & SPELL_SCHOOL_MASK_NORMAL  && (spellInfo->AttributesCu & SPELL_ATTR_CU_IGNORE_ARMOR) == 0)
         damage = CalcArmorReducedDamage(pVictim, damage);
 
@@ -3854,6 +3858,30 @@ bool Unit::AddAura(Aura *Aur)
     SpellEntry const* aurSpellInfo = Aur->GetSpellProto();
 
     spellEffectPair spair = spellEffectPair(Aur->GetId(), Aur->GetEffIndex());
+
+    // Dont let ancestral fortitude stack with inspiration
+    if (aurSpellInfo->Id == 16177 || aurSpellInfo->Id == 16236 || aurSpellInfo->Id == 16237)
+    {
+        // If already has inspiration, remove it
+        if (HasAura(14893))
+            RemoveAura(14893,0);
+        if (HasAura(15357))
+            RemoveAura(15357,0);
+        if (HasAura(15359))
+            RemoveAura(15359,0);
+    }
+
+    // Dont let inspiration stack with ancestral fortitude
+    if (aurSpellInfo->Id == 14893 || aurSpellInfo->Id == 15357 || aurSpellInfo->Id == 15359) 
+    {
+        // If already has ancestral fortitude, remove it
+        if (HasAura(16177))
+            RemoveAura(16177,0);
+        if (HasAura(16236))
+            RemoveAura(16236,0);
+        if (HasAura(16237))
+            RemoveAura(16237,0);
+    }
 
     bool stackModified = false;
     // passive and persistent auras can stack with themselves any number of times (with NPCs windfury exception)

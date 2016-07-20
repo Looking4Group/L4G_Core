@@ -619,7 +619,7 @@ bool SpellMgr::IsSingleFromSpellSpecificPerTarget(SpellSpecific spellSpec1, Spel
         case SPELL_FOOD:
         case SPELL_CHARM:
         case SPELL_WARRIOR_ENRAGE:
-		case SPELL_ARMOR_REDUCE:
+        case SPELL_ARMOR_REDUCE:
             return spellSpec1 == spellSpec2;
         case SPELL_BATTLE_ELIXIR:
             return spellSpec2 == SPELL_BATTLE_ELIXIR
@@ -3083,7 +3083,6 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 5171:
             case 6774:                     // Slice'n'Dice
-		spellInfo->AttributesEx |= SPELL_ATTR_EX_NOT_BREAK_STEALTH;
 		spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
                 break;
             /* SHAMAN CUSTOM ATTRIBUTES */
@@ -3677,6 +3676,26 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 33813: //Hurtful Strike
                 spellInfo->rangeIndex = 137;
+                break;
+            case 33671: // Gruul Shatter Radius Reduction (From 20 to 19 yards)
+                // There was a slight range issue with shatter
+                spellInfo->EffectRadiusIndex[0] = 49;
+                break;
+            case 30567: // Tormet of worgen has 3% chance to proc Torment of the Worgen (Transform)
+                spellInfo->procChance = 3;
+                spellInfo->Effect[0] = 0;
+                spellInfo->EffectTriggerSpell[0] = 0;
+                spellInfo->EffectApplyAuraName[0] = 0;
+                break;
+            case 30731: // Torment of the Worgen (Transform) has 100% chance to proc Worgen's Spite
+                spellInfo->procChance = 100;
+                spellInfo->Effect[0] = 6;
+                spellInfo->EffectTriggerSpell[0] = 30564;
+                spellInfo->EffectApplyAuraName[0] = 42;
+                spellInfo->EffectImplicitTargetA[0] = 1;
+                break;
+            case 30564: // Worgen's Spite has a duration of 1.1 seconds (Will fade once Transform fades)
+                spellInfo->DurationIndex = 555;
                 break;
             default:
                 break;
@@ -4363,53 +4382,20 @@ DiminishingGroup SpellMgr::GetDiminishingReturnsGroupForSpell(SpellEntry const* 
     // Explicit Diminishing Groups
     switch (spellproto->SpellFamilyName)
     {
-		case SPELLFAMILY_GENERIC:
-		{
-            // some generic arena related spells have by some strange reason MECHANIC_TURN
-            if (spellproto->Mechanic == MECHANIC_TURN)
-                return DIMINISHING_NONE;
-	    // Hunter Pet Intimidation
-            else if (spellproto->Id == 24394)
-                return DIMINISHING_CONTROL_STUN;
-	    // Warlock Pet Intercept (Felguard)
-            else if (spellproto->Id == 30198)
-                return DIMINISHING_CONTROL_STUN;
-            // Warlock Pet Inferno (Infernal)
-            else if (spellproto->Id == 1122)
-                return DIMINISHING_CONTROL_STUN;
-	    // Shaman Stoneclaw Stun (Totem) Trigger
-            else if (spellproto->Id == 39796)
-                return DIMINISHING_TRIGGER_STUN;
-	    // frostbite
-            else if (spellproto->Id == 12494) 
-                return DIMINISHING_TRIGGER_ROOT;
-            // War Stomp
-            else if (spellproto->Id == 20549)
-                return DIMINISHING_CONTROL_STUN;
-	    // Stun (Stormherald/Deep Thunder) Needs Trigger Flag
-            else if (spellproto->Id == 34510)
-                return DIMINISHING_TRIGGER_STUN;
-			break;
-		}	
         case SPELLFAMILY_MAGE:
         {
-	    // Frost Nova / Freeze (Water Elemental)
-	    // if (spellproto->Id == 33395)
-            if (spellproto->SpellIconID == 193)
-                return DIMINISHING_CONTROL_ROOT;
+			// Polymorph 16777216
+            if ((spellproto->SpellFamilyFlags & 0x00001000000LL) && spellproto->EffectApplyAuraName[0]==SPELL_AURA_MOD_CONFUSE)
+                return DIMINISHING_DISORIENT;
             // Dragon's Breath
-	    else if (spellproto->SpellFamilyFlags & 0x800000LL) 
+			else if (spellproto->SpellFamilyFlags & 0x800000LL) 
                 return DIMINISHING_DRAGONS_BREATH;
-	    // Frost Nova 524352
+			/* Frost Nova 524352
             else if (spellproto->SpellFamilyFlags & 0x80040LL)
-                return DIMINISHING_CONTROL_ROOT;
-	    // Polymorph 16777216
-            // if ((spellproto->SpellFamilyFlags & 0x00001000000LL) && spellproto->EffectApplyAuraName[0]==SPELL_AURA_MOD_CONFUSE)
-		// else if (spellproto->SpellFamilyFlags & 0x00001000000LL)
-            //    return DIMINISHING_DISORIENT;
-            // Impact 0
-            // else if (spellproto->Id == 12360 && spellproto->Attributes == 1D0)
-            //     return DIMINISHING_TRIGGER_STUN;			
+                return DIMINISHING_CONTROL_ROOT;*/
+            // Impact 0 Id 12355
+            else if (spellproto->Id == 12355)
+                return DIMINISHING_TRIGGER_STUN;			
             break;
         }
         case SPELLFAMILY_ROGUE:
@@ -4417,43 +4403,45 @@ DiminishingGroup SpellMgr::GetDiminishingReturnsGroupForSpell(SpellEntry const* 
             // Kidney Shot 2097152
             if (spellproto->SpellFamilyFlags & 0x00000200000LL)
                 return DIMINISHING_KIDNEYSHOT;
-	    // Blind 16777216
+			// Blind 16777216
             else if (spellproto->SpellFamilyFlags & 0x00001000000LL)
                 return DIMINISHING_BLIND_CYCLONE;
-	    // Gouge 8
+			// Gouge 8
             else if (spellproto->SpellFamilyFlags & 0x00000000008LL)
                 return DIMINISHING_DISORIENT;
-	    // Mace Specialization 0 -> Id
-            if (spellproto->Id == 5530)
+			// Mace Specialization 0 -> Id
+            else if (spellproto->Id == 5530)
                 return DIMINISHING_TRIGGER_STUN;
-	    // Cheap Shot 1024
+			// Cheap Shot 1024
             else if (spellproto->SpellFamilyFlags & 0x400LL)
                 return DIMINISHING_CONTROL_STUN;
-            // Riposte 2147483648
+            /* Riposte 2147483648
             else if (spellproto->SpellFamilyFlags & 0x80000000LL)
-                return DIMINISHING_DISARM;			
+                return DIMINISHING_DISARM; */		
             // Sap 128
-            // else if (spellproto->SpellFamilyFlags & 0x00000000080LL)
-            //    return DIMINISHING_DISORIENT;
+            else if (spellproto->SpellFamilyFlags & 0x00000000080LL)
+                return DIMINISHING_DISORIENT;
             break;
         }
-/*        case SPELLFAMILY_HUNTER:
+        case SPELLFAMILY_HUNTER:
         {
-			
             // Freezing trap
 			if (spellproto->SpellFamilyFlags & 0x00000000008LL)
 			    return DIMINISHING_FREEZE;
-	        // Scare Beast icon 958
+	        /* Scare Beast icon 958
 			if (spellproto->SpellIconID == 958)
 			    return DIMINISHING_FEAR;
             // Wyvern Sting 4096
 			if (spellproto->SpellFamilyFlags & 0x1000LL)
-			//    return DIMINISHING_SLEEP;
+			    return DIMINISHING_SLEEP;
             // Entrapment  0 Trigger Spell
             if (spellproto->Id == 19185 && spellproto->Attributes == 0x8000000)
-                return DIMINISHING_TRIGGER_ROOT;
+                return DIMINISHING_TRIGGER_ROOT; */
+			// Improved Concussive Shot Id 19410
+			else if (spellproto->Id == 19410)
+                return DIMINISHING_TRIGGER_STUN;
             break;
-        }*/
+        }
         case SPELLFAMILY_WARLOCK:
         {
             // Death Coil 524288 
@@ -4461,67 +4449,69 @@ DiminishingGroup SpellMgr::GetDiminishingReturnsGroupForSpell(SpellEntry const* 
                 return DIMINISHING_DEATHCOIL;
             // Seduction 1073741824 
             else if (spellproto->SpellFamilyFlags & 0x40000000LL)
-                return DIMINISHING_FEAR;
-            // Fear
-            // else if (spellproto->SpellFamilyFlags & 0x40840000000LL)
-            //    return DIMINISHING_WARLOCK_FEAR;
+                return DIMINISHING_FEAR; 
+            /* Fear
+            else if (spellproto->SpellFamilyFlags & 0x40840000000LL)
+                return DIMINISHING_WARLOCK_FEAR; */
             // Curses/etc 2147483648
             else if (spellproto->SpellFamilyFlags & 0x00080000000LL)
                 return DIMINISHING_LIMITONLY;
             // Unstable Affliction dispel silence
-            // if (spellproto->Id == 31117)
-	    if (spellproto->SpellIconID == 232)
+            else if (spellproto->Id == 31117)
                 return DIMINISHING_UNSTABLE_AFFLICTION;
             // Enslave Demon 2048
             else if(spellproto->SpellFamilyFlags & 0x800LL)
-                return DIMINISHING_LIMITONLY;
-            // Shadowfury Icon 1988
-		if (spellproto->SpellIconID == 1988)
+                return DIMINISHING_ENSLAVE;
+			// Shadowfury Icon 1988
+			else if (spellproto->SpellIconID == 1988) 
                 return DIMINISHING_CONTROL_STUN;
+			// Pyroclasm Id 18093 
+			else if (spellproto->Id == 18093)
+                return DIMINISHING_TRIGGER_STUN;
+			break;
+        }
+		case SPELLFAMILY_PRIEST:
+        {
+			// Blackout Trigger Spell SpellFamilyFlags 2 4096
+			if (spellproto->Id == 15269)
+                return DIMINISHING_TRIGGER_STUN;
+            /* Psychic Scream 65536 SpellFamilyFlags
+            if (spellproto->SpellFamilyFlags & 0x10000LL)
+                return DIMINISHING_FEAR; */
+            // Mind Control 131072
+            else if (spellproto->SpellFamilyFlags & 0x20000LL)
+                return DIMINISHING_CHARM; 
             break;
         }
-/*		case SPELLFAMILY_PRIEST:
-        {
-            // Psychic Scream 65536 SpellFamilyFlags
-            else if (spellproto->SpellFamilyFlags & 0x10000LL)
-                return DIMINISHING_FEAR;
-            // Mind Control 131072
-            if (spellproto->SpellFamilyFlags & 0x20000LL)
-                return DIMINISHING_CHARM;
-            // Blackout Trigger Spell SpellFamilyFlags 2 4096
-            if (spellproto->Id == 15269 && spellproto->SpellFamilyFlags2 == 0x1000)
-                return DIMINISHING_TRIGGER_STUN;
-            break;
-        }*/
         case SPELLFAMILY_DRUID:
         {
             // Cyclone
             if (spellproto->SpellFamilyFlags & 0x02000000000LL)
                 return DIMINISHING_BLIND_CYCLONE;
-            // Entangling Roots 512 -> 0x200
-	    else if (spellproto->SpellFamilyFlags & 0x200LL)
-                return DIMINISHING_CONTROL_ROOT;
+			/* Entangling Roots 512 -> 0x200
+			else if (spellproto->SpellFamilyFlags & 0x200LL)
+                return DIMINISHING_CONTROL_ROOT; */
             // Nature's Grasp (trigger)
-            if (spellproto->SpellFamilyFlags & 0x00000000200LL && spellproto->Attributes == 0x49010000)
+			else if (spellproto->SpellFamilyFlags & 0x00000000200LL && spellproto->Attributes == 0x49010000)
                 return DIMINISHING_CONTROL_ROOT;
-	    // Bash 8192
-            if (spellproto->SpellFamilyFlags & 0x2000LL)
+			// Bash 8192
+            else if (spellproto->SpellFamilyFlags & 0x2000LL)
                 return DIMINISHING_CONTROL_STUN;
             // Pounce 131072
-            if (spellproto->SpellFamilyFlags & 0x20000LL)
+            else if (spellproto->SpellFamilyFlags & 0x20000LL)
                 return DIMINISHING_CONTROL_STUN;
             // Maim Icon 1681
-            if (spellproto->SpellIconID == 1681)
+			else if (spellproto->SpellIconID == 1681)
                 return DIMINISHING_DISORIENT;
-            // Hibernate 16777216
-            if (spellproto->SpellFamilyFlags & 0x1000000LL)
-                return DIMINISHING_SLEEP;
+            /* Hibernate 16777216
+            else if (spellproto->SpellFamilyFlags & 0x1000000LL)
+                return DIMINISHING_SLEEP; */
             // Celestial Focus Id 16922
-            else if (spellproto->Id == 16922)
-		return DIMINISHING_TRIGGER_STUN;
-	    // Feral Charge Root Effect
-	    else if (spellproto->Id == 45334)
-		return DIMINISHING_NONE;
+			else if (spellproto->Id == 16922)
+			    return DIMINISHING_TRIGGER_STUN;
+			// Feral Charge Root Effect
+			else if (spellproto->Id == 45334)
+				return DIMINISHING_NONE;
             break;
         }
         case SPELLFAMILY_WARRIOR:
@@ -4529,36 +4519,39 @@ DiminishingGroup SpellMgr::GetDiminishingReturnsGroupForSpell(SpellEntry const* 
             // Hamstring - limit to 10s in PvP
             if (spellproto->SpellFamilyFlags & 0x00000000002LL)
                 return DIMINISHING_LIMITONLY;
-            // Mace Specialization 0 -> Id
-            if (spellproto->Id == 5530)
+			// Mace Specialization 0 -> Id
+            else if (spellproto->Id == 5530)
                 return DIMINISHING_TRIGGER_STUN;
             // Charge Stun 16777216
             else if (spellproto->SpellFamilyFlags & 0x1000000LL)
                 return DIMINISHING_CONTROL_STUN;
             // Intercept Stun 0 -> Rank Ids other spells have same Icon
-            else if (spellproto->Id == (20253 || 20614 || 30197 || 25273 || 25274))
+            else if (spellproto->Id == 20253 || spellproto->Id == 20614 || spellproto->Id == 30197 || spellproto->Id == 25273 || spellproto->Id == 25274)
                 return DIMINISHING_CONTROL_STUN;
             // Concussion Blow 69206016
             else if (spellproto->SpellFamilyFlags & 0x4200000LL)
                 return DIMINISHING_CONTROL_STUN;
-            // Intimidating Shout 262144
+            /* Intimidating Shout 262144
             else if (spellproto->SpellFamilyFlags & 0x40000LL)
                 return DIMINISHING_FEAR;
             // Disarm 512
             else if (spellproto->SpellFamilyFlags & 0x200LL)
-                return DIMINISHING_DISARM;
+                return DIMINISHING_DISARM; */
+			// Improved Revenge 12798
+			else if (spellproto->Id == 18093)
+                return DIMINISHING_TRIGGER_STUN;
             break;
         }
         case SPELLFAMILY_PALADIN:
         {
             // Turn Evil 2878,5627,10326 - share group with fear, seduction Icon 309
             // if (spellproto->Id == 10326)
-            if (spellproto->SpellIconID == 309)
+			if (spellproto->SpellIconID == 309)
                 return DIMINISHING_FEAR;
 			// Hammer of Justice 2048
-            if (spellproto->SpellFamilyFlags & 0x800LL)
+            else if (spellproto->SpellFamilyFlags & 0x800LL)
                 return DIMINISHING_CONTROL_STUN;
-            // Seal of Justice (Seal) trigger ???
+            // Seal of Justice (Seal) trigger ??? Id 20170
             else if (spellproto->Id == 20170 && spellproto->Attributes == 0x40000)
                 return DIMINISHING_TRIGGER_STUN;
             // Repentance 4
@@ -4566,10 +4559,46 @@ DiminishingGroup SpellMgr::GetDiminishingReturnsGroupForSpell(SpellEntry const* 
                 return DIMINISHING_DISORIENT;
             break;
         }
-        //case SPELLFAMILY_POTION:
-        //    return DIMINISHING_NONE;
+        case SPELLFAMILY_POTION:
+            return DIMINISHING_NONE;
+		case SPELLFAMILY_GENERIC:
+		{
+            // some generic arena related spells have by some strange reason MECHANIC_TURN
+            if (spellproto->Mechanic == MECHANIC_TURN)
+                return DIMINISHING_NONE;
+			break;
+		}	
         default:
+		{
+			// Frost Nova / Freeze (Water Elemental)
+			if (spellproto->Id == 33395)
+                return DIMINISHING_CONTROL_ROOT;
+			// Hunter Pet Intimidation
+            else if (spellproto->Id == 24394)
+                return DIMINISHING_CONTROL_STUN;
+			// Warlock Pet Intercept (Felguard)
+            else if (spellproto->Id == 30198)
+                return DIMINISHING_CONTROL_STUN;
+            // Warlock Pet Inferno (Infernal)
+            else if (spellproto->Id == 1122)
+                return DIMINISHING_CONTROL_STUN;
+			// Shaman Stoneclaw Stun (Totem) Trigger Id 39796
+            else if (spellproto->Id == 39796)
+                return DIMINISHING_TRIGGER_STUN;
+			// frostbite
+            else if (spellproto->Id == 12494) 
+                return DIMINISHING_TRIGGER_ROOT;
+		    // War Stomp
+            else if (spellproto->Id == 20549)
+                return DIMINISHING_CONTROL_STUN;
+			// Stun (Stormherald/Deep Thunder) Needs Trigger Flag 34510
+            else if (spellproto->Id == 34510)
+                return DIMINISHING_TRIGGER_STUN;
+			// Brutal Earthstorm Diamond 37982
+			else if (spellproto->Id == 37982)
+                return DIMINISHING_TRIGGER_STUN;
             break;
+		}	
     }
 
     // Get by mechanic
@@ -4599,9 +4628,9 @@ DiminishingGroup SpellMgr::GetDiminishingReturnsGroupForSpell(SpellEntry const* 
         else if (spellproto->Mechanic == MECHANIC_BANISH  || spellproto->EffectMechanic[i] == MECHANIC_BANISH)
             return DIMINISHING_BANISH;
 		else if (spellproto->Mechanic == MECHANIC_SAPPED || spellproto->EffectMechanic[i] == MECHANIC_SAPPED || 
-			spellproto->Mechanic == MECHANIC_POLYMORPH  || spellproto->EffectMechanic[i] == MECHANIC_POLYMORPH ||
-			spellproto->Mechanic == MECHANIC_SHACKLE  || spellproto->EffectMechanic[i] == MECHANIC_SHACKLE ||
-			spellproto->Mechanic == MECHANIC_KNOCKOUT  || spellproto->EffectMechanic[i] == MECHANIC_KNOCKOUT)
+				 spellproto->Mechanic == MECHANIC_POLYMORPH  || spellproto->EffectMechanic[i] == MECHANIC_POLYMORPH ||
+				 spellproto->Mechanic == MECHANIC_SHACKLE  || spellproto->EffectMechanic[i] == MECHANIC_SHACKLE ||
+				 spellproto->Mechanic == MECHANIC_KNOCKOUT  || spellproto->EffectMechanic[i] == MECHANIC_KNOCKOUT)
             return DIMINISHING_DISORIENT;
     }
 
@@ -4621,7 +4650,7 @@ bool SpellMgr::IsDiminishingReturnsGroupDurationLimited(DiminishingGroup group)
         case DIMINISHING_FEAR:
         case DIMINISHING_CHARM:
         case DIMINISHING_FREEZE:
-	case DIMINISHING_DISORIENT:
+		case DIMINISHING_DISORIENT:
         case DIMINISHING_BLIND_CYCLONE:
         case DIMINISHING_BANISH:
         case DIMINISHING_LIMITONLY:
@@ -4644,7 +4673,7 @@ DiminishingReturnsType SpellMgr::GetDiminishingReturnsGroupType(DiminishingGroup
         case DIMINISHING_TRIGGER_ROOT:
         case DIMINISHING_FEAR:
         case DIMINISHING_CHARM:
-	case DIMINISHING_DISORIENT:
+		case DIMINISHING_DISORIENT:
         case DIMINISHING_UNSTABLE_AFFLICTION:
         case DIMINISHING_DISARM:
         case DIMINISHING_DEATHCOIL:

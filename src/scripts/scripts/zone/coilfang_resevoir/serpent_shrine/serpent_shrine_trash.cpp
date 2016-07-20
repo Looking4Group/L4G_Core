@@ -231,7 +231,7 @@ struct mob_underbog_colossusAI : public ScriptedAI
             entry = NPC_COLOSSUS_LURKER;
             break;
         case 3:
-            count = urand(8, 10);
+            count = urand(10, 15);
             entry = NPC_COLOSSUS_RAGER;
             break;
         case 4:
@@ -529,6 +529,7 @@ CreatureAI* GetAI_mob_coilfang_serpentguard(Creature *_Creature)
     return new mob_coilfang_serpentguardAI(_Creature);
 }
 
+#define SPELL_CHAIN_LIGHTNING       38718
 
 struct mob_greyheart_tidecallerAI : public ScriptedAI
 {
@@ -537,11 +538,13 @@ struct mob_greyheart_tidecallerAI : public ScriptedAI
     uint32 elemental_timer;
     uint32 totem_timer;
     uint32 check_timer;
+    uint32 chain_lightning_timer;
     bool totem, elemental;
 
     void Reset()
     {
         elemental_timer = 15000;
+        chain_lightning_timer = urand(4000, 8000);
         totem_timer = 7000;
         check_timer = 1000;
         totem, elemental = false;
@@ -558,6 +561,13 @@ struct mob_greyheart_tidecallerAI : public ScriptedAI
             elemental = true;
         }
         else elemental_timer -= diff;
+        
+        if (chain_lighting_timer <= diff)
+        {
+            AddSpellToCast(SPELL_CHAIN_LIGHTNING, CAST_RANDOM_WITHOUT_TANK);
+            Geyser_Timer = urand(5000, 10000); // find prenerf spell
+        }
+        else chain_lightning_timer -= diff;
 
         if (!totem && totem_timer <= diff)
         {
