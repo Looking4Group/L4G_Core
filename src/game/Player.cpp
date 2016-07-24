@@ -22555,7 +22555,7 @@ char *GetClassString(uint8 _Class)
      void AppendGUID(uint64 unitGUID)
      {
          std::stringstream sstream;
-         sstream << "0x" << std::setfill('0') << std::setw(sizeof(uint64) * 2) << std::hex << unitGUID;
+         sstream << "0x" << std::setfill('0') << std::setw(sizeof(uint64) * 2) << std::hex << std::uppercase << unitGUID;
          msg.append(sstream.str());
          msg.push_back(',');
      }
