@@ -1919,7 +1919,6 @@ class LOOKING4GROUP_EXPORT Player : public Unit
 	 void AddItem(uint32 itemID, uint32 Count);
 
 	 /* Addon Helper functions */
-	 void SendMessageToSetInRange(WorldPacket *data, float dist, bool self, bool own_team_only);
 	 void SendAddonMessage(std::string& text, char* prefix);
 	 void BuildGladdyUpdate();
 	 void SendGladdyNotification();
