@@ -22603,9 +22603,6 @@ char *GetClassString(uint8 _Class)
       
  WorldPacket Player::BuildGladdyUpdate()
  {
-     if (!InArena() || GetBattleGround()->GetStatus() != STATUS_IN_PROGRESS)
-         return;
- 
      Powers type = getPowerType();
      int32 maxPower;
      int32 currentPower;
