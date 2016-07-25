@@ -95,9 +95,12 @@ void BattleGroundBE::Update(uint32 diff)
             SetStatus(STATUS_IN_PROGRESS);
             SetStartDelayTime(0);
 
-            for (BattleGroundPlayerMap::const_iterator itr = GetPlayers().begin(); itr != GetPlayers().end(); ++itr)
-                if (Player *plr = sObjectMgr.GetPlayer(itr->first))
-                    plr->RemoveAurasDueToSpell(SPELL_ARENA_PREPARATION);
+            for (BattleGroundPlayerMap::const_iterator itr = GetPlayers().begin(); itr != GetPlayers().end(); ++itr){
+                if (Player *plr = sObjectMgr.GetPlayer(itr->first)){
+					plr->RemoveAurasDueToSpell(SPELL_ARENA_PREPARATION);
+					SendPacketToEnemyTeam(GetPlayerTeam(plr->GetGUID()), &plr->BuildGladdyUpdate());
+				}
+			}
 
             if (!GetPlayersCountByTeam(ALLIANCE) && GetPlayersCountByTeam(HORDE))
                 EndBattleGround(HORDE);
