@@ -1920,7 +1920,8 @@ class LOOKING4GROUP_EXPORT Player : public Unit
 
 	 /* Addon Helper functions */
 	 void SendAddonMessage(std::string& text, char* prefix);
-	 void BuildGladdyUpdate();
+	 WorldPacket CreateAddonMessage(std::string& text, char* prefix);
+	 WorldPacket BuildGladdyUpdate();
 	 void SendGladdyNotification();
 
         /*********************************************************/

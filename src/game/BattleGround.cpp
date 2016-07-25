@@ -374,6 +374,21 @@ void BattleGround::SendPacketToTeam(uint32 TeamID, WorldPacket *packet, Player *
     }
 }
 
+void BattleGround::SendPacketToEnemyTeam(uint32 TeamID, WorldPacket *packet)
+{
+    for (BattleGroundPlayerMap::iterator itr = m_Players.begin(); itr != m_Players.end(); ++itr)
+    {
+        Player *plr = sObjectMgr.GetPlayer(itr->first);
+
+        uint32 team = 0;
+
+        team = plr->GetBGTeam();
+
+        if (team && team != TeamID)
+            plr->SendPacketToSelf(packet);
+    }
+}
+
 void BattleGround::PlaySoundToAll(uint32 SoundID)
 {
     WorldPacket data;
@@ -1101,7 +1116,7 @@ void BattleGround::StartBattleGround()
 	/* Send message to Gladdy addon to prevent it from greying out! */
 	for (BattleGroundPlayerMap::const_iterator itr = GetPlayers().begin(); itr != GetPlayers().end(); ++itr){
          if (Player *plr = sObjectMgr.GetPlayer(itr->first)){
-             plr->BuildGladdyUpdate();
+			 SendPacketToEnemyTeam(plr->GetTeam(), &plr->BuildGladdyUpdate());
 		 }
 	}
 }

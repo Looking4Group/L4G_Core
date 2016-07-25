@@ -22488,6 +22488,25 @@ void Player::SendAddonMessage(std::string& text, char* prefix)
 	 BroadcastPacketInRange(&data, MAX_VISIBILITY_DISTANCE, false, false);
  }
 
+WorldPacket Player::CreateAddonMessage(std::string& text, char* prefix)
+ {
+     std::string message;
+     message.append(prefix);
+     message.push_back(9);
+     message.append(text);
+ 
+     WorldPacket data(SMSG_MESSAGECHAT, 200);
+     data << uint8(CHAT_MSG_WHISPER);
+     data << uint32(LANG_ADDON);
+     data << uint64(0); // guid
+     data << uint32(LANG_ADDON);                               //language 2.1.0 ?
+     data << uint64(0); // guid
+     data << uint32(message.length() + 1);
+     data << message;
+     data << uint8(0);
+	 return data;
+ }
+
 char *GetClassString(uint8 _Class)
  {
      switch (_Class)
@@ -22582,7 +22601,7 @@ char *GetClassString(uint8 _Class)
      }
  };
       
- void Player::BuildGladdyUpdate()
+ WorldPacket Player::BuildGladdyUpdate()
  {
      if (!InArena() || GetBattleGround()->GetStatus() != STATUS_IN_PROGRESS)
          return;
@@ -22613,7 +22632,7 @@ char *GetClassString(uint8 _Class)
      update.Append(maxPower);
      update.AppendLast(type);
       
-     SendAddonMessage(update.msg, "Gladdy");
+     return CreateAddonMessage(update.msg, "Gladdy");
  }
  
  void Player::SendGladdyNotification()
