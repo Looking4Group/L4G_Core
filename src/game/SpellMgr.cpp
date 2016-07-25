@@ -3396,6 +3396,7 @@ void SpellMgr::LoadSpellCustomAttr()
             case 46039:
                 spellInfo->AttributesEx2 |= SPELL_ATTR_EX2_IGNORE_LOS;
                 break;
+            case 835:   // Tidal Charm
             case 21358: // Aqual Quintessence / Eternal Quintessence
             case 47977: // Broom Broom
             case 42679:
