@@ -373,8 +373,8 @@ struct boss_strawmanAI : public boss_operaAI
 
     void SpellHit(Unit* caster, const SpellEntry *Spell)
     {
-		// Set chance to Disorient to 20%
-        if ((Spell->SchoolMask == SPELL_SCHOOL_MASK_FIRE) && (!(rand()%5)))
+		// Set chance to Disorient to 33%
+        if ((Spell->SchoolMask == SPELL_SCHOOL_MASK_FIRE) && (!(rand()%3)))
             DoCast(m_creature, SPELL_BURNING_STRAW, true);
     }
 
