@@ -65,7 +65,7 @@ struct boss_omor_the_unscarredAI : public ScriptedAI
 
         OrbitalStrike_Timer = 22000;
         ShadowWhip_Timer = 2000;
-        Aura_Timer = 18000;
+        Aura_Timer = urand(12300, 23300);
         DemonicShield_Timer = 1000;
         Shadowbolt_Timer = 1;
         Summon_Timer = 20000;
@@ -185,7 +185,7 @@ struct boss_omor_the_unscarredAI : public ScriptedAI
             if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0))
             {
                 AddSpellToCast(target, SPELL_BANE_OF_AURA_TREACHERY);
-                Aura_Timer = 18000;
+                Aura_Timer = urand(8000, 16000);
             }
         }
         else
