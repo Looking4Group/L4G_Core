@@ -1,1 +1,0 @@
-UPDATE `autobroadcast` SET `text`='T5 PTR Testphase incoming & Arena Point Catchup Phase ending on 08.08.16' WHERE `id`='5';
