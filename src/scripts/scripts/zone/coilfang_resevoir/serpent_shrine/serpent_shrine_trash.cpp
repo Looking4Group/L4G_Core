@@ -562,10 +562,10 @@ struct mob_greyheart_tidecallerAI : public ScriptedAI
         }
         else elemental_timer -= diff;
         
-        if (chain_lighting_timer <= diff)
+        if (chain_lightning_timer <= diff)
         {
             AddSpellToCast(SPELL_CHAIN_LIGHTNING, CAST_RANDOM_WITHOUT_TANK);
-            Geyser_Timer = urand(5000, 10000); // find prenerf spell
+			chain_lightning_timer = urand(5000, 10000); // find prenerf spell
         }
         else chain_lightning_timer -= diff;
 
