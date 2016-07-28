@@ -868,8 +868,6 @@ struct boss_bigbadwolfAI : public boss_operaAI
                 if (target && target->GetTypeId() == TYPEID_PLAYER)
                 {
                     ForceSpellCastWithScriptText(target, SPELL_LITTLE_RED_RIDING_HOOD,SAY_WOLF_HOOD, INTERRUPT_AND_CAST_INSTANTLY, true, true);
-                    m_creature->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_TAUNT, true);
-                    m_creature->ApplySpellImmune(0, IMMUNITY_EFFECT,SPELL_EFFECT_ATTACK_ME, true);
 
                     TempThreat = DoGetThreat(target);
                     if (TempThreat)
@@ -894,8 +892,6 @@ struct boss_bigbadwolfAI : public boss_operaAI
                     TempThreat = 0;
                 }
 
-                m_creature->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_TAUNT, false);
-                m_creature->ApplySpellImmune(0, IMMUNITY_EFFECT,SPELL_EFFECT_ATTACK_ME, false);
 		// Chase again after 10secs
                 ChaseTimer = 10000;
             }
