@@ -215,7 +215,7 @@ struct boss_dorotheeAI : public boss_operaAI
 
         WaterBoltTimer = 5000;
         FearTimer = 15000;
-        SummonTitoTimer = 47500;
+        SummonTitoTimer = urand(36000,41000);
 
         SummonedTito = false;
         TitoDied = false;
