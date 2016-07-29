@@ -63,7 +63,7 @@ struct boss_warlord_kalithreshAI : public ScriptedAI
 
         Reflection_Timer = 10000;
         Impale_Timer = 7000+rand()%7000;
-        Rage_Timer = 45000;
+        Rage_Timer = urand(15000, 20000);
         CurrentDistiller = 0;
         checkTimer = 3000;
 
