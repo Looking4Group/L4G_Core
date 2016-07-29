@@ -318,7 +318,7 @@ struct boss_grand_warlock_nethekurseAI : public ScriptedAI
             if (Cleave_Timer <= diff)
             {
                 DoCast(me->getVictim(),(HeroicMode ? H_SPELL_SHADOW_SLAM : SPELL_SHADOW_CLEAVE));
-                Cleave_Timer = 20000+rand()%2500;
+                Cleave_Timer = urand(6000, 8500);
             } else Cleave_Timer -= diff;
 
             if ((me->GetHealth()*100) / me->GetMaxHealth() <= 20)
