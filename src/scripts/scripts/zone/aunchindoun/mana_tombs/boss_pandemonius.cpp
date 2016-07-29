@@ -57,8 +57,8 @@ struct boss_pandemoniusAI : public ScriptedAI
 
     void Reset()
     {
-        VoidBlast_Timer = 30000;
-        DarkShell_Timer = 20000;
+        VoidBlast_Timer = urand(15000, 20000);
+        DarkShell_Timer = 15000;
         VoidBlast_Counter = 0;
 
         if(pInstance)
@@ -102,7 +102,7 @@ struct boss_pandemoniusAI : public ScriptedAI
 
             if( VoidBlast_Counter == 5 )
             {
-                VoidBlast_Timer = 25000+rand()%10000;
+                VoidBlast_Timer = urand(25000, 30000);
                 VoidBlast_Counter = 0;
             }
         }
@@ -119,7 +119,7 @@ struct boss_pandemoniusAI : public ScriptedAI
                 DoScriptText(EMOTE_DARK_SHELL, m_creature);
 
                 DoCast(m_creature,HeroicMode ? H_SPELL_DARK_SHELL : SPELL_DARK_SHELL);
-                DarkShell_Timer = 20000;
+                DarkShell_Timer = urand(20000, 25000);
             }
             else
                 DarkShell_Timer -= diff;
