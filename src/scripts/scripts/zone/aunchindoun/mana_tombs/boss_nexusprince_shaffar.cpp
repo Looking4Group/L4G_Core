@@ -87,8 +87,8 @@ struct boss_nexusprince_shaffarAI : public ScriptedAI
     {
         Blink_Timer = 1500;
         Beacon_Timer = 10000;
-        FireBall_Timer = 8000;
-        Frostbolt_Timer = 4000;
+        FireBall_Timer = urand(2000, 12000);
+        Frostbolt_Timer = urand(1000, 14000);
         FrostNova_Timer = 15000;
 
         HasTaunted = false;
@@ -131,7 +131,7 @@ struct boss_nexusprince_shaffarAI : public ScriptedAI
     {
         if( !m_creature->getVictim() && who->isTargetableForAttack() && ( m_creature->IsHostileTo( who )) && who->isInAccessiblePlacefor(m_creature) )
         {
-            if( !HasTaunted && m_creature->IsWithinDistInMap(who, 100.0) )
+            if( !HasTaunted && m_creature->IsWithinDistInMap(who, 80.0) ) // Intro Text should not be triggerable from first Boss Room
             {
                 DoScriptText(SAY_INTRO, m_creature);
                 HasTaunted = true;
@@ -197,7 +197,7 @@ struct boss_nexusprince_shaffarAI : public ScriptedAI
                 m_creature->InterruptNonMeleeSpells(true);
 
             DoCast(m_creature,SPELL_FROSTNOVA);
-            FrostNova_Timer  = 17500 + rand()%7500;
+            FrostNova_Timer  = urand(10000, 20000);
             CanBlink = true;
         }
         else
@@ -206,7 +206,7 @@ struct boss_nexusprince_shaffarAI : public ScriptedAI
         if( Frostbolt_Timer < diff )
         {
             DoCast(m_creature->getVictim(),SPELL_FROSTBOLT);
-            Frostbolt_Timer = 4500 + rand()%1500;
+            Frostbolt_Timer = urand(3000, 8000);
         }
         else
             Frostbolt_Timer -= diff;
@@ -214,7 +214,7 @@ struct boss_nexusprince_shaffarAI : public ScriptedAI
         if( FireBall_Timer < diff )
         {
             DoCast(m_creature->getVictim(),SPELL_FIREBALL);
-            FireBall_Timer = 4500 + rand()%1500;
+            FireBall_Timer = urand(3000, 8000);
         }
         else
             FireBall_Timer -= diff;
