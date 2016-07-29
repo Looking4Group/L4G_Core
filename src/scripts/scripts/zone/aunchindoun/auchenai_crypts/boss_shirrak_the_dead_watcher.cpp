@@ -53,9 +53,9 @@ struct boss_shirrak_the_dead_watcherAI : public ScriptedAI
     void Reset()
     {
         Inhibitmagic_Timer = 0;
-        Attractmagic_Timer = 28000;
-        Carnivorousbite_Timer = 10000;
-        FocusFire_Timer = 17000;
+        Attractmagic_Timer = urand(20000, 24000);
+        Carnivorousbite_Timer = urand(4000, 7000);
+        FocusFire_Timer = 15000;
         focusedTarget = NULL;
     }
 
@@ -129,7 +129,7 @@ struct boss_shirrak_the_dead_watcherAI : public ScriptedAI
         if (Attractmagic_Timer < diff)
         {
             DoCast(m_creature,SPELL_ATTRACTMAGIC);
-            Attractmagic_Timer = 30000;
+            Attractmagic_Timer = urand(25000, 38000);
             Carnivorousbite_Timer = 1500;
         }
         else
@@ -139,7 +139,7 @@ struct boss_shirrak_the_dead_watcherAI : public ScriptedAI
         if (Carnivorousbite_Timer < diff)
         {
             DoCast(m_creature,SPELL_CARNIVOROUSBITE);
-            Carnivorousbite_Timer = 10000;
+            Carnivorousbite_Timer = urand(4000, 10000);
         }
         else
             Carnivorousbite_Timer -= diff;
@@ -161,7 +161,7 @@ struct boss_shirrak_the_dead_watcherAI : public ScriptedAI
                 DoTextEmote(emote->c_str(),NULL,true);
                 delete emote;
             }
-            FocusFire_Timer = 15000+(rand()%5000);
+            FocusFire_Timer = 15000;
         }
         else
             FocusFire_Timer -= diff;
