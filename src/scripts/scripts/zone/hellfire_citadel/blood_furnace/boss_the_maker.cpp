@@ -90,7 +90,7 @@ struct boss_the_makerAI : public ScriptedAI
         if (AcidSpray_Timer < diff)
         {
             AddSpellToCast(me->getVictim(), SPELL_ACID_SPRAY);
-            AcidSpray_Timer = 35000+rand()%8000; // not the correct spell. why spam ?
+            AcidSpray_Timer = urand(15000, 23000);
         }
         else
             AcidSpray_Timer -=diff;
@@ -110,7 +110,7 @@ struct boss_the_makerAI : public ScriptedAI
             if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0))
                 AddSpellToCast(target, SPELL_DOMINATION);
 
-            Domination_Timer = 120000;
+            Domination_Timer = urand(15000, 25000);
         }
         else
             Domination_Timer -=diff;
