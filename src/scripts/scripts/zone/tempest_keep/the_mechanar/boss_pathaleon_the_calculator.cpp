@@ -75,11 +75,11 @@ struct boss_pathaleon_the_calculatorAI : public ScriptedAI
 
     void Reset()
     {
-        Summon_Timer = 30000;
-        ManaTap_Timer = 12000 + rand()%8000;
-        ArcaneTorrent_Timer = 16000 + rand()%9000;
-        Domination_Timer = 25000 + rand()%15000;
-        ArcaneExplosion_Timer = 8000 + rand()%5000;
+        Summon_Timer = urand(12000, 23000);
+        ManaTap_Timer = urand(2000, 9000);
+        ArcaneTorrent_Timer = urand(11000, 24000);
+        Domination_Timer = urand(25000, 40000);
+        ArcaneExplosion_Timer = urand(18000, 45000);
 
         Enraged = false;
 
