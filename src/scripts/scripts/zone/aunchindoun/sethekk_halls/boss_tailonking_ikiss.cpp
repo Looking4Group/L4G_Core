@@ -77,10 +77,10 @@ struct boss_talon_king_ikissAI : public ScriptedAI
     {
         HeroicMode = m_creature->GetMap()->IsHeroic();
 
-        ArcaneVolley_Timer = 5000;
+        ArcaneVolley_Timer = urand(5000, 12000);
         Sheep_Timer = 8000;
-        Blink_Timer = 35000;
-        Slow_Timer = 15000+rand()%15000;
+        Blink_Timer = urand(16000, 20000);
+        Slow_Timer = urand(9000, 13000);
         Blink = false;
         Intro = false;
         ManaShield = false;
@@ -147,7 +147,7 @@ struct boss_talon_king_ikissAI : public ScriptedAI
         if (ArcaneVolley_Timer < diff)
         {
             DoCast(m_creature,HeroicMode ? H_SPELL_ARCANE_VOLLEY : SPELL_ARCANE_VOLLEY);
-            ArcaneVolley_Timer = 10000+rand()%5000;
+            ArcaneVolley_Timer = urand(8000, 12000);
         }
         else
             ArcaneVolley_Timer -= diff;
@@ -175,7 +175,7 @@ struct boss_talon_king_ikissAI : public ScriptedAI
             if (Slow_Timer < diff)
             {
                 DoCast(m_creature,H_SPELL_SLOW);
-                Slow_Timer = 15000+rand()%25000;
+                Slow_Timer = urand(15000, 24000);
             }
             else
                 Slow_Timer -= diff;
@@ -198,7 +198,7 @@ struct boss_talon_king_ikissAI : public ScriptedAI
                 DoCast(target,SPELL_BLINK_TELEPORT);
                 Blink = true;
             }
-            Blink_Timer = 35000+rand()%5000;
+            Blink_Timer = 15000+rand()%25000;
         }
         else
             Blink_Timer -= diff;
