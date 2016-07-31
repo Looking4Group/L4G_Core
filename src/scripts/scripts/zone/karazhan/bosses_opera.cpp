@@ -215,7 +215,7 @@ struct boss_dorotheeAI : public boss_operaAI
 
         WaterBoltTimer = 5000;
         FearTimer = 15000;
-        SummonTitoTimer = 47500;
+        SummonTitoTimer = urand(36000,41000);
 
         SummonedTito = false;
         TitoDied = false;
@@ -373,8 +373,8 @@ struct boss_strawmanAI : public boss_operaAI
 
     void SpellHit(Unit* caster, const SpellEntry *Spell)
     {
-		// Set chance to Disorient to 20%
-        if ((Spell->SchoolMask == SPELL_SCHOOL_MASK_FIRE) && (!(rand()%5)))
+		// Set chance to Disorient to 33%
+        if ((Spell->SchoolMask == SPELL_SCHOOL_MASK_FIRE) && (!(rand()%3)))
             DoCast(m_creature, SPELL_BURNING_STRAW, true);
     }
 
@@ -868,8 +868,6 @@ struct boss_bigbadwolfAI : public boss_operaAI
                 if (target && target->GetTypeId() == TYPEID_PLAYER)
                 {
                     ForceSpellCastWithScriptText(target, SPELL_LITTLE_RED_RIDING_HOOD,SAY_WOLF_HOOD, INTERRUPT_AND_CAST_INSTANTLY, true, true);
-                    m_creature->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_TAUNT, true);
-                    m_creature->ApplySpellImmune(0, IMMUNITY_EFFECT,SPELL_EFFECT_ATTACK_ME, true);
 
                     TempThreat = DoGetThreat(target);
                     if (TempThreat)
@@ -894,8 +892,6 @@ struct boss_bigbadwolfAI : public boss_operaAI
                     TempThreat = 0;
                 }
 
-                m_creature->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_TAUNT, false);
-                m_creature->ApplySpellImmune(0, IMMUNITY_EFFECT,SPELL_EFFECT_ATTACK_ME, false);
 		// Chase again after 10secs
                 ChaseTimer = 10000;
             }
