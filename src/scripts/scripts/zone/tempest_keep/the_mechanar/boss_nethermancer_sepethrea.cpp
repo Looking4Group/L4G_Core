@@ -113,7 +113,7 @@ struct boss_nethermancer_sepethreaAI : public ScriptedAI
         if (arcane_blast_Timer < diff)
         {
             AddSpellToCast(SPELL_ARCANE_BLAST, CAST_TANK);
-            arcane_blast_Timer = urand(25000, 35000);
+            arcane_blast_Timer = urand(15000, 30000);
             me->getThreatManager().modifyThreatPercent(me->getVictim(), -50.0f);
         }
         else
@@ -123,7 +123,7 @@ struct boss_nethermancer_sepethreaAI : public ScriptedAI
         if (dragons_breath_Timer < diff)
         {
             AddSpellToCastWithScriptText(SPELL_DRAGONS_BREATH, CAST_TANK, RAND(SAY_DRAGONS_BREATH_1, SAY_DRAGONS_BREATH_2, 0, 0));
-            dragons_breath_Timer = urand(30000, 35000);
+            dragons_breath_Timer = urand(20000, 35000);
         }
         else
             dragons_breath_Timer -= diff;
