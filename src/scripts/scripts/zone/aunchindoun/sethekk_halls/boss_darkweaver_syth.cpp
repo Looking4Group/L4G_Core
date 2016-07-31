@@ -88,11 +88,11 @@ struct boss_darkweaver_sythAI : public ScriptedAI
 
     void Reset()
     {
-        flameshock_timer = 2000;
-        arcaneshock_timer = 4000;
-        frostshock_timer = 6000;
-        shadowshock_timer = 8000;
-        chainlightning_timer = 15000;
+        flameshock_timer = 4000;
+        arcaneshock_timer = 8000;
+        frostshock_timer = 12000;
+        shadowshock_timer = 16000;
+        chainlightning_timer = urand(6000, 9000);
         //Addcounter auf 0 setzen
 		anzahl_adds=0;
 		anzahl_addsa=0;
@@ -174,7 +174,7 @@ struct boss_darkweaver_sythAI : public ScriptedAI
         DoCast(m_creature,SPELL_SUMMON_SYTH_FROST,true);    //left
         DoCast(m_creature,SPELL_SUMMON_SYTH_SHADOW,true);   //right*/
 
-        //neuer spawn um den despawn handhaben zu können:	 
+        //neuer spawn um den despawn handhaben zu kÃ¶nnen:	 
 		
 		Creature *ele = m_creature->SummonCreature(19203, me->GetPositionX()+5, me->GetPositionY(), me->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 1000);
 		anzahl_adds++;
@@ -250,7 +250,7 @@ struct boss_darkweaver_sythAI : public ScriptedAI
             if (Unit *target = SelectUnit(SELECT_TARGET_RANDOM,0, 60, true))
                 DoCast(target,SPELL_CHAIN_LIGHTNING);
 
-            chainlightning_timer = 25000;
+            chainlightning_timer = urand(13000, 19000);
         } else chainlightning_timer -= diff;
 
         DoMeleeAttackIfReady();
