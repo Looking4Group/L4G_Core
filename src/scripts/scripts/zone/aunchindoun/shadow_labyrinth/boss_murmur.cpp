@@ -50,12 +50,12 @@ struct boss_murmurAI : public Scripted_NoMovementAI
 
     void Reset()
     {
-        SonicBoom_Timer = (HeroicMode ? 40000 : 50000);
-        MurmursTouch_Timer = (HeroicMode ? 28000 : 31000);
-        Resonance_Timer = 5000;
-        MagneticPull_Timer = 45000;
-        ThunderingStorm_Timer = 5000;
-        SonicShock_Timer = 5000;
+        SonicBoom_Timer = urand(21000, 35000);
+        MurmursTouch_Timer = urand(9000, 18000);
+        Resonance_Timer = urand(1000, 7000);
+        MagneticPull_Timer = urand(15000, 25000);
+        ThunderingStorm_Timer = urand(10000, 50000);
+        SonicShock_Timer = urand(5000, 15000);
 
         //database should have `RegenHealth`=0 to prevent regen
         uint32 hp = (me->GetMaxHealth()*40)/100;
@@ -98,7 +98,7 @@ struct boss_murmurAI : public Scripted_NoMovementAI
             if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, 100, true))
                 AddSpellToCast(target, SPELL_MURMURS_TOUCH);
 
-            MurmursTouch_Timer = (HeroicMode ? 30000 : 20000);
+            MurmursTouch_Timer = (HeroicMode ? urand(21000, 21000) : urand(29000, 40000);
         }
         else
             MurmursTouch_Timer -= diff;
@@ -111,7 +111,7 @@ struct boss_murmurAI : public Scripted_NoMovementAI
             if (target && !me->IsWithinMeleeRange(target))
                 AddSpellToCast(me, SPELL_RESONANCE);
 
-            Resonance_Timer = 5000;
+            Resonance_Timer = urand(5000, 12000);
         }
         else
             Resonance_Timer -= diff;
@@ -131,7 +131,7 @@ struct boss_murmurAI : public Scripted_NoMovementAI
                     }
                 }
 
-                ThunderingStorm_Timer = 7500;
+                ThunderingStorm_Timer = urand(5000, 6000);
             }
             else
                 ThunderingStorm_Timer -= diff;
@@ -152,7 +152,7 @@ struct boss_murmurAI : public Scripted_NoMovementAI
                     }
                 }
 
-                SonicShock_Timer = 2000;
+                SonicShock_Timer = urand(3000, 10000);
             }
             else
                 SonicShock_Timer -= diff;
@@ -166,7 +166,7 @@ struct boss_murmurAI : public Scripted_NoMovementAI
                 if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, 100, true))
                     ForceSpellCast(target, SPELL_MAGNETIC_PULL);
 
-                 MagneticPull_Timer = 40000;
+                 MagneticPull_Timer = urand(21000, 30000);
             }
             else
                 MagneticPull_Timer -= diff;
@@ -177,7 +177,7 @@ struct boss_murmurAI : public Scripted_NoMovementAI
         {
             ForceSpellCast(me, SPELL_SONIC_BOOM, DONT_INTERRUPT, true);
             ForceSpellCastWithScriptText(me, SPELL_SONIC_BOOM_CAST, EMOTE_SONIC_BOOM);
-            SonicBoom_Timer = (HeroicMode ? 30000 : 40000);
+            SonicBoom_Timer = urand(31000, 38000);
             Resonance_Timer = 5000;
             ThunderingStorm_Timer = 5000;
             SonicShock_Timer = 5000;
