@@ -156,7 +156,7 @@ struct boss_high_botanist_freywinnAI : public ScriptedAI
         if( SummonSeedling_Timer < diff )
         {
             DoCast(m_creature, RAND(SPELL_PLANT_WHITE, SPELL_PLANT_GREEN, SPELL_PLANT_BLUE, SPELL_PLANT_RED));
-            SummonSeedling_Timer = 6000;
+            SummonSeedling_Timer = 5000;
         }else SummonSeedling_Timer -= diff;
 
         DoMeleeAttackIfReady();
