@@ -356,19 +356,19 @@ struct boss_warbringer_omroggAI : public ScriptedAI
                 DoResetThreat();
                 me->AddThreat(target, 0.0f);
             }
-            ResetThreat_Timer = 35000+rand()%10000;
+            ResetThreat_Timer = urand(25000, 40000);
         }else ResetThreat_Timer -= diff;
 
         if (Fear_Timer < diff)
         {
             DoCast(me,SPELL_FEAR);
-            Fear_Timer = 15000+rand()%25000;
+            Fear_Timer = urand(15000, 35000);
         }else Fear_Timer -= diff;
 
         if (ThunderClap_Timer < diff)
         {
             DoCast(me,SPELL_THUNDERCLAP);
-            ThunderClap_Timer = 25000+rand()%15000;
+            ThunderClap_Timer = urand(15000, 30000);
         }else ThunderClap_Timer -= diff;
 
         DoMeleeAttackIfReady();
