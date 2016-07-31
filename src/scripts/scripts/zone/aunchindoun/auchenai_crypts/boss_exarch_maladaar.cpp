@@ -167,7 +167,7 @@ struct boss_exarch_maladaarAI : public ScriptedAI
 
         Fear_timer = 15000 + rand()% 5000;
         Ribbon_of_Souls_timer = 5000;
-        StolenSoul_Timer = 25000 + rand()% 10000;
+        StolenSoul_Timer = urand(19000, 31000);
 
         Avatar_summoned = false;
     }
@@ -273,7 +273,7 @@ struct boss_exarch_maladaarAI : public ScriptedAI
             if (Unit *target = SelectUnit(SELECT_TARGET_RANDOM,0, 100, true))
                 DoCast(target,SPELL_RIBBON_OF_SOULS);
 
-            Ribbon_of_Souls_timer = 5000 + (rand()%20 * 1000);
+            Ribbon_of_Souls_timer = urand(4000, 18000);
         }
         else
             Ribbon_of_Souls_timer -= diff;
@@ -281,7 +281,7 @@ struct boss_exarch_maladaarAI : public ScriptedAI
         if (Fear_timer < diff)
         {
             DoCast(m_creature,SPELL_SOUL_SCREAM);
-            Fear_timer = 15000 + rand()% 15000;
+            Fear_timer = urand(13000, 30000);
         }
         else
             Fear_timer -= diff;
