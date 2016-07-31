@@ -75,7 +75,7 @@ struct boss_broggokAI : public ScriptedAI
     void Reset()
     {
         AcidSpray_Timer = 10000;
-        PoisonSpawn_Timer = 13000;
+        PoisonSpawn_Timer = 5000;
         PoisonBolt_Timer = 7000;
         checkTimer = 3000;
 
