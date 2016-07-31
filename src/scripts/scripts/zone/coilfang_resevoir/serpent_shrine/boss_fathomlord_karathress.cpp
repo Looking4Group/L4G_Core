@@ -17,7 +17,7 @@
 /* ScriptData
 SDName: Boss_Fathomlord_Karathress
 SD%Complete: 70
-SDComment: Cyclone workaround
+SDComment: Cyclone workaround, Sharkkis missing Spell 38374, Tidalvess might have false WF Spell
 SDCategory: Coilfang Resevoir, Serpent Shrine Cavern
 EndScriptData */
 
@@ -53,7 +53,7 @@ EndScriptData */
 #define SPELL_POISON_CLEANSING_EFFECT   8167
 #define SPELL_EARTHBIND_TOTEM           38304
 #define SPELL_EARTHBIND_TOTEM_EFFECT    6474
-#define SPELL_WINDFURY_WEAPON           38184
+#define SPELL_WINDFURY_WEAPON           38184 // 32911
 
 //Caribdis Spells
 #define SPELL_WATER_BOLT_VOLLEY         38335
@@ -137,7 +137,7 @@ struct boss_fathomlord_karathressAI : public ScriptedAI
         PulseCombat_Timer = 5000;
         CataclysmicBolt_Timer = 10000;
         Enrage_Timer = 600000;                 // 10 minutes
-        SearNova_Timer = 20000+rand()%40000;   // 20 - 60 seconds
+        SearNova_Timer = urand(20000, 30000);
         AuraCheck_Timer = 3000;
         TidalSurge_Timer = 15000+rand()%5000;
 
@@ -321,7 +321,7 @@ struct boss_fathomlord_karathressAI : public ScriptedAI
         if(SearNova_Timer < diff)
         {
             DoCast(m_creature->getVictim(), SPELL_SEAR_NOVA);
-            SearNova_Timer = 20000+rand()%40000;
+            SearNova_Timer = urand(20000, 30000);
         }
         else
             SearNova_Timer -= diff;
@@ -390,7 +390,7 @@ struct boss_fathomguard_sharkkisAI : public ScriptedAI
     {
         LeechingThrow_Timer = 20000;
         TheBeastWithin_Timer = 30000;
-        Multishot_Timer = 10000;
+        Multishot_Timer = urand(7000, 11000);
         Pet_Timer = 10000;
 
         pet = false;
@@ -463,7 +463,7 @@ struct boss_fathomguard_sharkkisAI : public ScriptedAI
         if(Multishot_Timer < diff)
         {
             DoCast(m_creature->getVictim(), SPELL_MULTISHOT);
-            Multishot_Timer = 10000;
+            Multishot_Timer = urand(7000, 12000);
         }
         else
             Multishot_Timer -= diff;
@@ -566,7 +566,7 @@ struct boss_fathomguard_tidalvessAI : public ScriptedAI
         if (FrostShock_Timer < diff)
         {
             DoCast(m_creature->getVictim(), SPELL_FROST_SHOCK);
-            FrostShock_Timer = 25000+rand()%5000;
+            FrostShock_Timer = urand(25000, 30000);
         }
         else
             FrostShock_Timer -= diff;
