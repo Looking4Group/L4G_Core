@@ -52,7 +52,7 @@ struct boss_anzuAI : public ScriptedAI
 
         Banished = false;
         Banish_Timer = 0;
-        SpellBomb_Timer = 22000; 
+        SpellBomb_Timer = 17000; 
         CycloneOfFeathers_Timer = 5000;
         ParalyzingScreech_Timer = 14000;
         BanishedTimes = 2;
@@ -141,7 +141,7 @@ struct boss_anzuAI : public ScriptedAI
             {
                 if(Unit *target = SelectUnit(SELECT_TARGET_RANDOM, 0))
                     AddSpellToCast(target, SPELL_SPELL_BOMB);
-                SpellBomb_Timer = 30000;
+                SpellBomb_Timer = urand(24000, 40000);
             } else
                 SpellBomb_Timer -= diff;
 
