@@ -70,8 +70,8 @@ struct boss_ambassador_hellmawAI : public ScriptedAI
     {
         EventCheck_Timer = 5000;
         Banish_Timer = 0;
-        CorrosiveAcid_Timer = 25000;
-        Fear_Timer = 40000;
+        CorrosiveAcid_Timer = urand(20000, 23000);
+        Fear_Timer = urand(20000, 26000);
         Enrage_Timer = 180000;
         Intro = false;
         IsBanished = false;
@@ -174,7 +174,7 @@ struct boss_ambassador_hellmawAI : public ScriptedAI
         if (CorrosiveAcid_Timer < diff)
         {
             DoCast(me->getVictim(),SPELL_CORROSIVE_ACID);
-            CorrosiveAcid_Timer = 25000;
+            CorrosiveAcid_Timer = urand(23000, 35000);
         }
         else
             CorrosiveAcid_Timer -= diff;
@@ -182,7 +182,7 @@ struct boss_ambassador_hellmawAI : public ScriptedAI
         if (Fear_Timer < diff)
         {
             DoCast(me,SPELL_FEAR);
-            Fear_Timer = 25000;
+            Fear_Timer = urand(20000, 38000);
         }
         else
             Fear_Timer -= diff;
