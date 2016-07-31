@@ -1,0 +1,6 @@
+DELETE FROM `game_event_creature_quest` WHERE `quest` IN (11380,11377,11381,11379);
+INSERT INTO `game_event_creature_quest` VALUES
+(24393,11379,125), -- 11377
+(24393,11379,127), -- 11379
+(24393,11380,124), -- 11380
+(24393,11381,126); -- 11381
