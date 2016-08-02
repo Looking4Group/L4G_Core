@@ -996,7 +996,7 @@ struct boss_kaelthasAI : public ScriptedAI
                         {
                             AddSpellToCast(m_creature->getVictim(), SPELL_FIREBALL, false);
                             //DoCast(m_creature->getVictim(), SPELL_FIREBALL, false);
-                            Fireball_Timer = 5000+rand()%10000;
+                            Fireball_Timer = urand(3000, 5000);
                         }
                         else
                             Fireball_Timer -= diff;
@@ -1279,7 +1279,7 @@ struct boss_kaelthasAI : public ScriptedAI
                             if (Unit* pUnit = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_NETHER_BEAM), true))
                                 DoCast(pUnit, SPELL_NETHER_BEAM);
 
-                            NetherBeam_Timer = 4000;
+                            NetherBeam_Timer = urand(2000, 4000);
                         }
                         else
                             NetherBeam_Timer -= diff;
@@ -1311,8 +1311,8 @@ struct boss_thaladred_the_darkenerAI : public advisorbase_ai
     void Reset()
     {
         Gaze_Timer = 100;
-        Rend_Timer = 1000;
-        Silence_Timer = 20000;
+        Rend_Timer = urand(4000, 8000);
+        Silence_Timer = 5000;
         PsychicBlow_Timer = 10000;
         Check_Timer = 1000;
         Check_Timer2 = 3000;
@@ -1404,7 +1404,7 @@ struct boss_thaladred_the_darkenerAI : public advisorbase_ai
         if(Silence_Timer < diff)
         {
             DoCast(m_creature, SPELL_SILENCE, true);
-            Silence_Timer = 20000;
+            Silence_Timer = urand(7000, 13000);
         }
         else
             Silence_Timer -= diff;
@@ -1412,7 +1412,7 @@ struct boss_thaladred_the_darkenerAI : public advisorbase_ai
         if(Rend_Timer < diff)
         {
             DoCast(m_creature->getVictim(), SPELL_REND);
-            Rend_Timer = 10000;
+            Rend_Timer = urand(7000, 12000);
         }
         else
             Rend_Timer -= diff;
@@ -1421,7 +1421,7 @@ struct boss_thaladred_the_darkenerAI : public advisorbase_ai
         if(PsychicBlow_Timer < diff)
         {
             DoCast(m_creature->getVictim(), SPELL_PSYCHIC_BLOW, true);
-            PsychicBlow_Timer = 20000+rand()%5000;
+            PsychicBlow_Timer = urand(20000, 25000);
         }
         else
             PsychicBlow_Timer -= diff;
@@ -1440,7 +1440,7 @@ struct boss_lord_sanguinarAI : public advisorbase_ai
 
     void Reset()
     {
-        Fear_Timer = 20000;
+        Fear_Timer = 10000;
         Check_Timer = 3000;
 
         advisorbase_ai::Reset();
@@ -1510,7 +1510,7 @@ struct boss_grand_astromancer_capernianAI : public advisorbase_ai
     {
         ClearCastQueue();
 
-        Fireball_Timer = 1000;
+        Fireball_Timer = 2000;
         Conflagration_Timer = 20000;
         ArcaneExplosion_Timer = 5000;
         Yell_Timer = 2000;
@@ -1588,7 +1588,7 @@ struct boss_grand_astromancer_capernianAI : public advisorbase_ai
             else
                 DoCast(m_creature->getVictim(), SPELL_CONFLAGRATION, true);
 
-            Conflagration_Timer = 10000+rand()%5000;
+            Conflagration_Timer = urand(10000, 15000);
         }
         else
             Conflagration_Timer -= diff;
@@ -1714,7 +1714,7 @@ struct boss_master_engineer_telonicusAI : public advisorbase_ai
             if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_REMOTE_TOY), true))
                 DoCast(target, SPELL_REMOTE_TOY);
 
-            RemoteToy_Timer = 10000+rand()%5000;
+            RemoteToy_Timer = urand(8000, 12000);
         }
         else
             RemoteToy_Timer -= diff;
