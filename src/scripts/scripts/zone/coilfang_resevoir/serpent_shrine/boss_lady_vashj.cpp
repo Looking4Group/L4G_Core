@@ -586,7 +586,7 @@ struct boss_lady_vashjAI : public ScriptedAI
                 }
 
                 if (Elemental)
-                    EnchantedElemental_Timer = 8000+rand()%5000;
+                    EnchantedElemental_Timer = 10000+rand()%5000;
 
             }
             else
