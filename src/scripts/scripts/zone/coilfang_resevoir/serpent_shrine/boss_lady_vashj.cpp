@@ -609,7 +609,7 @@ struct boss_lady_vashjAI : public ScriptedAI
             {
                 path_nr = urand(0,3);
                 me->SummonCreature(COILFANG_ELITE, StriderNagaWP[path_nr*4][0],StriderNagaWP[path_nr*4][1],StriderNagaWP[path_nr*4][2],0, TEMPSUMMON_DEAD_DESPAWN, 0);
-                CoilfangElite_Timer = 50000+rand()%5000;
+                CoilfangElite_Timer = 45000+rand()%5000;
             }
             else
                 CoilfangElite_Timer -= diff;
