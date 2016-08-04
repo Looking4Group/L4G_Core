@@ -199,8 +199,8 @@ struct boss_leotheras_the_blindAI : public ScriptedAI
         PulseCombat_Timer = 5000;
         Whirlwind_Timer = 15000;
         ChaosBlast_Timer = 1000;
-        SwitchToDemon_Timer = 55000;
-        SwitchToHuman_Timer = 45000;
+        SwitchToDemon_Timer = 60000;
+        SwitchToHuman_Timer = 60000;
         Berserk_Timer = 600000;
         InnerDemons_Timer = 30000;
         m_creature->SetCanDualWield(true);
@@ -503,7 +503,7 @@ struct boss_leotheras_the_blindAI : public ScriptedAI
                     m_creature->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_DISPLAY+1, 0);
                     DemonForm = true;
                     NeedThreatReset = true;
-                    SwitchToDemon_Timer = 55000;
+                    SwitchToDemon_Timer = 45000;
                     m_creature->SetReactState(REACT_AGGRESSIVE);
                     m_creature->SetMeleeDamageSchool(SPELL_SCHOOL_FIRE);
                 }
@@ -530,7 +530,7 @@ struct boss_leotheras_the_blindAI : public ScriptedAI
                     int damage = 100;
                     m_creature->CastCustomSpell(m_creature->getVictim(), SPELL_CHAOS_BLAST, &damage, NULL, NULL, false, NULL, NULL, m_creature->GetGUID());
                 }
-                ChaosBlast_Timer = 3000;
+                ChaosBlast_Timer = urand(2000, 3000);
             }
             else
                 ChaosBlast_Timer -= diff;
@@ -595,7 +595,7 @@ struct boss_leotheras_the_blindAI : public ScriptedAI
                 DemonForm = false;
                 NeedThreatReset = true;
 
-                SwitchToHuman_Timer = 45000;
+                SwitchToHuman_Timer = 60000;
                 m_creature->SetMeleeDamageSchool(SPELL_SCHOOL_NORMAL);
             }
             else
@@ -692,7 +692,7 @@ struct boss_leotheras_the_blind_demonformAI : public ScriptedAI
                 //m_creature->CastSpell(m_creature->getVictim(),SPELL_CHAOS_BLAST,true);
                 int damage = 100;
                 m_creature->CastCustomSpell(m_creature->getVictim(), SPELL_CHAOS_BLAST, &damage, NULL, NULL, false, NULL, NULL, m_creature->GetGUID());
-                ChaosBlast_Timer = 3000;
+                ChaosBlast_Timer = urand(2000, 3000);
             }
          }else ChaosBlast_Timer -= diff;
 
@@ -716,8 +716,8 @@ struct mob_greyheart_spellbinderAI : public ScriptedAI
 
     void Reset()
     {
-        Mindblast_Timer  = 3000 + rand()%5000;
-        Earthshock_Timer = 5000 + rand()%5000;
+        Mindblast_Timer  = urand(3000, 8000);
+        Earthshock_Timer = urand(5000, 10000);
 
         if(pInstance)
         {
@@ -790,7 +790,7 @@ struct mob_greyheart_spellbinderAI : public ScriptedAI
             if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0, GetSpellMaxRange(SPELL_MINDBLAST), true))
                 DoCast(target, SPELL_MINDBLAST);
 
-            Mindblast_Timer = 10000 + rand()%5000;
+            Mindblast_Timer = urand(10000, 15000);
         }else Mindblast_Timer -= diff;
 
         if(Earthshock_Timer < diff)
@@ -813,7 +813,7 @@ struct mob_greyheart_spellbinderAI : public ScriptedAI
                     }
                 }
             }
-            Earthshock_Timer = 8000 + rand()%7000;
+            Earthshock_Timer = urand(8000, 15000);
         }else Earthshock_Timer -= diff;
         DoMeleeAttackIfReady();
     }
