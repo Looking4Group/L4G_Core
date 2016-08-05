@@ -141,8 +141,6 @@ void BattleGround::Update(uint32 diff)
 
     m_StartTime += diff;
 
-
-
     if (GetRemovedPlayersSize())
     {
         for (std::map<uint64, uint8>::iterator itr = m_RemovedPlayers.begin(); itr != m_RemovedPlayers.end(); ++itr)
@@ -371,6 +369,18 @@ void BattleGround::SendPacketToTeam(uint32 TeamID, WorldPacket *packet, Player *
 
         if (team && team == TeamID)
             plr->SendPacketToSelf(packet);
+    }
+}
+
+void BattleGround::SendPacketToEnemyTeam(uint32 TeamID, WorldPacket *packet)
+{
+	for (BattleGroundPlayerMap::iterator itr = m_Players.begin(); itr != m_Players.end(); ++itr){
+        if (Player *plr = sObjectMgr.GetPlayer(itr->first)){
+			uint32 team = GetPlayerTeam(plr->GetGUID());
+			if (team && team != TeamID){
+				plr->SendPacketToSelf(packet);
+			}
+		}
     }
 }
 
@@ -1097,6 +1107,7 @@ void BattleGround::StartBattleGround()
     AnnounceBGStart();
     if (m_IsRated)
         sLog.outLog(LOG_ARENA, "Arena match type: %u for Team1Id: %u - Team2Id: %u started.", m_ArenaType, m_ArenaTeamIds[BG_TEAM_ALLIANCE], m_ArenaTeamIds[BG_TEAM_HORDE]);
+
 }
 
 void BattleGround::AnnounceBGStart()

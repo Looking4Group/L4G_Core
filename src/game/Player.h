@@ -1918,6 +1918,12 @@ class LOOKING4GROUP_EXPORT Player : public Unit
 	 void PvpPush(uint16 items[]); //Funktionsdeklaration für S0,5
 	 void AddItem(uint32 itemID, uint32 Count);
 
+	 /* Addon Helper functions */
+	 void SendAddonMessage(std::string& text, char* prefix);
+	 WorldPacket CreateAddonMessage(std::string& text, char* prefix);
+	 WorldPacket BuildGladdyUpdate();
+	 void SendGladdyNotification();
+
         /*********************************************************/
         /***               BATTLEGROUND SYSTEM                 ***/
         /*********************************************************/

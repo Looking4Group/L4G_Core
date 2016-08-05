@@ -404,6 +404,7 @@ class LOOKING4GROUP_IMPORT_EXPORT BattleGround
         // method that should fill worldpacket with actual world states (not yet implemented for all battlegrounds!)
         virtual void FillInitialWorldStates(WorldPacket& /*data*/) {}
         void SendPacketToTeam(uint32 TeamID, WorldPacket *packet, Player *sender = NULL, bool self = true);
+		void BattleGround::SendPacketToEnemyTeam(uint32 TeamID, WorldPacket *packet);
         void SendPacketToAll(WorldPacket *packet);
         void YellToAll(Creature* creature, const char* text, uint32 language);
         void PlaySoundToTeam(uint32 SoundID, uint32 TeamID);
