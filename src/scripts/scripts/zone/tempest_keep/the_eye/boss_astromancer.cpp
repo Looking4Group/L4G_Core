@@ -109,9 +109,9 @@ struct boss_high_astromancer_solarianAI : public ScriptedAI
 
     void Reset()
     {
-        ArcaneMissiles_Timer = 2000;
+        ArcaneMissiles_Timer = 0;
         MarkOfTheAstromancer_Timer = 15000;
-        BlindingLight_Timer = 41000;
+        BlindingLight_Timer = 35000;
         Fear_Timer = 20000;
         VoidBolt_Timer = 10000;
         Phase1_Timer = 50000;
@@ -123,7 +123,7 @@ struct boss_high_astromancer_solarianAI : public ScriptedAI
         MarkOfTheSolarian_Timer=45000;
         Jump_Timer=8000;
         Check_Timer = 3000;
-        Wrath_Timer = 20000+rand()%5000;//twice in phase one
+        Wrath_Timer = urand(15000, 25000);//twice in phase one
         Phase = 1;
 
         if(pInstance && pInstance->GetData(DATA_HIGHASTROMANCERSOLARIANEVENT) != DONE)
@@ -247,7 +247,7 @@ struct boss_high_astromancer_solarianAI : public ScriptedAI
                 if(Unit *target =  SelectUnit(SELECT_TARGET_RANDOM,1, GetSpellMaxRange(SPELL_WRATH_OF_THE_ASTROMANCER), true, m_creature->getVictimGUID()))
                     DoCast(target, SPELL_WRATH_OF_THE_ASTROMANCER, true);
 
-                Wrath_Timer = 20000+rand()%5000;
+                Wrath_Timer = urand(15000, 25000);
             }
             else
                 Wrath_Timer -= diff;
@@ -272,7 +272,7 @@ struct boss_high_astromancer_solarianAI : public ScriptedAI
                         DoCast(target, SPELL_ARCANE_MISSILES);
                     }
                 }
-                ArcaneMissiles_Timer = 3000;
+                ArcaneMissiles_Timer = urand(3000, 4000);
             }
             else
                 ArcaneMissiles_Timer -= diff;
