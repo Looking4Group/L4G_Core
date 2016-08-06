@@ -53,6 +53,9 @@ void UnitAI::DoMeleeAttackIfReady()
             ((Creature*)me)->SetSelection(me->getVictimGUID());
     }
 
+	//Force victim update
+	((Creature*)me)->SelectVictim();
+
     //Make sure our attack is ready and we aren't currently casting before checking distance
     if (me->isAttackReady())
     {
