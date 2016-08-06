@@ -1909,20 +1909,14 @@ class LOOKING4GROUP_EXPORT Player : public Unit
         void SendNotifyLootMoneyRemoved();
 
         uint8 GetValidForPush();
-        void PushSixty();
-        void Push();
-        void EquipForPush(uint16 items[]);
-        void EquipForPushSixty(uint16 items[]);
-        void FinishPush();
-        void FinishPushSixty();
-        void PvpPush(uint16 items[]);
-        void AddItem(uint32 itemID, uint32 Count);
-
-        /* Addon Helper functions */
-        void SendAddonMessage(std::string& text, char* prefix);
-        WorldPacket CreateAddonMessage(std::string& text, char* prefix);
-        WorldPacket BuildGladdyUpdate();
-        void SendGladdyNotification();
+	 void PushSixty();
+     void Push();
+	 void EquipForPush(uint16 items[]);
+     void EquipForPushSixty(uint16 items[]);
+	 void FinishPush();
+     void FinishPushSixty();
+	 void PvpPush(uint16 items[]); //Funktionsdeklaration für S0,5
+	 void AddItem(uint32 itemID, uint32 Count);
 
         /*********************************************************/
         /***               BATTLEGROUND SYSTEM                 ***/

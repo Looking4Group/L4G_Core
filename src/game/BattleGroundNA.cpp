@@ -94,10 +94,7 @@ void BattleGroundNA::Update(uint32 diff)
 
             for (BattleGroundPlayerMap::const_iterator itr = GetPlayers().begin(); itr != GetPlayers().end(); ++itr)
                 if (Player *plr = sObjectMgr.GetPlayer(itr->first))
-                {
-                    SendPacketToEnemyTeam(GetPlayerTeam(plr->GetGUID()), &plr->BuildGladdyUpdate());
                     plr->RemoveAurasDueToSpell(SPELL_ARENA_PREPARATION);
-                }
 
             if (!GetPlayersCountByTeam(ALLIANCE) && GetPlayersCountByTeam(HORDE))
                 EndBattleGround(HORDE);
