@@ -396,7 +396,6 @@ bool checkForAggroDropSpells(Unit* target) {
 
 	uint32 size = (sizeof(spellArray) / sizeof(*spellArray));
 	for (int i = 0; i < (size); ++i) {
-
 		if (target->HasAura(spellArray[i]) == true) {
 			return true;
 		}
