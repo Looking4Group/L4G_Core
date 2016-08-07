@@ -47,35 +47,34 @@ void UnitAI::DoMeleeAttackIfReady()
         return;
 
     // set selection back to attacked victim if not selected (after spell casting)
-	if (me->GetTypeId() == TYPEID_UNIT)
-	{
-		if (((Creature*)me)->GetSelection() != me->getVictimGUID() && !((Creature*)me)->hasIgnoreVictimSelection())
-			((Creature*)me)->SetSelection(me->getVictimGUID());
+    if(me->GetTypeId() == TYPEID_UNIT)
+    {
+        if(((Creature*)me)->GetSelection() != me->getVictimGUID() && !((Creature*)me)->hasIgnoreVictimSelection())
+            ((Creature*)me)->SetSelection(me->getVictimGUID());
+    }
 
+	//Force victim update
+	((Creature*)me)->SelectVictim();
 
-		//Force victim update
-		((Creature*)me)->SelectVictim();
-
-		//Make sure our attack is ready and we aren't currently casting before checking distance
-		if (me->isAttackReady())
-		{
-			//If we are within range melee the target
-			if (me->IsWithinMeleeRange(me->getVictim()))
-			{
-				me->AttackerStateUpdate(me->getVictim());
-				me->resetAttackTimer();
-			}
-		}
-		if (me->haveOffhandWeapon() && me->isAttackReady(OFF_ATTACK))
-		{
-			//If we are within range melee the target
-			if (me->IsWithinMeleeRange(me->getVictim()))
-			{
-				me->AttackerStateUpdate(me->getVictim(), OFF_ATTACK);
-				me->resetAttackTimer(OFF_ATTACK);
-			}
-		}
-	}
+    //Make sure our attack is ready and we aren't currently casting before checking distance
+    if (me->isAttackReady())
+    {
+        //If we are within range melee the target
+        if (me->IsWithinMeleeRange(me->getVictim()))
+        {
+            me->AttackerStateUpdate(me->getVictim());
+            me->resetAttackTimer();
+        }
+    }
+    if (me->haveOffhandWeapon() && me->isAttackReady(OFF_ATTACK))
+    {
+        //If we are within range melee the target
+        if (me->IsWithinMeleeRange(me->getVictim()))
+        {
+            me->AttackerStateUpdate(me->getVictim(), OFF_ATTACK);
+            me->resetAttackTimer(OFF_ATTACK);
+        }
+    }
 }
 
 bool UnitAI::DoSpellAttackIfReady(uint32 spell)
