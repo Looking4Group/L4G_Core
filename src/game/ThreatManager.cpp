@@ -330,7 +330,7 @@ bool DropAggro(Creature* pAttacker, Unit * target)
         return true;
 
 	//Check for spells that should cause an aggro drop
-	if (checkForAggroDropSpells(target) == true)
+	if (CheckForAggroDropSpells(target) == true)
 		return true;
 
     // Vengeful Spirit can't be attacked
@@ -342,7 +342,7 @@ bool DropAggro(Creature* pAttacker, Unit * target)
 
 //============================================================
 // Check the unit for spells that should cause an aggro drop
-bool checkForAggroDropSpells(Unit* target) {
+bool CheckForAggroDropSpells(Unit* target) {
 
 	uint32 spellArray[] = {
 		//Gouge
