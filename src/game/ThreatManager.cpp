@@ -285,61 +285,6 @@ void ThreatContainer::update()
     iDirty = false;
 }
 
-bool DropAggro(Creature* pAttacker, Unit * target)
-{
-    if (!target)
-        return false;
-
-    // if target is immuned to melee dmg
-    if (target->IsImmunedToDamage(pAttacker->GetMeleeDamageSchoolMask(), false))
-        return true;
-
-    // if target is immune to actually casted spell - i think it's not good check because we don't switch spell target to proper one
-    if (pAttacker->IsNonMeleeSpellCasted(false))
-    {
-        SpellSchoolMask schoolMask = SPELL_SCHOOL_MASK_NONE;
-        if (Spell* pSpell = pAttacker->m_currentSpells[CURRENT_GENERIC_SPELL])
-            schoolMask = SpellSchoolMask(pSpell->GetSpellInfo()->SchoolMask);
-        else if (Spell* pSpell = pAttacker->m_currentSpells[CURRENT_CHANNELED_SPELL])
-            schoolMask = SpellSchoolMask(pSpell->GetSpellInfo()->SchoolMask);
-
-        if (target->IsImmunedToDamage(schoolMask, false))
-            return true;
-    }
-
-    // disorient and confuse effects
-    if (target->hasUnitState(UNIT_STAT_CONFUSED))
-        return true;
-
-    // is this needed ? Oo if not then next check if also useless ;)
-    // check if target is charmed by friendly player
-    if (target->isCharmed() && pAttacker->IsFriendlyTo(target))
-        return true;
-
-    // check if target is friendly because of faction or forced reactions
-    FactionTemplateEntry const* faction = pAttacker->getFactionTemplateEntry();
-    if (faction && target->GetTypeId() == TYPEID_PLAYER)
-    {
-        ReputationRank const * rank = ((Player const*)target)->GetReputationMgr().GetForcedRankIfAny(faction);
-        if (rank && (*rank) >= REP_FRIENDLY)
-            return true;
-    }
-
-    // target has Spirit of Redemption aura (shapeshift effect) or should be ignored
-    if (target->HasAuraType(SPELL_AURA_SPIRIT_OF_REDEMPTION) || target->HasAuraType(SPELL_AURA_IGNORED))
-        return true;
-
-	//Check for spells that should cause an aggro drop
-	if (CheckForAggroDropSpells(target) == true)
-		return true;
-
-    // Vengeful Spirit can't be attacked
-    if (target->GetTypeId() == TYPEID_UNIT && target->GetEntry() == 23109)
-        return true;
-
-    return false;
-}
-
 //============================================================
 // Check the unit for spells that should cause an aggro drop
 bool CheckForAggroDropSpells(Unit* target) {
@@ -402,6 +347,61 @@ bool CheckForAggroDropSpells(Unit* target) {
 	}
 
 	return false;
+}
+
+bool DropAggro(Creature* pAttacker, Unit * target)
+{
+    if (!target)
+        return false;
+
+    // if target is immuned to melee dmg
+    if (target->IsImmunedToDamage(pAttacker->GetMeleeDamageSchoolMask(), false))
+        return true;
+
+    // if target is immune to actually casted spell - i think it's not good check because we don't switch spell target to proper one
+    if (pAttacker->IsNonMeleeSpellCasted(false))
+    {
+        SpellSchoolMask schoolMask = SPELL_SCHOOL_MASK_NONE;
+        if (Spell* pSpell = pAttacker->m_currentSpells[CURRENT_GENERIC_SPELL])
+            schoolMask = SpellSchoolMask(pSpell->GetSpellInfo()->SchoolMask);
+        else if (Spell* pSpell = pAttacker->m_currentSpells[CURRENT_CHANNELED_SPELL])
+            schoolMask = SpellSchoolMask(pSpell->GetSpellInfo()->SchoolMask);
+
+        if (target->IsImmunedToDamage(schoolMask, false))
+            return true;
+    }
+
+    // disorient and confuse effects
+    if (target->hasUnitState(UNIT_STAT_CONFUSED))
+        return true;
+
+    // is this needed ? Oo if not then next check if also useless ;)
+    // check if target is charmed by friendly player
+    if (target->isCharmed() && pAttacker->IsFriendlyTo(target))
+        return true;
+
+    // check if target is friendly because of faction or forced reactions
+    FactionTemplateEntry const* faction = pAttacker->getFactionTemplateEntry();
+    if (faction && target->GetTypeId() == TYPEID_PLAYER)
+    {
+        ReputationRank const * rank = ((Player const*)target)->GetReputationMgr().GetForcedRankIfAny(faction);
+        if (rank && (*rank) >= REP_FRIENDLY)
+            return true;
+    }
+
+    // target has Spirit of Redemption aura (shapeshift effect) or should be ignored
+    if (target->HasAuraType(SPELL_AURA_SPIRIT_OF_REDEMPTION) || target->HasAuraType(SPELL_AURA_IGNORED))
+        return true;
+
+	//Check for spells that should cause an aggro drop
+	if (CheckForAggroDropSpells(target) == true)
+		return true;
+
+    // Vengeful Spirit can't be attacked
+    if (target->GetTypeId() == TYPEID_UNIT && target->GetEntry() == 23109)
+        return true;
+
+    return false;
 }
 
 //============================================================
