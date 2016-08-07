@@ -285,6 +285,70 @@ void ThreatContainer::update()
     iDirty = false;
 }
 
+//============================================================
+// Check the unit for spells that should cause an aggro drop
+bool CheckForAggroDropSpells(Unit* target) {
+
+	uint32 spellArray[] = {
+		//Gouge
+		1776, 1777, 3232, 8629, 11285, 11286, 12540, 13579,13741,13792,13793,23048, 24698,28456,29425,34940,36862, 38764,38863,
+		//Iceblock
+		45438,
+		//Divine Shield
+		642,1020,
+		//Divine Protection
+		498, 5573,
+		//Polymorph
+		118, 851, 12824, 12825, 12826, 13323, 14621, 15334, 27760, 28271, 28272, 28285, 29124, 29848, 30838, 33173, 36840,38245, 38896, 41334, 43309, 46280,
+		//Dragon's Breath
+		29964, 29965, 31661, 33041, 33042, 33043, 35250, 37289,
+		//Bellowing Roar | if all target are feared, main aggro should retain aggro
+		18431,22686,36922,39427,40636,44863,
+		//Fear
+		5782, 6213, 6215, 12096, 12542, 22678, 26070, 26580, 26661, 27641, 27990, 29168, 29321, 30002, 30530, 30584, 30615, 31358, 31970, 32241, 33547, 33924,
+		34259, 38154, 38595, 38660, 39119, 39176, 39210, 39415, 41150,
+		//Terrifying Howl | same as bellowing roar
+		8715, 30752,
+		//Howl of Terror
+		5484, 17928, 39048,
+		//Seduction
+		6358, 6359, 20407, 29490, 30850, 31865, 36241,
+		//Intimidating Shout
+		5246, 20511,
+		//Death Coil
+		6789, 17925, 17926, 27223, 28412, 30500, 30741, 32709, 33130, 34437, 35954, 38065, 39661, 41070, 44142, 46283,
+		//Banish
+		710, 8994, 18647, 27565, 30231, 31797, 35182, 37527, 37546, 37833, 38009, 38791, 39622, 39674, 40370, 42354, 44765, 44836,
+		//Freezing Trap (Effect)
+		3355, 14308, 14309, 31932, 43448,
+		//Ice Trap
+		41086,
+		//Scatter Shot
+		19503, 23601, 36732, 37506, 46681, 50733,
+		//Scare Beast,
+		1513, 14326, 14327,
+		//Sap
+		2070, 6770, 11297, 30980,
+		//Cyclone
+		33786,
+		//Hibernate
+		2637, 18657, 18658,
+		//Psychic Scream
+		8122, 8124, 10888, 10890, 13704, 15398, 22884, 26042, 27610, 34322, 43432,
+		//Shackle
+		9484, 9485, 10955, 11444, 38051, 38505, 40135
+	};
+
+	uint32 size = (sizeof(spellArray) / sizeof(*spellArray));
+	for (int i = 0; i < (size); ++i) {
+		if (target->HasAura(spellArray[i]) == true) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 bool DropAggro(Creature* pAttacker, Unit * target)
 {
     if (!target)
@@ -329,11 +393,9 @@ bool DropAggro(Creature* pAttacker, Unit * target)
     if (target->HasAuraType(SPELL_AURA_SPIRIT_OF_REDEMPTION) || target->HasAuraType(SPELL_AURA_IGNORED))
         return true;
 
-    // special cases
-    if (target->HasAura(24698, 1) || // Gouge
-        target->HasAura(41086, 0) || // Ice Trap
-        target->HasAura(41197,2))    // Shield Bash
-        return true;
+	//Check for spells that should cause an aggro drop
+	if (CheckForAggroDropSpells(target) == true)
+		return true;
 
     // Vengeful Spirit can't be attacked
     if (target->GetTypeId() == TYPEID_UNIT && target->GetEntry() == 23109)
