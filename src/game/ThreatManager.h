@@ -174,7 +174,7 @@ class LOOKING4GROUP_IMPORT_EXPORT ThreatManager
 {
     public:
         friend class HostilReference;
-
+		bool checkForAggroDropSpells(Unit* target) {};
         explicit ThreatManager(Unit *pOwner);
 
         ~ThreatManager() { clearReferences(); }
