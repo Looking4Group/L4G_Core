@@ -2481,6 +2481,10 @@ void Spell::cancel()
 
 void Spell::cast(bool skipCheck)
 {
+    // send trinket message to Gladdy
+    if (m_spellInfo->Id == 42292)
+        m_caster->ToPlayer()->SendGladdyNotification();
+
     // what the fuck is done here? o.O
     SpellEntry const* spellInfo = sSpellStore.LookupEntry(GetSpellInfo()->Id);
     if (!spellInfo)
