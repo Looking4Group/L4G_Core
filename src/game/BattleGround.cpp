@@ -376,12 +376,13 @@ void BattleGround::SendPacketToTeam(uint32 TeamID, WorldPacket *packet, Player *
 
 void BattleGround::SendPacketToEnemyTeam(uint32 TeamID, WorldPacket packet)
 {
-    for (BattleGroundPlayerMap::iterator itr = m_Players.begin(); itr != m_Players.end(); ++itr){
-        if (Player *plr = sObjectMgr.GetPlayer(itr->first)){
+    for (BattleGroundPlayerMap::iterator itr = m_Players.begin(); itr != m_Players.end(); ++itr)
+    {
+        if (Player *plr = sObjectMgr.GetPlayer(itr->first))
+        {
             uint32 team = GetPlayerTeam(plr->GetGUID());
-            if (team && team != TeamID){
+            if (team && team != TeamID)
                 plr->SendPacketToSelf(&packet);
-            }
         }
     }
 }
