@@ -263,8 +263,8 @@ struct boss_high_astromancer_solarianAI : public ScriptedAI
                 {
                     Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_ARCANE_MISSILES), true);
 
-                    if(!m_creature->HasInArc(2.5f, target))
-                        target = m_creature->getVictim();
+                    //if(!m_creature->HasInArc(2.5f, target))
+                    //    target = m_creature->getVictim();
 
                     if(target)
                     {
