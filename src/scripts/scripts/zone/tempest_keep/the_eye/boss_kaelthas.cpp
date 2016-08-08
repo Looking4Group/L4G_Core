@@ -159,7 +159,8 @@ float KaelthasWeapons[7][5] =
 #define GRAVITY_Y 0.0f
 #define GRAVITY_Z 49.0f
 
-#define TIME_PHASE_2_3            125000 // Phase 2 ends approximately 2 minutes and 5 seconds after it begins
+// Phase 2 - In-Depth Look Kael'thas will summon 7 weapons during this phase and give you 95 seconds to kill as many as you can.
+#define TIME_PHASE_2_3            95000 // Phase 2 ends approximately 1 minutes and 35 seconds after it begins 
 #define TIME_PHASE_3_4            180000 // Phase 3 ends approximately 3 minutes after it begins
 
 #define KAEL_VISIBLE_RANGE  50.0f
