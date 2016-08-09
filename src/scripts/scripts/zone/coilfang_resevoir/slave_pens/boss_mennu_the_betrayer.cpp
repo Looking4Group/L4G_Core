@@ -101,7 +101,7 @@ struct boss_mennu_the_betrayerAI : public ScriptedAI
         if(NovaTotem_Timer < diff)
         {
             AddSpellToCast(m_creature, SPELL_CORRUPTED_NOVA_TOTEM);
-            NovaTotem_Timer = urand(26200, 26200);
+            NovaTotem_Timer = 26200;
         }
         else
             NovaTotem_Timer -= diff;
@@ -120,7 +120,7 @@ struct boss_mennu_the_betrayerAI : public ScriptedAI
         if(EarthGrab_Timer < diff)
         {
             AddSpellToCast(m_creature, SPELL_EARTHGRAB_TOTEM);
-            EarthGrab_Timer = urand(26200, 26200);
+            EarthGrab_Timer = 26200;
         }
         else
             EarthGrab_Timer -= diff;
