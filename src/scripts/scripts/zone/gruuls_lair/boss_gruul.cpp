@@ -141,7 +141,7 @@ struct boss_gruulAI : public ScriptedAI
             }
 
             DoZoneInCombat();
-            me->SetSpeed(MOVE_RUN, 2.0f);
+            //me->SetSpeed(MOVE_RUN, 2.0f);
             Check_Timer= 3000;
         }
         else
@@ -162,7 +162,7 @@ struct boss_gruulAI : public ScriptedAI
         if (Reverberation_Timer < diff)
         {
             AddSpellToCast(SPELL_REVERBERATION, CAST_NULL);
-            Reverberation_Timer = 30000;
+            Reverberation_Timer = urand(15000, 25000);
         }
         else
             Reverberation_Timer -= diff;
@@ -228,7 +228,7 @@ struct boss_gruulAI : public ScriptedAI
                 me->GetMotionMaster()->MoveIdle();
                 me->SetSelection(0);
 
-                ShatterTimer = 15000;
+                ShatterTimer = 10000;
                 GroundSlamTimer = urand(60000, 65000);
 
                 // is this true ? Oo
