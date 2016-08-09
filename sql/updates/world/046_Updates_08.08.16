@@ -188,4 +188,10 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('1646012','16460','7','0','100','2','0','0','0','0','28','0','29488','0','21','1','0','0','22','0','0','0','Night Mistress - Remove Night Mistress Transform and Set Phase 0 on Evade');
 
 -- Shattered Hand Reaver 20590
-UPDATE `creature_template` SET `mechanic_immune_mask`=1089 WHERE `entry` IN (20590);
+UPDATE `creature_template` SET `mechanic_immune_mask`=1089 WHERE `entry` = 20590;
+-- Shattered Hand Zealot 20595
+UPDATE `creature_template` SET `equipment_id`=990,`mindmg`=1600,`maxdmg`=2400 WHERE `entry` = 20595;
+
+-- Warbringer O'mrogg 16809,20596
+UPDATE `creature_template` SET `mindmg`='1677',`maxdmg`='2210',`speed`='1.00' WHERE `entry` IN ('16809'); -- 638 1305 s1 2h hammer -- 638 1305 -- 2,096 - 2,763
+UPDATE `creature_template` SET `mindmg`='5623',`maxdmg`='5936',`pickpocketloot`='16809',`speed`='1.00' WHERE `entry` IN (20596); -- 2255 2802 -- 9,841 - 10,388
