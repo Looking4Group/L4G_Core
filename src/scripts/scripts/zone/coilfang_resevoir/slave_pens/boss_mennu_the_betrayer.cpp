@@ -44,11 +44,11 @@ struct boss_mennu_the_betrayerAI : public ScriptedAI
     {
         ClearCastQueue();
 
-        HealingWard_Timer = 15000;
-        NovaTotem_Timer = 45000;
-        LightningBolt_Timer = 10000;
-        EarthGrab_Timer = 15000;
-        StoneSkin_Timer = 15000;
+        HealingWard_Timer = urand(15700, 22900);
+        NovaTotem_Timer = urand(20200, 30600);
+        LightningBolt_Timer = urand(12100, 18500);
+        EarthGrab_Timer = urand(19200, 23300);
+        StoneSkin_Timer = urand(13700, 18000);
         Summons.DespawnAll();
     }
 
@@ -93,7 +93,7 @@ struct boss_mennu_the_betrayerAI : public ScriptedAI
         if(HealingWard_Timer < diff)
         {
             AddSpellToCast(m_creature, SPELL_HEALING_WARD);
-            HealingWard_Timer = 30000;
+            HealingWard_Timer = urand(15700, 22900);
         }
         else
             HealingWard_Timer -= diff;
@@ -101,7 +101,7 @@ struct boss_mennu_the_betrayerAI : public ScriptedAI
         if(NovaTotem_Timer < diff)
         {
             AddSpellToCast(m_creature, SPELL_CORRUPTED_NOVA_TOTEM);
-            NovaTotem_Timer = 45000;
+            NovaTotem_Timer = 26200;
         }
         else
             NovaTotem_Timer -= diff;
@@ -112,7 +112,7 @@ struct boss_mennu_the_betrayerAI : public ScriptedAI
                 AddCustomSpellToCast(m_creature->getVictim(), SPELL_LIGHTNING_BOLT,142,0,0);
             else
             AddCustomSpellToCast(m_creature->getVictim(), SPELL_LIGHTNING_BOLT,175,0,0);
-            LightningBolt_Timer = 10000;
+            LightningBolt_Timer = urand(19300, 29100);
         }
         else
             LightningBolt_Timer -= diff;
@@ -120,7 +120,7 @@ struct boss_mennu_the_betrayerAI : public ScriptedAI
         if(EarthGrab_Timer < diff)
         {
             AddSpellToCast(m_creature, SPELL_EARTHGRAB_TOTEM);
-            EarthGrab_Timer = 30000;
+            EarthGrab_Timer = 26200;
         }
         else
             EarthGrab_Timer -= diff;
@@ -128,7 +128,7 @@ struct boss_mennu_the_betrayerAI : public ScriptedAI
         if(StoneSkin_Timer < diff)
         {
             AddSpellToCast(m_creature, SPELL_STONESKIN_TOTEM);
-            StoneSkin_Timer = 60000;
+            StoneSkin_Timer = urand(25400, 33800);
         }
         else
             StoneSkin_Timer -= diff;
