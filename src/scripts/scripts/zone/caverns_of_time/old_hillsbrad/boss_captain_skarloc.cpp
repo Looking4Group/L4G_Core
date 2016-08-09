@@ -76,10 +76,10 @@ struct boss_captain_skarlocAI : public ScriptedAI
         Add1GUID = 0;
         Add2GUID = 0;
         IntroTimer = 20000;
-        Holy_Light_Timer = 30000;
-        Cleanse_Timer = 10000;
-        HammerOfJustice_Timer = 60000;
-        HolyShield_Timer = 240000;
+        Holy_Light_Timer = urand(13300, 15700);
+        Cleanse_Timer = urand(10000, 14000);
+        HammerOfJustice_Timer = urand(2200, 6400);
+        HolyShield_Timer = urand(2200, 4300);
         DevotionAura_Timer = 3000;
         Consecration_Timer = 8000;
         me->SetReactState(REACT_PASSIVE);
@@ -243,7 +243,7 @@ struct boss_captain_skarlocAI : public ScriptedAI
         if (Holy_Light_Timer < diff)
         {
             DoCast(me, SPELL_HOLY_LIGHT);
-            Holy_Light_Timer = 30000;
+            Holy_Light_Timer = urand(13300, 15700);
         }
         else
             Holy_Light_Timer -= diff;
@@ -252,7 +252,7 @@ struct boss_captain_skarlocAI : public ScriptedAI
         if(Cleanse_Timer  < diff)
         {
             DoCast(me, SPELL_CLEANSE);
-            Cleanse_Timer = 10000;
+            Cleanse_Timer = urand(10000, 14000);
         }
         else
             Cleanse_Timer -= diff;
@@ -261,7 +261,7 @@ struct boss_captain_skarlocAI : public ScriptedAI
         if (HammerOfJustice_Timer < diff)
         {
             DoCast(me->getVictim(), SPELL_HAMMER_OF_JUSTICE);
-            HammerOfJustice_Timer = 60000;
+            HammerOfJustice_Timer = urand(10800, 15200);
         }
         else
             HammerOfJustice_Timer -= diff;
@@ -270,7 +270,7 @@ struct boss_captain_skarlocAI : public ScriptedAI
         if(HolyShield_Timer < diff)
         {
             DoCast(me, SPELL_HOLY_SHIELD);
-            HolyShield_Timer = 240000;
+            HolyShield_Timer = urand(13300, 21700);
         }
         else
             HolyShield_Timer -= diff;
