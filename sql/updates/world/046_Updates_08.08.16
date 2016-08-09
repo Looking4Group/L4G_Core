@@ -186,3 +186,6 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('1646010','16460','0','5','100','3','8000','10000','9000','12000','11','30358','5','0','0','0','0','0','0','0','0','0','Night Mistress - Cast Searing Pain'),
 ('1646011','16460','3','3','100','3','100','15','1000','1000','23','-1','0','0','0','0','0','0','0','0','0','0','Night Mistress - Set Phase 1 when Mana is above 15% (Phase 2)'),
 ('1646012','16460','7','0','100','2','0','0','0','0','28','0','29488','0','21','1','0','0','22','0','0','0','Night Mistress - Remove Night Mistress Transform and Set Phase 0 on Evade');
+
+-- Shattered Hand Reaver 20590
+UPDATE `creature_template` SET `mechanic_immune_mask`=1089 WHERE `entry` IN (20590);
