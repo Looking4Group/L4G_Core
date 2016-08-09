@@ -47,7 +47,7 @@ struct boss_temporusAI : public ScriptedAI
 
     ScriptedInstance *pInstance;
     bool HeroicMode;
-    bool canApplyWound;
+    //bool canApplyWound;
 
     uint32 MortalWound_Timer;
     uint32 WingBuffet_Timer;
@@ -56,11 +56,11 @@ struct boss_temporusAI : public ScriptedAI
 
     void Reset()
     {
-        MortalWound_Timer = 5000;
-        canApplyWound = false;
+        MortalWound_Timer = 8000;
+        //canApplyWound = false;
         WingBuffet_Timer = 10000;
-        Haste_Timer = 20000;
-        SpellReflection_Timer = 40000;
+        Haste_Timer = urand(15000, 23000);
+        SpellReflection_Timer = 30000;
         m_creature->setActive(true);
 
         SayIntro();
@@ -108,10 +108,10 @@ struct boss_temporusAI : public ScriptedAI
 
     void DamageMade(Unit* target, uint32 & damage, bool direct_damage)
     {
-        if (canApplyWound)
+        //if (canApplyWound)
             me->CastSpell(target, SPELL_MORTAL_WOUND, true);
 
-        canApplyWound = false;
+        //canApplyWound = false;
     }
 
     void UpdateAI(const uint32 diff)
@@ -141,7 +141,7 @@ struct boss_temporusAI : public ScriptedAI
         //Mortal Wound
         if (MortalWound_Timer < diff)
         {
-            canApplyWound = true;
+            //canApplyWound = true;
 
             if (m_creature->HasAura(SPELL_HASTE, 0))
                 MortalWound_Timer = urand(2000, 3000);
@@ -155,7 +155,7 @@ struct boss_temporusAI : public ScriptedAI
         if (HeroicMode && SpellReflection_Timer < diff)
         {
             AddSpellToCast(m_creature, SPELL_REFLECT);
-            SpellReflection_Timer = urand(40000, 50000);
+            SpellReflection_Timer = urand(25000, 35000);
         }
         else
             SpellReflection_Timer -= diff;
