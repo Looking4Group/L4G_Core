@@ -266,7 +266,7 @@ struct boss_olm_the_summonerAI : public BossAI
                 }
                 case EVENT_DEATH_COIL:
                 {
-                    AddSpellToCast(SPELL_DEATH_COIL, CAST_RANDOM);
+                    AddSpellToCast(SPELL_DEATH_COIL, CAST_TANK);
                     events.ScheduleEvent(eventId, urand(8000, 13000));
                     break;
                 }
