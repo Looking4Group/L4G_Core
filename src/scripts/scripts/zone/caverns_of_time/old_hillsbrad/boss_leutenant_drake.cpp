@@ -211,7 +211,7 @@ struct boss_lieutenant_drakeAI : public ScriptedAI
             if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM,1, GetSpellMaxRange(SPELL_EXPLODING_SHOT), true, me->getVictimGUID()))
                 DoCast(target, SPELL_EXPLODING_SHOT);
             else
-                DoCast(me->getVictim(),SPELL_EXPLODING_SHOT);
+                DoCast(me->getVictim(), SPELL_EXPLODING_SHOT);
                 
             ExplodingShot_Timer = urand(12100, 26600);
         }else ExplodingShot_Timer -= diff;
