@@ -303,7 +303,7 @@ struct boss_kiggler_the_crazedAI : public BossAI
         events.Reset();
         ClearCastQueue();
 
-        events.ScheduleEvent(EVENT_POLYMORPH, urand(12000, 18000)); //Probably too quick
+        events.ScheduleEvent(EVENT_POLYMORPH, urand(10000, 20000)); //Probably too quick
         events.ScheduleEvent(EVENT_ARCANE_SHOCK, 20000);
         events.ScheduleEvent(EVENT_ARCANE_EXPLO, 30000);
 
@@ -344,7 +344,7 @@ struct boss_kiggler_the_crazedAI : public BossAI
                 case EVENT_POLYMORPH:
                 {
                     AddSpellToCast(SPELL_GREATER_POLYMORPH, CAST_TANK);
-                    events.ScheduleEvent(eventId, urand(15000, 20000));
+                    events.ScheduleEvent(eventId, urand(10000, 20000));
                     break;
                 }
                 case EVENT_ARCANE_SHOCK:
