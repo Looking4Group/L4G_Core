@@ -162,7 +162,7 @@ struct boss_gruulAI : public ScriptedAI
         if (Reverberation_Timer < diff)
         {
             AddSpellToCast(SPELL_REVERBERATION, CAST_NULL);
-            Reverberation_Timer = urand(15000, 25000);
+            Reverberation_Timer = 30000;
         }
         else
             Reverberation_Timer -= diff;
