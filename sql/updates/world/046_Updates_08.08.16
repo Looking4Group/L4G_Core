@@ -193,5 +193,98 @@ UPDATE `creature_template` SET `mechanic_immune_mask`=1089 WHERE `entry` = 20590
 UPDATE `creature_template` SET `equipment_id`=990,`mindmg`=1600,`maxdmg`=2400 WHERE `entry` = 20595;
 
 -- Warbringer O'mrogg 16809,20596
-UPDATE `creature_template` SET `mindmg`='1677',`maxdmg`='2210',`speed`='1.00' WHERE `entry` IN ('16809'); -- 638 1305 s1 2h hammer -- 638 1305 -- 2,096 - 2,763
-UPDATE `creature_template` SET `mindmg`='5623',`maxdmg`='5936',`pickpocketloot`='16809',`speed`='1.00' WHERE `entry` IN (20596); -- 2255 2802 -- 9,841 - 10,388
+UPDATE `creature_template` SET `mindmg`='1677',`maxdmg`='2210',`speed`='1.20' WHERE `entry` IN ('16809'); -- 638 1305 s1 2h hammer -- 638 1305 -- 2,096 - 2,763
+UPDATE `creature_template` SET `mindmg`='5623',`maxdmg`='5936',`pickpocketloot`='16809',`speed`='1.20' WHERE `entry` IN (20596); -- 2255 2802 -- 9,841 - 10,388
+
+-- Call for Help on Aggro Prenerf
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN ('21920');
+INSERT INTO `creature_ai_scripts` VALUES
+('2192001','21920','9','0','100','3','0','5','5900','7100','11','41932','1','0','0','0','0','0','0','0','0','0','Tidewalker Lurker - Cast Carnivorous Bite'),
+('2192002','21920','4','0','100','2','0','0','0','0','39','15','0','0','0','0','0','0','0','0','0','0','Tidewalker Lurker - Call for Help on Aggro');
+
+-- 20041 Emote on 37106 Spellcast
+-- -9711 - -9720
+DELETE FROM `creature_ai_texts` WHERE `entry` BETWEEN -9711 AND -9720;
+INSERT INTO `creature_ai_texts` VALUES
+(-9711,''s hand begins to glow with Arcane energy.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,2,0,0,'20041 on Overcharged Arcane Explosion Spellcast'),
+(-9712,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'TKPlaceholder'),
+(-9713,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'TKPlaceholder'),
+(-9714,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'TKPlaceholder'),
+(-9715,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'TKPlaceholder'),
+(-9716,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'TKPlaceholder'),
+(-9717,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'TKPlaceholder'),
+(-9718,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'TKPlaceholder'),
+(-9719,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'TKPlaceholder'),
+(-9720,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'TKPlaceholder');
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN ('20041');
+INSERT INTO `creature_ai_scripts` VALUES
+('2004101','20041','0','0','100','3','9000','14000','25000','35000','11','37104','1','0','0','0','0','0','0','0','0','0','Crystalcore Sentinel - Cast Overcharge'), -- 4
+('2004102','20041','0','0','100','3','21000','25000','25000','30000','11','37106','0','0','1','-9711','0','0','0','0','0','0','Crystalcore Sentinel - Cast Charged Arcane Explosion and Emote'),
+('2004103','20041','2','0','100','2','15','0','0','0','11','34937','0','1','0','0','0','0','0','0','0','0','Crystalcore Sentinel - Cast Power Down at 15% HP'),
+('2004104','20041','0','0','100','3','4000','8000','8000','16000','11','40492','0','0','0','0','0','0','0','0','0','0','Crystalcore Sentinel - Cast Trample');
+
+-- Thaladred the Darkener <Advisor to Kael'thas> 20064
+-- 378000 -> 491400
+-- http://wowwiki.wikia.com/wiki/Thaladred_the_Darkener
+UPDATE `creature_template` SET `minhealth`='756000',`maxhealth`='756000',`rank`= 3, `speed`='0.8',`mindmg`='10548',`maxdmg`='12527',`mechanic_immune_mask`='653213695' WHERE `entry` IN ('20064'); -- 756000 1 XXX 3790 7747 -- 21,096 - 25,053
+--
+-- Lord Sanguinar <The Blood Hammer> 20060
+-- 376000 -> 488800
+-- http://wowwiki.wikia.com/wiki/Lord_Sanguinar
+UPDATE `creature_template` SET `minhealth`='752000',`maxhealth`='752000',`rank`='3',`speed`='1.48',`mindmg`='7501',`maxdmg`='8908',`mechanic_immune_mask`='653213695' WHERE `entry` IN ('20060'); -- 552000 1 3369 6886 -- 18,752 - 22,269
+--
+-- Grand Astromancer Capernian <Advisor to Kael'thas> 20062
+-- 281000 -> 365300
+-- http://wowwiki.wikia.com/wiki/Grand_Astromancer_Capernian
+UPDATE `creature_template` SET `minhealth`='562000',`maxhealth`='562000',`rank`='3',`armor`='6700',`speed`='2',`mindmg`='2754',`maxdmg`='3312',`baseattacktime`='2000' WHERE `entry` IN ('20062'); -- 562000 1 959 2074 -- 5,508 - 6,623
+--
+-- Master Engineer Telonicus <Advisor to Kael'thas> 20063
+-- 377000 -> 490100
+-- http://wowwiki.wikia.com/wiki/Master_Engineer_Telonicus
+UPDATE `creature_template` SET `minhealth`='754000',`maxhealth`='754000',`rank`='3',`mindmg`='6692',`maxdmg`='7192' WHERE `entry` IN ('20063'); -- 754000 1 2754 3312 -- 13,383 - 14,383
+
+-- weapon wowhead nerf * 1.57533987 +10% (documented nerf) +30% buff (talents / knowledge)
+-- Netherstrand Longbow 21268
+-- weapon_advisor
+-- ~210,000 HP (208000) + 10% nerf for advisor+weapon 231000 -> 300300
+UPDATE `creature_template` SET `minhealth`='231000',`maxhealth`='231000',`speed`='1.48',`mindmg`='4179',`maxdmg`='4963',`mechanic_immune_mask`='1040135103',`flags_extra`='4194304'  WHERE `entry` IN ('21268'); -- 216000 1502 3070 -- 8,358 - 9,926
+--
+-- Devastation 21269
+-- ~230,000 HP + 10% 253000 -> 328900
+-- http://wowwiki.wikia.com/wiki/Kael%27thas_Sunstrider_(tactics)?oldid=1139113
+-- Also has much higher HP than the other weapons. 
+UPDATE `creature_template` SET `minhealth`='253000',`maxhealth`='253000',`speed`='1.48',`mindmg`='8358',`maxdmg`='9926',`mechanic_immune_mask`='1040135103',`flags_extra`='4194304'  WHERE `entry` IN ('21269'); -- 220059 3003 6139 --  16,716 - 19,852
+--
+-- Cosmic Infuser 21270
+-- ~280,000 HP  + 10% nerf for advisor+weapon 308000 -> 400400 
+UPDATE `creature_template` SET `minhealth`='308000',`maxhealth`='308000',`speed`='1.48',`mindmg`='4179',`maxdmg`='4963',`baseattacktime`='1400',`mechanic_immune_mask`='1040135103',`flags_extra`='4194304'  WHERE `entry` IN ('21270'); -- 251496 1502 3070 2000 -- 8,358 - 9,926
+--
+-- Infinity Blades 21271
+-- ~210,000 HP + 10% 231000 -> 300300
+UPDATE `creature_template` SET `minhealth`='231000',`maxhealth`='231000',`speed`='1.48',`mindmg`='5000',`maxdmg`='6111',`mechanic_immune_mask`='1040135103',`flags_extra`='4194304'  WHERE `entry` IN ('21271'); -- 210000 1667 3889 -- 9,999 - 12,221
+--
+-- Warp Slicer 21272
+-- ~290,000 HP + 10% 319000 -> 414700
+UPDATE `creature_template` SET `minhealth`='319000',`maxhealth`='319000',`speed`='1.48',`mindmg`='6686',`maxdmg`='7941',`mechanic_immune_mask`='1040135103',`flags_extra`='4194304'  WHERE `entry` IN ('21272'); -- 251496 1502 3070 -- 8,358 - 9,926
+--
+-- Phaseshift Bulwark 21273
+-- ~290,000 HP + 10% 319000 -> 414700
+UPDATE `creature_template` SET `minhealth`='319000',`maxhealth`='319000',`speed`='1.48',`mindmg`='3999',`maxdmg`='4444',`mechanic_immune_mask`='1040135103',`flags_extra`='4194304'  WHERE `entry` IN ('21273'); -- 340000 1666 2555 -- 7,998 - 8,887
+--
+-- Staff of Disintegration 21274
+-- ~170,000 HP + 10% 187000 -> 243100
+UPDATE `creature_template` SET `minhealth`='187000',`maxhealth`='187000',`speed`='1.48',`mindmg`='4179',`maxdmg`='4963',`mechanic_immune_mask`='1040135103',`flags_extra`='4194304'  WHERE `entry` IN ('21274'); -- 160496 1502 3070 -- 8,358 - 9,926
+
+-- Phoenix Egg 21364
+-- mob_phoenix_egg_tk
+-- 70k HP + 10% 77 -> 100100
+UPDATE `creature_template` SET `minhealth`='77000',`maxhealth`='77000',`armor`='5800',`mindmg`='0',`maxdmg`='0',`baseattacktime`='0',`unit_flags`=`unit_flags`|'262144',`dynamicflags`='8',`flags_extra`='4194304' WHERE `entry` IN ('21364'); -- 69000
+--
+-- Phoenix 21362
+-- http://www.wowhead.com/npc=21362/phoenix#abilities 
+-- ~ 177458 + 10% 195204 -> 253765
+-- added stun immunity
+UPDATE `creature_template` SET `minhealth`='195204',`maxhealth`='195204',`speed`='1.20',`mindmg`='2278',`maxdmg`='3309',`mechanic_immune_mask`='1073561599',`flags_extra`='4194304' WHERE `entry` IN ('21362'); -- 174650 1001 2046 -- 5,572 - 6,617 
+
+UPDATE `autobroadcast` SET `text`='T5 PTR Testphase: SSC closed and TK closing on 21.08.16. T5 Release Trailer in development.' WHERE `id` = 5;
