@@ -50,12 +50,15 @@ bool GOUse_go_barrel_old_hillsbrad(Player *player, GameObject* go)
 ## boss_lieutenant_drake
 ######*/
 
-#define SAY_AGGRO                  -1560007
-#define SAY_SLAY1                  -1560008
-#define SAY_SLAY2                  -1560009
-#define SAY_MORTAL                 -1560010
-#define SAY_SHOUT                  -1560011
-#define SAY_DEATH                  -1560012
+enum Texts
+{
+    SAY_AGGRO                 = -1560007,
+    SAY_SLAY1                 = -1560008,
+    SAY_SLAY2                 = -1560009,
+    SAY_MORTAL                = -1560010,
+    SAY_SHOUT                 = -1560011,
+    SAY_DEATH                 = -1560012
+};
 
 enum Spells
 {
