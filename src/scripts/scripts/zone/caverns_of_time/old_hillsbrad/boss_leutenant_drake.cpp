@@ -57,11 +57,14 @@ bool GOUse_go_barrel_old_hillsbrad(Player *player, GameObject* go)
 #define SAY_SHOUT                  -1560011
 #define SAY_DEATH                  -1560012
 
-#define SPELL_WHIRLWIND            31909
-#define SPELL_HAMSTRING            9080
-#define SPELL_MORTAL_STRIKE        31911
-#define SPELL_FRIGHTENING_SHOUT    33789
-#define SPELL_EXPLODING_SHOT       33792    
+enum Spells
+{
+    SPELL_WHIRLWIND           = 31909,
+    SPELL_HAMSTRING           = 9080,
+    SPELL_MORTAL_STRIKE       = 31911,
+    SPELL_FRIGHTENING_SHOUT   = 33789,
+    SPELL_EXPLODING_SHOT      = 33792
+};
 
 struct Location
 {
@@ -184,7 +187,7 @@ struct boss_lieutenant_drakeAI : public ScriptedAI
         {
             DoCast(me->getVictim(), SPELL_WHIRLWIND);
             Whirlwind_Timer = urand(18100, 22900);
-        }else Whirlwind_Timer -= diff;
+        } else Whirlwind_Timer -= diff;
 
         //Fear
         if (Fear_Timer < diff)
@@ -192,7 +195,7 @@ struct boss_lieutenant_drakeAI : public ScriptedAI
             DoScriptText(SAY_SHOUT, me);
             DoCast(me->getVictim(), SPELL_FRIGHTENING_SHOUT);
             Fear_Timer = urand(25000, 35000);
-        }else Fear_Timer -= diff;
+        } else Fear_Timer -= diff;
 
         //Mortal Strike
         if (MortalStrike_Timer < diff)
@@ -200,7 +203,7 @@ struct boss_lieutenant_drakeAI : public ScriptedAI
             DoScriptText(SAY_MORTAL, me);
             DoCast(me->getVictim(), SPELL_MORTAL_STRIKE);
             MortalStrike_Timer = urand(16900, 27800);
-        }else MortalStrike_Timer -= diff;
+        } else MortalStrike_Timer -= diff;
         
         //Exploding Shot
         if (ExplodingShot_Timer < diff)
@@ -214,14 +217,14 @@ struct boss_lieutenant_drakeAI : public ScriptedAI
                 DoCast(me->getVictim(), SPELL_EXPLODING_SHOT);
                 
             ExplodingShot_Timer = urand(12100, 26600);
-        }else ExplodingShot_Timer -= diff;
+        } else ExplodingShot_Timer -= diff;
         
         //Harmstring
         if (Harmstring_Timer < diff)
         {
             DoCast(me->getVictim(), SPELL_HAMSTRING);
             Harmstring_Timer = urand(7200, 22900);
-        }else Harmstring_Timer -= diff;
+        } else Harmstring_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }
