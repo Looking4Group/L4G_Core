@@ -310,3 +310,6 @@ UPDATE `creature_template` SET `minlevel`=70,`maxlevel`=70,`minhealth`=140000,`m
 UPDATE `creature` SET `position_x`='-28.4099', `position_y`='-86.7979', `position_z`='-0.1248', `orientation`='2.5604' WHERE `guid` IN ('83319');
 UPDATE `creature` SET `position_x`='-99.9899', `position_y`='-102.1105', `position_z`='-0.8251', `orientation`='0.9817' WHERE `guid` IN ('83310');
 UPDATE `creature` SET `position_x`='-106.1641', `position_y`='-96.3666', `position_z`='-0.6624', `orientation`='0.9267' WHERE `guid` IN ('83309');
+
+INSERT INTO `creature` (`guid`, `id`, `map`, `spawnMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES (88813, 15990, 533, 1, 0, 0, 3746.41, -5113.35, 142.031, 2.93162, 28800, 0, 0, 3198000, 1572000, 0, 0);
+INSERT INTO `creature_linked_respawn` VALUES (88813,88813);
