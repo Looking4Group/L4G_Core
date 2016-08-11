@@ -50,23 +50,20 @@ bool GOUse_go_barrel_old_hillsbrad(Player *player, GameObject* go)
 ## boss_lieutenant_drake
 ######*/
 
-enum Texts
+enum
 {
     SAY_AGGRO                 = -1560007,
     SAY_SLAY1                 = -1560008,
     SAY_SLAY2                 = -1560009,
     SAY_MORTAL                = -1560010,
     SAY_SHOUT                 = -1560011,
-    SAY_DEATH                 = -1560012
-};
+    SAY_DEATH                 = -1560012,
 
-enum Spells
-{
     SPELL_WHIRLWIND           = 31909,
     SPELL_HAMSTRING           = 9080,
     SPELL_MORTAL_STRIKE       = 31911,
     SPELL_FRIGHTENING_SHOUT   = 33789,
-    SPELL_EXPLODING_SHOT      = 33792
+    SPELL_EXPLODING_SHOT      = 33792,
 };
 
 struct Location
