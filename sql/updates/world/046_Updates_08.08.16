@@ -306,3 +306,7 @@ INSERT INTO `creature_ai_scripts` VALUES
 -- http://www.wowhead.com/npc=19551/ember-of-alar#abilities http://wowwiki.wikia.com/wiki/Ember_of_Al'ar
 -- Hit for ~1500 damage.  mob_ember_of_alar
 UPDATE `creature_template` SET `minlevel`=70,`maxlevel`=70,`minhealth`=140000,`maxhealth`=140000,`speed`=2,`mindmg`=4196,`maxdmg`=4292, `dmgschool` = 2, `baseattacktime`=1400,`resistance2`=-1,`mechanic_immune_mask`=75644246,`flags_extra`=4194304 WHERE `entry` = 19551; -- 140000 1520 1664 0 2000 -- 6,294 - 6,438
+
+UPDATE `creature` SET `position_x`='-28.4099', `position_y`='-86.7979', `position_z`='-0.1248', `orientation`='2.5604' WHERE `guid` IN ('83319');
+UPDATE `creature` SET `position_x`='-99.9899', `position_y`='-102.1105', `position_z`='-0.8251', `orientation`='0.9817' WHERE `guid` IN ('83310');
+UPDATE `creature` SET `position_x`='-106.1641', `position_y`='-96.3666', `position_z`='-0.6624', `orientation`='0.9267' WHERE `guid` IN ('83309');
