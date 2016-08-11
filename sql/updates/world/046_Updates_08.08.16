@@ -206,7 +206,7 @@ INSERT INTO `creature_ai_scripts` VALUES
 -- -9711 - -9720
 DELETE FROM `creature_ai_texts` WHERE `entry` BETWEEN -9711 AND -9720;
 INSERT INTO `creature_ai_texts` VALUES
-(-9711,''s hand begins to glow with Arcane energy.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,2,0,0,'20041 on Overcharged Arcane Explosion Spellcast'),
+(-9711,'\'s hand begins to glow with Arcane energy.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,2,0,0,'20041 on Overcharged Arcane Explosion Spellcast'),
 (-9712,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'TKPlaceholder'),
 (-9713,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'TKPlaceholder'),
 (-9714,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'TKPlaceholder'),
@@ -288,3 +288,21 @@ UPDATE `creature_template` SET `minhealth`='77000',`maxhealth`='77000',`armor`='
 UPDATE `creature_template` SET `minhealth`='195204',`maxhealth`='195204',`speed`='1.20',`mindmg`='2278',`maxdmg`='3309',`mechanic_immune_mask`='1073561599',`flags_extra`='4194304' WHERE `entry` IN ('21362'); -- 174650 1001 2046 -- 5,572 - 6,617 
 
 UPDATE `autobroadcast` SET `text`='T5 PTR Testphase: SSC closed and TK closing on 21.08.16. T5 Release Trailer in development.' WHERE `id` = 5;
+
+DELETE FROM `creature_ai_scripts` WHERE `id` IN ('1831105','1831106');
+INSERT INTO `creature_ai_scripts` VALUES 
+('1831105','18311','4','0','15','7','0','0','0','0','1','-1237','-1238','-1239','0','0','0','0','0','0','0','0','Ethereal Crypt Raider - Random Say on Aggro'),
+('1831106','18311','4','0','100','6','0','0','0','0','39','8','0','0','0','0','0','0','0','0','0','0','Ethereal Crypt Raider - Call for Help on Aggro');
+DELETE FROM `creature_ai_scripts` WHERE `id` IN ('1830904','1830905');
+INSERT INTO `creature_ai_scripts` VALUES 
+('1830904','18309','4','0','15','7','0','0','0','0','1','-1236','-1237','-1239','0','0','0','0','0','0','0','0','Ethereal Scavenger - Random Say on Aggro'),
+('1830905','18309','4','0','100','6','0','0','0','0','39','8','0','0','0','0','0','0','0','0','0','0','Ethereal Scavenger - Call for Help on Aggro');
+
+DELETE FROM `creature_ai_scripts` WHERE `id` IN ('1831405');
+INSERT INTO `creature_ai_scripts` VALUES 
+(1831405,18314,4,0,100,7,0,0,0,0,11,29651,0,7,0,0,0,0,0,0,0,0,'Nexus Stalker - Casts Dual Wield on Aggro');
+
+-- Ember of Al'ar 19551
+-- http://www.wowhead.com/npc=19551/ember-of-alar#abilities http://wowwiki.wikia.com/wiki/Ember_of_Al'ar
+-- Hit for ~1500 damage.  mob_ember_of_alar
+UPDATE `creature_template` SET `minlevel`=70,`maxlevel`=70,`minhealth`=140000,`maxhealth`=140000,`speed`=2,`mindmg`=4196,`maxdmg`=4292, `dmgschool` = 2, `baseattacktime`=1400,`resistance2`=-1,`mechanic_immune_mask`=75644246,`flags_extra`=4194304 WHERE `entry` = 19551; -- 140000 1520 1664 0 2000 -- 6,294 - 6,438
