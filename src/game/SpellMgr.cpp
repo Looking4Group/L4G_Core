@@ -3581,8 +3581,8 @@ void SpellMgr::LoadSpellCustomAttr()
             case 32686: //earthsquake doomwalker 
                 spellInfo->AttributesCu |= SPELL_ATTR_CU_IGNORE_ARMOR; 
                 break;
-            case 44032: // Mind Exhaust  Magtheridon
-                spellInfo->DurationIndex = 23;
+            case 44032: // Mind Exhaustion Magtheridon
+                spellInfo->DurationIndex = 25;
             break;
             case 24869: //Halooween food
                 spellInfo->Effect[2] = 6;
