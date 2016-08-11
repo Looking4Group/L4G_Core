@@ -208,10 +208,7 @@ struct boss_lieutenant_drakeAI : public ScriptedAI
         //Exploding Shot
         if (ExplodingShot_Timer < diff)
         {
-            if (me->IsNonMeleeSpellCasted(false))
-                return;
-                
-            if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM,1, GetSpellMaxRange(SPELL_EXPLODING_SHOT), true, me->getVictimGUID()))
+            if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 1, GetSpellMaxRange(SPELL_EXPLODING_SHOT), true, me->getVictimGUID()))
                 DoCast(target, SPELL_EXPLODING_SHOT);
             else
                 DoCast(me->getVictim(), SPELL_EXPLODING_SHOT);
