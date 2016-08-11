@@ -63,7 +63,7 @@ enum
     SPELL_HAMSTRING           = 9080,
     SPELL_MORTAL_STRIKE       = 31911,
     SPELL_FRIGHTENING_SHOUT   = 33789,
-    SPELL_EXPLODING_SHOT      = 33792,
+    SPELL_EXPLODING_SHOT      = 33792
 };
 
 struct Location
