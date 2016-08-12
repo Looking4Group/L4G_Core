@@ -3397,13 +3397,17 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->AttributesEx2 |= SPELL_ATTR_EX2_IGNORE_LOS;
                 break;
             case 835:   // Tidal Charm
+            case 13120: // Net-o-Matic
+            case 15712: // Linken's Boomerang
             case 21358: // Aqual Quintessence / Eternal Quintessence
-            case 47977: // Broom Broom
-            case 42679:
-            case 42673:
-            case 42680:
-            case 42681:
-            case 42683:
+            case 30452: // Rocket Boots Engaged (triggered Buff)
+            case 51582: // Rocket Boots Engaged (Boots Spell)
+            case 47977: // Event Broom Mounts without Casttime 
+            case 42679: 
+            case 42673: 
+            case 42680: 
+            case 42681: 
+            case 42683: 
             case 42684:
                 spellInfo->AttributesEx4 |= SPELL_ATTR_EX4_NOT_USABLE_IN_ARENA;
                 break;
