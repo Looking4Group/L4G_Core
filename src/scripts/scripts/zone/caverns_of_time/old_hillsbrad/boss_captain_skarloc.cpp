@@ -84,7 +84,7 @@ struct boss_captain_skarlocAI : public ScriptedAI
         HammerOfJustice_Timer = urand(2200, 6400);
         HolyShield_Timer = urand(2200, 4300);
         DevotionAura_Timer = 3000;
-        Consecration_Timer = 8000;
+        Consecration_Timer = HeroicMode ? 8000 : 0;
         me->SetReactState(REACT_PASSIVE);
         me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
         me->Mount(SKARLOC_MOUNT_MODEL);
@@ -287,7 +287,7 @@ struct boss_captain_skarlocAI : public ScriptedAI
         else
             DevotionAura_Timer -= diff;
 
-        if (HeroicMode)
+        //Consecration (Heroic)
         if (Consecration_Timer < diff)
         {
             DoCast(me, SPELL_CONSECRATION);
