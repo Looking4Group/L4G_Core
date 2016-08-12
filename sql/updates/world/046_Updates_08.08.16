@@ -204,7 +204,7 @@ INSERT INTO `creature_ai_scripts` VALUES
 
 -- 20041 Emote on 37106 Spellcast
 -- -9711 - -9720
-DELETE FROM `creature_ai_texts` WHERE `entry` BETWEEN -9711 AND -9720;
+DELETE FROM `creature_ai_texts` WHERE `entry` IN(-9711,-9712,-9713,-9714,-9715,-9716,-9717,-9718,-9719,-9720);
 INSERT INTO `creature_ai_texts` VALUES
 (-9711,'\'s hand begins to glow with Arcane energy.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,2,0,0,'20041 on Overcharged Arcane Explosion Spellcast'),
 (-9712,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'TKPlaceholder'),
