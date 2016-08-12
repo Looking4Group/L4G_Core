@@ -50,7 +50,7 @@ bool GOUse_go_barrel_old_hillsbrad(Player *player, GameObject* go)
 ## boss_lieutenant_drake
 ######*/
 
-enum
+enum LieutenantDrake
 {
     SAY_AGGRO                 = -1560007,
     SAY_SLAY1                 = -1560008,
