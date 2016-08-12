@@ -108,7 +108,7 @@ void PetAI::_stopAttack()
 
 void PetAI::UpdateMotionMaster()
 {
-    if (m_owner && me->GetCharmInfo() && me->GetCharmInfo()->HasCommandState(COMMAND_FOLLOW) && !m_creature->hasUnitState(UNIT_STAT_CASTING))
+    if (m_owner && me->GetCharmInfo() && me->GetCharmInfo()->HasCommandState(COMMAND_FOLLOW) && (!m_creature->hasUnitState(UNIT_STAT_CASTING) || !m_unit->hasUnitState(UNIT_STAT_CAN_NOT_REACT) || !m_unit->hasUnitState(UNIT_STAT_NOT_MOVE)))
         me->GetMotionMaster()->MoveFollow(m_owner,PET_FOLLOW_DIST,PET_FOLLOW_ANGLE);
     else
         me->GetMotionMaster()->MoveIdle();
