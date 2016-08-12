@@ -24,7 +24,7 @@ EndScriptData */
 #include "precompiled.h"
 #include "def_old_hillsbrad.h"
 
-enum
+enum CaptainSkarloc
 {
     SAY_ENTER               =    -1560000,
     SAY_TAUNT1              =    -1560001,
