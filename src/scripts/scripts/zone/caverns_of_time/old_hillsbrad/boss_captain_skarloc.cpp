@@ -33,18 +33,18 @@ enum CaptainSkarloc
     SAY_SLAY2               =    -1560004,
     SAY_DEATH               =    -1560005,
 
-    SPELL_HOLY_LIGHT        =    29427,
-    SPELL_CLEANSE           =    29380,
-    SPELL_HAMMER_OF_JUSTICE =    13005,
-    SPELL_HOLY_SHIELD       =    31904,
-    SPELL_DEVOTION_AURA     =     8258,
-    SPELL_CONSECRATION      =    38385,
+    SPELL_HOLY_LIGHT        =       29427,
+    SPELL_CLEANSE           =       29380,
+    SPELL_HAMMER_OF_JUSTICE =       13005,
+    SPELL_HOLY_SHIELD       =       31904,
+    SPELL_DEVOTION_AURA     =        8258,
+    SPELL_CONSECRATION      =       38385,
 
-    C_THRALL                =    17876,
-    C_WARDEN                =    17833,
-    C_VETERAN               =    17860,
-    SKARLOC_MOUNT           =    18798,
-    SKARLOC_MOUNT_MODEL     =    18223
+    C_THRALL                =       17876,
+    C_WARDEN                =       17833,
+    C_VETERAN               =       17860,
+    SKARLOC_MOUNT           =       18798,
+    SKARLOC_MOUNT_MODEL     =       18223
 };
 
 struct boss_captain_skarlocAI : public ScriptedAI
