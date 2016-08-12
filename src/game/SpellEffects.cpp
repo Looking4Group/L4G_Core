@@ -5765,7 +5765,7 @@ void Spell::EffectScriptEffect(uint32 effIndex)
             if (!m_caster->CanHaveThreatList())
                 return;
 
-            m_caster->getThreatManager().addThreat(unitTarget, -12000.0f);
+            m_caster->getThreatManager().modifyThreatPercent(unitTarget, -25.0f);
             break;
         }
         // Incite Chaos
