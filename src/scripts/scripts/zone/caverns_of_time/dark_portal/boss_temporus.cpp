@@ -47,7 +47,6 @@ struct boss_temporusAI : public ScriptedAI
 
     ScriptedInstance *pInstance;
     bool HeroicMode;
-    //bool canApplyWound;
 
     uint32 MortalWound_Timer;
     uint32 WingBuffet_Timer;
@@ -57,7 +56,6 @@ struct boss_temporusAI : public ScriptedAI
     void Reset()
     {
         MortalWound_Timer = 8000;
-        //canApplyWound = false;
         WingBuffet_Timer = 10000;
         Haste_Timer = urand(15000, 23000);
         SpellReflection_Timer = 30000;
@@ -106,14 +104,6 @@ struct boss_temporusAI : public ScriptedAI
         ScriptedAI::MoveInLineOfSight(who);
     }
 
-    void DamageMade(Unit* target, uint32 & damage, bool direct_damage)
-    {
-        //if (canApplyWound)
-            me->CastSpell(target, SPELL_MORTAL_WOUND, true);
-
-        //canApplyWound = false;
-    }
-
     void UpdateAI(const uint32 diff)
     {
         //Return since we have no target
@@ -141,11 +131,11 @@ struct boss_temporusAI : public ScriptedAI
         //Mortal Wound
         if (MortalWound_Timer < diff)
         {
-            //canApplyWound = true;
-
             if (m_creature->HasAura(SPELL_HASTE, 0))
+                me->CastSpell(target, SPELL_MORTAL_WOUND, true);
                 MortalWound_Timer = urand(2000, 3000);
             else
+                me->CastSpell(target, SPELL_MORTAL_WOUND, true);
                 MortalWound_Timer = urand(6000, 9000);
         }
         else
