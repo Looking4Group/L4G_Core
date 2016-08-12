@@ -244,8 +244,11 @@ struct boss_high_astromancer_solarianAI : public ScriptedAI
             {
                 m_creature->InterruptNonMeleeSpells(false);
 
-                if(Unit *target =  SelectUnit(SELECT_TARGET_RANDOM,1, GetSpellMaxRange(SPELL_WRATH_OF_THE_ASTROMANCER), true, m_creature->getVictimGUID()))
-                    DoCast(target, SPELL_WRATH_OF_THE_ASTROMANCER, true);
+				if (Unit *target = SelectUnit(SELECT_TARGET_RANDOM, 1, GetSpellMaxRange(SPELL_WRATH_OF_THE_ASTROMANCER), true, m_creature->getVictimGUID()))
+				{
+					me->SetInFront(target);
+					DoCast(target, SPELL_WRATH_OF_THE_ASTROMANCER, true);
+				}
 
                 Wrath_Timer = urand(15000, 25000);
             }
