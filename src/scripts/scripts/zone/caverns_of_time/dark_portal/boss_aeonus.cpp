@@ -57,7 +57,6 @@ struct boss_aeonusAI : public ScriptedAI
 
     void Reset()
     {
-        //Say_Timer = 20000;
         Cleave_Timer = urand(5000, 9000);
         SandBreath_Timer = urand(15000, 30000);
         TimeStop_Timer = urand(10000, 15000);
@@ -111,15 +110,6 @@ struct boss_aeonusAI : public ScriptedAI
         //Return since we have no target
         if (!UpdateVictim())
             return;
-
-        //Say Aggro
-        //if (Say_Timer && Say_Timer <= diff)
-        //{
-        //    DoScriptText(SAY_AGGRO, m_creature);
-        //    Say_Timer = 0;
-        //}
-        //else
-        //    Say_Timer -= diff;
 
         //Cleave
         if (Cleave_Timer < diff)
