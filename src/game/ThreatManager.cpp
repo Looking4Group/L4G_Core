@@ -307,30 +307,43 @@ bool CheckForAggroDropMechanics(Unit* target) {
 		29,	//invulnerable
 		30	//sapped
 	};
-	//some auras dont have mechanic(effect), e.g. Boss spells -> moroes set in dbc? db fields 84 -86
-	Unit::AuraMap& Auras = target->GetAuras();
-	for (Unit::AuraMap::iterator iter = Auras.begin(); iter != Auras.end(); ++iter)
-	{
-		SpellEntry const* spell = iter->second->GetSpellProto();	
-		if (spell->Mechanic != 0)
-		{			
-			aggroDrop = std::find(std::begin(mechanicArray), std::end(mechanicArray), spell->Mechanic) != std::end(mechanicArray);
-		}
-		if (spell->EffectMechanic[0] != 0)
-		{
-			aggroDrop = std::find(std::begin(mechanicArray), std::end(mechanicArray), spell->EffectMechanic[0]) != std::end(mechanicArray);
-		}
 
-		if (spell->EffectMechanic[1] != 0)
-		{
-			aggroDrop = std::find(std::begin(mechanicArray), std::end(mechanicArray), spell->EffectMechanic[1]) != std::end(mechanicArray);
-		}
+	//Some spells are excluded from this check
+	uint32 spellExceptions[] = {
+		29511	//Maiden of Virtue Repentance
+	};
 
-		if (spell->EffectMechanic[2] != 0) {
-			aggroDrop = std::find(std::begin(mechanicArray), std::end(mechanicArray), spell->EffectMechanic[2]) != std::end(mechanicArray);
+	uint32 size = (sizeof(spellExceptions) / sizeof(*spellExceptions));
+	for (int i = 0; i < (size); ++i) {
+		if (target->HasAura(spellExceptions[i]) == true) {
+			return false;
 		}
 	}
-	
+
+	//Get Auras and look for qualifying mechanics	
+	Unit::AuraMap& Auras = target->GetAuras();
+		for (Unit::AuraMap::iterator iter = Auras.begin(); iter != Auras.end() && aggroDrop == false; ++iter)
+		{
+			SpellEntry const* spell = iter->second->GetSpellProto();
+			if (spell->Mechanic != 0)
+			{
+				aggroDrop = std::find(std::begin(mechanicArray), std::end(mechanicArray), spell->Mechanic) != std::end(mechanicArray);
+			}
+			if (spell->EffectMechanic[0] != 0)
+			{
+				aggroDrop = std::find(std::begin(mechanicArray), std::end(mechanicArray), spell->EffectMechanic[0]) != std::end(mechanicArray);
+			}
+
+			if (spell->EffectMechanic[1] != 0)
+			{
+				aggroDrop = std::find(std::begin(mechanicArray), std::end(mechanicArray), spell->EffectMechanic[1]) != std::end(mechanicArray);
+			}
+
+			if (spell->EffectMechanic[2] != 0) {
+				aggroDrop = std::find(std::begin(mechanicArray), std::end(mechanicArray), spell->EffectMechanic[2]) != std::end(mechanicArray);
+			}
+		}
+		
 	return aggroDrop;
 }
 
