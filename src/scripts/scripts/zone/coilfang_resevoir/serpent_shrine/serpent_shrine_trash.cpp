@@ -167,7 +167,7 @@ CreatureAI* GetAI_mob_vashjir_honor_guard(Creature *_Creature)
     return new mob_vashjir_honor_guardAI(_Creature);
 }
 
-#define SPELL_SUMMON_SERPENTSHRINE_PARASITE         39053
+#define SPELL_SUMMON_SERPENTSHRINE_PARASITE         39044
 #define SPELL_INITIAL_INFECTION                     39032
 #define SPELL_SPORE_QUAKE                           38976
 #define SPELL_ACID_GEYSER                           38971
