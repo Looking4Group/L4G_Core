@@ -133,11 +133,9 @@ struct boss_temporusAI : public ScriptedAI
         {
             AddSpellToCast(m_creature, SPELL_MORTAL_WOUND);
                 if (m_creature->HasAura(SPELL_HASTE, 0))
-                {
                     MortalWound_Timer = urand(2000, 3000);
-                    else
+                else
                     MortalWound_Timer = urand(6000, 9000);
-                }
         }
         else
             MortalWound_Timer -= diff;
