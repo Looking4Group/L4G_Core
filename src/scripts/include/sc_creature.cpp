@@ -371,7 +371,9 @@ void ScriptedAI::CastNextSpellIfAnyAndReady(uint32 diff)
 
             if (tempU && tempU->IsInWorld() && tempU->isAlive() && tempU->IsInMap(m_creature))
                 if (temp.spellId)
-                {
+                {					
+					Unit* target = m_creature->GetUnit(temp.targetGUID);
+					m_creature->SetInFront(target);
                     if(temp.setAsTarget && !m_creature->hasIgnoreVictimSelection())
                         m_creature->SetSelection(temp.targetGUID);
                     if(temp.hasCustomValues)
@@ -437,11 +439,12 @@ void ScriptedAI::CastNextSpellIfAnyAndReady(uint32 diff)
                             return;
                         }
                 }
-
+								
                 if (victim && !m_creature->hasIgnoreVictimSelection())
                 {
                     m_creature->SetSelection(victim->GetGUID());    // for autocast always target actual victim
-                    m_creature->CastSpell(victim, autocastId, false);
+					m_creature->SetInFront(victim);
+					m_creature->CastSpell(victim, autocastId, false);
                 }
 
                 autocastTimer = autocastTimerDef;
