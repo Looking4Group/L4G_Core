@@ -209,7 +209,7 @@ struct boss_leotheras_the_blindAI : public ScriptedAI
         IsFinalForm = false;
         NeedThreatReset = false;
         InnderDemon_Count = 0;
-        m_creature->SetSpeed( MOVE_RUN, 2.0f, true);
+        m_creature->SetSpeed( MOVE_RUN, 2.4f, true);
         m_creature->SetUInt32Value(UNIT_FIELD_DISPLAYID, MODEL_NIGHTELF);
         m_creature->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_DISPLAY  , 0);
         m_creature->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_DISPLAY+1, 0);
@@ -420,7 +420,7 @@ struct boss_leotheras_the_blindAI : public ScriptedAI
         {
             DoZoneInCombat();
             PulseCombat_Timer = 2000;
-            me->SetSpeed(MOVE_RUN, DemonForm ? 3.0 : 2.0);
+            me->SetSpeed(MOVE_RUN, DemonForm ? 3.0 : 2.4);
         }
         else
             PulseCombat_Timer -= diff;
