@@ -101,8 +101,17 @@ UPDATE `creature_loot_template` SET `ChanceOrQuestChance`=`ChanceOrQuestChance`/
 -- Random Epics <~1% first entry 0,3
 UPDATE `creature_loot_template` SET `ChanceOrQuestChance`=`ChanceOrQuestChance`/3,`mincountOrRef`=0,`maxcount`=0 WHERE `item` IN (30020,30021,30022,30023,30024,30025,30026,30027,30028,30029,30030,30620);
 --
+-- Kael
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 100 WHERE `item` IN (29905,32405,34056,50032) AND `entry` = 19622;
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 2 WHERE `item` = 32458 AND `entry` = 19622;
+-- Vashj
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 100 WHERE `item` IN (29906,50031,90062) AND `entry` = 21212;
+-- Boss Pattern
+UPDATE `reference_loot_template` SET `mincountOrRef`=0, `maxcount`=0 WHERE `entry` IN (34052); -- 1 1
+
 -- Setting Kael and Vashj Vortex back
-UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 25,`mincountOrRef`=2,`maxcount`=2 WHERE `entry` IN (19622,21212) AND `item` = 30183; 
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 25,`mincountOrRef`=2,`maxcount`=2 WHERE `entry` = 19622 AND `item` = 30183;
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 25,`mincountOrRef`=2,`maxcount`=2 WHERE `entry` = 21212 AND `item` = 30183;
 -- 
 -- 32902,32905
 UPDATE `creature_loot_template` SET `mincountOrRef` = 0, `maxcount` = 0 WHERE `item` IN (32902,32905); -- 1 3
