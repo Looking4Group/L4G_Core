@@ -229,7 +229,7 @@ struct boss_captain_skarlocAI : public ScriptedAI
     {
         if (Intro)
         {
-            if (IntroTimer < diff)
+            if (IntroTimer <= diff)
             {
                 IntroEnd();
                 Intro = false;
@@ -243,7 +243,7 @@ struct boss_captain_skarlocAI : public ScriptedAI
             return;
 
         //Holy_Light
-        if (Holy_Light_Timer < diff)
+        if (Holy_Light_Timer <= diff)
         {
             DoCast(me, SPELL_HOLY_LIGHT);
             Holy_Light_Timer = urand(13300, 15700);
@@ -252,7 +252,7 @@ struct boss_captain_skarlocAI : public ScriptedAI
             Holy_Light_Timer -= diff;
 
         //Cleanse
-        if (Cleanse_Timer  < diff)
+        if (Cleanse_Timer  <= diff)
         {
             DoCast(me, SPELL_CLEANSE);
             Cleanse_Timer = urand(10000, 14000);
@@ -261,7 +261,7 @@ struct boss_captain_skarlocAI : public ScriptedAI
             Cleanse_Timer -= diff;
 
         //Hammer of Justice
-        if (HammerOfJustice_Timer < diff)
+        if (HammerOfJustice_Timer <= diff)
         {
             DoCast(me->getVictim(), SPELL_HAMMER_OF_JUSTICE);
             HammerOfJustice_Timer = urand(10800, 15200);
@@ -270,7 +270,7 @@ struct boss_captain_skarlocAI : public ScriptedAI
             HammerOfJustice_Timer -= diff;
 
         //Holy Shield
-        if (HolyShield_Timer < diff)
+        if (HolyShield_Timer <= diff)
         {
             DoCast(me, SPELL_HOLY_SHIELD);
             HolyShield_Timer = urand(13300, 21700);
@@ -279,7 +279,7 @@ struct boss_captain_skarlocAI : public ScriptedAI
             HolyShield_Timer -= diff;
 
         //Devotion_Aura
-        if (DevotionAura_Timer < diff)
+        if (DevotionAura_Timer <= diff)
         {
             DoCast(me, SPELL_DEVOTION_AURA);
             DevotionAura_Timer = 60000;
@@ -288,7 +288,7 @@ struct boss_captain_skarlocAI : public ScriptedAI
             DevotionAura_Timer -= diff;
 
         //Consecration (Heroic)
-        if (Consecration_Timer < diff)
+        if (Consecration_Timer && Consecration_Timer <= diff)
         {
             DoCast(me, SPELL_CONSECRATION);
             Consecration_Timer = 8000;
