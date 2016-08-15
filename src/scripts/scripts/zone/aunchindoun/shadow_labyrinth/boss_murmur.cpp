@@ -98,7 +98,7 @@ struct boss_murmurAI : public Scripted_NoMovementAI
             if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, 100, true))
                 AddSpellToCast(target, SPELL_MURMURS_TOUCH);
 
-            MurmursTouch_Timer = (HeroicMode ? urand(21000, 21000) : urand(29000, 40000);
+            MurmursTouch_Timer = (HeroicMode ? urand(21000, 21000) : urand(29000, 40000));
         }
         else
             MurmursTouch_Timer -= diff;

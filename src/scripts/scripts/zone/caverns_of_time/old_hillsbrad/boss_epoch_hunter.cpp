@@ -81,10 +81,10 @@ struct boss_epoch_hunterAI : public ScriptedAI
         Wave = 0;
         IntroTimer = 45000;
         NextTimer = 51000;
-        SandBreath_Timer = 25000;
-        ImpendingDeath_Timer = 30000;
-        WingBuffet_Timer = 35000;
-        Mda_Timer = 40000;
+        SandBreath_Timer = urand(6400, 10300);
+        ImpendingDeath_Timer = urand(25000, 30000);
+        WingBuffet_Timer = urand(12400, 20300);
+        Mda_Timer = urand(1100, 8800);
         attackers.clear();
         me->SetReactState(REACT_PASSIVE);
         me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
@@ -356,7 +356,7 @@ struct boss_epoch_hunterAI : public ScriptedAI
 
             DoScriptText(RAND(SAY_BREATH1, SAY_BREATH2), me);
 
-            SandBreath_Timer = 25000+rand()%5000;
+            SandBreath_Timer = urand(18100, 26600);
         }
         else
             SandBreath_Timer -= diff;
@@ -365,7 +365,7 @@ struct boss_epoch_hunterAI : public ScriptedAI
         {
             if(Unit *target = SelectUnit(SELECT_TARGET_RANDOM, 0 , GetSpellMaxRange(SPELL_IMPENDING_DEATH), true))
                 DoCast(target,SPELL_IMPENDING_DEATH);
-            ImpendingDeath_Timer = 30000+rand()%5000;
+            ImpendingDeath_Timer = urand(25000, 30000);
         }
         else
             ImpendingDeath_Timer -= diff;
@@ -373,7 +373,7 @@ struct boss_epoch_hunterAI : public ScriptedAI
         if(WingBuffet_Timer < diff)
         {
             DoCast(me,SPELL_WING_BUFFET);
-            WingBuffet_Timer = 25000+rand()%10000;
+            WingBuffet_Timer = urand(20500, 26600);
         }
         else
             WingBuffet_Timer -= diff;
@@ -381,7 +381,7 @@ struct boss_epoch_hunterAI : public ScriptedAI
         if(Mda_Timer < diff)
         {
             DoCast(me,SPELL_MAGIC_DISRUPTION_AURA);
-            Mda_Timer = 15000;
+            Mda_Timer = urand(15700, 25300);
         }
         else
             Mda_Timer -= diff;

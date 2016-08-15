@@ -173,8 +173,7 @@ class LOOKING4GROUP_IMPORT_EXPORT ThreatContainer
 class LOOKING4GROUP_IMPORT_EXPORT ThreatManager
 {
     public:
-        friend class HostilReference;
-
+        friend class HostilReference;		
         explicit ThreatManager(Unit *pOwner);
 
         ~ThreatManager() { clearReferences(); }

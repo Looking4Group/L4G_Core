@@ -530,9 +530,6 @@ uint32 ArenaTeam::GetPoints(uint32 MemberRating)
     else
         points = 1511.26f / (1.0f + 1639.28f * exp(-0.00412f * (float)rating));
 
-    // 1.5x points for first 6 weeks
-    points = points * 2.0;
-        
     // type penalties for <5v5 teams
     if (Type == ARENA_TEAM_2v2)
         points *= 0.76f;

@@ -275,7 +275,7 @@ struct boss_grandmaster_vorpilAI : public ScriptedAI
 
         if (HeroicMode && banish_Timer < diff)
         {
-            Unit *target = SelectUnit(SELECT_TARGET_RANDOM,0,30,false);
+            Unit *target = SelectUnit(SELECT_TARGET_RANDOM,1,30,false);
             if (target)
             {
                 DoCast(target,SPELL_BANISH);

@@ -16,8 +16,8 @@
 
 /* ScriptData
 SDName: Boss_Midnight
-SD%Complete: 100
-SDComment:
+SD%Complete: 80
+SDComment: Attumen missing Spell 29850, Midnight missing Spell 29711;
 SDCategory: Karazhan
 EndScriptData */
 

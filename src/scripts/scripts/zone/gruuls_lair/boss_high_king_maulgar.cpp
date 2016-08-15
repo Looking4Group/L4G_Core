@@ -77,8 +77,8 @@ struct boss_high_king_maulgarAI : public BossAI
 
         instance->SetData(DATA_MAULGAREVENT, NOT_STARTED);
 
-        events.ScheduleEvent(EVENT_MIGHTY_BLOW, 40000);
-        events.ScheduleEvent(EVENT_ARCING_SMASH, 10000);
+        events.ScheduleEvent(EVENT_MIGHTY_BLOW, urand(15000, 25000));
+        events.ScheduleEvent(EVENT_ARCING_SMASH, urand(8000, 14000));
         events.ScheduleEvent(EVENT_WHIRLWIND, 30000);
 
         ForceSpellCast(me, SPELL_DUAL_WIELD);
@@ -140,32 +140,32 @@ struct boss_high_king_maulgarAI : public BossAI
                 case EVENT_ARCING_SMASH:
                 {
                     AddSpellToCast(SPELL_ARCING_SMASH);
-                    events.ScheduleEvent(eventId, 10000);
+                    events.ScheduleEvent(eventId, urand(8000, 12000));
                     break;
                 }
                 case EVENT_WHIRLWIND:
                 {
                     AddSpellToCast(SPELL_WHIRLWIND, CAST_SELF);
-                    events.ScheduleEvent(eventId, 55000);
+                    events.ScheduleEvent(eventId, urand(30000, 40000));
                     events.RescheduleEvent(EVENT_ARCING_SMASH, 16500);
                     break;
                 }
                 case EVENT_MIGHTY_BLOW:
                 {
                     AddSpellToCast(SPELL_MIGHTY_BLOW);
-                    events.ScheduleEvent(eventId, urand(30000, 40000));
+                    events.ScheduleEvent(eventId, urand(20000, 35000));
                     break;
                 }
                 case EVENT_CHARGE_HKM:
                 {
                     AddSpellToCast(SPELL_BERSERKER_C, CAST_RANDOM);
-                    events.ScheduleEvent(eventId, 20000);
+                    events.ScheduleEvent(eventId, urand(14000, 20000));
                     break;
                 }
                 case EVENT_ROAR:
                 {
                     AddSpellToCast(SPELL_ROAR, CAST_SELF);
-                    events.ScheduleEvent(eventId, 20000);
+                    events.ScheduleEvent(eventId, urand(20000, 35000));
                     break;
                 }
             }
@@ -178,9 +178,9 @@ struct boss_high_king_maulgarAI : public BossAI
 
             DoScriptText(SAY_ENRAGE, me);
 
-            events.RescheduleEvent(EVENT_WHIRLWIND, 30000);
-            events.ScheduleEvent(EVENT_CHARGE_HKM, 2000);
-            events.ScheduleEvent(EVENT_ROAR, 3000);
+            events.RescheduleEvent(EVENT_WHIRLWIND, urand(10000, 20000));
+            events.ScheduleEvent(EVENT_CHARGE_HKM, 3000);
+            events.ScheduleEvent(EVENT_ROAR, 2000);
 
             ForceSpellCast(me, SPELL_DUAL_WIELD);
             ForceSpellCast(me, SPELL_FLURRY);
@@ -223,7 +223,7 @@ struct boss_olm_the_summonerAI : public BossAI
         ClearCastQueue();
 
         events.ScheduleEvent(EVENT_DARK_DECAY, 10000);
-        events.ScheduleEvent(EVENT_SUMMON, 15000);
+        events.ScheduleEvent(EVENT_SUMMON, urand(1000, 10000));
         events.ScheduleEvent(EVENT_DEATH_COIL, 8000);
     }
 
@@ -261,13 +261,13 @@ struct boss_olm_the_summonerAI : public BossAI
                 case EVENT_SUMMON:
                 {
                     AddSpellToCast(SPELL_SUMMON_WFH, CAST_SELF);
-                    events.ScheduleEvent(eventId, 50000);
+                    events.ScheduleEvent(eventId, urand(25000, 35000));
                     break;
                 }
                 case EVENT_DEATH_COIL:
                 {
-                    AddSpellToCast(SPELL_DEATH_COIL, CAST_RANDOM);
-                    events.ScheduleEvent(eventId, 10000);
+                    AddSpellToCast(SPELL_DEATH_COIL, CAST_TANK);
+                    events.ScheduleEvent(eventId, urand(8000, 13000));
                     break;
                 }
             }
@@ -303,7 +303,7 @@ struct boss_kiggler_the_crazedAI : public BossAI
         events.Reset();
         ClearCastQueue();
 
-        events.ScheduleEvent(EVENT_POLYMORPH, urand(10000, 25000)); //Probably too quick
+        events.ScheduleEvent(EVENT_POLYMORPH, urand(10000, 20000)); //Probably too quick
         events.ScheduleEvent(EVENT_ARCANE_SHOCK, 20000);
         events.ScheduleEvent(EVENT_ARCANE_EXPLO, 30000);
 
@@ -343,14 +343,14 @@ struct boss_kiggler_the_crazedAI : public BossAI
             {
                 case EVENT_POLYMORPH:
                 {
-                    AddSpellToCast(SPELL_GREATER_POLYMORPH, CAST_RANDOM);
-                    events.ScheduleEvent(eventId, urand(10000, 25000));
+                    AddSpellToCast(SPELL_GREATER_POLYMORPH, CAST_TANK);
+                    events.ScheduleEvent(eventId, urand(10000, 20000));
                     break;
                 }
                 case EVENT_ARCANE_SHOCK:
                 {
                     AddSpellToCast(SPELL_ARCANE_SHOCK);
-                    events.ScheduleEvent(eventId, 20000);
+                    events.ScheduleEvent(eventId, urand(15000, 20000));
                     break;
                 }
                 case EVENT_ARCANE_EXPLO:
@@ -364,6 +364,7 @@ struct boss_kiggler_the_crazedAI : public BossAI
 
         CheckCasterNoMovementInRange(diff, 42.0f);
         CastNextSpellIfAnyAndReady(diff);
+        DoMeleeAttackIfReady();
     }
 };
 
@@ -521,6 +522,7 @@ struct boss_krosh_firehandAI : public BossAI
 
         CheckCasterNoMovementInRange(diff, 42.0f);
         CastNextSpellIfAnyAndReady(diff);
+        DoMeleeAttackIfReady();
     }
 };
 

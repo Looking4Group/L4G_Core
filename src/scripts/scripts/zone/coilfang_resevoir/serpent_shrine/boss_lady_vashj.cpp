@@ -563,10 +563,13 @@ struct boss_lady_vashjAI : public ScriptedAI
                 //Forked Lightning
                 //Used constantly in Phase 2, it shoots out completely randomly targeted bolts of lightning which hit everybody in a roughtly 60 degree cone in front of Vashj for 2313-2687 nature damage.
                 Unit *target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_FORKED_LIGHTNING), true);
+				if (!target)
+				{
+					target = me->getVictim();
+				}
 
-                if(!target)
-                    target = me->getVictim();
-
+				me->SetSelection(target->GetGUID());
+				me->SetInFront(target);
                 DoCast(target, SPELL_FORKED_LIGHTNING);
 
                 ForkedLightning_Timer = 2000+rand()%6000;   //blizzlike
@@ -586,7 +589,7 @@ struct boss_lady_vashjAI : public ScriptedAI
                 }
 
                 if (Elemental)
-                    EnchantedElemental_Timer = 8000+rand()%5000;
+                    EnchantedElemental_Timer = 10000+rand()%5000;
 
             }
             else
@@ -609,7 +612,7 @@ struct boss_lady_vashjAI : public ScriptedAI
             {
                 path_nr = urand(0,3);
                 me->SummonCreature(COILFANG_ELITE, StriderNagaWP[path_nr*4][0],StriderNagaWP[path_nr*4][1],StriderNagaWP[path_nr*4][2],0, TEMPSUMMON_DEAD_DESPAWN, 0);
-                CoilfangElite_Timer = 50000+rand()%5000;
+                CoilfangElite_Timer = 45000+rand()%5000;
             }
             else
                 CoilfangElite_Timer -= diff;

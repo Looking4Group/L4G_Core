@@ -126,11 +126,11 @@ struct boss_warp_splinterAI : public ScriptedAI
 
     void Reset()
     {
-        War_Stomp_Timer = 25000 + rand()%15000;
-        Summon_Treants_Timer = 45000;
-        Arcane_Volley_Timer = 8000 + rand()%12000;
+        War_Stomp_Timer = urand(6000, 7000);
+        Summon_Treants_Timer = urand(25000, 35000);
+        Arcane_Volley_Timer = urand(12000, 14500);
 
-        m_creature->SetSpeed( MOVE_RUN, 0.7f, true);
+        //m_creature->SetSpeed( MOVE_RUN, 0.7f, true);
     }
 
     void EnterCombat(Unit *who)
@@ -174,7 +174,7 @@ struct boss_warp_splinterAI : public ScriptedAI
         if(War_Stomp_Timer < diff)
         {
             DoCast(m_creature->getVictim(),WAR_STOMP);
-            War_Stomp_Timer = 25000 + rand()%15000;
+            War_Stomp_Timer = urand(17000, 38000);
         }else War_Stomp_Timer -= diff;
 
         //Check_Timer
@@ -194,14 +194,14 @@ struct boss_warp_splinterAI : public ScriptedAI
         if(Arcane_Volley_Timer < diff)
         {
             DoCast(m_creature->getVictim(),ARCANE_VOLLEY);
-            Arcane_Volley_Timer = 20000 + rand()%15000;
+            Arcane_Volley_Timer = urand(16000, 38000);
         }else Arcane_Volley_Timer -= diff;
 
         //Check for Summon Treants
         if(Summon_Treants_Timer < diff)
         {
             SummonTreants();
-            Summon_Treants_Timer = 45000;
+            Summon_Treants_Timer = urand(37000, 55000);
         }else Summon_Treants_Timer -= diff;
 
         DoMeleeAttackIfReady();

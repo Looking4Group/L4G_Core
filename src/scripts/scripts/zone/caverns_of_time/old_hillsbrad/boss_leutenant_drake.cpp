@@ -50,17 +50,21 @@ bool GOUse_go_barrel_old_hillsbrad(Player *player, GameObject* go)
 ## boss_lieutenant_drake
 ######*/
 
-#define SAY_AGGRO                  -1560007
-#define SAY_SLAY1                  -1560008
-#define SAY_SLAY2                  -1560009
-#define SAY_MORTAL                 -1560010
-#define SAY_SHOUT                  -1560011
-#define SAY_DEATH                  -1560012
+enum LieutenantDrake
+{
+    SAY_AGGRO                 = -1560007,
+    SAY_SLAY1                 = -1560008,
+    SAY_SLAY2                 = -1560009,
+    SAY_MORTAL                = -1560010,
+    SAY_SHOUT                 = -1560011,
+    SAY_DEATH                 = -1560012,
 
-#define SPELL_WHIRLWIND            31909
-#define SPELL_HAMSTRING            9080
-#define SPELL_MORTAL_STRIKE        31911
-#define SPELL_FRIGHTENING_SHOUT    33789
+    SPELL_WHIRLWIND           = 31909,
+    SPELL_HAMSTRING           = 9080,
+    SPELL_MORTAL_STRIKE       = 31911,
+    SPELL_FRIGHTENING_SHOUT   = 33789,
+    SPELL_EXPLODING_SHOT      = 33792
+};
 
 struct Location
 {
@@ -106,7 +110,8 @@ struct boss_lieutenant_drakeAI : public ScriptedAI
     uint32 Whirlwind_Timer;
     uint32 Fear_Timer;
     uint32 MortalStrike_Timer;
-    uint32 ExplodingShout_Timer;
+    uint32 ExplodingShot_Timer;
+    uint32 Harmstring_Timer;
 
     void Reset()
     {
@@ -114,10 +119,11 @@ struct boss_lieutenant_drakeAI : public ScriptedAI
         wpId = 0;
         me->SetWalk(true);
         me->GetMotionMaster()->MovePoint(DrakeWP[wpId].wpId, DrakeWP[wpId].x, DrakeWP[wpId].y, DrakeWP[wpId].z);
-        Whirlwind_Timer = 20000;
-        Fear_Timer = 30000;
-        MortalStrike_Timer = 45000;
-        ExplodingShout_Timer = 25000;
+        Whirlwind_Timer = urand(13300, 14500);
+        Fear_Timer = urand(25000, 30000);
+        MortalStrike_Timer = urand(8400, 10900);
+        ExplodingShot_Timer = urand(20500, 24100);
+        Harmstring_Timer = urand(6100, 6100);
     }
 
     void MovementInform(uint32 type, uint32 id)
@@ -180,24 +186,42 @@ struct boss_lieutenant_drakeAI : public ScriptedAI
         if (Whirlwind_Timer < diff)
         {
             DoCast(me->getVictim(), SPELL_WHIRLWIND);
-            Whirlwind_Timer = 20000+rand()%5000;
-        }else Whirlwind_Timer -= diff;
+            Whirlwind_Timer = urand(18100, 22900);
+        } else Whirlwind_Timer -= diff;
 
         //Fear
         if (Fear_Timer < diff)
         {
             DoScriptText(SAY_SHOUT, me);
             DoCast(me->getVictim(), SPELL_FRIGHTENING_SHOUT);
-            Fear_Timer = 30000+rand()%10000;
-        }else Fear_Timer -= diff;
+            Fear_Timer = urand(25000, 35000);
+        } else Fear_Timer -= diff;
 
         //Mortal Strike
         if (MortalStrike_Timer < diff)
         {
             DoScriptText(SAY_MORTAL, me);
             DoCast(me->getVictim(), SPELL_MORTAL_STRIKE);
-            MortalStrike_Timer = 45000+rand()%5000;
-        }else MortalStrike_Timer -= diff;
+            MortalStrike_Timer = urand(16900, 27800);
+        } else MortalStrike_Timer -= diff;
+        
+        //Exploding Shot
+        if (ExplodingShot_Timer < diff)
+        {
+            if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 1, GetSpellMaxRange(SPELL_EXPLODING_SHOT), true, me->getVictimGUID()))
+                DoCast(target, SPELL_EXPLODING_SHOT);
+            else
+                DoCast(me->getVictim(), SPELL_EXPLODING_SHOT);
+                
+            ExplodingShot_Timer = urand(12100, 26600);
+        } else ExplodingShot_Timer -= diff;
+        
+        //Harmstring
+        if (Harmstring_Timer < diff)
+        {
+            DoCast(me->getVictim(), SPELL_HAMSTRING);
+            Harmstring_Timer = urand(7200, 22900);
+        } else Harmstring_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

@@ -334,10 +334,10 @@ struct boss_alarAI : public ScriptedAI
                             m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                             DoZoneInCombat();
                             m_creature->CastSpell(m_creature, SPELL_REBIRTH, true);
-                            MeltArmor_Timer = 60000;
-                            Charge_Timer = 7000;
-                            DiveBomb_Timer = 40000+rand()%5000;
-                            FlamePatch_Timer = 30000;
+                            MeltArmor_Timer = 10000;
+                            Charge_Timer = 15000;
+                            DiveBomb_Timer = 30000;
+                            FlamePatch_Timer = 20000;
                             Phase1 = false;
                             if(Unit *top = SelectUnit(SELECT_TARGET_TOPAGGRO,0))
                                 AttackStart(top);
@@ -479,7 +479,7 @@ struct boss_alarAI : public ScriptedAI
                 m_creature->SetFloatValue(UNIT_FIELD_BOUNDINGRADIUS, 50);
                 WaitEvent = WE_METEOR;
                 WaitTimer = 0;
-                DiveBomb_Timer = 40000+rand()%5000;
+                DiveBomb_Timer = urand(37000, 47000);
                 return;
             }
             else
