@@ -193,6 +193,7 @@ struct boss_lady_vashjAI : public ScriptedAI
         EnchantedElemental_Pos = 0;
         Phase = 0;
         Intro = false;
+		me->SetSpeed(MOVE_RUN, 2.0f);
 
         me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE); //set it only once on creature create (no need do intro if wiped)
 
@@ -443,27 +444,33 @@ struct boss_lady_vashjAI : public ScriptedAI
             }
             else
                 StaticCharge_Timer -= diff;
+			
+			//Entangle_Timer
+			if (Entangle_Timer < diff)
+			{
+				if (!Entangle)
+				{
+					//Entangle
+					//Used in Phases 1 and 3, it casts Entangling Roots on everybody in a 15 yard radius of Vashj, 
+					//immobilzing them for 10 seconds (not working, breaking on dmg) and dealing 500 damage every 2 seconds. 
+					//It's not a magic effect so it cannot be dispelled, but is removed by various buffs such as Cloak of Shadows or Blessing of Freedom.
+					DoCast(me->getVictim(), SPELL_ENTANGLE);
+					Entangle = true;
+					Entangle_Timer = 10000;
 
-            //Entangle_Timer
-            if(Entangle_Timer < diff)
-            {
-                if(!Entangle)
-                {
-                    //Entangle
-                    //Used in Phases 1 and 3, it casts Entangling Roots on everybody in a 15 yard radius of Vashj, immobilzing them for 10 seconds and dealing 500 damage every 2 seconds. It's not a magic effect so it cannot be dispelled, but is removed by various buffs such as Cloak of Shadows or Blessing of Freedom.
-                    DoCast(me->getVictim(), SPELL_ENTANGLE);
-                    Entangle = true;
-                    Entangle_Timer = 10000;
-                }
-                else
-                {
-                    CastShootOrMultishot();
-                    Entangle = false;
-                    Entangle_Timer = 20000+rand()%5000;
-                }
-            }
-            else
-                Entangle_Timer -= diff;
+					float x, y, z;
+					me->GetNearPoint(x, y, z, 0.0f, 20.0f, frand(0.0f, 2 * M_PI));
+					me->GetMotionMaster()->MovePoint(1, x, y, z);
+					Check_Timer = 0;
+				}
+				else
+				{
+					Entangle = false;
+					Entangle_Timer = 20000 + rand() % 5000;
+				}
+			}
+			else
+				Entangle_Timer -= diff;
 
             //Phase 1
             if(Phase == 1)
@@ -527,32 +534,49 @@ struct boss_lady_vashjAI : public ScriptedAI
                     Persuasion_Timer -= diff;
             }
 
-            //Melee attack
-            DoMeleeAttackIfReady();
+			//Melee attack
+			DoMeleeAttackIfReady();
 
-            //Check_Timer - used to check if somebody is in melee range
-            if(Check_Timer < diff)
-            {
-                bool InMeleeRange = false;
-                Unit *target;
-                std::list<HostilReference *> t_list = me->getThreatManager().getThreatList();
-                for(std::list<HostilReference *>::iterator itr = t_list.begin(); itr!= t_list.end(); ++itr)
-                {
-                    target = Unit::GetUnit(*me, (*itr)->getUnitGuid());
-                                                            //if in melee range
-                    if(target && target->IsWithinDistInMap(me, 5))
-                    {
-                        InMeleeRange = true;
-                        break;
-                    }
-                }
+			//Once abovce 15y, stop moving and switch to range attack
+			float DistanceToVicim = me->GetDistance(me->getVictim()->GetPositionX(), me->getVictim()->GetPositionY(), me->getVictim()->GetPositionZ());			
+			if (DistanceToVicim > 15.0f)
+			{
+				me->GetMotionMaster()->MovementExpired();
+			}
 
-                //if nobody is in melee range
-                if(!InMeleeRange)
-                    CastShootOrMultishot();
+			bool InMeleeRange = false;
+			Unit *target;
 
-                Check_Timer = 2000;
-            }else Check_Timer -= diff;
+			std::list<HostilReference *> t_list = me->getThreatManager().getThreatList();
+			for (std::list<HostilReference *>::iterator itr = t_list.begin(); itr != t_list.end(); ++itr)
+			{
+				target = Unit::GetUnit(*me, (*itr)->getUnitGuid());
+				//if in melee range
+				if (target && target->IsWithinDistInMap(me, 5))
+				{
+					InMeleeRange = true;
+					break;
+				}
+			}
+
+			//Check_Timer - used as cast timer for ranged attack
+			if (Check_Timer < diff)
+			{
+				if (!InMeleeRange)
+				{
+					CastShootOrMultishot();
+				}
+				else
+				{
+					me->GetMotionMaster()->MoveChase(me->getVictim());
+				}
+
+				Check_Timer = 2000;
+			}
+			else
+			{
+				Check_Timer -= diff;
+			}
         }
         //Phase 2
         else
