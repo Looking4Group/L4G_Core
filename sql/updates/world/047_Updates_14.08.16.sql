@@ -193,6 +193,48 @@ DELETE FROM `game_event_gameobject` WHERE `guid` = 3461739; -- nicht vorhanden
 INSERT INTO `game_event_gameobject` VALUES
 (3461739,1);
 
+-- U 15.08.08
+SET @GUID := '59464';
+SET @POINT := '0';
+UPDATE `creature` SET `MovementType`='2' WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1','-455.0282','4862.6879','30.2490',0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1','-489.4607','4881.5634','31.7768',0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1','-519.2503','4890.5107','35.2500',0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1','-540.9163','4880.7221','36.8381',0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1','-552.9354','4857.9985','37.5230',0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1','-523.6680','4806.4946','33.0417',0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1','-487.4189','4805.9248','30.0893',0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1','-477.1825','4859.6909','30.5836',0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1','-439.1553','4854.8764','28.7576',0,0,0,100,0);
+-- (@PATH,@POINT := @POINT + '1','XXX','YYY','ZZZ',0,0,0,100,0),
+
+DELETE FROM `creature_formations` WHERE `leaderguid` IN (59464,58904,58905,59461,58903,58902,68832,58165,58164);
+DELETE FROM `creature_formations` WHERE `memberguid` IN (59464,58904,58905,59461,58903,58902,68832,58165,58164);
+INSERT INTO `creature_formations` VALUES
+--
+(59464,59464,100,360,2),
+(59464,58904,2,1,2),
+(59464,58905,2,4,2),
+--
+(59461,59461,100,360,2),
+(59461,58903,2,1,2),
+(59461,58902,2,4,2),
+--
+(68832,68832,100,360,2),
+(68832,58164,2,1,2),
+(68832,58165,2,4,2);
+
+DELETE FROM `creature_addon` WHERE `guid` = '6589096';
+INSERT INTO `creature_addon` VALUES
+(6589096,0,0,16777472,0,4097,0,0,'30205');
+
+-- Manticron Cube 181713
+UPDATE `gameobject_template` SET `data10` = 30410 WHERE `entry` = 181713; -- 30420 which is nonexistant
+
 -- Honor Hold Defender1
 UPDATE `creature_template` SET `modelid_A`='16387',`modelid_H`='16387',`modelid_A2`='16388',`modelid_H2`='16388',`faction_A`='1666',`faction_H`='1666',`armor`='5200',`speed`='1.20',`AIName`='EventAI',`minlevel`='68',`maxlevel`='68',`minhealth`='7716',`maxhealth`='7716',`mindmg`='214',`maxdmg`='267',`unit_flags`='0',`type_flags`='4096' WHERE `entry` IN ('16842');
 DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN ('16842');
@@ -209,5 +251,3 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('2051301','20513','9','0','100','1','0','30','4000','8000','11','18396','1','7','0','0','0','0','0','0','0','0','Honor Hold Defender - Cast Dismounting Blast'),
 (2051302,20513,0,0,100,1,3500,5500,10000,12000,11,15618,1,0,0,0,0,0,0,0,0,0,'Honor Hold Defender - Cast Snap Kick'),
 (2051303,20513,0,0,100,1,8500,8500,15000,15000,11,19643,1,0,0,0,0,0,0,0,0,0,'Honor Hold Defender - Cast Mortal Strike');
-
-
