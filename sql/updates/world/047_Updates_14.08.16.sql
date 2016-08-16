@@ -262,3 +262,32 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('2051301','20513','9','0','100','1','0','30','4000','8000','11','18396','1','7','0','0','0','0','0','0','0','0','Honor Hold Defender - Cast Dismounting Blast'),
 (2051302,20513,0,0,100,1,3500,5500,10000,12000,11,15618,1,0,0,0,0,0,0,0,0,0,'Honor Hold Defender - Cast Snap Kick'),
 (2051303,20513,0,0,100,1,8500,8500,15000,15000,11,19643,1,0,0,0,0,0,0,0,0,0,'Honor Hold Defender - Cast Mortal Strike');
+
+-- Toxic Spore Bat 22140
+-- mob_toxic_sporebat
+UPDATE `creature_template` SET `minlevel`=70,`maxlevel`=70,`minhealth`=10400,`maxhealth`=10530,`speed`=1.20 WHERE `entry` = 22140; -- 70 73 6986 6986 1 -- 8000 8200
+
+-- Invisible Stalker (Floating) 23033
+UPDATE `creature_template` SET `inhabittype`=7 WHERE `entry` = 23033; -- 3
+
+DELETE FROM `item_template` WHERE `entry` = 40000;
+INSERT INTO `item_template` VALUES (40000, 15, 0, -1, 'Welcome to L4G', 7629, 0, 0, 1, 1, 0, 0, -1, -1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1, 0, '', 4000, 0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, '', 0, 0, 0, 0, 0);
+
+-- 1 page
+DELETE FROM `page_text` WHERE `entry` = 4000;
+INSERT INTO `page_text` VALUES (4000, 'Welcome to Hellfire TBC!
+
+Thank you for choosing our realm. We hope you will enjoy your stay here. Before you begin your journey, here are a few things to help you on your way:
+
+1. The Murloc in front of you will take you through the process of obtaining level 60, choosing your gear-setup and teleport you to your class trainer where you can learn your skills.
+
+2. Your Hearthstone is your one way ticket to Blasted Lands where you can reach the Outlands through the Dark Portal. ( Dont forget to set hearthstone to the next Inn )
+
+3. You may notice you are unable to chat in global chat. It\'s set in place to neutralize illegal gold selling spam. Rest assured - you can still use /Say, /Whisper, /Yell and /Guild.
+
+If you have any further questions, feel free to visit the Q & A Section of our forum board: http://looking4group.eu/hellfire/
+
+Good luck and have fun in your adventures! Your L4G - Team.', 0);
+
+#Set sell price to 1c for alliance start bags
+update item_template set SellPrice = 1 where entry = 10050; -- 2500
