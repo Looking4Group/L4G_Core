@@ -57,11 +57,10 @@ struct boss_aeonusAI : public ScriptedAI
 
     void Reset()
     {
-        Say_Timer = 20000;
-        Cleave_Timer = 5000;
-        SandBreath_Timer = 30000;
-        TimeStop_Timer = 40000;
-        Frenzy_Timer = 120000;
+        Cleave_Timer = urand(5000, 9000);
+        SandBreath_Timer = urand(15000, 30000);
+        TimeStop_Timer = urand(10000, 15000);
+        Frenzy_Timer = urand(30000, 45000);
         m_creature->setActive(true);
 
         SayIntro();
@@ -72,7 +71,10 @@ struct boss_aeonusAI : public ScriptedAI
         DoScriptText(SAY_ENTER, m_creature);
     }
 
-    void EnterCombat(Unit *who) {}
+    void EnterCombat(Unit *who) 
+    {
+        DoScriptText(SAY_AGGRO, m_creature);
+    }
 
     void MoveInLineOfSight(Unit *who)
     {
@@ -109,20 +111,11 @@ struct boss_aeonusAI : public ScriptedAI
         if (!UpdateVictim())
             return;
 
-        //Say Aggro
-        if (Say_Timer && Say_Timer <= diff)
-        {
-            DoScriptText(SAY_AGGRO, m_creature);
-            Say_Timer = 0;
-        }
-        else
-            Say_Timer -= diff;
-
         //Cleave
         if (Cleave_Timer < diff)
         {
             AddSpellToCast(m_creature->getVictim(), SPELL_CLEAVE);
-            Cleave_Timer = 6000+rand()%4000;
+            Cleave_Timer = urand(7000, 12000);
         }
         else
             Cleave_Timer -= diff;
@@ -131,7 +124,7 @@ struct boss_aeonusAI : public ScriptedAI
         if (SandBreath_Timer < diff)
         {
             AddSpellToCast(m_creature->getVictim(), HeroicMode ? H_SPELL_SAND_BREATH : SPELL_SAND_BREATH);
-            SandBreath_Timer = 30000;
+            SandBreath_Timer = urand(15000, 25000);
         }
         else
             SandBreath_Timer -= diff;
@@ -140,7 +133,7 @@ struct boss_aeonusAI : public ScriptedAI
         if (TimeStop_Timer < diff)
         {
             AddSpellToCast(m_creature->getVictim(), SPELL_TIME_STOP);
-            TimeStop_Timer = 40000;
+            TimeStop_Timer = urand(20000, 35000);
         }
         else
             TimeStop_Timer -= diff;
@@ -149,7 +142,7 @@ struct boss_aeonusAI : public ScriptedAI
         if (Frenzy_Timer < diff)
         {
             AddSpellToCastWithScriptText(m_creature, SPELL_ENRAGE, EMOTE_FRENZY);
-            Frenzy_Timer = 120000;
+            Frenzy_Timer = urand(20000, 35000);
         }
         else
             Frenzy_Timer -= diff;
