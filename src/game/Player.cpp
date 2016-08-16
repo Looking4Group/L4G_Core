@@ -21155,7 +21155,17 @@ void Player::Push()
 void Player::PushSixty()
 {
     GiveLevel(60);
-    learnSpell(33389); //riding skill of 75
+	
+	//Alliance
+	if (GetTeam() == 0) 
+	{
+		learnSpell(33391); //riding skill of 100
+	}
+	else
+	{
+		learnSpell(33389); //riding skill of 75
+	}
+    
     SaveToDB();
 }
 
@@ -21513,34 +21523,35 @@ void Player::EquipForPushSixty(uint16 items[])
 
     AddItem(22895, 20); //something to eat
     AddItem(30703, 20); //something to drink
-
+	AddItem(40000, 1);
+	
     switch (GetTeam())
     {
         case ALLIANCE:
         {
-            switch (getRace())
-            {
-                case RACE_HUMAN:
-                    if (!HasItemCount(2414, 1, true))
-                        AddItem(2414, 1);
-                    break;
-                case RACE_DWARF:
-                    if (!HasItemCount(5872, 1, true))
-                        AddItem(5872, 1);
-                    break;
-                case RACE_NIGHTELF:
-                    if (!HasItemCount(8629, 1, true))
-                        AddItem(8629, 1);
-                    break;
-                case RACE_GNOME:
-                    if (!HasItemCount(13321, 1, true))
-                    AddItem(13321, 1);
-                    break;
-                case RACE_DRAENEI:
-                    if (!HasItemCount(29743, 1, true))
-                        AddItem(29743, 1);
-                    break;
-            }
+			switch (getRace())
+			{
+			case RACE_HUMAN:
+				if (!HasItemCount(18778, 1, true))  //Mount
+					AddItem(18778, 1);
+					break;
+			case RACE_DWARF:
+				if (!HasItemCount(18787, 1, true))  //Mount
+					AddItem(18787, 1);
+					break;
+			case RACE_NIGHTELF:
+				if (!HasItemCount(18767, 1, true))  //Mount
+					AddItem(18767, 1);
+					break;
+			case RACE_GNOME:
+				if (!HasItemCount(18772, 1, true))  //Mount
+					AddItem(18772, 1);
+					break;
+			case RACE_DRAENEI:
+				if (!HasItemCount(29745, 1, true))  //Mount
+					AddItem(29745, 1);
+					break;
+			}
 
             switch (getClass())
             {
