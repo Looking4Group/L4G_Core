@@ -3402,6 +3402,7 @@ void SpellMgr::LoadSpellCustomAttr()
             case 21358: // Aqual Quintessence / Eternal Quintessence
             case 30452: // Rocket Boots Engaged (triggered Buff)
             case 51582: // Rocket Boots Engaged (Boots Spell)
+            case 30458: // Nigh-Invulnerability Belt
             case 47977: // Event Broom Mounts without Casttime 
             case 42679: 
             case 42673: 
