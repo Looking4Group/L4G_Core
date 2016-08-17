@@ -205,8 +205,8 @@ INSERT INTO `game_event_gameobject` VALUES
 (3461739,1);
 
 -- U 15.08.08
-SET @GUID := '59464';
-SET @POINT := '0';
+SET @GUID := 59464;
+SET @POINT := 0;
 UPDATE `creature` SET `MovementType`='2' WHERE `guid` = @GUID;
 DELETE FROM `creature_addon` WHERE `guid` = @GUID;
 INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
@@ -239,7 +239,7 @@ INSERT INTO `creature_formations` VALUES
 (68832,58164,2,1,2),
 (68832,58165,2,4,2);
 
-DELETE FROM `creature_addon` WHERE `guid` = '6589096';
+DELETE FROM `creature_addon` WHERE `guid` = 6589096;
 INSERT INTO `creature_addon` VALUES
 (6589096,0,0,16777472,0,4097,0,0,'30205');
 
@@ -247,7 +247,7 @@ INSERT INTO `creature_addon` VALUES
 UPDATE `gameobject_template` SET `data10` = 30410 WHERE `entry` = 181713; -- 30420 which is nonexistant
 
 -- Honor Hold Defender1
-UPDATE `creature_template` SET `modelid_A`='16387',`modelid_H`='16387',`modelid_A2`='16388',`modelid_H2`='16388',`faction_A`='1666',`faction_H`='1666',`armor`='5200',`speed`='1.20',`AIName`='EventAI',`minlevel`='68',`maxlevel`='68',`minhealth`='7716',`maxhealth`='7716',`mindmg`='214',`maxdmg`='267',`unit_flags`='0',`type_flags`='4096' WHERE `entry` IN ('16842');
+UPDATE `creature_template` SET `modelid_A`='16387',`modelid_H`='16387',`modelid_A2`='16388',`modelid_H2`='16388',`faction_A`='1666',`faction_H`='1666',`armor`='5200',`speed`='1.20',`AIName`='EventAI',`minlevel`='68',`maxlevel`='68',`minhealth`='7716',`maxhealth`='7716',`mindmg`='214',`maxdmg`='267',`unit_flags`='0',`type_flags`='4096' WHERE `entry` = 16842;
 DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN ('16842');
 INSERT INTO `creature_ai_scripts` VALUES
 ('1684201','16842','9','0','100','1','0','30','4000','8000','11','18396','1','7','0','0','0','0','0','0','0','0','Honor Hold Defender - Cast Dismounting Blast'),
@@ -255,7 +255,7 @@ INSERT INTO `creature_ai_scripts` VALUES
 (1684203,16842,0,0,100,1,8500,8500,15000,15000,11,19643,1,0,0,0,0,0,0,0,0,0,'Honor Hold Defender - Cast Mortal Strike');
 --
 -- Honor Hold Defender2
-UPDATE `creature_template` SET `modelid_A`='16389',`modelid_H`='16389',`modelid_A2`='16390',`modelid_H2`='16390',`armor`='2800',`speed`='1.20',`AIName`='EventAI',`minhealth`='5874',`maxhealth`='5874',`mindmg`='107',`maxdmg`='160',`unit_flags`='0' WHERE `entry` IN ('20513');
+UPDATE `creature_template` SET `modelid_A`='16389',`modelid_H`='16389',`modelid_A2`='16390',`modelid_H2`='16390',`armor`='2800',`speed`='1.20',`AIName`='EventAI',`minhealth`='5874',`maxhealth`='5874',`mindmg`='107',`maxdmg`='160',`unit_flags`='0' WHERE `entry` = 20513;
 UPDATE `creature_template` SET `AIName`='EventAI' WHERE `entry` IN ('20513');
 DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN ('20513');
 INSERT INTO `creature_ai_scripts` VALUES
