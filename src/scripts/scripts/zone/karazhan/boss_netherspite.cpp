@@ -129,8 +129,7 @@ struct boss_netherspiteAI : public ScriptedAI
             {
 				Unit *current = Unit::GetUnit(*portal, BeamTarget[i]);
 				if (current && current->GetTypeId() == TYPEID_PLAYER)
-				{
-					//here! danach: maulgar movement while whirl reducen, totems
+				{					
 					current->AddAura(PlayerDebuff[i], current);
 				}
                 portal->SetVisibility(VISIBILITY_OFF);
