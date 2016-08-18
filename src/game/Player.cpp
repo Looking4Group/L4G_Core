@@ -21157,7 +21157,7 @@ void Player::PushSixty()
     GiveLevel(60);
 	
 	//Alliance
-	if (GetTeam() == 0) 
+	if (GetTeam() == 469)
 	{
 		learnSpell(33391); //riding skill of 100
 	}
@@ -21523,7 +21523,7 @@ void Player::EquipForPushSixty(uint16 items[])
 
     AddItem(22895, 20); //something to eat
     AddItem(30703, 20); //something to drink
-	AddItem(40000, 1);
+	
 	
     switch (GetTeam())
     {
