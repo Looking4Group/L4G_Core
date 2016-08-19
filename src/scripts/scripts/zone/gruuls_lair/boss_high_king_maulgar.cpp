@@ -140,12 +140,14 @@ struct boss_high_king_maulgarAI : public BossAI
                 case EVENT_ARCING_SMASH:
                 {
                     AddSpellToCast(SPELL_ARCING_SMASH);
+                    m_creature->SetSpeed(MOVE_RUN, DefaultMoveSpeedRate);
                     events.ScheduleEvent(eventId, urand(8000, 12000));
                     break;
                 }
                 case EVENT_WHIRLWIND:
                 {
                     AddSpellToCast(SPELL_WHIRLWIND, CAST_SELF);
+                    m_creature->SetSpeed(MOVE_RUN, 0.9f);
                     events.ScheduleEvent(eventId, urand(30000, 40000));
                     events.RescheduleEvent(EVENT_ARCING_SMASH, 16500);
                     break;
