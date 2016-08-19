@@ -246,7 +246,7 @@ struct boss_hex_lord_malacrassAI : public ScriptedAI
 
     Unit* SoulDrainTarget;
     Unit* MC_Target;
-	Unit* MC_Target_2nd;
+    Unit* MC_Target_2nd;
     bool Intro;
     bool MC_Casted;
     bool MC_Casted_2nd;

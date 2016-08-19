@@ -7722,7 +7722,7 @@ bool ChatHandler::HandleADGreduceCommand(char const* args)
 bool ChatHandler::HandleSetTitleCommand(char const* args)
 {
     if (!*args)
-	    return false;
+        return false;
 
     uint64 title = 0;
     sscanf((char*)args, UI64FMTD, &title);

@@ -375,11 +375,11 @@ struct mob_ethereal_apprenticeAI : public ScriptedAI
         isFireboltTurn = true;
     }
 
-	void EnterEvadeMode()
-	{
-		me->Kill(me);
-		ScriptedAI::EnterEvadeMode();
-	}
+    void EnterEvadeMode()
+    {
+        me->Kill(me);
+        ScriptedAI::EnterEvadeMode();
+    }
 
     void UpdateAI(const uint32 diff)
     {

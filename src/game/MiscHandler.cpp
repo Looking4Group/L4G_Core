@@ -953,7 +953,7 @@ void WorldSession::HandleAreaTriggerOpcode(WorldPacket & recv_data)
     {
         if (at->target_mapId == 580 &&  sWorld.GetSwpStatus() < 1)
         {
-			GetPlayer()->GetSession()->SendAreaTriggerMessage("Gildenlevel 3, SWP Event Phase 1 und Gesegnetes Medaillon von Karabor benoetigt");
+            GetPlayer()->GetSession()->SendAreaTriggerMessage("Gildenlevel 3, SWP Event Phase 1 und Gesegnetes Medaillon von Karabor benoetigt");
             return;
         }
     }

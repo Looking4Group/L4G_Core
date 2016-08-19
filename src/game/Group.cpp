@@ -692,15 +692,15 @@ void Group::PrepareLootRolls(const uint64& playerGUID, Loot *loot, WorldObject* 
                     //r->playerVote[member->GetGUID()] = NOT_EMITED_YET;
                     ++r->totalPlayersRolling;
                     if (member->GetPassOnGroupLoot())
-	                {
-	                    r->playerVote[member->GetGUID()] = PASS;
+                    {
+                        r->playerVote[member->GetGUID()] = PASS;
                         r->totalPass++;
-	                    // can't broadcast the pass now. need to wait until all rolling players are known.
-	                }
-	                else
-	                {
-	                    r->playerVote[member->GetGUID()] = NOT_EMITED_YET;
-	                }
+                        // can't broadcast the pass now. need to wait until all rolling players are known.
+                    }
+                    else
+                    {
+                        r->playerVote[member->GetGUID()] = NOT_EMITED_YET;
+                    }
                 }
             }
 

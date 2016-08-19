@@ -1207,8 +1207,8 @@ bool GOUse_go_ethereum_prison(Player* player, GameObject* go)
         break;
     }
 
-	go->SetRespawnTime(120); 
-	go->SetLootState(GO_READY);
+    go->SetRespawnTime(120); 
+    go->SetLootState(GO_READY);
     go->UseDoorOrButton(5*MINUTE*IN_MILISECONDS);
 
     return true;

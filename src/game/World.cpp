@@ -1569,7 +1569,7 @@ void World::SetInitialWorldSettings()
     InitDailyQuestResetTime();
 
     sLog.outString("Calculate next monthly quest reset time...");
- 	InitMonthlyQuestResetTime();
+     InitMonthlyQuestResetTime();
 
     sLog.outString("Starting Game Event system...");
     uint32 nextGameEvent = sGameEventMgr.Initialize();
@@ -1844,10 +1844,10 @@ void World::Update(uint32 diff)
 
             std::list<std::string>::const_iterator itr = m_Autobroadcasts.begin();
             std::advance(itr, broadcastrepeater);
-		 	msg = *itr;
-			broadcastrepeater++;
-			if (broadcastrepeater >= m_Autobroadcasts.size())
-				broadcastrepeater = 0;
+             msg = *itr;
+            broadcastrepeater++;
+            if (broadcastrepeater >= m_Autobroadcasts.size())
+                broadcastrepeater = 0;
 
             sWorld.SendWorldText(LANG_AUTO_ANN, ACC_DISABLED_BROADCAST, msg.c_str());
         }

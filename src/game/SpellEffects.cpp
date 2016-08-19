@@ -979,7 +979,7 @@ void Spell::EffectDummy(uint32 i)
                                 m_caster->DealDamage(unitTarget, unitTarget->GetMaxHealth(), DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
                         }
                     }
-					return;
+                    return;
                 }
                 // SixDeamonBag
                 case 14537: 
@@ -1017,7 +1017,7 @@ void Spell::EffectDummy(uint32 i)
                          unitTarget = m_caster;
                     }
 
-					m_caster->CastSpell(unitTarget, spell_id, true, NULL);
+                    m_caster->CastSpell(unitTarget, spell_id, true, NULL);
                     return;
                 }
                 // Salvage Wreckage
@@ -4907,7 +4907,7 @@ void Spell::EffectSummonPet(uint32 i)
             // pet in corpse state can't be summoned
             if (OldSummon->isDead())
                 return;
-	        // if warlock allow summoning pet with same pet active
+            // if warlock allow summoning pet with same pet active
             if (owner->getClass() != CLASS_WARLOCK)
                 OldSummon->GetMap()->Remove((Creature*)OldSummon,false);
             OldSummon->SetMapId(owner->GetMapId());

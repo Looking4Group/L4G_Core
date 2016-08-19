@@ -297,8 +297,8 @@ void AddSC_slave_pens_trash()
 
     newscript = new Script;
     newscript->Name="npc_naturalist_bite";
-	newscript->pGossipHello = &GossipHello_npc_naturalist_bite;
-	newscript->pGossipSelect = &GossipSelect_npc_naturalist_bite;
+    newscript->pGossipHello = &GossipHello_npc_naturalist_bite;
+    newscript->pGossipSelect = &GossipSelect_npc_naturalist_bite;
     newscript->GetAI = &GetAI_npc_naturalist_bite;
     newscript->RegisterSelf();
 }
