@@ -3704,6 +3704,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 38316: //Lady Vashj entangle is not supposed to break on damage
                 spellInfo->Attributes = 0;
+                break;
             default:
                 break;
         }
