@@ -45,6 +45,8 @@ struct boss_doomwalkerAI : public ScriptedAI
     boss_doomwalkerAI(Creature *c) : ScriptedAI(c)
     {
         m_creature->GetPosition(wLoc);
+        // On script initialisation we want to make Doomwalker invisible in case he shouldn't spawn due to server crash/restart
+        m_creature->SetVisibility(VISIBILITY_OFF);
     }
 
     uint32 Chain_Timer;
@@ -71,24 +73,31 @@ struct boss_doomwalkerAI : public ScriptedAI
 
         InEnrage = false;
         isEarthquake = false;
-
+        
         QueryResultAutoPtr resultWorldBossRespawn = QueryResultAutoPtr(NULL); 
         resultWorldBossRespawn = GameDataDatabase.PQuery("SELECT RespawnTime FROM worldboss_respawn WHERE BossEntry = %i", m_creature->GetEntry());
         if (resultWorldBossRespawn)
         {
             Field* fieldsWBR = resultWorldBossRespawn->Fetch();
-            uint64 last_time_killed = fieldsWBR[0].GetUInt64();
-            last_time_killed += 259200;
-            if (last_time_killed >= time(0))
+            uint64 respawn_time = fieldsWBR[0].GetUInt64();
+            if (respawn_time > time(0))
+            {
+                // If Doomwalker shouldn't be spawned then despawn him and make him invisible for any future attempted respawns
+                me->SetVisibility(VISIBILITY_OFF);
                 me->DisappearAndDie();
-        }
-        
+            } else {
+                // If Doomwalker should be spawned, make him visible
+                me->SetVisibility(VISIBILITY_ON);
+            }
+        }        
     }
 
     void KilledUnit(Unit* victim)
     {
         if(!victim->HasAura(SPELL_MARK_DEATH,0))
+        {
             m_creature->AddAura(SPELL_MARK_DEATH,victim);
+        }
 
         DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), m_creature);
     }
@@ -96,7 +105,8 @@ struct boss_doomwalkerAI : public ScriptedAI
     void JustDied(Unit* Killer)
     {
         DoScriptText(SAY_DEATH, m_creature);
-        GameDataDatabase.PExecute("REPLACE INTO worldboss_respawn VALUES (%i, UNIX_TIMESTAMP())", m_creature->GetEntry());
+        uint64 respawn_time = urand(302400, 604800); // set the next respawn time between 3.5 to 7 days
+        GameDataDatabase.PExecute("REPLACE INTO worldboss_respawn VALUES (%i, %i)", m_creature->GetEntry(), respawn_time+time(0));
     }
 
     void EnterCombat(Unit *who)
