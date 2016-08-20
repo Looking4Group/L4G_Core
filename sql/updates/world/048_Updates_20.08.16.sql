@@ -1,5 +1,5 @@
 -- Storming Wind-Ripper 22310
-UPDATE `creature_template` SET `resistance3`='-1' WHERE `entry` IN ('22310');
+UPDATE `creature_template` SET `resistance3`='-1' WHERE `entry` ='22310';
 
 -- 1 archer missing
 DELETE FROM `creature_linked_respawn` WHERE `guid` = 57698;
@@ -16,14 +16,14 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('2011505','20115','1','0','100','1','10000','10000','120000','150000','11','34871','0','0','0','0','0','0','0','0','0','0','Umbrafen Witchdoctor- Cast Umbrafen Buff OOC');
 -- Terror Totem 20455
 UPDATE `creature_template` SET `speed`=0.0001,`unit_flags`=262148, `dynamicflags`=8 WHERE `entry` ='20455'; -- 0 0
-DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN ('20455');
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` ='20455';
 INSERT INTO `creature_ai_scripts` VALUES
 ('2045501','20455','1','0','100','1','3000','3000','0','0','11','35198','0','39','21','0','0','0','20','0','0','0','Terror Totem - Cast Fear'),
 ('2045502','20455','4','0','100','0','0','0','0','0','103','5','0','0','20','0','0','0','21','0','0','0','Terror Totem - Stop Attack and Stop Melee and Stop Movement on Aggro'),
 ('2045503','20455','1','0','100','1','15000','15000','1000','1000','41','0','0','0','0','0','0','0','0','0','0','0','Terror Totem - Despawn on OOC Timer');
 
 
-UPDATE `creature` SET `orientation`='3.4761' WHERE `guid` IN ('67880');
+UPDATE `creature` SET `orientation`='3.4761' WHERE `guid` IN =67880;
 
 
 DELETE FROM `creature_formations` WHERE `leaderguid` IN (101459,101460,101461,101462,101463);
@@ -114,7 +114,7 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('1766902','17669','0','0','100','3','2000','6000','12000','16000','11','30636','0','1','0','0','0','0','0','0','0','0','Rabid Warhound (Normal) - Cast Furious Howl'),
 ('1766903','17669','0','0','100','5','2000','4000','10000','12000','11','35942','0','1','0','0','0','0','0','0','0','0','Rabid Warhound (Heroic) - Cast Furious Howl');
 
-UPDATE `creature_template` SET `equipment_id`='1187',`mindmg`='1830',`maxdmg`='2410' WHERE `entry` IN (16807); -- 558 1138 rotes 2h schwert -- 1,830 - 2,410 --
+UPDATE `creature_template` SET `equipment_id`='1187',`mindmg`='1830',`maxdmg`='2410' WHERE `entry` =16807; -- 558 1138 rotes 2h schwert -- 1,830 - 2,410 --
 
 -- Creeping Oozeling 17357,20566
 UPDATE `creature_template` SET `minhealth`='3200',`speed`='1.48',`mindmg`='158',`maxdmg`='208',`AIName`='EventAI' WHERE `entry` ='17357'; -- 48 98 -- 158 - 208
@@ -123,7 +123,7 @@ DELETE FROM `creature_template_addon` WHERE `entry` IN ('17357','20566');
 INSERT INTO `creature_template_addon` VALUES
 (17357,0,0,512,0,4097,0,0,''),
 (20566,0,0,512,0,4097,0,0,'');
-DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN ('17357');
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` =17357;
 INSERT INTO `creature_ai_scripts` VALUES
 ('1735701','17357','0','0','100','7','5000','10000','5000','10000','11','30494','0','0','0','0','0','0','0','0','0','0','Creeping Oozeling - Cast Sticky Ooze');
 
@@ -134,7 +134,7 @@ DELETE FROM `creature_template_addon` WHERE `entry` IN ('17356','20565');
 INSERT INTO `creature_template_addon` VALUES
 (17356,0,0,512,0,4097,0,0,''),
 (20565,0,0,512,0,4097,0,0,'');
-DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN ('17356');
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` =17356;
 INSERT INTO `creature_ai_scripts` VALUES
 ('1735601','17356','0','0','100','7','3000','6000','3800','6500','11','30494','0','0','0','0','0','0','0','0','0','0','Creeping Ooze - Cast Sticky Ooze');
 
@@ -399,9 +399,9 @@ UPDATE `creature_template` SET `mindmg`='2602',`maxdmg`='3090',`baseattacktime`=
 
 -- https://bitbucket.org/looking4group_b2tbc/looking4group/issues/564/nighbane-adds-durch-die-wand
 UPDATE `creature` SET `spawnmask`='0',`MovementType`='0' WHERE `guid` IN (353909,353950);
-UPDATE `creature` SET `spawnmask`='0',`position_x`='-11155.8916',`position_y`='-1926.7788',`position_z`='74.4197',`orientation`='4.5796' WHERE `guid` IN (352721);
-UPDATE `creature` SET `spawnmask`='0',`position_x`='-11162.8251',`position_y`='-1925.7696',`position_z`='74.4123',`orientation`='4.5678' WHERE `guid` IN (352535);
-UPDATE `creature` SET `spawnmask`='0',`position_x`='-11159.0224',`position_y`='-1924.8333',`position_z`='74.4180',`orientation`='4.6856',`MovementType`='2' WHERE `guid` IN (368541);
+UPDATE `creature` SET `spawnmask`='0',`position_x`='-11155.8916',`position_y`='-1926.7788',`position_z`='74.4197',`orientation`='4.5796' WHERE `guid` =352721;
+UPDATE `creature` SET `spawnmask`='0',`position_x`='-11162.8251',`position_y`='-1925.7696',`position_z`='74.4123',`orientation`='4.5678' WHERE `guid` =352535;
+UPDATE `creature` SET `spawnmask`='0',`position_x`='-11159.0224',`position_y`='-1924.8333',`position_z`='74.4180',`orientation`='4.6856',`MovementType`='2' WHERE `guid` =368541;
 
 -- Mark of the Illidari
 UPDATE `creature_loot_template` SET `mincountOrRef`=0, `maxcount`=0 WHERE `item` =32897; -- 1 1
