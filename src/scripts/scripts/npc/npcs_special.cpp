@@ -2770,7 +2770,7 @@ struct npc_resurrectAI : public Scripted_NoMovementAI
             std::list<Player*> players;
             Looking4group::AnyPlayerInObjectRangeCheck check(me, 15.0f, false);
             Looking4group::ObjectListSearcher<Player, Looking4group::AnyPlayerInObjectRangeCheck> searcher(players, check);
-    		Cell::VisitAllObjects(me, searcher, 15.0f);
+            Cell::VisitAllObjects(me, searcher, 15.0f);
 
             players.remove_if([this](Player* plr) -> bool { return me->IsHostileTo(plr); });
 
@@ -3255,16 +3255,16 @@ struct npc_fel_cannon_master : public Scripted_NoMovementAI
 
     void UpdateAI(const uint32 diff)
     {
-		if (!UpdateVictim())
+        if (!UpdateVictim())
             return;
 
         if (CheckTimer < diff)
         {
-			me->CastSpell(me->getVictim(), 36238, false);
+            me->CastSpell(me->getVictim(), 36238, false);
             CheckTimer = 3000;
         }
-		else
-			CheckTimer -= diff;
+        else
+            CheckTimer -= diff;
     }
 };
 
@@ -3490,7 +3490,7 @@ void AddSC_npcs_special()
     newscript->GetAI = &GetAI_npc_nearly_dead_combat_dummy;
     newscript->RegisterSelf();
 
-	newscript = new Script;
+    newscript = new Script;
     newscript->Name="npc_fel_cannon_master";
     newscript->GetAI = &GetAI_npc_fel_cannon_master;
     newscript->RegisterSelf();

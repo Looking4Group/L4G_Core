@@ -60,7 +60,7 @@ void InstanceSaveManager::UnbindBeforeDelete()
     {
         InstanceSave *save = itr->second;
         if (save == nullptr)
-			continue;
+            continue;
 
         for (InstanceSave::PlayerListType::iterator itr2 = save->m_playerList.begin(); itr2 != save->m_playerList.end(); ++itr2)
         {

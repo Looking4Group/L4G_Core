@@ -626,7 +626,7 @@ bool GossipSelect_event_reward(Player* Player, Creature* Creature, uint32 /*send
                 Player->PlayerTalkClass->SendGossipMenu(40002,Creature->GetGUID());
             break;
         default:
-		    GossipHello_event_reward(Player,Creature);
+            GossipHello_event_reward(Player,Creature);
     }
     return true;
 }

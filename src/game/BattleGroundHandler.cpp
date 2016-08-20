@@ -810,7 +810,7 @@ void WorldSession::HandleBattleGroundArenaJoin(WorldPacket & recv_data)
         DEBUG_LOG("Battleground: arena join as group start");
         if (isRated)
             DEBUG_LOG("Battleground: arena team id %u, leader %s queued with rating %u for type %u",_player->GetArenaTeamId(arenaslot),_player->GetName(),arenaRating,arenatype);
-			//sWorld.SendWorldTextForLevels(60, 70, ACC_DISABLED_BGANN, LANG_BG_START_ANNOUNCE, "Ein Arena Team hat sich angemeldet!");
+            //sWorld.SendWorldTextForLevels(60, 70, ACC_DISABLED_BGANN, LANG_BG_START_ANNOUNCE, "Ein Arena Team hat sich angemeldet!");
         for (GroupReference *itr = grp->GetFirstMember(); itr != NULL; itr = itr->next())
         {
             Player *member = itr->getSource();

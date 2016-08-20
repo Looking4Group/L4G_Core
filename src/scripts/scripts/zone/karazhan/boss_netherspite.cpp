@@ -119,7 +119,7 @@ struct boss_netherspiteAI : public ScriptedAI
         for(int i=0; i<3; ++i)
         {
             if(Creature *portal = Unit::GetCreature(*m_creature, PortalGUID[i]))
-            {
+            {                
                 portal->SetVisibility(VISIBILITY_OFF);
                 portal->DealDamage(portal, portal->GetMaxHealth());
                 portal->RemoveFromWorld();
@@ -127,6 +127,11 @@ struct boss_netherspiteAI : public ScriptedAI
 
             if(Creature *portal = Unit::GetCreature(*m_creature, BeamerGUID[i]))
             {
+                Unit *current = Unit::GetUnit(*portal, BeamTarget[i]);
+                if (current && current->GetTypeId() == TYPEID_PLAYER)
+                {                    
+                    current->AddAura(PlayerDebuff[i], current);
+                }
                 portal->SetVisibility(VISIBILITY_OFF);
                 portal->DealDamage(portal, portal->GetMaxHealth());
                 portal->RemoveFromWorld();

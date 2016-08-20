@@ -160,7 +160,7 @@ struct npc_pit_commanderAI : public ScriptedAI
             InfernalTimer = 40000;
         }
         else InfernalTimer -= diff;
-		
+        
         if (InvadersTimer <= diff)
         {
             SummonInvaders();
@@ -503,7 +503,7 @@ struct npc_undercity_mageAI : public ScriptedAI
 
     void Reset()
     {
-		ReadyToCast = 3000;
+        ReadyToCast = 3000;
 
         me->setActive(true);
         me->SetReactState(REACT_AGGRESSIVE);
@@ -580,7 +580,7 @@ struct npc_dark_portal_invaderAI : public ScriptedAI
     bool atFinalPosition;
 
     void Reset() 
-	{  
+    {  
         CleaveTimer        = urand(3000, 5000);
         CutDownTimer       = urand(6000, 8000);
         ReadyToInvadeTimer = 15000;
@@ -601,7 +601,7 @@ struct npc_dark_portal_invaderAI : public ScriptedAI
     void UpdateAI(const uint32 diff)
     {
         // at Final position
-        if (GetClosestCreatureWithEntry(me, FINAL_POS_TRIGGER, 0.01f) && !atFinalPosition)		 
+        if (GetClosestCreatureWithEntry(me, FINAL_POS_TRIGGER, 0.01f) && !atFinalPosition)         
             atFinalPosition = true;
 
         if (ReadyToInvadeTimer <= diff)
@@ -793,7 +793,7 @@ struct npc_ironforge_paladinAI : public ScriptedAI
         me->setActive(true);
         me->SetReactState(REACT_AGGRESSIVE);
     }
-	
+    
     void EnterCombat(Unit *who)
     {
         if (who->GetTypeId() == TYPEID_PLAYER)
@@ -1035,7 +1035,7 @@ CreatureAI* GetAI_npc_orgrimmar_shaman(Creature* creature)
 struct npc_infernal_siegebreakerAI : public ScriptedAI
 {
     npc_infernal_siegebreakerAI(Creature* c) : ScriptedAI(c) {}
-	
+    
     bool StunedEnemy;
 
     void Reset() 
@@ -1075,7 +1075,7 @@ void AddSC_stair_of_destiny()
     newscript->Name = "npc_pit_commander";
     newscript->GetAI = &GetAI_npc_pit_commander;
     newscript->RegisterSelf();
-	
+    
     newscript = new Script;
     newscript->Name = "npc_melgromm_highmountain";
     newscript->GetAI = &GetAI_npc_melgromm_highmountain;
