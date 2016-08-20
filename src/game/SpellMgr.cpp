@@ -3702,6 +3702,8 @@ void SpellMgr::LoadSpellCustomAttr()
             case 30564: // Worgen's Spite has a duration of 1.1 seconds (Will fade once Transform fades)
                 spellInfo->DurationIndex = 555;
                 break;
+            case 38316: //Lady Vashj entangle is not supposed to break on damage
+                spellInfo->Attributes = 0;
             default:
                 break;
         }
