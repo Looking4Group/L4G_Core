@@ -3705,6 +3705,10 @@ void SpellMgr::LoadSpellCustomAttr()
             case 38316: //Lady Vashj entangle is not supposed to break on damage
                 spellInfo->Attributes = 0;
                 break;
+            case 38015: //Hydross beam visual
+                spellInfo->Attributes |= SPELL_ATTR_EX_NO_THREAT;
+                spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
+                break;
             default:
                 break;
         }
