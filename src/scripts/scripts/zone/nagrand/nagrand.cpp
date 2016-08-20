@@ -1566,79 +1566,79 @@ CreatureAI* GetAI_npc_fel_cannon(Creature *creature)
 
 enum Spells
 {
-	SPELL_feuer				= 29948,
-	Spell_feuerimmunity		= 7942
+    SPELL_feuer                = 29948,
+    Spell_feuerimmunity        = 7942
 };
 
 struct npc_erzuernte_FeuerseeleAI : public ScriptedAI
 {
-	npc_erzuernte_FeuerseeleAI(Creature *c) : ScriptedAI(c)
-		{ }
+    npc_erzuernte_FeuerseeleAI(Creature *c) : ScriptedAI(c)
+        { }
 
-		uint32 t_feuer;
+        uint32 t_feuer;
 
-		void Reset()
-		{
-			t_feuer = 20000;
-		}
+        void Reset()
+        {
+            t_feuer = 20000;
+        }
 
-		void EnterCombat(Unit* /*who*/)
-		{
-			me->CastSpell(me, Spell_feuerimmunity, false);
-			me->AddAura(SPELL_feuer, me->getVictim());
-		}
-		void UpdateAI (const uint32 diff)
-		{
-			if (!UpdateVictim())
-				return;
-			if (t_feuer <= diff)
-			{
-				me->AddAura(SPELL_feuer, me->getVictim());
-				t_feuer = 20000;
-			} else t_feuer -= diff;
+        void EnterCombat(Unit* /*who*/)
+        {
+            me->CastSpell(me, Spell_feuerimmunity, false);
+            me->AddAura(SPELL_feuer, me->getVictim());
+        }
+        void UpdateAI (const uint32 diff)
+        {
+            if (!UpdateVictim())
+                return;
+            if (t_feuer <= diff)
+            {
+                me->AddAura(SPELL_feuer, me->getVictim());
+                t_feuer = 20000;
+            } else t_feuer -= diff;
 
-			DoMeleeAttackIfReady(); 
-		}
+            DoMeleeAttackIfReady(); 
+        }
 };
 
 CreatureAI* GetAI_npc_erzuernte_Feuerseele(Creature *creature)
 {
-	return new npc_erzuernte_FeuerseeleAI(creature);
+    return new npc_erzuernte_FeuerseeleAI(creature);
 }
 enum FrostSpells
 {
-	SPELL_wasserball		= 34425,
-	Spell_frostimmunity		= 7940
+    SPELL_wasserball        = 34425,
+    Spell_frostimmunity        = 7940
 };
 
 struct npc_WasserelementarAI : public ScriptedAI
 {
-	npc_WasserelementarAI(Creature *c) : ScriptedAI(c)
-		{ }
-		uint32 t_Wasser;
-		
-		void Reset()
-		{
-			t_Wasser = 4000;
-		}
+    npc_WasserelementarAI(Creature *c) : ScriptedAI(c)
+        { }
+        uint32 t_Wasser;
+        
+        void Reset()
+        {
+            t_Wasser = 4000;
+        }
 
-		void EnterCombat(Unit* /*who*/)
-		{
-			me->CastSpell(me, Spell_frostimmunity, false);
-			me->CastSpell(me->getVictim(), SPELL_wasserball, false);
-		}
-		void UpdateAI (const uint32 diff)
-		{
-			if (!UpdateVictim())
-				return;
-			if (t_Wasser <= diff)
-			{
-				me->CastSpell(me->getVictim(), SPELL_wasserball, false);
-				t_Wasser = 4000;
-			} else t_Wasser -= diff;
-			
-			DoMeleeAttackIfReady(); 
-		}
+        void EnterCombat(Unit* /*who*/)
+        {
+            me->CastSpell(me, Spell_frostimmunity, false);
+            me->CastSpell(me->getVictim(), SPELL_wasserball, false);
+        }
+        void UpdateAI (const uint32 diff)
+        {
+            if (!UpdateVictim())
+                return;
+            if (t_Wasser <= diff)
+            {
+                me->CastSpell(me->getVictim(), SPELL_wasserball, false);
+                t_Wasser = 4000;
+            } else t_Wasser -= diff;
+            
+            DoMeleeAttackIfReady(); 
+        }
 };
 
 CreatureAI* GetAI_npc_Wasserelementar(Creature *creature)

@@ -114,7 +114,7 @@ struct boss_operaAI : public ScriptedAI
             return;
         }
 
-		DoMeleeAttackIfReady();
+        DoMeleeAttackIfReady();
     }
 };
 
@@ -373,7 +373,7 @@ struct boss_strawmanAI : public boss_operaAI
 
     void SpellHit(Unit* caster, const SpellEntry *Spell)
     {
-		// Set chance to Disorient to 33%
+        // Set chance to Disorient to 33%
         if ((Spell->SchoolMask == SPELL_SCHOOL_MASK_FIRE) && (!(rand()%3)))
             DoCast(m_creature, SPELL_BURNING_STRAW, true);
     }
@@ -813,7 +813,7 @@ struct boss_bigbadwolfAI : public boss_operaAI
 
     void Reset()
     {
-    	// initial timer for chase
+        // initial timer for chase
         ChaseTimer = 5000;
         FearTimer = 25000 + rand()%10000;
         SwipeTimer = 5000;
@@ -892,7 +892,7 @@ struct boss_bigbadwolfAI : public boss_operaAI
                     TempThreat = 0;
                 }
 
-		// Chase again after 10secs
+        // Chase again after 10secs
                 ChaseTimer = 10000;
             }
         }

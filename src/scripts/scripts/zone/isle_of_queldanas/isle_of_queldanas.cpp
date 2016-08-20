@@ -66,12 +66,12 @@ bool GossipSelect_npc_archmage_nethul(Player *player, Creature *_Creature, uint3
             if (query)
             {
                 Field *fields = query->Fetch();
-                uint64 quests_needed_p1	= fields[0].GetUInt64(); //for SWP Opening
-                uint64 quests_needed_p2	= fields[1].GetUInt64(); //for Boss 1,2 and 3
-                uint64 quests_needed_p3	= fields[2].GetUInt64(); //for Boss 4 and 5
-                uint64 quests_needed_p4	= fields[3].GetUInt64(); //for Last Boss
-                uint64 quests_done		= fields[4].GetUInt64();
-                uint64 quests_phase		= fields[5].GetUInt64();
+                uint64 quests_needed_p1    = fields[0].GetUInt64(); //for SWP Opening
+                uint64 quests_needed_p2    = fields[1].GetUInt64(); //for Boss 1,2 and 3
+                uint64 quests_needed_p3    = fields[2].GetUInt64(); //for Boss 4 and 5
+                uint64 quests_needed_p4    = fields[3].GetUInt64(); //for Last Boss
+                uint64 quests_done        = fields[4].GetUInt64();
+                uint64 quests_phase        = fields[5].GetUInt64();
 
                 if (quests_phase == -1)
                 {

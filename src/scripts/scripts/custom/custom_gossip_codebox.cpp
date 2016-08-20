@@ -173,8 +173,8 @@ bool GossipSelect_custom_gossip_codebox(Player* Player, Creature* Creature, uint
             // WARRIOR - DD -fertig
             uint16 items[] = {29969,25784,30005,0,29789,29807,29980,29786,30402,29812,30339,25926,29776,31617,25780,0,0,30227};
             Player->EquipForPush(items);
-			if (!Player->HasItemCount(28056, 200, true))
-				Player->AddItem(28056, 200);
+            if (!Player->HasItemCount(28056, 200, true))
+                Player->AddItem(28056, 200);
             Player->AddItem(30364, 1);
             Player->AddItem(31423, 1);
             Player->AddItem(31701, 1);
@@ -186,9 +186,9 @@ bool GossipSelect_custom_gossip_codebox(Player* Player, Creature* Creature, uint
         {
             // WARRIOR - TANK -ü
             uint16 items[] = {32871,29794,30291,0,30270,30380,25979,32866,30225,30264,30006,31528,28042,31617,29777,30278,25624,25971};
-			Player->EquipForPush(items);
-			if (!Player->HasItemCount(28056, 200, true))
-				Player->AddItem(28056, 200);
+            Player->EquipForPush(items);
+            if (!Player->HasItemCount(28056, 200, true))
+                Player->AddItem(28056, 200);
             Player->ADD_GOSSIP_ITEM(0, "Take me to class trainer", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 31);
             Player->PlayerTalkClass->SendGossipMenu(30013, Creature->GetGUID());
             break;
@@ -196,8 +196,8 @@ bool GossipSelect_custom_gossip_codebox(Player* Player, Creature* Creature, uint
         case GOSSIP_ACTION_INFO_DEF + 15:
         {
             // PALADIN - DD - fertig
-			uint16 items[] = {29969,25784,30005,0,29789,29807,29980,29786,30402,29812,30339,25926,29776,31617,25780,30394,0,27949};
-			Player->EquipForPush(items);
+            uint16 items[] = {29969,25784,30005,0,29789,29807,29980,29786,30402,29812,30339,25926,29776,31617,25780,30394,0,27949};
+            Player->EquipForPush(items);
             Player->ADD_GOSSIP_ITEM(0, "Take me to class trainer", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 31);
             Player->PlayerTalkClass->SendGossipMenu(30013, Creature->GetGUID());
             break;
@@ -215,7 +215,7 @@ bool GossipSelect_custom_gossip_codebox(Player* Player, Creature* Creature, uint
         {
             // PALADIN - TANK -ü
             uint16 items[] = {32871,28027,30381,0,30296,30330,29774,30334,30400,29959,27734,31528,25619,28042,29777,31448,25624,27949};
-			Player->EquipForPush(items);
+            Player->EquipForPush(items);
             Player->ADD_GOSSIP_ITEM(0, "Take me to class trainer", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 31);
             Player->PlayerTalkClass->SendGossipMenu(30013, Creature->GetGUID());
             break;
@@ -224,7 +224,7 @@ bool GossipSelect_custom_gossip_codebox(Player* Player, Creature* Creature, uint
         {
             // PALADIN - Healer -ü
             uint16 items[] = {25530,30276,31115,0,31765,25948,25929,30968,25592,25566,25542,31730,30293,25634,30338,25492,31732,23201};
-			Player->EquipForPush(items);
+            Player->EquipForPush(items);
             Player->ADD_GOSSIP_ITEM(0, "Take me to class trainer", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 31);
             Player->PlayerTalkClass->SendGossipMenu(30013, Creature->GetGUID());
             break;
@@ -233,7 +233,7 @@ bool GossipSelect_custom_gossip_codebox(Player* Player, Creature* Creature, uint
         {
             // HUNTER - fertig
             uint16 items[] = {30329,30981,30333,0,30255,30001,29968,30273,29785,30336,25779,31527,29776,31617,29792,31701,0,30397};
-			Player->EquipForPush(items);
+            Player->EquipForPush(items);
             Player->ADD_GOSSIP_ITEM(0, "Take me to class trainer", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 31);
             Player->PlayerTalkClass->SendGossipMenu(30013, Creature->GetGUID());
             break;
@@ -242,7 +242,7 @@ bool GossipSelect_custom_gossip_codebox(Player* Player, Creature* Creature, uint
         {
             // ROGUE - fertig
             uint16 items[] = {30362,30981,29810,0,30328,29772,30272,30401,30384,30003,25779,30339,29776,25628,29792,30277,31703,30227};
-			Player->EquipForPush(items);
+            Player->EquipForPush(items);
             Player->ADD_GOSSIP_ITEM(0, "Take me to class trainer", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 31);
             Player->PlayerTalkClass->SendGossipMenu(30013, Creature->GetGUID());
             break;
@@ -251,7 +251,7 @@ bool GossipSelect_custom_gossip_codebox(Player* Player, Creature* Creature, uint
         {
             // PRIEST - DD - fertig
             uint16 items[] = {30271, 31818, 29954, 0, 30928, 30516, 30268, 30284, 30382, 30521, 29793, 31523, 30340, 31615, 30971, 30522, 0, 30252};
-			Player->EquipForPush(items);
+            Player->EquipForPush(items);
             Player->ADD_GOSSIP_ITEM(0, "Take me to class trainer", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 31);
             Player->PlayerTalkClass->SendGossipMenu(30013, Creature->GetGUID());
             break;
@@ -260,7 +260,7 @@ bool GossipSelect_custom_gossip_codebox(Player* Player, Creature* Creature, uint
         {
             // PRIEST - Healer -ü
             uint16 items[] = {30294,30276,25925,0,29978,30923,31485,27728,30382,30521,31526,31730,31615,25634,30338,31700,0,29779};
-			Player->EquipForPush(items);
+            Player->EquipForPush(items);
             Player->ADD_GOSSIP_ITEM(0, "Take me to class trainer", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 31);
             Player->PlayerTalkClass->SendGossipMenu(30013, Creature->GetGUID());
             break;
@@ -269,7 +269,7 @@ bool GossipSelect_custom_gossip_codebox(Player* Player, Creature* Creature, uint
         {
             // SHAMANE - VERSTÄRKER - fertig
             uint16 items[] = {30329,30981,30333,0,30255,30001,29968,30273,30399,30336,25779,30339,29776,31617,29792,30277,0,22395};
-			Player->EquipForPush(items);
+            Player->EquipForPush(items);
             Player->AddItem(14487, 1);
             Player->ADD_GOSSIP_ITEM(0, "Take me to class trainer", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 31);
             Player->PlayerTalkClass->SendGossipMenu(30013, Creature->GetGUID());
@@ -279,7 +279,7 @@ bool GossipSelect_custom_gossip_codebox(Player* Player, Creature* Creature, uint
         {
             // SHAMANE - ELEMENTAR -fertig
             uint16 items[] = {29773,29775,31314,0,30363,30342,25568,30004,25592,31515,29793,31523,30340,31615,30971,30522,0,23199};
-			Player->EquipForPush(items);
+            Player->EquipForPush(items);
             Player->ADD_GOSSIP_ITEM(0, "Take me to class trainer", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 31);
             Player->PlayerTalkClass->SendGossipMenu(30013, Creature->GetGUID());
             break;
@@ -288,7 +288,7 @@ bool GossipSelect_custom_gossip_codebox(Player* Player, Creature* Creature, uint
         {
             // SHAMANE - Healer -ü
             uint16 items[] = {25575,30276,31533,0,25556,31114,25568,25479,25592,31515,25542,31730,30293,25634,30338,31475,31732,23200};
-			Player->EquipForPush(items);
+            Player->EquipForPush(items);
             Player->ADD_GOSSIP_ITEM(0, "Take me to class trainer", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 31);
             Player->PlayerTalkClass->SendGossipMenu(30013, Creature->GetGUID());
             break;
@@ -297,7 +297,7 @@ bool GossipSelect_custom_gossip_codebox(Player* Player, Creature* Creature, uint
         {
             // MAGE -fertig
             uint16 items[] = {30271, 31818, 29954,0, 30928, 30516, 30268, 30284, 30382, 30521, 29793, 31523, 30340, 31615, 30971, 30522, 0, 30252};
-			Player->EquipForPush(items);
+            Player->EquipForPush(items);
             Player->ADD_GOSSIP_ITEM(0, "Take me to class trainer", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 31);
             Player->PlayerTalkClass->SendGossipMenu(30013, Creature->GetGUID());
             break;
@@ -306,7 +306,7 @@ bool GossipSelect_custom_gossip_codebox(Player* Player, Creature* Creature, uint
         {
             // WARLOCK -fertig
             uint16 items[] = {31509,29775,30514,0,30518,30383,30517,31312,30520,30930,29793,31523,30340,31615,30971,30522,0,30252};
-			Player->EquipForPush(items);
+            Player->EquipForPush(items);
             Player->ADD_GOSSIP_ITEM(0, "Take me to class trainer", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 31);
             Player->PlayerTalkClass->SendGossipMenu(30013, Creature->GetGUID());
             break;
@@ -315,7 +315,7 @@ bool GossipSelect_custom_gossip_codebox(Player* Player, Creature* Creature, uint
         {
             // DRUID - KATZE -fertig
             uint16 items[] = {30362,30981,29810,0,30328,29772,30272,30401,30384,30003,25779,30339,29776,25628,29792,25622,0,28064};
-			Player->EquipForPush(items);
+            Player->EquipForPush(items);
             Player->ADD_GOSSIP_ITEM(0, "Take me to class trainer", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 31);
             Player->PlayerTalkClass->SendGossipMenu(30013, Creature->GetGUID());
             break;
@@ -324,7 +324,7 @@ bool GossipSelect_custom_gossip_codebox(Player* Player, Creature* Creature, uint
         {
             // DRUID - EULE -ü
             uint16 items[] = {30946,29775,30262,0,29967,25583,30290,30335,30520,31430,29793,31523,30340,31615,30971,30522,0,23197};
-			Player->EquipForPush(items);
+            Player->EquipForPush(items);
             Player->ADD_GOSSIP_ITEM(0, "Take me to class trainer", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 31);
             Player->PlayerTalkClass->SendGossipMenu(30013, Creature->GetGUID());
             break;
@@ -333,7 +333,7 @@ bool GossipSelect_custom_gossip_codebox(Player* Player, Creature* Creature, uint
         {
             // DRUID - BAUM -ü
             uint16 items[] = {30515,30276,31538,0,30945,31513,30290,27727,29955,25591,31526,31730,31615,25634,30338,31700,0,22398};
-			Player->EquipForPush(items);
+            Player->EquipForPush(items);
             Player->ADD_GOSSIP_ITEM(0, "Take me to class trainer", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 31);
             Player->PlayerTalkClass->SendGossipMenu(30013, Creature->GetGUID());
             break;
@@ -342,7 +342,7 @@ bool GossipSelect_custom_gossip_codebox(Player* Player, Creature* Creature, uint
         {
             // DRUID - BÄR -ü
             uint16 items[] = {30269,29794,29999,0,32869,30285,30941,30266,30332,30341,30006,31528,28042,31617,29777,25622,0,28064};
-			Player->EquipForPush(items);
+            Player->EquipForPush(items);
             Player->ADD_GOSSIP_ITEM(0, "Take me to class trainer", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 31);
             Player->PlayerTalkClass->SendGossipMenu(30013, Creature->GetGUID());
             break;
