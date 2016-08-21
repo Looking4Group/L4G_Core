@@ -206,7 +206,7 @@ struct boss_the_lurker_belowAI : public BossAI
                 }
             }
             else {
-                //Since target is invalid, apply Immunity to Spout spell
+                //Since target is invalid, apply Immunity to Spout spell, to avoid being caught by it because a target nearby gets hit by spout
                 i->getSource()->ApplySpellImmune(0, IMMUNITY_ID, 37433, true);
             }
                 
