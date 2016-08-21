@@ -195,12 +195,21 @@ struct boss_the_lurker_belowAI : public BossAI
         Map::PlayerList const &PlayerList = map->GetPlayers();
         for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
         {
-            //Player *target = i->getSource();
-            if (i->getSource() && !i->getSource()->IsInWater() && (i->getSource()->GetPositionZ() >= -21.0f))
-                if(i->getSource()->isAlive() && !i->getSource()->HasAura(36151) && me->HasInArc((double)diff/20000*(double)M_PI*2,i->getSource()) && (me->GetDistance(i->getSource()) <= SPOUT_DIST)){
-                    DoCast(i->getSource(),SPELL_SPOUT,true);//only knock back palyers in arc, in 100yards, not in water
+            //Player *target = i->getSource();            
+            if (i->getSource() && !i->getSource()->IsInWater() && (i->getSource()->GetPositionZ() >= -21.0f)) {
+                if (i->getSource()->isAlive() && !i->getSource()->HasAura(36151) && me->HasInArc((double)diff / 20000 * (double)M_PI * 2, i->getSource()) && (me->GetDistance(i->getSource()) <= SPOUT_DIST)) {
+                    //Remove Immunity to Spout spell, if set
+                    i->getSource()->ApplySpellImmune(0, IMMUNITY_ID, 37433, false);
+
+                    DoCast(i->getSource(), SPELL_SPOUT, true);//only knock back palyers in arc, in 100yards, not in water
                     DoCast(i->getSource(), 36151, true);
                 }
+            }
+            else {
+                //Since target is invalid, apply Immunity to Spout spell, to avoid being caught by it because a target nearby gets hit by spout
+                i->getSource()->ApplySpellImmune(0, IMMUNITY_ID, 37433, true);
+            }
+                
         }
 
     }
