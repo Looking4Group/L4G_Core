@@ -23,7 +23,7 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('2045503','20455','1','0','100','1','15000','15000','1000','1000','41','0','0','0','0','0','0','0','0','0','0','0','Terror Totem - Despawn on OOC Timer');
 
 
-UPDATE `creature` SET `orientation`='3.4761' WHERE `guid` IN =67880;
+UPDATE `creature` SET `orientation`='3.4761' WHERE `guid` = 67880;
 
 
 DELETE FROM `creature_formations` WHERE `leaderguid` IN (101459,101460,101461,101462,101463);
