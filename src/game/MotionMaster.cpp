@@ -198,6 +198,12 @@ void MotionMaster::propagateSpeedChange()
 
 MovementGeneratorType MotionMaster::GetCurrentMovementGeneratorType() const
 {
+    if (!this || !const_cast<MotionMaster*>(this) || const_cast<MotionMaster*>(this)->empty())
+    {
+        sLog.outLog(LOG_DEFAULT, "ERROR: MotionMaster::GetCurrentMovementGeneratorType() %s ran into trouble!", m_owner->GetGuidStr().c_str());
+        return IDLE_MOTION_TYPE;
+    }
+
     return const_cast<MotionMaster*>(this)->top()->GetMovementGeneratorType();
 }
 
