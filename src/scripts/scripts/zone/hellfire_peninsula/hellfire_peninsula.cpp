@@ -1839,9 +1839,7 @@ struct npc_vindicator_sedaiAI : public ScriptedAI
             if (Vision)
                 StepsTimer = NextStep(++Steps);
         }
-        else StepsTimer -= diff;
-
-        DoMeleeAttackIfReady();
+        else StepsTimer -= diff;        
     }
 };
 
