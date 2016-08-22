@@ -93,9 +93,7 @@ void SpellCastTargets::setUnitTarget(Unit *target)
         return;
 
     m_unitTarget = target;
-    
-    if (target && target->GetGUID())
-        m_unitTargetGUID = target->GetGUID();
+    m_unitTargetGUID = target->GetObjectGuid();
 
     m_targetMask |= TARGET_FLAG_UNIT;
 }
