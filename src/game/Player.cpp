@@ -3561,10 +3561,7 @@ uint32 Player::resetTalentsCost() const
         return 1*GOLD;
     // then 5 gold
     else if (m_resetTalentsCost < 5*GOLD)
-        return 5*GOLD;
-    // After that it increases in increments of 5 gold
-    else if (m_resetTalentsCost < 10*GOLD)
-        return 10*GOLD;
+        return 5*GOLD;    
     else
     {
         uint32 months = (sWorld.GetGameTime() - m_resetTalentsTime)/MONTH;
@@ -3572,16 +3569,16 @@ uint32 Player::resetTalentsCost() const
         {
             // This cost will be reduced by a rate of 5 gold per month
             int32 new_cost = int32(m_resetTalentsCost) - 5*GOLD*months;
-            // to a minimum of 10 gold.
-            return (new_cost < 10*GOLD ? 10*GOLD : new_cost);
+            // to a minimum of 5 gold.
+            return (new_cost < 5*GOLD ? 5*GOLD : new_cost);
         }
         else
         {
             // After that it increases in increments of 5 gold
             int32 new_cost = m_resetTalentsCost + 5*GOLD;
-            // until it hits a cap of 50 gold.
-            if (new_cost > 50*GOLD)
-                new_cost = 50*GOLD;
+            // until it hits a cap of 20 gold.
+            if (new_cost > 20*GOLD)
+                new_cost = 20*GOLD;
             return new_cost;
         }
     }
