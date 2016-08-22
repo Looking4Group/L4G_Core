@@ -223,7 +223,9 @@ struct boss_netherspiteAI : public ScriptedAI
         PortalTimer = 10000;
         EmpowermentTimer = 10000;
         DoScriptText(EMOTE_PHASE_PORTAL,m_creature);
-        AttackStart(m_creature->getVictim());
+        DoResetThreat();
+        m_creature->getThreatManager().setCurrentVictim((HostilReference*)target);
+        m_creature->AI()->AttackStart(target);
     }
 
     void SwitchToBanishPhase()
@@ -350,7 +352,7 @@ struct boss_netherspiteAI : public ScriptedAI
                 if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0,GetSpellMaxRange(SPELL_NETHERBREATH),true))
                     AddSpellToCast(target,SPELL_NETHERBREATH);
 
-                NetherbreathTimer = 5000+rand()%2000;
+                NetherbreathTimer = urand(4000, 5000);
             }
             else
                 NetherbreathTimer -= diff;
