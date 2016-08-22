@@ -61,9 +61,9 @@ struct boss_maiden_of_virtueAI : public ScriptedAI
 
     void Reset()
     {
-        Repentance_Timer    = 30000+(rand()%15000);
-        Holyfire_Timer      = 8000+(rand()%17000);
-        Holywrath_Timer     = 20000+(rand()%10000);
+        Repentance_Timer    = urand(30000, 40000);
+        Holyfire_Timer      = urand(8000, 25000);
+        Holywrath_Timer     = urand(20000, 25000);
         Holyground_Timer    = 3000;
         Enrage_Timer        = 600000;
         CheckTimer = 3000;
@@ -136,7 +136,7 @@ struct boss_maiden_of_virtueAI : public ScriptedAI
 
             DoScriptText(RAND(SAY_REPENTANCE1, SAY_REPENTANCE2), m_creature);
 
-            Repentance_Timer = 30000 + rand()%15000;        //A little randomness on that spell
+            Repentance_Timer = urand(30000, 40000);        //A little randomness on that spell
             Holyfire_Timer += 6000;
         }
         else
@@ -147,7 +147,7 @@ struct boss_maiden_of_virtueAI : public ScriptedAI
             if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0,GetSpellMaxRange(SPELL_HOLYFIRE), true))
                 DoCast(target,SPELL_HOLYFIRE);
 
-                Holyfire_Timer = 8000 + rand()%17000; //Anywhere from 8 to 25 seconds, good luck having several of those in a row!
+                Holyfire_Timer = urand(8000, 25000); //Anywhere from 8 to 25 seconds, good luck having several of those in a row!
         }
         else
             Holyfire_Timer -= diff;
@@ -157,7 +157,7 @@ struct boss_maiden_of_virtueAI : public ScriptedAI
             if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0,GetSpellMaxRange(SPELL_HOLYWRATH), true))
                 DoCast(target,SPELL_HOLYWRATH);
 
-            Holywrath_Timer = 20000+(rand()%10000);     //20-30 secs sounds nice
+            Holywrath_Timer = urand(20000, 25000);     //20-25 secs sounds nice
 
         }
         else
