@@ -1123,3 +1123,6 @@ INSERT INTO `creature_ai_texts` VALUES
 (-9217,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'TerokkarPlaceholder'),
 (-9218,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'TerokkarPlaceholder'),
 (-9219,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'TerokkarPlaceholder');
+
+-- pvp daily quests
+update `quest_template` set `RewHonorableKills` = 24, `RewMoneyMaxLevel` = 155999 where `entry` between 11335 and 11342;
