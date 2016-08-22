@@ -683,18 +683,20 @@ void WorldSession::AnnounceArenaStart(uint8 arenatype, uint32 arenaRating, std::
     switch (arenatype)
     {
     case 2:
-        ss << "2v2: Team \"" << teamName << "\" with rating " << arenaRating << " just queued"; 
+        ss << "2v2: ";
         break;
     case 3:
-        ss << "3v3: Team \"" << teamName << "\" with rating " << arenaRating << " just queued";
+        ss << "3v3: ";
         break;
     case 5:
-        ss << "5v5: Team \"" << teamName << "\" with rating " << arenaRating << " just queued";
+        ss << "5v5: ";
         break;   
     default: 
         return;
-    }    
-    
+    }
+
+    ss << "\"" <<teamName << "\" with rating " << arenaRating << " just queued!";
+
     sWorld.SendWorldTextForLevels(60, 70, ACC_DISABLED_BGANN, LANG_BG_START_ANNOUNCE, ss.str().c_str());
 }
 
