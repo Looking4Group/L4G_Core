@@ -71,7 +71,7 @@ struct boss_curatorAI : public ScriptedAI
     {
         addTimer = 10000;
         hatefulBoltTimer = 15000;                           //This time may be wrong
-        berserkTimer = 720000;                              //12 minutes
+        berserkTimer = 600000;                              //10 minutes
         enraged = false;
         evocating = false;
         me->ApplySpellImmune(0, IMMUNITY_SCHOOL, SPELL_SCHOOL_MASK_ARCANE, true);
