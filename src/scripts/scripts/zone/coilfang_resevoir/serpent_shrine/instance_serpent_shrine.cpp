@@ -515,8 +515,7 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
                             {
                                 if (Creature* frenzy = pPlayer->SummonCreature(MOB_COILFANG_FRENZY,pPlayer->GetPositionX(),pPlayer->GetPositionY(),pPlayer->GetPositionZ(),pPlayer->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,5000))
                                 {
-                                    frenzy->AddUnitMovementFlag(MOVEFLAG_SWIMMING);
-                                    frenzy->SetLevitate(true);
+                                    frenzy->AddUnitMovementFlag(MOVEFLAG_SWIMMING);                                    
                                     frenzy->AI()->AttackStart(pPlayer);
                                 }
                             }
@@ -528,7 +527,7 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
                     }
                 }
             }
-            WaterCheckTimer = 2000;
+            WaterCheckTimer = 4000;
         }
         else
             WaterCheckTimer -= diff;
