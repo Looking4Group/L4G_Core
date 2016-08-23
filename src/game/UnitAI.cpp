@@ -53,11 +53,6 @@ void UnitAI::DoMeleeAttackIfReady()
             ((Creature*)me)->SetSelection(me->getVictimGUID());
     }
     
-    //Force victim update, if we are no totem or pet
-    if (me->GetOwnerGUID() == 0) {        
-        ((Creature*)me)->SelectVictim();
-    }
-        
     //Make sure our attack is ready and we aren't currently casting before checking distance
     if (me->isAttackReady())
     {        
