@@ -628,11 +628,15 @@ struct boss_malchezaarAI : public ScriptedAI
             {
                 Unit* target = NULL;
                 if(phase == 1)
+                {
                     target = m_creature->getVictim();       // p1 the tank
                     DoCast(target, SPELL_SW_PAIN_PHASE1);
+                }    
                 else                                        // p3 anyone but the tank
+                {
                     target = SelectUnit(SELECT_TARGET_RANDOM, 1, GetSpellMaxRange(SPELL_SW_PAIN_PHASE3), true, m_creature->getVictimGUID());
                     DoCast(target, SPELL_SW_PAIN_PHASE3);
+                }    
 
                 SWPainTimer = 20000;
             }
