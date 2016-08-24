@@ -85,7 +85,7 @@ static InfernalPoint InfernalPoints[] =
 #define SPELL_EQUIP_AXES        30857                       //Visual for axe equiping
 #define SPELL_AMPLIFY_DAMAGE    39095                       //Amplifiy during phase 3
 #define SPELL_HELLFIRE          30859                       //Infenals' hellfire aura
-//#define SPELL_CLEAVE            30131                       //spell not confirmed
+#define SPELL_CLEAVE            30131                       //Same as Nightbane.
 #define NETHERSPITE_INFERNAL    17646                       //The netherspite infernal creature
 #define MALCHEZARS_AXE          17650                       //Malchezar's axes (creatures), summoned during phase 3
 
@@ -220,6 +220,7 @@ struct boss_malchezaarAI : public ScriptedAI
         SWPainTimer = 20000;
         SunderArmorTimer = urand(5000, 10000);
         AmplifyDamageTimer = 5000;
+        Cleave_Timer = 8000;
         InfernalTimer = 45000;
         InfernalCleanupTimer = 47000;
         AxesTargetSwitchTimer = urand(7500, 20000);
@@ -554,6 +555,12 @@ struct boss_malchezaarAI : public ScriptedAI
                 SunderArmorTimer = urand(10000, 18000);
 
             }else SunderArmorTimer -= diff;
+            
+            if(Cleave_Timer < diff)
+            {
+                DoCast(m_creature->getVictim(), SPELL_CLEAVE);
+                Cleave_Timer = urand(6000, 12000);
+            }else Cleave_Timer -= diff;
 
         }
         else
