@@ -60,6 +60,7 @@ enum lurkerSpells
     SPELL_WHIRL        = 37660,
     SPELL_WATERBOLT    = 37138,
     SPELL_SUBMERGE     = 37550,
+    SPELL_EMERGE       = 20568
 };
 
 #define SPOUT_WIDTH 1.2f
@@ -95,8 +96,12 @@ struct boss_the_lurker_belowAI : public BossAI
     bool m_rotating;
     bool m_submerged;
     bool m_emoteDone;
+    bool CanStartEvent;
+    bool ConsecutiveSubmerge;
 
     uint32 m_checkTimer;
+    uint32 WaitTimer;
+    uint32 WaitTimer2;
 
     void Reset()
     {
@@ -127,13 +132,16 @@ struct boss_the_lurker_belowAI : public BossAI
         SpoutAnimTimer = 1000;
         RotTimer = 20000;
         SpoutTimer = 15000;
-
-        // Timers
         m_checkTimer = 3000;
-
-        // Bools
+       
         m_rotating = false;
-        m_submerged = false;
+        m_submerged = true;
+        ConsecutiveSubmerge = false;
+
+        //Time values here is irrelevant, they just need to be set
+        WaitTimer = 60000;
+        WaitTimer2 = 60000;
+        CanStartEvent = false;
 
         summons.DespawnAll();
         me->CastSpell(me, SPELL_SUBMERGE, false);
@@ -181,7 +189,7 @@ struct boss_the_lurker_belowAI : public BossAI
             me->SetReactState(REACT_AGGRESSIVE);
             m_rotating = false;
             me->InterruptNonMeleeSpells(false);
-            events.ScheduleEvent(LURKER_EVENT_WHIRL, 4000); //whirl directly after spout ends
+            events.RescheduleEvent(LURKER_EVENT_WHIRL, 4000); //whirl directly after spout ends
             return;
         }else RotTimer-=diff;
 
@@ -240,10 +248,9 @@ struct boss_the_lurker_belowAI : public BossAI
     }
 
     void EnterCombat(Unit *who)
-    {
+    {        
         instance->SetData(DATA_THELURKERBELOWEVENT, IN_PROGRESS);
-        me->SetReactState(REACT_AGGRESSIVE);
-
+        me->SetReactState(REACT_AGGRESSIVE);        
         AttackStart(who);
     }
 
@@ -314,15 +321,49 @@ struct boss_the_lurker_belowAI : public BossAI
         if (instance->GetData(DATA_STRANGE_POOL) != IN_PROGRESS)
             return;
 
-        if (me->GetVisibility() == VISIBILITY_OFF)
-        {
-            me->SetVisibility(VISIBILITY_ON);
-            me->RemoveAurasDueToSpell(SPELL_SUBMERGE);
+        //boss is invisible, don't attack
+        if (!CanStartEvent)
+        {            
+                if (m_submerged)
+                {                    
+                    m_submerged = false;
+                    WaitTimer2 = 500;
+                }
+                
+                //wait 500ms before emerge anim
+                if (!m_submerged && WaitTimer2 <= diff)
+                {
+                    me->SetVisibility(VISIBILITY_ON);
+                    me->RemoveAllAuras();
+                    me->SetUInt32Value(UNIT_NPC_EMOTESTATE, 0);                    
+                    DoCast(me, SPELL_EMERGE, false);
+                    WaitTimer2 = 60000;//never reached
+                    WaitTimer = 3000;
+                }
+                else
+                    WaitTimer2 -= diff;
 
-            me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_ATTACKABLE_2);
-            me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                //wait 3secs for emerge anim, then attack
+                if (WaitTimer <= diff)
+                {
+                    //fresh fished from pool
+                    WaitTimer = 3000;                    
+                    CanStartEvent = true;
+                    me->RemoveAurasDueToSpell(SPELL_SUBMERGE);
+                    me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_ATTACKABLE_2);
+                    me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                    DoZoneInCombat();
 
-            DoZoneInCombat();
+                    if (ConsecutiveSubmerge)
+                    {
+                        events.RescheduleEvent(LURKER_EVENT_WHIRL, 2000);
+                        events.RescheduleEvent(LURKER_EVENT_GEYSER, urand(5000, 15000));
+                        events.RescheduleEvent(LURKER_EVENT_SUBMERGE, 90000);
+                    }
+                }
+                else
+                    WaitTimer -= diff;
+            return;
         }
 
         if (!UpdateVictim())
@@ -350,33 +391,12 @@ struct boss_the_lurker_belowAI : public BossAI
         {
             switch (eventId)
             {    
-                /*case LURKER_EVENT_SPOUT_EMOTE:
-                {
-                me->MonsterTextEmote(EMOTE_SPOUT, 0, true);
-                ForceSpellCast(me, SPELL_SPOUT_BREATH);
-                events.ScheduleEvent(LURKER_EVENT_SPOUT, 3000);
-                break;
-                }
-                case LURKER_EVENT_SPOUT:
-                {
-                me->SetReactState(REACT_PASSIVE);
-
-                me->SetSelection(0);
-                me->GetMotionMaster()->MoveRotate(20000, RAND(ROTATE_DIRECTION_LEFT, ROTATE_DIRECTION_RIGHT));
-
-                ForceSpellCast(me, SPELL_SPOUT_VISUAL, INTERRUPT_AND_CAST_INSTANTLY);
-
-                m_rotating = true;
-
-                events.DelayEvents(20000, 0);
-                events.ScheduleEvent(LURKER_EVENT_SPOUT_EMOTE, 45000);
-                events.RescheduleEvent(LURKER_EVENT_WHIRL, 21000);
-                break;
-                }*/
             case LURKER_EVENT_WHIRL:
                 {
-                    AddSpellToCast(me, SPELL_WHIRL);
-                    events.ScheduleEvent(LURKER_EVENT_WHIRL, 18000);
+                    if (m_submerged == false) {
+                        AddSpellToCast(me, SPELL_WHIRL);
+                    }
+                    events.RescheduleEvent(LURKER_EVENT_WHIRL, 18000);                    
                     break;
                 }
             case LURKER_EVENT_GEYSER:
@@ -394,10 +414,9 @@ struct boss_the_lurker_belowAI : public BossAI
 
                     SummonAdds();
                     m_submerged = true;
-
-                    events.CancelEvent(LURKER_EVENT_SPOUT_EMOTE);
-                    SpoutTimer = 4000; // directly cast Spout after emerging!
-                    // events.CancelEvent(LURKER_EVENT_SPOUT);
+                    
+                    // directly cast Spout after emerging!                    
+                    SpoutTimer = 4000; 
                     events.CancelEvent(LURKER_EVENT_WHIRL);
                     events.CancelEvent(LURKER_EVENT_GEYSER);
                     events.ScheduleEvent(LURKER_EVENT_REEMERGE, 60000);
@@ -405,17 +424,15 @@ struct boss_the_lurker_belowAI : public BossAI
                 }
             case LURKER_EVENT_REEMERGE:
                 {
-                    me->RemoveAurasDueToSpell(SPELL_SUBMERGE);
+                    me->SetVisibility(VISIBILITY_OFF);
+                    DoStopAttack();
 
-                    me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_ATTACKABLE_2);
-                    me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-
-                    m_submerged = false;
-
-                    events.ScheduleEvent(LURKER_EVENT_SPOUT_EMOTE, 0);
-                    events.ScheduleEvent(LURKER_EVENT_WHIRL, 2000);
-                    events.ScheduleEvent(LURKER_EVENT_GEYSER, urand(5000, 15000));
-                    events.ScheduleEvent(LURKER_EVENT_SUBMERGE, 90000);
+                    //Time values here is irrelevant, they just need to be set
+                    WaitTimer = 60000;
+                    WaitTimer2 = 60000;
+                    CanStartEvent = false;
+                    m_submerged = true;
+                    ConsecutiveSubmerge = true;                    
                     break;
                 }
             }
