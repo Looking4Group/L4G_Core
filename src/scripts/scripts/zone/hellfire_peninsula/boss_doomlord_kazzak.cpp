@@ -116,13 +116,15 @@ struct boss_doomlordkazzakAI : public BossAI
 
     void KilledUnit(Unit* pVictim)
     {
-        if (pVictim->ToPlayer())
-            return;
+        if (pVictim->GetTypeId() == TYPEID_PLAYER)
+        {
+            if (!HealthBelowPct(1))
+            {
+                ForceSpellCast(SPELL_CAPTURESOUL, CAST_SELF);
+            }
 
-        if (!HealthBelowPct(1))
-            ForceSpellCast(SPELL_CAPTURESOUL, CAST_SELF);
-
-        DoScriptText(RAND(SAY_KILL1, SAY_KILL2, SAY_KILL3), me);
+            DoScriptText(RAND(SAY_KILL1, SAY_KILL2, SAY_KILL3), me);
+        }
     }
 
     void JustDied(Unit *victim)
