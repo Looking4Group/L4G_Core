@@ -1782,7 +1782,7 @@ struct npc_earth_elemental_guardianAI : public ScriptedAI
     void Reset()
     {
         AngeredEarth_Timer = 1000;
-        me->ApplySpellImmune(0, IMMUNITY_SCHOOL, SPELL_SCHOOL_MASK_NATURE, true);
+        me->ApplySpellImmune(0, IMMUNITY_DAMAGE, SPELL_SCHOOL_MASK_NATURE, true);
         me->SetReactState(REACT_DEFENSIVE);
         me->SetAggroRange(0);
         me->CombatStopWithPets();
@@ -1840,7 +1840,7 @@ struct npc_earth_elemental_guardianAI : public ScriptedAI
              if (AngeredEarth_Timer <= diff)
              {
                 DoCast(me->getVictim(), SPELL_ANGEREDEARTH);
-                AngeredEarth_Timer = 5000 + rand() % 15000; // 5-20 sec cd
+                AngeredEarth_Timer = urand(5000, 20000); // 5-20 sec cd
              }
              else
                 AngeredEarth_Timer -= diff;
