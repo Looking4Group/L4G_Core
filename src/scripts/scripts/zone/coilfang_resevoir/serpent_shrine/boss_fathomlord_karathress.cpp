@@ -17,7 +17,7 @@
 /* ScriptData
 SDName: Boss_Fathomlord_Karathress
 SD%Complete: 70
-SDComment: Cyclone workaround, Sharkkis missing Spell 38374, Tidalvess might have false WF Spell
+SDComment: Tidalvess might have false WF Spell
 SDCategory: Coilfang Resevoir, Serpent Shrine Cavern
 EndScriptData */
 
@@ -39,9 +39,10 @@ EndScriptData */
 #define SPELL_BLESSING_OF_THE_TIDES     38449
 
 //Sharkkis spells
+#define SPELL_HURL_TRIDENT              38374
 #define SPELL_LEECHING_THROW            29436
 #define SPELL_THE_BEAST_WITHIN          38373
-#define SPELL_MULTISHOT                 38366
+#define SPELL_MULTITOSS                 38366
 #define SPELL_SUMMON_FATHOM_LURKER      38433
 #define SPELL_SUMMON_FATHOM_SPOREBAT    38431
 #define SPELL_PET_ENRAGE                38371
@@ -380,6 +381,7 @@ struct boss_fathomguard_sharkkisAI : public ScriptedAI
 
     ScriptedInstance* pInstance;
 
+    uint32 HurlTridentTimer;
     uint32 LeechingThrow_Timer;
     uint32 TheBeastWithin_Timer;
     uint32 Multishot_Timer;
@@ -389,6 +391,7 @@ struct boss_fathomguard_sharkkisAI : public ScriptedAI
 
     void Reset()
     {
+        HurlTridentTimer = 2500;
         LeechingThrow_Timer = 20000;
         TheBeastWithin_Timer = 30000;
         Multishot_Timer = urand(7000, 11000);
@@ -449,6 +452,17 @@ struct boss_fathomguard_sharkkisAI : public ScriptedAI
             return;
         }
 
+        if (HurlTridentTimer < diff)
+        {            
+            if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_HURL_TRIDENT), 0))
+            {                
+                DoCast(target, SPELL_HURL_TRIDENT);
+                HurlTridentTimer = 5000;
+            }
+        }
+        else
+            HurlTridentTimer -= diff;
+
         //LeechingThrow_Timer
         if(LeechingThrow_Timer < diff)
         {
@@ -463,7 +477,7 @@ struct boss_fathomguard_sharkkisAI : public ScriptedAI
         //Multishot_Timer
         if(Multishot_Timer < diff)
         {
-            DoCast(m_creature->getVictim(), SPELL_MULTISHOT);
+            DoCast(m_creature->getVictim(), SPELL_MULTITOSS);
             Multishot_Timer = urand(7000, 12000);
         }
         else
