@@ -758,3 +758,6 @@ INSERT INTO `gameobject` VALUES (100002, 185890, 530, 1, 2742.79, 7298.34, 370.9
 INSERT INTO `gameobject` VALUES (100001, 185894, 530, 1, 2742.81, 7298.31, 368.673, 0, 0, 0, 0, 1, 180, 100, 1);
 
 UPDATE `creature` SET `spawntimesecs`='600' WHERE `id` IN (18411,20216,20555,20600,21514,22199,22910);
+
+-- Quagmirran 17942,19894
+UPDATE `creature_template` SET `speed`='1.48',`mechanic_immune_mask`='787431423',`mindmg`='1190',`maxdmg`='1554',`flags_extra`=`flags_extra`|'536870912'|'4194304' WHERE `entry` IN ('17942'); -- 2,975 - 3,886
