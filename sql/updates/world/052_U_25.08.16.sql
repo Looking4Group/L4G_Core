@@ -761,3 +761,11 @@ UPDATE `creature` SET `spawntimesecs`='600' WHERE `id` IN (18411,20216,20555,206
 
 -- Quagmirran 17942,19894
 UPDATE `creature_template` SET `speed`='1.48',`mechanic_immune_mask`='787431423',`mindmg`='1190',`maxdmg`='1554',`flags_extra`=`flags_extra`|'536870912'|'4194304' WHERE `entry` IN ('17942'); -- 2,975 - 3,886
+
+-- Set As the Crow Flies as PrevQuestId for The Dead Mire
+
+UPDATE `quest_template` SET `PrevQuestId`=9718 WHERE `entry` = 9782;
+
+-- Set The Path of Anguish as PrevQuestId for Zeth'Gor Must Burn!
+
+UPDATE `quest_template` SET `PrevQuestId`=10142 WHERE `entry` = 10895;
