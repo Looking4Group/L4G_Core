@@ -405,9 +405,6 @@ struct mob_coilfang_frenzyAI : public ScriptedAI
         float x, y, z;
         me->GetPosition(x, y, z);
 
-        std::cout << z << std::endl;
-        
-
         if (WaterCheckTimer < diff) {
             if (!UpdateVictim() || me->getVictim()->IsInWater() == false) {
                 if (z + 0.2f > WATER_Z)
@@ -424,15 +421,12 @@ struct mob_coilfang_frenzyAI : public ScriptedAI
                             me->GetMotionMaster()->MoveChase((*itr));
                             AttackStart((*itr));
                         }
-
-                        std::cout << PlayerInWater << std::endl;
                         WaterCheckTimer = 2000;
                     }
                     if (PlayerInWater == false)
                     {
                         me->ForcedDespawn(1500);
                     }
-                    //me->Relocate(x, y, WATER_Z, me->GetOrientation());            
                 }
             }
         }
@@ -440,14 +434,6 @@ struct mob_coilfang_frenzyAI : public ScriptedAI
         {
             WaterCheckTimer -= diff;
         }                                    
-
-       /* victim->GetPosition(x, y, z);
-        if(z - 0.5f > WATER_Z)
-        {
-            
-            EnterEvadeMode();
-            return;
-        }*/
 
         DoMeleeAttackIfReady();
     }
