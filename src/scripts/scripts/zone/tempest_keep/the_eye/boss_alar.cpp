@@ -43,12 +43,14 @@ EndScriptData */
 #define ASHTONGUE_RUSE                39527
 #define QUEST_RUSEOFTHEASHTONGUE      10946
 
-static float waypoint[6][3] =
+static float waypoint[8][3] =
 {
     {340.15, 58.65, 17.71},
     {388.09, 31.54, 20.18},
     {388.18, -32.85, 20.18},
     {340.29, -60.19, 17.72},
+    {262.57, -41.90, 20.18}, // South-East Platform
+    {262.40, 40.20, 20.18}, // South-West Platform
     {332, 0.01, 39}, // better not use the same xy coord
     {331, 0.01, -2.59}
 };
@@ -76,7 +78,7 @@ struct boss_alarAI : public ScriptedAI
     {
         pInstance = (ScriptedInstance*)c->GetInstanceData();
         //DefaultMoveSpeedRate = c->GetSpeedRate(MOVE_RUN);
-        DefaultMoveSpeedRate = 1.5;
+        DefaultMoveSpeedRate = 3;
         //m_creature->GetPosition(wLoc);
         wLoc.coord_x = 331;
         wLoc.coord_y = 0.01;
@@ -108,6 +110,7 @@ struct boss_alarAI : public ScriptedAI
     WorldLocation wLoc;
 
     int8 cur_wp;
+    int8 prev_wp;
 
     void Reset()
     {
@@ -126,7 +129,8 @@ struct boss_alarAI : public ScriptedAI
         ForceTimer = 5000;
         checkTimer = 3000;
 
-        cur_wp = 4;
+        cur_wp = 6;
+        prev_wp = 6;
         m_creature->SetDisplayId(m_creature->GetNativeDisplayId());
         m_creature->SetSpeed(MOVE_RUN, 1.5);
         m_creature->SetSpeed(MOVE_FLIGHT, 1.5);
@@ -216,7 +220,8 @@ struct boss_alarAI : public ScriptedAI
                 m_creature->SetSpeed(MOVE_FLIGHT, 5.0f);
                 ForceMove = true;
                 ForceTimer = 0;
-                cur_wp = 5;
+                cur_wp = 7;
+                prev_wp = 7;
                 //m_creature->GetMotionMaster()->Clear();
                 //m_creature->GetMotionMaster()->MovePoint(0, waypoint[5][0], waypoint[5][1], waypoint[5][2]);
             }
@@ -414,20 +419,23 @@ struct boss_alarAI : public ScriptedAI
 
             if(Platforms_Move_Timer < diff)
             {
-                if(cur_wp == 4)
+                if(cur_wp == 6)
                 {
                     cur_wp = urand(0,1) ? 0 : 3;
                     WaitEvent = WE_PLATFORM;
                 }
                 else
                 {
-                    if(urand(0,4)) // next platform
+                    if(urand(0,4)) //80% chance to move to next platform, 20% flame quill
                     {
                         DoSpawnCreature(CREATURE_EMBER_OF_ALAR, 0, 0, 0, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
-                        if(cur_wp == 3)
-                            cur_wp = 0;
-                        else
-                            cur_wp++;
+                        
+                        prev_wp = cur_wp;
+                        do {                            
+                            cur_wp = urand(0, 6);
+                            
+                        } while (cur_wp == prev_wp);
+
                         WaitEvent = WE_PLATFORM;
                     }
                     else // flame quill
