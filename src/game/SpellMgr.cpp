@@ -3146,14 +3146,10 @@ void SpellMgr::LoadSpellCustomAttr()
                break;
             case 15453: // Arcane Explosion 
                 spellInfo->EffectBasePoints[0] = 154; 
-                break;
-            /****************/
+                break;            
             case 40447: // BT: Akama - Soul Channel
                 spellInfo->Effect[0] = 0;
-                break;
-            case 29538:
-                spellInfo->EffectApplyAuraName[0] = 0;
-                break;
+                break;            
             case 24311: // Powerful Healing Ward
                 spellInfo->CastingTimeIndex = 14;
                 break;

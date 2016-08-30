@@ -17,7 +17,7 @@
 /* ScriptData
 SDName: Boss_Fathomlord_Karathress
 SD%Complete: 70
-SDComment: Cyclone workaround, Sharkkis missing Spell 38374, Tidalvess might have false WF Spell
+SDComment: Tidalvess might have false WF Spell
 SDCategory: Coilfang Resevoir, Serpent Shrine Cavern
 EndScriptData */
 
@@ -39,9 +39,10 @@ EndScriptData */
 #define SPELL_BLESSING_OF_THE_TIDES     38449
 
 //Sharkkis spells
+#define SPELL_HURL_TRIDENT              38374
 #define SPELL_LEECHING_THROW            29436
 #define SPELL_THE_BEAST_WITHIN          38373
-#define SPELL_MULTISHOT                 38366
+#define SPELL_MULTITOSS                 38366
 #define SPELL_SUMMON_FATHOM_LURKER      38433
 #define SPELL_SUMMON_FATHOM_SPOREBAT    38431
 #define SPELL_PET_ENRAGE                38371
@@ -62,7 +63,7 @@ EndScriptData */
 #define SPELL_HEAL                      38330
 #define SPELL_SUMMON_CYCLONE            38337
 #define SPELL_CYCLONE_CYCLONE           29538
-#define SPELL_INCREASE_CAST_SPEED       39261
+#define SPELL_DECREASE_CAST_SPEED       39261
 
 //Yells and Quotes
 #define SAY_GAIN_BLESSING_OF_TIDES      "Your overconfidence will be your undoing! Guards, lend me your strength!"
@@ -71,6 +72,7 @@ EndScriptData */
 #define SOUND_MISC                      11283
 
 //Summoned Unit GUIDs
+#define CREATURE_CYCLONE_VISUAL         36178
 #define CREATURE_CYCLONE                22104
 #define CREATURE_SPITFIRE_TOTEM         22091
 #define CREATURE_EARTHBIND_TOTEM        22486
@@ -379,6 +381,7 @@ struct boss_fathomguard_sharkkisAI : public ScriptedAI
 
     ScriptedInstance* pInstance;
 
+    uint32 HurlTridentTimer;
     uint32 LeechingThrow_Timer;
     uint32 TheBeastWithin_Timer;
     uint32 Multishot_Timer;
@@ -388,6 +391,7 @@ struct boss_fathomguard_sharkkisAI : public ScriptedAI
 
     void Reset()
     {
+        HurlTridentTimer = 2500;
         LeechingThrow_Timer = 20000;
         TheBeastWithin_Timer = 30000;
         Multishot_Timer = urand(7000, 11000);
@@ -448,6 +452,17 @@ struct boss_fathomguard_sharkkisAI : public ScriptedAI
             return;
         }
 
+        if (HurlTridentTimer < diff)
+        {            
+            if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_HURL_TRIDENT), 0))
+            {                
+                DoCast(target, SPELL_HURL_TRIDENT);
+                HurlTridentTimer = 5000;
+            }
+        }
+        else
+            HurlTridentTimer -= diff;
+
         //LeechingThrow_Timer
         if(LeechingThrow_Timer < diff)
         {
@@ -462,7 +477,7 @@ struct boss_fathomguard_sharkkisAI : public ScriptedAI
         //Multishot_Timer
         if(Multishot_Timer < diff)
         {
-            DoCast(m_creature->getVictim(), SPELL_MULTISHOT);
+            DoCast(m_creature->getVictim(), SPELL_MULTITOSS);
             Multishot_Timer = urand(7000, 12000);
         }
         else
@@ -706,17 +721,14 @@ struct boss_fathomguard_caribdisAI : public ScriptedAI
 
         //Cyclone_Timer
         if(Cyclone_Timer < diff)
-        {
-            //DoCast(m_creature, SPELL_SUMMON_CYCLONE); // Doesn't work
+        {            
             Cyclone_Timer = 30000+rand()%10000;
-            Creature *Cyclone = m_creature->SummonCreature(CREATURE_CYCLONE, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), (rand()%5), TEMPSUMMON_TIMED_DESPAWN, 20000);
+            Creature *Cyclone = m_creature->SummonCreature(22104, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), (rand()%5), TEMPSUMMON_TIMED_DESPAWN, 20000);
             if( Cyclone )
-            {
+            {                
                 ((Creature*)Cyclone)->SetFloatValue(OBJECT_FIELD_SCALE_X, 3.0f);
                 Cyclone->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                Cyclone->setFaction(m_creature->getFaction());
-                Cyclone->CastSpell(Cyclone, 32332, true);
-                Cyclone->CastSpell(Cyclone, 43120, false);
+                Cyclone->CastSpell(Cyclone, CREATURE_CYCLONE_VISUAL, true);                
             }
         }
         else
@@ -791,14 +803,11 @@ struct mob_caribdis_cycloneAI : public ScriptedAI
             {
                 for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
                 {
-                    if(m_creature->IsWithinMeleeRange(i->getSource()))
+                    if(m_creature->IsWithinMeleeRange(i->getSource(), 3.0F))
                     {
                         Player *p = i->getSource();
-                        if(!p->HasAura(SPELL_CYCLONE_CYCLONE, 0))
-                        {
-                            DoCast(p, SPELL_CYCLONE_CYCLONE);
-                            DoCast(p, SPELL_INCREASE_CAST_SPEED);
-                        }
+                        DoCast(p, SPELL_CYCLONE_CYCLONE, true);
+                        DoCast(p, SPELL_DECREASE_CAST_SPEED);
                     }
                 }
             }
