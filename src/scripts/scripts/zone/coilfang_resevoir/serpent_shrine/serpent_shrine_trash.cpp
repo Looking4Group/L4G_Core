@@ -384,9 +384,11 @@ struct mob_coilfang_frenzyAI : public ScriptedAI
 {
     mob_coilfang_frenzyAI(Creature *c) : ScriptedAI(c) {}
 
+    uint32 WaterCheckTimer;
+
     void Reset()
     {
-
+        WaterCheckTimer = 2000;
     }
 
     void EnterEvadeMode()
@@ -399,23 +401,39 @@ struct mob_coilfang_frenzyAI : public ScriptedAI
 
     void UpdateAI(const uint32 diff)
     {
+        bool PlayerInWater;
         float x, y, z;
         me->GetPosition(x, y, z);
 
-        if(z > WATER_Z)
-            me->Relocate(x, y, WATER_Z, me->GetOrientation());
-
-        if(!UpdateVictim())
-            return;
-
-        Unit *victim = me->getVictim();
-
-        victim->GetPosition(x, y, z);
-        if(z - 0.5f > WATER_Z)
-        {
-            EnterEvadeMode();
-            return;
+        if (WaterCheckTimer < diff) {
+            if (!UpdateVictim() || me->getVictim()->IsInWater() == false) {
+                if (z + 0.2f > WATER_Z)
+                {
+                    PlayerInWater = false;
+                    std::list<Unit*> tmpList;
+                    SelectUnitList(tmpList, 25, SELECT_TARGET_RANDOM, 100.0f, true);
+                    int i = 0;
+                    for (std::list<Unit*>::const_iterator itr = tmpList.begin(); itr != tmpList.end(); ++itr)
+                    {
+                        if ((*itr)->IsInWater() == true)
+                        {
+                            PlayerInWater = true;
+                            me->GetMotionMaster()->MoveChase((*itr));
+                            AttackStart((*itr));
+                        }
+                        WaterCheckTimer = 2000;
+                    }
+                    if (PlayerInWater == false)
+                    {
+                        me->ForcedDespawn(1500);
+                    }
+                }
+            }
         }
+        else 
+        {
+            WaterCheckTimer -= diff;
+        }                                    
 
         DoMeleeAttackIfReady();
     }
