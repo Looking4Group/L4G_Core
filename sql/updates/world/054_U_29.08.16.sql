@@ -207,3 +207,199 @@ UPDATE `creature` SET `position_x`='1911.2104', `position_y`='7339.8510', `posit
 UPDATE `creature` SET `position_x`='1907.1466', `position_y`='7375.6025', `position_z`='364.4706', `orientation`='6.1394',`spawndist`='5',`movementtype`='1' WHERE `guid` = '84704';
 UPDATE `creature` SET `position_x`='1946.1286', `position_y`='7378.9438', `position_z`='364.4708', `orientation`='4.8160',`spawndist`='5',`movementtype`='1' WHERE `guid` = '84706';
 UPDATE `creature` SET `spawndist`='5',`movementtype`='1' WHERE `guid` IN (51613,51612,51614,51615,55133,82671,53047,53046,53047,84232,84233,84705,84702);
+
+-- Adyen the Lightwarden 18537 / Ishanah 18538
+UPDATE `creature_template` SET `unit_flags`=`unit_flags`|'2' WHERE `entry` IN (18537,18538);
+
+-- make them clickable without using quest item -4
+UPDATE `gameobject_template` SET `flags`='32' WHERE `entry` IN ('184289','184290','184414','184415');
+
+-- Sunfury Conjurer
+UPDATE `creature_ai_scripts` SET `action1_param1`='1' WHERE `id` IN ('2013901','2013906');
+UPDATE `creature_ai_scripts` SET `action1_param3`='0' WHERE `id` IN ('2013909');
+UPDATE `creature_ai_scripts` SET `event_param3`='20000',`action1_param3`='32' WHERE `id` IN ('2013910');
+UPDATE `creature_ai_scripts` SET `event_param4`='4500' WHERE `id` IN ('2013903');
+
+-- Zarcsin 23355
+UPDATE `creature_template` SET `speed`='1.71',`mindmg`='1284',`maxdmg`='1524',`AIName`='EventAI',`mechanic_immune_mask`='619396095',`equipment_id`='1548' WHERE `entry` = '23355';
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = '23355';
+INSERT INTO `creature_ai_scripts` VALUES
+(2335501,23355,4,0,100,7,0,0,0,0,11,29651,0,7,1,-9901,0,0,0,0,0,0,'Zarcsin  - Cast Dual Wield on Aggro'),
+(2335502,23355,2,0,100,0,50,0,0,0,11,41447,0,7,1,-106,0,0,0,0,0,0,'Zarcsin - Casts Enrage at 50% HP'),
+(2335503,23355,0,0,100,1,5000,6000,12000,13000,11,41444,0,0,0,0,0,0,0,0,0,0,'Zarcsin - Casts Fel Flames');
+-- 
+DELETE FROM `creature_ai_texts` WHERE `entry` IN ('-9910','-9909','-9908','-9907','-9906','-9905','-9904','-9903','-9902','-9901','-9900');
+INSERT INTO `creature_ai_texts` VALUES
+('-9910','Me angered. Raaah!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0','0','0','0','Schergrat Ogres on Aggro'),
+('-9909','Me smash! You die!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0','0','0','0','Schergrat Ogres on Aggro'),
+('-9908','Now, proceed to the translocator. Forge Camp Wrath awaits your arrival!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0','0','0','0','19747 OCC Summon Event'),
+('-9907','You will suffer slowly until the end of time for this affront!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0','1','0','0','19747 on Aggro'),
+('-9906','Prepare yourself for eternal torture, mortal!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0','1','0','0','19747 on Aggro'),
+('-9905','I shall enjoy the smell of the grease from your marrow crackling over the fire!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0','1','0','0','19747 on Aggro'),
+('-9904','Release the hounds!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0','1','0','0','19747 IC Summon Event'),
+('-9903','Your name is as insignificant to me as the names of the thousands who have died under the might of Goc. I will crush you and $N!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0','0','0','0','20555 on Aggro'),
+('-9902','Me mad. You get smash in face!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0','0','0','0','19948 on Aggro'),
+('-9901','','As I shall consume your flesh, so too shall the Burning Legion consume your people!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0','0','0','0','23355 on Aggro'),
+('-9900',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0','0','0','0','SCHERGRATCOMMENT');
+
+UPDATE `creature` SET `position_x`='2548.5935', `position_y`='7331.4287', `position_z`='373.4237', `orientation`='4.2454',`spawndist`='0',`movementtype`='0' WHERE `guid` = '44255';
+DELETE FROM `creature_addon` WHERE `guid` = 44255;
+INSERT INTO `creature_addon` VALUES (44255,0,21152,0,0,4097,0,0,'');
+
+DELETE FROM `creature_loot_template` WHERE `entry` IN (22281,23353,23354,23355);
+-- Galvanoth 22281
+INSERT INTO `creature_loot_template` VALUES (22281, 21877, 26.506, 0, 4, 5, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22281, 24001, 5, 1, -24001, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22281, 24002, 5, 1, -24002, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22281, 24011, 1, 1, -24011, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22281, 24013, 1, 1, -24013, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22281, 24035, 2, 1, -24035, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22281, 27854, 3.6145, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22281, 27860, 9.6386, 0, 1, 1, 0, 0, 0);
+-- Apexis Crystal
+INSERT INTO `creature_loot_template` VALUES (22281, 32572, 0, 2, 1, 1, 0, 0, 0); -- 62.6506 0
+-- Depleted Items
+INSERT INTO `creature_loot_template` VALUES (22281, 32670, 1.3, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22281, 32671, 3, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22281, 32672, 2, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22281, 32673, 1, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22281, 32674, 3, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22281, 32675, 1.9, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22281, 32676, 3, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22281, 32677, 1.4, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22281, 32678, 1.9, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22281, 32679, 2, 3, 1, 1, 0, 0, 0);
+-- Fel Whip
+INSERT INTO `creature_loot_template` VALUES (22281, 32733, -100, 0, 1, 1, 0, 0, 0);
+--
+-- Braxxus 23353
+INSERT INTO `creature_loot_template` VALUES (23353, 24001, 5, 1, -24001, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23353, 24002, 5, 1, -24002, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23353, 24013, 1, 1, -24013, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23353, 24092, 0.5, 1, -24092, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23353, 25418, 33.9, 0, 2, 4, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23353, 25421, 8, 0, 2, 4, 0, 0, 0);
+-- Apexis Crystal
+INSERT INTO `creature_loot_template` VALUES (23353, 32572, 0, 2, 1, 1, 0, 0, 0); -- 77.3 0
+-- Depleted Items
+INSERT INTO `creature_loot_template` VALUES (23353, 32670, 6, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23353, 32671, 3, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23353, 32672, 0.8, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23353, 32673, 2, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23353, 32674, 3, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23353, 32676, 1.6, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23353, 32677, 2, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23353, 32678, 0.9, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23353, 32679, 2, 3, 1, 1, 0, 0, 0);
+-- Fel Whip
+INSERT INTO `creature_loot_template` VALUES (23353, 32733, -100, 0, 1, 1, 0, 0, 0);
+--
+-- Mo'arg Incinerator 23354
+INSERT INTO `creature_loot_template` VALUES (23354, 21877, 21.1, 0, 4, 6, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23354, 24001, 5, 1, -24001, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23354, 24002, 5, 1, -24002, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23354, 24013, 1, 1, -24013, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23354, 27854, 1.7, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23354, 27860, 1, 0, 1, 1, 0, 0, 0);
+-- Apexis Crystal
+INSERT INTO `creature_loot_template` VALUES (23354, 32572, 0, 2, 1, 1, 0, 0, 0); -- 80.5 0
+-- Depleted Items
+INSERT INTO `creature_loot_template` VALUES (23354, 32670, 1.6, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23354, 32671, 2, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23354, 32672, 1.3, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23354, 32673, 1.9, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23354, 32674, 1.8, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23354, 32675, 1.6, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23354, 32676, 1.4, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23354, 32677, 1.8, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23354, 32678, 2, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23354, 32679, 2, 3, 1, 1, 0, 0, 0);
+-- Fel Whip
+INSERT INTO `creature_loot_template` VALUES (23354, 32733, -100, 0, 1, 1, 0, 0, 0);
+--
+-- Zarcsin 23355
+INSERT INTO `creature_loot_template` VALUES (23355, 21877, 16.9, 0, 4, 6, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23355, 22903, 0.5, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23355, 24001, 5, 1, -24001, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23355, 24002, 5, 1, -24002, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23355, 24013, 1, 1, -24013, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23355, 24035, 2, 1, -24035, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23355, 24092, 0.5, 1, -24092, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23355, 27854, 2.6, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23355, 27860, 0.5, 0, 1, 1, 0, 0, 0);
+-- Apexis Crystal
+INSERT INTO `creature_loot_template` VALUES (23355, 32572, 0, 2, 1, 1, 0, 0, 0); -- 86.8 0
+-- Depleted Items
+INSERT INTO `creature_loot_template` VALUES (23355, 32670, 1.5, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23355, 32671, 3, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23355, 32672, 2, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23355, 32673, 2, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23355, 32674, 1.6, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23355, 32675, 1.3, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23355, 32676, 1.9, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23355, 32677, 1.9, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23355, 32678, 2, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23355, 32679, 2, 3, 1, 1, 0, 0, 0);
+-- Fel Whip
+INSERT INTO `creature_loot_template` VALUES (23355, 32733, -100, 0, 1, 1, 0, 0, 0);
+
+-- Galvanoth 22281
+UPDATE `creature_template` SET `speed`='1.71',`mindmg`='3210',`maxdmg`='3811',`AIName`='EventAI',`mechanic_immune_mask`='619396095',`spell1`='15708',`spell2`='38750',`spell3`='39139' WHERE `entry` = '22281'; -- 577 1178 -- 1200 - 1400 -- 3,210 - 3,811
+-- Braxxus 23353
+UPDATE `creature_template` SET `speed`='1.71',`mindmg`='2140',`maxdmg`='2541',`AIName`='EventAI',`mechanic_immune_mask`='619396095' WHERE `entry` = '23353'; -- 1284 1524 -- 3,210 - 3,811
+-- Mo'arg Incinerator 23354
+UPDATE `creature_template` SET `speed`='1.71',`mindmg`='2140',`maxdmg`='2541',`AIName`='EventAI',`mechanic_immune_mask`='619396095' WHERE `entry` = '23354';
+-- Zarcsin 23355
+UPDATE `creature_template` SET `speed`='1.71',`mindmg`='2140',`maxdmg`='2541',`AIName`='EventAI',`mechanic_immune_mask`='619396095',`equipment_id`='1548' WHERE `entry` = '23355';
+
+DELETE FROM `creature` WHERE `guid` IN (42593,48425,48521,45572);
+INSERT INTO `creature` (`guid`,`id`, `map`, `spawnMask`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `MovementType`) VALUES
+(48425,25370, 580 , 1, 1657.0256, 1056.0332, 16.00, 4.2728, 7200, 0, 0),
+-- (48521,25369, 580 , 1, 1751.8967, 993.6798, 16.1618, 1.0841, 7200, 0, 0),
+(45572,25507,580,1,1761.8767,1082.1558,17.4186,3.8831,7200,0,0);
+
+INSERT INTO `creature` VALUES (42593, 25369, 580, 1, 0, 1, 1757.44, 995.046, 16.0957, 0.715585, 7200, 0, 0, 220059, 0, 0, 0);
+INSERT INTO `creature` VALUES (48521, 2010, 1, 1, 6801, 1, 9884.34, 1580.37, 1285.29, 0.087266, 300, 0, 0, 137, 0, 0, 0);
+
+DELETE FROM `creature_formations` WHERE `MemberGUID` IN (43440,42593,48521,42655,54833,43738,54819,48360);
+INSERT INTO `creature_formations` VALUES
+(43440,43440,100,360,2),
+(43440,42593,100,360,2),
+(43440,42655,100,360,2),
+(43440,54833,100,360,2),
+(43440,43738,100,360,2),
+(43440,54819,100,360,2),
+(43440,48360,100,360,2);
+
+DELETE FROM `creature_linked_respawn` WHERE `guid` IN (48425,42593,48521,45572,54810,55065);
+INSERT INTO `creature_linked_respawn` VALUES
+(48425,53645),
+(42593,53645),
+(45572,53645),
+(54810,53645),
+(55065,53645);
+
+-- del bs
+DELETE FROM `creature` WHERE `guid` IN (36095,42593,45532,45604,45611,45615,45624,45632,45637,45741,46137,53940,84269,92517,98086,107061,124516,163912,174558,221620,312393,351441,529506,604678,605542,605601,605637,605654,605691,605704,605721,605739,605754,605830,605861,605879,605905,605920,605989,605996,606011,606182,606214,606255,606293,606312,606349,606391,606507,606521,606538,606548,606567,606581,606610,606637,606649,606666,606681,606703,606870,606883,606891,606925,606973,607027,607050,607149,607167,607189,607243,607255,607332,607356,607371,607444,607499,607593,607610,607622,607635,607651,607822,607839,607866,607883,607922,607968,608031,608098,608175,608243,608257,608275,608321,608348,608378,608391,608460,608538,608552,608562,608584,608611,608627,608922,608947,608969,609048,610375,610405,610428,610547,610578,610608,610634,610682,610712,610938,611084,611159,611216,611259,611292,611308,611452,611478,611618,611650,611670,611693,611719,611733,615216,615418,615432,615453,615501,615520,615534,615666,615687,615700,615714,615734,615786,615901,615916,615927,615939,615949,615958,615978,615992,616004,616014,616048,616065,616102,616119,616134,616145,616158,616230,616249,616268,616279,616306,616321,618916,618936,618952,618978,618999,619068,619084,619100,619127,619271,619297,619386,619471,619521,619774,619791,619809,619824,619838,619858,619873,619886,619903,620044,620066,620085,620101,620116,620132,620157,620190,620232,620249,620260,620282,620309,620334,620363,620377,620399,620413,620423,620438,620453,620840,621331,621387,621475,621486,621496,621513,621528,621540,621553,621567,621592,621607,621620,621636,621661,621672,621688,621701,621727,621754,621768,621783,621803,621814,621831,621859,622704,622721,622729,622743,622843,622856,622867,622874,622950,622958,622981,622996,623041,623065,623083,623098,623132,623155,623167,623182,623189,623208,623220,623231,623415,623456,623473,623503,623521,623531,623546,623556,623566,623582,623592,623810,623817,624584,624594,624609,624626,624639,624653,624668,624672,624742,624758,624778,624805,624817,624829,624894,624910,625050,625062,625073,625090,625119,625131,625142,625218,625294,625305,625321,625335,625361,625378,625414,625554,625569,668268,679332,1332722,1334878);
+
+-- Prince Thunderaan <The Wind Seeker> 14435
+UPDATE `creature_template` SET `armor`='7400',`resistance3`='-1',`AIName`='EventAI' WHERE `entry` = '14435';
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = '14435';
+INSERT INTO `creature_ai_scripts` VALUES
+('1443501','14435','0','0','100','1','5000','5000','15000','15000','11','23009','0','7','0','0','0','0','0','0','0','0','Prince Thunderaan - Cast Tendrils of Air'),
+('1443502','14435','0','0','100','1','15000','15000','15000','15000','11','23011','0','7','0','0','0','0','0','0','0','0','Prince Thunderaan - Cast Tears of the Wind Seeker');
+
+DELETE FROM `creature` WHERE `guid` IN ('66606');
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-1954.978,`position_y`=4752.3,`position_z`=-2.763442,`spawntimesecs`=180 WHERE `guid`=66605;
+INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
+(66606,18483,530,1,0,0,-1956.585,4751.758,-2.86066,2.005122,180,0,0,4500,0,0,0);
+
+-- The Grand Collector 23333
+UPDATE `creature_template` SET `speed`='2',`mindmg`='2568',`maxdmg`='3048',`unit_flags`='0',`type_flags`='0',`skinloot`='0',`flags_extra`='0' WHERE `entry` = '23333'; -- 1154 2356 -- 6,419 - 7,621 -- 80004
+-- Bash'ir's Harbinger 23390
+UPDATE `creature_template` SET `speed`='2',`mindmg`='3209',`maxdmg`='3811' WHERE `entry` = '23390'; -- 577 1179 -- 3,209 - 3,811
+-- Bash'ir 23391
+UPDATE `creature_template` SET `faction_A`='91',`faction_H`='91',`speed`='2',`mindmg`='3210',`maxdmg`='3811',`lootid`='23391' WHERE `entry` = '23391'; -- 577 1178 --  3,210 - 3,811
+
+-- Hellfire Warder – Höllenfeuerwärter 18829
+UPDATE `creature_template` SET `modelid_A2`='11438',`modelid_H2`='11440',`minlevel`='73',`maxlevel`='73',`rank`='3',`mindmg`='9417',`maxdmg`='11178',`baseattacktime`='2000',`speed`='1.48',`mechanic_immune_mask`='646004723' WHERE `entry` = 18829;
