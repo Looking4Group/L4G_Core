@@ -189,7 +189,7 @@ UPDATE `creature` SET `position_x`='3940.2756', `position_y`='4873.3632', `posit
 UPDATE `creature` SET `position_x`='4094.4379', `position_y`='5227.4394', `position_z`='265.7415' WHERE `guid` = '78213';
 UPDATE `creature` SET `position_x`='3882.9060', `position_y`='5410.5659', `position_z`='267.7539' WHERE `guid` = '78215';
 
-UPDATE `creature` SET `spawnmask`=0 WHERE `id`=23055;
+
 
 -- Wrath Reaver 22196 inacive
 UPDATE `creature_template` SET `speed`='2',`mindmg`='1000',`maxdmg`='2000',`unit_flags`='32834',`mechanic_immune_mask`='1073741823',`flags_extra`='2' WHERE `entry` IN ('22196');
