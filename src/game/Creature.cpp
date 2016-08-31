@@ -462,7 +462,14 @@ bool Creature::UpdateEntry(uint32 Entry, uint32 team, const CreatureData *data)
         ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_TAUNT, true);
         ApplySpellImmune(0, IMMUNITY_EFFECT,SPELL_EFFECT_ATTACK_ME, true);
     }
-
+    
+    //  NO BOSSES should be able to be silenced/set to speed 1.0.
+    if (isWorldBoss())
+    {
+    ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_SILENCE, true);
+    ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_USE_NORMAL_MOVEMENT_SPEED, true);
+    }
+    
     return true;
 }
 
