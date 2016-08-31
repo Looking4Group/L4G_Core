@@ -77,6 +77,7 @@ struct boss_gruulAI : public ScriptedAI
         pInstance = c->GetInstanceData();
         c->GetPosition(wLoc);
         me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_HASTE_MELEE, true);
+        me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_USE_NORMAL_MOVEMENT_SPEED, true);
     }
 
     ScriptedInstance *pInstance;
