@@ -662,3 +662,89 @@ UPDATE `creature` SET `spawntimesecs`='7200' WHERE `guid` IN (80272,93853,93828,
 --
 -- Lurker Trash
 UPDATE `creature` SET `spawntimesecs`='7200' WHERE `guid` IN (183607,82966,93837,93840,93841,82861,172713,173195,93789,183141,93829,82965,93834,93830,93787,175587,175857,93831,182677,93820,93815,93824,93825,82036,176722,176935,82032,181841,93823,93821,93822,93819,82002,177699,81997,82003,180803,93816,82964,93827,93818,81917,81916,80273,81944,179801,93842,82955,93844,93826,81029,80445,80274,80473);
+
+DELETE FROM `creature_loot_template` WHERE `entry` IN (23061,23282,23261,23281);
+-- Rivendark 23061
+INSERT INTO `creature_loot_template` VALUES (23061, 24001, 5, 1, -24001, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23061, 24002, 5, 1, -24002, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23061, 24013, 1, 1, -24013, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23061, 24092, 0.5, 1, -24092, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23061, 29549, 0.1, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23061, 29563, 25.1, 0, 2, 4, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23061, 29564, 5.7, 0, 2, 4, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23061, 31837, 0.1, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23061, 32569, 92, 0, 2, 3, 0, 0, 0); --  24.9
+INSERT INTO `creature_loot_template` VALUES (23061, 32670, 3, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23061, 32671, 3, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23061, 32672, 1.7, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23061, 32673, 2, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23061, 32674, 1.3, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23061, 32675, 1.2, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23061, 32676, 2, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23061, 32677, 1.7, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23061, 32678, 3, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23061, 32679, 1.6, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23061, 32681, 0, 2, 1, 1, 0, 0, 0); -- 100 0
+INSERT INTO `creature_loot_template` VALUES (23061, 32732, -100, 0, 1, 1, 0, 0, 0);
+--
+-- Obsidia 23282
+INSERT INTO `creature_loot_template` VALUES (23282, 24001, 5, 1, -24001, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23282, 24002, 5, 1, -24002, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23282, 24013, 1, 1, -24013, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23282, 29563, 23.6, 0, 2, 4, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23282, 29564, 5, 0, 2, 4, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23282, 32569, 93, 0, 2, 3, 0, 0, 0); -- 25
+INSERT INTO `creature_loot_template` VALUES (23282, 32670, 2, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23282, 32671, 2, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23282, 32672, 2, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23282, 32673, 1.8, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23282, 32674, 1.8, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23282, 32675, 1.8, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23282, 32676, 1.5, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23282, 32677, 3, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23282, 32678, 2, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23282, 32679, 1.4, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23282, 32682, 0, 2	, 1, 1, 0, 0, 0); -- 100 0
+INSERT INTO `creature_loot_template` VALUES (23282, 32732, -100, 0, 1, 1, 0, 0, 0);
+--
+-- Furywing 23261
+INSERT INTO `creature_loot_template` VALUES (23261, 22153, 0.1, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23261, 24001, 5, 1, -24001, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23261, 24002, 5, 1, -24002, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23261, 24013, 1, 1, -24013, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23261, 29549, 0.1, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23261, 29563, 27.2, 0, 2, 4, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23261, 29564, 5.1, 0, 2, 4, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23261, 32569, 92, 0, 2, 3, 0, 0, 0); -- 25
+INSERT INTO `creature_loot_template` VALUES (23261, 32670, 3, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23261, 32671, 1.8, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23261, 32672, 2, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23261, 32673, 1.7, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23261, 32674, 0.8, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23261, 32675, 1.3, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23261, 32676, 1.4, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23261, 32677, 1.9, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23261, 32678, 1.7, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23261, 32679, 4, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23261, 32683, 0, 2, 1, 1, 0, 0, 0); -- 100 0
+INSERT INTO `creature_loot_template` VALUES (23261, 32732, -100, 0, 1, 1, 0, 0, 0);
+--
+-- Insidion 23281
+INSERT INTO `creature_loot_template` VALUES (23281, 24001, 5, 1, -24001, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23281, 24002, 5, 1, -24002, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23281, 24013, 1, 1, -24013, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23281, 29563, 23.6, 0, 2, 4, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23281, 29564, 7, 0, 2, 4, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23281, 32569, 93, 0, 2, 3, 0, 0, 0); -- 25.1 
+INSERT INTO `creature_loot_template` VALUES (23281, 32670, 1.9, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23281, 32671, 2, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23281, 32672, 1.8, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23281, 32673, 1.1, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23281, 32674, 2, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23281, 32675, 3, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23281, 32676, 1.3, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23281, 32677, 1.1, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23281, 32678, 1.9, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23281, 32679, 1.9, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23281, 32684, 0, 2, 1, 1, 0, 0, 0); -- 100 0
+INSERT INTO `creature_loot_template` VALUES (23281, 32732, -100, 0, 1, 1, 0, 0, 0);
