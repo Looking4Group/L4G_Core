@@ -466,10 +466,9 @@ bool Creature::UpdateEntry(uint32 Entry, uint32 team, const CreatureData *data)
     //  NO BOSSES should be able to be silenced/set to speed 1.0/have their attackspeed altered.
     if (isWorldBoss())
     {
-    ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_SILENCE, true);
-    ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_USE_NORMAL_MOVEMENT_SPEED, true);
-    ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_HASTE_MELEE, true);
-    ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_HASTE_RANGED, true); 
+        ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_SILENCE, true);
+        ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_USE_NORMAL_MOVEMENT_SPEED, true);
+        ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_HASTE_MELEE, true);
     }
     
     return true;
