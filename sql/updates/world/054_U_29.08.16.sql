@@ -246,7 +246,7 @@ UPDATE `creature` SET `position_x`='2548.5935', `position_y`='7331.4287', `posit
 DELETE FROM `creature_addon` WHERE `guid` = 44255;
 INSERT INTO `creature_addon` VALUES (44255,0,21152,0,0,4097,0,0,'');
 
-DELETE FROM `creature_loot_template` WHERE `entry` IN (22281,23353,23354,23355);
+DELETE FROM `creature_loot_template` WHERE `entry` IN (22281,23353,23354,23355,22275);
 -- Galvanoth 22281
 INSERT INTO `creature_loot_template` VALUES (22281, 21877, 26.506, 0, 4, 5, 0, 0, 0);
 INSERT INTO `creature_loot_template` VALUES (22281, 24001, 5, 1, -24001, 1, 0, 0, 0);
@@ -342,6 +342,31 @@ INSERT INTO `creature_loot_template` VALUES (23355, 32678, 2, 3, 1, 1, 0, 0, 0);
 INSERT INTO `creature_loot_template` VALUES (23355, 32679, 2, 3, 1, 1, 0, 0, 0);
 -- Fel Whip
 INSERT INTO `creature_loot_template` VALUES (23355, 32733, -100, 0, 1, 1, 0, 0, 0);
+--
+-- Apexis Guardian 22275
+INSERT INTO `creature_loot_template` VALUES (22275, 4552, 48.5095, 0, 2, 4, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22275, 4554, 13.5501, 0, 2, 4, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22275, 24001, 5, 1, -24001, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22275, 24002, 5, 1, -24002, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22275, 24009, 1, 1, -24009, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22275, 24011, 1, 1, -24011, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22275, 24013, 1, 1, -24013, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22275, 24092, 0.5, 1, -24092, 1, 0, 0, 0);
+-- Apexis Crystal
+INSERT INTO `creature_loot_template` VALUES (22275, 32572, 0, 2, 1, 1, 0, 0, 0); -- 60.7046 0
+-- Depleted Items
+INSERT INTO `creature_loot_template` VALUES (22275, 32670, 2, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22275, 32671, 3, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22275, 32672, 1.4, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22275, 32673, 3, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22275, 32674, 3, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22275, 32675, 1.7, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22275, 32676, 1.5, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22275, 32677, 2, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22275, 32678, 2, 3, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22275, 32679, 2, 3, 1, 1, 0, 0, 0);
+-- Apexis Guardian's Head
+INSERT INTO `creature_loot_template` VALUES (22275, 32697, -100, 0, 1, 1, 0, 0, 0); -- -43
 
 -- Galvanoth 22281
 UPDATE `creature_template` SET `speed`='1.71',`mindmg`='3210',`maxdmg`='3811',`AIName`='EventAI',`mechanic_immune_mask`='619396095',`spell1`='15708',`spell2`='38750',`spell3`='39139' WHERE `entry` = '22281'; -- 577 1178 -- 1200 - 1400 -- 3,210 - 3,811
@@ -618,3 +643,22 @@ INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`
 (@GUID, @POINT := @POINT + '1', '-431.3665', '2916.574', '19.33275', '0', '0', '0', '100', '0'),
 (@GUID, @POINT := @POINT + '1', '-444.4490', '2935.541', '17.37160', '0', '0', '0', '100', '0'),
 (@GUID, @POINT := @POINT + '1', '-438.6376', '2967.621', '7.942842', '0', '0', '0', '100', '0');
+
+UPDATE `creature` SET `spawndist`='0',`movementtype`='0' WHERE `guid` = '57907';
+
+UPDATE `creature_template` SET `speed`='2.00',`mindmg`='6500',`maxdmg`='8500',`mechanic_immune_mask`='1072644095',`flags_extra`='4522017',`minhealth`='4810000',`maxhealth`='4810000' WHERE `entry` = 21216; -- 6500 7500 3700000 --
+-- Pure Spawn of Hydross 22035
+-- Pure Spawns of Hydross has around 55,000 HP
+UPDATE `creature_template` SET `minhealth`='72692',`maxhealth`='72692',`mindmg`='4000',`maxdmg`='5000',`baseattacktime`='2000',`speed`='1.48',`resistance4`='-1',`AIName`='EventAI' WHERE `entry` =22035; -- 55917 3500 4500 2000 -- 
+-- Tainted Spawn of Hydross 22036
+-- Tainted Spawn of Hydross has around 62,500 HP
+UPDATE `creature_template` SET `minhealth`='81792',`maxhealth`='81792',`mindmg`='4000',`maxdmg`='5000',`baseattacktime`='2000',`speed`='1.48',`resistance3`='-1',`AIName`='EventAI' WHERE `entry` = 22036; -- 62917 3500 4500 2000 --
+
+-- 2h respawn as decided by staff
+-- ssc hydross & lurker trash 45min respawn timer
+-- The creatures that lead up to Hydross the Unstable and creatures at the six pumping stations are now on a 2 hour respawn instead of 45 minutes. 
+-- always 5min in despawn so -5min always
+UPDATE `creature` SET `spawntimesecs`='7200' WHERE `guid` IN (80272,93853,93828,93851,82953,82961,82917,93848,93850,93852,82956,93832,93849,93847,82958,82957,93845);
+--
+-- Lurker Trash
+UPDATE `creature` SET `spawntimesecs`='7200' WHERE `guid` IN (183607,82966,93837,93840,93841,82861,172713,173195,93789,183141,93829,82965,93834,93830,93787,175587,175857,93831,182677,93820,93815,93824,93825,82036,176722,176935,82032,181841,93823,93821,93822,93819,82002,177699,81997,82003,180803,93816,82964,93827,93818,81917,81916,80273,81944,179801,93842,82955,93844,93826,81029,80445,80274,80473);
