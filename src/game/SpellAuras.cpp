@@ -5518,7 +5518,7 @@ void Aura::HandleAuraModResistance(bool apply, bool Real)
     if ((m_spellProto->SpellIconID == 109 &&
         m_spellProto->SpellFamilyName == SPELLFAMILY_DRUID &&
         m_spellProto->SpellFamilyFlags & 0x0000000000000400LL)
-        || m_spellProto->Id == 9806 || m_spellProto->Id == 9991 || m_spellProto->Id == 16432 || m_spellProto->Id == 35325 || m_spellProto->Id == 35328 || m_spellProto->Id == 35329 || m_spellProto->Id == 35331)
+        || m_spellProto->Id == 35325)
     {
         m_target->ModifyAuraState(AURA_STATE_FAERIE_FIRE,apply);
     }
