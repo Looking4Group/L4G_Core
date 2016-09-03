@@ -955,3 +955,9 @@ UPDATE `creature` SET `spawnmask`='1',`id`='1000033',`position_x`='16251.6015', 
 DELETE FROM `gameobject` WHERE `guid` = 9970818;
 INSERT INTO `gameobject` VALUES (9970818,183402,1,1,16232.5859,16297.9716,13.17430,0,0,0,-0.05,0.90,25,100,1); -- 0.665095,0.746758
 UPDATE `gameobject` SET `animprogress`=100 WHERE `guid` IN (7332252,9970817);
+
+-- Frostwolf Bowman 13359
+UPDATE `creature_template` SET `modelid_A`='13398',`modelid_A2`='13400',`modelid_H`='13398',`modelid_H2`='13400',`minhealth`='10000',`maxhealth`='10142',`rank`='0',`mindmg`='500',`maxdmg`='1000',`attackpower`='0',`baseattacktime`='1400',`minrangedmg`='1000',`maxrangedmg`='2000',`unit_flags`=36937 WHERE `entry` IN ('13359'); -- 66 137 2000 200 600 uf 4608
+
+-- Stormpike Bowman 13358
+UPDATE `creature_template` SET `modelid_A`='13390',`modelid_A2`='13392',`modelid_H`='13390',`modelid_H2`='13392',`faction_A`='1217',`faction_H`='1217',`mingold`='262',`maxgold`='347',`minhealth`='10000',`maxhealth`='10142',`rank`='0',`mindmg`='500',`maxdmg`='1000',`attackpower`='0',`baseattacktime`='1400',`minrangedmg`='1000',`maxrangedmg`='2000',`unit_flags`=36937 WHERE `entry` IN ('13358'); -- 65 135 2000 200 600 uf 4608  4500
