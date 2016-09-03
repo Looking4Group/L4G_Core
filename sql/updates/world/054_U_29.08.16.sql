@@ -948,3 +948,6 @@ INSERT INTO `spell_proc_event` VALUES
 
 -- respawn
 UPDATE `creature` SET `spawntimesecs`='120' WHERE `id` IN ('20561'); -- 1551
+
+-- One Barber One 
+UPDATE `creature` SET `spawnmask`='1',`position_x`='16227.0566', `position_y`='16287.4736', `position_z`='31.4318', `orientation`='4.6047',`spawndist`='0',`movementtype`='0' WHERE `guid` = 16800799;
