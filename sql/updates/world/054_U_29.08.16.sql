@@ -951,3 +951,7 @@ UPDATE `creature` SET `spawntimesecs`='120' WHERE `id` IN ('20561'); -- 1551
 
 -- One Barber One 
 UPDATE `creature` SET `spawnmask`='1',`position_x`='16227.0566', `position_y`='16287.4736', `position_z`='31.4318', `orientation`='4.6047',`spawndist`='0',`movementtype`='0' WHERE `guid` = 16800799;
+UPDATE `creature` SET `spawnmask`='1',`id`='1000033',`position_x`='16251.6015', `position_y`='16295.9707', `position_z`='13.1745', `orientation`='1.4473',`spawndist`='0',`movementtype`='0' WHERE `guid` = '16800595';
+DELETE FROM `gameobject` WHERE `guid` = 9970818;
+INSERT INTO `gameobject` VALUES (9970818,183402,1,1,16232.5859,16297.9716,13.17430,0,0,0,-0.05,0.90,25,100,1); -- 0.665095,0.746758
+UPDATE `gameobject` SET `animprogress`=100 WHERE `guid` IN (7332252,9970817);
