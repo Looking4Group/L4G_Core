@@ -855,3 +855,96 @@ INSERT INTO `creature_loot_template` VALUES (23281, 32678, 1.9, 3, 1, 1, 0, 0, 0
 INSERT INTO `creature_loot_template` VALUES (23281, 32679, 1.9, 3, 1, 1, 0, 0, 0);
 INSERT INTO `creature_loot_template` VALUES (23281, 32684, 0, 2, 1, 1, 0, 0, 0); -- 100 0
 INSERT INTO `creature_loot_template` VALUES (23281, 32732, -100, 0, 1, 1, 0, 0, 0);
+
+SET @GUID := 86120;
+SET @POINT := 0;
+UPDATE `creature` SET `MovementType`='2' WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@GUID,@POINT := @POINT + 1,XXX,YYY,ZZZ,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,-3820.2136,3569.1176,294.5442,0,1,0,100,0),
+(@GUID,@POINT := @POINT + 1,-3777.4877,3504.3828,303.5247,0,1,0,100,0),
+(@GUID,@POINT := @POINT + 1,-3732.4897,3452.7006,307.9561,0,1,0,100,0),
+(@GUID,@POINT := @POINT + 1,-3686.8332,3451.7778,310.1673,0,1,0,100,0),
+(@GUID,@POINT := @POINT + 1,-3608.2360,3470.6501,316.8722,0,1,0,100,0),
+(@GUID,@POINT := @POINT + 1,-3561.0017,3505.7106,313.4443,0,1,0,100,0),
+(@GUID,@POINT := @POINT + 1,-3534.2641,3541.0085,310.5031,0,1,0,100,0),
+(@GUID,@POINT := @POINT + 1,-3543.2609,3589.5461,312.8757,0,1,0,100,0),
+(@GUID,@POINT := @POINT + 1,-3560.8098,3624.6367,309.2609,0,1,0,100,0),
+(@GUID,@POINT := @POINT + 1,-3588.5305,3664.1962,306.7961,0,1,0,100,0),
+(@GUID,@POINT := @POINT + 1,-3672.4365,3730.8588,306.0436,0,1,0,100,0),
+(@GUID,@POINT := @POINT + 1,-3745.7727,3730.3386,311.7840,0,1,0,100,0),
+(@GUID,@POINT := @POINT + 1,-3810.6787,3647.8015,302.2104,0,1,0,100,0),
+(@GUID,@POINT := @POINT + 1,-3834.4943,3597.2600,296.8573,0,1,0,100,0);
+
+-- Monstrous Kaliri 23051
+UPDATE `creature_template` SET `speed`='2.0',`inhabittype`='7' WHERE `entry` = '23051'; -- 1 3
+
+-- Hyakiss the Lurker - Hyakiss der Lauerer 16179
+UPDATE `creature_template` SET `mindmg`='5275',`maxdmg`='6264',`type_flags`='108',`mechanic_immune_mask`='787431423',`flags_extra`='0',`speed`='1.78',`baseattacktime`='1500',`inhabittype`='3',`AIName`='EventAI' WHERE `entry` IN ('16179'); -- -- ba 1900 -- 10,549 - 12,527
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN ('16179');
+INSERT INTO `creature_ai_scripts` VALUES
+('1617901','16179','11','0','66','0','0','0','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Hyakiss the Lurker - Chance to Despawn on Spawn'),
+('1617902','16179','11','0','100','0','0','0','0','0','11','22766','0','33','1','-9979','0','0','0','0','0','0','Hyakiss the Lurker - Cast Stealth and Emote on Spawn'),
+('1617903','16179','4','0','100','0','0','0','0','0','23','1','0','0','0','0','0','0','0','0','0','0','Hyakiss the Lurker - Set Phase 1 on Aggro'),
+('1617904','16179','9','5','100','1','0','5','5000','10000','11','29901','1','0','0','0','0','0','0','0','0','0','Hyakiss the Lurker - Cast Acidic Fang (Phase 1)'),
+('1617905','16179','24','5','100','1','29901','7','5000','5000','23','1','0','0','0','0','0','0','0','0','0','0','Hyakiss the Lurker - Set Phase 2 on Target Max Acidic Fang Aura Stack (Phase 1)'),
+('1617906','16179','28','3','100','1','29901','1','5000','5000','23','-1','0','0','0','0','0','0','0','0','0','0','Hyakiss the Lurker - Set Phase 1 on Target Missing Acidic Fang Aura Stack (Phase 2)'),
+('1617907','16179','9','0','100','1','0','40','6000','12000','11','29896','4','1','0','0','0','0','0','0','0','0','Hyakiss the Lurker - Cast Hyakiss\' Web'),
+('1617908','16179','7','0','100','1','0','0','0','0','22','0','0','0','11','22766','0','1','0','0','0','0','Hyakiss the Lurker - Set Phase to 0 & Cast Stealth on Evade');
+
+-- Shadikith the Glider - Shadikith der Gleiter
+UPDATE `creature_template` SET `mindmg`='6716',`maxdmg`='7706',`speed`='1.71',`type_flags`='108',`mechanic_immune_mask`='787431423',`flags_extra`='0',`baseattacktime`='1500',`AIName`='EventAI' WHERE `entry` IN ('16180'); -- 1400 -- 13,432 - 15,411
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN ('16180');
+INSERT INTO `creature_ai_scripts` VALUES
+('1618001','16180','11','0','66','1','0','0','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Shadikith the Glider - Chance to Despawn on Spawn'),
+('1618002','16180','9','0','100','0','0','45','0','0','11','29903','1','1','0','0','0','0','0','0','0','0','Shadikith the Glider - Cast Dive on Aggro'),
+('1618003','16180','0','0','100','1','7000','11000','8000','12000','11','29905','1','1','13','-99','1','0','0','0','0','0','Shadikith the Glider - Cast Wing Buffet & Tank Aggro Reset'),
+('1618004','16180','9','0','100','1','0','5','10000','12000','11','29904','0','1','0','0','0','0','0','0','0','0','Shadikith the Glider - Cast Sonic Burst'),
+('1618005','16180','2','0','100','0','75','0','0','0','11','29903','5','1','0','0','0','0','0','0','0','0','Shadikith the Glider - Cast Dive at 75% HP'),
+('1618006','16180','2','0','100','0','50','0','0','0','11','29903','5','1','0','0','0','0','0','0','0','0','Shadikith the Glider - Cast Dive at 50% HP'),
+('1618007','16180','2','0','100','0','25','0','0','0','11','29903','5','1','0','0','0','0','0','0','0','0','Shadikith the Glider - Cast Dive at 25% HP'); -- ziel welches am weitesten weg ist hmmm
+
+-- thx @ anonxy 
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = -100 WHERE `item` = 29905 AND `entry` = 19622;
+
+-- Elder Razormaw nerf
+UPDATE `creature_template` SET `equipment_id`='0' WHERE `entry` = 1019;
+
+INSERT INTO `item_template` VALUES
+(31878,9,10,-1,'Design: Veiled Noble Topaz',6270,3,64,1,120000,30000,0,-1,-1,70,0,755,350,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,483,0,-1,0,-1,0,-1,39470,6,0,0,-1,0,-1,0,0,0,0,-1,0,-1,0,0,0,0,-1,0,-1,0,0,0,0,-1,0,-1,0,'Teaches you how to cut a Veiled Noble Topaz.',0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,'',0,0,0,0,0);
+
+DELETE FROM `creature_loot_template` WHERE `entry` IN (23230);
+-- Shartuul 23230
+INSERT INTO `creature_loot_template` VALUES (23230, 21877, 59.6, 0, 4, 6, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23230, 24001, 5, 1, -24001, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23230, 24002, 5, 1, -24002, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23230, 27854, 4.3, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23230, 32670, 6.5, 2, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23230, 32671, 12.9, 2, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23230, 32672, 4.4, 2, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23230, 32673, 15, 2, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23230, 32674, 4.4, 2, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23230, 32675, 10.7, 2, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23230, 32676, 3, 2, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23230, 32677, 6.5, 2, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23230, 32678, 15, 2, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23230, 32679, 8.6, 2, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23230, 32941, 8.6, 2, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23230, 32942, 4.4, 2, 1, 1, 0, 0, 0);
+
+-- Set Internal Cooldown to Thrash and Double Attack Abilities
+DELETE FROM `spell_proc_event` WHERE `entry` IN (3417,8876,12787,19817,19818,19194,18943);
+INSERT INTO `spell_proc_event` VALUES
+(3417,0,0,0,0,0,0,0,2),
+(8876,0,0,0,0,0,0,0,2),
+(12787,0,0,0,0,0,0,0,2),
+(19817,0,0,0,0,0,0,0,2),
+(19818,0,0,0,0,0,0,0,2),
+(19194,0,0,0,0,0,0,0,2),
+(18943,0,0,0,0,0,0,0,2);
+
+-- respawn
+UPDATE `creature` SET `spawntimesecs`='120' WHERE `id` IN ('20561'); -- 1551
