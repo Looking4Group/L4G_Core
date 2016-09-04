@@ -216,8 +216,8 @@ struct boss_leotheras_the_blindAI : public ScriptedAI
         m_creature->CastSpell(m_creature, SPELL_DUAL_WIELD, true);
         m_creature->SetCorpseDelay(1000*60*60);
 
-        if(pInstance && pInstance->GetData(DATA_LEOTHERASTHEBLINDEVENT) != DONE)
-            pInstance->SetData(DATA_LEOTHERASTHEBLINDEVENT, NOT_STARTED);
+        if(pInstance && pInstance->GetData(DATA_LEOTHERAS_EVENT) != DONE) // check for not special also
+            pInstance->SetData(DATA_LEOTHERAS_EVENT, NOT_STARTED);
 
         m_creature->SetReactState(REACT_AGGRESSIVE);
         m_creature->SetMeleeDamageSchool(SPELL_SCHOOL_NORMAL);
@@ -277,7 +277,7 @@ struct boss_leotheras_the_blindAI : public ScriptedAI
         DoZoneInCombat();
         DoScriptText(SAY_AGGRO, m_creature);
         if(pInstance)
-            pInstance->SetData(DATA_LEOTHERASTHEBLINDEVENT, IN_PROGRESS);
+            pInstance->SetData(DATA_LEOTHERAS_EVENT, IN_PROGRESS);
     }
 
     void CheckBanish()
@@ -389,7 +389,7 @@ struct boss_leotheras_the_blindAI : public ScriptedAI
                 pUnit->DealDamage(pUnit, pUnit->GetHealth(), DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
         }
         if (pInstance)
-            pInstance->SetData(DATA_LEOTHERASTHEBLINDEVENT, DONE);
+            pInstance->SetData(DATA_LEOTHERAS_EVENT, DONE);
     }
 
     void EnterCombat(Unit *who)
@@ -721,7 +721,7 @@ struct mob_greyheart_spellbinderAI : public ScriptedAI
 
         if(pInstance)
         {
-            if (pInstance->GetData(DATA_LEOTHERASTHEBLINDEVENT) != NOT_STARTED)
+            if (pInstance->GetData(DATA_LEOTHERAS_EVENT) != NOT_STARTED)
             {
                 m_creature->Kill(m_creature,false);
                 return;
