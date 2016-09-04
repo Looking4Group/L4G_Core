@@ -1136,3 +1136,12 @@ INSERT INTO `creature_formations` VALUES
 
 DELETE FROM `creature_onkill_reputation` WHERE `creature_id` =17096;
 -- 17096	967	0	7	0	15	0	0	0	0
+
+-- Restless Skeleton 17261
+UPDATE `creature_template` SET `speed`='1.20',`mindmg`='1224',`maxdmg`='1519',`baseattacktime`='1400',`resistance2`='-1',`resistance3`='-1',`resistance4`='-1',`resistance5`='-1',`resistance6`='-1' WHERE `entry` IN ('17261'); -- 587 1471 -- 3,672 - 4,556
+--
+-- Image of Arcanagos
+UPDATE `creature_template` SET `InhabitType`='5' WHERE `entry` = 17652;
+DELETE FROM `creature_template_addon` WHERE `entry` = 17652;
+INSERT INTO `creature_template_addon` VALUES
+(17652,0,0,16908544,0,4097,0,0,NULL);
