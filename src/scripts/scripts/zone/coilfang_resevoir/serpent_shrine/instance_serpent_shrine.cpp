@@ -543,7 +543,7 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
         if (TrashCheckTimer < diff)
         {
             // If Lurker has not been started
-            if (Encounters[2] == NOT_STARTED)
+            if (Encounters[1] == NOT_STARTED)
             {
                 // If there are no Technicians alive
                 // Then make the water scalding
