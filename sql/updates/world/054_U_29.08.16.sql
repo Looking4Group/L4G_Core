@@ -1133,3 +1133,6 @@ INSERT INTO `creature_formations` VALUES
 (84987,84987,60,360,2),
 (84987,56849,60,360,2),
 (84987,56855,60,360,2);
+
+DELETE FROM `creature_onkill_reputation` WHERE `creature_id` =17096;
+-- 17096	967	0	7	0	15	0	0	0	0
