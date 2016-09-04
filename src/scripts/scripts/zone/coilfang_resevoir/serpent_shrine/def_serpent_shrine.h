@@ -5,12 +5,13 @@
 #ifndef DEF_SERPENT_SHRINE_H
 #define DEF_SERPENT_SHRINE_H
 
-enum LurkerEventState
-{
-    LURKER_NOT_STARTED = 0,
-    LURKER_FISHING     = 1,
-    LURKER_HOOKED      = 2
-};
+#define MAX_ENCOUNTER 6
+#define LURKER_FISHING_INTERNAL_COOLDOWN 7000
+#define MOB_GREYHEART_TECHNICIAN 21263
+#define SPELL_SCALDINGWATER 37284
+#define MOB_COILFANG_FRENZY 21508
+#define WATER_Z -19.9f
+
 enum WaterEventState
 {
     WATERSTATE_NONE     = 0,
@@ -18,31 +19,40 @@ enum WaterEventState
     WATERSTATE_SCALDING = 2
 };
 
-#define DATA_CANSTARTPHASE3 1
-#define DATA_CARIBDIS 2
-#define DATA_HYDROSSTHEUNSTABLEEVENT 3
-#define DATA_KARATHRESS 4
-#define DATA_KARATHRESSEVENT 5
-#define DATA_KARATHRESSEVENT_STARTER 6
-#define DATA_LADYVASHJ 7
-#define DATA_LADYVASHJEVENT 8
-#define DATA_LEOTHERASTHEBLINDEVENT 9
-#define DATA_MOROGRIMTIDEWALKEREVENT 10
-#define DATA_SHARKKIS 11
-#define DATA_SHIELDGENERATOR1 12
-#define DATA_SHIELDGENERATOR2 13
-#define DATA_SHIELDGENERATOR3 14
-#define DATA_SHIELDGENERATOR4 15
-#define DATA_THELURKERBELOW 16
-#define DATA_THELURKERBELOWEVENT 17
-#define DATA_TIDALVESS 18
-#define DATA_LEOTHERAS 19
-#define DATA_LEOTHERAS_EVENT_STARTER 20
-#define DATA_CONTROL_CONSOLE 21
-#define DATA_STRANGE_POOL 22
-#define DATA_WATER 23
-#define DATA_SHARKKIS_PET 24
+enum DataTypes
+{        
+    /* Encounters */
+    DATA_HYDROSS_EVENT              = 1,
+    DATA_LURKER_EVENT               = 2,
+    DATA_LEOTHERAS_EVENT            = 3,
+    DATA_KARATHRESS_EVENT           = 4,
+    DATA_MOROGRIM_EVENT             = 5,
+    DATA_VASHJ_EVENT                = 6,
 
-#define WATER_Z -19.9f
+    /* Creatures */
+    DATA_HYDROSS                    = 7,
+    DATA_LURKER                     = 8,
+    DATA_LEOTHERAS                  = 9,
+    DATA_KARATHRESS                 = 10,
+    DATA_MOROGRIM                   = 11,
+    DATA_VASHJ                      = 12,
+    DATA_SHARKKIS                   = 13,
+    DATA_TIDALVESS                  = 14,
+    DATA_CARIBDIS                   = 15,
+    DATA_SHARKKIS_PET               = 16,
+    DATA_LEOTHERAS_EVENT_STARTER    = 17,
+    DATA_KARATHRESS_EVENT_STARTER   = 18,
+    
+    /* Misc */
+    DATA_BRIDGE_CONSOLE             = 43,
+    DATA_LURKER_FISHING_EVENT       = 44,
+    DATA_SHIELD_GENERATOR_ONE       = 45,
+    DATA_SHIELD_GENERATOR_TWO       = 46,
+    DATA_SHIELD_GENERATOR_THREE     = 47,
+    DATA_SHIELD_GENERATOR_FOUR      = 48,
+    DATA_CAN_START_PHASE_3          = 49,
+    DATA_WATER                      = 50,
+};
+
 #endif
 
