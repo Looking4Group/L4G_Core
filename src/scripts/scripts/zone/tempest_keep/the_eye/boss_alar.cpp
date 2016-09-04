@@ -440,9 +440,8 @@ struct boss_alarAI : public ScriptedAI
                     }
                     else // flame quill
                     {
-                        cur_wp = 4;
-                        WaitEvent = WE_QUILL;
-                        m_creature->Yell("Denkt ihr tatsaechlich, dass ihr eine Chance habt? Seht selbst...", LANG_UNIVERSAL, me->getVictimGUID());
+                        cur_wp = 6;
+                        WaitEvent = WE_QUILL;                        
                     }
                 }
 
