@@ -556,7 +556,7 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
             }
             // If Lurker has been completed
             // Then make the water normal
-            else if ((Encounters[2] == DONE) || (Encounters[2] == SPECIAL))
+            else if ((Encounters[1] == DONE) || (Encounters[1] == SPECIAL))
             {
                 Water = WATERSTATE_NONE;
             }
