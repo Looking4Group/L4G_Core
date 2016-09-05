@@ -2549,7 +2549,7 @@ enum BattleGroundTypeId
 
 #define CONTACT_DISTANCE            0.5f
 #define INTERACTION_DISTANCE        5.0f
-#define MAX_VISIBILITY_DISTANCE     180.0f      // max distance for visible object show, limited in 500 yards
+#define MAX_VISIBILITY_DISTANCE     500.0f      // max distance for visible object show, limited in 500 yards
 #define DEFAULT_VISIBILITY_DISTANCE 180.0f       // default visible distance, 90 yards on continents
 #define DEFAULT_VISIBILITY_INSTANCE 180.0f      // default visible distance in instances, 120 yards
 #define DEFAULT_VISIBILITY_BGARENAS 180.0f      // default visible distance in BG/Arenas, 180 yards
