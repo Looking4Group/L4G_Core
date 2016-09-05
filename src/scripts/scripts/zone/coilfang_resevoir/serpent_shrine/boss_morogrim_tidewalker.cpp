@@ -37,7 +37,7 @@ EndScriptData */
 #define EMOTE_EARTHQUAKE            -1548040
 #define EMOTE_WATERY_GLOBULES       -1548041
 
-#define SPELL_THRASH_PASSIVE        12787
+#define SPELL_THRASH_PASSIVE        19818
 #define SPELL_TIDAL_WAVE            37730
 #define SPELL_WATERY_GRAVE          38049
 #define SPELL_EARTHQUAKE            37764
