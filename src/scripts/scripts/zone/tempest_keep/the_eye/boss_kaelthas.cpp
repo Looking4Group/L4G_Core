@@ -192,10 +192,10 @@ float KaelthasWeapons[7][5] =
 #define SPELL_STAFF_WBOLT       36990 // frostbolt
 
 // Advisors hp
-#define HP_THALADRED    279999
-#define HP_SANGUINAR    289999
-#define HP_CAPERNIAN    199999
-#define HP_TELONICUS    274999
+#define HP_THALADRED    756000
+#define HP_SANGUINAR    752000
+#define HP_CAPERNIAN    562000
+#define HP_TELONICUS    754000
 
 //Base AI for Advisors
 struct advisorbase_ai : public ScriptedAI
