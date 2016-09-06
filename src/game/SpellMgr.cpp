@@ -3707,6 +3707,9 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 37433: //Lurker spout knockback should not be resistable
                 spellInfo->AttributesEx4 |= SPELL_ATTR_EX4_IGNORE_RESISTANCES;
+            case 38258: //Strider fear should not be breakable by anti fear spells
+                spellInfo->Mechanic = MECHANIC_HORROR;
+
             default:
                 break;
         }
