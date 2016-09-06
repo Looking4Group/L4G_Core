@@ -181,7 +181,7 @@ struct boss_lady_vashjAI : public ScriptedAI
         Entangle_Timer = 30000;
         StaticCharge_Timer = urand(10000, 25000);
         ForkedLightning_Timer = 2000;
-        Check_Timer = 15000;
+        Check_Timer = 2000;
         ParalyzeCheck_Timer = 1000;
         Persuasion_Timer = 30000;
         EnchantedElemental_Timer = 5000;
@@ -544,20 +544,12 @@ struct boss_lady_vashjAI : public ScriptedAI
 				me->GetMotionMaster()->MovementExpired();
 			}
 
-			bool InMeleeRange = false;
-			Unit *target;
-
-			std::list<HostilReference *> t_list = me->getThreatManager().getThreatList();
-			for (std::list<HostilReference *>::iterator itr = t_list.begin(); itr != t_list.end(); ++itr)
-			{
-				target = Unit::GetUnit(*me, (*itr)->getUnitGuid());
-				//if in melee range
-				if (target && target->IsWithinDistInMap(me, 5))
-				{
-					InMeleeRange = true;
-					break;
-				}
-			}
+			bool InMeleeRange = false;		
+		
+            if (me->getVictim() && me->getVictim()->IsWithinDistInMap(me, 5))
+            {
+                InMeleeRange = true;                
+            }
 
 			//Check_Timer - used as cast timer for ranged attack
 			if (Check_Timer < diff)
