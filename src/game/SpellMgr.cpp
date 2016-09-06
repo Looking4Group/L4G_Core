@@ -3596,8 +3596,8 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->EffectRadiusIndex[0] = 18;
             break;
             case 37284:  //scalding water
-                spellInfo->EffectBasePoints[1] = 1000;
-                spellInfo->EffectBasePoints[0] = 1000;
+                spellInfo->EffectBasePoints[1] = 999;
+                spellInfo->EffectBasePoints[0] = 999;
                 spellInfo->AttributesCu |= SPELL_ATTR_CU_NO_SPELL_DMG_COEFF;
             break;
             case 29838: //Second Wind (Rank 2)
