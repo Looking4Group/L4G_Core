@@ -3377,9 +3377,9 @@ void SpellMgr::LoadSpellCustomAttr()
             case 66:    // Invisibility (fading) - break on casting spell
                 spellInfo->AuraInterruptFlags |= AURA_INTERRUPT_FLAG_CAST;
                 break;
-            case 37363: // set 5y radius instead of 25y
-                spellInfo->EffectRadiusIndex[0] = 8;
-                spellInfo->EffectRadiusIndex[1] = 8;
+            case 37363: // set 8y radius instead of 25y
+                spellInfo->EffectRadiusIndex[0] = 14;
+                spellInfo->EffectRadiusIndex[1] = 14;
                 spellInfo->EffectMiscValue[1] = 50;
                 break;
             case 42835: // set visual only
