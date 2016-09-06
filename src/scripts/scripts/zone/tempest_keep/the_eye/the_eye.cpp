@@ -102,7 +102,7 @@ struct mob_crystalcore_mechanicAI : public ScriptedAI
 
     void Reset()
     {
-        Recharge_Timer = 20000;
+        Recharge_Timer = urand(5000, 20000);
         Sawblade_Timer = 4000;
         Saw_count=0;
     }
@@ -122,12 +122,12 @@ struct mob_crystalcore_mechanicAI : public ScriptedAI
             if(Unit* target = FindCreature(20040, 100, m_creature))
             {
                 DoCast(target,SPELL_RECHARGE);
-                Recharge_Timer = 30000+rand()%10000;
+                Recharge_Timer = urand(20000, 40000);
             }
             else if(Unit* target = FindCreature(20041, 100, m_creature))
             {
                 DoCast(target,SPELL_RECHARGE);
-                Recharge_Timer = 30000+rand()%10000;
+                Recharge_Timer = urand(20000, 40000);
             }
         }
         else
@@ -176,7 +176,7 @@ struct mob_phoenixhawk_hatchlingAI : public ScriptedAI
     void Reset()
     {
         Silence_Timer = 2000;
-        WingBuffet_Timer = 4000;
+        WingBuffet_Timer = urand(5000, 7500);
     }
 
     void EnterCombat(Unit *who)
@@ -200,7 +200,7 @@ struct mob_phoenixhawk_hatchlingAI : public ScriptedAI
         if(WingBuffet_Timer < diff)
         {
             DoCast(m_creature,SPELL_WINGBUFFET);
-            WingBuffet_Timer = 16000+rand()%14000;
+            WingBuffet_Timer = urand(12000, 15000);
         }
         else
             WingBuffet_Timer -= diff;
@@ -326,7 +326,7 @@ struct mob_tempest_falconerAI : public ScriptedAI
         if(Knockback_Timer < diff)
         {
             DoCast(m_creature,SPELL_KNOCKBACK);
-            Knockback_Timer = 8000;
+            Knockback_Timer = urand(6000, 11000);
         }
         else
             Knockback_Timer -= diff;
@@ -685,7 +685,7 @@ struct mob_tempest_smithAI : public ScriptedAI
     void Reset()
     {
         Fragmentation_Bomb_Timer= 7000;
-        Golem_Repair_Timer = 10000+rand()%4000;
+        Golem_Repair_Timer = urand(5000, 20000);
         Power_Up_Timer = 20000;
         Shell_Shock_Timer = 11000;
     }
@@ -706,7 +706,7 @@ struct mob_tempest_smithAI : public ScriptedAI
             if(target)
                 DoCast(target,SPELL_FEAGMENTATIONBOMB);
 
-            Fragmentation_Bomb_Timer = 5000+rand()%3000;
+            Fragmentation_Bomb_Timer = urand(5000, 7000);
         }
         else
             Fragmentation_Bomb_Timer -= diff;
@@ -716,12 +716,12 @@ struct mob_tempest_smithAI : public ScriptedAI
             if(Unit* target = FindCreature(20040, 25, m_creature))
             {
                 DoCast(target,SPELL_RECHARGE);
-                Golem_Repair_Timer = 30000+rand()%10000;
+                Golem_Repair_Timer = urand(20000, 40000);
             }
             else if(Unit* target = FindCreature(20041, 25, m_creature))
             {
                 DoCast(target,SPELL_RECHARGE);
-                Golem_Repair_Timer = 30000+rand()%10000;
+                Golem_Repair_Timer = urand(20000, 40000);
             }
         }
         else
@@ -749,7 +749,7 @@ struct mob_tempest_smithAI : public ScriptedAI
             if(target)
                 DoCast(target,SPELL_SHELLSHOCK);
 
-            Shell_Shock_Timer = 8000+rand()%8000;
+            Shell_Shock_Timer = urand(9000, 13000);
         }
         else
             Shell_Shock_Timer -= diff;
@@ -811,7 +811,7 @@ struct mob_novice_astromancerAI : public ScriptedAI
         if(Fire_Shield_Timer < diff)
         {
             DoCast(m_creature,SPELL_FIRESHIELD_NOVICE_ASTROMANCER);
-            Fire_Shield_Timer = 60000;
+            Fire_Shield_Timer = urand(15000, 30000);
         }
         else
             Fire_Shield_Timer -= diff;

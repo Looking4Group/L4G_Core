@@ -2568,10 +2568,10 @@ struct npc_gauntlet_imp_triggerAI : public Scripted_NoMovementAI
             JustRespawned();
 
         if(pInstance->GetData(DATA_TRASH_GAUNTLET_EVENT) == DONE)
-		{
+        {
             me->Kill(me, false);
             JustRespawned();
-		}
+        }
     }
 };
 

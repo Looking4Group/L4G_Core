@@ -66,7 +66,7 @@ struct boss_high_king_maulgarAI : public BossAI
 {
     boss_high_king_maulgarAI(Creature *c) : BossAI(c, DATA_MAULGAREVENT) {}
 
-    ePhase _phase;
+    ePhase _phase;   
 
     void Reset()
     {
@@ -76,7 +76,6 @@ struct boss_high_king_maulgarAI : public BossAI
         _phase = PHASE_ONE;
 
         instance->SetData(DATA_MAULGAREVENT, NOT_STARTED);
-
         events.ScheduleEvent(EVENT_MIGHTY_BLOW, urand(15000, 25000));
         events.ScheduleEvent(EVENT_ARCING_SMASH, urand(8000, 14000));
         events.ScheduleEvent(EVENT_WHIRLWIND, 30000);
@@ -131,14 +130,24 @@ struct boss_high_king_maulgarAI : public BossAI
             return;
 
         DoSpecialThings(diff, DO_EVERYTHING, 200.0f, 1.6f);
-
+        
+        //Slow his movement speed while he whirls
+        //I'm not proud of this. Should be handled by the dbc, 
+        //modaura slow of the spell only applied shortly (and once) in the beginning, afterwards he regains normal speed
+        if (me->HasAura(33238)) {
+            me->SetSpeed(MOVE_RUN, 0.80f);            
+        }
+        else {
+            me->SetSpeed(MOVE_RUN, 1.71);            
+        }
+        
         events.Update(diff);
         while (uint32 eventId = events.ExecuteEvent())
         {
             switch (eventId)
             {
                 case EVENT_ARCING_SMASH:
-                {
+                {                    
                     AddSpellToCast(SPELL_ARCING_SMASH);
                     events.ScheduleEvent(eventId, urand(8000, 12000));
                     break;

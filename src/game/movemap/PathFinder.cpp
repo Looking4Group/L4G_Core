@@ -36,7 +36,7 @@ m_polyLength(0), m_type(PATHFIND_BLANK),
     {
         createFilter();
         return;
-    }	
+    }    
 
     if (m_sourceUnit->GetTerrain() && m_sourceUnit->GetTerrain()->IsPathFindingEnabled(owner))
     {

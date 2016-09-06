@@ -716,6 +716,7 @@ class LOOKING4GROUP_IMPORT_EXPORT WorldSession
 
         void HandleAreaSpiritHealerQueryOpcode(WorldPacket& recv_data);
         void HandleAreaSpiritHealerQueueOpcode(WorldPacket& recv_data);
+        void AnnounceArenaStart(uint8 arenatype, uint32 arenaRating, std::string teamName);
         void HandleDismountOpcode(WorldPacket& recv_data);
         void HandleSelfResOpcode(WorldPacket& recv_data);
         void HandleReportSpamOpcode(WorldPacket& recv_data);

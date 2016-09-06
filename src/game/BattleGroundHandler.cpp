@@ -677,6 +677,29 @@ void WorldSession::HandleAreaSpiritHealerQueueOpcode(WorldPacket & recv_data)
     bg->AddPlayerToResurrectQueue(guid, _player->GetGUID());
 }
 
+void WorldSession::AnnounceArenaStart(uint8 arenatype, uint32 arenaRating, std::string teamName)
+{    
+    std::stringstream ss;
+    switch (arenatype)
+    {
+    case 2:
+        ss << "2v2: ";
+        break;
+    case 3:
+        ss << "3v3: ";
+        break;
+    case 5:
+        ss << "5v5: ";
+        break;   
+    default: 
+        return;
+    }
+
+    ss << "\"" <<teamName << "\" with rating " << arenaRating << " just queued!";
+
+    sWorld.SendWorldTextForLevels(60, 70, ACC_DISABLED_BGANN, LANG_BG_START_ANNOUNCE, ss.str().c_str());
+}
+
 void WorldSession::HandleBattleGroundArenaJoin(WorldPacket & recv_data)
 {
     DEBUG_LOG("WORLD: CMSG_BATTLEMASTER_JOIN_ARENA");
@@ -808,9 +831,15 @@ void WorldSession::HandleBattleGroundArenaJoin(WorldPacket & recv_data)
     {
         GroupQueueInfo * ginfo = sBattleGroundMgr.m_BattleGroundQueues[bgQueueTypeId].AddGroup(_player, bgTypeId, bgBracketId, arenatype, isRated, false, arenaRating, hiddenRating, ateamId);
         DEBUG_LOG("Battleground: arena join as group start");
-        if (isRated)
-            DEBUG_LOG("Battleground: arena team id %u, leader %s queued with rating %u for type %u",_player->GetArenaTeamId(arenaslot),_player->GetName(),arenaRating,arenatype);
-			//sWorld.SendWorldTextForLevels(60, 70, ACC_DISABLED_BGANN, LANG_BG_START_ANNOUNCE, "Ein Arena Team hat sich angemeldet!");
+        if (isRated) {
+            DEBUG_LOG("Battleground: arena team id %u, leader %s queued with rating %u for type %u", _player->GetArenaTeamId(arenaslot), _player->GetName(), arenaRating, arenatype);
+            
+            ateamId = _player->GetArenaTeamId(arenaslot);
+            ArenaTeam * at = sObjectMgr.GetArenaTeamById(ateamId);
+            if (at) {
+                AnnounceArenaStart(arenatype, arenaRating, at->GetName());
+            }
+        }            
         for (GroupReference *itr = grp->GetFirstMember(); itr != NULL; itr = itr->next())
         {
             Player *member = itr->getSource();

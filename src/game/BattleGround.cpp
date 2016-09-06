@@ -643,7 +643,7 @@ void BattleGround::EndBattleGround(uint32 winner)
                     if (Player* player = sObjectMgr.GetPlayer(itr->first))
                     {
                         sLog.outLog(LOG_ARENA, "Statistics for %s (GUID: " UI64FMTD ", Team: %d, IP: %s): %u damage, %u healing, %u killing blows", player->GetName(), itr->first, player->GetArenaTeamId(m_ArenaType == 5 ? 2 : m_ArenaType == 3), player->GetSession()->GetRemoteAddress().c_str(), itr->second->DamageDone, itr->second->HealingDone, itr->second->KillingBlows);
-						RealmDataDatabase.PExecute("INSERT INTO arena_logging (timestamp, playername, guid, team, ipaddress, damage, healing, killingblows) VALUES (NOW(), '%s', '%u', '%d', '%s', '%u', '%u', '%u')", player->GetName(), GUID_LOPART(player->GetGUID()), player->GetArenaTeamId(m_ArenaType == 5 ? 2 : m_ArenaType == 3), player->GetSession()->GetRemoteAddress().c_str(), itr->second->DamageDone, itr->second->HealingDone, itr->second->KillingBlows);
+                        RealmDataDatabase.PExecute("INSERT INTO arena_logging (timestamp, playername, guid, team, ipaddress, damage, healing, killingblows) VALUES (NOW(), '%s', '%u', '%d', '%s', '%u', '%u', '%u')", player->GetName(), GUID_LOPART(player->GetGUID()), player->GetArenaTeamId(m_ArenaType == 5 ? 2 : m_ArenaType == 3), player->GetSession()->GetRemoteAddress().c_str(), itr->second->DamageDone, itr->second->HealingDone, itr->second->KillingBlows);
                     }
         }
         else

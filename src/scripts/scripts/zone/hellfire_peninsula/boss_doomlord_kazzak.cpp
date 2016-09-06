@@ -66,7 +66,7 @@ enum
 };
 struct boss_doomlordkazzakAI : public BossAI
 {
-    boss_doomlordkazzakAI(Creature *c) : BossAI(c, EVENT_KAZZAK) {}
+    boss_doomlordkazzakAI(Creature *c) : BossAI(c, EVENT_KAZZAK) { }
 
     void Reset()
     {
@@ -87,16 +87,26 @@ struct boss_doomlordkazzakAI : public BossAI
         if (resultWorldBossRespawn)
         {
             Field* fieldsWBR = resultWorldBossRespawn->Fetch();
-            uint64 last_time_killed = fieldsWBR[0].GetUInt64();
-            last_time_killed += 259200;
-            if (last_time_killed >= time(0))
+            uint64 respawn_time = fieldsWBR[0].GetUInt64();
+            if (respawn_time > time(0))
+            {
+                // If Kazzak shouldn't be spawned then despawn him and make him invisible for any future attempted respawns
+                me->SetVisibility(VISIBILITY_OFF);
                 me->DisappearAndDie();
-        }
+            } else {
+                // If Kazzak should be spawned, make him visible and say intro
+                me->SetVisibility(VISIBILITY_ON);
+                DoScriptText(SAY_INTRO, me);
+            }
+        } 
+
     }
 
+    // Not compatible with the way world boss spawns are randomised
+    // DoScriptText(SAY_INTRO, me); moved into Reset() when we check the spawn is valid
     void JustRespawned()
     {
-        DoScriptText(SAY_INTRO, me);
+        //DoScriptText(SAY_INTRO, me);
     }
 
     void EnterCombat(Unit *who)
@@ -106,19 +116,22 @@ struct boss_doomlordkazzakAI : public BossAI
 
     void KilledUnit(Unit* pVictim)
     {
-        if (pVictim->ToPlayer())
-            return;
+        if (pVictim->GetTypeId() == TYPEID_PLAYER)
+        {
+            if (!HealthBelowPct(1))
+            {
+                ForceSpellCast(SPELL_CAPTURESOUL, CAST_SELF);
+            }
 
-        if (!HealthBelowPct(1))
-            ForceSpellCast(SPELL_CAPTURESOUL, CAST_SELF);
-
-        DoScriptText(RAND(SAY_KILL1, SAY_KILL2, SAY_KILL3), me);
+            DoScriptText(RAND(SAY_KILL1, SAY_KILL2, SAY_KILL3), me);
+        }
     }
 
     void JustDied(Unit *victim)
     {
         DoScriptText(SAY_DEATH, me);
-        GameDataDatabase.PExecute("REPLACE INTO worldboss_respawn VALUES (%i, UNIX_TIMESTAMP())", m_creature->GetEntry());
+        uint64 respawn_time = urand(302400, 604800); // set the next respawn time between 3.5 to 7 days
+        GameDataDatabase.PExecute("REPLACE INTO worldboss_respawn VALUES (%i, %i)", m_creature->GetEntry(), respawn_time+time(0));
     }
 
     void UpdateAI(const uint32 diff)

@@ -52,14 +52,11 @@ void UnitAI::DoMeleeAttackIfReady()
         if(((Creature*)me)->GetSelection() != me->getVictimGUID() && !((Creature*)me)->hasIgnoreVictimSelection())
             ((Creature*)me)->SetSelection(me->getVictimGUID());
     }
-
-	//Force victim update
-	((Creature*)me)->SelectVictim();
-
+    
     //Make sure our attack is ready and we aren't currently casting before checking distance
     if (me->isAttackReady())
-    {
-        //If we are within range melee the target
+    {        
+        //If we are within range melee of the target
         if (me->IsWithinMeleeRange(me->getVictim()))
         {
             me->AttackerStateUpdate(me->getVictim());
@@ -68,7 +65,7 @@ void UnitAI::DoMeleeAttackIfReady()
     }
     if (me->haveOffhandWeapon() && me->isAttackReady(OFF_ATTACK))
     {
-        //If we are within range melee the target
+        //If we are within range melee of the target
         if (me->IsWithinMeleeRange(me->getVictim()))
         {
             me->AttackerStateUpdate(me->getVictim(), OFF_ATTACK);

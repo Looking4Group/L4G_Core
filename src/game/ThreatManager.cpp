@@ -292,59 +292,59 @@ void ThreatContainer::update()
 //============================================================
 // Check the unit for mechanics that should cause an aggro drop
 bool CheckForAggroDropMechanics(Unit* target) {
-	bool aggroDrop = false;
-	uint32 mechanicArray[] = { 
-		1,	//charmed checked
-		2,	//disoriented checked
-		5,	//fleeing 
-		10,	//asleep
-		13,	//frozen
-		14, //incapacitated
-		17,	//polymorphed
-		18, //banished
-		20, //shackled
-		24,	//horrified
-		29,	//invulnerable
-		30	//sapped
-	};
+    bool aggroDrop = false;
+    uint32 mechanicArray[] = { 
+        1,    //charmed checked
+        2,    //disoriented checked
+        5,    //fleeing 
+        10,    //asleep
+        13,    //frozen
+        14, //incapacitated
+        17,    //polymorphed
+        18, //banished
+        20, //shackled
+        24,    //horrified
+        29,    //invulnerable
+        30    //sapped
+    };
 
-	//Some spells are excluded from this check
-	uint32 spellExceptions[] = {
-		29511	//Maiden of Virtue Repentance
-	};
+    //Some spells are excluded from this check
+    uint32 spellExceptions[] = {
+        29511    //Maiden of Virtue Repentance
+    };
 
-	uint32 size = (sizeof(spellExceptions) / sizeof(*spellExceptions));
-	for (int i = 0; i < (size); ++i) {
-		if (target->HasAura(spellExceptions[i]) == true) {
-			return false;
-		}
-	}
+    uint32 size = (sizeof(spellExceptions) / sizeof(*spellExceptions));
+    for (int i = 0; i < (size); ++i) {
+        if (target->HasAura(spellExceptions[i]) == true) {
+            return false;
+        }
+    }
 
-	//Get Auras and look for qualifying mechanics	
-	Unit::AuraMap& Auras = target->GetAuras();
-		for (Unit::AuraMap::iterator iter = Auras.begin(); iter != Auras.end() && aggroDrop == false; ++iter)
-		{
-			SpellEntry const* spell = iter->second->GetSpellProto();
-			if (spell->Mechanic != 0)
-			{
-				aggroDrop = std::find(std::begin(mechanicArray), std::end(mechanicArray), spell->Mechanic) != std::end(mechanicArray);
-			}
-			if (spell->EffectMechanic[0] != 0)
-			{
-				aggroDrop = std::find(std::begin(mechanicArray), std::end(mechanicArray), spell->EffectMechanic[0]) != std::end(mechanicArray);
-			}
+    //Get Auras and look for qualifying mechanics    
+    Unit::AuraMap& Auras = target->GetAuras();
+        for (Unit::AuraMap::iterator iter = Auras.begin(); iter != Auras.end() && aggroDrop == false; ++iter)
+        {
+            SpellEntry const* spell = iter->second->GetSpellProto();
+            if (spell->Mechanic != 0)
+            {
+                aggroDrop = std::find(std::begin(mechanicArray), std::end(mechanicArray), spell->Mechanic) != std::end(mechanicArray);
+            }
+            if (spell->EffectMechanic[0] != 0)
+            {
+                aggroDrop = std::find(std::begin(mechanicArray), std::end(mechanicArray), spell->EffectMechanic[0]) != std::end(mechanicArray);
+            }
 
-			if (spell->EffectMechanic[1] != 0)
-			{
-				aggroDrop = std::find(std::begin(mechanicArray), std::end(mechanicArray), spell->EffectMechanic[1]) != std::end(mechanicArray);
-			}
+            if (spell->EffectMechanic[1] != 0)
+            {
+                aggroDrop = std::find(std::begin(mechanicArray), std::end(mechanicArray), spell->EffectMechanic[1]) != std::end(mechanicArray);
+            }
 
-			if (spell->EffectMechanic[2] != 0) {
-				aggroDrop = std::find(std::begin(mechanicArray), std::end(mechanicArray), spell->EffectMechanic[2]) != std::end(mechanicArray);
-			}
-		}
-		
-	return aggroDrop;
+            if (spell->EffectMechanic[2] != 0) {
+                aggroDrop = std::find(std::begin(mechanicArray), std::end(mechanicArray), spell->EffectMechanic[2]) != std::end(mechanicArray);
+            }
+        }
+        
+    return aggroDrop;
 }
 
 bool DropAggro(Creature* pAttacker, Unit * target)
@@ -391,9 +391,9 @@ bool DropAggro(Creature* pAttacker, Unit * target)
     if (target->HasAuraType(SPELL_AURA_SPIRIT_OF_REDEMPTION) || target->HasAuraType(SPELL_AURA_IGNORED))
         return true;
 
-	//Check for spells that should cause an aggro drop
-	if (CheckForAggroDropMechanics(target) == true)
-		return true;
+    //Check for spells that should cause an aggro drop
+    if (CheckForAggroDropMechanics(target) == true)
+        return true;
 
     // Vengeful Spirit can't be attacked
     if (target->GetTypeId() == TYPEID_UNIT && target->GetEntry() == 23109)
