@@ -108,7 +108,7 @@ struct boss_morogrim_tidewalkerAI : public ScriptedAI
         Phase2 = false;
         m_creature->CastSpell(m_creature, SPELL_THRASH_PASSIVE, true);
 
-        pInstance->SetData(DATA_MOROGRIMTIDEWALKEREVENT, NOT_STARTED);
+        pInstance->SetData(DATA_MOROGRIM_EVENT, NOT_STARTED);
     }
 
     void KilledUnit(Unit *victim)
@@ -119,13 +119,13 @@ struct boss_morogrim_tidewalkerAI : public ScriptedAI
     void JustDied(Unit *victim)
     {
         DoScriptText(SAY_DEATH, m_creature);
-        pInstance->SetData(DATA_MOROGRIMTIDEWALKEREVENT, DONE);
+        pInstance->SetData(DATA_MOROGRIM_EVENT, DONE);
     }
 
     void EnterCombat(Unit *who)
     {
         DoScriptText(SAY_AGGRO, m_creature);
-        pInstance->SetData(DATA_MOROGRIMTIDEWALKEREVENT, IN_PROGRESS);
+        pInstance->SetData(DATA_MOROGRIM_EVENT, IN_PROGRESS);
     }
 
     void UpdateAI(const uint32 diff)
