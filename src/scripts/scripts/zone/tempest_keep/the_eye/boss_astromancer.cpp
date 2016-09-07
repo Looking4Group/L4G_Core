@@ -24,6 +24,8 @@ EndScriptData */
 #include "precompiled.h"
 #include "def_the_eye.h"
 
+#define AGGRO_RANGE                             42.0
+
 #define SAY_AGGRO                           -1550007
 #define SAY_SUMMON1                         -1550008
 #define SAY_SUMMON2                         -1550009
@@ -72,6 +74,7 @@ struct boss_high_astromancer_solarianAI : public ScriptedAI
 {
     boss_high_astromancer_solarianAI(Creature *c) : ScriptedAI(c), Summons(m_creature)
     {
+        m_creature->SetAggroRange(AGGRO_RANGE);
         pInstance = (c->GetInstanceData());
 
         defaultarmor = m_creature->GetArmor();
