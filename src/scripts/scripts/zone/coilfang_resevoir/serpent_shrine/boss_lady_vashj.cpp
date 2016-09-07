@@ -26,6 +26,8 @@ EndScriptData */
 #include "../../../creature/simple_ai.h"
 #include "Spell.h"
 
+#define AGGRO_RANGE			35.0
+
 #define SAY_INTRO                   -1548042
 #define SAY_AGGRO1                  -1548043
 #define SAY_AGGRO2                  -1548044
@@ -142,6 +144,7 @@ struct boss_lady_vashjAI : public ScriptedAI
 {
     boss_lady_vashjAI (Creature *c) : ScriptedAI(c)
     {
+    	me->SetAggroRange(AGGRO_RANGE);
         instance = c->GetInstanceData();
     }
 
