@@ -29,40 +29,42 @@ EndScriptData */
 //This spell effect will only reduce healing
 enum PrinceMalchezaar
 {
-    SAY_AGGRO             = -1532091,
-    SAY_AXE_TOSS1         = -1532092,
-    SAY_AXE_TOSS2         = -1532093,
-    SAY_SPECIAL1          = -1532094,
-    SAY_SPECIAL2          = -1532095,
-    SAY_SPECIAL3          = -1532096,
-    SAY_SLAY1             = -1532097,
-    SAY_SLAY2             = -1532098,
-    SAY_SLAY3             = -1532099,
-    SAY_SUMMON1           = -1532100,
-    SAY_SUMMON2           = -1532101,
-    SAY_DEATH             = -1532102,   
+    AGGRO_RANGE             =     28.0, 
+    
+    SAY_AGGRO               = -1532091,
+    SAY_AXE_TOSS1           = -1532092,
+    SAY_AXE_TOSS2           = -1532093,
+    SAY_SPECIAL1            = -1532094,
+    SAY_SPECIAL2            = -1532095,
+    SAY_SPECIAL3            = -1532096,
+    SAY_SLAY1               = -1532097,
+    SAY_SLAY2               = -1532098,
+    SAY_SLAY3               = -1532099,
+    SAY_SUMMON1             = -1532100,
+    SAY_SUMMON2             = -1532101,
+    SAY_DEATH               = -1532102,   
 
-    SPELL_ENFEEBLE           = 30843,       //Enfeeble during phase 1 and 2
-    SPELL_ENFEEBLE_EFFECT    = 41624,
+    SPELL_ENFEEBLE          =    30843,       //Enfeeble during phase 1 and 2
+    SPELL_ENFEEBLE_EFFECT   =    41624,
 
-    SPELL_SHADOWNOVA         = 30852,       //Shadownova used during all phases
-    SPELL_SW_PAIN_PHASE1     = 30854,       //Shadow word pain during phase 1
-    SPELL_SW_PAIN_PHASE3     = 30898,       //Shadow word pain during phase 3
-    SPELL_THRASH_PASSIVE     = 12787,       //Extra attack chance during phase 2
-    SPELL_SUNDER_ARMOR       = 30901,       //Sunder armor during phase 2
-    SPELL_EQUIP_AXES         = 30857,       //Visual for axe equiping
-    SPELL_AMPLIFY_DAMAGE     = 39095,       //Amplifiy during phase 3
-    SPELL_HELLFIRE           = 30859,       //Infenals' hellfire aura
-    SPELL_CLEAVE             = 30131,       //Same as Nightbane.
+    SPELL_SHADOWNOVA        =    30852,       //Shadownova used during all phases
+    SPELL_SW_PAIN_PHASE1    =    30854,       //Shadow word pain during phase 1
+    SPELL_SW_PAIN_PHASE3    =    30898,       //Shadow word pain during phase 3
+    SPELL_THRASH_PASSIVE    =    12787,       //Extra attack chance during phase 2
+    SPELL_SUNDER_ARMOR      =    30901,       //Sunder armor during phase 2
+    SPELL_EQUIP_AXES        =    30857,       //Visual for axe equiping
+    SPELL_AMPLIFY_DAMAGE    =    39095,       //Amplifiy during phase 3
+    SPELL_HELLFIRE          =    30859,       //Infenals' hellfire aura
+    SPELL_CLEAVE            =    30131,       //Same as Nightbane.
 
-    NETHERSPITE_INFERNAL     = 17646,       //The netherspite infernal creature
-    MALCHEZARS_AXE           = 17650,       //Malchezar's axes (creatures), summoned during phase 3
+    NETHERSPITE_INFERNAL    =    17646,       //The netherspite infernal creature
+    MALCHEZARS_AXE          =    17650,       //Malchezar's axes (creatures), summoned during phase 3
 
-    INFERNAL_MODEL_INVISIBLE = 11686,       //Infernal Effects
-    SPELL_INFERNAL_RELAY     = 30834,
+    INFERNAL_MODEL_INVISIBLE=    11686,       //Infernal Effects
+    SPELL_INFERNAL_RELAY    =    30834,
 
-    AXE_EQUIP_MODEL          = 40066,       //Axes info
-    AXE_EQUIP_INFO           = 33490690
+    AXE_EQUIP_MODEL         =    40066,       //Axes info
+    AXE_EQUIP_INFO          = 33490690
 }
 
 // 19 Coordinates for Infernal spawns
@@ -104,6 +106,7 @@ struct netherspite_infernalAI : public Scripted_NoMovementAI
     netherspite_infernalAI(Creature *c) : Scripted_NoMovementAI(c) ,
         malchezaarGUID(0), HellfireTimer(0), CleanupTimer(0), point(NULL)
     {
+        me->SetAggroRange(AGGRO_RANGE);
         me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_CASTING_SPEED, true);
         me->ApplySpellImmune(1, IMMUNITY_STATE, SPELL_AURA_HASTE_SPELLS, true);
         me->ApplySpellImmune(2, IMMUNITY_STATE, SPELL_AURA_MOD_STUN, true);
