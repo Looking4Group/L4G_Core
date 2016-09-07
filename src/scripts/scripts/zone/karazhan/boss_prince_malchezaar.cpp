@@ -448,7 +448,7 @@ struct boss_malchezaarAI : public ScriptedAI
         if (!UpdateVictim() )
             return;
 
-        if (CheckTimer < diff)
+        if (CheckTimer <= diff)
         {
             if (!m_creature->IsWithinDistInMap(&wLoc, 95.0f))
                 DoResetThreat();
@@ -553,14 +553,14 @@ struct boss_malchezaarAI : public ScriptedAI
                 return;
             }
 
-            if (SunderArmorTimer < diff)
+            if (SunderArmorTimer <= diff)
             {
                 DoCast(m_creature->getVictim(), SPELL_SUNDER_ARMOR);
                 SunderArmorTimer = urand(10000, 18000);
 
             }else SunderArmorTimer -= diff;
-            
-            if (CleaveTimer < diff)
+
+            if (CleaveTimer <= diff)
             {
                 DoCast(m_creature->getVictim(), SPELL_CLEAVE);
                 CleaveTimer = urand(6000, 12000);
@@ -569,7 +569,7 @@ struct boss_malchezaarAI : public ScriptedAI
         }
         else
         {
-            if (AxesTargetSwitchTimer < diff)
+            if (AxesTargetSwitchTimer <= diff)
             {
                 AxesTargetSwitchTimer = urand(7500, 20000);
 
@@ -598,7 +598,7 @@ struct boss_malchezaarAI : public ScriptedAI
             else
                 AxesTargetSwitchTimer -= diff;
 
-            if (AmplifyDamageTimer < diff)
+            if (AmplifyDamageTimer <= diff)
             {
                 if (Unit *target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_AMPLIFY_DAMAGE), true))
                     DoCast(target, SPELL_AMPLIFY_DAMAGE);
@@ -610,7 +610,7 @@ struct boss_malchezaarAI : public ScriptedAI
         }
 
         //Time for global and double timers
-        if (InfernalTimer < diff)
+        if (InfernalTimer <= diff)
         {
             SummonInfernal(diff);
             InfernalTimer =  phase == 3 ? 15000 : 45000;    //15 secs in phase 3, 45 otherwise
@@ -618,7 +618,7 @@ struct boss_malchezaarAI : public ScriptedAI
         else
             InfernalTimer -= diff;
 
-        if (ShadowNovaTimer < diff)
+        if (ShadowNovaTimer <= diff)
         {
             DoCast(m_creature, SPELL_SHADOWNOVA);
             ShadowNovaTimer = phase == 3 ? 30000 : -1;
@@ -628,7 +628,7 @@ struct boss_malchezaarAI : public ScriptedAI
 
         if (phase != 2)
         {
-            if (SWPainTimer < diff)
+            if (SWPainTimer <= diff)
             {
                 Unit* target = NULL;
                 if (phase == 1)
@@ -650,7 +650,7 @@ struct boss_malchezaarAI : public ScriptedAI
 
         if (phase != 3)
         {
-            if (EnfeebleTimer < diff)
+            if (EnfeebleTimer <= diff)
             {
                 EnfeebleHealthEffect();
                 EnfeebleTimer = 30000;
