@@ -770,7 +770,7 @@ struct mob_enchanted_elementalAI : public ScriptedAI
                     me->DealDamage(me, me->GetMaxHealth(), DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
                 }
             }
-            if(((boss_lady_vashjAI*)((Creature*)Vashj)->AI())->InCombat == false || ((boss_lady_vashjAI*)((Creature*)Vashj)->AI())->Phase != 2 || Vashj->isDead())
+            if(((boss_lady_vashjAI*)((Creature*)Vashj)->AI())->InCombat == false || Vashj->isDead())
             {
                 //call Unsummon()
                 me->DealDamage(me, me->GetMaxHealth(), DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
