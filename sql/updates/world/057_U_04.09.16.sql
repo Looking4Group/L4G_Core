@@ -1969,7 +1969,7 @@ UPDATE `creature_template` SET `speed`='2',`scale`='1',`mindmg`='9780',`maxdmg`=
 -- High Astromancer Solarian 18805
 -- www.wowhead.com/npc=18925/high-astromancer-solarian#comments http://wowwiki.wikia.com/wiki/High_Astromancer_Solarian?oldid=829691 http://wowwiki.wikia.com/wiki/High_Astromancer_Solarian?direction=next&oldid=697382
 -- As a DPS warrior, she can crush me for 8k, and one of our rogues reported 10k. (Arcane Dmg?)
-UPDATE `creature_template` SET `minmana`='420970',`maxmana`='420970',`speed`='2',`scale`='0.7',`mindmg`='5434',`maxdmg`='6449',`baseattacktime`='1400',`mechanic_immune_mask`='650854399' WHERE `entry` = 18805; -- 1.2 0.7 2444 4983 2000 -- 6792 8062 --13,584 - 16,123
+UPDATE `creature_template` SET `minmana`='420970',`maxmana`='420970',`speed`='2',`scale`='0.7',`mindmg`='5434',`maxdmg`='6449',`dmgschool`='0',`baseattacktime`='1400',`mechanic_immune_mask`='650854399' WHERE `entry` = 18805; -- 1.2 0.7 2444 4983 2000 -- 6792 8062 --13,584 - 16,123
 --
 -- Solarium Agent 18925
 UPDATE `creature_template` SET `speed`='1.48',`mindmg`='1500',`maxdmg`='2000',`baseattacktime`='1400',`equipment_id`='8002' WHERE `entry` = 18925; -- 1 845 1267 2000 -- 2,111 - 2,333
