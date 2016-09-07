@@ -2162,3 +2162,7 @@ UPDATE `creature_loot_template` SET `groupid`= 0, `maxcount` = 2 WHERE `entry` =
 -- Tokens
 UPDATE `creature_loot_template` SET `maxcount` = 1 WHERE `entry` = 19622 AND `item` = 50032; -- 3
 --
+
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance`=`ChanceOrQuestChance`*81 WHERE `item` = 30183;
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 100,`mincountOrRef`=2,`maxcount`=2 WHERE `entry` = 19622 AND `item` = 30183;
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 55,`mincountOrRef`=2,`maxcount`=2 WHERE `entry` = 21212 AND `item` = 30183;
