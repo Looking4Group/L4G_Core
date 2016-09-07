@@ -2166,3 +2166,7 @@ UPDATE `creature_loot_template` SET `maxcount` = 1 WHERE `entry` = 19622 AND `it
 UPDATE `creature_loot_template` SET `ChanceOrQuestChance`=`ChanceOrQuestChance`*81 WHERE `item` = 30183;
 UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 100,`mincountOrRef`=2,`maxcount`=2 WHERE `entry` = 19622 AND `item` = 30183;
 UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 55,`mincountOrRef`=2,`maxcount`=2 WHERE `entry` = 21212 AND `item` = 30183;
+
+-- Astromancer Solarian Spotlight 18928
+UPDATE `creature` SET `position_x`='432.5939', `position_y`='-373.6006', `position_z`='17.9604', `orientation`='1.0367' WHERE `guid` = 12457; 
+UPDATE `creature_template` SET `flags_extra`='128' WHERE `entry` = 18928;
