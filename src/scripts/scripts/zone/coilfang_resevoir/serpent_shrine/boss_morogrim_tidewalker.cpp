@@ -24,6 +24,8 @@ EndScriptData */
 #include "precompiled.h"
 #include "def_serpent_shrine.h"
 
+#define AGGRO_RANGE                     45.0
+
 #define SAY_AGGRO                   -1548030
 #define SAY_SUMMON1                 -1548031
 #define SAY_SUMMON2                 -1548032
@@ -81,6 +83,7 @@ struct boss_morogrim_tidewalkerAI : public ScriptedAI
 {
     boss_morogrim_tidewalkerAI(Creature *c) : ScriptedAI(c)
     {
+        m_creature->SetAggroRange(AGGRO_RANGE);
         pInstance = (c->GetInstanceData());
         m_creature->GetPosition(wLoc);
     }
