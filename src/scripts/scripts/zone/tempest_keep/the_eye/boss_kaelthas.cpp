@@ -25,6 +25,8 @@ EndScriptData */
 #include "def_the_eye.h"
 #include "WorldPacket.h"
 
+#define AGGRO_RANGE                           40.0
+
 //kael'thas Speech
 #define SAY_INTRO                         -1550016
 #define SAY_INTRO_CAPERNIAN               -1550017
@@ -318,6 +320,7 @@ struct boss_kaelthasAI : public ScriptedAI
 {
     boss_kaelthasAI(Creature *c) : ScriptedAI(c), summons(m_creature)
     {
+        m_creature->SetAggroRange(AGGRO_RANGE);
         pInstance = (c->GetInstanceData());
 
         for(int i = 0; i < 4; i++)
