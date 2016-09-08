@@ -781,6 +781,7 @@ bool Creature::Create(uint32 guidlow, Map *map, uint32 Entry, uint32 team, float
         LoadCreaturesAddon();
         if (GetCreatureInfo()->flags_extra & CREATURE_FLAG_EXTRA_HASTE_IMMUNE)
             ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_HASTE_SPELLS, true);
+            ApplySpellImmune(0, IMMUNITY_ID, 20812, true);
     }
     return bResult;
 }
