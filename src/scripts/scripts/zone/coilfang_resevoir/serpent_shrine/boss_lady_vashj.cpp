@@ -26,6 +26,8 @@ EndScriptData */
 #include "../../../creature/simple_ai.h"
 #include "Spell.h"
 
+#define AGGRO_RANGE			35.0
+
 #define SAY_INTRO                   -1548042
 #define SAY_AGGRO1                  -1548043
 #define SAY_AGGRO2                  -1548044
@@ -142,6 +144,7 @@ struct boss_lady_vashjAI : public ScriptedAI
 {
     boss_lady_vashjAI (Creature *c) : ScriptedAI(c)
     {
+    	me->SetAggroRange(AGGRO_RANGE);
         instance = c->GetInstanceData();
     }
 
@@ -770,7 +773,7 @@ struct mob_enchanted_elementalAI : public ScriptedAI
                     me->DealDamage(me, me->GetMaxHealth(), DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
                 }
             }
-            if(((boss_lady_vashjAI*)((Creature*)Vashj)->AI())->InCombat == false || ((boss_lady_vashjAI*)((Creature*)Vashj)->AI())->Phase != 2 || Vashj->isDead())
+            if(((boss_lady_vashjAI*)((Creature*)Vashj)->AI())->InCombat == false || Vashj->isDead())
             {
                 //call Unsummon()
                 me->DealDamage(me, me->GetMaxHealth(), DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
