@@ -24,6 +24,8 @@ EndScriptData */
 #include "precompiled.h"
 #include "def_the_eye.h"
 
+#define AGGRO_RANGE                     50.0
+
 #define SAY_AGGRO                   -1550000
 #define SAY_SLAY1                   -1550001
 #define SAY_SLAY2                   -1550002
@@ -43,6 +45,7 @@ struct boss_void_reaverAI : public ScriptedAI
 {
     boss_void_reaverAI(Creature *c) : ScriptedAI(c)
     {
+        m_creature->SetAggroRange(AGGRO_RANGE);
         pInstance = (c->GetInstanceData());
         m_creature->GetPosition(wLoc);
     }
@@ -142,9 +145,14 @@ struct boss_void_reaverAI : public ScriptedAI
                 target = m_creature->getVictim();
 
             if (target)
-              if (Creature* t = DoSpawnCreature(TRIGGER, 0.0f, 0.0f, 10.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN, 40000))
-                 t->CastSpell(target, SPELL_ARCANE_ORB, false, 0, 0, m_creature->GetGUID());
-
+            {
+                if (Creature* t = DoSpawnCreature(TRIGGER, 0.0f, 0.0f, 10.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN, 40000))
+                {
+                    m_creature->SetInFront(target);
+                    t->CastSpell(target, SPELL_ARCANE_ORB, false, 0, 0, m_creature->GetGUID());
+                }
+            }    
+        
             ArcaneOrb_Timer = urand(3000, 4000);
         }
         else
