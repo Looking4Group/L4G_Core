@@ -17,6 +17,10 @@
 #define DATA_VOIDREAVEREVENT                11
 #define DATA_ALAR                           12
 #define DATA_EXPLODE                        13
+#define DATA_THALADRED_HEALTH               14
+#define DATA_SANGUINAR_HEALTH               15
+#define DATA_CAPERNIAN_HEALTH               16
+#define DATA_TELONICUS_HEALTH               17
 
 #endif
 
