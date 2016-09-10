@@ -2170,3 +2170,29 @@ UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 55,`mincountOrRef`=2
 -- Astromancer Solarian Spotlight 18928
 UPDATE `creature` SET `position_x`='432.5939', `position_y`='-373.6006', `position_z`='17.9604', `orientation`='1.0367' WHERE `guid` = 12457; 
 UPDATE `creature_template` SET `flags_extra`='128' WHERE `entry` = 18928;
+
+DELETE FROM `game_event_gameobject` WHERE `guid` IN (15773,210003,210004,210005,210006);
+INSERT INTO `game_event_gameobject` VALUES
+(15773,1),
+(210003,1),
+(210004,1),
+(210005,1),
+(210006,1);
+
+UPDATE `gameobject` SET `spawnmask`=0 WHERE `id` = 183435;
+
+UPDATE `quest_template` SET `RewRepValue1`='0' WHERE `entry` = 16;
+
+-- Bleeding Hollow Archer
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17270;
+INSERT INTO `creature_ai_scripts` VALUES
+('1727001','17270','4','0','10','6','0','0','0','0','1','-158','-160','-157','0','0','0','0','0','0','0','0','Bleeding Hollow Archer - Random Say on Aggro'), -- -156','-181','-672'=160
+('1727002','17270','0','0','100','7','1000','1000','2000','2000','21','1','0','0','40','1','0','0','0','0','0','0','Bleeding Hollow Archer - Start Movement and Set Melee Weapon Model'),
+('1727003','17270','9','0','100','7','5','30','2300','4000','11','18651','1','0','40','2','0','0','21','0','0','0','Bleeding Hollow Archer - Cast Multi Shot and Set Ranged Weapon Model and Stop Movement'),
+-- ('1727004','17270','9','0','100','3','5','30','2300','5000','11','18651','1','0','40','2','0','0','21','0','0','0','Bleeding Hollow Archer (Normal) - Cast Multi Shot and Set Ranged Weapon Model and Stop Movement'),
+-- ('1727005','17270','9','0','100','5','5','30','2300','5000','11','31942','1','0','40','2','0','0','21','0','0','0','Bleeding Hollow Archer (Heroic) - Cast Multi Shot and Set Ranged Weapon Model and Stop Movement'),
+('1727006','17270','0','0','100','7','12100','15300','13300','18200','11','30614','4','1','40','2','0','0','21','0','0','0','Bleeding Hollow Archer - Cast Aimed Shot and Set Ranged Weapon Model and Stop Movement'),
+-- ('1727007','17270','9','0','50','3','5','30','2000','5000','11','15620','1','0','40','2','0','0','21','0','0','0','Bleeding Hollow Archer (Normal) - Cast Shoot and Set Ranged Weapon Model and Stop Movement'),
+-- ('1727008','17270','9','0','50','5','5','30','2000','5000','11','22907','1','0','40','2','0','0','21','0','0','0','Bleeding Hollow Archer (Heroic) - Cast Shoot and Set Ranged Weapon Model and Stop Movement'),
+('1727009','17270','9','0','100','6','0','5','0','0','21','1','0','0','40','1','0','0','0','0','0','0','Bleeding Hollow Archer - Start Movement and Set Melee Weapon Model Below 6 Yards'),
+('1727010','17270','9','0','100','6','6','15','0','0','21','0','0','0','40','2','0','0','0','0','0','0','Bleeding Hollow Archer - Stop Movement and Set Ranged Weapon Model Above 5 Yards');
