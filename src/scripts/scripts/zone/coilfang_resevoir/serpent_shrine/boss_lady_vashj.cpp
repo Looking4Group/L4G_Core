@@ -541,11 +541,14 @@ struct boss_lady_vashjAI : public ScriptedAI
 			DoMeleeAttackIfReady();
 
 			//Once abovce 15y, stop moving and switch to range attack
-			float DistanceToVicim = me->GetDistance(me->getVictim()->GetPositionX(), me->getVictim()->GetPositionY(), me->getVictim()->GetPositionZ());			
-			if (DistanceToVicim > 15.0f)
-			{
-				me->GetMotionMaster()->MovementExpired();
-			}
+            Unit* victim = me->getVictim();
+            if (victim) {
+                float DistanceToVicim = me->GetDistance(victim->GetPositionX(), victim->GetPositionY(), victim->GetPositionZ());
+                if (DistanceToVicim > 15.0f)
+                {
+                    me->GetMotionMaster()->MovementExpired();
+                }
+            }			
 
 			bool InMeleeRange = false;		
 		
