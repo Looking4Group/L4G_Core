@@ -778,6 +778,10 @@ bool Creature::Create(uint32 guidlow, Map *map, uint32 Entry, uint32 team, float
 
         if (GetCreatureInfo()->flags_extra & CREATURE_FLAG_EXTRA_NORMAL_MOVEMENT_IMMUNE)
             ApplySpellImmune(1, IMMUNITY_STATE, SPELL_AURA_USE_NORMAL_MOVEMENT_SPEED, true);
+
+        //Ugly Hackfix to prevent cripple (spell of wl pet) on bosses
+        if (isWorldBoss())
+            ApplySpellImmune(0, IMMUNITY_ID, 20812, true);
     }
     return bResult;
 }
