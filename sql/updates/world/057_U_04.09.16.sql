@@ -2200,7 +2200,7 @@ INSERT INTO `creature_ai_scripts` VALUES
 -- Start Pool Spawning for Arcane Vortex/Felmist/Swamp Gas/Windy Cloud
 UPDATE `pool_template` SET `max_limit`='10' WHERE `entry` IN (30043,30044,30045,30046);
 
-UPDATE `creature` SET `spawntimesecs`='300' WHERE `id` = 17407; -- 3600 
+UPDATE `creature` SET `spawntimesecs`='900' WHERE `id` = 17407; -- 3600 
 DELETE FROM `pool_creature` WHERE `pool_entry` = 30046;
 INSERT INTO `pool_creature` VALUES 
 (26582,30046,0,'Felmist - Shadowmoonvalley'),
@@ -2252,7 +2252,7 @@ INSERT INTO `pool_creature` VALUES
 
 -- Shadowmoon Valley Tuber Node
 UPDATE `creature` SET `MovementType`='0',`spawndist`='0' WHERE `id` = 21347;
-UPDATE `creature_template` SET `unit_flags`=`unit_flags`|'' WHERE `entry` = 21347;
+-- UPDATE `creature_template` SET `unit_flags`=`unit_flags`|'' WHERE `entry` = 21347;
 
 -- Anveena
 UPDATE `creature_template` SET `MovementType`='5' WHERE `entry` = 26046;
