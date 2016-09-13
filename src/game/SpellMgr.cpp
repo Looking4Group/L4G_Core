@@ -3210,8 +3210,7 @@ void SpellMgr::LoadSpellCustomAttr()
             case 24340: case 26558: case 28884:     // Meteor
             case 36837: case 38903: case 41276:     // Meteor
             case 26789:                             // Shard of the Fallen Star
-            case 31436:                             // Malevolent Cleave
-            case 35181:                             // Dive Bomb
+            case 31436:                             // Malevolent Cleave            
             case 40810: case 43267: case 43268:     // Saber Lash
             case 42384:                             // Brutal Swipe
             case 45150:                             // Meteor Slash
@@ -3709,6 +3708,14 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->AttributesEx4 |= SPELL_ATTR_EX4_IGNORE_RESISTANCES;
             case 38258: //Strider fear should not be breakable by anti fear spells
                 spellInfo->Mechanic = MECHANIC_HORROR;
+                break;
+            case 35181: //Al'ar prenerf divebomb
+                spellInfo->AttributesCu |= SPELL_ATTR_CU_SHARE_DAMAGE;
+                spellInfo->EffectBasePoints[0] = 28499; // Up to 30000 Damage
+                spellInfo->EffectDieSides[0] = 1501;
+                spellInfo->Targets = 64;
+                spellInfo->EffectImplicitTargetA[0] = 16;
+                break;
 
             default:
                 break;
