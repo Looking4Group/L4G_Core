@@ -33,7 +33,6 @@ EndScriptData */
 #define SPELL_DIVE_BOMB_VISUAL        35367 // Bosskillers says 30 sec cooldown, wowwiki says 30 sec colldown, DBM and BigWigs addons says ~47 sec
 #define SPELL_DIVE_BOMB               35181 // after watching tonns of movies, set cooldown to 40+rand()%5.
 #define SPELL_BERSERK                 45078 // 10 minutes after phase 2 starts(id is wrong, but proper id is unknown)
-#define SPELL_METEOR                  26558 // Spell used as basis for the custom divebomb solution
 
 #define CREATURE_EMBER_OF_ALAR        19551 // Al'ar summons one Ember of Al'ar every position change in phase 1 and two after Dive Bomb. Also in phase 2 when Ember of Al'ar dies, boss loose 3% health.
 #define SPELL_EMBER_BLAST             34133 // When Ember of Al'ar dies, it casts Ember Blast
@@ -355,7 +354,7 @@ struct boss_alarAI : public ScriptedAI
                             WaitTimer = 4000;
                             return;
                         case WE_DIVE:
-                            if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0,GetSpellMaxRange(SPELL_METEOR),true))
+                            if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0,GetSpellMaxRange(SPELL_DIVE_BOMB),true))
                             {                                
                                 m_creature->RemoveAurasDueToSpell(SPELL_DIVE_BOMB_VISUAL);
                                 m_creature->CastSpell(target, SPELL_DIVE_BOMB, true);
