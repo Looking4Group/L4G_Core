@@ -33,6 +33,7 @@ EndScriptData */
 #define SPELL_DIVE_BOMB_VISUAL        35367 // Bosskillers says 30 sec cooldown, wowwiki says 30 sec colldown, DBM and BigWigs addons says ~47 sec
 #define SPELL_DIVE_BOMB               35181 // after watching tonns of movies, set cooldown to 40+rand()%5.
 #define SPELL_BERSERK                 45078 // 10 minutes after phase 2 starts(id is wrong, but proper id is unknown)
+#define SPELL_METEOR                  26558 // Spell used as basis for the custom divebomb solution
 
 #define CREATURE_EMBER_OF_ALAR        19551 // Al'ar summons one Ember of Al'ar every position change in phase 1 and two after Dive Bomb. Also in phase 2 when Ember of Al'ar dies, boss loose 3% health.
 #define SPELL_EMBER_BLAST             34133 // When Ember of Al'ar dies, it casts Ember Blast
@@ -354,13 +355,16 @@ struct boss_alarAI : public ScriptedAI
                             WaitTimer = 4000;
                             return;
                         case WE_DIVE:
-                            if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0,GetSpellMaxRange(SPELL_DIVE_BOMB),true))
-                            {
+                            if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0,GetSpellMaxRange(SPELL_METEOR),true))
+                            {                                
                                 m_creature->RemoveAurasDueToSpell(SPELL_DIVE_BOMB_VISUAL);
                                 m_creature->CastSpell(target, SPELL_DIVE_BOMB, true);
+
                                 float dist = 3.0f;
-                                if(m_creature->IsWithinDistInMap(target, 5.0f))
+                                if (m_creature->IsWithinDistInMap(target, 5.0f)) 
+                                {
                                     dist = 5.0f;
+                                }
                                 WaitTimer = 1000 + floor(dist / 80 * 1000.0f);
                                 m_creature->StopMoving();
                                 DoTeleportTo(target->GetPositionX(), target->GetPositionY(), target->GetPositionZ() + 0.2f,0.0f);
@@ -432,7 +436,7 @@ struct boss_alarAI : public ScriptedAI
                         
                         prev_wp = cur_wp;
                         do {                            
-                            cur_wp = urand(0, 6);
+                            cur_wp = urand(0, 5);
                             
                         } while (cur_wp == prev_wp);
 
@@ -480,7 +484,7 @@ struct boss_alarAI : public ScriptedAI
             {
                 m_creature->SetReactState(REACT_PASSIVE);
                 m_creature->AttackStop();
-                m_creature->GetMotionMaster()->MovePoint(6, waypoint[4][0], waypoint[4][1], waypoint[4][2]);
+                m_creature->GetMotionMaster()->MovePoint(6, waypoint[6][0], waypoint[6][1], waypoint[6][2]);
                 m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                 m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                 m_creature->SetFloatValue(UNIT_FIELD_BOUNDINGRADIUS, 50);
