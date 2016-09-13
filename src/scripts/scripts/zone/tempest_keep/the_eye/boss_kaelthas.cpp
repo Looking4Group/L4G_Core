@@ -271,16 +271,16 @@ struct advisorbase_ai : public ScriptedAI
     void UpdateMaxHealth(bool twice)
     {
         if(m_creature->GetGUID() == pInstance->GetData64(DATA_LORDSANGUINAR))
-            m_creature->SetMaxHealth(twice ? pInstance->GetData(DATA_SANGUINAR_HEALTH)*2 : pInstance->GetData(DATA_SANGUINAR_HEALTH));
+            m_creature->SetMaxHealth(twice ? m_creature->GetCreatureInfo()->maxhealth * 2 : m_creature->GetCreatureInfo()->maxhealth);
 
         if(m_creature->GetGUID() == pInstance->GetData64(DATA_GRANDASTROMANCERCAPERNIAN))
-            m_creature->SetMaxHealth(twice ? pInstance->GetData(DATA_CAPERNIAN_HEALTH)*2 : pInstance->GetData(DATA_CAPERNIAN_HEALTH));
+            m_creature->SetMaxHealth(twice ? m_creature->GetCreatureInfo()->maxhealth * 2 : m_creature->GetCreatureInfo()->maxhealth);
 
         if(m_creature->GetGUID() == pInstance->GetData64(DATA_MASTERENGINEERTELONICUS))
-            m_creature->SetMaxHealth(twice ? pInstance->GetData(DATA_TELONICUS_HEALTH)*2 : pInstance->GetData(DATA_TELONICUS_HEALTH));
+            m_creature->SetMaxHealth(twice ? m_creature->GetCreatureInfo()->maxhealth * 2 : m_creature->GetCreatureInfo()->maxhealth);
 
         if (m_creature->GetGUID() == pInstance->GetData64(DATA_THALADREDTHEDARKENER))
-            m_creature->SetMaxHealth(twice ? pInstance->GetData(DATA_THALADRED_HEALTH)*2 : pInstance->GetData(DATA_THALADRED_HEALTH));
+            m_creature->SetMaxHealth(twice ? m_creature->GetCreatureInfo()->maxhealth * 2 : m_creature->GetCreatureInfo()->maxhealth);
     }
 
     void DamageTaken(Unit* pKiller, uint32 &damage)

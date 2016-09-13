@@ -61,10 +61,6 @@ struct instance_the_eye : public ScriptedInstance
         LordSanguinar = 0;
         GrandAstromancerCapernian = 0;
         MasterEngineerTelonicus = 0;
-        ThaladredBaseHealth = 0;
-        SanguinarBaseHealth = 0;
-        CapernianBaseHealth = 0;
-        TelonicusBaseHealth = 0;
         Kaelthas = 0;
         DoorGUID.clear();
         ExplodeObjectGUID.clear();
@@ -109,19 +105,15 @@ struct instance_the_eye : public ScriptedInstance
         {
             case 20064:
                 ThaladredTheDarkener = creature->GetGUID();
-                ThaladredBaseHealth = creature->GetMaxHealth();
                 break;
             case 20063:
                 MasterEngineerTelonicus = creature->GetGUID();
-                TelonicusBaseHealth = creature->GetMaxHealth();
                 break;
             case 20062:
                 GrandAstromancerCapernian = creature->GetGUID();
-                CapernianBaseHealth = creature->GetMaxHealth();
                 break;
             case 20060:
                 LordSanguinar = creature->GetGUID();
-                SanguinarBaseHealth = creature->GetMaxHealth();
                 break;
             case 19622:
                 Kaelthas = creature->GetGUID();
@@ -255,11 +247,6 @@ struct instance_the_eye : public ScriptedInstance
             case DATA_HIGHASTROMANCERSOLARIANEVENT: return Encounters[1];
             case DATA_VOIDREAVEREVENT:              return Encounters[2];
             case DATA_KAELTHASEVENT:                return Encounters[3];
-            case DATA_THALADRED_HEALTH:             return ThaladredBaseHealth;
-            case DATA_SANGUINAR_HEALTH:             return SanguinarBaseHealth;
-            case DATA_CAPERNIAN_HEALTH:             return CapernianBaseHealth;
-            case DATA_TELONICUS_HEALTH:             return TelonicusBaseHealth;
-
         }
         return 0;
     }
