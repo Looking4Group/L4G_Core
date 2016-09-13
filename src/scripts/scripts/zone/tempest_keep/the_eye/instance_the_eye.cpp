@@ -41,10 +41,6 @@ struct instance_the_eye : public ScriptedInstance
     uint64 LordSanguinar;
     uint64 GrandAstromancerCapernian;
     uint64 MasterEngineerTelonicus;
-    uint32 ThaladredBaseHealth;
-    uint32 SanguinarBaseHealth;
-    uint32 CapernianBaseHealth;
-    uint32 TelonicusBaseHealth;
     uint64 Kaelthas;
     std::set<uint64> DoorGUID;
     std::set<uint64> ExplodeObjectGUID;
