@@ -364,9 +364,9 @@ bool Pet::LoadPetFromDB(Unit* owner, uint32 petentry, uint32 petnumber, bool cur
         }
     }
 
-   //set last used pet number (for use in BG's)
-   if (owner->GetTypeId() == TYPEID_PLAYER && (owner->getClass() == CLASS_HUNTER || owner->getClass() == CLASS_WARLOCK) && isControlled() && !isTemporarySummoned() && (getPetType() == SUMMON_PET || getPetType() == HUNTER_PET))
-       ((Player*)owner)->SetLastPetNumber(pet_number);
+    //set last used pet number (for use in BG's)
+    if (owner->GetTypeId() == TYPEID_PLAYER && isControlled() && !isTemporarySummoned() && (getPetType() == SUMMON_PET || getPetType() == HUNTER_PET))
+        owner->ToPlayer()->SetLastPetNumber(pet_number);
 
     m_loading = false;
     return true;
