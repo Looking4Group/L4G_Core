@@ -933,6 +933,9 @@ void Spell::EffectDummy(uint32 i)
                 // Tag Subbued Talbuk (for Quest Creatures of the Eco-Domes - 10427)
                 case 35771:
                 {
+                    if (unitTarget->GetTypeId() == TYPEID_PLAYER)
+                        return;
+
                     if (((Player*)m_caster)->GetQuestStatus(10427) == QUEST_STATUS_INCOMPLETE)
                     {
                         // Get Sleep Visual (34664)
