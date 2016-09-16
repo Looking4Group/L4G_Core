@@ -193,25 +193,18 @@ float KaelthasWeapons[7][5] =
 #define SPELL_STAFF_FNOVA       36989 // frost nova
 #define SPELL_STAFF_WBOLT       36990 // frostbolt
 
-// Advisors hp
-#define HP_THALADRED    279999
-#define HP_SANGUINAR    289999
-#define HP_CAPERNIAN    199999
-#define HP_TELONICUS    274999
-
 //Base AI for Advisors
 struct advisorbase_ai : public ScriptedAI
-{
+{    
+    ScriptedInstance* pInstance;
+    bool SetHP;
+    bool CanDie;
+    WorldLocation dLoc;
+
     advisorbase_ai(Creature *c) : ScriptedAI(c)
     {
         pInstance = (c->GetInstanceData());
     }
-
-    ScriptedInstance* pInstance;
-    bool SetHP;
-    bool CanDie;
-
-    WorldLocation dLoc;
 
     void Reset()
     {
@@ -277,17 +270,7 @@ struct advisorbase_ai : public ScriptedAI
 
     void UpdateMaxHealth(bool twice)
     {
-        if(m_creature->GetGUID() == pInstance->GetData64(DATA_LORDSANGUINAR))
-            m_creature->SetMaxHealth(twice ? HP_SANGUINAR*2 : HP_SANGUINAR);
-
-        if(m_creature->GetGUID() == pInstance->GetData64(DATA_GRANDASTROMANCERCAPERNIAN))
-            m_creature->SetMaxHealth(twice ? HP_CAPERNIAN*2 : HP_CAPERNIAN);
-
-        if(m_creature->GetGUID() == pInstance->GetData64(DATA_MASTERENGINEERTELONICUS))
-            m_creature->SetMaxHealth(twice ? HP_TELONICUS*2 : HP_TELONICUS);
-
-        if (m_creature->GetGUID() == pInstance->GetData64(DATA_THALADREDTHEDARKENER))
-            m_creature->SetMaxHealth(twice ? HP_THALADRED*2 : HP_THALADRED);
+        m_creature->SetMaxHealth(twice ? m_creature->GetCreatureInfo()->maxhealth * 2 : m_creature->GetCreatureInfo()->maxhealth);
     }
 
     void DamageTaken(Unit* pKiller, uint32 &damage)
