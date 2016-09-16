@@ -137,6 +137,7 @@ struct boss_high_astromancer_solarianAI : public ScriptedAI
         m_creature->SetVisibility(VISIBILITY_ON);
         m_creature->SetFloatValue(OBJECT_FIELD_SCALE_X, defaultsize);
         m_creature->SetUInt32Value(UNIT_FIELD_DISPLAYID, MODEL_HUMAN);
+        m_creature->SetMeleeDamageSchool(SPELL_SCHOOL_NORMAL);
 
         Summons.DespawnAll();
     }
@@ -238,7 +239,7 @@ struct boss_high_astromancer_solarianAI : public ScriptedAI
             if(BlindingLight_Timer < diff)
             {
                 BlindingLight = true;
-                BlindingLight_Timer = 45000;
+                BlindingLight_Timer = urand(20000, 40000);
             }
             else
                 BlindingLight_Timer -= diff;
@@ -403,6 +404,8 @@ struct boss_high_astromancer_solarianAI : public ScriptedAI
         }
         else if(Phase == 4)
         {
+            m_creature->SetMeleeDamageSchool(SPELL_SCHOOL_ARCANE);
+            
             //Fear_Timer
             if (Fear_Timer < diff)
             {
