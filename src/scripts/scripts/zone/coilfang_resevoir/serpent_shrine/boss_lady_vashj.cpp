@@ -858,7 +858,6 @@ struct mob_toxic_sporebatAI : public ScriptedAI
         if(TempSpell)
         {
             TempSpell->EffectBasePoints[0] = 1500;
-            TempSpell->DurationIndex = 3; //60sec instead of 30sec
         }
     }
 
