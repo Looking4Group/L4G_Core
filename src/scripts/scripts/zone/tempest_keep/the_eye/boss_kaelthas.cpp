@@ -162,8 +162,8 @@ float KaelthasWeapons[7][5] =
 #define GRAVITY_Z 49.0f
 
 // Phase 2 - In-Depth Look Kael'thas will summon 7 weapons during this phase and give you 95 seconds to kill as many as you can.
-#define TIME_PHASE_2_3            95000 // Phase 2 ends approximately 1 minutes and 35 seconds after it begins 
-#define TIME_PHASE_3_4            180000 // Phase 3 ends approximately 3 minutes after it begins
+#define TIME_PHASE_2_3            91500 // Phase 2 ends approximately 1 minutes and 35 seconds after it begins 
+#define TIME_PHASE_3_4            173000 // Phase 3 ends approximately 3 minutes after it begins
 
 #define KAEL_VISIBLE_RANGE  50.0f
 
@@ -307,6 +307,7 @@ struct advisorbase_ai : public ScriptedAI
                 m_creature->GetMotionMaster()->MovementExpired(false);
                 m_creature->GetMotionMaster()->MoveIdle();
                 m_creature->SetUInt32Value(UNIT_FIELD_BYTES_1,PLAYER_STATE_DEAD);
+                m_creature->getThreatManager().clearReferences();
 
                 UpdateMaxHealth(true);
                 m_creature->GetPosition(dLoc);
@@ -929,12 +930,19 @@ struct boss_kaelthasAI : public ScriptedAI
                 }
 
                 if (PhaseSubphase == 2)
-                    if (Phase_Timer < diff)
                 {
-                    DoScriptText(SAY_PHASE3_ADVANCE, m_creature);
-                    Phase = 3;
-                    PhaseSubphase = 0;
-                }else Phase_Timer -= diff;
+                    if (Phase_Timer < diff)
+                    {
+                        DoScriptText(SAY_PHASE3_ADVANCE, m_creature);
+                        Phase = 3;
+                        PhaseSubphase = 0;
+                        Phase_Timer = 7000; // wait 7 seconds after yelling for phase 3 to start
+                    }
+                    else
+                    {
+                        Phase_Timer -= diff;
+                    }
+                }
                  //missing Resetcheck
             }
             break;
@@ -943,18 +951,26 @@ struct boss_kaelthasAI : public ScriptedAI
             {
                 if (PhaseSubphase == 0)
                 {
-                    Creature* Advisor;
-                    for (uint32 i = 0; i < 4; ++i)
+                    if (Phase_Timer < diff)
                     {
-                        Advisor = Unit::GetCreature((*m_creature), AdvisorGuid[i]);
-                        if (!Advisor)
-                            error_log("TSCR: Kael'Thas Advisor %u does not exist. Possibly despawned? Incorrectly Killed?", i);
-                        else
-                            ((advisorbase_ai*)Advisor->AI())->Revive();
-                    }
+                        Creature* Advisor;
+                        for (uint32 i = 0; i < 4; ++i)
+                        {
+                            Advisor = Unit::GetCreature((*m_creature), AdvisorGuid[i]);
+                            if (!Advisor)
+                                error_log("TSCR: Kael'Thas Advisor %u does not exist. Possibly despawned? Incorrectly Killed?", i);
+                            else
+                                ((advisorbase_ai*)Advisor->AI())->Revive();
+                        }
 
-                    PhaseSubphase = 1;
-                    Phase_Timer = TIME_PHASE_3_4;
+                        PhaseSubphase = 1;
+                        Phase_Timer = TIME_PHASE_3_4;
+                    }
+                    else
+                    {
+                        Phase_Timer -= diff;
+                    }
+                    break;
                 }
 
                 if(Phase_Timer < diff)
@@ -1398,7 +1414,7 @@ struct boss_thaladred_the_darkenerAI : public advisorbase_ai
                     AttackStart(target);
                     DoScriptText(EMOTE_THALADRED_GAZE, m_creature, target);
                 }
-                Gaze_Timer = 8500;
+                Gaze_Timer = urand(9000, 15000);
             }
         }
         else
@@ -1489,7 +1505,7 @@ struct boss_lord_sanguinarAI : public advisorbase_ai
         if(Fear_Timer < diff)
         {
             DoCast(m_creature, SPELL_BELLOWING_ROAR);
-            Fear_Timer = 25000+rand()%10000;                //approximately every 30 seconds
+            Fear_Timer = urand(25000, 35000);                //approximately every 30 seconds
         }
         else
             Fear_Timer -= diff;
@@ -1515,7 +1531,7 @@ struct boss_grand_astromancer_capernianAI : public advisorbase_ai
         ClearCastQueue();
 
         Fireball_Timer = 2000;
-        Conflagration_Timer = 20000;
+        Conflagration_Timer = urand(11000, 15000);
         ArcaneExplosion_Timer = 5000;
         Yell_Timer = 2000;
         Yell = false;
@@ -1592,7 +1608,7 @@ struct boss_grand_astromancer_capernianAI : public advisorbase_ai
             else
                 DoCast(m_creature->getVictim(), SPELL_CONFLAGRATION, true);
 
-            Conflagration_Timer = urand(10000, 15000);
+            Conflagration_Timer = urand(14000, 16000);
         }
         else
             Conflagration_Timer -= diff;
@@ -1639,6 +1655,7 @@ struct boss_master_engineer_telonicusAI : public advisorbase_ai
     uint32 Bomb_Timer;
     uint32 RemoteToy_Timer;
     uint32 Check_Timer;
+    uint32 Bomb_Only_Timer;
 
     void Reset()
     {
@@ -1659,13 +1676,7 @@ struct boss_master_engineer_telonicusAI : public advisorbase_ai
         if (!who || m_creature->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE))
             return;
 
-        if(who->getClass() == CLASS_HUNTER)
-        {
-            ScriptedAI::AttackStart(who);
-            DoStartMovement(who, 28.0f, 2*M_PI);
-        }
-        else
-            ScriptedAI::AttackStart(who);
+        ScriptedAI::AttackStart(who);
     }
 
     void EnterCombat(Unit *who)
@@ -1685,19 +1696,32 @@ struct boss_master_engineer_telonicusAI : public advisorbase_ai
         //Return since we have no target
         if(!UpdateVictim())
             return;
-
-        if(Unit *hunter = m_creature->getVictim())
+        
+        Unit* victim = m_creature->getVictim();
+        if (victim)
         {
-            if(hunter->getClass() == CLASS_HUNTER)
+            float DistanceToVictim = m_creature->GetDistance2d(victim);
+            // If the victim is more than 15 yards away (but less than 30) stop moving so we can use bombs only
+            if ((DistanceToVictim > 15.0f) && (DistanceToVictim <= 30.0f))
             {
-                if(m_creature->GetDistance2d(hunter) > 30.0f)
-                    DoStartMovement(hunter, 28.0f, 2*M_PI);
-                else if( m_creature->hasUnitState(UNIT_STAT_CHASE))
-                    m_creature->StopMoving();
+                m_creature->StopMoving();
+                if (Bomb_Only_Timer < diff)
+                {
+                    m_creature->CastSpell(victim, SPELL_BOMB, false);
+                    Bomb_Only_Timer = 2000;
+
+                    // If we bomb them at range, reset the bomb timer that is used generically (Bomb_Timer)
+                    Bomb_Timer = 8000;
+                }
+                else
+                {
+                    Bomb_Only_Timer -= diff;
+                }
             }
             else
-                if(!m_creature->hasUnitState(UNIT_STAT_CHASE) )
-                    ScriptedAI::AttackStart(hunter);
+            {
+                ScriptedAI::AttackStart(victim);
+            }
         }
 
         if(Creature* kael = Unit::GetCreature((*m_creature), pInstance->GetData64(DATA_KAELTHAS)))
@@ -1727,7 +1751,7 @@ struct boss_master_engineer_telonicusAI : public advisorbase_ai
         if(Bomb_Timer < diff)
         {
             m_creature->CastSpell(m_creature->getVictim(), SPELL_BOMB, false);
-            Bomb_Timer = 2000+rand()%6000;
+            Bomb_Timer = urand(2000, 8000);
             return;
         }
         else
