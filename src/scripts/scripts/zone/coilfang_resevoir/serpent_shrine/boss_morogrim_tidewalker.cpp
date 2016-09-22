@@ -24,7 +24,7 @@ EndScriptData */
 #include "precompiled.h"
 #include "def_serpent_shrine.h"
 
-#define AGGRO_RANGE                     40.0
+#define AGGRO_RANGE                     35.0
 
 #define SAY_AGGRO                   -1548030
 #define SAY_SUMMON1                 -1548031
