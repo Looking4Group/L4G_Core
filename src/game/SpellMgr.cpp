@@ -3511,7 +3511,6 @@ void SpellMgr::LoadSpellCustomAttr()
             case 30207: // Magtheridon's creatures Shadow Grasp
                 spellInfo->StackAmount = 5;
                 break;
-                break;
             case 20814: // Collect Dire Water
                 spellInfo->InterruptFlags = SPELL_INTERRUPT_FLAG_MOVEMENT | SPELL_INTERRUPT_FLAG_DAMAGE | SPELL_INTERRUPT_FLAG_AUTOATTACK | SPELL_INTERRUPT_FLAG_PUSH_BACK | SPELL_INTERRUPT_FLAG_INTERRUPT;
                 break;
@@ -3583,7 +3582,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 44032: // Mind Exhaustion Magtheridon
                 spellInfo->DurationIndex = 25;
-            break;
+				break;
             case 24869: //Halooween food
                 spellInfo->Effect[2] = 6;
                 spellInfo->EffectBasePoints[2] = 1;
@@ -3591,15 +3590,17 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->EffectImplicitTargetA[2] = 1;
                 spellInfo->EffectAmplitude[2] = 10000;
                 spellInfo->EffectTriggerSpell[2] = 19709;
-            break;
+				break;
             case 37674: // leo chaosblast
                 spellInfo->EffectRadiusIndex[0] = 18;
-            break;
+				break;
+                spellInfo->StackAmount = 2;
+				break;
             case 37284:  //scalding water
                 spellInfo->EffectBasePoints[1] = 999;
                 spellInfo->EffectBasePoints[0] = 999;
                 spellInfo->AttributesCu |= SPELL_ATTR_CU_NO_SPELL_DMG_COEFF;
-            break;
+				break;
             case 29838: //Second Wind (Rank 2)
                 spellInfo->procFlags &= ~PROC_FLAG_ON_TAKE_PERIODIC;
                 break;
