@@ -144,8 +144,8 @@ struct instance_the_eye : public ScriptedInstance
     {
         switch (go->GetEntry())
         {
-            case 184324:
-                DoorGUID.insert(go->GetGUID());
+            case 184324:                
+                DoorGUID.insert(go->GetGUID());                                               
                 break;
             case 184069: // main window
             case 184596: // statues
@@ -205,7 +205,7 @@ struct instance_the_eye : public ScriptedInstance
                 }
                 break;
             case DATA_KAELTHASEVENT:
-                if(data == NOT_STARTED || data == DONE)
+                if(data == DONE)
                 {
                     for(std::set<uint64>::iterator i = DoorGUID.begin(); i != DoorGUID.end(); ++i)
                     {
@@ -229,6 +229,17 @@ struct instance_the_eye : public ScriptedInstance
                     if(GameObject *ExplodeObject = instance->GetGameObject(*i))
                     ExplodeObject->SetGoState(GOState(!data));
                 }
+        }
+        
+        
+        if ((GetData(DATA_ALAREVENT) == DONE && GetData(DATA_HIGHASTROMANCERSOLARIANEVENT) == DONE && GetData(DATA_VOIDREAVEREVENT) == DONE) && GetData(DATA_KAELTHASEVENT) != IN_PROGRESS)
+        {
+            //open Kael'thas doors
+            for (std::set<uint64>::iterator i = DoorGUID.begin(); i != DoorGUID.end(); ++i)
+            {
+                if (GameObject *Door = instance->GetGameObject(*i))
+                    Door->SetGoState(GO_STATE_ACTIVE);
+            }
         }
 
         if(data == DONE)
@@ -272,9 +283,15 @@ struct instance_the_eye : public ScriptedInstance
         OUT_LOAD_INST_DATA(in);
         std::istringstream stream(in);
         stream >> Encounters[0] >> Encounters[1] >> Encounters[2] >> Encounters[3];
-        for(uint8 i = 0; i < ENCOUNTERS; ++i)
-            if(Encounters[i] == IN_PROGRESS)                // Do not load an encounter as "In Progress" - reset it instead.
+        for (uint8 i = 0; i < ENCOUNTERS; ++i)
+        {
+            // Do not load an encounter as "In Progress" - reset it instead.
+            if (Encounters[i] == IN_PROGRESS)
+            {               
                 Encounters[i] = NOT_STARTED;
+            }
+        }
+            
         OUT_LOAD_INST_DATA_COMPLETE;
     }
 };
