@@ -170,8 +170,8 @@ struct instance_the_eye : public ScriptedInstance
     {
         switch (go->GetEntry())
         {
-            case 184324:                
-                DoorGUID.insert(go->GetGUID());                                               
+            case 184324:
+                DoorGUID.insert(go->GetGUID());
                 break;
             case 184069: // main window
             case 184596: // statues
@@ -239,7 +239,7 @@ struct instance_the_eye : public ScriptedInstance
                 }
                 HandleKaelDoors();
                 break;
-            case DATA_KAELTHASEVENT:               
+            case DATA_KAELTHASEVENT:     
                 if (Encounters[3] != DONE)
                 {
                     Encounters[3] = data;
