@@ -340,4 +340,7 @@ INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`
 UPDATE `creature_template` SET `mindmg`='9600',`maxdmg`='12800' WHERE `entry` = 21215;
 
 -- Remove CC immunites from Serpentshrine Sporebat
-UPDATE creature_template set mechanic_immune_mask = 0 where entry = 21246; 
+UPDATE creature_template set mechanic_immune_mask = 0 where entry = 21246;
+
+-- Chieftain Mummaki's Totem Dropchance
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance`= -100 WHERE `entry` = 19174 AND `item` = 27943; -- -83
