@@ -192,7 +192,7 @@ struct boss_lady_vashjAI : public ScriptedAI
         CoilfangElite_Timer = 45000;
         CoilfangStrider_Timer = urand(60000, 70000);
         SummonSporebat_Timer = 10000;
-        SummonSporebat_StaticTimer = 25000;
+        SummonSporebat_StaticTimer = 20000;
         EnchantedElemental_Pos = 0;
         Phase = 0;
         Intro = false;
