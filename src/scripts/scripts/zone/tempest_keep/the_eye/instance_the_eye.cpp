@@ -298,15 +298,9 @@ struct instance_the_eye : public ScriptedInstance
         OUT_LOAD_INST_DATA(in);
         std::istringstream stream(in);
         stream >> Encounters[0] >> Encounters[1] >> Encounters[2] >> Encounters[3];
-        for (uint8 i = 0; i < ENCOUNTERS; ++i)
-        {
-            // Do not load an encounter as "In Progress" - reset it instead.
-            if (Encounters[i] == IN_PROGRESS)
-            {               
+        for(uint8 i = 0; i < ENCOUNTERS; ++i)
+            if(Encounters[i] == IN_PROGRESS)                // Do not load an encounter as "In Progress" - reset it instead.
                 Encounters[i] = NOT_STARTED;
-            }
-        }
-            
         OUT_LOAD_INST_DATA_COMPLETE;
     }
 };
