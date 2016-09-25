@@ -3716,6 +3716,9 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->Targets = 64;
                 spellInfo->EffectImplicitTargetA[0] = 16;
                 break;
+            case 37029: //Kael'Thas Telonicus: Remove DR from remote toy by setting mechanic to 0
+                spellInfo->Mechanic = 0;
+                break;
 
             default:
                 break;
