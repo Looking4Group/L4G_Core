@@ -4792,7 +4792,7 @@ void Aura::HandleModMechanicImmunity(bool apply, bool Real)
     }
 
     // The Beast Within and Bestial Wrath - immunity
-    if (GetId() == 19574 || GetId() == 34471)
+    if (GetId() == 19574 || GetId() == 34471 || GetId() == 38484)
     {
         if (apply)
         {
