@@ -344,3 +344,7 @@ UPDATE creature_template set mechanic_immune_mask = 0 where entry = 21246;
 
 -- Chieftain Mummaki's Totem Dropchance
 UPDATE `creature_loot_template` SET `ChanceOrQuestChance`= -100 WHERE `entry` = 19174 AND `item` = 27943; -- -83
+
+-- Leftout Lurker Respawn
+DELETE FROM `creature_linked_respawn` WHERE `guid` = 80273;
+INSERT INTO `creature_linked_respawn` VALUES (80273,93838);
