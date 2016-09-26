@@ -351,3 +351,6 @@ INSERT INTO `creature_linked_respawn` VALUES (80273,93838);
 
 -- Morogrim 40y Aggro Range
 UPDATE `creature` SET `position_x`='351.9414', `position_y`='-723.1434', `position_z`='-13.7273', `orientation`='3.2655',`spawndist`='0',`movementtype`='0' WHERE `guid` = 82974; -- 355,821 -721,004 -13,8746 6,09301
+
+-- Quest Convenience 
+UPDATE `item_template` SET `stackable` = 4 WHERE `entry` = 31346; -- 1
