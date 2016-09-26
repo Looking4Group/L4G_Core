@@ -364,3 +364,6 @@ INSERT INTO `creature_questrelation` VALUES
 DELETE FROM `creature_involvedrelation` WHERE `quest` = 10164;
 INSERT INTO `creature_involvedrelation` VALUES
 (19698,10164);
+
+-- missed out patrols in sv, should fix Steam Surger movement behavior
+UPDATE `creature` SET `MovementType`='0' WHERE `guid` IN (1723,118,120,394,12621,12641,12642,12616,12618,1554,1552,12622,12636,12646,12649,12661,12668,12694,12703);
