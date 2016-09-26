@@ -690,7 +690,7 @@ bool ChatHandler::HandleDebugThreatList(const char * /*args*/)
     uint32 max_count = 0;
     if (!m_session->HasPermissions(PERM_GMT_DEV))
     {
-        pOwner->AddSpellCooldown(COMMAND_COOLDOWN, 0, time(NULL) +10);
+        pOwner->AddSpellCooldown(COMMAND_COOLDOWN, 0, time(NULL) +3);
         max_count = 3;
     }
 
