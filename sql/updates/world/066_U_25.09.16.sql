@@ -370,3 +370,68 @@ UPDATE `creature` SET `MovementType`='0' WHERE `guid` IN (1723,118,120,394,12621
 
 -- Honor Mark Trade Quests
 UPDATE `quest_template` SET `ReqItemId1`= 0 WHERE `entry` IN (8385,8388); -- 20560
+
+DELETE FROM `creature_formations` WHERE `leaderguid` IN (56809,56816);
+INSERT INTO `creature_formations` VALUES
+(56816,56816,60,360,2),
+(56816,56823,60,360,2),
+(56816,56815,60,360,2),
+(56816,369790,60,360,2),
+(56816,369881,60,360,2),
+(56816,369817,60,360,2);
+
+-- Hyakiss the Lurker Movement
+SET @GUID := 56809;
+UPDATE `creature` SET `MovementType` = 2 WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid`= @GUID;
+INSERT INTO `creature_addon` VALUES (@GUID,@GUID,0,0,0,0,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id`= @GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,1,'-10986.1777','-1971.1149','45.8543',0,0,0,100,0),
+(@GUID,2,'-10957.9921','-1974.7480','46.3185',0,0,0,100,0),
+(@GUID,3,'-10960.4873','-1974.4567','46.0256',15000,0,0,100,0),
+(@GUID,4,'-10986.1777','-1971.1149','45.8543',0,0,0,100,0),
+(@GUID,5,'-10992.5654','-2014.9318','46.0213',0,0,0,100,0),
+(@GUID,6,'-10992.4228','-2013.8153','46.0213',15000,0,0,100,0),
+(@GUID,7,'-10986.1777','-1971.1149','45.8543',0,0,0,100,0),
+(@GUID,8,'-10980.6376','-1938.5960','46.0396',0,0,0,100,0),
+(@GUID,9,'-10981.1054','-1940.7429','46.0408',15000,0,0,100,0);
+
+DELETE FROM `pool_template` WHERE `entry` = 30048;
+INSERT INTO `pool_template` VALUES
+(30048,1,'Karazhan - Servants Quarter Bosses');
+--
+DELETE FROM `pool_creature` WHERE `pool_entry` = 30048;
+INSERT INTO `pool_creature` VALUES
+(56809,30048,0,'Karazhan - Hyakiss the Lurker'),
+(86073,30048,0,'Karazhan - Shadikith the Glider'),
+(84987,30048,0,'Karazhan - Rokad the Ravager');
+
+-- Hyakiss the Lurker - Hyakiss der Lauerer 16179
+UPDATE `creature_template` SET `mindmg`='5275',`maxdmg`='6264',`type_flags`='108',`mechanic_immune_mask`='787431423',`flags_extra`='0',`speed`='1.78',`baseattacktime`='1500',`inhabittype`='3',`AIName`='EventAI' WHERE `entry` = 16179; -- -- ba 1900 -- 10,549 - 12,527
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 16179;
+INSERT INTO `creature_ai_scripts` VALUES
+('1617901','16179','1','0','100','0','0','0','0','0','11','22766','0','33','1','-9979','0','0','0','0','0','0','Hyakiss the Lurker - Cast Stealth and Emote on Spawn'),
+('1617902','16179','4','0','100','0','0','0','0','0','23','1','0','0','0','0','0','0','0','0','0','0','Hyakiss the Lurker - Set Phase 1 on Aggro'),
+('1617903','16179','9','5','100','1','0','5','5000','10000','11','29901','1','0','0','0','0','0','0','0','0','0','Hyakiss the Lurker - Cast Acidic Fang (Phase 1)'),
+('1617904','16179','24','5','100','1','29901','7','5000','5000','23','1','0','0','0','0','0','0','0','0','0','0','Hyakiss the Lurker - Set Phase 2 on Target Max Acidic Fang Aura Stack (Phase 1)'),
+('1617905','16179','28','3','100','1','29901','1','5000','5000','23','-1','0','0','0','0','0','0','0','0','0','0','Hyakiss the Lurker - Set Phase 1 on Target Missing Acidic Fang Aura Stack (Phase 2)'),
+('1617906','16179','9','0','100','1','0','40','6000','12000','11','29896','4','1','0','0','0','0','0','0','0','0','Hyakiss the Lurker - Cast Hyakiss\' Web'),
+('1617907','16179','7','0','100','0','0','0','0','0','22','0','0','0','0','0','0','0','0','0','0','0','Hyakiss the Lurker - Set Phase to 0 on Evade');
+
+-- Shadikith the Glider - Shadikith der Gleiter
+UPDATE `creature_template` SET `mindmg`='6716',`maxdmg`='7706',`speed`='1.71',`type_flags`='108',`mechanic_immune_mask`='787431423',`flags_extra`='0',`baseattacktime`='1500',`AIName`='EventAI' WHERE `entry` = 16180; -- 1400 -- 13,432 - 15,411
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 16180;
+INSERT INTO `creature_ai_scripts` VALUES
+('1618001','16180','9','0','100','0','0','45','0','0','11','29903','1','1','0','0','0','0','0','0','0','0','Shadikith the Glider - Cast Dive on Aggro'),
+('1618002','16180','0','0','100','1','7000','11000','8000','12000','11','29905','1','1','13','-99','1','0','0','0','0','0','Shadikith the Glider - Cast Wing Buffet & Tank Aggro Reset'),
+('1618003','16180','9','0','100','1','0','5','10000','12000','11','29904','0','1','0','0','0','0','0','0','0','0','Shadikith the Glider - Cast Sonic Burst'),
+('1618004','16180','2','0','100','0','75','0','0','0','11','29903','5','1','0','0','0','0','0','0','0','0','Shadikith the Glider - Cast Dive at 75% HP'),
+('1618005','16180','2','0','100','0','50','0','0','0','11','29903','5','1','0','0','0','0','0','0','0','0','Shadikith the Glider - Cast Dive at 50% HP'),
+('1618006','16180','2','0','100','0','25','0','0','0','11','29903','5','1','0','0','0','0','0','0','0','0','Shadikith the Glider - Cast Dive at 25% HP'); -- ziel welches am weitesten weg ist hmmm
+
+-- Rokad the Ravager - Rokad der Verheerer 1800-2500 auf tank
+UPDATE `creature_template` SET `type_flags`='108',`mechanic_immune_mask`='787431423',`flags_extra`='65536',`speed`='1.78',`baseattacktime`='1000',`mindmg`='6330',`maxdmg`='7516',`AIName`='EventAI' WHERE `entry` = 16181; -- 2000 
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 16181;
+INSERT INTO `creature_ai_scripts` VALUES
+('1618101','16181','9','0','100','1','0','5','3000','4000','11','29906','4','33','0','0','0','0','0','0','0','0','Rokad the Ravager - Cast Ravage');
