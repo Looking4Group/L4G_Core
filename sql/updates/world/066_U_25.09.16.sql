@@ -435,3 +435,10 @@ UPDATE `creature_template` SET `type_flags`='108',`mechanic_immune_mask`='787431
 DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 16181;
 INSERT INTO `creature_ai_scripts` VALUES
 ('1618101','16181','9','0','100','1','0','5','3000','4000','11','29906','4','33','0','0','0','0','0','0','0','0','Rokad the Ravager - Cast Ravage');
+
+-- Fel Orc Neophytes  17429
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17429;
+INSERT INTO `creature_ai_scripts` VALUES
+('1742901','17429','9','0','50','7','5','30','10250','20500','11','22120','4','1','0','0','0','0','0','0','0','0','Fel Orc Neophyte - Cast Random Charge and Aggro Reset'),
+('1742902','17429','0','0','100','7','1000','30000','120000','240000','11','8269','0','3','0','0','0','0','0','0','0','0','Fel Orc Neophyte - Cast Frenzy'),
+('1742903','17429','0','0','100','7','3000','9000','3000','9000','14','-99','0','0','13','100','4','0','0','0','0','0','Fel Orc Neophyte - Randomly Drop Aggro and Take on New Target');
