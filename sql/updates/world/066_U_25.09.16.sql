@@ -354,3 +354,13 @@ UPDATE `creature` SET `position_x`='351.9414', `position_y`='-723.1434', `positi
 
 -- Quest Convenience 
 UPDATE `item_template` SET `stackable` = 4 WHERE `entry` = 31346; -- 1
+
+-- Greatfather Aldrimus
+DELETE FROM `creature` WHERE `guid` = 100047;
+INSERT INTO `creature` VALUES (100047, 19698, 530, 1, 0, 0, -3345.28, 5189.06, -100.966, 5.77704, 120, 0, 0, 1, 0, 0, 0);
+DELETE FROM `creature_questrelation` WHERE `quest` = 10164;
+INSERT INTO `creature_questrelation` VALUES
+(19698,10164);
+DELETE FROM `creature_involvedrelation` WHERE `quest` = 10164;
+INSERT INTO `creature_involvedrelation` VALUES
+(19698,10164);
