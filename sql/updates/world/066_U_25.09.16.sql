@@ -442,3 +442,52 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('1742901','17429','9','0','50','7','5','30','10250','20500','11','22120','4','1','0','0','0','0','0','0','0','0','Fel Orc Neophyte - Cast Random Charge and Aggro Reset'),
 ('1742902','17429','0','0','100','7','1000','30000','120000','240000','11','8269','0','3','0','0','0','0','0','0','0','0','Fel Orc Neophyte - Cast Frenzy'),
 ('1742903','17429','0','0','100','7','3000','9000','3000','9000','14','-99','0','0','13','100','4','0','0','0','0','0','Fel Orc Neophyte - Randomly Drop Aggro and Take on New Target');
+
+-- https://github.com/Looking4Group/L4G_Core/issues/2771
+DELETE FROM `creature_ai_texts` WHERE `entry` IN (-698,-699,-9600,-9601,-9602);
+INSERT INTO `creature_ai_texts` VALUES (-698, 'ATTACK WITH THE FULL FORCE OF NETHERWING, MY CHILDREN! ATTACK!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, '11980');
+INSERT INTO `creature_ai_texts` VALUES (-699, 'Lord Illidan, bless me with the power of the flight!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, '11980');
+INSERT INTO `creature_ai_texts` VALUES (-9600,'Destroy them! Destroy them all!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, '11980');
+INSERT INTO `creature_ai_texts` VALUES (-9601,'Indeed, the time has come to end this charade.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, '11980');
+INSERT INTO `creature_ai_texts` VALUES (-9602,'Foolish mortals. Did you think that I would not strike you down for your transgressions?', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, '11980');
+
+-- Zuluhed the Whacked 11980
+UPDATE `creature_template` SET `faction_A`=16, `faction_H`=16, `speed`=1.48, `mindmg`=640, `maxdmg`=1280, `spell2`=19717, `spell4`=38853, `spell5`=24240, `unit_flags`=2, `AIName`='EventAI', `flags_extra`=1077936128, `equipment_id`=1301 WHERE `entry` = 11980; -- 594 1056 -- 3,069 - 3,531
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 11980;
+INSERT INTO `creature_ai_scripts` VALUES
+('1198001','11980','11','0','100','0','0','0','0','0','11','24240','0','7','0','0','0','0','0','0','0','0','Zuluhed the Whacked - Spawn Effect on Spawn'),
+('1198002','11980','4','0','100','0','0','0','0','0','1','-9602','0','0','21','0','0','0','0','0','0','0','Zuluhed the Whacked - Text and Stop Movement on Aggro'),
+('1198003','11980','0','0','100','0','3000','3000','0','0','1','-9601','0','0','0','0','0','0','0','0','0','0','Zuluhed the Whacked - Text Event'),
+('1198004','11980','0','0','100','0','6000','6000','0','0','1','-9600','0','0','0','0','0','0','0','0','0','0','Zuluhed the Whacked - Text Event'),
+('1198005','11980','0','0','100','0','8000','8000','0','0','1','-698','0','0','21','1','0','0','19','2','0','0','Zuluhed the Whacked - Text Event and Start Movement and Remove Unit Flags'),
+('1198006','11980','0','0','100','1','10000','15000','10000','15000','11','19717','4','0','0','0','0','0','0','0','0','0','Zuluhed the Whacked - Cast Rain of Fire'),
+('1198007','11980','0','0','100','1','17000','17000','3000','6000','11','41069','1','0','0','0','0','0','0','0','0','0','Zuluhed the Whacked - Cast Shadow Bolt'),
+('1198008','11980','2','0','100','0','80','60','0','0','11','38876','0','7','0','0','0','0','0','0','0','0','Zuluhed the Whacked - Cast Demon Portal and Text'),
+('1198009','11980','2','0','100','0','30','20','0','0','11','38876','0','7','0','0','0','0','0','0','0','0','Zuluhed the Whacked - Cast Demon Portal and Text'),
+('1198010','11980','2','0','100','0','20','0','0','0','11','38853','0','7','1','-699','0','0','0','0','0','0','Zuluhed the Whacked - Cast Nether Infusion and Text at 20% HP'),
+('1198011','11980','7','0','100','0','0','0','0','0','18','2','0','0','0','0','0','0','0','0','0','0','Zuluhed the Whacked - Set Unit Flags on Evade');
+
+-- Demon Portal (Zuluhed) 22336
+UPDATE `creature_template` SET `AIName`='EventAI', `faction_A`=16, `faction_H`=16, `unit_flags`=`unit_flags`|512|256, `dynamicflags`=`dynamicflags`|8 WHERE `entry`= 22336;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 22336;
+INSERT INTO `creature_ai_scripts` VALUES
+('2233601','22336','1','0','100','1','4000','8000','30000','30000','11','38877','0','7','0','0','0','0','0','0','0','0','Demon Portal - Cast Summon Arcubus'),
+('2233602','22336','1','0','100','1','120000','120000','1000','1000','41','0','0','0','0','0','0','0','0','0','0','0','Demon Portal - Despawn OOC');
+
+-- Arcubus Destroyer 22338
+UPDATE `creature_template` SET `AIName`='EventAI', `faction_A`=90, `faction_H`=90, `unit_flags`=32832, `flags_extra`=65536 WHERE `entry`= 22338;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 22338;
+INSERT INTO `creature_ai_scripts` VALUES
+('2233801','22338','1','0','100','1','1000','1000','1000','1000','103','40','0','0','0','0','0','0','0','0','0','0','Arcubus Destroyer - Attack OOC'),
+('2233802','22338','1','0','100','1','10000','10000','1000','1000','41','0','0','0','0','0','0','0','0','0','0','0','Arcubus Destroyer - Despawn OOC');
+
+-- Varedis 21178
+UPDATE `creature_template` SET `AIName`='EventAI' WHERE `entry` = 21178;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 21178;
+INSERT INTO `creature_ai_scripts` VALUES
+(2117801,21178,0,0,100,1,3500,5500,10000,11000,11,38010,4,32,0,0,0,0,0,0,0,0,'Varedis - Curse of Flames'),
+(2117802,21178,0,0,100,1,4000,8000,12000,15000,11,37683,0,0,0,0,0,0,0,0,0,0,'Varedis - Evasion'),
+(2117803,21178,0,0,100,1,5000,5000,9500,16000,11,39262,4,0,0,0,0,0,0,0,0,0,'Varedis - Mana Burn'),
+(2117804,21178,9,0,100,1,0,15,15000,20000,11,33803,1,0,0,0,0,0,0,0,0,0,'Varedis - Cast Flame Wave'),
+(2117805,21178,2,0,100,0,50,0,0,0,11,37905,0,7,0,0,0,0,0,0,0,0,'Varedis - Casts Metamorphosis at 50% HP'), -- 37905
+(2117806,21178,7,0,100,0,0,0,0,0,28,0,37905,0,0,0,0,0,0,0,0,0,'Varedis - Remove Metamorphosis on Evade');
