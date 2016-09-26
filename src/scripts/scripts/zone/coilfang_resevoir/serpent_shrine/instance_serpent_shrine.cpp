@@ -33,8 +33,8 @@ EndScriptData */
 5 - Lady Vashj
 */
 
-ObjectGuid ConsoleGuids[5]; 
-ObjectGuid BridgeConsoleGuid;
+uint64 ConsoleGuids[5]; 
+uint64 BridgeConsoleGuid;
 
 bool GOUse_go_vashj_console_access_panel(Player *player, GameObject* go)
 {
@@ -45,8 +45,7 @@ bool GOUse_go_vashj_console_access_panel(Player *player, GameObject* go)
         return false;
     }
 
-    ObjectGuid id;
-    id = go->GetGUID();
+    uint64 id = go->GetGUID();
 
     if (id == ConsoleGuids[0])
     {
