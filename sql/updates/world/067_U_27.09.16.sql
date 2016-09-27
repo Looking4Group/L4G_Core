@@ -39,3 +39,10 @@ INSERT INTO `waypoint_data` VALUES (57800, 30, 192.09, 4333.34, 116.444, 0, 0, 0
 INSERT INTO `waypoint_data` VALUES (57800, 31, 90.3435, 4333.23, 101.483, 0, 0, 0, 100, 0);
 
 UPDATE `creature` SET `position_x`='103.4094', `position_y`='4341.2641', `position_z`='101.4677', `orientation`='4.2540',`spawndist`='0',`movementtype`='0' WHERE `guid` = '67032';
+
+-- Deathfrost ~10%
+-- http://www.wowhead.com/spell=46578/deathfrost#comments:id=311615
+-- http://www.wowhead.com/item=35498/formula-enchant-weapon-deathfrost#comments:id=309736:reply=339434
+-- http://www.wowhead.com/item=35498/formula-enchant-weapon-deathfrost#comments:id=310017
+DELETE FROM `spell_enchant_proc_data` WHERE `entry` = 3273;
+INSERT INTO `spell_enchant_proc_data` VALUES (3273, 0, 3, 0, 3);
