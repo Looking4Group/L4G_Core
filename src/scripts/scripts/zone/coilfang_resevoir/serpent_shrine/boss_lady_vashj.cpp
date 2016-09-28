@@ -531,7 +531,7 @@ struct boss_lady_vashjAI : public ScriptedAI
                 if(Persuasion_Timer < diff)
                 {
                     MindcontrolEffect();
-                    Persuasion_Timer = 120000;
+                    Persuasion_Timer = urand(25000, 35000);
                 }
                 else
                     Persuasion_Timer -= diff;
