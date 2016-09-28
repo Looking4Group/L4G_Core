@@ -1663,3 +1663,8 @@ INSERT INTO `creature_ai_scripts` VALUES
 (2117805,21178,9,0,100,1,0,15,15000,20000,11,33803,1,0,0,0,0,0,0,0,0,0,'Varedis - Cast Flame Wave'),
 (2117806,21178,2,0,100,0,50,0,0,0,11,37905,0,7,0,0,0,0,0,0,0,0,'Varedis - Casts Metamorphosis at 50% HP'), -- 37905
 (2117807,21178,7,0,100,0,0,0,0,0,28,0,37905,0,0,0,0,0,0,0,0,0,'Varedis - Remove Metamorphosis on Evade');
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 22134;
+INSERT INTO `creature_ai_scripts` VALUES
+('2213401','22134','4','0','100','0','0','0','0','0','25','0','0','0','1','-48','0','0','0','0','0','0','Shadowmoon Eye of Kilrogg - Flee and Emote on Aggro'),
+('2213402','22134','0','0','100','1','10000','10000','1000','1000','41','0','0','0','0','0','0','0','0','0','0','0','Witness of Doom - Despawn IC');
