@@ -3475,6 +3475,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->AttributesEx2 &= ~SPELL_ATTR_EX2_IGNORE_LOS;
                 break;
             case 43383: // Spirit Bolts (HexLord)
+            case 38976: // Underbog Colossus SPORE_QUAKE
                 spellInfo->ChannelInterruptFlags |= CHANNEL_INTERRUPT_FLAG_MOVEMENT;
                 spellInfo->InterruptFlags &= ~SPELL_INTERRUPT_FLAG_INTERRUPT;
                 break;
@@ -3604,6 +3605,8 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 38971: //acid geysir - spell of ssc colosses
                 spellInfo->EffectBasePoints[0] = 2478;
+                spellInfo->ChannelInterruptFlags |= CHANNEL_INTERRUPT_FLAG_MOVEMENT;
+                spellInfo->InterruptFlags &= ~SPELL_INTERRUPT_FLAG_INTERRUPT;
                 break;
             case 39045: //SPELL_SUMMON_SERPENTSHRINE_PARASITE
                 spellInfo->AreaId = 3607;

@@ -1246,6 +1246,15 @@ void Spell::DoSpellHitOnUnit(Unit *unit, const uint32 effectMask)
         if (unit->GetEntry() == 17767 && GetSpellInfo()->Effect[effectNumber] == SPELL_EFFECT_CHARGE)
             continue;
 
+        //Hack for underbog colossus ACID_GEYSER - don't interrupt with intercept
+        if (unit->HasAura(38971) && GetSpellInfo()->Effect[effectNumber] == SPELL_EFFECT_CHARGE)
+            continue;
+
+        //Hack for underbog colossus SPORE_QUAKE  - don't interrupt with intercept
+        if (unit->HasAura(38976) && GetSpellInfo()->Effect[effectNumber] == SPELL_EFFECT_CHARGE)
+            continue;
+
+
         if (effectMask & (1<<effectNumber))
             HandleEffects(unit,NULL,NULL,effectNumber/*,m_damageMultipliers[effectNumber]*/);
     }
@@ -2320,6 +2329,24 @@ void Spell::prepare(SpellCastTargets * targets, Aura* triggeredByAura)
         if (m_targets.getUnitTarget())               //Deathcoil                                //Maim                       //Intercept
             if ((GetSpellInfo()->Effect[0] == SPELL_EFFECT_HEALTH_LEECH || GetSpellInfo()->Id == 22570 || GetSpellInfo()->Id == 25275)
                 && m_targets.getUnitTarget()->HasAura(43383))
+            {
+                SendCastResult(SPELL_FAILED_NOT_READY);
+                finish(false);
+                return;
+            }
+        //Hack for Underbog Colossus SPORE_QUAKE - don't interrupt with death coil, Maim, Intercept
+        if (m_targets.getUnitTarget())               //Deathcoil                                //Maim                       //Intercept
+            if ((GetSpellInfo()->Effect[0] == SPELL_EFFECT_HEALTH_LEECH || GetSpellInfo()->Id == 22570 || GetSpellInfo()->Id == 25275)
+                && m_targets.getUnitTarget()->HasAura(38976))
+            {
+                SendCastResult(SPELL_FAILED_NOT_READY);
+                finish(false);
+                return;
+            }
+        //Hack for Underbog Colossus ACID_GEYSER  - don't interrupt with death coil, Maim, Intercept
+        if (m_targets.getUnitTarget())               //Deathcoil                                //Maim                       //Intercept
+            if ((GetSpellInfo()->Effect[0] == SPELL_EFFECT_HEALTH_LEECH || GetSpellInfo()->Id == 22570 || GetSpellInfo()->Id == 25275)
+                && m_targets.getUnitTarget()->HasAura(38971))
             {
                 SendCastResult(SPELL_FAILED_NOT_READY);
                 finish(false);
