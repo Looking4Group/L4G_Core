@@ -237,7 +237,7 @@ struct boss_lady_vashjAI : public ScriptedAI
         }
 
         //cut down to size if we have more than 5 targets
-        while(targets.size() > 5)
+        while(targets.size() > 2)
             targets.erase(targets.begin()+rand()%targets.size());
 
         int i = 0;
