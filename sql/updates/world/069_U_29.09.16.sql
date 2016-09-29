@@ -89,3 +89,9 @@ INSERT INTO `creature_ai_scripts` VALUES
 
 UPDATE `creature` SET `position_x`='-1230.2587',`position_y`='5751.5078',`position_z`='41.0792' WHERE `guid` = 64845;
 UPDATE `creature` SET `position_x`='68.3115',`position_y`='8190.1899',`position_z`='21.2747',`orientation`='4.0090' WHERE `guid` = 64658;
+
+DELETE FROM `creature_formations` WHERE `leaderguid` = 112008;
+INSERT INTO `creature_formations` VALUES 
+(112008,112008,100,360,1),
+(112008,111481,100,360,1),
+(112008,110619,100,360,1);
