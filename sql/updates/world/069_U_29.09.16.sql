@@ -101,3 +101,5 @@ INSERT INTO `creature_formations` VALUES
 (112008,112008,100,360,1),
 (112008,111481,100,360,1),
 (112008,110619,100,360,1);
+
+UPDATE `creature` SET `position_x`='361.8721', `position_y`='-724.3999', `position_z`='-14.0032' WHERE `guid` = 82974;
