@@ -103,3 +103,25 @@ INSERT INTO `creature_formations` VALUES
 (112008,110619,100,360,1);
 
 UPDATE `creature` SET `position_x`='361.8721', `position_y`='-724.3999', `position_z`='-14.0032' WHERE `guid` = 82974;
+
+-- Warchief Kargath Bladefist 16808,20597
+UPDATE `creature_loot_template` SET `maxcount`=2 WHERE `entry` = 20597 AND `item` = 35003; -- 1
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 40 WHERE `entry` = 20597 AND `Item` = 50021; -- 66
+
+-- Warp Splinter
+UPDATE `creature_loot_template` SET `maxcount`=2 WHERE `entry` = 21582 AND `item` = 35006; -- 1
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 40 WHERE `entry` = 21582 AND `Item` = 50013; -- 66
+
+-- Pathaleon the Calculator 19220,21537
+UPDATE `creature_loot_template` SET `maxcount`=2 WHERE `entry` = 21537 AND `item` = 35005; -- 1
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 40 WHERE `entry` = 21537 AND `Item` = 50018; -- 66
+
+-- Harbinger Skyriss 20912,21599
+DELETE FROM `creature_loot_template` WHERE `item` = 50028 AND `entry` IN (21599);
+INSERT INTO `creature_loot_template` VALUES 
+(21599,50028,40,0,-50028,1,0,0,0);
+
+DELETE FROM `reference_loot_template` WHERE `entry` = 50028;
+INSERT INTO `reference_loot_template` VALUES (50028, 30581, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `reference_loot_template` VALUES (50028, 30575, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `reference_loot_template` VALUES (50028, 30582, 0, 1, 1, 1, 0, 0, 0);
