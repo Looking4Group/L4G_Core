@@ -531,7 +531,7 @@ struct boss_lady_vashjAI : public ScriptedAI
                 if(Persuasion_Timer < diff)
                 {
                     MindcontrolEffect();
-                    Persuasion_Timer = 120000;
+                    Persuasion_Timer = urand(25000, 35000);
                 }
                 else
                     Persuasion_Timer -= diff;
@@ -632,7 +632,7 @@ struct boss_lady_vashjAI : public ScriptedAI
             //CoilfangElite_Timer
             if(CoilfangElite_Timer < diff)
             {
-                path_nr = urand(0,3);
+                path_nr = urand(0,2);
                 me->SummonCreature(COILFANG_ELITE, StriderNagaWP[path_nr*4][0],StriderNagaWP[path_nr*4][1],StriderNagaWP[path_nr*4][2],0, TEMPSUMMON_DEAD_DESPAWN, 0);
                 CoilfangElite_Timer = 45000+rand()%5000;
             }
