@@ -86,3 +86,6 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('2201801','22018','0','0','100','1','1000','3000','120000','240000','11','30931','0','0','0','0','0','0','0','0','0','0','Eclipsion Cavalier - Cast Battle Shout'),
 ('2201802','22018','0','0','100','1','10000','14000','17000','21000','11','35871','1','0','0','0','0','0','0','0','0','0','Eclipsion Cavalier - Cast Spellbreaker'),
 ('2201803','22018','6','0','100','0','0','0','0','0','11','38311','1','7','0','0','0','0','0','0','0','0','Eclipsion Cavalier - Summon Eclipsion Hawkstrider on Death');
+
+UPDATE `creature` SET `position_x`='-1230.2587',`position_y`='5751.5078',`position_z`='41.0792' WHERE `guid` = 64845;
+UPDATE `creature` SET `position_x`='68.3115',`position_y`='8190.1899',`position_z`='21.2747',`orientation`='4.0090' WHERE `guid` = 64658;
