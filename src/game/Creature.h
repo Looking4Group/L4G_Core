@@ -126,30 +126,31 @@ struct GossipOption
 
 enum CreatureFlagsExtra
 {
-    CREATURE_FLAG_EXTRA_INSTANCE_BIND       = 0x00000001,       // 1 creature kill bind instance with killer and killer's group
-    CREATURE_FLAG_EXTRA_CIVILIAN            = 0x00000002,       // 2 not aggro (ignore faction/reputation hostility)
-    CREATURE_FLAG_EXTRA_NO_PARRY            = 0x00000004,       // 4 creature can't parry
-    CREATURE_FLAG_EXTRA_NO_PARRY_HASTEN     = 0x00000008,       // 8 creature can't counter-attack at parry
-    CREATURE_FLAG_EXTRA_NO_BLOCK            = 0x00000010,       // 16 creature can't block
-    CREATURE_FLAG_EXTRA_NO_CRUSH            = 0x00000020,       // 32 creature can't do crush attacks
-    CREATURE_FLAG_EXTRA_NO_XP_AT_KILL       = 0x00000040,       // 64 creature kill not provide XP
-    CREATURE_FLAG_EXTRA_TRIGGER             = 0x00000080,       // 128 trigger creature
-    CREATURE_FLAG_EXTRA_WORLDEVENT          = 0x00004000,       // 16384 custom flag for world event creatures (left room for merging)
-    CREATURE_FLAG_EXTRA_CHARM_AI            = 0x00008000,       // 32768 use ai when charmed
-    CREATURE_FLAG_EXTRA_NO_TAUNT            = 0x00010000,       // 65536 cannot be taunted
-    CREATURE_FLAG_EXTRA_NO_CRIT             = 0x00020000,       // 131072 creature can't do critical strikes
-    CREATURE_FLAG_EXTRA_NO_BLOCK_ON_ATTACK  = 0x00040000,       // 262144 creature attack's cannot be blocked
-    CREATURE_FLAG_EXTRA_NO_DAMAGE_TAKEN     = 0x00080000,       // 524288
-    CREATURE_FLAG_EXTRA_ALWAYS_WALK         = 0x00100000,       // 1048576
-    CREATURE_FLAG_EXTRA_NO_TARGET           = 0x00200000,       // 2097152 creature won't set UNIT_FIELD_TARGET by self (return in Attack function !)
-    CREATURE_FLAG_EXTRA_HASTE_IMMUNE        = 0x00400000,       // 4194304
-    CREATURE_FLAG_EXTRA_CANT_MISS           = 0x00800000,       // 8388608 creature melee attacks cant miss
-    CREATURE_FLAG_EXTRA_NOT_REGEN_MANA      = 0x01000000,       // 16777216 creature has mana pool, but do not regenerates it when OOC
-    CREATURE_FLAG_EXTRA_NOT_REGEN_HEALTH    = 0x02000000,       // 33554432 rare case that creature should not regen health when OOC
-    CREATURE_FLAG_EXTRA_1PCT_TAUNT_RESIST   = 0x04000000,       // 67108864 creature have only 1% chance to resist taunt like spell
-    CREATURE_FLAG_EXTRA_NO_HEALING_TAKEN    = 0x08000000,       // 134217728
-    CREATURE_EXTRA_FLAG_MMAP_FORCE_ENABLE   = 0x10000000,       // 268435456
-    CREATURE_EXTRA_FLAG_MMAP_FORCE_DISABLE  = 0x20000000        // 536870912
+    CREATURE_FLAG_EXTRA_INSTANCE_BIND           = 0x00000001,       // 1 creature kill bind instance with killer and killer's group
+    CREATURE_FLAG_EXTRA_CIVILIAN                = 0x00000002,       // 2 not aggro (ignore faction/reputation hostility)
+    CREATURE_FLAG_EXTRA_NO_PARRY                = 0x00000004,       // 4 creature can't parry
+    CREATURE_FLAG_EXTRA_NO_PARRY_HASTEN         = 0x00000008,       // 8 creature can't counter-attack at parry
+    CREATURE_FLAG_EXTRA_NO_BLOCK                = 0x00000010,       // 16 creature can't block
+    CREATURE_FLAG_EXTRA_NO_CRUSH                = 0x00000020,       // 32 creature can't do crush attacks
+    CREATURE_FLAG_EXTRA_NO_XP_AT_KILL           = 0x00000040,       // 64 creature kill not provide XP
+    CREATURE_FLAG_EXTRA_TRIGGER                 = 0x00000080,       // 128 trigger creature
+    CREATURE_FLAG_EXTRA_WORLDEVENT              = 0x00004000,       // 16384 custom flag for world event creatures (left room for merging)
+    CREATURE_FLAG_EXTRA_CHARM_AI                = 0x00008000,       // 32768 use ai when charmed
+    CREATURE_FLAG_EXTRA_NO_TAUNT                = 0x00010000,       // 65536 cannot be taunted
+    CREATURE_FLAG_EXTRA_NO_CRIT                 = 0x00020000,       // 131072 creature can't do critical strikes
+    CREATURE_FLAG_EXTRA_NO_BLOCK_ON_ATTACK      = 0x00040000,       // 262144 creature attack's cannot be blocked
+    CREATURE_FLAG_EXTRA_NO_DAMAGE_TAKEN         = 0x00080000,       // 524288
+    CREATURE_FLAG_EXTRA_ALWAYS_WALK             = 0x00100000,       // 1048576
+    CREATURE_FLAG_EXTRA_NO_TARGET               = 0x00200000,       // 2097152 creature won't set UNIT_FIELD_TARGET by self (return in Attack function !)
+    CREATURE_FLAG_EXTRA_HASTE_IMMUNE            = 0x00400000,       // 4194304
+    CREATURE_FLAG_EXTRA_CANT_MISS               = 0x00800000,       // 8388608 creature melee attacks cant miss
+    CREATURE_FLAG_EXTRA_NOT_REGEN_MANA          = 0x01000000,       // 16777216 creature has mana pool, but do not regenerates it when OOC
+    CREATURE_FLAG_EXTRA_NOT_REGEN_HEALTH        = 0x02000000,       // 33554432 rare case that creature should not regen health when OOC
+    CREATURE_FLAG_EXTRA_1PCT_TAUNT_RESIST       = 0x04000000,       // 67108864 creature have only 1% chance to resist taunt like spell
+    CREATURE_FLAG_EXTRA_NO_HEALING_TAKEN        = 0x08000000,       // 134217728
+    CREATURE_EXTRA_FLAG_MMAP_FORCE_ENABLE       = 0x10000000,       // 268435456
+    CREATURE_EXTRA_FLAG_MMAP_FORCE_DISABLE      = 0x20000000,       // 536870912
+    CREATURE_FLAG_EXTRA_NORMAL_MOVEMENT_IMMUNE  = 0x40000000        // 1073741824 creature ignore SPELL_AURA_USE_NORMAL_MOVEMENT_SPEED
 };
 
 // GCC have alternative #pragma pack(N) syntax and old gcc version not support pack(push,N), also any gcc version not support it at some platform

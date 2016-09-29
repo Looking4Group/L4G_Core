@@ -220,6 +220,10 @@ void Player::UpdateMaxPower(Powers power)
     value += GetModifierValue(unitMod, TOTAL_VALUE) +  bonusPower;
     value *= GetModifierValue(unitMod, TOTAL_PCT);
 
+    if (HasAura(30422, 0)) // Netherspite's Green Beam - Serenity
+        if (power == POWER_MANA)
+            SetPower(power, uint32(value));
+
     SetMaxPower(power, uint32(value));
 }
 

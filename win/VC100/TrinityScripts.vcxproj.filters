@@ -1570,6 +1570,9 @@
     <ClCompile Include="..\..\src\scripts\scripts\zone\maraudon\npc_celebras_the_redeemed.cpp">
       <Filter>Scripts\zone\Maraudon</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\scripts\scripts\zone\redridge_mountains\redridge_mountains.cpp">
+      <Filter>Scripts\zone\Redridge Mountains</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\scripts\scripts\creature\simple_ai.h">

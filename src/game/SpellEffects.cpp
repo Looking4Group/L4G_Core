@@ -933,6 +933,9 @@ void Spell::EffectDummy(uint32 i)
                 // Tag Subbued Talbuk (for Quest Creatures of the Eco-Domes - 10427)
                 case 35771:
                 {
+                    if (unitTarget->GetTypeId() == TYPEID_PLAYER)
+                        return;
+
                     if (((Player*)m_caster)->GetQuestStatus(10427) == QUEST_STATUS_INCOMPLETE)
                     {
                         // Get Sleep Visual (34664)
@@ -5190,6 +5193,19 @@ void Spell::SpellDamageWeaponDmg(uint32 i)
             {
                 spell_bonus += int32(0.20f*m_caster->SpellBaseDamageBonus(SpellMgr::GetSpellSchoolMask(GetSpellInfo())));
                 spell_bonus += int32(0.20f*m_caster->SpellBaseDamageBonusForVictim(SpellMgr::GetSpellSchoolMask(GetSpellInfo()), unitTarget));
+            }
+            // Crusader Strike +40% damage if Seal of the Crusader Active
+            if (m_spellInfo->SpellFamilyFlags & 0x0000800000000000LL)
+            {
+                Unit::AuraMap const& auras = m_caster->GetAuras();
+                for (Unit::AuraMap::const_iterator itr = auras.begin(); itr != auras.end(); ++itr)
+                {
+                    if (itr->second->GetSpellProto()->SpellFamilyFlags & 0x0000000000000200LL)
+                    {
+                        totalDamagePercentMod *= 1.4f;
+                        break;
+                    }
+                }
             }
             break;
         }

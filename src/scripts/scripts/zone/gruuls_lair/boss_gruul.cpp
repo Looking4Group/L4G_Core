@@ -76,6 +76,7 @@ struct boss_gruulAI : public ScriptedAI
     {
         pInstance = c->GetInstanceData();
         c->GetPosition(wLoc);
+        me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_USE_NORMAL_MOVEMENT_SPEED, true);
     }
 
     ScriptedInstance *pInstance;
@@ -99,7 +100,7 @@ struct boss_gruulAI : public ScriptedAI
         CaveIn_Timer = 27000;
         GroundSlamTimer = 35000;
         ShatterTimer = 0;
-        HurtfulStrike_Timer = 8000;
+        HurtfulStrike_Timer = 6000;
         Reverberation_Timer = 105000;
         Check_Timer = 3000;
         CaveInReduce = 2000;
@@ -181,7 +182,7 @@ struct boss_gruulAI : public ScriptedAI
                     me->SetSelection(victim->GetGUID());
                 }
 
-                HurtfulStrike_Timer = 8000;
+                HurtfulStrike_Timer = 6000;
                 ShatterTimer = 0;
 
                 //The dummy shatter spell is cast
@@ -201,8 +202,10 @@ struct boss_gruulAI : public ScriptedAI
                 if (!target)
                     target = me->getVictim();
 
+                me->SetSelection(target->GetGUID());
+                me->SetInFront(target);
                 AddSpellToCast(target, SPELL_HURTFUL_STRIKE);
-                HurtfulStrike_Timer = 8000;
+                HurtfulStrike_Timer = 6000;
             }
             else
                 HurtfulStrike_Timer -= diff;

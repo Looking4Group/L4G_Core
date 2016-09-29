@@ -77,7 +77,7 @@ enum LurkerEvents
 
 struct boss_the_lurker_belowAI : public BossAI
 {
-    boss_the_lurker_belowAI(Creature *c) : BossAI(c, DATA_THELURKERBELOW) { 
+    boss_the_lurker_belowAI(Creature *c) : BossAI(c, DATA_LURKER) { 
         SpellEntry *TempSpell = (SpellEntry*)GetSpellStore()->LookupEntry(36151);
         if(TempSpell)
         {
@@ -108,8 +108,8 @@ struct boss_the_lurker_belowAI : public BossAI
         ClearCastQueue();
         events.Reset();
 
-        instance->SetData(DATA_THELURKERBELOWEVENT, NOT_STARTED);
-        instance->SetData(DATA_STRANGE_POOL, NOT_STARTED);
+        instance->SetData(DATA_LURKER_EVENT, NOT_STARTED);
+        instance->SetData(DATA_LURKER_FISHING_EVENT, NOT_STARTED);
 
         // Do not fall to the ground ;]
         me->AddUnitMovementFlag(MOVEFLAG_SWIMMING);
@@ -249,7 +249,7 @@ struct boss_the_lurker_belowAI : public BossAI
 
     void EnterCombat(Unit *who)
     {        
-        instance->SetData(DATA_THELURKERBELOWEVENT, IN_PROGRESS);
+        instance->SetData(DATA_LURKER_EVENT, IN_PROGRESS);
         me->SetReactState(REACT_AGGRESSIVE);        
         AttackStart(who);
     }
@@ -273,7 +273,7 @@ struct boss_the_lurker_belowAI : public BossAI
 
     void JustDied(Unit* Killer)
     {
-        instance->SetData(DATA_THELURKERBELOWEVENT, DONE);
+        instance->SetData(DATA_LURKER_EVENT, DONE);
         me->RemoveAurasDueToSpell(SPELL_SUBMERGE);
     }
 
@@ -318,7 +318,7 @@ struct boss_the_lurker_belowAI : public BossAI
 
     void UpdateAI(const uint32 diff)
     {
-        if (instance->GetData(DATA_STRANGE_POOL) != IN_PROGRESS)
+        if (instance->GetData(DATA_LURKER_FISHING_EVENT) != DONE)
             return;
 
         //boss is invisible, don't attack

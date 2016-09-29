@@ -27,10 +27,10 @@ EndScriptData */
 #define ENCOUNTERS 4
 
 /* The Eye encounters:
-0 - Kael'thas event
-1 - Al' ar event
-2 - Solarian Event
-3 - Void Reaver event
+0 - Al' ar event
+1 - Solarian Event 
+2 - Void Reaver event
+3 - Kael'thas event
 */
 
 struct instance_the_eye : public ScriptedInstance
@@ -76,6 +76,32 @@ struct instance_the_eye : public ScriptedInstance
                 return true;
 
         return false;
+    }
+
+    void HandleKaelDoors() {        
+        uint32 kaelData = GetData(DATA_KAELTHASEVENT);        
+        if (kaelData == NOT_STARTED || kaelData == DONE)
+        {
+            //open Kael'thas doors
+            for (std::set<uint64>::iterator i = DoorGUID.begin(); i != DoorGUID.end(); ++i)
+            {
+                if (GameObject *Door = instance->GetGameObject(*i))
+                {
+                    Door->SetGoState(GO_STATE_ACTIVE);
+                }
+            }
+        }
+        if((GetData(DATA_ALAREVENT) != DONE || GetData(DATA_HIGHASTROMANCERSOLARIANEVENT) != DONE || GetData(DATA_VOIDREAVEREVENT) != DONE) || kaelData == IN_PROGRESS || kaelData == SPECIAL || kaelData == TO_BE_DECIDED)
+        {
+            //close Kael'thas doors
+            for (std::set<uint64>::iterator i = DoorGUID.begin(); i != DoorGUID.end(); ++i)
+            {
+                if (GameObject *Door = instance->GetGameObject(*i))
+                {
+                    Door->SetGoState(GO_STATE_READY);
+                }
+            }
+        }
     }
 
     uint32 GetEncounterForEntry(uint32 entry)
@@ -175,8 +201,11 @@ struct instance_the_eye : public ScriptedInstance
         switch(type)
         {
             case DATA_ALAREVENT:
-                if(Encounters[0] != DONE)
+                if (Encounters[0] != DONE)
+                {
                     Encounters[0] = data;
+                }
+                HandleKaelDoors();
                 break;
             case DATA_HIGHASTROMANCERSOLARIANEVENT:
                 if(Encounters[1] != DONE)
@@ -187,9 +216,12 @@ struct instance_the_eye : public ScriptedInstance
                         {
                             Creature* trashmob = GetCreature(*i);
                             if (trashmob && trashmob->isAlive())
+                            {
                                 trashmob->AI()->DoZoneInCombat();
+                            }
                         }
                 }
+                HandleKaelDoors();
                 break;
             case DATA_VOIDREAVEREVENT:
                 if(Encounters[2] != DONE)
@@ -200,36 +232,30 @@ struct instance_the_eye : public ScriptedInstance
                         {
                             Creature* trashmob = GetCreature(*i);
                             if (trashmob && trashmob->isAlive())
+                            {
                                 trashmob->AI()->DoZoneInCombat();
+                            }
                         }
                 }
+                HandleKaelDoors();
                 break;
-            case DATA_KAELTHASEVENT:
-                if(data == NOT_STARTED || data == DONE)
+            case DATA_KAELTHASEVENT:     
+                if (Encounters[3] != DONE)
                 {
-                    for(std::set<uint64>::iterator i = DoorGUID.begin(); i != DoorGUID.end(); ++i)
-                    {
-                        if(GameObject *Door = instance->GetGameObject(*i))
-                        Door->SetGoState(GO_STATE_ACTIVE);
-                    }
-                }
-                else
-                    for(std::set<uint64>::iterator i = DoorGUID.begin(); i != DoorGUID.end(); ++i)
-                    {
-                        if(GameObject *Door = instance->GetGameObject(*i))
-                        Door->SetGoState(GO_STATE_READY);
-                    }
-                if(Encounters[3] != DONE)
                     Encounters[3] = data;
+                }
+                HandleKaelDoors();                                
                 break;
             case DATA_EXPLODE:
                 // true - explode / false - reset
                 for(std::set<uint64>::iterator i = ExplodeObjectGUID.begin(); i != ExplodeObjectGUID.end(); ++i)
                 {
-                    if(GameObject *ExplodeObject = instance->GetGameObject(*i))
-                    ExplodeObject->SetGoState(GOState(!data));
-                }
-        }
+                    if (GameObject *ExplodeObject = instance->GetGameObject(*i))
+                    {
+                        ExplodeObject->SetGoState(GOState(!data));
+                    }
+                }            
+        }                       
 
         if(data == DONE)
             SaveToDB();

@@ -485,7 +485,12 @@ void World::LoadConfigSettings(bool reload)
     }
 
     ///- Read the player limit and the Message of the day from the config file
-    SetPlayerLimit(sConfig.GetIntDefault("PlayerLimit", DEFAULT_PLAYER_LIMIT), true);
+    int val = sConfig.GetIntDefault("PlayerLimit", DEFAULT_PLAYER_LIMIT);
+    if (val >= 0)
+        SetPlayerLimit(val, true);
+    else
+        SetMinimumPermissionMask(-val);
+
     SetMotd(sConfig.GetStringDefault("Motd", "Welcome to a Trinity Core Server."));
 
     ///- Get string for new logins (newly created characters)

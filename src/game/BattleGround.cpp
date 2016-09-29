@@ -236,7 +236,6 @@ void BattleGround::Update(uint32 diff)
             if (!plr)
                 continue;
             plr->ResurrectPlayer(1.0f);
-
             //restore player's pet
             if (plr->GetLastPetNumber() && plr->isAlive())
             {
@@ -244,12 +243,14 @@ void BattleGround::Update(uint32 diff)
 
                if (!NewPet->LoadPetFromDB(plr, 0, plr->GetLastPetNumber(), true))
                     delete NewPet;
+
                //restore pet's Health and Mana
                else if (plr->getClass() == CLASS_HUNTER)
                {
+                   plr->CastSpell(NewPet, SPELL_REVIVE_PET, true);
                    NewPet->SetHealth(NewPet->GetMaxHealth());
-                   //NewPet->SetPower(POWER_MANA,NewPet->GetMaxPower(POWER_MANA));
-                    NewPet->SetPower(POWER_HAPPINESS ,NewPet->GetMaxPower(POWER_HAPPINESS));
+                   NewPet->SetPower(NewPet->getPowerType(), NewPet->GetMaxPower(NewPet->getPowerType()));
+                   NewPet->SetPower(POWER_HAPPINESS ,NewPet->GetMaxPower(POWER_HAPPINESS));
                }else if (plr->getClass() == CLASS_WARLOCK)
                {
                    NewPet->SetHealth(NewPet->GetMaxHealth());

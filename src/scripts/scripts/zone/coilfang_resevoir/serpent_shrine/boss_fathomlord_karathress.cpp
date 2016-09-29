@@ -158,7 +158,7 @@ struct boss_fathomlord_karathressAI : public ScriptedAI
             RAdvisors[2] = pInstance->GetData64(DATA_CARIBDIS);
 
             // Don't respawn adds if encounter is done
-            if(pInstance->GetData(DATA_KARATHRESSEVENT) == DONE)
+            if(pInstance->GetData(DATA_KARATHRESS_EVENT) == DONE)
             {
                 m_creature->SummonCreature(SEER_OLUM, OLUM_X, OLUM_Y, OLUM_Z, OLUM_O, TEMPSUMMON_MANUAL_DESPAWN, 0);
                 return;
@@ -181,7 +181,7 @@ struct boss_fathomlord_karathressAI : public ScriptedAI
                     }
                 }
             }
-            pInstance->SetData(DATA_KARATHRESSEVENT, NOT_STARTED);
+            pInstance->SetData(DATA_KARATHRESS_EVENT, NOT_STARTED);
         }
     }
 
@@ -217,8 +217,8 @@ struct boss_fathomlord_karathressAI : public ScriptedAI
         DoScriptText(SAY_AGGRO, m_creature);
         DoZoneInCombat();
 
-        pInstance->SetData64(DATA_KARATHRESSEVENT_STARTER, who->GetGUID());
-        pInstance->SetData(DATA_KARATHRESSEVENT, IN_PROGRESS);
+        pInstance->SetData64(DATA_KARATHRESS_EVENT_STARTER, who->GetGUID());
+        pInstance->SetData(DATA_KARATHRESS_EVENT, IN_PROGRESS);
     }
 
     void KilledUnit(Unit *victim)
@@ -231,7 +231,7 @@ struct boss_fathomlord_karathressAI : public ScriptedAI
         DoScriptText(SAY_DEATH, m_creature);
 
         if(pInstance)
-            pInstance->SetData(DATA_KARATHRESSEVENT, DONE);
+            pInstance->SetData(DATA_KARATHRESS_EVENT, DONE);
 
         //support for quest 10944
         m_creature->SummonCreature(SEER_OLUM, OLUM_X, OLUM_Y, OLUM_Z, OLUM_O, TEMPSUMMON_TIMED_DESPAWN, 3600000);
@@ -245,9 +245,9 @@ struct boss_fathomlord_karathressAI : public ScriptedAI
     void UpdateAI(const uint32 diff)
     {
         //Only if not incombat check if the event is started
-        if (!m_creature->isInCombat() && pInstance && pInstance->GetData(DATA_KARATHRESSEVENT))
+        if (!m_creature->isInCombat() && pInstance && pInstance->GetData(DATA_KARATHRESS_EVENT))
         {
-            Unit* target = Unit::GetUnit((*m_creature), pInstance->GetData64(DATA_KARATHRESSEVENT_STARTER));
+            Unit* target = Unit::GetUnit((*m_creature), pInstance->GetData64(DATA_KARATHRESS_EVENT_STARTER));
 
             if (target)
             {
@@ -261,7 +261,7 @@ struct boss_fathomlord_karathressAI : public ScriptedAI
             return;
 
         //someone evaded!
-        if (pInstance && !pInstance->GetData(DATA_KARATHRESSEVENT))
+        if (pInstance && !pInstance->GetData(DATA_KARATHRESS_EVENT))
         {
             EnterEvadeMode();
             return;
@@ -429,15 +429,15 @@ struct boss_fathomguard_sharkkisAI : public ScriptedAI
     void EnterCombat(Unit *who)
     {
         if(pInstance)
-            pInstance->SetData64(DATA_KARATHRESSEVENT_STARTER, who->GetGUID());
+            pInstance->SetData64(DATA_KARATHRESS_EVENT_STARTER, who->GetGUID());
     }
 
     void UpdateAI(const uint32 diff)
     {
         //Only if not incombat check if the event is started
-        if (!m_creature->isInCombat() && pInstance && pInstance->GetData(DATA_KARATHRESSEVENT))
+        if (!m_creature->isInCombat() && pInstance && pInstance->GetData(DATA_KARATHRESS_EVENT))
         {
-            if(Unit* target = Unit::GetUnit((*m_creature), pInstance->GetData64(DATA_KARATHRESSEVENT_STARTER)))
+            if(Unit* target = Unit::GetUnit((*m_creature), pInstance->GetData64(DATA_KARATHRESS_EVENT_STARTER)))
                 AttackStart(target);
         }
 
@@ -446,7 +446,7 @@ struct boss_fathomguard_sharkkisAI : public ScriptedAI
             return;
 
         //someone evaded!
-        if (pInstance && !pInstance->GetData(DATA_KARATHRESSEVENT))
+        if (pInstance && !pInstance->GetData(DATA_KARATHRESS_EVENT))
         {
             EnterEvadeMode();
             return;
@@ -549,7 +549,7 @@ struct boss_fathomguard_tidalvessAI : public ScriptedAI
     void EnterCombat(Unit *who)
     {
         if (pInstance)
-            pInstance->SetData64(DATA_KARATHRESSEVENT_STARTER, who->GetGUID());
+            pInstance->SetData64(DATA_KARATHRESS_EVENT_STARTER, who->GetGUID());
 
         DoCast(m_creature, SPELL_WINDFURY_WEAPON);
     }
@@ -557,9 +557,9 @@ struct boss_fathomguard_tidalvessAI : public ScriptedAI
     void UpdateAI(const uint32 diff)
     {
         //Only if not incombat check if the event is started
-        if (!m_creature->isInCombat() && pInstance && pInstance->GetData(DATA_KARATHRESSEVENT))
+        if (!m_creature->isInCombat() && pInstance && pInstance->GetData(DATA_KARATHRESS_EVENT))
         {
-            if(Unit* target = Unit::GetUnit((*m_creature), pInstance->GetData64(DATA_KARATHRESSEVENT_STARTER)))
+            if(Unit* target = Unit::GetUnit((*m_creature), pInstance->GetData64(DATA_KARATHRESS_EVENT_STARTER)))
                 AttackStart(target);
         }
 
@@ -568,7 +568,7 @@ struct boss_fathomguard_tidalvessAI : public ScriptedAI
             return;
 
         //someone evaded!
-        if(pInstance && !pInstance->GetData(DATA_KARATHRESSEVENT))
+        if(pInstance && !pInstance->GetData(DATA_KARATHRESS_EVENT))
         {
             EnterEvadeMode();
             return;
@@ -674,15 +674,15 @@ struct boss_fathomguard_caribdisAI : public ScriptedAI
     void EnterCombat(Unit *who)
     {
         if(pInstance)
-            pInstance->SetData64(DATA_KARATHRESSEVENT_STARTER, who->GetGUID());
+            pInstance->SetData64(DATA_KARATHRESS_EVENT_STARTER, who->GetGUID());
     }
 
     void UpdateAI(const uint32 diff)
     {
         //Only if not incombat check if the event is started
-        if(pInstance && !m_creature->isInCombat() && pInstance->GetData(DATA_KARATHRESSEVENT))
+        if(pInstance && !m_creature->isInCombat() && pInstance->GetData(DATA_KARATHRESS_EVENT))
         {
-            if(Unit* target = Unit::GetUnit((*m_creature), pInstance->GetData64(DATA_KARATHRESSEVENT_STARTER)))
+            if(Unit* target = Unit::GetUnit((*m_creature), pInstance->GetData64(DATA_KARATHRESS_EVENT_STARTER)))
                 AttackStart(target);
         }
 
@@ -691,7 +691,7 @@ struct boss_fathomguard_caribdisAI : public ScriptedAI
             return;
 
         //someone evaded!
-        if(pInstance && !pInstance->GetData(DATA_KARATHRESSEVENT))
+        if(pInstance && !pInstance->GetData(DATA_KARATHRESS_EVENT))
         {
             EnterEvadeMode();
             return;

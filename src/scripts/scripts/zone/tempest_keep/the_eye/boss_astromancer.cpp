@@ -24,6 +24,8 @@ EndScriptData */
 #include "precompiled.h"
 #include "def_the_eye.h"
 
+#define AGGRO_RANGE                             42.0
+
 #define SAY_AGGRO                           -1550007
 #define SAY_SUMMON1                         -1550008
 #define SAY_SUMMON2                         -1550009
@@ -72,6 +74,7 @@ struct boss_high_astromancer_solarianAI : public ScriptedAI
 {
     boss_high_astromancer_solarianAI(Creature *c) : ScriptedAI(c), Summons(m_creature)
     {
+        m_creature->SetAggroRange(AGGRO_RANGE);
         pInstance = (c->GetInstanceData());
 
         defaultarmor = m_creature->GetArmor();
@@ -134,6 +137,7 @@ struct boss_high_astromancer_solarianAI : public ScriptedAI
         m_creature->SetVisibility(VISIBILITY_ON);
         m_creature->SetFloatValue(OBJECT_FIELD_SCALE_X, defaultsize);
         m_creature->SetUInt32Value(UNIT_FIELD_DISPLAYID, MODEL_HUMAN);
+        m_creature->SetMeleeDamageSchool(SPELL_SCHOOL_NORMAL);
 
         Summons.DespawnAll();
     }
@@ -235,7 +239,7 @@ struct boss_high_astromancer_solarianAI : public ScriptedAI
             if(BlindingLight_Timer < diff)
             {
                 BlindingLight = true;
-                BlindingLight_Timer = 45000;
+                BlindingLight_Timer = urand(20000, 40000);
             }
             else
                 BlindingLight_Timer -= diff;
@@ -400,6 +404,8 @@ struct boss_high_astromancer_solarianAI : public ScriptedAI
         }
         else if(Phase == 4)
         {
+            m_creature->SetMeleeDamageSchool(SPELL_SCHOOL_ARCANE);
+            
             //Fear_Timer
             if (Fear_Timer < diff)
             {
@@ -453,9 +459,9 @@ struct mob_solarium_priestAI : public ScriptedAI
 
     void Reset()
     {
-        healTimer = 9000;
-        holysmiteTimer = 1;
-        aoesilenceTimer = 15000;
+        healTimer = urand(1, 1000);
+        holysmiteTimer = urand(1, 1000);
+        aoesilenceTimer = 5000;
     }
 
     void EnterCombat(Unit *who)
@@ -476,20 +482,20 @@ struct mob_solarium_priestAI : public ScriptedAI
             if(target)
             {
                 DoCast(target,SOLARIUM_HEAL);
-                healTimer = 9000;
+                healTimer = urand(3000, 9000);
             }
         } else healTimer -= diff;
 
         if(holysmiteTimer < diff)
         {
             DoCast(m_creature->getVictim(), SOLARIUM_SMITE);
-            holysmiteTimer = 4000;
+            holysmiteTimer = urand(4000, 12000);
         } else holysmiteTimer -= diff;
 
         if (aoesilenceTimer < diff)
         {
             DoCast(m_creature->getVictim(), SOLARIUM_SILENCE);
-            aoesilenceTimer = 13000;
+            aoesilenceTimer = urand(6000, 12000);
         } else aoesilenceTimer -= diff;
 
         DoMeleeAttackIfReady();

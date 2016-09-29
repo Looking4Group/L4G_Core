@@ -24,6 +24,8 @@ EndScriptData */
 #include "precompiled.h"
 #include "def_serpent_shrine.h"
 
+#define AGGRO_RANGE                     35
+
 #define SAY_AGGRO                   -1548030
 #define SAY_SUMMON1                 -1548031
 #define SAY_SUMMON2                 -1548032
@@ -81,6 +83,7 @@ struct boss_morogrim_tidewalkerAI : public ScriptedAI
 {
     boss_morogrim_tidewalkerAI(Creature *c) : ScriptedAI(c)
     {
+        m_creature->SetAggroRange(AGGRO_RANGE);
         pInstance = (c->GetInstanceData());
         m_creature->GetPosition(wLoc);
     }
@@ -108,7 +111,7 @@ struct boss_morogrim_tidewalkerAI : public ScriptedAI
         Phase2 = false;
         m_creature->CastSpell(m_creature, SPELL_THRASH_PASSIVE, true);
 
-        pInstance->SetData(DATA_MOROGRIMTIDEWALKEREVENT, NOT_STARTED);
+        pInstance->SetData(DATA_MOROGRIM_EVENT, NOT_STARTED);
     }
 
     void KilledUnit(Unit *victim)
@@ -119,13 +122,13 @@ struct boss_morogrim_tidewalkerAI : public ScriptedAI
     void JustDied(Unit *victim)
     {
         DoScriptText(SAY_DEATH, m_creature);
-        pInstance->SetData(DATA_MOROGRIMTIDEWALKEREVENT, DONE);
+        pInstance->SetData(DATA_MOROGRIM_EVENT, DONE);
     }
 
     void EnterCombat(Unit *who)
     {
         DoScriptText(SAY_AGGRO, m_creature);
-        pInstance->SetData(DATA_MOROGRIMTIDEWALKEREVENT, IN_PROGRESS);
+        pInstance->SetData(DATA_MOROGRIM_EVENT, IN_PROGRESS);
     }
 
     void UpdateAI(const uint32 diff)

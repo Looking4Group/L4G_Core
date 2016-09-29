@@ -538,6 +538,7 @@
     <ClCompile Include="..\..\src\scripts\scripts\zone\moonglade\moonglade.cpp" />
     <ClCompile Include="..\..\src\scripts\scripts\zone\razorfen_kraul\instance_razorfen_kraul.cpp" />
     <ClCompile Include="..\..\src\scripts\scripts\zone\razorfen_kraul\razorfen_kraul.cpp" />
+    <ClCompile Include="..\..\src\scripts\scripts\zone\redridge_mountains\redridge_mountains.cpp" />
     <ClCompile Include="..\..\src\scripts\scripts\zone\ruins_of_ahnqiraj\boss_ayamiss.cpp" />
     <ClCompile Include="..\..\src\scripts\scripts\zone\ruins_of_ahnqiraj\boss_buru.cpp" />
     <ClCompile Include="..\..\src\scripts\scripts\zone\ruins_of_ahnqiraj\boss_kurinnaxx.cpp" />
