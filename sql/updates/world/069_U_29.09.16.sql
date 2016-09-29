@@ -87,6 +87,12 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('2201802','22018','0','0','100','1','10000','14000','17000','21000','11','35871','1','0','0','0','0','0','0','0','0','0','Eclipsion Cavalier - Cast Spellbreaker'),
 ('2201803','22018','6','0','100','0','0','0','0','0','11','38311','1','7','0','0','0','0','0','0','0','0','Eclipsion Cavalier - Summon Eclipsion Hawkstrider on Death');
 
+-- Scryer Hawkstrider 22969
+UPDATE `creature_template` SET `minlevel`='70',`maxlevel`='70',`minhealth`='4192',`maxhealth`='4192',`armor`='6792',`faction_A`='1838',`faction_H`='1838',`mindmg`='60',`maxdmg`='123',`unit_flags`='32768',`AIName`='EventAI'  WHERE `entry` = '22969';
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN ('22969');
+INSERT INTO `creature_ai_scripts` VALUES
+('2296901','22969','1','0','100','0','10000','10000','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Scryer Hawkstrider - Despawn OOC');
+
 UPDATE `creature` SET `position_x`='-1230.2587',`position_y`='5751.5078',`position_z`='41.0792' WHERE `guid` = 64845;
 UPDATE `creature` SET `position_x`='68.3115',`position_y`='8190.1899',`position_z`='21.2747',`orientation`='4.0090' WHERE `guid` = 64658;
 
