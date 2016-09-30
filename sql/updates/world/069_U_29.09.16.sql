@@ -125,3 +125,18 @@ DELETE FROM `reference_loot_template` WHERE `entry` = 50028;
 INSERT INTO `reference_loot_template` VALUES (50028, 30581, 0, 1, 1, 1, 0, 0, 0);
 INSERT INTO `reference_loot_template` VALUES (50028, 30575, 0, 1, 1, 1, 0, 0, 0);
 INSERT INTO `reference_loot_template` VALUES (50028, 30582, 0, 1, 1, 1, 0, 0, 0);
+
+UPDATE `creature` SET `spawntimesecs` = '300' WHERE `id` = 20159;
+UPDATE `creature_template` SET `speed`='1.20',`AIName`='EventAI' WHERE `entry` = 20159;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 20159;
+INSERT INTO `creature_ai_scripts` VALUES 
+(2015901,20159,9,0,100,1,0,10,12000,15000,11,11831,0,1,0,0,0,0,0,0,0,0,'Magister Aledis - Casts Frost Nova'),
+(2015902,20159,0,0,100,1,3500,5500,10000,10000,11,33975,1,0,0,0,0,0,0,0,0,0,'Magister Aledis - Casts Pyroblast'),
+(2015903,20159,4,0,100,0,0,0,0,0,11,20823,1,0,22,1,0,0,0,0,0,0,'Magister Aledis - Cast Fireball and Set Phase 1 on Aggro'),
+(2015904,20159,0,13,100,1,3000,3500,3000,3500,0,0,0,0,11,20823,1,0,0,0,0,0,'Magister Aledis - Cast Fireball (Phase 1)'),
+(2015905,20159,3,13,100,0,15,0,0,0,21,1,0,0,22,2,0,0,0,0,0,0,'Magister Aledis - Start Movement and Set Phase 2 when Mana is at 15%'),
+(2015906,20159,9,13,100,1,25,80,0,0,21,1,0,0,0,0,0,0,0,0,0,0,'Magister Aledis - Start Movement Beyond 25 Yards'),
+(2015907,20159,3,11,100,1,100,30,100,100,22,1,0,0,0,0,0,0,0,0,0,0,'Magister Aledis - Set Phase 1 when Mana is above 30% (Phase 2)'),
+(2015908,20159,2,0,100,0,15,0,0,0,22,3,0,0,0,0,0,0,0,0,0,0,'Magister Aledis - Set Phase 3 at 15% HP'),
+(2015909,20159,2,7,100,0,15,0,0,0,21,1,0,0,25,0,0,0,1,-47,0,0,'Magister Aledis - Start Movement and Flee at 15% HP (Phase 3)'),
+(2015910,20159,7,0,100,0,0,0,0,0,22,0,0,0,0,0,0,0,0,0,0,0,'Magister Aledis - On Evade set Phase to 0');
