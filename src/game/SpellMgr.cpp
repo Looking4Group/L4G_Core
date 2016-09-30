@@ -2396,14 +2396,14 @@ void SpellMgr::LoadSpellChains()
 
     // Greater Blessing of Sanctuary I
     spell_id = 25899;
-    mSpellChains[spell_id].prev = 27168;    // BoS V
+    mSpellChains[spell_id].prev = 20914;    // BoS IV
     mSpellChains[spell_id].next = 27169;    // GBoS II
     mSpellChains[spell_id].first = 20911;   // BoS I
     mSpellChains[spell_id].last = 27169;    // GBoS II
-    mSpellChains[spell_id].rank = 6;
+    mSpellChains[spell_id].rank = 5;        // should not be 6 otherwise BoS V is parent spell
 
-    // link BoS V with GBoS I
-    mSpellChains[27168].next = spell_id;
+    // link BoS IV with GBoS I
+    mSpellChains[20914].next = spell_id;
 
     // Greater Blessing of Sanctuary II
     spell_id = 27169;
