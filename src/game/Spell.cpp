@@ -3204,6 +3204,16 @@ void Spell::SendCastResult(SpellCastResult result)
             // hardcode areas limitation case
             switch (GetSpellInfo()->Id)
             {
+                case 41304:                             // Blue Ogre Brew
+                case 41306:                             // Red Ogre Brew
+                case 40567:                             // Unstable Flask of the Bandit
+                case 40568:                             // Unstable Flask of the Elder
+                case 40572:                             // Unstable Flask of the Beast                
+                case 40573:                             // Unstable Flask of the Physician             
+                case 40575:                             // Unstable Flask of the Soldier
+                case 40576:                             // Unstable Flask of the Sorcerer
+                    data << uint32(3522);
+                    break;
                 case 41617:                             // Cenarion Mana Salve
                 case 41619:                             // Cenarion Healing Salve
                     data << uint32(3905);
