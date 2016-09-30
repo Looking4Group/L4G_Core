@@ -3957,8 +3957,9 @@ bool SpellMgr::IsSpellValid(SpellEntry const* spellInfo, Player* pl, bool msg)
 
 bool SpellMgr::IsSpellAllowedInLocation(SpellEntry const *spellInfo,uint32 map_id,uint32 zone_id,uint32 area_id)
 {
-    // hack moved from Player::UpdateAreaDependentAuras <--- is still needed ? Oo i don't think so ...
-    if (spellInfo->Id == 38157)
+    //  Overseer Disguise         Blue Ogre Brew            Red Ogre Brew
+    if (spellInfo->Id == 38157 || spellInfo->Id == 41304 || spellInfo->Id == 41306)
+        // Blade's Edge Mountains & Forge Camp: Wrath
     {
         if (area_id == 3522 || area_id == 3785)
             return true;
