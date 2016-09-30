@@ -1,4 +1,5 @@
 #include "precompiled.h"
+#include "slave_pens.h"
 
 #define SPELL_HAMSTRING     9080
 #define SPELL_HEAD_CRACK    16172
@@ -202,85 +203,124 @@ CreatureAI* GetAI_npc_coilfang_slavemaster(Creature *_creature)
 }
 
 
-#define SPELL_MARK_OF_BITE         34906
-#define MOB_COILFANG_CHAMPION      17957
-#define MOB_COILFANG_ENCHANTRESS   17961
-#define MOB_COILFANG_SOOTHSAYER    17960
+enum Misc
+{
+    SPELL_MARK_OF_BITE          = 34906,
+    COILFANG_CHAMPION           = 17957,
+    COILFANG_SOOTHSAYER         = 17960,
+    COILFANG_ENCHANTRESS        = 17961,
+    QUEST_LOST_IN_ACTION        = 9738,
+    NPC_NATURALIST_BITE_ENTRY   = 17893
+};
 
 struct npc_naturalist_biteAI : public ScriptedAI
 {
     npc_naturalist_biteAI(Creature *c) : ScriptedAI(c) {}
 
-    bool screamed, buffed;
+    bool HasYelled, HasSummoned;
+    uint32 GossipTimer;
 
     void Reset()
     {
-        screamed = false;
+        HasYelled = false;
+        HasSummoned = false;
+        me->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+        GossipTimer = 0;
+    }
 
+    void EnterCombat(Unit *who)
+    {
+        me->Say("Uh oh! It would appear that all of the noise you've been making has attracted some unwanted attention!", 0, 0);
     }
 
     void MoveInLineOfSight(Unit *u)
     {
-        if (!screamed)
+        if (u->GetTypeId() == TYPEID_PLAYER && me->IsWithinDistInMap(u, 50.0f) && !HasYelled)
         {
-            m_creature->Yell("Hier bin ich! Holt mich hier raus!", LANG_UNIVERSAL, u->GetGUID());
-            screamed = true;
+            me->Yell("Hey! Over here! Yeah, over here... I'm in the cage!!", 0, 0);
+            HasYelled= true;
         }
     }
 
-    void BuffPlayers(Player *player)
+    void JustSummoned(Creature* summoned)
     {
-        if (!buffed)
-        {
-            //Buff every Player in map..
-            Map *map = me->GetMap();
-            if(!map->IsDungeon()) return;
-            Map::PlayerList const &PlayerList = map->GetPlayers();
-            for(Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
-            {
-                if (Unit* i_pl = i->getSource()->ToUnit())
-                    if(i_pl->isAlive())
-                        me->CastSpell(i_pl, SPELL_MARK_OF_BITE, true);                    
-            }
-            GameObject *go = FindGameObject(182094, 20, me);
-            go->SetGoState(GO_STATE_ACTIVE);
-            Creature *c1 = me->SummonCreature(MOB_COILFANG_CHAMPION, -120.0f, -752.0f, 37.5f, 0, TEMPSUMMON_CORPSE_DESPAWN, 12000);
-            Creature *c2 = me->SummonCreature(MOB_COILFANG_ENCHANTRESS, -120.0f, -752.0f, 37.5f, 0, TEMPSUMMON_CORPSE_DESPAWN, 12000);
-            Creature *c3 = me->SummonCreature(MOB_COILFANG_SOOTHSAYER, -120.0f, -752.0f, 37.5f, 0, TEMPSUMMON_CORPSE_DESPAWN, 12000);
-            c1->GetMotionMaster()->MoveChase(player);
-            c1->Attack(player, true);
-            c2->Attack(player, false);
-            c3->Attack(player, false);
-            //me->GetMotionMaster()->MovePoint(0, -195.0f, -797.0f, 44.0f);
-        }
-
+        summoned->AI()->AttackStart(me);
     }
 
+    void SummonMobs()
+    {
+        me->SummonCreature(COILFANG_CHAMPION, -138.0847f, -758.946f, 37.892f, 3.699f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 3*MINUTE*IN_MILISECONDS);
+        me->SummonCreature(COILFANG_SOOTHSAYER, -141.585f, -754.85f, 37.892f, 3.762f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 3*MINUTE*IN_MILISECONDS);
+        me->SummonCreature(COILFANG_ENCHANTRESS, -144.608f, -751.4299f, 37.8923f, 3.762f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 3*MINUTE*IN_MILISECONDS);
+        
+        me->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+        GossipTimer = 45000;
+        HasSummoned = true;
+    }
+
+    void UpdateAI(const uint32 diff)
+    {
+        if (GossipTimer <= diff)
+            me->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+        else
+            GossipTimer -= diff;
+        
+        if (!UpdateVictim())
+            return;
+
+        DoMeleeAttackIfReady();
+    }
 };
+
+bool GossipHello_npc_naturalist_bite(Player *player, Creature *creature)
+{
+    ScriptedInstance* instance = creature->GetInstanceData();
+
+    if (!instance)
+        return false;
+
+    if (player->GetQuestStatus(QUEST_LOST_IN_ACTION) == QUEST_STATUS_INCOMPLETE)
+        player->KilledMonster(NPC_NATURALIST_BITE_ENTRY, NULL);
+
+    if (npc_naturalist_biteAI* naturalist = dynamic_cast<npc_naturalist_biteAI*>(creature->AI()))
+        if (!naturalist->HasSummoned)
+            player->ADD_GOSSIP_ITEM(0, "Alright, Bite, I'll let you out.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+
+    if (instance->GetData(TYPE_NATURALIST_EVENT) == DONE && !player->HasAura(SPELL_MARK_OF_BITE, 0))
+        player->ADD_GOSSIP_ITEM(0, "Naturalist, please grant me your boon.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+    
+    //TODO: Add correct gossip texts
+    player->SEND_GOSSIP_MENU(1, creature->GetGUID());
+    return true;
+}
+
+bool GossipSelect_npc_naturalist_bite(Player *player, Creature *creature, uint32 sender, uint32 action)
+{
+    ScriptedInstance* instance = creature->GetInstanceData();
+
+    switch (action)
+    {
+        case GOSSIP_ACTION_INFO_DEF + 1:
+            player->CLOSE_GOSSIP_MENU();
+            if (instance)
+            {
+                instance->HandleGameObject(instance->GetData64(DATA_CAGE), true);
+                instance->SetData(TYPE_NATURALIST_EVENT, DONE);
+                dynamic_cast<npc_naturalist_biteAI*>(creature->AI())->SummonMobs();
+            }
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 2:
+            player->CLOSE_GOSSIP_MENU();
+            creature->CastSpell(player, SPELL_MARK_OF_BITE, true);
+            break;
+    }
+    return true;
+}
 
 CreatureAI* GetAI_npc_naturalist_bite(Creature *_creature)
 {
     return new npc_naturalist_biteAI(_creature);
 }
-
-
-bool GossipHello_npc_naturalist_bite(Player *Player, Creature *Creature)
-{
-    Player->ADD_GOSSIP_ITEM(0,"Ich helfe euch...",GOSSIP_SENDER_MAIN,GOSSIP_ACTION_INFO_DEF+1 );
-    Player->PlayerTalkClass->SendGossipMenu(1,Creature->GetGUID());
-    return true;
-}
-
-bool GossipSelect_npc_naturalist_bite(Player* Player, Creature* Creature, uint32 sender, uint32 action)
-{
-    if (action == GOSSIP_ACTION_INFO_DEF+1)
-    {
-        ((npc_naturalist_biteAI*)Creature->AI())->BuffPlayers(Player);
-        Player->PlayerTalkClass->CloseGossip();
-    }
-    return true;
-}
-
 
 void AddSC_slave_pens_trash()
 {

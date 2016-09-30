@@ -1717,6 +1717,9 @@
     <ClInclude Include="..\..\src\scripts\scripts\custom\barber.h">
       <Filter>Scripts\custom</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\scripts\scripts\zone\coilfang_resevoir\slave_pens\slave_pens.h">
+      <Filter>Scripts\zone\Coilfang Resevoir\Slave Pens</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\..\src\scripts\trinityscripts.rc" />
