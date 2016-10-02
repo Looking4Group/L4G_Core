@@ -2303,3 +2303,139 @@ INSERT INTO `waypoint_data` VALUES (52345, 26, -5094.85, 679.147, 85.3696, 0, 0,
 INSERT INTO `waypoint_data` VALUES (52345, 27, -5106.98, 672.888, 85.3975, 0, 0, 0, 0, 0);
 INSERT INTO `waypoint_data` VALUES (52345, 28, -5142.35, 666.693, 81.2582, 0, 0, 0, 0, 0);
 INSERT INTO `waypoint_data` VALUES (52345, 29, -5189.73, 683.031, 70.062, 0, 0, 0, 0, 0);
+
+UPDATE `creature_template` SET `faction_A`='62',`faction_H`='62' WHERE `entry` IN (23324,23305); 
+
+-- Murkblood Miner 23287
+UPDATE `creature_template` SET `faction_A`='62',`faction_H`='62', `equipment_id` = 2141 WHERE `entry` = 23287;
+DELETE FROM `creature_template_addon` WHERE `entry` = 23287;
+INSERT INTO `creature_template_addon` VALUES
+(23287,0,0,0,0,4097,173,0,NULL);
+
+UPDATE `creature` SET `MovementType` = 2 WHERE `guid` IN (40727,140771);
+UPDATE `creature` SET `MovementType` = 0 WHERE `guid` IN (140755,140756);
+DELETE FROM `creature_addon` WHERE `guid` IN (40727,140771);
+INSERT INTO `creature_addon` VALUES
+(40727,140755,0,0,0,4097,0,0,NULL),
+(140771,140756,0,0,0,4097,0,0,NULL);
+
+DELETE FROM `creature_formations` WHERE `leaderguid` IN (40727,140771);
+INSERT INTO `creature_formations` VALUES 
+(40727,40727,100,360,2),
+(40727,140755,2,3.1,2),
+--
+(140771,140771,100,360,2),
+(140771,140756,2,3.1,2);
+
+-- Dragonmaw Foreman 23376
+
+-- Mine Cart 23289
+UPDATE `creature_template` SET `speed`='1.25',`unit_flags`='33554432' WHERE `entry` = 23289;
+UPDATE `creature_addon` SET `auras` = '40684 0' WHERE `guid` IN (140755,140756);
+
+UPDATE `creature` SET `position_x`='-5133.9995', `position_y`='700.8438', `position_z`='41.6098', `orientation`='1.8326' WHERE `guid` = 40727;
+UPDATE `creature` SET `position_x`='-5211.1293', `position_y`='621.6760', `position_z`='46.6056', `orientation`='6.1756' WHERE `guid` = 140771;
+
+UPDATE `creature` SET `spawndist` = 5, `MovementType` = 1 WHERE `guid` IN (127346,127345,127344,127343,127342,127341,127340,127337,127336,127335,127334,127333,127332,127331,127330,127329,127328,127327,127326,127325,127324,140705);
+UPDATE `creature` SET `spawndist` = 5, `MovementType` = 1 WHERE `guid` BETWEEN 140705 AND 140754;
+DELETE FROM `creature_addon` WHERE `guid` IN (127346,127345,127344,127343,127342,127341,127340,127337,127336,127335,127334,127333,127332,127331,127330,127329,127328,127327,127326,127325,127324,140705);
+DELETE FROM `creature_addon` WHERE `guid` BETWEEN 140705 AND 140754;
+INSERT INTO `creature_addon` VALUES
+(140705,0,0,0,0,4097,0,0,NULL),
+(140706,0,0,0,0,4097,0,0,NULL),
+(140707,0,0,0,0,4097,0,0,NULL),
+(140708,0,0,0,0,4097,0,0,NULL),
+(140709,0,0,0,0,4097,0,0,NULL),
+(140710,0,0,0,0,4097,0,0,NULL),
+(140711,0,0,0,0,4097,0,0,NULL),
+(140712,0,0,0,0,4097,0,0,NULL),
+(140713,0,0,0,0,4097,0,0,NULL),
+(140714,0,0,0,0,4097,0,0,NULL),
+(140715,0,0,0,0,4097,0,0,NULL),
+(140716,0,0,0,0,4097,0,0,NULL),
+(140717,0,0,0,0,4097,0,0,NULL),
+(140718,0,0,0,0,4097,0,0,NULL),
+(140719,0,0,0,0,4097,0,0,NULL),
+(140720,0,0,0,0,4097,0,0,NULL),
+(140721,0,0,0,0,4097,0,0,NULL),
+(140722,0,0,0,0,4097,0,0,NULL),
+(140723,0,0,0,0,4097,0,0,NULL),
+(140724,0,0,0,0,4097,0,0,NULL),
+(140725,0,0,0,0,4097,0,0,NULL),
+(140726,0,0,0,0,4097,0,0,NULL),
+(140727,0,0,0,0,4097,0,0,NULL),
+(140728,0,0,0,0,4097,0,0,NULL),
+(140729,0,0,0,0,4097,0,0,NULL),
+(140730,0,0,0,0,4097,0,0,NULL),
+(140731,0,0,0,0,4097,0,0,NULL),
+(140732,0,0,0,0,4097,0,0,NULL),
+(140733,0,0,0,0,4097,0,0,NULL),
+(140734,0,0,0,0,4097,0,0,NULL),
+(140735,0,0,0,0,4097,0,0,NULL),
+(140736,0,0,0,0,4097,0,0,NULL),
+(140737,0,0,0,0,4097,0,0,NULL),
+(140738,0,0,0,0,4097,0,0,NULL),
+(140739,0,0,0,0,4097,0,0,NULL),
+(140740,0,0,0,0,4097,0,0,NULL),
+(140741,0,0,0,0,4097,0,0,NULL),
+(140742,0,0,0,0,4097,0,0,NULL),
+(140743,0,0,0,0,4097,0,0,NULL),
+(140744,0,0,0,0,4097,0,0,NULL),
+(140745,0,0,0,0,4097,0,0,NULL),
+(140746,0,0,0,0,4097,0,0,NULL),
+(140747,0,0,0,0,4097,0,0,NULL),
+(140748,0,0,0,0,4097,0,0,NULL),
+(140749,0,0,0,0,4097,0,0,NULL),
+(140750,0,0,0,0,4097,0,0,NULL),
+(140751,0,0,0,0,4097,0,0,NULL),
+(140752,0,0,0,0,4097,0,0,NULL),
+(140753,0,0,0,0,4097,0,0,NULL),
+(140754,0,0,0,0,4097,0,0,NULL);
+INSERT INTO `creature_addon` VALUES
+(127346,0,0,0,0,4097,0,0,NULL),
+(127345,0,0,0,0,4097,0,0,NULL),
+(127344,0,0,0,0,4097,0,0,NULL),
+(127343,0,0,0,0,4097,0,0,NULL),
+(127342,0,0,0,0,4097,0,0,NULL),
+(127341,0,0,0,0,4097,0,0,NULL),
+(127340,0,0,0,0,4097,0,0,NULL),
+(127337,0,0,0,0,4097,0,0,NULL),
+(127336,0,0,0,0,4097,0,0,NULL),
+(127335,0,0,0,0,4097,0,0,NULL),
+(127334,0,0,0,0,4097,0,0,NULL),
+(127333,0,0,0,0,4097,0,0,NULL),
+(127332,0,0,0,0,4097,0,0,NULL),
+(127331,0,0,0,0,4097,0,0,NULL),
+(127330,0,0,0,0,4097,0,0,NULL),
+(127329,0,0,0,0,4097,0,0,NULL),
+(127328,0,0,0,0,4097,0,0,NULL),
+(127327,0,0,0,0,4097,0,0,NULL),
+(127326,0,0,0,0,4097,0,0,NULL),
+(127325,0,0,0,0,4097,0,0,NULL),
+(127324,0,0,0,0,4097,0,0,NULL);
+
+-- Nethermine Ravager 23326
+UPDATE `creature_template` SET `faction_A`='1824',`faction_H`='1824',`AIName`='EventAI' WHERE `entry` = 23326; --
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 23326;
+INSERT INTO `creature_ai_scripts` VALUES
+(2332601,23326,9,0,100,1,0,5,10000,12000,11,13443,1,0,0,0,0,0,0,0,0,0,'Nethermine Ravager - Cast Rend'),
+(2332602,23326,0,0,100,1,5000,10000,15000,16000,11,33810,0,1,0,0,0,0,0,0,0,0,'Nethermine Ravager - Cast Rock Shell'); -- trigger 33811
+DELETE FROM `spell_linked_spell` WHERE `spell_trigger`= -33810;
+INSERT INTO `spell_linked_spell` VALUES 
+(-33810,33811,0,'Rock Shell trigger Broken Rage');
+-- Nethermine Flayer 23169
+UPDATE `creature_template` SET `faction_A`='1824',`faction_H`='1824', `mindmg`='300',`maxdmg`='600',`AIName`='EventAI' WHERE `entry` = 23169; -- 98 209
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 23169;
+INSERT INTO `creature_ai_scripts` VALUES
+(2316901,23169,9,0,100,1,0,5,10000,12000,11,13443,1,0,0,0,0,0,0,0,0,0,'Nethermine Flayer - Cast Rend'),
+(2316902,23169,0,0,100,1,4000,8000,8000,16000,11,40770,1,0,0,0,0,0,0,0,0,0,'Nethermine Flayer - Cast Shred Armor');
+
+UPDATE `creature` SET `spawndist` = 5, `MovementType` = 1 WHERE `id` = 23169;
+
+-- Black Blood of Draenor 23286
+UPDATE `creature_template` SET `faction_A`='1824',`faction_H`='1824', `AIName`='EventAI' WHERE `entry` = '23286';
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = '23286';
+INSERT INTO `creature_ai_scripts` VALUES
+('2328601','23286','0','0','100','1','4000','8000','10000','20000','11','40818','0','0','0','0','0','0','0','0','0','0','Black Blood of Draenor - Cast Toxic Slime'),
+('2328602','23286','2','0','100','0','50','0','0','0','11','7279','1','0','0','0','0','0','0','0','0','0','Black Blood of Draenor - Cast Black Sludge at 50% HP'),
+('2328603','23286','2','0','100','0','15','0','0','0','25','0','0','0','0','0','0','0','0','0','0','0','Black Blood of Draenor - Flee at 15% HP');
