@@ -1,0 +1,1 @@
+UPDATE `game_event` SET `length` = '23040' WHERE `entry` = 26; --old: 20160 changed from 14days to 16days 
