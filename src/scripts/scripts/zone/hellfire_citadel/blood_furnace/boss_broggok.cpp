@@ -66,8 +66,6 @@ struct boss_broggokAI : public ScriptedAI
     uint32 PoisonSpawn_Timer;
     uint32 PoisonBolt_Timer;
     uint32 checkTimer;
-    
-    Map *pMap;
 
     SummonList summons;
     ScriptedInstance *pInstance;
@@ -78,8 +76,6 @@ struct boss_broggokAI : public ScriptedAI
 
     void Reset()
     {        
-        pMap = me->GetMap();
-
         AcidSpray_Timer = 10000;
         PoisonSpawn_Timer = urand(8000, 12000);
         PoisonBolt_Timer = 7000;
@@ -195,7 +191,7 @@ struct boss_broggokAI : public ScriptedAI
             //Here is a fix to a bug. There was no way to reset the boss gauntlet packs if you wiped on it.
             //Therefore, when you run back, encounter is still in progress, and you can simply pull next pack.
             //They should reset.
-            if (pMap->GetAlivePlayersCountExceptGMs() == 0)
+            if (me->GetMap()->GetAlivePlayersCountExceptGMs() == 0)
             {
                 std::cout << "We are going to reset, cause we're in combat, and we wiped." << std::endl;
                 //Reset it! We wiped!
