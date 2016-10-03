@@ -56,6 +56,10 @@ EndScriptData */
 #define SPELL_MAGIC_BARRIER         38112
 #define SPELL_PARALYZE              38132
 #define SPELL_PERSUASION            38511   //Mindcontrol
+#define SPELL_IMMUNITY1             24395   //MC IMMUNE1
+#define SPELL_IMMUNITY2             24396   //MC IMMUNE2
+#define SPELL_IMMUNITY3             24397   //MC IMMUNE3
+#define SPELL_IMMUNITY4             26592   //MC IMMUNE4
 
 #define MIDDLE_X                    30.134
 #define MIDDLE_Y                    -923.65
@@ -247,6 +251,10 @@ struct boss_lady_vashjAI : public ScriptedAI
             if(target)
             {
                 m_creature->AddAura(SPELL_PERSUASION, target);
+                m_creature->AddAura(SPELL_IMMUNITY1, target);
+                m_creature->AddAura(SPELL_IMMUNITY2, target);
+                m_creature->AddAura(SPELL_IMMUNITY3, target);
+                m_creature->AddAura(SPELL_IMMUNITY4, target);              
             }
         }
     }
