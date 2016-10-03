@@ -32,18 +32,20 @@ EndScriptData */
 
 enum eEvents
 {
-    EVENT_NULL,
-    EVENT_1_CAGE,
-    EVENT_2_CAGE,
-    EVENT_3_CAGE,
-    EVENT_4_CAGE,
-    EVENT_FIGHT
+    EVENT_NULL,   //0
+    EVENT_START,  //1
+    EVENT_2_CAGE, //2
+    EVENT_3_CAGE, //3
+    EVENT_4_CAGE, //4
+    EVENT_FIGHT   //5
 };
 
 struct CellPosition
 {
     float x, y, z, o;
 };
+
+
 
 static CellPosition CellLocation[]=
 {
@@ -73,7 +75,7 @@ struct boss_broggokAI : public ScriptedAI
     std::map<uint64, uint8> prisoners;
 
     void Reset()
-    {
+    {        
         AcidSpray_Timer = 10000;
         PoisonSpawn_Timer = urand(8000, 12000);
         PoisonBolt_Timer = 7000;
@@ -83,7 +85,9 @@ struct boss_broggokAI : public ScriptedAI
         prisoners.clear();
 
         if (pInstance)
+        {
             pInstance->SetData(DATA_BROGGOKEVENT, NOT_STARTED);
+        }
 
         me->SetReactState(REACT_PASSIVE);
 
@@ -132,27 +136,25 @@ struct boss_broggokAI : public ScriptedAI
 
     void DoAction(const int32 param)
     {
-        switch (param)
+        //The lever has been pulled, phase 1 - start the encounter.
+        if (param == EVENT_START)
         {
-            case EVENT_1_CAGE:
-                if (pInstance)
-                    pInstance->SetData(DATA_BROGGOKEVENT, IN_PROGRESS);
-            case EVENT_2_CAGE:
-            case EVENT_3_CAGE:
-            case EVENT_4_CAGE:
-            {
-                phase = eEvents(param);
-                break;
-            }
-            default:
-                me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                me->SetReactState(REACT_AGGRESSIVE);
-
-                DoZoneInCombat();
-                pInstance->HandleGameObject(pInstance->GetData64(5), true, NULL);
-                return;
+            if (pInstance)
+                pInstance->SetData(DATA_BROGGOKEVENT, IN_PROGRESS);
         }
+        //Boss is ready to fight.
+        else if (param == EVENT_FIGHT)
+        {
+            me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+            me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+            me->SetReactState(REACT_AGGRESSIVE);
+
+            DoZoneInCombat();
+            pInstance->HandleGameObject(pInstance->GetData64(5), true, NULL);
+            return;            
+        }
+
+        phase = eEvents(param);
 
         pInstance->HandleGameObject(pInstance->GetData64(phase), true, NULL);
         for (std::map<uint64, uint8>::iterator it = prisoners.begin(); it != prisoners.end(); it++)
@@ -161,6 +163,7 @@ struct boss_broggokAI : public ScriptedAI
             {
                 if (Creature *pPrisoner = me->GetCreature(it->first))
                 {
+                    // std::cout << "Should see this 4 times per phase." << std::endl;
                     pPrisoner->SetAggroRange(90.0f);
                     pPrisoner->SetReactState(REACT_AGGRESSIVE);
 
@@ -172,13 +175,36 @@ struct boss_broggokAI : public ScriptedAI
         }
     }
 
+    //This is called either per instance ID, or per player for that instance ID.
+    //It calls this even if you're out of instance - as long as you have an ID.
+    //When you reset instance, it stops calling it.
+    //Then: The very moment you enter the dungeon, it begins calling it.
+    //It's called about 5 times per second.
+    //It STOPS executing this method once the boss dies.
     void UpdateAI(const uint32 diff)
     {
+        //Save processing power by preventing many if statements being called.
+        if (phase == EVENT_NULL)
+            return;
+        else
+        {
+            //Here is a fix to a bug. There was no way to reset the boss gauntlet packs if you wiped on it.
+            //Therefore, when you run back, encounter is still in progress, and you can simply pull next pack.
+            //They should reset.
+            if (me->GetMap()->GetAlivePlayersCountExceptGMs() == 0)
+            {
+                std::cout << "We are going to reset, cause we're in combat, and we wiped." << std::endl;
+                //Reset it! We wiped!
+                Reset();
+            }
+        }
+
+        //If the boss does not have a victim yet (Calls ScriptedAI --> CreatureAI --> UpdateVictim)
         if (!UpdateVictim())
         {
             if (checkTimer < diff)
             {
-                if (phase != EVENT_NULL && phase != EVENT_FIGHT)
+                if (phase != EVENT_FIGHT)
                 {
                     bool found = false;
                     for (std::map<uint64, uint8>::iterator it = prisoners.begin(); it != prisoners.end(); it++)
@@ -249,14 +275,17 @@ bool GOUse_go_broggok_lever(Player* pPlayer, GameObject* pGo)
             return true;
 
         if (Creature *pBoss = GetClosestCreatureWithEntry(pPlayer, 17380, 200.0f))
-            pBoss->AI()->DoAction(EVENT_1_CAGE);
+            pBoss->AI()->DoAction(EVENT_START);
     }
     pGo->UseDoorOrButton(5);
     return true;
 }
 
+//This actually adds the script so it knows it exists.
 void AddSC_boss_broggok()
 {
+    //Log using outstring_log, and notify that the Brogokk script has been loaded.
+    outstring_log("Brogokk Script Loaded.");
     Script *newscript;
     newscript = new Script;
     newscript->Name = "boss_broggok";
