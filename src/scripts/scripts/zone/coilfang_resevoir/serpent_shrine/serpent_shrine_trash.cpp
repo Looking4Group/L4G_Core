@@ -254,7 +254,7 @@ struct mob_underbog_colossusAI : public ScriptedAI
     {
         if(!UpdateVictim())
             return;
-
+        
         switch(type)
         {
         case 0:
@@ -268,7 +268,7 @@ struct mob_underbog_colossusAI : public ScriptedAI
 
             if (Quake_Timer < diff)
             {
-                AddSpellToCast(SPELL_SPORE_QUAKE, CAST_SELF);
+                AddSpellToCast(SPELL_SPORE_QUAKE, CAST_SELF);                                
                 Quake_Timer = urand(30000, 60000);
             }
             else
