@@ -3602,8 +3602,11 @@ void SpellMgr::LoadSpellCustomAttr()
             case 29838: //Second Wind (Rank 2)
                 spellInfo->procFlags &= ~PROC_FLAG_ON_TAKE_PERIODIC;
                 break;
-            case 38971: //acid geysir - spell of ssc colosses
-                spellInfo->EffectBasePoints[0] = 2478;
+            case 38971: //acid geysir - spell of ssc underbog colossus
+                spellInfo->EffectBasePoints[0] = 2478;                
+            case 39032: //Initial Infection - spell of ssc underbog colossus
+            case 39044: //Summon Serpentshrine parasite - spell of ssc underbog colossus
+                spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_PLAYERS_ONLY;
                 break;
             case 39045: //SPELL_SUMMON_SERPENTSHRINE_PARASITE
                 spellInfo->AreaId = 3607;
@@ -3718,8 +3721,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 37029: //Kael'Thas Telonicus: Remove DR from remote toy by setting mechanic to 0
                 spellInfo->Mechanic = 0;
-                break;
-
+                break;                
             default:
                 break;
         }
