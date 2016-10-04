@@ -187,8 +187,8 @@ struct boss_lady_vashjAI : public ScriptedAI
         Check_Timer = 2000;
         ParalyzeCheck_Timer = 1000;
         Persuasion_Timer = 30000;
-        EnchantedElemental_Timer = 5000;
-        TaintedElemental_Timer = 50000;
+        EnchantedElemental_Timer = 5000; //50000
+        TaintedElemental_Timer = 5000;
         CoilfangElite_Timer = 45000;
         CoilfangStrider_Timer = urand(60000, 70000);
         SummonSporebat_Timer = 10000;
@@ -643,7 +643,7 @@ struct boss_lady_vashjAI : public ScriptedAI
                 uint32 pos = rand()%8;
                 Tain_Elemental = me->SummonCreature(TAINTED_ELEMENTAL, ElementPos[pos][0], ElementPos[pos][1], ElementPos[pos][2], ElementPos[pos][3], TEMPSUMMON_DEAD_DESPAWN, 0);
 
-                TaintedElemental_Timer = 120000;
+                TaintedElemental_Timer = 30000; //120000
             }
             else
                 TaintedElemental_Timer -= diff;
