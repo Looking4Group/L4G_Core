@@ -876,7 +876,7 @@ struct mob_toxic_sporebatAI : public ScriptedAI
         SpellEntry *TempSpell = (SpellEntry*)GetSpellStore()->LookupEntry(SPELL_TOXIC_SPORES);
         if(TempSpell)
         {
-            TempSpell->EffectBasePoints[0] = 1500;
+            TempSpell->EffectBasePoints[0] = 3000;
         }
     }
 
