@@ -872,12 +872,7 @@ struct mob_toxic_sporebatAI : public ScriptedAI
     mob_toxic_sporebatAI(Creature *c) : ScriptedAI(c)
     {
         instance = (c->GetInstanceData());
-        EnterEvadeMode();
-        SpellEntry *TempSpell = (SpellEntry*)GetSpellStore()->LookupEntry(SPELL_TOXIC_SPORES);
-        if(TempSpell)
-        {
-            TempSpell->EffectBasePoints[0] = 3000;
-        }
+        EnterEvadeMode();        
     }
 
     ScriptedInstance *instance;
