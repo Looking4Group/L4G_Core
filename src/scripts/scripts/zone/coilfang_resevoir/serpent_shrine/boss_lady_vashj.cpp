@@ -220,10 +220,24 @@ struct boss_lady_vashjAI : public ScriptedAI
     {
 
         std::list<HostilReference *> t_list = m_creature->getThreatManager().getThreatList();
-        std::vector<Unit *> targets;
+        std::list<SpellEntry *> tmpBestialWrathImmunties;
+        std::vector<Unit *> targets;        
 
         if(!t_list.size())
             return;
+
+        //Immunity spells of bestial wrath
+        uint32 immunityArray[] = { 24395, 24396, 24397, 26592 };
+        
+        for (int i = 0; i < (sizeof(immunityArray) / sizeof(*immunityArray)); ++i) {
+            SpellEntry *TempSpell = (SpellEntry*)GetSpellStore()->LookupEntry(immunityArray[i]);
+            if (TempSpell)
+            {
+                //Set duration to 20 sec
+                TempSpell->DurationIndex = 18;
+                tmpBestialWrathImmunties.push_back(TempSpell);
+            }
+        }
 
         //begin + 1 , so we don't target the one with the highest threat
         std::list<HostilReference *>::iterator itr = t_list.begin();
@@ -247,6 +261,11 @@ struct boss_lady_vashjAI : public ScriptedAI
             if(target)
             {
                 m_creature->AddAura(SPELL_PERSUASION, target);
+                std::list<SpellEntry*>::iterator iterator;
+                for (iterator = tmpBestialWrathImmunties.begin(); iterator != tmpBestialWrathImmunties.end(); ++iterator)
+                {
+                    m_creature->AddAura((*iterator)->Id, target);
+                }
             }
         }
     }
