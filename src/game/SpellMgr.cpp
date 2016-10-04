@@ -3714,7 +3714,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 35181: //Al'ar prenerf divebomb
                 spellInfo->AttributesCu |= SPELL_ATTR_CU_SHARE_DAMAGE;
-                spellInfo->EffectBasePoints[0] = 28499; // Up to 30000 Damage
+                spellInfo->EffectBasePoints[0] = 58499; // Up to 60000 Damage
                 spellInfo->EffectDieSides[0] = 1501;
                 spellInfo->Targets = 64;
                 spellInfo->EffectImplicitTargetA[0] = 16;
