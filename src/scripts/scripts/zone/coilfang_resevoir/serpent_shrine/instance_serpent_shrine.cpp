@@ -162,7 +162,7 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
         WaterCheckTimer = 500;
         TrashCheckTimer = 10000;
 
-        VashjBridgeCheckTimer = 120000;
+        VashjBridgeCheckTimer = 10000;
         VashjBridgeOpen = false;
     }
 
