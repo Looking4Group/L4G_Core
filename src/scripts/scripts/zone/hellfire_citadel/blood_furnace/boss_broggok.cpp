@@ -287,7 +287,6 @@ bool GOUse_go_broggok_lever(Player* pPlayer, GameObject* pGo)
 //This actually adds the script so it knows it exists.
 void AddSC_boss_broggok()
 {
-    outstring_log("Brogokk Script Loaded.");
     Script *newscript;
     newscript = new Script;
     newscript->Name = "boss_broggok";
