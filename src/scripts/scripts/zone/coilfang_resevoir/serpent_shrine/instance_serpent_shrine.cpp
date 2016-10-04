@@ -116,6 +116,8 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
     uint32 WaterCheckTimer;
     uint32 Water;
     uint32 TrashCheckTimer;
+    uint32 VashjBridgeCheckTimer; // remove this and any related code at the earliest opportunity
+    bool VashjBridgeOpen; // remove this and any related code at the earliest opportunity
 
     bool ShieldGeneratorDeactivated[4];
     bool DoSpawnFrenzy;
@@ -159,6 +161,9 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
         ShieldGeneratorDeactivated[3] = false;
         WaterCheckTimer = 500;
         TrashCheckTimer = 10000;
+
+        VashjBridgeCheckTimer = 120000;
+        VashjBridgeOpen = false;
     }
 
     void OnObjectCreate(GameObject *go)
@@ -211,7 +216,7 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
                 if (AllSerpentshrineConsolesActivated())
                 {
                     UnlockGameObject(BridgeConsoleGuid); 
-                }  
+                }
                 break;
             case 184203: // Doodad_Coilfang_Raid_Bridge_Part01
                 BridgePartGuids[0] = go->GetGUID();
@@ -622,6 +627,32 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
         else
         {
             WaterCheckTimer -= diff;
+        }
+
+        // Temporary SSC console fix (automatically open bridge when all 5 previous bosses are killed
+        if (!VashjBridgeOpen)
+        {
+            if (VashjBridgeCheckTimer < diff)
+            {
+                if (((Encounters[0] == DONE) || (Encounters[0] == SPECIAL)) &&
+                    ((Encounters[1] == DONE) || (Encounters[1] == SPECIAL)) &&
+                    ((Encounters[2] == DONE) || (Encounters[2] == SPECIAL)) &&
+                    ((Encounters[3] == DONE) || (Encounters[3] == SPECIAL)) &&
+                    ((Encounters[4] == DONE) || (Encounters[4] == SPECIAL)))
+                {
+                    OpenDoor(BridgeConsoleGuid, true);
+                    OpenDoor(BridgePartGuids[0], true);
+                    OpenDoor(BridgePartGuids[1], true);
+                    OpenDoor(BridgePartGuids[2], true);
+                    VashjBridgeOpen = true;
+                }
+
+                VashjBridgeCheckTimer = 120000;
+            }
+            else
+            {
+                VashjBridgeCheckTimer -= diff;
+            }
         }
 
     }
