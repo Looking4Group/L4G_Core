@@ -282,3 +282,33 @@ INSERT INTO `creature_linked_respawn` VALUES
 -- increase tidewalker damage by 15 %
 update creature_template set mindmg = 16173, maxdmg = 19207 where entry = 21213;
 
+-- Anonx
+
+UPDATE `gameobject` SET `spawntimesecs` = 600 WHERE `id` = 185877; -- 2100
+UPDATE `pool_template` SET `max_limit` = 10, `description` = 'Master Mineral Pool - Shadowmoon Valley (Nethercite Deposit Spawns)' WHERE `entry` = 2069; -- 25
+DELETE FROM `pool_gameobject` WHERE `pool_entry` = 2069;
+INSERT INTO `pool_gameobject` VALUES
+(3481871,2069,0,'Nethercite Deposit'),
+(3484816,2069,0,'Nethercite Deposit'),
+(3484853,2069,0,'Nethercite Deposit'),
+(3484984,2069,0,'Nethercite Deposit'),
+(3485057,2069,0,'Nethercite Deposit'),
+(3485206,2069,0,'Nethercite Deposit'),
+(3485484,2069,0,'Nethercite Deposit'),
+(3494224,2069,0,'Nethercite Deposit'),
+(3494277,2069,0,'Nethercite Deposit'),
+(3494304,2069,0,'Nethercite Deposit'),
+(3494412,2069,0,'Nethercite Deposit'),
+(3494453,2069,0,'Nethercite Deposit'),
+(3494456,2069,0,'Nethercite Deposit'),
+(3494559,2069,0,'Nethercite Deposit'),
+(3494698,2069,0,'Nethercite Deposit'),
+(3495652,2069,0,'Nethercite Deposit'),
+(3495653,2069,0,'Nethercite Deposit'),
+(3495654,2069,0,'Nethercite Deposit'),
+(3495655,2069,0,'Nethercite Deposit'),
+(3495656,2069,0,'Nethercite Deposit'),
+(3495657,2069,0,'Nethercite Deposit'),
+(3495658,2069,0,'Nethercite Deposit'),
+(3495659,2069,0,'Nethercite Deposit'),
+(3495660,2069,0,'Nethercite Deposit');
