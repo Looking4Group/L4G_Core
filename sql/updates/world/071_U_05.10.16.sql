@@ -312,3 +312,10 @@ INSERT INTO `pool_gameobject` VALUES
 (3495658,2069,0,'Nethercite Deposit'),
 (3495659,2069,0,'Nethercite Deposit'),
 (3495660,2069,0,'Nethercite Deposit');
+
+UPDATE `gameobject` SET `spawntimesecs` = 600 WHERE `id` = 185881; -- 2100
+DELETE FROM `pool_template` WHERE `entry` = 2070;
+INSERT INTO `pool_template` VALUES
+(2070,10,'Master Mineral Pool - Shadowmoon Valley (Netherdust Bush Spawns)');
+UPDATE `pool_gameobject` SET `pool_entry` = 2070 WHERE `pool_entry` = 50000;
+DELETE FROM `pool_template` WHERE `entry` = 50000;
