@@ -282,5 +282,3 @@ INSERT INTO `creature_linked_respawn` VALUES
 -- increase tidewalker damage by 15 %
 update creature_template set mindmg = 16173, maxdmg = 19207 where entry = 21213;
 
--- every 6h vl70ETC playing 5mins infront of shat
-UPDATE `game_event` SET `start_time`='2016-10-05 18:00:00', `occurence`='360', `length`='5' WHERE `entry` = 34;  
