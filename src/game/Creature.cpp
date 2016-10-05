@@ -56,6 +56,7 @@
 
 // apply implementation of the singletons
 #include "Map.h"
+#include <iostream>
 
 std::map<uint32, uint32> CreatureAIReInitialize;
 
@@ -155,7 +156,7 @@ m_gossipOptionLoaded(false), m_isPet(false), m_isTotem(false), m_reactState(REAC
 m_defaultMovementType(IDLE_MOTION_TYPE), m_equipmentId(0), m_AlreadyCallAssistance(false),
 m_regenHealth(true), m_isDeadByDefault(false), m_AlreadySearchedAssistance(false), m_creatureData(NULL),
 m_meleeDamageSchoolMask(SPELL_SCHOOL_MASK_NORMAL),m_creatureInfo(NULL), m_DBTableGuid(0), m_formation(NULL), m_PlayerDamageReq(0),
-m_tempSummon(false)
+m_tempSummon(false), m_IsInInstance(false), m_lastHitTime(0)
 {
     m_regenTimer = 2000;
     m_valuesCount = UNIT_END;
@@ -193,6 +194,10 @@ void Creature::AddToWorld()
     if (!IsInWorld())
     {
         GetMap()->InsertIntoObjMap(this);
+
+        //Check that the map exists, and check if its in a dungeon
+        m_IsInInstance = GetMap()->IsDungeon();
+
         Unit::AddToWorld();
         SearchFormation();
         AIM_Initialize();
@@ -675,6 +680,133 @@ void Creature::RegenerateMana()
         addvalue = maxValue/3;
 
     ModifyPower(POWER_MANA, addvalue);
+}
+
+
+
+
+//Method used to allow mob leashing.
+//https://github.com/Looking4Group/L4G_Core/issues/2706
+//This bug still applies.
+//This core has no evade (refer to Unit.h `UnitState`)
+bool Creature::IsOutOfThreatArea(Unit* pVictim) /*const*/
+{
+
+    if (!pVictim)
+        return true;
+
+    if (!pVictim->IsInMap(this))
+        return true;
+
+    if (!canAttack(pVictim))
+        return true;
+
+    if (!pVictim->isInAccessiblePlacefor(this))
+        return true;
+
+    if (IsAIEnabled && !AI()->CanAIAttack(pVictim))
+        return true;
+
+    if (sMapStore.LookupEntry(GetMapId())->IsDungeon())
+        return false;
+
+    uint32 AttackDist = GetAttackDistance(pVictim);
+
+    uint32 distToHome = std::max(AttackDist, sWorld.getConfig(CONFIG_EVADE_HOMEDIST));
+    uint32 distToTarget = std::max(AttackDist, sWorld.getConfig(CONFIG_EVADE_TARGETDIST));
+    bool shouldReset = false;
+
+
+    //Blanket catch-all for casters:
+    if (!IsWithinDistInMap(pVictim, distToTarget))
+        return true;
+
+    //Default implementation with no leashing for world bosses:
+    if (isWorldBoss() || isElite())
+    {
+        if (!IsWithinDistInMap(&homeLocation, distToHome))
+            return true;
+
+        if (!pVictim->IsWithinDistInMap(&homeLocation, distToHome))
+            return true;
+    }
+    else
+    {
+        if (isInCombat())
+        {
+            //If hit in the last second AND in radius
+            if (((time(NULL) - m_lastHitTime) < 1) && (IsWithinDistInMap(&homeLocation, distToHome)))
+            {
+                // std::cout << "Hit in last second" << std::endl;
+                //Update home location to current location
+                SetHomePosition(GetPositionX(), GetPositionY(), GetPositionZ(), GetOrientation());
+                return false;          
+            }
+            //If hit in the last 5 seconds, and in radius
+            if (((time(NULL) - m_lastHitTime) < 5) && (IsWithinDistInMap(&homeLocation, distToHome)))
+            {
+                return false;
+            }
+            //HAS hit in the last 5 seconds BUT NOT in radius
+            else if (((time(NULL) - m_lastHitTime) < 5) && (!IsWithinDistInMap(&homeLocation, distToHome)))
+            {
+                // std::cout << "Hit in last 5 but not in radius." << std::endl;
+                //How close are we to the 5 second mark?
+                time_t timeSinceLastHit = time(NULL) - m_lastHitTime;
+
+                //2 second grace period
+                if (timeSinceLastHit < 2)
+                {
+                    //Update home location to current location
+                    SetHomePosition(GetPositionX(), GetPositionY(), GetPositionZ(), GetOrientation());
+                    // std::cout << "Grace Period Started." << std::endl;
+                    return false;
+                }
+
+                // std::cout << "Grace Period Expired." << std::endl;
+                shouldReset = true;
+            }
+            //NOT hit in the last 5 seconds AND not in radius
+            else if (((time(NULL) - m_lastHitTime) > 5) && (!IsWithinDistInMap(&homeLocation, distToHome)))
+            {
+                // std::cout << "Not hit in last 5 AND not in radius." << std::endl;
+                shouldReset = true;
+            }
+        }
+
+        //If the mob should reset
+        if (shouldReset)
+        {   
+            //Reset its home location to default:
+            SetHomePosition(m_creatureData->posX, m_creatureData->posY, m_creatureData->posZ, m_creatureData->orientation);
+            //L4G-TODO: If its too far, just despawn and resummon him.
+            return true;
+        }
+    }
+
+    return  false;
+}
+
+//This method is virtual, and overrides Unit::ModifyHealth.
+//The purpose of doing this, is so that we can call the Base::ModifyHealth at the end
+//to ensure original functionality.
+int32 Creature::ModifyHealth(int32 dVal)
+{
+    //No mob leashing in instances. Do standard functionality.
+    if (m_IsInInstance)
+        return Unit::ModifyHealth(dVal);
+
+    //Obviously a mob cannot leash if it's not in combat.
+    if (!isInCombat())
+        return Unit::ModifyHealth(dVal);
+
+    if (isInCombat())
+    {
+        m_lastHitTime = time(NULL);
+    }
+
+    //Make sure that anything that was supposed to happen, still happens.
+    return Unit::ModifyHealth(dVal);
 }
 
 void Creature::RegenerateHealth()
@@ -2259,43 +2391,6 @@ void Creature::SaveRespawnTime()
         sObjectMgr.SaveCreatureRespawnTime(m_DBTableGuid,GetInstanceId(),m_respawnTime);
     else if (m_deathTimer > 0)                               // dead (corpse)
         sObjectMgr.SaveCreatureRespawnTime(m_DBTableGuid,GetInstanceId(),time(NULL)+m_respawnDelay+m_deathTimer/1000);
-}
-
-bool Creature::IsOutOfThreatArea(Unit* pVictim) const
-{
-    if (!pVictim)
-        return true;
-
-    if (!pVictim->IsInMap(this))
-        return true;
-
-    if (!canAttack(pVictim))
-        return true;
-
-    if (!pVictim->isInAccessiblePlacefor(this))
-        return true;
-
-    if (IsAIEnabled && !AI()->CanAIAttack(pVictim))
-        return true;
-
-    if (sMapStore.LookupEntry(GetMapId())->IsDungeon())
-        return false;
-
-    uint32 AttackDist = GetAttackDistance(pVictim);
-
-    uint32 distToHome = std::max(AttackDist, sWorld.getConfig(CONFIG_EVADE_HOMEDIST));
-    uint32 distToTarget = std::max(AttackDist, sWorld.getConfig(CONFIG_EVADE_TARGETDIST));
-
-    if (!IsWithinDistInMap(&homeLocation, distToHome))
-        return true;
-
-    if (!IsWithinDistInMap(pVictim, distToTarget))
-        return true;
-
-    if (!pVictim->IsWithinDistInMap(&homeLocation, distToHome))
-        return true;
-
-    return  false;
 }
 
 CreatureDataAddon const* Creature::GetCreatureAddon() const
