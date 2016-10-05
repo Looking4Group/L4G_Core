@@ -459,8 +459,6 @@ class LOOKING4GROUP_IMPORT_EXPORT Creature : public Unit
         void RemoveFromWorld();
         void DisappearAndDie();
 
-        virtual int32 ModifyHealth(int32 dVal);
-
         bool Create(uint32 guidlow, Map *map, uint32 Entry, uint32 team, float x, float y, float z, float ang, const CreatureData *data = NULL);
         bool LoadCreaturesAddon(bool reload = false);
         void SelectLevel(const CreatureInfo *cinfo);
@@ -494,7 +492,7 @@ class LOOKING4GROUP_IMPORT_EXPORT Creature : public Unit
         bool isCanTrainingOf(Player* player, bool msg) const;
         bool isCanInteractWithBattleMaster(Player* player, bool msg) const;
         bool isCanTrainingAndResetTalentsOf(Player* pPlayer) const;
-        bool IsOutOfThreatArea(Unit* pVictim) /*const*/;
+        bool IsOutOfThreatArea(Unit* pVictim) const;
         bool IsImmunedToSpell(SpellEntry const* spellInfo, bool useCharges = false);
                                                             // redefine Unit::IsImmunedToSpell
         bool IsImmunedToSpellEffect(uint32 effect, uint32 mechanic) const;
@@ -786,8 +784,6 @@ class LOOKING4GROUP_IMPORT_EXPORT Creature : public Unit
         std::set<uint64> m_playersAllowedToLoot;
 
         /// Timers
-        time_t m_lastHitTime;                                 // (secs) since last hit.
-
         uint32 m_deathTimer;                                // (msecs)timer for death or corpse disappearance
         time_t m_respawnTime;                               // (secs) time of next respawn
         uint32 m_respawnDelay;                              // (secs) delay between corpse disappearance and respawning
@@ -840,9 +836,6 @@ class LOOKING4GROUP_IMPORT_EXPORT Creature : public Unit
     private:
         //Formation var
         CreatureGroup *m_formation;
-
-        //Check if we're in an instance.
-        bool m_IsInInstance;
 
         bool TriggerJustRespawned;
 

@@ -958,7 +958,7 @@ class LOOKING4GROUP_IMPORT_EXPORT Unit : public WorldObject
 
         void SetHealth(uint32 val, bool ignoreAliveCheck = false);
         void SetMaxHealth(uint32 val);
-        virtual int32 ModifyHealth(int32 val);
+        int32 ModifyHealth(int32 val);
 
         Powers getPowerType() const { return Powers(GetByteValue(UNIT_FIELD_BYTES_0, 3)); }
         void setPowerType(Powers power);
