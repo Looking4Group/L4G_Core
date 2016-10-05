@@ -59,7 +59,7 @@ INSERT INTO `creature_formations` (`leaderGUID`, `memberGUID`, `dist`, `angle`, 
 UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=196.28,`position_y`=2781.241,`position_z`=115.9637 WHERE `guid`= @GUID;
 DELETE FROM `creature_addon` WHERE `guid`= @GUID;
 INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,14334,0,1,0,''); -- bytes values are still kinda mistery to me.
-DELETE FROM `waypoint_data` WHERE `id`= @leaderGUID;
+DELETE FROM `waypoint_data` WHERE `id`= @GUID;
 INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
 (@GUID,1,196.28,2781.241,115.9637,0,1,0,100,0),
 (@GUID,2,173.7009,2773.865,111.0617,0,1,0,100,0),
