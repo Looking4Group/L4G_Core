@@ -268,6 +268,8 @@ UPDATE `creature` SET `MovementType`=2,`spawndist`=0,`position_x`=3448.69, `posi
 
 UPDATE `game_event` SET `length` = 23040 WHERE `entry` = 26; -- old: 20160 changed from 14days to 16days
 
+UPDATE `game_event` SET `start_time`='2016-10-05 18:00:00', `occurence`='360', `length`='5' WHERE `entry` = 34;  -- every 6h vl70ETC playing 5mins infront of shat
+
 DELETE FROM `creature_linked_respawn` WHERE `guid` IN (37951,37989,37987,37991);
 INSERT INTO `creature_linked_respawn` VALUES
 (37951,93846),
