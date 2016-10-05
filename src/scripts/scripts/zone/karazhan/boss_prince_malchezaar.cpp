@@ -107,10 +107,7 @@ struct netherspite_infernalAI : public Scripted_NoMovementAI
         malchezaarGUID(0), HellfireTimer(0), CleanupTimer(0), point(NULL)
     {
         me->SetAggroRange(AGGRO_RANGE);
-        me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_CASTING_SPEED, true);
-        me->ApplySpellImmune(1, IMMUNITY_STATE, SPELL_AURA_HASTE_SPELLS, true);
-        me->ApplySpellImmune(2, IMMUNITY_STATE, SPELL_AURA_MOD_STUN, true);
-        me->ApplySpellImmune(3, IMMUNITY_STATE, SPELL_AURA_USE_NORMAL_MOVEMENT_SPEED, true);
+        me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_STUN, true);
     }
 
     uint32 HellfireTimer;
