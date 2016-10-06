@@ -116,7 +116,8 @@ struct boss_hydross_the_unstableAI : public ScriptedAI
 
         CorruptedForm = false;
         m_creature->SetMeleeDamageSchool(SPELL_SCHOOL_FROST);
-        m_creature->ApplySpellImmune(0, IMMUNITY_DAMAGE, SPELL_SCHOOL_MASK_FROST, true);        
+        m_creature->ApplySpellImmune(0, IMMUNITY_DAMAGE, SPELL_SCHOOL_MASK_FROST, true);
+        m_creature->ApplySpellImmune(1, IMMUNITY_DAMAGE, SPELL_SCHOOL_MASK_NATURE, false);
 
         m_creature->SetUInt32Value(UNIT_FIELD_DISPLAYID, MODEL_CLEAN);
 
