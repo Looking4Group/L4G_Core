@@ -754,3 +754,18 @@ INSERT INTO `waypoint_scripts` (`id`, `delay`, `command`, `datalong`, `datalong2
 (1094,0,2,169,94,0,0,0,0,0,1094,'ONESHOT_DANCE'),                
 --
 (1476,0,2,169,476,0,0,0,0,0,1476,'ONESHOT_CRY (JAINA PROUDMOORE ONLY)');
+
+DELETE FROM `game_event_creature` WHERE `guid` BETWEEN 138384 AND 138394;
+SET @GUID := 138384;
+INSERT INTO `game_event_creature` VALUES
+(@GUID := @GUID + '0',1),
+(@GUID := @GUID + '1',1),
+(@GUID := @GUID + '1',1),
+(@GUID := @GUID + '1',1),
+(@GUID := @GUID + '1',1),
+(@GUID := @GUID + '1',1),
+(@GUID := @GUID + '1',1),
+(@GUID := @GUID + '1',1),
+(@GUID := @GUID + '1',1),
+(@GUID := @GUID + '1',1),
+(@GUID := @GUID + '1',1);
