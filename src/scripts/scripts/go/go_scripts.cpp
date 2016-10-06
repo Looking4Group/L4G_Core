@@ -488,7 +488,7 @@ enum
 
 bool GOUse_go_fel_crystal_prism(Player* pPlayer, GameObject* pGO)
 {
-    if (pPlayer->HasItemCount(ITEM_APEX_SHARD,  35) && pPlayer->GetQuestStatus(11079) == QUEST_STATUS_INCOMPLETE)
+    if (pPlayer->HasItemCount(ITEM_APEX_SHARD,  35))
         pPlayer->ADD_GOSSIP_ITEM(0, GOSSIP_ITEM_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
 
     pPlayer->SEND_GOSSIP_MENU(pGO->GetGOInfo()->questgiver.gossipID, pGO->GetGUID());
