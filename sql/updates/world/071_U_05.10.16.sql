@@ -592,3 +592,103 @@ INSERT INTO `pool_gameobject` VALUES
 (@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
 (@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
 (@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)');
+
+-- Saltgurka Update 3
+ 
+-- ----------------------------------------------------------
+-- https://github.com/Looking4Group/L4G_Core/issues/708
+-- Bonechewer Marauder/ Bonechewe Messenger not patrolling and not triggering their event
+-- ----------------------------------------------------------
+ 
+-- This is an emergency creature that will only spawn if the orcs somehow get past the demon event. It kills them and then despawns self.
+DELETE FROM `creature_template` WHERE `entry` = 1000011;
+INSERT INTO `creature_template` (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`) VALUES
+(1000011, 0, 17519, 11686, 17519, 11686, 'Bonechewer Event Killer', 10, 10, 112, 112, 0, 0, 20, 114, 114, 0, 0.91, 1, 0, 0, 0, 0, 0, 2000, 0, 33587968, 0, 0, 0, 0, 0, 0, 1.76, 2.42, 100, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'EventAI', 0, 3, 0, 1, 0, 0, 128, '');
+ 
+-- Source for numbers: Corona DB
+
+-- Bonechewer Messenger 21244
+UPDATE `creature_template` SET `AIName`='EventAI',`mindmg` = '238',`maxdmg`='304',`baseattacktime`='2000',`unit_flags`='32768',`flags_extra`='536870912',`armor`='6192',`speed`='1.20' WHERE `entry` = 21244;
+-- Bonechewer Marauder 21245
+UPDATE `creature_template` SET `AIName`='EventAI',`mindmg` = '188',`maxdmg`='240',`baseattacktime`='1500',`unit_flags`='32768',`flags_extra`='536870912',`armor`='6492',`speed`='1.20' WHERE `entry` = 21245;
+-- Wrathstalker 21249
+UPDATE `creature_template` SET `AIName`='EventAI',`mindmg` = '792',`maxdmg`='1047',`baseattacktime`='2000',`unit_flags`='64',`flags_extra`='0',`armor`='6370',`speed`='1.20',`mechanic_immune_mask`='1' WHERE `entry` = 21249; -- Wrathstalker
+DELETE FROM `creature_loot_template` WHERE `entry` = 21249 AND `item` = 29740; -- 21249	29740	33	0	1	1	0	0	0
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN (21244,21245,21249,1000011);
+INSERT INTO `creature_ai_scripts` VALUES
+-- Bonechewer Messenger
+('2124401','21244','4','0','100','0','0','0','0','0','17','154','0','0','19','134217728','0','0','0','0','0','0','Bonechewer Messenger - Dismount on Aggro'),
+('2124402','21244','9','0','100','0','8','25','0','0','11','35570','1','0','0','0','0','0','0','0','0','0','Bonechewer Messenger - Cast Charge'),
+('2124403','21244','7','0','100','0','0','0','0','0','43','17408','0','0','0','0','0','0','0','0','0','0','Bonechewer Messenger - Mount on Evade'),
+-- Bonechewer Marauder
+('2124501','21245','9','0','100','1','0','5','10000','15000','11','8646','1','32','0','0','0','0','0','0','0','0','Bonechewer Marauder - Cast Snap Kick'),
+('2124502','21245','4','0','100','0','0','0','0','0','17','154','0','0','19','134217728','0','0','0','0','0','0','Bonechewer Marauder - Dismount on Aggro'),
+('2124503','21245','7','0','100','0','0','0','0','0','43','17408','0','0','0','0','0','0','0','0','0','0','Bonechewer Marauder - Mount on Evade'),
+-- Wrathstalker
+('2124901','21249','11','0','100','0','0','0','0','0','11','7791','0','1','0','0','0','0','0','0','0','0','Wrathstalker - Cast Teleport on Spawn'),
+('2124902','21249','9','0','100','1','0','5','8200','12100','11','15496','4','0','0','0','0','0','0','0','0','0','Wrathstalker - Cast Cleave'),
+('2124903','21249','2','0','100','0','30','0','0','0','11','8599','0','0','0','0','0','0','0','0','0','0','Wrathstalker - Cast Enrage at 30% HP'),
+('2124905','21249','21','0','100','0','0','0','0','0','100','0','0','0','41','0','0','0','0','0','0','0','Wrathstalker - Despawn on Return to Home after Evade'),
+-- Bonechewer Event Killer
+('100001101','1000011','11','0','100','0','0','0','0','0','44','5','74476','0','44','5','74477','0','44','5','74478','0','Bonechewer Event Killer - Cast Death Touch on Bonechewer NPCs'),
+('100001102','1000011','11','0','100','0','0','0','0','0','44','5','74479','0','44','5','74480','0','41','0','0','0','Bonechewer Event Killer - Cast Death Touch on Bonechewer NPCs, then despawn self');
+ 
+-- Set spawnsettings
+UPDATE `creature` SET `position_x`='-2970.7753', `position_y`='3473.5097', `position_z`='-0.1832',`movementtype`='2',`spawntimesecs`='600',`spawndist`='0' WHERE `guid` = 74476;
+UPDATE `creature` SET `position_x`='-2962.9152', `position_y`='3473.9216', `position_z`='-0.3620',`movementtype`='0',`spawntimesecs`='600',`spawndist`='0' WHERE `guid` = 74477;
+UPDATE `creature` SET `position_x`='-2969.1257', `position_y`='3482.2575', `position_z`='-1.2946',`movementtype`='0',`spawntimesecs`='600',`spawndist`='0' WHERE `guid` = 74478;
+UPDATE `creature` SET `position_x`='-2978.6911', `position_y`='3475.1311', `position_z`='0.0306',`movementtype`='0',`spawntimesecs`='600',`spawndist`='0' WHERE `guid` = 74479;
+UPDATE `creature` SET `position_x`='-2971.6948', `position_y`='3465.3898', `position_z`='0.2104',`movementtype`='0',`spawntimesecs`='600',`spawndist`='0' WHERE `guid` = 74480;
+
+DELETE FROM `creature_formations` WHERE `leaderguid` = 74476;
+INSERT INTO `creature_formations` VALUES
+(74476,74476,100,360,2),
+(74476,74477,3,0.7,2),
+(74476,74478,3,2.3,2),
+(74476,74479,3,3.9,2),
+(74476,74480,3,5.5,2);
+ 
+-- Movement. Messenger is formation leader
+SET @GUID := 74476;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,17408,16777472,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,1,'-2975.3991','3482.2319','-0.8728',0,0,0,100,0),
+(@GUID,2,'-2977.6318','3490.6518','-1.7099',0,0,0,100,0),
+(@GUID,3,'-2982.1223','3519.9533','-4.5545',0,0,0,100,0),
+(@GUID,4,'-2968.1250','3540.5681','-7.9367',0,0,0,100,0),
+(@GUID,5,'-2959.8293','3544.7788','-9.6096',0,0,0,100,0),
+(@GUID,6,'-2935.3659','3533.3242','-16.4632',0,0,0,100,0),
+(@GUID,7,'-2894.6325','3501.2863','-28.5189',0,0,0,100,0),
+(@GUID,8,'-2828.9492','3492.9062','-36.3563',0,0,0,100,0),
+(@GUID,9,'-2817.3093','3460.1953','-40.8173',0,1,0,100,0),
+(@GUID,10,'-2806.1398','3391.6066','-32.0091',0,1,0,100,0),
+(@GUID,11,'-2785.5380','3342.2800','-13.7473',0,1,0,100,0),
+(@GUID,12,'-2750.3918','3313.3601','0.4519',0,1,0,100,0),
+(@GUID,13,'-2761.7126','3290.6828','1.3977',0,1,0,100,0),
+(@GUID,14,'-2799.2678','3251.6989','5.2506',0,1,0,100,0),
+(@GUID,15,'-2820.2299','3227.4272','10.9445',0,1,0,100,0),
+(@GUID,16,'-2841.0607','3203.4450','5.4102',0,1,0,100,0),
+(@GUID,17,'-2870.5827','3172.2014','13.0033',0,1,0,100,0),
+(@GUID,18,'-2892.5683','3135.9277','23.4260',0,1,0,100,0),
+(@GUID,19,'-2914.6350','3114.1408','30.7731',0,1,0,100,0),
+(@GUID,20,'-2918.0200','3080.2678','39.7595',0,1,0,100,0),
+(@GUID,21,'-2908.4555','3048.2336','46.8876',0,1,0,100,0),
+(@GUID,22,'-2916.8417','3027.5156','52.1469',0,1,0,100,0),
+(@GUID,23,'-2948.5908','3005.5483','63.3806',0,1,0,100,0),
+(@GUID,24,'-2992.3544','2977.6123','78.5383',0,1,0,100,0),
+(@GUID,25,'-3017.9770','2955.5036','85.2966',0,1,0,100,0),
+(@GUID,26,'-3034.6232','2937.4646','86.4232',0,1,7447601,100,0), -- 74476 Spawn 4 Wrathstalkers. The orcs should never be able to get past these.
+(@GUID,27,'-3046.9462','2921.9240','86.1639',0,1,0,100,0),
+(@GUID,28,'-3076.9624','2876.5402','81.9593',0,1,0,100,0),
+(@GUID,29,'-3107.3051','2830.9824','78.3916',0,1,7447602,100,0); -- If the mobs by some miracle make it past the demons, an invisible mob will spawn and kill them at this waypoint. Optimally I would have liked to just despawn them, but this seems hard to do.
+ 
+-- Not sure how we handle id's in waypoint_scripts? I used the id from waypoint_data + 01,02,03 etc.
+DELETE FROM `waypoint_scripts` WHERE `id` IN (7447601,7447602);
+INSERT INTO `waypoint_scripts` VALUES
+(7447601,0,10,21249,120000,0,-3040.230713,2923.361572,86.667702,0.959264,7447601,'Spawn Wrathstalker 1'), 
+(7447601,0,10,21249,120000,0,-3049.942139,2944.359863,91.529282,6.221430,7447602,'Spawn Wrathstalker 2'), 
+(7447601,0,10,21249,120000,0,-3027.402344,2920.409668,89.594650,2.527246,7447603,'Spawn Wrathstalker 3'), 
+(7447601,0,10,21249,120000,0,-3047.662842,2927.633301,86.636345,0.723925,7447604,'Spawn Wrathstalker 4'), 
+(7447602,0,10,1000011,120000,0,-3107.3051,2830.9824,78.3916,0.723925,7447605,'Spawn Bonechewer Event Killer');
