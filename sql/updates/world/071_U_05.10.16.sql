@@ -769,3 +769,6 @@ INSERT INTO `game_event_creature` VALUES
 (@GUID := @GUID + '1',1),
 (@GUID := @GUID + '1',1),
 (@GUID := @GUID + '1',1);
+
+-- mob_ember_of_alar
+UPDATE `creature_template` SET `speed`=4 WHERE `entry` = 19551;
