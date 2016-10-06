@@ -319,3 +319,276 @@ INSERT INTO `pool_template` VALUES
 (2070,10,'Master Mineral Pool - Shadowmoon Valley (Netherdust Bush Spawns)');
 UPDATE `pool_gameobject` SET `pool_entry` = 2070 WHERE `pool_entry` = 50000;
 DELETE FROM `pool_template` WHERE `entry` = 50000;
+
+-- Netherwing Egg Trap (Gas)
+UPDATE `gameobject_template` SET `data2`= 2,`data4` = 1 WHERE `entry` = 185600; -- 0 0
+
+-- Overmine Flayer 23264
+UPDATE `creature_template` SET `faction_A`='1824',`faction_H`='1824',`AIName`='EventAI' WHERE `entry` = 23264; -- 14
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 23264;
+INSERT INTO `creature_ai_scripts` VALUES
+(2326401,23264,9,0,100,1,0,5,10000,12000,11,13443,1,0,0,0,0,0,0,0,0,0,'Overmine Flayer - Cast Rend'),
+(2326402,23264,0,0,100,1,5000,10000,15000,16000,11,33810,0,1,0,0,0,0,0,0,0,0,'Overmine Flayer - Cast Rock Shell'); -- trigger 33811
+
+-- pool
+-- 1800	40	Nethermine Cargo (185939)
+DELETE FROM `gameobject` WHERE `id` = 185939;
+INSERT INTO `gameobject` VALUES (50388, 185939, 530, 1, -5205.37, 203.066, -13.3182, 5.21189, 0, 0, 0.510396, -0.85994, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50389, 185939, 530, 1, -5189.81, 627.107, 43.5186, 3.07167, 0, 0, 0.999389, 0.0349535, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50390, 185939, 530, 1, -5178.61, 362.202, -20.2691, 0.299837, 0, 0, 0.149358, 0.988783, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50391, 185939, 530, 1, -5176.67, 160.591, -11.8483, 5.69884, 0, 0, 0.288036, -0.95762, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50392, 185939, 530, 1, -5155.35, 726.69, 45.245, 1.91321, 0, 0, 0.81724, 0.576298, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50393, 185939, 530, 1, -5154.33, 225.287, -20.1081, 0.742976, 0, 0, 0.363002, 0.931788, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50394, 185939, 530, 1, -5146.78, 659.46, 39.2763, 4.15159, 0, 0, 0.875174, -0.483808, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50395, 185939, 530, 1, -5138.9, 690.166, 42.1073, 5.2818, 0, 0, 0.480034, -0.87725, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50396, 185939, 530, 1, -5122.69, 412, -11.7448, 4.39961, 0, 0, 0.80861, -0.588345, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50397, 185939, 530, 1, -5112.25, 160.935, -9.40376, 0.63302, 0, 0, 0.311252, 0.950328, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50398, 185939, 530, 1, -5105.03, 460.255, -9.67519, 1.11665, 0, 0, 0.529766, 0.848144, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50399, 185939, 530, 1, -5103.78, 662.771, 33.5271, 5.89441, 0, 0, 0.193167, -0.981166, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50400, 185939, 530, 1, -5098.94, 371.462, 0.885829, 1.45769, 0, 0, 0.666008, 0.745945, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50401, 185939, 530, 1, -5094.73, 444.284, -5.70656, 1.28097, 0, 0, 0.597585, 0.801806, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50402, 185939, 530, 1, -5080.83, 335.975, 4.94704, 2.44729, 0, 0, 0.940345, 0.340221, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50403, 185939, 530, 1, -5078.21, 277.921, -9.74248, 3.76677, 0, 0, 0.951541, -0.307521, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50404, 185939, 530, 1, -5062.76, 402.884, 0.763877, 0.106798, 0, 0, 0.0533735, 0.998575, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50405, 185939, 530, 1, -5060.08, 182.564, -10.4589, 0.464771, 0, 0, 0.230299, 0.97312, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50406, 185939, 530, 1, -5042.78, 323.487, -3.05248, 1.02571, 0, 0, 0.490667, 0.871347, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50407, 185939, 530, 1, -5037.07, 302.368, 5.13704, 2.42373, 0, 0, 0.936272, 0.351275, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50408, 185939, 530, 1, -5037.07, 452.604, -10.9334, 5.3297, 0, 0, 0.458886, -0.888495, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50409, 185939, 530, 1, -5028.88, 599.486, 19.7124, 5.1365, 0, 0, 0.542443, -0.840093, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50410, 185939, 530, 1, -5024.72, 504.442, 11.34, 4.53174, 0, 0, 0.768005, -0.640444, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50411, 185939, 530, 1, -5024.53, 372.361, 1.72313, 4.61028, 0, 0, 0.742269, -0.670102, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50412, 185939, 530, 1, -5011.71, 237.713, -6.58554, 0.978595, 0, 0, 0.470006, 0.882663, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50413, 185939, 530, 1, -5007.28, 470.563, 18.8001, 1.46555, 0, 0, 0.668934, 0.743322, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50414, 185939, 530, 1, -5005.62, 549.462, 20.7371, 5.01161, 0, 0, 0.59381, -0.804605, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50415, 185939, 530, 1, -4955.91, 409.701, 1.61203, 4.72888, 0, 0, 0.701254, -0.712912, 120, 100, 1);
+INSERT INTO `gameobject` VALUES (50416, 185939, 530, 1, -4931.72, 529.889, 6.94222, 2.21167, 0, 0, 0.893839, 0.448387, 120, 100, 1);
+
+DELETE FROM `pool_gameobject` WHERE `pool_entry` = 1800;
+SET @GUID := 50388;
+INSERT INTO `pool_gameobject` VALUES
+(@GUID := @GUID + '0', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)');
+
+INSERT INTO `gameobject` VALUES (56203, 185939, 530, 1, -4969.38, 523.027, -5.36902, 2.70526, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56204, 185939, 530, 1, -5002.83, 448.958, -7.03501, 2.09439, 0, 0, 0, 1, 300, 255, 1);
+
+SET @GUID := 56203;
+INSERT INTO `pool_gameobject` VALUES
+(@GUID := @GUID + '0', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)');
+
+INSERT INTO `gameobject` VALUES (56207, 185939, 530, 1, -5096.04, 353.769, 3.34744, -1.15192, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56208, 185939, 530, 1, -5033.93, 388.446, -13.2778, -0.226892, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56209, 185939, 530, 1, -5045.86, 420.975, -10.681, -2.56563, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56210, 185939, 530, 1, -4929.31, 297.951, -12.1268, -1.58825, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56211, 185939, 530, 1, -5066.43, 394.802, -12.9495, 0.767944, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56212, 185939, 530, 1, -5026.17, 587.553, 21.0214, -0.017452, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56213, 185939, 530, 1, -5024.83, 207.571, -11.9162, 1.0821, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56214, 185939, 530, 1, -4987.25, 520.171, -5.70161, 0.017452, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56215, 185939, 530, 1, -5026.1, 493.594, 10.4515, 1.44862, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56216, 185939, 530, 1, -5228.15, 136.479, -13.7112, 0.890117, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56217, 185939, 530, 1, -5103.53, 123.015, -13.9215, 1.15192, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56218, 185939, 530, 1, -5140.1, 150.798, -11.5229, -1.95477, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56219, 185939, 530, 1, -5135.53, 483.049, -14.8337, 2.46091, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56220, 185939, 530, 1, -4883.53, 475.869, -2.67198, -3.03684, 0, 0, 0, 1, 180, 33, 1);
+INSERT INTO `gameobject` VALUES (56221, 185939, 530, 1, -5036.11, 361.019, 2.36178, -2.33874, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56222, 185939, 530, 1, -5111.9, 665.725, 35.3144, 2.79252, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56223, 185939, 530, 1, -4971.06, 225.004, -11.3607, 2.70526, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56224, 185939, 530, 1, -5038.92, 575.498, 19.7935, 1.65806, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56225, 185939, 530, 1, -5217.55, 337.072, -22.0709, 1.22173, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56226, 185939, 530, 1, -5027.67, 545.317, 18.4923, 1.81514, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56227, 185939, 530, 1, -5180.56, 383.743, -18.8471, 1.41372, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56228, 185939, 530, 1, -4891.32, 531.999, 1.39411, 2.70526, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56229, 185939, 530, 1, -5037.43, 424.579, 4.64012, 1.81514, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56230, 185939, 530, 1, -5051.67, 632.156, 23.9043, -0.645772, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56231, 185939, 530, 1, -5018.34, 150.108, -14.1947, -0.453785, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56232, 185939, 530, 1, -5108.4, 405.713, -12.3955, -2.3911, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56233, 185939, 530, 1, -4987.44, 668.217, 23.5955, 3.00195, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56234, 185939, 530, 1, -4943.11, 423.362, 1.99854, -2.426, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56235, 185939, 530, 1, -4943.78, 536.902, 7.24843, -2.82743, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56236, 185939, 530, 1, -5033.96, 512.002, -5.49904, -1.71042, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56237, 185939, 530, 1, -5092.58, 450.738, -6.41982, 1.0472, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56238, 185939, 530, 1, -4900.04, 458.943, 0.135431, 1.11701, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56239, 185939, 530, 1, -5101.45, 473.739, -8.98286, -3.01941, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56240, 185939, 530, 1, -5135.19, 451.007, -11.4897, 1.02974, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56241, 185939, 530, 1, -4976.8, 451.216, 3.51752, -2.35619, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56242, 185939, 530, 1, -4932.08, 453.45, 1.32601, -1.74533, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56243, 185939, 530, 1, -4985.45, 531.645, -6.27893, -1.46608, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56244, 185939, 530, 1, -5063, 323.446, 6.62532, 2.51327, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56245, 185939, 530, 1, -5051.17, 624.346, 23.028, 2.68781, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56246, 185939, 530, 1, -4959.3, 362.391, -1.9749, 0.872664, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56247, 185939, 530, 1, -5012.34, 426.711, 13.5566, -1.41372, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56248, 185939, 530, 1, -4959.33, 576.761, 11.9238, -2.28638, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56249, 185939, 530, 1, -5104.44, 165.22, -8.67575, 0.314158, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56250, 185939, 530, 1, -4953.66, 468.525, 0.739507, -2.26892, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56251, 185939, 530, 1, -5048.38, 403.73, 1.97754, 1.27409, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56252, 185939, 530, 1, -4908.91, 429.57, -3.17093, 0.279252, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56253, 185939, 530, 1, -5222.39, 196.002, -12.931, -1.79769, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56254, 185939, 530, 1, -5003.44, 525.828, 19.1116, 1.48353, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56255, 185939, 530, 1, -5170.85, 254.96, -31.7537, -0.349065, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56256, 185939, 530, 1, -4917.46, 309.583, -13.1415, 1.83259, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56257, 185939, 530, 1, -5170.76, 167.798, -11.7985, 0.541051, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56258, 185939, 530, 1, -4972.69, 334.418, -1.68185, -1.88495, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56259, 185939, 530, 1, -5067.6, 624.055, 28.1315, 1.90241, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56260, 185939, 530, 1, -4910.93, 592.504, 5.28092, 1.51844, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56261, 185939, 530, 1, -5162.89, 310.071, -25.0638, 1.48353, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56262, 185939, 530, 1, -5081.24, 190.113, -8.61309, 1.91986, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56263, 185939, 530, 1, -5033.31, 470.331, -9.32264, -0.122173, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56264, 185939, 530, 1, -5027.37, 482.105, -8.57508, -2.07694, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56265, 185939, 530, 1, -5037.1, 596.536, 18.5783, 1.78023, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56266, 185939, 530, 1, -4916.29, 545.349, 6.52156, 2.61799, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56267, 185939, 530, 1, -5069.65, 662.32, 33.0581, 2.80997, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56268, 185939, 530, 1, -5175.63, 231.512, -33.8192, 0.977383, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56269, 185939, 530, 1, -5018.86, 299.244, 4.61528, 1.23918, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56270, 185939, 530, 1, -4910.72, 480.099, 0.642428, -2.65289, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56271, 185939, 530, 1, -5130.02, 347.811, -17.7808, -2.68781, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56272, 185939, 530, 1, -5056.37, 137.68, -14.3643, -1.309, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56273, 185939, 530, 1, -5116.07, 441.232, -10.9529, -1.41372, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56274, 185939, 530, 1, -5155.65, 431.065, -10.451, -1.18682, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56275, 185939, 530, 1, -5087.48, 429.858, -12.093, 1.51844, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56276, 185939, 530, 1, -4962.56, 366.978, -1.46309, 0.296705, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56277, 185939, 530, 1, -4939.6, 523.843, 7.77777, -2.58308, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56278, 185939, 530, 1, -5107.48, 645.042, 33.7795, -0.157079, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56279, 185939, 530, 1, -5032.08, 432.775, -9.90734, -1.71042, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56280, 185939, 530, 1, -4988.81, 280.268, -4.79425, -0.715585, 0, 0, 0, 1, 300, 255, 1);
+
+SET @GUID := 56207;
+INSERT INTO `pool_gameobject` VALUES
+(@GUID := @GUID + '0', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)');
+
+INSERT INTO `gameobject` VALUES (56596, 185939, 530, 1, -4997.54, 158.95, -14.7979, 0.104719, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56597, 185939, 530, 1, -5033.11, 427.561, -9.99404, -1.91986, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56598, 185939, 530, 1, -5071.87, 398.519, -0.286157, 1.69297, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56599, 185939, 530, 1, -4962.51, 405.349, 1.43439, 0.087266, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56600, 185939, 530, 1, -5013.62, 404.31, -12.2255, 2.70526, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56601, 185939, 530, 1, -5017.2, 365.171, 0.648494, 2.21656, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56602, 185939, 530, 1, -4957.36, 334.104, -3.08167, 0.610864, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56603, 185939, 530, 1, -4948.42, 283.201, -7.74535, 1.25664, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56604, 185939, 530, 1, -5018.78, 271.518, -0.210369, 2.68781, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56605, 185939, 530, 1, -4968.73, 624.278, 16.0225, -2.30383, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56606, 185939, 530, 1, -4996.43, 264.861, -4.54931, -0.104719, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56607, 185939, 530, 1, -4962.21, 298.344, -4.64944, -0.418879, 0, 0, 0, 1, 300, 255, 1);
+INSERT INTO `gameobject` VALUES (56608, 185939, 530, 1, -5057.35, 120.543, -17.2921, -0.418879, 0, 0, 0, 1, 300, 255, 1);
+
+SET @GUID := 56596;
+INSERT INTO `pool_gameobject` VALUES
+(@GUID := @GUID + '0', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)'),
+(@GUID := @GUID + '1', 1800, 0,'Nethermine Cargo (185939)');
