@@ -1343,3 +1343,31 @@ UPDATE `creature` SET `position_x`='-10949.7656', `position_y`='-1959.3552', `po
 UPDATE `creature` SET `position_x`='-10989.9980', `position_y`='-1994.8156', `position_z`='275.1358' WHERE `guid` = 135909;
 
 UPDATE `creature` SET `position_x`='4007.0761', `position_y`='1517.1452', `position_z`='-115.8280', `orientation`='4.9955',`spawndist`='0',`movementtype`='0' WHERE `guid` = 71729;
+
+-- Apexis Shard
+DELETE FROM `creature_loot_template` WHERE `item` = 32569;
+INSERT INTO `creature_loot_template` VALUES (18692, 32569, 100, 2, 2, 3, 0, 0, 0); -- 15
+INSERT INTO `creature_loot_template` VALUES (19973, 32569, 73, 0, 1, 1, 0, 0, 0); -- 18.7
+INSERT INTO `creature_loot_template` VALUES (20557, 32569, 8.3465, 0, 1, 1, 0, 0, 0); -- 8.3465
+INSERT INTO `creature_loot_template` VALUES (22175, 32569, 33.1139, 0, 1, 1, 0, 0, 0); -- 
+INSERT INTO `creature_loot_template` VALUES (22180, 32569, 25, 0, 1, 1, 0, 0, 0); -- 29.4929 -- 45
+INSERT INTO `creature_loot_template` VALUES (22181, 32569, 31.0921, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22182, 32569, 22.768, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22195, 32569, 26, 0, 1, 1, 0, 0, 0); -- 16.6 -- 46
+INSERT INTO `creature_loot_template` VALUES (22204, 32569, 25, 0, 1, 1, 0, 0, 0); -- 25.2364 -- 45
+INSERT INTO `creature_loot_template` VALUES (22241, 32569, 27, 0, 1, 1, 0, 0, 0); -- 21.9174 -- 47
+INSERT INTO `creature_loot_template` VALUES (22242, 32569, 25, 0, 1, 1, 0, 0, 0); -- 21.9872 -- 45
+INSERT INTO `creature_loot_template` VALUES (22243, 32569, 28, 0, 1, 1, 0, 0, 0); -- 24.0095 -- 48
+INSERT INTO `creature_loot_template` VALUES (22244, 32569, 14, 0, 1, 1, 0, 0, 0); -- 15.2663 -- 34
+INSERT INTO `creature_loot_template` VALUES (22254, 32569, 25, 0, 1, 1, 0, 0, 0); -- 26.756 -- 45  
+INSERT INTO `creature_loot_template` VALUES (22291, 32569, 27, 0, 1, 1, 0, 0, 0); -- 15.2455 -- 47
+INSERT INTO `creature_loot_template` VALUES (22298, 32569, 13, 0, 1, 1, 0, 0, 0); -- 7.2 -- 33
+INSERT INTO `creature_loot_template` VALUES (22304, 32569, 98.2, 0, 2, 3, 0, 0, 0); -- 
+INSERT INTO `creature_loot_template` VALUES (23061, 32569, 92, 0, 2, 3, 0, 0, 0); -- 24.9 --
+INSERT INTO `creature_loot_template` VALUES (23153, 32569, 97.2, 0, 2, 3, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23154, 32569, 97.2, 0, 2, 3, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23174, 32569, 98.7, 0, 2, 3, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (23261, 32569, 92, 0, 2, 3, 0, 0, 0); -- 25 --
+INSERT INTO `creature_loot_template` VALUES (23281, 32569, 93, 0, 2, 3, 0, 0, 0); -- 25.1 --
+INSERT INTO `creature_loot_template` VALUES (23282, 32569, 93, 0, 2, 3, 0, 0, 0); -- 25 --
+INSERT INTO `creature_loot_template` VALUES (23386, 32569, 30, 0, 1, 1, 0, 0, 0); -- 33.8 -- 50
