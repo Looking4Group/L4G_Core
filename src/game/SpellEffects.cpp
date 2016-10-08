@@ -5536,6 +5536,7 @@ void Spell::EffectScriptEffect(uint32 effIndex)
     // TODO: we must implement hunter pet summon at login there (spell 6962)
     switch (GetSpellInfo()->Id)
     {
+        // we need script here, because KillCreadit in DB is used for diff quest :p
         case 32314:
         {
             uint32 const CREDIT_MARKER = 18393;
