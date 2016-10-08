@@ -51,9 +51,9 @@ EndScriptData */
 #define SPELL_SW_PAIN_PHASE3    30898                    // Shadow word pain during phase 3
 
 
-#define SPELL_THRASH_PASSIVE    3417                       //Extra attack chance during phase 2
+#define SPELL_THRASH_PASSIVE    12787                       //Extra attack chance during phase 2
 #define SPELL_SUNDER_ARMOR      30901                       //Sunder armor during phase 2
-#define SPELL_THRASH_AURA       12787                       //Passive proc chance for thrash
+#define SPELL_THRASH_AURA       3417                        //Passive proc chance for thrash
 #define SPELL_EQUIP_AXES        30857                       //Visual for axe equiping
 #define SPELL_AMPLIFY_DAMAGE    39095                       //Amplifiy during phase 3
 #define SPELL_HELLFIRE          30859                       //Infenals' hellfire aura
@@ -517,7 +517,7 @@ struct boss_malchezaarAI : public ScriptedAI
         {
             if(SWPainTimer < diff)
             {
-                Unit* target = (phase == 1) ? m_creature->getVictim() : (SelectUnit(SELECT_TARGET_RANDOM, 1, GetSpellMaxRange(SPELL_SW_PAIN_PHASE1), true, m_creature->getVictimGUID()));
+                Unit* target = (phase == 1) ? m_creature->getVictim() : (SelectUnit(SELECT_TARGET_RANDOM, 1, GetSpellMaxRange(SPELL_SW_PAIN_PHASE3), true, m_creature->getVictimGUID()));
                 CastSWP(target, phase);
                 SWPainTimer = 20000;
             }
