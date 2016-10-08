@@ -1312,3 +1312,34 @@ INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`
 (@GUID,7,-3949.776,1184.953,106.8185,0,0,0,100,0),
 (@GUID,8,-3981.939,1200.395,108.2629,0,0,0,100,0);
 -- .go -3981.939 1200.395 108.2629
+
+DELETE FROM `spell_linked_spell` WHERE `spell_trigger` = 30834;
+INSERT INTO `spell_linked_spell` VALUES
+(30834,30836,1,'Prince Infernal Spawning');
+
+DELETE FROM `spell_script_target` WHERE `entry` = 30834;
+
+-- Infernal Target 17644 netherspite_infernal
+UPDATE `creature_template` SET `modelid_A`= 13069, `modelid_H` = 13069, `unit_flags` = 0, `flags_extra`=130, `ScriptName` = NULL, `AIName` = NULL  WHERE `entry` = 17644; -- 7029 33554434 0
+
+-- Netherspite Infernal 17646
+UPDATE `creature_template` SET `faction_A` = 16, `faction_H` = 16, `speed` = 0.001, `dynamicflags` = 8, `ScriptName` = NULL, `AIName` = 'EventAI' WHERE `entry` = 17646; -- 35
+DELETE FROM `creature_template_addon` WHERE `entry` IN (17646);
+INSERT INTO `creature_template_addon` VALUES
+(17646,0,0,16908544,0,4097,0,0,NULL);
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN (17646);
+INSERT INTO `creature_ai_scripts` VALUES
+('1764601','17646','1','0','100','1','0','0','100','100','11','30859','0','32','0','0','0','0','0','0','0','0','Netherspite Infernal - Cast Hellfire OOC'),
+('1764602','17646','0','0','100','1','0','0','100','100','11','30859','0','32','0','0','0','0','0','0','0','0','Netherspite Infernal - Cast Hellfire');
+
+UPDATE `creature` SET `position_x`='-10932.4775', `position_y`='-1980.9719', `position_z`='275.5039' WHERE `guid` = 135920;
+UPDATE `creature` SET `position_x`='-10982.8105', `position_y`='-2013.3117', `position_z`='275.0239' WHERE `guid` = 135919;
+UPDATE `creature` SET `position_x`='-11005.1621', `position_y`='-1981.5374', `position_z`='274.9985' WHERE `guid` = 135917;
+UPDATE `creature` SET `position_x`='-10954.2138', `position_y`='-1979.7288', `position_z`='275.3330' WHERE `guid` = 135916;
+UPDATE `creature` SET `position_x`='-10958.8154', `position_y`='-1999.3208', `position_z`='275.4359' WHERE `guid` = 135915;
+UPDATE `creature` SET `position_x`='-10972.2529', `position_y`='-1963.7476', `position_z`='275.0897' WHERE `guid` = 135912;
+UPDATE `creature` SET `position_x`='-10949.7656', `position_y`='-1959.3552', `position_z`='275.2453' WHERE `guid` = 135911;
+UPDATE `creature` SET `position_x`='-10989.9980', `position_y`='-1994.8156', `position_z`='275.1358' WHERE `guid` = 135909;
+
+UPDATE `creature` SET `position_x`='4007.0761', `position_y`='1517.1452', `position_z`='-115.8280', `orientation`='4.9955',`spawndist`='0',`movementtype`='0' WHERE `guid` = 71729;
