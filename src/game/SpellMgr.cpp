@@ -3724,6 +3724,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 30834: //Prince infernals targeting
                 spellInfo->Targets = 6;
+                spellInfo->EffectImplicitTargetA[0] = 6;
                 break;
             default:
                 break;
