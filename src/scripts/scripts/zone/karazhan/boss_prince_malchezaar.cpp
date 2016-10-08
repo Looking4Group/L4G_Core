@@ -38,16 +38,6 @@ EndScriptData */
 #define SAY_SUMMON2         -1532101
 #define SAY_DEATH           -1532102
 
-// 19 Coordinates for Infernal spawns
-struct InfernalPoint
-{
-    float x,y;
-};
-
-#define INFERNAL_Z  275.5
-
-#define TOTAL_INFERNAL_POINTS 19
-
 //Enfeeble is supposed to reduce hp to 1 and then heal player back to full when it ends
 //Along with reducing healing and regen while enfeebled to 0%
 //This spell effect will only reduce healing
@@ -56,10 +46,14 @@ struct InfernalPoint
 #define SPELL_ENFEEBLE_EFFECT   41624
 
 #define SPELL_SHADOWNOVA        30852                       //Shadownova used during all phases
-#define SPELL_SW_PAIN           30854                       //Shadow word pain during phase 1 and 3 (different targeting rules though)
-#define SPELL_THRASH_PASSIVE    12787                       //Extra attack chance during phase 2
+
+#define SPELL_SW_PAIN_PHASE1    30854                    // Shadow word pain during phase 1
+#define SPELL_SW_PAIN_PHASE3    30898                    // Shadow word pain during phase 3
+
+
+#define SPELL_THRASH_PASSIVE    3417                       //Extra attack chance during phase 2
 #define SPELL_SUNDER_ARMOR      30901                       //Sunder armor during phase 2
-#define SPELL_THRASH_AURA       3417                        //Passive proc chance for thrash
+#define SPELL_THRASH_AURA       12787                       //Passive proc chance for thrash
 #define SPELL_EQUIP_AXES        30857                       //Visual for axe equiping
 #define SPELL_AMPLIFY_DAMAGE    39095                       //Amplifiy during phase 3
 #define SPELL_HELLFIRE          30859                       //Infenals' hellfire aura
@@ -68,10 +62,12 @@ struct InfernalPoint
 #define MALCHEZARS_AXE          17650                       //Malchezar's axes (creatures), summoned during phase 3
 
 #define INFERNAL_MODEL_INVISIBLE 11686                      //Infernal Effects
-#define SPELL_INFERNAL_RELAY     30834 /*30834*/
+#define SPELL_INFERNAL_RELAY     30834
 
 #define AXE_EQUIP_MODEL          40066                      //Axes info
 #define AXE_EQUIP_INFO           33490690
+
+#define AGGRO_RANGE              28.0
 
 struct boss_malchezaarAI : public ScriptedAI
 {
@@ -79,6 +75,7 @@ struct boss_malchezaarAI : public ScriptedAI
     {
         pInstance =  (instance_karazhan*)c->GetInstanceData();
         m_creature->GetPosition(wLoc);
+        m_creature->SetAggroRange(AGGRO_RANGE); 
     }
 
     instance_karazhan *pInstance;
@@ -95,9 +92,6 @@ struct boss_malchezaarAI : public ScriptedAI
 
     WorldLocation wLoc;
 
-    std::vector<uint64> infernals;
-    std::vector<InfernalPoint*> positions;
-
     uint64 axes[2];
     uint64 enfeeble_targets[5];
     uint64 enfeeble_health[5];
@@ -111,19 +105,18 @@ struct boss_malchezaarAI : public ScriptedAI
         AxesCleanup();
         ClearWeapons();
         InfernalCleanup();
-        positions.clear();
 
         for(int i =0; i < 5; ++i)
             enfeeble_targets[i] = 0;
 
         EnfeebleTimer = 30000;
         EnfeebleResetTimer = 38000;
-        ShadowNovaTimer = 35000;
+        ShadowNovaTimer = 35500;
         SWPainTimer = 20000;
         AmplifyDamageTimer = 5000;
         Cleave_Timer = 8000;
         InfernalTimer = 45000;
-        AxesTargetSwitchTimer = 7500 + rand()%12500;
+        AxesTargetSwitchTimer = urand(7500, 20000);
         CheckTimer = 3000;
         phase = 1;
 
@@ -156,7 +149,6 @@ struct boss_malchezaarAI : public ScriptedAI
         AxesCleanup();
         ClearWeapons();
         InfernalCleanup();
-        positions.clear();
 
         if(pInstance)
         {
@@ -452,21 +444,21 @@ struct boss_malchezaarAI : public ScriptedAI
             if(SunderArmorTimer < diff)
             {
                 DoCast(m_creature->getVictim(), SPELL_SUNDER_ARMOR);
-                SunderArmorTimer = 15000;
+                SunderArmorTimer = urand(10000, 18000);
 
             }else SunderArmorTimer -= diff;
 
             if(Cleave_Timer < diff)
             {
                 DoCast(m_creature->getVictim(), SPELL_CLEAVE);
-                Cleave_Timer = 6000 + rand()%6000;
+                Cleave_Timer = urand(6000, 12000);
             }else Cleave_Timer -= diff;
         }
         else
         {
             if(AxesTargetSwitchTimer < diff)
             {
-                AxesTargetSwitchTimer = 7500 + rand()%12500 ;
+                AxesTargetSwitchTimer = urand(7500, 20000);
 
                 Unit *target = SelectUnit(SELECT_TARGET_RANDOM, 0);
                 if(target)
@@ -498,7 +490,7 @@ struct boss_malchezaarAI : public ScriptedAI
                 if(Unit *target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_AMPLIFY_DAMAGE), true))
                     DoCast(target, SPELL_AMPLIFY_DAMAGE);
 
-                AmplifyDamageTimer = 20000 + rand()%10000;
+                AmplifyDamageTimer = urand(20000, 30000);
             }
             else
                 AmplifyDamageTimer -= diff;
@@ -516,7 +508,7 @@ struct boss_malchezaarAI : public ScriptedAI
         if(ShadowNovaTimer < diff)
         {
             DoCast(m_creature, SPELL_SHADOWNOVA);
-            ShadowNovaTimer = phase == 3 ? 35000 : -1;
+            ShadowNovaTimer = phase == 3 ? 30000 : -1;
         }
         else
             ShadowNovaTimer -= diff;
@@ -525,15 +517,8 @@ struct boss_malchezaarAI : public ScriptedAI
         {
             if(SWPainTimer < diff)
             {
-                Unit* target = NULL;
-                if(phase == 1)
-                    target = m_creature->getVictim();       // the tank
-                else                                        //anyone but the tank
-                    target = SelectUnit(SELECT_TARGET_RANDOM, 1, GetSpellMaxRange(SPELL_SW_PAIN), true, m_creature->getVictimGUID());
-
-                if (target)
-                    DoCast(target, SPELL_SW_PAIN);
-
+                Unit* target = (phase == 1) ? m_creature->getVictim() : (SelectUnit(SELECT_TARGET_RANDOM, 1, GetSpellMaxRange(SPELL_SW_PAIN_PHASE1), true, m_creature->getVictimGUID()));
+                CastSWP(target, phase);
                 SWPainTimer = 20000;
             }
             else
@@ -559,6 +544,17 @@ struct boss_malchezaarAI : public ScriptedAI
             DoMeleeAttackIfReady();
     }
 
+    void CastSWP(Unit* target, uint32 phase)
+    {
+        if (target)
+        {
+            if (phase == 1)
+                DoCast(target, SPELL_SW_PAIN_PHASE1);
+            else
+                DoCast(target, SPELL_SW_PAIN_PHASE3);
+        }
+    }
+
     void DoMeleeAttacksIfReady()
     {
         if( m_creature->IsWithinMeleeRange(m_creature->getVictim()) && !m_creature->IsNonMeleeSpellCasted(false))
@@ -576,18 +572,6 @@ struct boss_malchezaarAI : public ScriptedAI
                 m_creature->resetAttackTimer(OFF_ATTACK);
             }
         }
-    }
-
-    void Cleanup(Creature *infernal, InfernalPoint *point)
-    {
-        for(std::vector<uint64>::iterator itr = infernals.begin(); itr!= infernals.end(); ++itr)
-            if(*itr == infernal->GetGUID())
-        {
-            infernals.erase(itr);
-            break;
-        }
-
-        positions.push_back(point);
     }
 };
 
