@@ -3729,6 +3729,7 @@ void SpellMgr::LoadSpellCustomAttr()
             case 30898: //Prince Phase 3 SWP
                 spellInfo->Targets = TARGET_UNIT_TARGET_ENEMY;
                 spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ENEMY;
+                break;
             default:
                 break;
         }
