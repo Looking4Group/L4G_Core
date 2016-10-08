@@ -23,6 +23,7 @@ EndScriptData */
 
 #include "precompiled.h"
 #include "def_karazhan.h"
+#include "instance_karazhan.h"
 
 #define SAY_AGGRO           -1532091
 #define SAY_AXE_TOSS1       -1532092
@@ -44,29 +45,6 @@ struct InfernalPoint
 };
 
 #define INFERNAL_Z  275.5
-
-static InfernalPoint InfernalPoints[] =
-{
-    {-10922.8, -1985.2},
-    {-10916.2, -1996.2},
-    {-10932.2, -2008.1},
-    {-10948.8, -2022.1},
-    {-10958.7, -1997.7},
-    {-10971.5, -1997.5},
-    {-10990.8, -1995.1},
-    {-10989.8, -1976.5},
-    {-10971.6, -1973.0},
-    {-10955.5, -1974.0},
-    {-10939.6, -1969.8},
-    {-10958.0, -1952.2},
-    {-10941.7, -1954.8},
-    {-10943.1, -1988.5},
-    {-10948.8, -2005.1},
-    {-10984.0, -2019.3},
-    {-10932.8, -1979.6},
-    {-10932.8, -1979.6},
-    {-10935.7, -1996.0}
-};
 
 #define TOTAL_INFERNAL_POINTS 19
 
@@ -90,10 +68,12 @@ static InfernalPoint InfernalPoints[] =
 #define MALCHEZARS_AXE          17650                       //Malchezar's axes (creatures), summoned during phase 3
 
 #define INFERNAL_MODEL_INVISIBLE 11686                      //Infernal Effects
-#define SPELL_INFERNAL_RELAY     30834
+#define SPELL_INFERNAL_RELAY     30834 /*30834*/
 
 #define AXE_EQUIP_MODEL          40066                      //Axes info
-#define AXE_EQUIP_INFO           33448898
+#define AXE_EQUIP_INFO           33490690
+
+#define NPC_NETHERSPITE_INFERNAL    17646
 
 //---------Infernal code first
 struct netherspite_infernalAI : public Scripted_NoMovementAI
@@ -171,11 +151,11 @@ struct boss_malchezaarAI : public ScriptedAI
 {
     boss_malchezaarAI(Creature *c) : ScriptedAI(c)
     {
-        pInstance = (c->GetInstanceData());
+        pInstance =  (instance_karazhan*)c->GetInstanceData();
         m_creature->GetPosition(wLoc);
     }
 
-    ScriptedInstance *pInstance;
+    instance_karazhan *pInstance;
     uint32 EnfeebleTimer;
     uint32 EnfeebleResetTimer;
     uint32 ShadowNovaTimer;
@@ -210,9 +190,6 @@ struct boss_malchezaarAI : public ScriptedAI
 
         for(int i =0; i < 5; ++i)
             enfeeble_targets[i] = 0;
-
-        for(int i = 0; i < TOTAL_INFERNAL_POINTS; ++i)
-            positions.push_back(&InfernalPoints[i]);
 
         EnfeebleTimer = 30000;
         EnfeebleResetTimer = 38000;
@@ -256,9 +233,6 @@ struct boss_malchezaarAI : public ScriptedAI
         ClearWeapons();
         InfernalCleanup();
         positions.clear();
-
-        for(int i = 0; i < TOTAL_INFERNAL_POINTS; ++i)
-            positions.push_back(&InfernalPoints[i]);
 
         if(pInstance)
         {
@@ -383,44 +357,48 @@ struct boss_malchezaarAI : public ScriptedAI
         }
     }
 
+    // Function that returns a valid relay target
+    Unit* GetInfernalRelayTarget()
+    {
+        if (!pInstance)
+            return nullptr;
+
+        // Check if the Infernal targets doesn't already have a Netherspite infernal
+        std::vector<uint64> lTargetsGuidList;
+        pInstance->GetInfernalTargetsList(lTargetsGuidList);
+
+        std::vector<Creature*> vAvailableTargets;
+        vAvailableTargets.reserve(lTargetsGuidList.size());
+
+        for (std::vector<uint64>::const_iterator itr = lTargetsGuidList.begin(); itr != lTargetsGuidList.end(); ++itr)
+        {
+            if (Creature* pInfernalTarget = m_creature->GetMap()->GetCreature(*itr))
+            {
+                if (!GetClosestCreatureWithEntry(pInfernalTarget, NPC_NETHERSPITE_INFERNAL, 5.0f))
+                    vAvailableTargets.push_back(pInfernalTarget);
+            }
+        }
+
+        if (vAvailableTargets.empty())
+            return nullptr;
+
+        Creature* pTarget = vAvailableTargets[urand(0, vAvailableTargets.size() - 1)];
+        if (pTarget)
+            return pTarget;
+
+        return nullptr;
+    }
+
     void SummonInfernal(const uint32 diff)
     {
-        InfernalPoint *point = NULL;
-        float posX,posY,posZ;
-        if( (m_creature->GetMapId() != 532) || positions.empty())
+        if (Creature* pRelay = m_creature->GetMap()->GetCreature(pInstance->GetRelayGuid()))
         {
-            m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 60, posX, posY, posZ);
+            if (Unit* pTarget = GetInfernalRelayTarget())
+            {
+                pRelay->CastSpell(pTarget, SPELL_INFERNAL_RELAY, true, nullptr, nullptr, m_creature->GetObjectGuid());
+                DoScriptText(urand(0, 1) ? SAY_SUMMON1 : SAY_SUMMON2, m_creature);
+            }
         }
-        else
-        {
-            // Generate new seed (For some reason, rand() was generating same number... casusing infernals to spawn same point)
-            // Infernals spawning together is still possible 1/19 chance of happening
-            srand(time(NULL));
-            std::vector<InfernalPoint*>::iterator itr = positions.begin() + rand() % positions.size();
-            point = *itr;
-            positions.erase(itr);
-
-            posX = point->x;
-            posY = point->y;
-            posZ = INFERNAL_Z;
-        }
-
-        // Change infernal despawn to 180001 (for some reason respawn and despawn of infernal timing would only cause 1 to go off)
-        Creature *Infernal = m_creature->SummonCreature(NETHERSPITE_INFERNAL, posX, posY, posZ, 0, TEMPSUMMON_TIMED_DESPAWN, 180001);
-
-        if (Infernal)
-        {
-            Infernal->SetUInt32Value(UNIT_FIELD_DISPLAYID, INFERNAL_MODEL_INVISIBLE);
-            Infernal->setFaction(m_creature->getFaction());
-            if(point)
-                ((netherspite_infernalAI*)Infernal->AI())->point=point;
-            ((netherspite_infernalAI*)Infernal->AI())->malchezaarGUID=m_creature->GetGUID();
-
-            infernals.push_back(Infernal->GetGUID());
-            DoCast(Infernal, SPELL_INFERNAL_RELAY);
-        }
-
-        DoScriptText(RAND(SAY_SUMMON1, SAY_SUMMON2), m_creature);
     }
 
     void DamageTaken(Unit *done_by, uint32 &damage)
@@ -433,7 +411,7 @@ struct boss_malchezaarAI : public ScriptedAI
 
     void UpdateAI(const uint32 diff)
     {
-        if (!Enabled && pInstance->GetData(DATA_OPERA_EVENT) == DONE)
+        if (!Enabled /*&& pInstance->GetData(DATA_OPERA_EVENT) == DONE*/)
         {
             m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
             m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
