@@ -163,6 +163,16 @@ void instance_karazhan::OnCreatureCreate(Creature *creature, uint32 entry)
         case 16812:
             BarnesGUID = creature->GetGUID();
             break;
+        case 17645:
+            if (creature->GetPositionZ() < 350.0f)
+            {
+                creature->SetFlying(true);
+                m_LowerRelayGuid = creature->GetObjectGuid();
+            }
+            break;
+        case 17644:
+            m_lInfernalTargetsGuidList.push_back(creature->GetObjectGuid());
+            break;
     }
 
     HandleInitCreatureState(creature);
