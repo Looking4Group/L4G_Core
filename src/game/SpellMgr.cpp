@@ -3723,8 +3723,8 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->Mechanic = 0;
                 break;
             case 30834: //Prince infernals targeting
-                spellInfo->Targets = TARGET_UNIT_TARGET_ALLY;
-                spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ALLY;
+                spellInfo->Targets = TARGET_UNIT_TARGET_ANY;
+                spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ANY;
                 break;
             default:
                 break;
