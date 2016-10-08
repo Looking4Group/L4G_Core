@@ -5536,15 +5536,6 @@ void Spell::EffectScriptEffect(uint32 effIndex)
     // TODO: we must implement hunter pet summon at login there (spell 6962)
     switch (GetSpellInfo()->Id)
     {
-        //For Karazhan - Meteor - Prince Event.
-        // case 30835:          // Infernal Relay.
-        // {
-        //     if (!unitTarget)
-        //         return;
-
-        //     unitTarget->CastSpell(unitTarget, 30836, true, nullptr, nullptr, m_originalCasterGUID);
-        //     break;
-        // }
         // we need script here, because KillCreadit in DB is used for diff quest :p
         case 32314:
         {
