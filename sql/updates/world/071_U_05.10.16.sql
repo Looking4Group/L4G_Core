@@ -830,3 +830,194 @@ INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`
 (@GUID,11,117.1341,5191.477,23.33294,0,0,0,100,0),
 (@GUID,12,118.593,5209.887,22.58294,0,0,0,100,0),
 (@GUID,13,114.1548,5216.103,23.23504,0,0,0,100,0);
+
+-- ----------------------------------------------------------
+-- https://github.com/Looking4Group/L4G_Core/issues/1749
+-- Bat Rider Guards and Eye of Thrallmar not flying and not on a path.
+-- ----------------------------------------------------------
+ 
+ 
+-- Remove duplicate Bat Rider Guard spawns. There should be 4, we had 7.
+DELETE FROM `creature` WHERE `guid` IN (54839,54844,54845);
+DELETE FROM `creature_addon` WHERE `guid` IN (54839,54844,54845);
+ 
+-- Fix Bat Rider Guard InhabitType and damage. Speed for flying mobs is currently bugged. Adjusting speed in creature_template has no effect.
+UPDATE `creature_template` SET `InhabitType`=4,`speed`=2.8,`mindmg`=558,`maxdmg`=674,`AIName`='EventAI' WHERE `entry`=15242;
+ 
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 15242;
+INSERT INTO `creature_ai_scripts` VALUES
+-- Bat Rider Guard
+('1524201','15242','4','0','100','0','0','0','0','0','11','38066','1','2','0','0','0','0','0','0','0','0','Bat Rider Guard - Cast Unstable Concoction on Aggro');
+ 
+-- Bat Rider Guard pathing
+SET @GUID := 54840;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=156.9029,`position_y`=2554.784,`position_z`=170.8949 WHERE `guid`=@GUID;
+UPDATE `creature_addon` SET `path_id`=@GUID WHERE `guid`=@GUID;
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,1,156.9029,2554.784,170.8949,0,0,0,100,0),
+(@GUID,2,52.51677,2602.816,139.7838,0,0,0,100,0),
+(@GUID,3,42.10146,2627.056,139.7838,0,0,0,100,0),
+(@GUID,4,37.17329,2663.729,139.7838,0,0,0,100,0),
+(@GUID,5,62.91933,2687.96,139.7838,0,0,0,100,0),
+(@GUID,6,96.1871,2688.141,148.4226,0,0,0,100,0),
+(@GUID,7,129.818,2690.786,151.256,0,0,0,100,0),
+(@GUID,8,165.6888,2715.398,170.8949,0,0,0,100,0),
+(@GUID,9,199.7751,2744.93,170.8949,0,0,0,100,0),
+(@GUID,10,246.0857,2761.154,170.8949,0,0,0,100,0),
+(@GUID,11,295.0904,2757.991,170.8949,0,0,0,100,0),
+(@GUID,12,309.3468,2726.089,170.8949,0,0,0,100,0),
+(@GUID,13,303.8448,2682.588,170.8949,0,0,0,100,0),
+(@GUID,14,289.3104,2650.866,170.8949,0,0,0,100,0),
+(@GUID,15,261.2743,2618.831,170.8949,0,0,0,100,0),
+(@GUID,16,233.6436,2578.997,170.8949,0,0,0,100,0),
+(@GUID,17,199.3375,2546.226,170.8949,0,0,0,100,0);
+ 
+-- Bat Rider Guard pathing
+SET @GUID := 54841;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=65.97776,`position_y`=2661.205,`position_z`=163.6752 WHERE `guid`=@GUID;
+UPDATE `creature_addon` SET `path_id`=@GUID WHERE `guid`=@GUID;
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,1,65.97776,2661.205,163.6752,0,0,0,100,0),
+(@GUID,2,85.52612,2668.312,163.6752,0,0,0,100,0),
+(@GUID,3,119.9537,2689.26,163.6752,0,0,0,100,0),
+(@GUID,4,121.8238,2721.88,163.6752,0,0,0,100,0),
+(@GUID,5,142.6907,2750.891,163.6752,0,0,0,100,0),
+(@GUID,6,149.9812,2788.504,163.6752,0,0,0,100,0),
+(@GUID,7,142.9353,2830.464,163.6752,0,0,0,100,0),
+(@GUID,8,115.1711,2822.444,163.6752,0,0,0,100,0),
+(@GUID,9,57.16672,2791.644,163.6752,0,0,0,100,0),
+(@GUID,10,38.80463,2758.823,163.6752,0,0,0,100,0),
+(@GUID,11,19.69282,2714.784,163.6752,0,0,0,100,0),
+(@GUID,12,23.22027,2677.714,163.6752,0,0,0,100,0);
+ 
+-- Bat Rider Guard pathing
+SET @GUID := 54842;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=263.5968,`position_y`=2694.818,`position_z`=169.7312 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`bytes2`) VALUES (@GUID,@GUID,4097);
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,1,263.5968,2694.818,169.7312,0,0,0,100,0),
+(@GUID,2,184.0861,2784.899,154.4534,0,0,0,100,0),
+(@GUID,3,154.2815,2754.787,154.3701,0,0,0,100,0),
+(@GUID,4,127.0308,2740.488,154.3701,0,0,0,100,0),
+(@GUID,5,118.0444,2706.509,154.3701,0,0,0,100,0),
+(@GUID,6,115.7577,2669.386,158.6756,0,0,0,100,0),
+(@GUID,7,131.4314,2622.531,162.1478,0,0,0,100,0),
+(@GUID,8,154.8241,2607.207,164.4812,0,0,0,100,0),
+(@GUID,9,176.3283,2571.343,168.5645,0,0,0,100,0),
+(@GUID,10,221.6267,2559.683,172.1201,0,0,0,100,0),
+(@GUID,11,245.392,2593.423,169.8978,0,0,0,100,0),
+(@GUID,12,251.0069,2617.749,169.7312,0,0,0,100,0),
+(@GUID,13,263.0581,2644.614,169.7312,0,0,0,100,0);
+ 
+-- Bat Rider Guard pathing
+SET @GUID := 54843;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=62.42025,`position_y`=2785.719,`position_z`=192.1124 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`bytes2`) VALUES (@GUID,@GUID,4097);
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,1,62.42025,2785.719,192.1124,0,0,0,100,0),
+(@GUID,2,159.9371,2842.977,208.279,0,0,0,100,0),
+(@GUID,3,183.0578,2845.035,208.279,0,0,0,100,0),
+(@GUID,4,211.2432,2864.757,214.2235,0,0,0,100,0),
+(@GUID,5,238.1182,2871.979,220.9457,0,0,0,100,0),
+(@GUID,6,252.9173,2853.913,220.9457,0,0,0,100,0),
+(@GUID,7,255.0203,2812.634,220.9457,0,0,0,100,0),
+(@GUID,8,240.4993,2780.929,220.9457,0,0,0,100,0),
+(@GUID,9,195.4901,2773.965,209.3901,0,0,0,100,0),
+(@GUID,10,162.1341,2742.294,212.9179,0,0,0,100,0),
+(@GUID,11,125.4935,2720.611,197.9457,0,0,0,100,0),
+(@GUID,12,93.49241,2699.757,192.1124,0,0,0,100,0),
+(@GUID,13,58.35324,2681.49,192.1124,0,0,0,100,0),
+(@GUID,14,22.8833,2715.123,192.1124,0,0,0,100,0),
+(@GUID,15,30.10514,2764.5,192.1124,0,0,0,100,0);
+ 
+-- Fix Eye of Thrallmar InhabitType. Speed for flying mobs is currently bugged. Adjusting speed in creature_template has no effect.
+UPDATE `creature_template` SET `InhabitType`=4,`speed`=2 WHERE `entry`=16598;
+ 
+-- Add missing Eye of Thrallmar spawn. We had 4, there should be 5.
+DELETE FROM `creature` WHERE `guid` = 57585;
+INSERT INTO `creature` (`guid`, `id`, `map`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `curhealth`, `curmana`, `MovementType`) VALUES
+(57585, 16598, 530, 242.116, 2814.94, 162.248, 6.14692, 300, 0, 4080, 2175, 2);
+ 
+-- Eye of Thrallmar
+SET @GUID := 57585;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=219.834778,`position_y`=2803.304688,`position_z`=214.173996 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`bytes2`) VALUES (@GUID,@GUID,4097);
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,1,219.834778,2803.304688,214.173996,0,0,0,100,0),
+(@GUID,2,233.776016,2804.136230,217.897995,0,0,0,100,0),
+(@GUID,3,253.133835,2818.521484,217.897995,0,0,0,100,0),
+(@GUID,4,254.082962,2844.027588,216.091873,0,0,0,100,0),
+(@GUID,5,227.018814,2857.876465,213.320297,0,0,0,100,0),
+(@GUID,6,212.906586,2848.217285,206.803482,0,0,0,100,0),
+(@GUID,7,205.680878,2819.583984,198.880692,0,0,0,100,0),
+(@GUID,8,225.256668,2807.054199,198.880692,0,0,0,100,0),
+(@GUID,9,245.431046,2817.839600,199.180984,0,0,0,100,0),
+(@GUID,10,246.018906,2853.813721,200.253677,0,0,0,100,0),
+(@GUID,11,213.296463,2851.532227,200.629395,0,0,0,100,0),
+(@GUID,12,209.837982,2828.311523,201.177902,0,0,0,100,0);
+ 
+-- Eye of Thrallmar
+SET @GUID := 57586;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=242.115891,`position_y`=2814.944824,`position_z`=162.247818 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`bytes2`) VALUES (@GUID,@GUID,4097);
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,1,242.115891,2814.944824,162.247818,0,0,0,100,0),
+(@GUID,2,255.798676,2828.883545,170.696396,0,0,0,100,0),
+(@GUID,3,240.192581,2867.977295,158.058456,0,0,0,100,0),
+(@GUID,4,217.483932,2858.706543,163.708649,0,0,0,100,0),
+(@GUID,5,205.317566,2838.108887,156.497604,0,0,0,100,0),
+(@GUID,6,219.706543,2808.419922,167.707886,0,0,0,100,0);
+ 
+-- Eye of Thrallmar
+SET @GUID := 57587;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=228.410950,`position_y`=2821.334473,`position_z`=171.923889 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`bytes2`) VALUES (@GUID,@GUID,4097);
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,1,228.410950,2821.334473,171.923889,0,0,0,100,0),
+(@GUID,2,241.658859,2825.995850,170.897873,0,0,0,100,0),
+(@GUID,3,247.296982,2830.600098,177.734558,0,0,0,100,0),
+(@GUID,4,251.712997,2845.102783,178.658875,0,0,0,100,0),
+(@GUID,5,239.692719,2853.370605,169.603516,0,0,0,100,0),
+(@GUID,6,213.356064,2852.545410,177.772354,0,0,0,100,0),
+(@GUID,7,214.914795,2828.211182,169.192627,0,0,0,100,0);
+ 
+-- Eye of Thrallmar
+SET @GUID := 57588;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=225.064789,`position_y`=2821.549805,`position_z`=194.492599 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`bytes2`) VALUES (@GUID,@GUID,4097);
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,1,225.064789,2821.549805,194.492599,0,0,0,100,0),
+(@GUID,2,240.854492,2824.726318,195.257202,0,0,0,100,0),
+(@GUID,3,245.693283,2834.881348,195.644119,0,0,0,100,0),
+(@GUID,4,252.054642,2845.350342,192.884186,0,0,0,100,0),
+(@GUID,5,239.172882,2856.322998,201.815521,0,0,0,100,0),
+(@GUID,6,220.145828,2855.896484,198.060486,0,0,0,100,0),
+(@GUID,7,206.920425,2843.603760,194.365051,0,0,0,100,0); 
+ 
+-- Eye of Thrallmar
+SET @GUID := 57589;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=214.620773,`position_y`=2817.682861,`position_z`=188.117706 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`bytes2`) VALUES (@GUID,@GUID,4097);
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,1,214.620773,2817.682861,188.117706,0,0,0,100,0),
+(@GUID,2,237.724762,2815.922363,200.630554,0,0,0,100,0),
+(@GUID,3,257.967712,2838.514160,203.734146,0,0,0,100,0),
+(@GUID,4,239.734726,2855.139404,209.278366,0,0,0,100,0),
+(@GUID,5,222.779602,2856.832275,208.555817,0,0,0,100,0),
+(@GUID,6,207.967361,2841.418945,192.224503,0,0,0,100,0);
