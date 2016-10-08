@@ -73,80 +73,6 @@ struct InfernalPoint
 #define AXE_EQUIP_MODEL          40066                      //Axes info
 #define AXE_EQUIP_INFO           33490690
 
-#define NPC_NETHERSPITE_INFERNAL    17646
-
-//---------Infernal code first
-struct netherspite_infernalAI : public Scripted_NoMovementAI
-{
-    netherspite_infernalAI(Creature *c) : Scripted_NoMovementAI(c) ,
-        malchezaarGUID(0), HellfireTimer(0), CleanupTimer(0), point(NULL)
-    {
-        me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_CASTING_SPEED, true);
-        me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_HASTE_SPELLS, true);
-        me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_STUN, true);
-    }
-
-    uint32 HellfireTimer;
-    uint32 CleanupTimer;
-    uint64 malchezaarGUID;
-    InfernalPoint *point;
-
-    void Reset() {}
-    void EnterCombat(Unit*) {}
-    void MoveInLineOfSight(Unit*) {}
-    void AttackStart(Unit*) {}
-
-    void UpdateAI(const uint32 diff)
-    {
-        if(HellfireTimer)
-        {
-            if(HellfireTimer <= diff)
-            {
-                DoCast(m_creature, SPELL_HELLFIRE);
-                HellfireTimer = 0;
-            }
-            else
-               HellfireTimer -= diff;
-        }
-
-        if (CleanupTimer)
-        {
-            if (CleanupTimer <= diff)
-            {
-                Cleanup();
-                CleanupTimer = 0;
-            }
-            else
-                CleanupTimer -= diff;
-        }
-    }
-
-    void KilledUnit(Unit *who)
-    {
-        if ( Creature *malchezaar = Unit::GetCreature(*m_creature, malchezaarGUID))
-            malchezaar->AI()->KilledUnit(who);
-    }
-
-    void SpellHit(Unit *who, const SpellEntry *spell)
-    {
-        if(spell->Id == SPELL_INFERNAL_RELAY)
-        {
-            m_creature->SetUInt32Value(UNIT_FIELD_DISPLAYID, m_creature->GetUInt32Value(UNIT_FIELD_NATIVEDISPLAYID));
-            m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-            HellfireTimer = 4000;
-            CleanupTimer = 170000;
-        }
-    }
-
-    void DamageTaken(Unit *done_by, uint32 &damage)
-    {
-        if (done_by->GetGUID() != malchezaarGUID)
-            damage = 0;
-    }
-
-    void Cleanup();
-};
-
 struct boss_malchezaarAI : public ScriptedAI
 {
     boss_malchezaarAI(Creature *c) : ScriptedAI(c)
@@ -164,7 +90,6 @@ struct boss_malchezaarAI : public ScriptedAI
     uint32 AmplifyDamageTimer;
     uint32 InfernalTimer;
     uint32 AxesTargetSwitchTimer;
-    uint32 InfernalCleanupTimer;
     uint32 CheckTimer;
     uint32 Cleave_Timer;
 
@@ -198,7 +123,6 @@ struct boss_malchezaarAI : public ScriptedAI
         AmplifyDamageTimer = 5000;
         Cleave_Timer = 8000;
         InfernalTimer = 45000;
-        InfernalCleanupTimer = 47000;
         AxesTargetSwitchTimer = 7500 + rand()%12500;
         CheckTimer = 3000;
         phase = 1;
@@ -263,17 +187,16 @@ struct boss_malchezaarAI : public ScriptedAI
 
     void InfernalCleanup()
     {
-        //Infernal Cleanup
-        for(std::vector<uint64>::iterator itr = infernals.begin(); itr!= infernals.end(); ++itr)
+        std::list<Creature*> infernalList =  FindAllCreaturesWithEntry(NETHERSPITE_INFERNAL, 300.0f);
+
+        for(std::list<Creature*>::iterator itr = infernalList.begin(); itr!= infernalList.end(); ++itr)
         {
-            Unit *pInfernal = Unit::GetUnit(*m_creature, *itr);
-            if(pInfernal && pInfernal->isAlive())
+            Creature *infernal = *itr;
+            if(infernal)
             {
-                pInfernal->SetVisibility(VISIBILITY_OFF);
-                pInfernal->setDeathState(JUST_DIED);
+                infernal->ForcedDespawn();
             }
         }
-        infernals.clear();
     }
 
     void AxesCleanup()
@@ -374,7 +297,7 @@ struct boss_malchezaarAI : public ScriptedAI
         {
             if (Creature* pInfernalTarget = m_creature->GetMap()->GetCreature(*itr))
             {
-                if (!GetClosestCreatureWithEntry(pInfernalTarget, NPC_NETHERSPITE_INFERNAL, 5.0f))
+                if (!GetClosestCreatureWithEntry(pInfernalTarget, NETHERSPITE_INFERNAL, 5.0f))
                     vAvailableTargets.push_back(pInfernalTarget);
             }
         }
@@ -668,19 +591,6 @@ struct boss_malchezaarAI : public ScriptedAI
     }
 };
 
-void netherspite_infernalAI::Cleanup()
-{
-    Unit *pMalchezaar = Unit::GetUnit(*m_creature, malchezaarGUID);
-
-    if(pMalchezaar && pMalchezaar->isAlive())
-        ((boss_malchezaarAI*)((Creature*)pMalchezaar)->AI())->Cleanup(m_creature, point);
-}
-
-CreatureAI* GetAI_netherspite_infernal(Creature *_Creature)
-{
-    return new netherspite_infernalAI (_Creature);
-}
-
 CreatureAI* GetAI_boss_malchezaar(Creature *_Creature)
 {
     return new boss_malchezaarAI (_Creature);
@@ -692,10 +602,5 @@ void AddSC_boss_malchezaar()
     newscript = new Script;
     newscript->Name="boss_malchezaar";
     newscript->GetAI = &GetAI_boss_malchezaar;
-    newscript->RegisterSelf();
-
-    newscript = new Script;
-    newscript->Name="netherspite_infernal";
-    newscript->GetAI = &GetAI_netherspite_infernal;
     newscript->RegisterSelf();
 }
