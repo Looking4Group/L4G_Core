@@ -631,10 +631,8 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
             {
                 if (CanHackDoorOpen())
                 {
-                    //@Honey, the reason this code didn't work is because BridgeConsoleGuid isn't a door.
                     // OpenDoor(BridgeConsoleGuid, true);
-                    if (ScriptedInstance* ssc = (ScriptedInstance*) instance->GetGameObject(BridgeConsoleGuid)->GetInstanceData())
-                        ssc->SetData(DATA_BRIDGE_CONSOLE, DONE);
+                    SetData(DATA_BRIDGE_CONSOLE, DONE);
 
                     UnlockGameObject(BridgeConsoleGuid); 
 
