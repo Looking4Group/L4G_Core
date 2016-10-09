@@ -631,10 +631,9 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
             {
                 if (CanHackDoorOpen())
                 {
+                    UnlockGameObject(BridgeConsoleGuid);
                     // OpenDoor(BridgeConsoleGuid, true);
                     SetData(DATA_BRIDGE_CONSOLE, DONE);
-
-                    UnlockGameObject(BridgeConsoleGuid); 
 
                     //Also, you don't need to define "OpenDoor" - That's what "HandleGameObject" does.
                     HandleGameObject(BridgePartGuids[0], true);
