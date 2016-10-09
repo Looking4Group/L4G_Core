@@ -3731,6 +3731,19 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ENEMY;
                 spellInfo->EffectImplicitTargetB[0] = 0;
                 break;
+            case 33862: //Steam tonk Mortar explosion
+                spellInfo->EffectBasePoints[0] = 35;
+                spellInfo->EffectDieSides[0] = 11;
+                break;
+            case 25099: //Steam tonk detonation
+                spellInfo->EffectBasePoints[0] = 35;
+                spellInfo->EffectDieSides[0] = 11;
+                break;
+            case 24933: //Steam tonk cannon
+            case 34154:
+                spellInfo->EffectBasePoints[0] = 18;
+                spellInfo->EffectDieSides[0] = 5;
+                break;
             default:
                 break;
         }
