@@ -209,7 +209,7 @@ typedef struct MapTemplate
 {
     MapTemplate()
     {
-        visibility = DEFAULT_VISIBILITY_DISTANCE;
+        visibility = DEFAULT_ACTIVE_OBJECT_UPDATE_DISTANCE;
         pathfinding = F_ALWAYS_DISABLED;
         lineofsight = F_ALWAYS_ENABLED;
 

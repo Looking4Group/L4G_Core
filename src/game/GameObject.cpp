@@ -1064,7 +1064,7 @@ void GameObject::Use(Unit* user)
             // check if the db is sane
             if (info->chair.slots > 0)
             {
-                float lowestDist = DEFAULT_VISIBILITY_DISTANCE;
+                float lowestDist = DEFAULT_ACTIVE_OBJECT_UPDATE_DISTANCE;
 
                 float x_lowest = GetPositionX();
                 float y_lowest = GetPositionY();

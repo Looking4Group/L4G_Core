@@ -1151,7 +1151,7 @@ float TerrainInfo::GetVisibilityDistance()
     const TerrainSpecifics* specifics = GetSpecifics();
 
     if (!specifics || specifics == nullptr)
-        return DEFAULT_VISIBILITY_DISTANCE;
+        return DEFAULT_ACTIVE_OBJECT_UPDATE_DISTANCE;
 
     float visibility = specifics->visibility;
     if (sWorld.GetCoreBalancerTreshold() >= CB_VISIBILITY_PENALTY)

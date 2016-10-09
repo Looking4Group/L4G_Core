@@ -254,17 +254,17 @@ void ScriptMgr::LoadScripts(ScriptMapMap& scripts, char const* tablename)
                     // continue; - quest objective requirement set and command can be allowed
                 }
 
-                if (float(tmp.datalong2) > DEFAULT_VISIBILITY_DISTANCE)
+                if (float(tmp.datalong2) > DEFAULT_ACTIVE_OBJECT_UPDATE_DISTANCE)
                 {
                     sLog.outLog(LOG_DB_ERR, "Table `%s` has too large distance (%u) for exploring objective complete in `datalong2` in SCRIPT_COMMAND_QUEST_EXPLORED in `datalong` for script id %u",
                         tablename,tmp.datalong2,tmp.id);
                     continue;
                 }
 
-                if (tmp.datalong2 && float(tmp.datalong2) > DEFAULT_VISIBILITY_DISTANCE)
+                if (tmp.datalong2 && float(tmp.datalong2) > DEFAULT_ACTIVE_OBJECT_UPDATE_DISTANCE)
                 {
                     sLog.outLog(LOG_DB_ERR, "Table `%s` has too large distance (%u) for exploring objective complete in `datalong2` in SCRIPT_COMMAND_QUEST_EXPLORED in `datalong` for script id %u, max distance is %f or 0 for disable distance check",
-                        tablename,tmp.datalong2,tmp.id,DEFAULT_VISIBILITY_DISTANCE);
+                        tablename,tmp.datalong2,tmp.id,DEFAULT_ACTIVE_OBJECT_UPDATE_DISTANCE);
                     continue;
                 }
 
