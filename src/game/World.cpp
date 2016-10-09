@@ -82,7 +82,8 @@ float World::m_VisibleObjectGreyDistance      = 0;
 uint32 broadcastrepeater = 0;
 
 int32 World::m_activeObjectUpdateDistanceOnContinents = DEFAULT_VISIBILITY_DISTANCE;
-int32 World::m_activeObjectUpdateDistanceInInstances = DEFAULT_VISIBILITY_DISTANCE;
+int32 World::m_activeObjectUpdateDistanceInInstances = DEFAULT_VISIBILITY_INSTANCE;
+int32 World::m_activeObjectUpdateDistanceInBattlegrounds = DEFAULT_VISIBILITY_BGARENAS;
 
 void MapUpdateDiffInfo::InitializeMapData()
 {
@@ -1016,7 +1017,9 @@ void World::LoadConfigSettings(bool reload)
     }
 
     m_activeObjectUpdateDistanceOnContinents = sConfig.GetIntDefault("Visibility.Distance.ActiveObjectUpdate.Continents", DEFAULT_VISIBILITY_DISTANCE);
-    m_activeObjectUpdateDistanceInInstances = sConfig.GetIntDefault("Visibility.Distance.ActiveObjectUpdate.Instances", DEFAULT_VISIBILITY_DISTANCE);
+    m_activeObjectUpdateDistanceInInstances = sConfig.GetIntDefault("Visibility.Distance.ActiveObjectUpdate.Instances", DEFAULT_VISIBILITY_INSTANCE);
+    m_activeObjectUpdateDistanceInBattlegrounds = sConfig.GetIntDefault("Visibility.Distance.ActiveObjectUpdate.Battlegrounds", DEFAULT_VISIBILITY_BGARENAS);
+
     m_configs[CONFIG_WAYPOINT_MOVEMENT_ACTIVE_ON_CONTINENTS] = sConfig.GetBoolDefault("AutoActive.WaypointMovement.Continents", true);
     m_configs[CONFIG_WAYPOINT_MOVEMENT_ACTIVE_IN_INSTANCES] = sConfig.GetBoolDefault("AutoActive.WaypointMovement.Instances", true);
     m_configs[CONFIG_COMBAT_ACTIVE_ON_CONTINENTS] = sConfig.GetBoolDefault("AutoActive.Combat.Continents", true);

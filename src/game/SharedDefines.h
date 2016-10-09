@@ -2548,12 +2548,12 @@ enum BattleGroundTypeId
 #define MAX_BATTLEGROUND_TYPE_ID 9
 
 
-#define CONTACT_DISTANCE            0.5f
-#define INTERACTION_DISTANCE        5.0f
-#define MAX_VISIBILITY_DISTANCE     500.0f      // max distance for visible object show, limited in 500 yards
-#define DEFAULT_VISIBILITY_DISTANCE 300.0f       // default visible distance, 90 yards on continents
-#define DEFAULT_VISIBILITY_INSTANCE 120.0f      // default visible distance in instances, 120 yards
-#define DEFAULT_VISIBILITY_BGARENAS 180.0f      // default visible distance in BG/Arenas, 180 yards
+#define CONTACT_DISTANCE                                0.5f
+#define INTERACTION_DISTANCE                            5.0f
+#define MAX_VISIBILITY_DISTANCE                         500.0f      // max distance for visible object show, limited in 500 yards
+#define DEFAULT_ACTIVE_OBJECT_UPDATE_DISTANCE           90.0f       // default active object update distance, 90 yards on continents
+#define DEFAULT_ACTIVE_OBJECT_UPDATE_DISTANCE_INSTANCE  120.0f      // default active object update distance in instances, 120 yards
+#define DEFAULT_ACTIVE_OBJECT_DISTANCE_BGARENAS         180.0f      // default active object update distance in BG/Arenas, 180 yards
 
 // we need to stick to 1 version or half of the stuff will work for someone
 // others will not and opposite

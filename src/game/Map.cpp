@@ -2529,7 +2529,7 @@ BattleGroundMap::~BattleGroundMap()
 
 void BattleGroundMap::InitVisibilityDistance()
 {
-    m_ActiveObjectUpdateDistance = sWorld.GetActiveObjectUpdateDistanceInInstances();
+    m_ActiveObjectUpdateDistance = sWorld.GetActiveObjectUpdateDistanceInBattlegrounds();
 }
 
 bool BattleGroundMap::CanEnter(Player * player)
