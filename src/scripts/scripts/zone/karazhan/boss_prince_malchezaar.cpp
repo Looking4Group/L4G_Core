@@ -23,6 +23,7 @@ EndScriptData */
 
 #include "precompiled.h"
 #include "def_karazhan.h"
+#include "instance_karazhan.h"
 
 #define SAY_AGGRO           -1532091
 #define SAY_AXE_TOSS1       -1532092
@@ -37,39 +38,6 @@ EndScriptData */
 #define SAY_SUMMON2         -1532101
 #define SAY_DEATH           -1532102
 
-// 19 Coordinates for Infernal spawns
-struct InfernalPoint
-{
-    float x,y;
-};
-
-#define INFERNAL_Z  275.5
-
-static InfernalPoint InfernalPoints[] =
-{
-    {-10922.8, -1985.2},
-    {-10916.2, -1996.2},
-    {-10932.2, -2008.1},
-    {-10948.8, -2022.1},
-    {-10958.7, -1997.7},
-    {-10971.5, -1997.5},
-    {-10990.8, -1995.1},
-    {-10989.8, -1976.5},
-    {-10971.6, -1973.0},
-    {-10955.5, -1974.0},
-    {-10939.6, -1969.8},
-    {-10958.0, -1952.2},
-    {-10941.7, -1954.8},
-    {-10943.1, -1988.5},
-    {-10948.8, -2005.1},
-    {-10984.0, -2019.3},
-    {-10932.8, -1979.6},
-    {-10932.8, -1979.6},
-    {-10935.7, -1996.0}
-};
-
-#define TOTAL_INFERNAL_POINTS 19
-
 //Enfeeble is supposed to reduce hp to 1 and then heal player back to full when it ends
 //Along with reducing healing and regen while enfeebled to 0%
 //This spell effect will only reduce healing
@@ -78,7 +46,11 @@ static InfernalPoint InfernalPoints[] =
 #define SPELL_ENFEEBLE_EFFECT   41624
 
 #define SPELL_SHADOWNOVA        30852                       //Shadownova used during all phases
-#define SPELL_SW_PAIN           30854                       //Shadow word pain during phase 1 and 3 (different targeting rules though)
+
+#define SPELL_SW_PAIN_PHASE1    30854                    // Shadow word pain during phase 1
+#define SPELL_SW_PAIN_PHASE3    30898                    // Shadow word pain during phase 3
+
+
 #define SPELL_THRASH_PASSIVE    12787                       //Extra attack chance during phase 2
 #define SPELL_SUNDER_ARMOR      30901                       //Sunder armor during phase 2
 #define SPELL_THRASH_AURA       3417                        //Passive proc chance for thrash
@@ -93,89 +65,20 @@ static InfernalPoint InfernalPoints[] =
 #define SPELL_INFERNAL_RELAY     30834
 
 #define AXE_EQUIP_MODEL          40066                      //Axes info
-#define AXE_EQUIP_INFO           33448898
+#define AXE_EQUIP_INFO           33490690
 
-//---------Infernal code first
-struct netherspite_infernalAI : public Scripted_NoMovementAI
-{
-    netherspite_infernalAI(Creature *c) : Scripted_NoMovementAI(c) ,
-        malchezaarGUID(0), HellfireTimer(0), CleanupTimer(0), point(NULL)
-    {
-        me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_CASTING_SPEED, true);
-        me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_HASTE_SPELLS, true);
-        me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_STUN, true);
-    }
-
-    uint32 HellfireTimer;
-    uint32 CleanupTimer;
-    uint64 malchezaarGUID;
-    InfernalPoint *point;
-
-    void Reset() {}
-    void EnterCombat(Unit*) {}
-    void MoveInLineOfSight(Unit*) {}
-    void AttackStart(Unit*) {}
-
-    void UpdateAI(const uint32 diff)
-    {
-        if(HellfireTimer)
-        {
-            if(HellfireTimer <= diff)
-            {
-                DoCast(m_creature, SPELL_HELLFIRE);
-                HellfireTimer = 0;
-            }
-            else
-               HellfireTimer -= diff;
-        }
-
-        if (CleanupTimer)
-        {
-            if (CleanupTimer <= diff)
-            {
-                Cleanup();
-                CleanupTimer = 0;
-            }
-            else
-                CleanupTimer -= diff;
-        }
-    }
-
-    void KilledUnit(Unit *who)
-    {
-        if ( Creature *malchezaar = Unit::GetCreature(*m_creature, malchezaarGUID))
-            malchezaar->AI()->KilledUnit(who);
-    }
-
-    void SpellHit(Unit *who, const SpellEntry *spell)
-    {
-        if(spell->Id == SPELL_INFERNAL_RELAY)
-        {
-            m_creature->SetUInt32Value(UNIT_FIELD_DISPLAYID, m_creature->GetUInt32Value(UNIT_FIELD_NATIVEDISPLAYID));
-            m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-            HellfireTimer = 4000;
-            CleanupTimer = 170000;
-        }
-    }
-
-    void DamageTaken(Unit *done_by, uint32 &damage)
-    {
-        if (done_by->GetGUID() != malchezaarGUID)
-            damage = 0;
-    }
-
-    void Cleanup();
-};
+#define AGGRO_RANGE              28.0
 
 struct boss_malchezaarAI : public ScriptedAI
 {
     boss_malchezaarAI(Creature *c) : ScriptedAI(c)
     {
-        pInstance = (c->GetInstanceData());
+        pInstance =  (instance_karazhan*)c->GetInstanceData();
         m_creature->GetPosition(wLoc);
+        m_creature->SetAggroRange(AGGRO_RANGE); 
     }
 
-    ScriptedInstance *pInstance;
+    instance_karazhan *pInstance;
     uint32 EnfeebleTimer;
     uint32 EnfeebleResetTimer;
     uint32 ShadowNovaTimer;
@@ -184,14 +87,10 @@ struct boss_malchezaarAI : public ScriptedAI
     uint32 AmplifyDamageTimer;
     uint32 InfernalTimer;
     uint32 AxesTargetSwitchTimer;
-    uint32 InfernalCleanupTimer;
     uint32 CheckTimer;
     uint32 Cleave_Timer;
 
     WorldLocation wLoc;
-
-    std::vector<uint64> infernals;
-    std::vector<InfernalPoint*> positions;
 
     uint64 axes[2];
     uint64 enfeeble_targets[5];
@@ -206,23 +105,18 @@ struct boss_malchezaarAI : public ScriptedAI
         AxesCleanup();
         ClearWeapons();
         InfernalCleanup();
-        positions.clear();
 
         for(int i =0; i < 5; ++i)
             enfeeble_targets[i] = 0;
 
-        for(int i = 0; i < TOTAL_INFERNAL_POINTS; ++i)
-            positions.push_back(&InfernalPoints[i]);
-
         EnfeebleTimer = 30000;
         EnfeebleResetTimer = 38000;
-        ShadowNovaTimer = 35000;
+        ShadowNovaTimer = 35500;
         SWPainTimer = 20000;
         AmplifyDamageTimer = 5000;
         Cleave_Timer = 8000;
         InfernalTimer = 45000;
-        InfernalCleanupTimer = 47000;
-        AxesTargetSwitchTimer = 7500 + rand()%12500;
+        AxesTargetSwitchTimer = urand(7500, 20000);
         CheckTimer = 3000;
         phase = 1;
 
@@ -255,10 +149,6 @@ struct boss_malchezaarAI : public ScriptedAI
         AxesCleanup();
         ClearWeapons();
         InfernalCleanup();
-        positions.clear();
-
-        for(int i = 0; i < TOTAL_INFERNAL_POINTS; ++i)
-            positions.push_back(&InfernalPoints[i]);
 
         if(pInstance)
         {
@@ -289,17 +179,16 @@ struct boss_malchezaarAI : public ScriptedAI
 
     void InfernalCleanup()
     {
-        //Infernal Cleanup
-        for(std::vector<uint64>::iterator itr = infernals.begin(); itr!= infernals.end(); ++itr)
+        std::list<Creature*> infernalList =  FindAllCreaturesWithEntry(NETHERSPITE_INFERNAL, 300.0f);
+
+        for(std::list<Creature*>::iterator itr = infernalList.begin(); itr!= infernalList.end(); ++itr)
         {
-            Unit *pInfernal = Unit::GetUnit(*m_creature, *itr);
-            if(pInfernal && pInfernal->isAlive())
+            Creature *infernal = *itr;
+            if(infernal)
             {
-                pInfernal->SetVisibility(VISIBILITY_OFF);
-                pInfernal->setDeathState(JUST_DIED);
+                infernal->ForcedDespawn();
             }
         }
-        infernals.clear();
     }
 
     void AxesCleanup()
@@ -383,44 +272,48 @@ struct boss_malchezaarAI : public ScriptedAI
         }
     }
 
+    // Function that returns a valid relay target
+    Unit* GetInfernalRelayTarget()
+    {
+        if (!pInstance)
+            return nullptr;
+
+        // Check if the Infernal targets doesn't already have a Netherspite infernal
+        std::vector<uint64> lTargetsGuidList;
+        pInstance->GetInfernalTargetsList(lTargetsGuidList);
+
+        std::vector<Creature*> vAvailableTargets;
+        vAvailableTargets.reserve(lTargetsGuidList.size());
+
+        for (std::vector<uint64>::const_iterator itr = lTargetsGuidList.begin(); itr != lTargetsGuidList.end(); ++itr)
+        {
+            if (Creature* pInfernalTarget = m_creature->GetMap()->GetCreature(*itr))
+            {
+                if (!GetClosestCreatureWithEntry(pInfernalTarget, NETHERSPITE_INFERNAL, 5.0f))
+                    vAvailableTargets.push_back(pInfernalTarget);
+            }
+        }
+
+        if (vAvailableTargets.empty())
+            return nullptr;
+
+        Creature* pTarget = vAvailableTargets[urand(0, vAvailableTargets.size() - 1)];
+        if (pTarget)
+            return pTarget;
+
+        return nullptr;
+    }
+
     void SummonInfernal(const uint32 diff)
     {
-        InfernalPoint *point = NULL;
-        float posX,posY,posZ;
-        if( (m_creature->GetMapId() != 532) || positions.empty())
+        if (Creature* pRelay = m_creature->GetMap()->GetCreature(pInstance->GetRelayGuid()))
         {
-            m_creature->GetRandomPoint(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 60, posX, posY, posZ);
+            if (Unit* pTarget = GetInfernalRelayTarget())
+            {
+                pRelay->CastSpell(pTarget, SPELL_INFERNAL_RELAY, true, nullptr, nullptr, m_creature->GetObjectGuid());
+                DoScriptText(urand(0, 1) ? SAY_SUMMON1 : SAY_SUMMON2, m_creature);
+            }
         }
-        else
-        {
-            // Generate new seed (For some reason, rand() was generating same number... casusing infernals to spawn same point)
-            // Infernals spawning together is still possible 1/19 chance of happening
-            srand(time(NULL));
-            std::vector<InfernalPoint*>::iterator itr = positions.begin() + rand() % positions.size();
-            point = *itr;
-            positions.erase(itr);
-
-            posX = point->x;
-            posY = point->y;
-            posZ = INFERNAL_Z;
-        }
-
-        // Change infernal despawn to 180001 (for some reason respawn and despawn of infernal timing would only cause 1 to go off)
-        Creature *Infernal = m_creature->SummonCreature(NETHERSPITE_INFERNAL, posX, posY, posZ, 0, TEMPSUMMON_TIMED_DESPAWN, 180001);
-
-        if (Infernal)
-        {
-            Infernal->SetUInt32Value(UNIT_FIELD_DISPLAYID, INFERNAL_MODEL_INVISIBLE);
-            Infernal->setFaction(m_creature->getFaction());
-            if(point)
-                ((netherspite_infernalAI*)Infernal->AI())->point=point;
-            ((netherspite_infernalAI*)Infernal->AI())->malchezaarGUID=m_creature->GetGUID();
-
-            infernals.push_back(Infernal->GetGUID());
-            DoCast(Infernal, SPELL_INFERNAL_RELAY);
-        }
-
-        DoScriptText(RAND(SAY_SUMMON1, SAY_SUMMON2), m_creature);
     }
 
     void DamageTaken(Unit *done_by, uint32 &damage)
@@ -433,7 +326,7 @@ struct boss_malchezaarAI : public ScriptedAI
 
     void UpdateAI(const uint32 diff)
     {
-        if (!Enabled && pInstance->GetData(DATA_OPERA_EVENT) == DONE)
+        if (!Enabled /*&& pInstance->GetData(DATA_OPERA_EVENT) == DONE*/)
         {
             m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
             m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
@@ -551,21 +444,21 @@ struct boss_malchezaarAI : public ScriptedAI
             if(SunderArmorTimer < diff)
             {
                 DoCast(m_creature->getVictim(), SPELL_SUNDER_ARMOR);
-                SunderArmorTimer = 15000;
+                SunderArmorTimer = urand(10000, 18000);
 
             }else SunderArmorTimer -= diff;
 
             if(Cleave_Timer < diff)
             {
                 DoCast(m_creature->getVictim(), SPELL_CLEAVE);
-                Cleave_Timer = 6000 + rand()%6000;
+                Cleave_Timer = urand(6000, 12000);
             }else Cleave_Timer -= diff;
         }
         else
         {
             if(AxesTargetSwitchTimer < diff)
             {
-                AxesTargetSwitchTimer = 7500 + rand()%12500 ;
+                AxesTargetSwitchTimer = urand(7500, 20000);
 
                 Unit *target = SelectUnit(SELECT_TARGET_RANDOM, 0);
                 if(target)
@@ -597,7 +490,7 @@ struct boss_malchezaarAI : public ScriptedAI
                 if(Unit *target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_AMPLIFY_DAMAGE), true))
                     DoCast(target, SPELL_AMPLIFY_DAMAGE);
 
-                AmplifyDamageTimer = 20000 + rand()%10000;
+                AmplifyDamageTimer = urand(20000, 30000);
             }
             else
                 AmplifyDamageTimer -= diff;
@@ -615,7 +508,7 @@ struct boss_malchezaarAI : public ScriptedAI
         if(ShadowNovaTimer < diff)
         {
             DoCast(m_creature, SPELL_SHADOWNOVA);
-            ShadowNovaTimer = phase == 3 ? 35000 : -1;
+            ShadowNovaTimer = phase == 3 ? 30000 : -1;
         }
         else
             ShadowNovaTimer -= diff;
@@ -624,15 +517,8 @@ struct boss_malchezaarAI : public ScriptedAI
         {
             if(SWPainTimer < diff)
             {
-                Unit* target = NULL;
-                if(phase == 1)
-                    target = m_creature->getVictim();       // the tank
-                else                                        //anyone but the tank
-                    target = SelectUnit(SELECT_TARGET_RANDOM, 1, GetSpellMaxRange(SPELL_SW_PAIN), true, m_creature->getVictimGUID());
-
-                if (target)
-                    DoCast(target, SPELL_SW_PAIN);
-
+                Unit* target = (phase == 1) ? m_creature->getVictim() : (SelectUnit(SELECT_TARGET_RANDOM, 1, GetSpellMaxRange(SPELL_SW_PAIN_PHASE3), true, m_creature->getVictimGUID()));
+                CastSWP(target, phase);
                 SWPainTimer = 20000;
             }
             else
@@ -658,6 +544,17 @@ struct boss_malchezaarAI : public ScriptedAI
             DoMeleeAttackIfReady();
     }
 
+    void CastSWP(Unit* target, uint32 phase)
+    {
+        if (target)
+        {
+            if (phase == 1)
+                DoCast(target, SPELL_SW_PAIN_PHASE1);
+            else
+                DoCast(target, SPELL_SW_PAIN_PHASE3);
+        }
+    }
+
     void DoMeleeAttacksIfReady()
     {
         if( m_creature->IsWithinMeleeRange(m_creature->getVictim()) && !m_creature->IsNonMeleeSpellCasted(false))
@@ -676,32 +573,7 @@ struct boss_malchezaarAI : public ScriptedAI
             }
         }
     }
-
-    void Cleanup(Creature *infernal, InfernalPoint *point)
-    {
-        for(std::vector<uint64>::iterator itr = infernals.begin(); itr!= infernals.end(); ++itr)
-            if(*itr == infernal->GetGUID())
-        {
-            infernals.erase(itr);
-            break;
-        }
-
-        positions.push_back(point);
-    }
 };
-
-void netherspite_infernalAI::Cleanup()
-{
-    Unit *pMalchezaar = Unit::GetUnit(*m_creature, malchezaarGUID);
-
-    if(pMalchezaar && pMalchezaar->isAlive())
-        ((boss_malchezaarAI*)((Creature*)pMalchezaar)->AI())->Cleanup(m_creature, point);
-}
-
-CreatureAI* GetAI_netherspite_infernal(Creature *_Creature)
-{
-    return new netherspite_infernalAI (_Creature);
-}
 
 CreatureAI* GetAI_boss_malchezaar(Creature *_Creature)
 {
@@ -714,10 +586,5 @@ void AddSC_boss_malchezaar()
     newscript = new Script;
     newscript->Name="boss_malchezaar";
     newscript->GetAI = &GetAI_boss_malchezaar;
-    newscript->RegisterSelf();
-
-    newscript = new Script;
-    newscript->Name="netherspite_infernal";
-    newscript->GetAI = &GetAI_netherspite_infernal;
     newscript->RegisterSelf();
 }

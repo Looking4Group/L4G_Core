@@ -3721,7 +3721,16 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 37029: //Kael'Thas Telonicus: Remove DR from remote toy by setting mechanic to 0
                 spellInfo->Mechanic = 0;
-                break;                
+                break;
+            case 30834: //Prince infernals targeting
+                spellInfo->Targets = TARGET_UNIT_TARGET_ANY;
+                spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ANY;
+                break;
+            case 30898: //Prince Phase 3 SWP
+                spellInfo->Targets = TARGET_UNIT_TARGET_ENEMY;
+                spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ENEMY;
+                spellInfo->EffectImplicitTargetB[0] = 0;
+                break;
             default:
                 break;
         }
