@@ -1323,15 +1323,14 @@ DELETE FROM `spell_script_target` WHERE `entry` = 30834;
 UPDATE `creature_template` SET `modelid_A`= 13069, `modelid_H` = 13069, `unit_flags` = 0, `flags_extra`=130, `ScriptName` = NULL, `AIName` = NULL  WHERE `entry` = 17644; -- 7029 33554434 0
 
 -- Netherspite Infernal 17646
-UPDATE `creature_template` SET `faction_A` = 16, `faction_H` = 16, `speed` = 0.001, `dynamicflags` = 8, `ScriptName` = NULL, `AIName` = 'EventAI' WHERE `entry` = 17646; -- 35
+UPDATE `creature_template` SET `faction_A` = 16, `faction_H` = 16, `speed` = 0.001, `unit_flags` = 33851973, `dynamicflags` = 8, `type_flags` = 1056, `ScriptName` = NULL, `AIName` = 'EventAI' WHERE `entry` = 17646; -- 35
 DELETE FROM `creature_template_addon` WHERE `entry` IN (17646);
 INSERT INTO `creature_template_addon` VALUES
 (17646,0,0,16908544,0,4097,0,0,NULL);
 
 DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN (17646);
 INSERT INTO `creature_ai_scripts` VALUES
-('1764601','17646','1','0','100','1','0','0','100','100','11','30859','0','32','0','0','0','0','0','0','0','0','Netherspite Infernal - Cast Hellfire OOC'),
-('1764602','17646','0','0','100','1','0','0','100','100','11','30859','0','32','0','0','0','0','0','0','0','0','Netherspite Infernal - Cast Hellfire');
+('1764601','17646','1','0','100','1','4000','4000','100','100','11','30859','0','32','0','0','0','0','0','0','0','0','Netherspite Infernal - Cast Hellfire OOC');
 
 UPDATE `creature` SET `position_x`='-10932.4775', `position_y`='-1980.9719', `position_z`='275.5039' WHERE `guid` = 135920;
 UPDATE `creature` SET `position_x`='-10982.8105', `position_y`='-2013.3117', `position_z`='275.0239' WHERE `guid` = 135919;
