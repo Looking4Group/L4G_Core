@@ -47,5 +47,6 @@ DELETE FROM `creature` WHERE `id` IN (17039,17034);
 UPDATE `spell_affect` SET `SpellFamilyMask`=527769339428864 WHERE `entry` IN (16833,16834,16835);
 
 -- Lesser Spell Blasting (32106) (Spellstrike Set Effect) will now have a chance to trigger from channeled spells and DoT application
+DELETE FROM `spell_proc_event` WHERE `entry` = 32106;
 INSERT INTO `spell_proc_event` (`entry`,`SchoolMask`,`SpellFamilyName`,`SpellFamilyMask`,`procFlags`,`procEx`,`ppmRate`,`CustomChance`,`Cooldown`) VALUES
 (32106, 0, 0, 0, 0, 67108864, 0, 0, 0);
