@@ -42,3 +42,6 @@ INSERT INTO `gameobject_scripts` (`id`, `delay`, `command`, `datalong`, `datalon
  
 -- Remove static spawns of Kaliri birds. They should not exist.
 DELETE FROM `creature` WHERE `id` IN (17039,17034);
+
+-- Update Natural Shapeshifter talents (rank 1-3) to include Tree of Life
+UPDATE `spell_affect` SET `SpellFamilyMask`=527769339428864 WHERE `entry` IN (16833,16834,16835);
