@@ -83,3 +83,12 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('1811810','18118','2','0','100','1','0','50','10000','15000','11','23381','0','0','0','0','0','0','0','0','0','0','Ango\'rosh Shaman - Cast Healing Touch at 50% HP'),
 ('1811811','18118','2','0','100','1','0','30','30000','60000','11','6742','0','0','0','0','0','0','0','0','0','0','Ango\'rosh Shaman - Cast Bloodlust at 30% HP'),
 ('1811812','18118','7','0','100','0','0','0','0','0','22','0','0','0','0','0','0','0','0','0','0','0','Ango\'rosh Shaman - Set Phase to 0 on Evade');
+
+-- Daggerfen Muckdweller 18115
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 18115;
+INSERT INTO `creature_ai_scripts` VALUES
+('1811501','18115','9','0','100','1','0','5','10000','10000','11','35201','1','32','0','0','0','0','0','0','0','0','Daggerfen Muckdweller - Cast Paralytic Poison');
+
+DELETE FROM `spell_linked_spell` WHERE `spell_trigger` = -35201;
+INSERT INTO `spell_linked_spell` VALUES
+('-35201','35202','0','Paralytic Poison - Paralysis');
