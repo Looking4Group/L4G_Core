@@ -308,8 +308,8 @@ struct boss_fathomlord_karathressAI : public ScriptedAI
         //CataclysmicBolt_Timer
         if(CataclysmicBolt_Timer < diff)
         {
-            //Exlude Tank and targets without mana, if there aren't other units, cast on the tank
-            if(Unit *target = SelectUnit(SELECT_TARGET_RANDOM, 1, GetSpellMaxRange(SPELL_CATACLYSMIC_BOLT), true, POWER_MANA))
+            //Exlude targets without mana, if there aren't other units, cast on the tank
+            if(Unit *target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_CATACLYSMIC_BOLT), true, POWER_MANA))
                 DoCast(target, SPELL_CATACLYSMIC_BOLT);
             else
                 DoCast(m_creature->getVictim(), SPELL_CATACLYSMIC_BOLT);
