@@ -92,3 +92,6 @@ INSERT INTO `creature_ai_scripts` VALUES
 DELETE FROM `spell_linked_spell` WHERE `spell_trigger` = -35201;
 INSERT INTO `spell_linked_spell` VALUES
 ('-35201','35202','0','Paralytic Poison - Paralysis');
+
+-- Ancestral Spirit Wolf 17077
+UPDATE creature_template SET unit_flags=unit_flags|2 WHERE entry = 17077;
