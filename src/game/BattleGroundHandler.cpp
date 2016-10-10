@@ -493,6 +493,29 @@ void WorldSession::HandleBattleGroundPlayerPortOpcode(WorldPacket &recv_data)
                 queueSlot = _player->GetBattleGroundQueueIndex(bgQueueTypeId);
                 sBattleGroundMgr.BuildBattleGroundStatusPacket(&data, bg, _player->GetBGTeam(), queueSlot, STATUS_IN_PROGRESS, 0, bg->GetStartTime());
                 _player->SendPacketToSelf(&data);
+
+
+                //Prevent Queue Hopping.
+                for (int i=0; i < PLAYER_MAX_BATTLEGROUND_QUEUES; i++)
+                {
+                    //Check that we can correctly get the BG --type-- ID:
+                    if (BattleGroundQueueTypeId queueHopID = _player->GetBattleGroundQueueTypeId(i))
+                    {
+                        //Check we're in a queue for this BG:
+                        if (_player->InBattleGroundQueueForBattleGroundQueueType(queueHopID))
+                        {
+                            //Verify that we're not prematurely removing the BG queue we're about to accept:
+                            if (queueHopID != bgQueueTypeId)
+                            {
+                                _player->RemoveBattleGroundQueueId(queueHopID);
+                                //Important to set the bool to 'false' so it doesn't decrement invite count on that BG.
+                                sBattleGroundMgr.m_BattleGroundQueues[ queueHopID ].RemovePlayer(_player->GetGUID(), false);
+                            }
+                        }   
+                    }
+                }
+
+
                 // remove battleground queue status from BGmgr
                 sBattleGroundMgr.m_BattleGroundQueues[bgQueueTypeId].RemovePlayer(_player->GetGUID(), false);
                 // this is still needed here if battleground "jumping" shouldn't add deserter debuff
