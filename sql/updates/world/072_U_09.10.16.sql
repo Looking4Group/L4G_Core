@@ -1699,3 +1699,34 @@ INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`
 (@GUID,17,-4695.498,116.758,106.433,0,1,0,100,0), -- 07:15:27
 (@GUID,18,-4713.938,87.04405,101.2085,0,1,0,100,0), -- 07:15:27
 (@GUID,19,-4726.667,100.212,106.433,0,1,0,100,0); -- 07:15:27
+
+DELETE FROM `spell_linked_spell` WHERE `spell_trigger` = 37906;
+INSERT INTO `spell_linked_spell` VALUES
+(37906,-37905,1,'Book of Fel Names - Remove Metamorphosis');
+
+-- Book of Fel Names target Varedis only
+DELETE FROM `spell_script_target` WHERE `entry` = 37906;
+INSERT INTO `spell_script_target` VALUES
+(37906,1,21178);
+
+-- Spell Script
+DELETE FROM `spell_scripts` WHERE `id` = 37906;
+INSERT INTO `spell_scripts` (`id`, `delay`, `command`, `datalong`, `datalong2`, `dataint`, `x`, `y`, `z`, `o`) VALUES
+(37906, 0, 14, 37905, 0, 0, 0, 0, 0, 0);
+
+-- Varedis 21178
+UPDATE `creature_template` SET `speed`='1.48', `AIName`='EventAI', `mechanic_immune_mask`='578895699', `flags_extra`='1078001664' WHERE `entry` = 21178; -- 578895699 1078001664
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 21178;
+INSERT INTO `creature_ai_scripts` VALUES
+(2117801,21178,4,0,100,0,0,0,0,0,11,29651,0,0,0,0,0,0,0,0,0,0,'Varedis - Casts Dual Wield on Aggro'),
+(2117802,21178,0,0,100,1,3500,5500,10000,11000,11,38010,4,32,0,0,0,0,0,0,0,0,'Varedis - Curse of Flames'),
+(2117803,21178,0,0,100,1,4000,8000,12000,15000,11,37683,0,0,0,0,0,0,0,0,0,0,'Varedis - Evasion'),
+(2117804,21178,0,0,100,1,5000,5000,9500,16000,11,39262,4,0,0,0,0,0,0,0,0,0,'Varedis - Mana Burn'),
+(2117805,21178,9,0,100,1,0,15,15000,20000,11,33803,1,0,0,0,0,0,0,0,0,0,'Varedis - Cast Flame Wave'),
+(2117806,21178,2,0,100,0,50,0,0,0,11,36298,0,7,0,0,0,0,0,0,0,0,'Varedis - Casts Metamorphosis at 50% HP'), -- 37905
+(2117807,21178,8,0,100,1,37906,-1,0,0,28,0,37905,0,0,0,0,0,0,0,0,0,'Varedis - Remove Metamorphosis on Book of Fel Names Spellhit'),
+(2117808,21178,7,0,100,0,0,0,0,0,28,0,36298,0,0,0,0,0,0,0,0,0,'Varedis - Remove Metamorphosis on Evade');
+
+-- Flame Wave 19381
+-- faulty model A or H
+UPDATE `creature_template` SET `flags_extra`='130' WHERE `entry` = 19381;
