@@ -1730,3 +1730,8 @@ INSERT INTO `creature_ai_scripts` VALUES
 -- Flame Wave 19381
 -- faulty model A or H
 UPDATE `creature_template` SET `flags_extra`='130' WHERE `entry` = 19381;
+
+-- Shadow Council Felsworn 21753
+UPDATE `creature_template` SET `faction_A`='16',`faction_H`='16' WHERE `entry` = 21753;
+-- Shadow Council Zealot 21754
+UPDATE `creature_template` SET `faction_A`='16',`faction_H`='16' WHERE `entry` = 21754;
