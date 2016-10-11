@@ -36,6 +36,24 @@ EndScriptData */
 ObjectGuid ConsoleGuids[5]; 
 ObjectGuid BridgeConsoleGuid;
 
+
+bool UnlockVashjDoor(ScriptedInstance* instance)
+{
+    return (((instance->GetData(DATA_HYDROSS_EVENT) == SPECIAL) && 
+    (instance->GetData(DATA_LURKER_EVENT) == SPECIAL)           && 
+    (instance->GetData(DATA_LEOTHERAS_EVENT) == SPECIAL)        && 
+    (instance->GetData(DATA_KARATHRESS_EVENT) == SPECIAL)       && 
+    (instance->GetData(DATA_MOROGRIM_EVENT) == SPECIAL)));
+}
+
+void UnlockGameObject(Map* map, uint64 GameObjectGUID)
+{
+    if (GameObject *go = map->GetGameObject(GameObjectGUID)) 
+    {
+        go->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_LOCKED);
+    }
+}
+
 bool GOUse_go_vashj_console_access_panel(Player *player, GameObject* go)
 {
     ScriptedInstance* instance = (ScriptedInstance*) go->GetInstanceData();
@@ -45,44 +63,53 @@ bool GOUse_go_vashj_console_access_panel(Player *player, GameObject* go)
         return false;
     }
 
+    bool returnVal = true;
+
     uint64 id = go->GetGUID();
 
     if (id == ConsoleGuids[0])
     {
         instance->SetData(DATA_HYDROSS_EVENT, SPECIAL);
         player->TextEmote("activates console #1 [Hydross the Unstable].");
-        return true;
     }
     else if (id == ConsoleGuids[1])
     {
         instance->SetData(DATA_LURKER_EVENT, SPECIAL);
         player->TextEmote("activates console #2 [The Lurker Below].");
-        return true;
     }
     else if (id == ConsoleGuids[2])
     {
         instance->SetData(DATA_LEOTHERAS_EVENT, SPECIAL);
         player->TextEmote("activates console #3 [Leotheras the Blind].");
-        return true;
     }
     else if (id == ConsoleGuids[3])
     {
         instance->SetData(DATA_KARATHRESS_EVENT, SPECIAL);
         player->TextEmote("activates console #4 [Fathom-Lord Karathress].");
-        return true;
     }
     else if (id == ConsoleGuids[4])
     {
         instance->SetData(DATA_MOROGRIM_EVENT, SPECIAL);
         player->TextEmote("activates console #5 [Morogrim Tidewalker].");
-        return true;
     }
     else if (id == BridgeConsoleGuid) {
         instance->SetData(DATA_BRIDGE_CONSOLE, DONE);
         player->TextEmote("activates console #6 [Access to Lady Vashj].");
-        return true;
     }
-    return false;
+    else
+    {
+        returnVal = false;
+    }
+
+    if (UnlockVashjDoor(instance))
+    {
+        UnlockGameObject(instance->instance, BridgeConsoleGuid);
+    }
+
+    return returnVal;
+
+    
+
 }
 
 struct instance_serpentshrine_cavern : public ScriptedInstance
@@ -179,7 +206,7 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
                 data = GetData(DATA_HYDROSS_EVENT);
                 if ((data == DONE) || (data == SPECIAL))
                 {
-                    UnlockGameObject(ConsoleGuids[0]);
+                    UnlockGameObject(instance, ConsoleGuids[0]);
                 }
                 break;
             case 185115: // Serpentshrine Console [The Lurker Below]
@@ -189,7 +216,7 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
                 data = GetData(DATA_LURKER_EVENT);
                 if ((data == DONE) || (data == SPECIAL))
                 {
-                    UnlockGameObject(ConsoleGuids[1]);
+                    UnlockGameObject(instance, ConsoleGuids[1]);
                 }
                 break;
             case 185116: // Serpentshrine Console [Leotheras the Blind]
@@ -199,7 +226,7 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
                 data = GetData(DATA_LEOTHERAS_EVENT);
                 if ((data == DONE) || (data == SPECIAL))
                 {
-                    UnlockGameObject(ConsoleGuids[2]);
+                    UnlockGameObject(instance, ConsoleGuids[2]);
                 }
                 break;
             case 185117: // Serpentshrine Console [Fathom-Lord Karathress]
@@ -209,7 +236,7 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
                 data = GetData(DATA_KARATHRESS_EVENT);
                 if ((data == DONE) || (data == SPECIAL))
                 {
-                    UnlockGameObject(ConsoleGuids[3]);
+                    UnlockGameObject(instance, ConsoleGuids[3]);
                 }
                 break;
             case 185118: // Serpentshrine Console [Morogrim Tidewalker]
@@ -219,16 +246,15 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
                 data = GetData(DATA_MOROGRIM_EVENT);
                 if ((data == DONE) || (data == SPECIAL))
                 {
-                    UnlockGameObject(ConsoleGuids[4]);
+                    UnlockGameObject(instance, ConsoleGuids[4]);
                 }
                 break;
             case 184568: // Lady Vashj Bridge Console
                 BridgeConsoleGuid = go->GetGUID();
-                go->setActive(true);
-                
-                if (AllSerpentshrineConsolesActivated())
+                go->setActive(true); 
+                if (UnlockVashjDoor(this))
                 {
-                    UnlockGameObject(BridgeConsoleGuid); 
+                    UnlockGameObject(instance, BridgeConsoleGuid); 
                 }
                 break;
             case 184203: // Doodad_Coilfang_Raid_Bridge_Part01
@@ -316,22 +342,26 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
         HandleInitCreatureState(creature);
     }
 
-    void UnlockGameObject(uint64 GameObjectGUID)
+    void OnCreatureDeath(Creature * creature) 
     {
-        if (GameObject *go = instance->GetGameObject(GameObjectGUID)) 
+        switch(creature->GetEntry())
         {
-            go->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_TRIGGERED);
-            go->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_LOCKED);
+            case 21215: //Leo
+                UnlockGameObject(instance, ConsoleGuids[2]);
+                break;
+            case 21214: //FLK
+                UnlockGameObject(instance, ConsoleGuids[3]);
+                break;
+            case 21217: //Lurker
+                UnlockGameObject(instance, ConsoleGuids[1]);
+                break;
+            case 21213: //Morogrim
+                UnlockGameObject(instance, ConsoleGuids[4]);
+                break;
+            case 21216: //Hydross
+                UnlockGameObject(instance, ConsoleGuids[0]);
+                break;
         }
-    }
-    
-    bool AllSerpentshrineConsolesActivated()
-    {
-        return ((GetData(DATA_HYDROSS_EVENT) == SPECIAL) &&
-                (GetData(DATA_LURKER_EVENT) == SPECIAL) &&
-                (GetData(DATA_LEOTHERAS_EVENT) == SPECIAL) &&
-                (GetData(DATA_KARATHRESS_EVENT) == SPECIAL) &&
-                (GetData(DATA_MOROGRIM_EVENT) == SPECIAL));
     }
 
     void SetData(uint32 type, uint32 data)
@@ -340,23 +370,18 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
         {
             case DATA_HYDROSS_EVENT:
                 Encounters[0] = data;
-                UnlockIfApplicable(data, ConsoleGuids[0]);
                 break;
             case DATA_LURKER_EVENT:
                 Encounters[1] = data;
-                UnlockIfApplicable(data, ConsoleGuids[1]);
                 break;
             case DATA_LEOTHERAS_EVENT:
                 Encounters[2] = data;
-                UnlockIfApplicable(data, ConsoleGuids[2]);
                 break;
             case DATA_KARATHRESS_EVENT:
                 Encounters[3] = data;
-                UnlockIfApplicable(data, ConsoleGuids[3]);
                 break;
             case DATA_MOROGRIM_EVENT:
                 Encounters[4] = data;
-                UnlockIfApplicable(data, ConsoleGuids[4]); 
                 break;
             case DATA_VASHJ_EVENT:
                 Encounters[5] = data;
@@ -391,18 +416,6 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
         {
             SaveToDB();
         }
-    }
-
-    void UnlockIfApplicable(uint32 data, ObjectGuid id)
-    {
-        if (data == DONE)
-        {
-            UnlockGameObject(id);           
-        }
-        if ((data == SPECIAL) && (AllSerpentshrineConsolesActivated()))
-        {
-            UnlockGameObject(BridgeConsoleGuid); 
-        }  
     }
 
     uint32 GetData(uint32 type)
@@ -527,15 +540,6 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
         OUT_LOAD_INST_DATA_COMPLETE;
     }
 
-    bool CanHackDoorOpen()
-    {
-        return  (((Encounters[0] == DONE) || (Encounters[0] == SPECIAL)) &&
-                ((Encounters[1] == DONE) || (Encounters[1] == SPECIAL)) &&
-                ((Encounters[2] == DONE) || (Encounters[2] == SPECIAL)) &&
-                ((Encounters[3] == DONE) || (Encounters[3] == SPECIAL)) &&
-                ((Encounters[4] == DONE) || (Encounters[4] == SPECIAL)));
-    }
-
     void Update(uint32 diff)
     {
         // If time left on LurkerFishingInternalCooldown is less than the update diff (usually 100ms~)
@@ -623,36 +627,6 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
         {
             WaterCheckTimer -= diff;
         }
-
-        // Temporary SSC console fix (automatically open bridge when all 5 previous bosses are killed)
-        if (!VashjBridgeOpen)
-        {
-            if ((VashjBridgeCheckTimer < diff))
-            {
-                if (CanHackDoorOpen())
-                {
-                    //@Honey, the reason this code didn't work is because BridgeConsoleGuid isn't a door.
-                    // OpenDoor(BridgeConsoleGuid, true);
-                    if (ScriptedInstance* ssc = (ScriptedInstance*) instance->GetGameObject(BridgeConsoleGuid)->GetInstanceData())
-                        ssc->SetData(DATA_BRIDGE_CONSOLE, DONE);
-
-                    UnlockGameObject(BridgeConsoleGuid); 
-
-                    //Also, you don't need to define "OpenDoor" - That's what "HandleGameObject" does.
-                    HandleGameObject(BridgePartGuids[0], true);
-                    HandleGameObject(BridgePartGuids[1], true);
-                    HandleGameObject(BridgePartGuids[2], true);
-                    VashjBridgeOpen = true;
-                }
-
-                VashjBridgeCheckTimer = 120000;
-            }
-            else
-            {
-                VashjBridgeCheckTimer -= diff;
-            }
-        }
-
     }
 };
 
