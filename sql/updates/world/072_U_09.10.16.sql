@@ -1348,3 +1348,354 @@ INSERT INTO `waypoint_data` VALUES (58256, 28, -1131.22, 1981.87, 72.9887, 0, 0,
 INSERT INTO `waypoint_data` VALUES (58256, 29, -1124.47, 1995.19, 69.7317, 0, 0, 0, 0, 0);
 
 UPDATE `creature` SET `spawntimesecs` = 180 WHERE `guid` = 59190;
+
+UPDATE `creature_template` SET `InhabitType` = 3 WHERE `entry` = 21315;
+DELETE FROM `creature` WHERE `guid` = 74638;
+INSERT INTO `creature` VALUES (74638, 21315, 530, 1, 0, 0, -3807.05, 1074.56, 125.246, 3.6, 120, 0, 0, 86172, 0, 0, 2);
+SET @GUID := 74638;
+SET @POINT := 0;
+UPDATE `creature` SET `MovementType`='2' WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,20344,16777472,0,4097,0,34078720,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@GUID,@POINT := @POINT + 1,XXX,YYY,ZZZ,0,0,0,100,0),
+(@GUID,0,-3806.5219,1077.2375,109.1055,0,1,0,100,0),
+(74638,1,-3871.77, 1061.12, 104.353,0, 1, 0, 0, 0),
+(74638,2,-3946.31, 1007.96, 41.4916,0, 0, 0, 0, 0),
+(74638,3,-3981.2, 987.16, 17.436,0, 0, 0, 0, 0),
+(74638,4,-3993.67, 972.909, 13.7035,0, 0, 0, 0, 0), -- remove flying
+(74638,5,-4005.54, 940.329, 13.9175,0, 0, 0, 0, 0),
+(74638,6,-4020.11,896.722,7.69662,0, 0, 0, 0, 0),
+(74638,7,-4028.87,860.941,4.21714,0, 0, 0, 0, 0),
+(74638,8,-4037.39,811.117,2.06301,0, 0, 0, 0, 0),
+(74638,9,-4052.31,778.566,2.59821,0, 0, 0, 0, 0),
+(74638,10,-4062.38, 747.941, 0.669277,0, 0, 0, 0, 0),
+(74638,11,-4088.7,713.37,2.51993,0, 0, 0, 0, 0),
+(74638,12,-4112.87,681.706,2.70455,0, 0, 0, 0, 0),
+(74638,13,-4129.74, 646.929, 4.20341,0, 0, 0, 0, 0),
+(74638,14,-4142.77,622.847,3.48307,0, 0, 0, 0, 0),
+(74638,15,-4150.78, 575.896, 9.39146,0, 0, 0, 0, 0),
+(74638,16,-4161.78, 548.95, 13.7863,0, 0, 0, 0, 0),
+(74638,17,-4175.77, 521.903, 23.8752,10000, 0, 0, 0, 0),
+(74638,18,-4181.6440, 503.6903, 28.0125,1000, 0, 0, 0, 0); -- 1 despawn?
+
+SET @GUID := 140785;
+SET @POINT := 0;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@GUID,@POINT := @POINT + 1,XXX,YYY,ZZZ,0,0,0,100,0),
+(140785,1,-5332.09,-85.8966,83.0617,0,0,0,100,0),
+(140785,2,-5345.18,-60.7703,86.1259,0,0,0,100,0),
+(140785,3,-5359.92,-47.2275,88.2481,0,0,0,100,0),
+(140785,4,-5375.98,-54.8256,85.1149,0,0,0,100,0),
+(140785,5,-5383.74,-67.6999,82.852,0,0,0,100,0),
+(140785,6,-5382.25,-85.6452,77.1119,0,0,0,100,0),
+(140785,7,-5369.33,-110.352,68.5213,0,0,0,100,0),
+(140785,8,-5376.19,-131.543,60.2006,0,0,0,100,0),
+(140785,9,-5365.88,-147.114,56.8587,0,0,0,100,0),
+(140785,10,-5354.64,-146.72,57.3092,0,0,0,100,0),
+(140785,11,-5347.56,-140.622,59.763,0,0,0,100,0),
+(140785,12,-5337.81,-108.826,72.3716,0,0,0,100,0);
+
+DELETE FROM `creature` WHERE `guid` IN (78291,78292,78293,78294,78295,78296,78297,78298,78299,78300);
+INSERT INTO `creature` VALUES (78291, 22274, 530, 1, 0, 0, -4911.14, 388.978, 125.189, 3.49686, 300, 0, 0, 7248, 3155, 0, 2);
+SET @GUID := 78291;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,20684,512,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES (78291, 1, -4881.3, 427.912, 128.262, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78291, 2, -4871.17, 466.401, 131.434, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78291, 3, -4873.22, 548.351, 119.355, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78291, 4, -4871.98, 596.992, 108.096, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78291, 5, -4891.92, 622.833, 110.9, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78291, 6, -4918.26, 642.178, 113.206, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78291, 7, -4966.29, 659.392, 117.973, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78291, 8, -5008.11, 653.667, 123.262, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78291, 9, -5053.75, 635.555, 122.915, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78291, 10, -5074.28, 608.823, 126.232, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78291, 11, -5080.16, 581.402, 130.831, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78291, 12, -5079.39, 564.034, 132.081, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78291, 13, -5072.99, 533.087, 134.23, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78291, 14, -5030.73, 474.796, 138.025, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78291, 15, -4985.5, 438.713, 136.57, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78291, 16, -4952.93, 411.544, 133.09, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78291, 17, -4928.21, 400.14, 131.012, 0, 0, 0, 0, 0);
+
+INSERT INTO `creature` VALUES (78292, 22274, 530, 1, 0, 0, -4902.26, 379.006, 152.696, 2.10116, 300, 0, 0, 7248, 3155, 0, 2);
+SET @GUID := 78292;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,20684,512,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES (78292, 1, -4949.25, 409.334, 172.648, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78292, 2, -4986.28, 430.9, 164.212, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78292, 3, -5030.59, 451.136, 157.85, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78292, 4, -5092.63, 466.253, 150.296, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78292, 5, -5133.9, 465.085, 140.105, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78292, 6, -5165.66, 429.091, 139.144, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78292, 7, -5182.09, 387.046, 147.142, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78292, 8, -5191.97, 332.265, 149.23, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78292, 9, -5184.35, 296.293, 154.117, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78292, 10, -5168.04, 259.87, 174.531, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78292, 11, -5144.8, 225.734, 177.739, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78292, 12, -5098.47, 187.537, 166.379, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78292, 13, -5056.61, 165.009, 154.057, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78292, 14, -5007.17, 150.469, 133.295, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78292, 15, -4962.95, 150.816, 126.2, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78292, 16, -4914.33, 175.569, 138.166, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78292, 17, -4883.57, 253.392, 130.726, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78292, 18, -4840.9, 301.478, 161.359, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78292, 19, -4867.16, 343.913, 179.668, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78292, 20, -4903.82, 376.069, 182.823, 0, 0, 0, 0, 0);
+
+INSERT INTO `creature` VALUES (78293, 22274, 530, 1, 0, 0, -4999.29, 189.984, 80.4584, 2.57263, 300, 0, 0, 7248, 3155, 0, 2);
+SET @GUID := 78293;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,20684,512,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES (78293, 1, -4997.6, 211.812, 133.552, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78293, 2, -4934.04, 221.55, 128.328, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78293, 3, -4879.49, 236.103, 122.107, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78293, 4, -4828.16, 305.232, 119.328, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78293, 5, -4828.82, 359.135, 124.352, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78293, 6, -4849.83, 387.363, 122.887, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78293, 7, -4884.64, 388.875, 126.775, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78293, 8, -4913.1, 382.401, 128.892, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78293, 9, -4937.48, 371.375, 130.364, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78293, 10, -4959.68, 347.329, 130.097, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78293, 11, -4978.18, 304.388, 114.958, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78293, 12, -4932.93, 209.679, 111.892, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78293, 13, -4926.15, 183.988, 115.455, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78293, 14, -4930.97, 159.154, 120.218, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78293, 15, -4946.76, 140.626, 122.312, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78293, 16, -4965.19, 141.617, 119.384, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78293, 17, -4984.45, 149.966, 118.799, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78293, 18, -5002.91, 172.814, 117.016, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78293, 19, -4998.34, 201.085, 113.024, 0, 0, 0, 0, 0);
+
+INSERT INTO `creature` VALUES (78294, 22274, 530, 1, 0, 0, -4958.5, -85.27, 117.736, 2.41635, 300, 0, 0, 7248, 3155, 0, 2);
+SET @GUID := 78294;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,20684,512,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES (78294, 1, -4941.07, -111.012, 114.028, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78294, 2, -4921.42, -123.247, 111.998, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78294, 3, -4884.24, -120.132, 112.711, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78294, 4, -4868.08, -92.5276, 107.21, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78294, 5, -4865.19, -54.2843, 104.094, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78294, 6, -4879.19, -23.9512, 100.15, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78294, 7, -4909.36, -13.2885, 106.699, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78294, 8, -4941.26, -7.0724, 133.33, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78294, 9, -5002.9, 5.94151, 132.549, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78294, 10, -5074.55, 22.7466, 134.073, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78294, 11, -5101.11, 26.0961, 133.55, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78294, 12, -5127.23, 20.6693, 131.995, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78294, 13, -5156.48, 0.475302, 144.378, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78294, 14, -5154.25, -29.3614, 139.554, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78294, 15, -5132.14, -63.023, 145.24, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78294, 16, -5097.03, -87.8888, 134.508, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78294, 17, -5032.7, -78.9392, 127.697, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78294, 18, -4975.4, -69.1826, 134.579, 0, 0, 0, 0, 0);
+
+INSERT INTO `creature` VALUES (78295, 22274, 530, 1, 0, 0, -5157.74, -73.334, 158.606, 1.83224, 300, 0, 0, 7248, 3155, 0, 2);
+SET @GUID := 78295;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,20684,512,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES (78295, 1, -5156.25, -94.823, 171.465, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78295, 2, -5130.8, -92.8877, 169.278, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78295, 3, -5097.89, -85.159, 167.084, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78295, 4, -5079.62, -74.9995, 165.999, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78295, 5, -5056.81, -48.5336, 164.502, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78295, 6, -5030.81, 95.1094, 164.23, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78295, 7, -5032.43, 121.94, 164.434, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78295, 8, -5043.1, 153.612, 169.073, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78295, 9, -5069.2, 159.741, 169.297, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78295, 10, -5119.94, 159.723, 170.732, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78295, 11, -5139.41, 122.925, 165.495, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78295, 12, -5146.54, 82.7476, 163.162, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78295, 13, -5151.17, -26.9422, 175.432, 0, 0, 0, 0, 0);
+
+INSERT INTO `creature` VALUES (78296, 22274, 530, 1, 0, 0, -5289.07, 145.261, 125.233, 2.07098, 300, 0, 0, 7248, 3155, 0, 2);
+SET @GUID := 78296;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,20684,512,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES (78296, 1, -5302.94, 148.193, 127.077, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78296, 2, -5290.26, 249.662, 119.674, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78296, 3, -5267.99, 307.372, 119.553, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78296, 4, -5242.13, 346.618, 121.471, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78296, 5, -5224.22, 366.559, 129.072, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78296, 6, -5200.15, 357.228, 128.85, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78296, 7, -5194.47, 339.612, 126.384, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78296, 8, -5194.41, 306.298, 116.659, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78296, 9, -5209.57, 201.541, 109.824, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78296, 10, -5207.61, 165.878, 112.162, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78296, 11, -5212.25, 113.191, 134.219, 0, 0, 0, 0, 0);
+
+INSERT INTO `creature` VALUES (78297, 22274, 530, 1, 0, 0, -5225.27, 263.193, 131.392, 3.25408, 300, 0, 0, 7248, 3155, 0, 2);
+SET @GUID := 78297;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,20684,512,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES (78297, 1, -5215.32, 277.894, 166.181, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78297, 2, -5172.04, 404.969, 165.06, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78297, 3, -5130.57, 454.686, 159.026, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78297, 4, -5089.47, 502.399, 170.614, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78297, 5, -5041.76, 475.945, 165.177, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78297, 6, -5006.87, 447.279, 171.482, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78297, 7, -4986.95, 415.732, 169.479, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78297, 8, -4975.85, 380.042, 181.744, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78297, 9, -4999.68, 166.051, 189.57, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78297, 10, -5015.45, 110.992, 189.148, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78297, 11, -5058.36, 88.613, 176.465, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78297, 12, -5120.99, 79.2858, 160.208, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78297, 13, -5157.9, 84.5635, 149.221, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78297, 14, -5175.5, 115.78, 143.718, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78297, 15, -5202.99, 172.801, 131.402, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78297, 16, -5229.64, 253.177, 150.283, 0, 0, 0, 0, 0);
+
+INSERT INTO `creature` VALUES (78298, 22274, 530, 1, 0, 0, -5107.23, 621.556, 149.469, 2.64865, 300, 0, 0, 7248, 3155, 0, 2);
+SET @GUID := 78298;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,20684,512,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES (78298, 1, -5075.7, 588.805, 171.098, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78298, 2, -5072.26, 564.667, 167.686, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78298, 3, -5084.8, 530.119, 160.541, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78298, 4, -5115.49, 507.568, 173.964, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78298, 5, -5154.44, 518.915, 169.609, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78298, 6, -5179.29, 544.52, 163.991, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78298, 7, -5191.59, 586.714, 155.673, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78298, 8, -5208.79, 630.415, 141.357, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78298, 9, -5201.16, 687.436, 133.72, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78298, 10, -5185.01, 716.463, 135.258, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78298, 11, -5153.45, 744.444, 135.341, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78298, 12, -5128.04, 743.877, 161.561, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78298, 13, -5110.02, 716.147, 155.565, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78298, 14, -5094.49, 634.262, 158.678, 0, 0, 0, 0, 0);
+
+INSERT INTO `creature` VALUES (78299, 22274, 530, 1, 0, 0, -5076.33, 636.957, 147.466, 0.855016, 300, 0, 0, 7248, 3155, 0, 2);
+SET @GUID := 78299;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,20684,512,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES (78299, 1, -5069.71, 577.64, 147.79, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78299, 2, -5050.86, 550.855, 148.449, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78299, 3, -5013.49, 533.048, 147.952, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78299, 4, -4981, 545.555, 145.112, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78299, 5, -4953.01, 572.649, 139.987, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78299, 6, -4955.81, 608.175, 129.584, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78299, 7, -4970, 644.18, 124.6, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78299, 8, -5003.18, 662.806, 125.4, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78299, 9, -5043.46, 659.586, 123.544, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78299, 10, -5075.57, 644.292, 130.902, 0, 0, 0, 0, 0);
+
+INSERT INTO `creature` VALUES (78300, 22274, 530, 1, 0, 0, -5130.26, 729.272, 115.821, 1.73891, 300, 0, 0, 7248, 3155, 0, 2);
+SET @GUID := 78300;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,20684,512,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES (78300, 1, -5108.2, 702.831, 122.868, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78300, 2, -5045.79, 689.993, 136.98, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78300, 3, -4957.58, 712.13, 126.374, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78300, 4, -4915.51, 732.807, 123.744, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78300, 5, -4936.79, 796.18, 127.606, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78300, 6, -5018.26, 817.255, 117.714, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78300, 7, -5081.91, 819.454, 141.825, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78300, 8, -5111.82, 789.527, 146.217, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (78300, 9, -5118.12, 733.878, 142.053, 0, 0, 0, 0, 0);
+
+DELETE FROM `creature` WHERE `guid` = 63565;
+INSERT INTO `creature` VALUES (63565, 17855, 530, 1, 0, 0, -202.651, 5515.28, 21.7477, 3.7547, 300, 0, 0, 5200, 3155, 0, 2);
+SET @GUID := 63565;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES (63565, 1, -156.735, 5529.23, 29.4078, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (63565, 2, -187.331, 5519.33, 29.4078, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (63565, 3, -195.079, 5516.92, 26.1063, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (63565, 4, -201.47, 5514.63, 22.0083, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (63565, 5, -208.031, 5511.41, 21.5288, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (63565, 6, -212.832, 5492.39, 21.6689, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (63565, 7, -224.826, 5479.09, 21.7913, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (63565, 8, -232.499, 5477.83, 22.2421, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (63565, 9, -242.15, 5485.49, 24.3591, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (63565, 10, -254.019, 5502.76, 29.0737, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (63565, 11, -250.092, 5496.16, 28.4978, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (63565, 12, -243.141, 5487.11, 25.3283, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (63565, 13, -240.121, 5482.4, 23.2805, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (63565, 14, -227.154, 5478.94, 21.8781, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (63565, 15, -214.306, 5488.03, 21.977, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (63565, 16, -209.588, 5509.94, 21.5479, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (63565, 17, -202.532, 5514.33, 21.6838, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (63565, 18, -195.18, 5516.57, 25.9736, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (63565, 19, -187.158, 5519.01, 29.408, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (63565, 20, -160.726, 5527.58, 29.408, 0, 0, 0, 0, 0);
+
+-- Expedition Warden
+UPDATE `creature_template` SET `minhealth`=14000, `maxhealth`=14000, `AIName` = 'EventAI' WHERE `entry` = 17855;
+DELETE FROM `creature_ai_scripts` WHERE `entryORGuid` = 17855;
+INSERT INTO `creature_ai_scripts` VALUES
+('1785501','17855','9','0','100','1','0','15','16000','24000','11','12024','1','32','0','0','0','0','0','0','0','0','Expedition Warden - Cast Net');
+
+-- Update position Ja'y Nosliw <Skybreaker General> 22433
+DELETE FROM `creature` WHERE `guid` = 8581445;
+UPDATE `creature` SET `position_x`=-5144.404, `position_y`=600.9089, `position_z`=82.75489, `orientation`=6.021386 WHERE  `guid`=78787;
+
+-- Update position Taskmaster Varkule Dragonbreath 23140
+UPDATE `creature` SET `position_x`=-5114.439, `position_y`=588.4843, `position_z`=85.87241, `orientation`=3.036873 WHERE  `guid`=51876;
+
+-- Update fly speed of Dragonmaw Skybreakers
+UPDATE `waypoint_data` SET `move_type`=1 WHERE  `id` IN (78294, 78297, 78291, 78292, 78293, 78294, 78295, 78296, 78297, 78298, 78299, 78300);
+
+-- Pathing for Dragonmaw Transporter Entry: 23188 'TDB FORMAT' 
+SET @GUID := 132814;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-4584.821,`position_y`=56.05914,`position_z`=260.3116 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,16314,0,1,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,1,-4584.821,56.05914,260.3116,0,1,0,100,0), -- 07:28:22
+(@GUID,2,-4554.921,74.39236,250.4782,0,1,0,100,0), -- 07:28:22
+(@GUID,3,-4532.374,72.2015,243.3948,0,1,0,100,0), -- 07:28:22
+(@GUID,4,-4508.559,67.28505,241.6727,0,1,0,100,0), -- 07:28:22
+(@GUID,5,-4487.302,56.6492,242.2004,0,1,0,100,0), -- 07:28:22
+(@GUID,6,-4470.297,28.84614,244.756,0,1,0,100,0), -- 07:28:22
+(@GUID,7,-4461.818,-8.348633,247.9227,0,1,0,100,0), -- 07:28:22
+(@GUID,8,-4477.97,-44.38118,242.3393,0,1,0,100,0), -- 07:28:22
+(@GUID,9,-4516.678,-59.03483,240.2283,0,1,0,100,0), -- 07:28:22
+(@GUID,10,-4543.176,-60.92849,240.2838,0,1,0,100,0), -- 07:28:22
+(@GUID,11,-4566.225,-51.06413,247.3116,0,1,0,100,0), -- 07:28:22
+(@GUID,12,-4581.653,-29.58301,254.2004,0,1,0,100,0), -- 07:28:22
+(@GUID,13,-4591.782,0.532661,260.3116,0,1,0,100,0), -- 07:28:22
+(@GUID,14,-4594.208,28.59668,260.3116,0,1,0,100,0); -- 07:28:22
+
+-- Pathing for Dragonmaw Transporter Entry: 23188 'TDB FORMAT' 
+SET @GUID := 132818;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-4735.987,`position_y`=122.2487,`position_z`=106.433 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,16314,0,1,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,1,-4735.987,122.2487,106.433,0,1,0,100,0), -- 07:15:27
+(@GUID,2,-4744.92,149.3799,106.433,0,1,0,100,0), -- 07:15:27
+(@GUID,3,-4751.057,182.3161,106.433,0,1,0,100,0), -- 07:15:27
+(@GUID,4,-4767.275,216.0688,106.433,0,1,0,100,0), -- 07:15:27
+(@GUID,5,-4776.866,248.6194,106.433,0,1,0,100,0), -- 07:15:27
+(@GUID,6,-4781.172,280.7835,106.433,0,1,0,100,0), -- 07:15:27
+(@GUID,7,-4783.174,319.2545,106.433,0,1,0,100,0), -- 07:15:27
+(@GUID,8,-4752.483,324.3357,106.433,0,1,0,100,0), -- 07:15:27
+(@GUID,9,-4729.643,316.453,106.433,0,1,0,100,0), -- 07:15:27
+(@GUID,10,-4715.97,309.7697,106.433,0,1,0,100,0), -- 07:15:27
+(@GUID,11,-4709.104,290.6015,106.433,0,1,0,100,0), -- 07:15:27
+(@GUID,12,-4710.651,264.7013,106.433,0,1,0,100,0), -- 07:15:27
+(@GUID,13,-4709.572,256.6543,106.433,0,1,0,100,0), -- 07:15:27
+(@GUID,14,-4706.147,218.4914,106.433,0,1,0,100,0), -- 07:15:27
+(@GUID,15,-4709.459,193.1469,106.433,0,1,0,100,0), -- 07:15:27
+(@GUID,16,-4704.721,157.6649,106.433,0,1,0,100,0), -- 07:15:27
+(@GUID,17,-4695.498,116.758,106.433,0,1,0,100,0), -- 07:15:27
+(@GUID,18,-4713.938,87.04405,101.2085,0,1,0,100,0), -- 07:15:27
+(@GUID,19,-4726.667,100.212,106.433,0,1,0,100,0); -- 07:15:27
