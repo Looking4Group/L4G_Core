@@ -100,7 +100,7 @@ void Map::DeleteStateMachine()
 
 Map::Map(uint32 id, time_t expiry, uint32 InstanceId, uint8 SpawnMode)
    : i_mapEntry (sMapStore.LookupEntry(id)), i_spawnMode(SpawnMode),
-     i_id(id), i_InstanceId(InstanceId), m_unloadTimer(0), i_gridExpiry(expiry), m_TerrainData(sTerrainMgr.LoadTerrain(id)),
+     i_id(id), i_InstanceId(InstanceId), m_unloadTimer(0), i_gridExpiry(expiry), /*m_TerrainData(sTerrainMgr.LoadTerrain(id)),*/
      m_activeNonPlayersIter(m_activeNonPlayers.end()), i_scriptLock(true)
 {
     for (unsigned int j=0; j < MAX_NUMBER_OF_GRIDS; ++j)
@@ -115,6 +115,7 @@ Map::Map(uint32 id, time_t expiry, uint32 InstanceId, uint8 SpawnMode)
 
     //lets initialize visibility distance for map
     Map::InitVisibilityDistance();
+    m_TerrainData = sTerrainMgr.LoadTerrain(id);
 
     //add reference for TerrainData object
     m_TerrainData->AddRef();
