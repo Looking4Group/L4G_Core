@@ -1847,3 +1847,9 @@ INSERT INTO `creature_ai_scripts` VALUES
 DELETE FROM `creature_ai_texts` WHERE `entry` = '-9100';
 INSERT INTO `creature_ai_texts` VALUES
 (-9100,'stops playing dead and charges forward!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,2,0,0,'Basilisc Feign Death Charge');
+
+DELETE FROM `npc_trainer` WHERE `spell` = 44970;
+INSERT INTO `npc_trainer` VALUES (19187, 44970, 50000, 165, 350, 0);
+INSERT INTO `npc_trainer` VALUES (21087, 44970, 50000, 165, 350, 0);
+INSERT INTO `npc_trainer` VALUES (18771, 44970, 50000, 165, 350, 0);
+INSERT INTO `npc_trainer` VALUES (18754, 44970, 50000, 165, 350, 0);
