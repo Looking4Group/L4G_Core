@@ -1739,3 +1739,8 @@ UPDATE `creature_template` SET `faction_A`='16',`faction_H`='16' WHERE `entry` =
 -- Losing Gracefully Quest Object
 UPDATE `gameobject` SET `spawnmask`=1 WHERE `id` = 183435;
 
+-- Totems - Invernal Behavior
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN (17646);
+INSERT INTO `creature_ai_scripts` VALUES
+('1764601','17646','1','0','100','1','4000','4000','100','100','11','30859','0','32','0','0','0','0','0','0','0','0','Netherspite Infernal - Cast Hellfire OOC'),
+('1764602','17646','0','0','100','1','4000','4000','100','100','11','30859','0','32','0','0','0','0','0','0','0','0','Netherspite Infernal - Cast Hellfire');
