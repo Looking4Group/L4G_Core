@@ -1751,3 +1751,6 @@ INSERT INTO `creature` VALUES (34053, 21839, 530, 1, 0, 0, 2024.7, 4905.79, 140.
 INSERT INTO `creature` VALUES (34054, 21839, 530, 1, 0, 0, 1970.95, 4916.71, 142.878, 5.79515, 180, 5, 0, 6505, 0, 0, 1);
 INSERT INTO `creature` VALUES (34058, 21839, 530, 1, 0, 0, 1869.55, 4921.42, 147.661, 0.140283, 180, 5, 0, 6505, 0, 0, 1);
 INSERT INTO `creature` VALUES (40592, 21839, 530, 1, 0, 0, 1785.86, 4767.26, 145.577, 4.16543, 180, 5, 0, 6505, 0, 0, 1);
+
+-- Don Carlos Head 100% not 50%
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance`=-100 WHERE `entry` = 91598 AND `item` = 38329;
