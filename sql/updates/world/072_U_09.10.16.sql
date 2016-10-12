@@ -1735,3 +1735,7 @@ UPDATE `creature_template` SET `flags_extra`='130' WHERE `entry` = 19381;
 UPDATE `creature_template` SET `faction_A`='16',`faction_H`='16' WHERE `entry` = 21753;
 -- Shadow Council Zealot 21754
 UPDATE `creature_template` SET `faction_A`='16',`faction_H`='16' WHERE `entry` = 21754;
+
+-- Losing Gracefully Quest Object
+UPDATE `gameobject` SET `spawnmask`=1 WHERE `id` = 183435;
+
