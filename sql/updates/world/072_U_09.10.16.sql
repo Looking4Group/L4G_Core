@@ -1754,3 +1754,96 @@ INSERT INTO `creature` VALUES (40592, 21839, 530, 1, 0, 0, 1785.86, 4767.26, 145
 
 -- Don Carlos Head 100% not 50%
 UPDATE `creature_loot_template` SET `ChanceOrQuestChance`=-100 WHERE `entry` = 91598 AND `item` = 38329;
+
+-- Dampscale Basilisk 18461
+UPDATE `creature_template` SET `AIName`='EventAI' WHERE `entry` = 18461;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 18461;
+INSERT INTO `creature_ai_scripts` VALUES
+('1846101','18461','0','0','100','1','3000','6000','45000','50000','11','32905','1','0','0','0','0','0','0','0','0','0','Dampscale Basilisk - Cast Glare');
+
+-- Marshrock Threshalisk 19706
+UPDATE `creature_template` SET `AIName`='EventAI' WHERE `entry` = 19706;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 19706;
+INSERT INTO `creature_ai_scripts` VALUES
+('1970601','19706','9','0','100','0','5','40','0','0','11','35385','1','7','11','35385','1','7','0','0','0','0','Marshrock Threshalisk - Cast Threshalisk Charge');
+
+-- Ironspine Threshalisk 19729
+UPDATE `creature_template` SET `AIName`='EventAI' WHERE `entry` = 19729;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 19729;
+INSERT INTO `creature_ai_scripts` VALUES
+('1972901','19729','9','0','100','0','5','40','0','0','11','35385','1','7','11','35385','1','7','0','0','0','0','Ironspine Threshalisk - Cast Threshalisk Charge');
+
+-- Ironspine Gazer 19730
+UPDATE `creature_template` SET `AIName`='EventAI' WHERE `entry` = 19730;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 19730;
+INSERT INTO `creature_ai_scripts` VALUES
+('1973001','19730','9','0','100','0','5','40','0','0','11','35385','1','7','11','35385','1','7','0','0','0','0','Ironspine Gazer - Cast Threshalisk Charge'),
+('1973002','19730','0','0','100','1','5000','10000','12000','24000','11','35313','4','32','0','0','0','0','0','0','0','0','Ironspine Gazer - Cast Hypnotic Gaze');
+
+-- Ragestone Threshalisk 20279 FD
+UPDATE `creature_template` SET `AIName`='EventAI' WHERE `entry` = 20279;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 20279;
+INSERT INTO `creature_ai_scripts` VALUES
+('2027901','20279','2','0','100','0','20','0','0','0','11','3019','0','0','1','-46','0','0','0','0','0','0','Ragestone Threshalisk - Cast Enrage at 20% HP');
+-- ('2027902','20279','2','0','100','0','50','40','0','0','11','35571','0','7','11','29266','0','7','22','0','0','0','Ragestone Threshalisk - Casts Feign Death Test and Stop Movement and Stop Attack at 50% HP'), -- 5384 29266 
+-- ('2027903','20279','2','0','100','1','40','30','0','0','28','0','35571','0','28','0','29266','0','22','1','0','0','Ragestone Threshalisk - Remove Feign Death Test at 40% HP'),
+-- ('2027904','20279','2','0','100','1','99','51','0','0','28','0','35571','0','28','0','29266','0','22','1','0','0','Ragestone Threshalisk - Remove Feign Death Test at 70% HP');
+
+-- Ragestone Trampler 20280
+UPDATE `creature_template` SET `AIName`='EventAI' WHERE `entry` = 20280;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 20280;
+INSERT INTO `creature_ai_scripts` VALUES
+('2028001','20280','0','0','100','1','4000','8000','7000','12000','11','5568','0','0','22','1','0','0','0','0','0','0','Ragestone Trampler - Cast Trample'),
+('2028002','20280','2','0','100','0','30','0','0','0','11','3019','0','0','1','-46','0','0','0','0','0','0','Ragestone Trampler - Cast Enrage at 30% HP'),
+('2028003','20280','9','0','100','0','5','40','0','0','11','35385','1','7','11','35385','1','7','22','1','0','0','Ragestone Trampler - Casts Threshalisk Charge and Set Phase 1'),
+-- ('2028004','20280','2','2','100','0','50','40','0','0','11','5384','0','7','11','29266','0','7','22','0','0','0','Ragestone Trampler - Casts Feign Death and Stop Movement and Stop Attack between 80% and 55% HP'),
+-- ('2028005','20280','2','2','100','0','40','30','0','0','28','0','5384','0','28','0','29266','0','22','1','0','0','Ragestone Trampler - Remove Feign Death between 55% to 30% HP'),
+('2028006','20280','9','2','100','0','5','40','0','0','11','35385','1','0','1','-9100','0','0','0','0','0','0','Ragestone Trampler - Casts Threshalisk Charge and Emote'),
+('2028007','20280','7','0','100','0','0','0','0','0','22','0','0','0','0','0','0','0','0','0','0','0','Ragestone Trampler - Set Phase to 0 on Evade');
+
+-- Marshrock Stomper 20283
+UPDATE `creature_template` SET `AIName`='EventAI' WHERE `entry` = 20283;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 20283;
+INSERT INTO `creature_ai_scripts` VALUES
+(2028301,20283,0,0,100,1,5000,5000,15000,15000,11,12612,0,0,0,0,0,0,0,0,0,0,'Marshrock Stomper - Casts Stomp'),
+(2028302,20283,9,0,100,0,5,40,0,0,11,35385,1,7,11,35385,1,7,0,0,0,0,'Marshrock Stomper - Casts Threshalisk Charge');
+
+-- Bladespine Basilisk 20607 FD
+UPDATE `creature_template` SET `AIName`='EventAI' WHERE `entry` = 20607;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 20607;
+INSERT INTO `creature_ai_scripts` VALUES
+('2060701','20607','9','0','100','0','5','40','0','0','11','35385','1','0','11','35385','1','0','0','0','0','0','Bladespine Basilisk - Cast Threshalisk Charge'),
+('2060702','20607','0','0','100','1','4000','8000','45000','55000','11','35313','1','0','0','0','0','0','0','0','0','0','Bladespine Basilisk - Cast Hypnotic Gaze');
+
+-- Grishnath Basilisk 20924 FD
+UPDATE `creature_template` SET `AIName`='EventAI' WHERE `entry` = 20924;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 20924;
+INSERT INTO `creature_ai_scripts` VALUES
+('2092401','20924','9','0','100','0','5','40','0','0','11','35385','1','7','11','35385','1','7','0','0','0','0','Grishnath Basilisk - Cast Threshalisk Charge'),
+('2092402','20924','2','0','100','0','70','41','0','0','11','37590','0','0','0','0','0','0','0','0','0','0','Grishnath Basilisk - Cast Soften at 70% HP'),
+('2092403','20924','2','0','100','0','40','11','0','0','11','37590','0','0','0','0','0','0','0','0','0','0','Grishnath Basilisk - Cast Soften at 40% HP'),
+('2092404','20924','2','0','100','0','10','0','0','0','11','37590','0','0','0','0','0','0','0','0','0','0','Grishnath Basilisk - Cast Soften at 10% HP');
+
+-- Scalded Basilisk 20925 FD
+UPDATE `creature_template` SET `AIName`='EventAI' WHERE `entry` = 20925;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 20925;
+INSERT INTO `creature_ai_scripts` VALUES
+('2092501','20925','9','0','100','0','5','40','0','0','11','35385','1','7','11','35385','1','7','0','0','0','0','Scalded Basilisk - Cast Threshalisk Charge'),
+('2092502','20925','0','0','85','1','8000','13000','14000','19000','11','35236','0','0','0','0','0','0','0','0','0','0','Scalded Basilisk - Cast Heat Wave');
+
+-- Ruuan Weald Basilisk 20987 FD
+UPDATE `creature_template` SET `AIName`='EventAI' WHERE `entry` = 20987;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 20987;
+INSERT INTO `creature_ai_scripts` VALUES
+('2098701','20987','9','0','100','0','5','40','0','0','11','35385','1','7','11','35385','1','7','0','0','0','0','Ruuan Weald Basilisk - Cast Threshalisk Charge');
+
+-- Craghide Basilisk 22187
+UPDATE `creature_template` SET `AIName`='EventAI' WHERE `entry` = 22187;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 22187;
+INSERT INTO `creature_ai_scripts` VALUES
+('2218701','22187','9','0','100','0','5','40','0','0','11','35385','1','7','11','35385','1','7','0','0','0','0','Craghide Basilisk - Cast Threshalisk Charge'),
+('2218702','22187','0','0','100','1','4000','8000','7000','14000','11','35236','0','0','0','0','0','0','0','0','0','0','Craghide Basilisk - Cast Heat Wave');
+
+DELETE FROM `creature_ai_texts` WHERE `entry` = '-9100';
+INSERT INTO `creature_ai_texts` VALUES
+(-9100,'stops playing dead and charges forward!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,2,0,0,'Basilisc Feign Death Charge');
