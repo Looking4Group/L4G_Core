@@ -1886,3 +1886,49 @@ INSERT INTO `creature_formations` VALUES
 (81648,81648,100,360,2),
 (81648,81649,100,360,2),
 (81648,81650,100,360,2);
+
+-- Mag'har Hunter 16912
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 16912;
+INSERT INTO `creature_ai_scripts` VALUES
+('1691201','16912','0','0','100','1','1000','1000','2000','2000','21','1','0','0','40','1','0','0','0','0','0','0','Mag\'har Hunter - Start Movement and Set Melee Weapon Model'),
+('1691202','16912','4','0','100','0','0','0','0','0','11','32730','1','7','0','0','0','0','0','0','0','0','Mag\'har Hunter - Summon Tamed Ravager on Aggro'),
+('1691203','16912','9','0','100','1','5','30','2300','3900','11','6660','1','0','40','2','0','0','0','0','0','0','Mag\'har Hunter - Cast Shoot and Set Ranged Weapon Model'),
+('1691204','16912','0','0','100','1','4000','8000','14000','18000','11','12024','1','0','0','0','0','0','0','0','0','0','Mag\'har Hunter - Cast Net'),
+('1691205','16912','2','0','100','0','15','0','0','0','21','1','0','0','25','0','0','0','1','-47','0','0','Mag\'har Hunter - Start Movement and Flee at 15% HP'),
+('1691206','16912','21','0','100','0','0','0','0','0','21','1','0','0','40','1','0','0','0','0','0','0','Mag\'har Hunter - Start Movement and Set Melee Weapon Model on Evade'),
+('1691207','16912','9','0','100','1','0','5','0','0','21','1','0','0','40','1','0','0','0','0','0','0','Mag\'har Hunter - Start Movement and Set Melee Weapon Model Below 6 Yards'),
+('1691208','16912','9','0','100','1','6','20','0','0','21','0','0','0','40','2','0','0','0','0','0','0','Mag\'har Hunter - Stop Movement and Set Ranged Weapon Model Above 5 Yards');
+
+SET @GUID := 58673;
+UPDATE `creature` SET `MovementType`='2' WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,207,16777472,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES (58673, 1, 296.593, 3812.2, 166.866, 5000, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (58673, 2, 278.562, 3799.43, 174.341, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (58673, 3, 254.613, 3795.56, 180.252, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (58673, 4, 244.686, 3788, 183.952, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (58673, 5, 243.414, 3773.33, 185.054, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (58673, 6, 250.251, 3760.86, 183.248, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (58673, 7, 254.6, 3754.41, 179.452, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (58673, 8, 296.357, 3704.58, 179.279, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (58673, 9, 333.027, 3689.41, 179.279, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (58673, 10, 358.843, 3689.22, 179.279, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (58673, 11, 405.334, 3713.95, 179.279, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (58673, 12, 428.31, 3738.71, 180.12, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (58673, 13, 434.829, 3740.89, 183.512, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (58673, 14, 471.896, 3737.58, 185.936, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (58673, 15, 524.585, 3732.89, 184.812, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (58673, 16, 532.705, 3739.35, 185.795, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (58673, 17, 537.17, 3748.46, 186.823, 5000, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (58673, 18, 523.617, 3730.31, 184.739, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (58673, 19, 435.559, 3741.62, 183.559, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (58673, 20, 427.597, 3737.42, 179.845, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (58673, 21, 391.187, 3704.16, 179.279, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (58673, 22, 344.63, 3684.85, 179.279, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (58673, 23, 300.681, 3702.1, 179.278, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (58673, 24, 254.7, 3752.27, 179.342, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (58673, 25, 254.312, 3762.82, 183.541, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (58673, 26, 249.374, 3780.52, 184.945, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (58673, 27, 250.775, 3792.2, 182.04, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (58673, 28, 266.842, 3799.05, 176.7, 0, 0, 0, 0, 0);
