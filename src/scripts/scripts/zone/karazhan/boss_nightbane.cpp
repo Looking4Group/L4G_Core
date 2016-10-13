@@ -17,7 +17,7 @@
 /* ScriptData
 SDName: Boss_Nightbane
 SD%Complete: 80
-SDComment: SDComment: Wrong Bellowing Roar Spell, needs to be tested
+SDComment: SDComment:
 SDCategory: Karazhan
 EndScriptData */
 
@@ -25,7 +25,7 @@ EndScriptData */
 #include "def_karazhan.h"
 
 //phase 1
-#define SPELL_BELLOWING_ROAR        39427 // 36922 2.5sec Casttime
+#define SPELL_BELLOWING_ROAR        36922
 #define SPELL_CHARRED_EARTH         30129
 #define SPELL_DISTRACTING_ASH       30130
 #define SPELL_SMOLDERING_BREATH     30210
