@@ -273,7 +273,7 @@ struct boss_nightbaneAI : public ScriptedAI
 
         Flying = true;
 
-        FlyTimer = urand(30000, 40000); // between 30 and 40 seconds
+        FlyTimer = 40000; //Flightphase with Movement should be about 60sec total
         ++FlyCount;
 
         RainofBonesTimer = 3000;
