@@ -2192,3 +2192,8 @@ INSERT INTO `game_event_creature` VALUES
 (109767,10),
 (109768,10),
 (109769,10);
+
+DELETE FROM `creature` WHERE `guid` IN (110323);
+INSERT INTO `creature` VALUES (110323, 23143, 530, 1, 0, 0, -5142.57, 581.328, 84.1357, 0.506145, 25, 0, 0, 6542, 0, 0, 0);
+-- Horus <Innkeeper>
+UPDATE `creature_template` SET `npcflag`=`npcflag`|65536|128|1,`unit_flags`=33536,`ScriptName`='npc_innkeeper' WHERE `entry` = 23143;
