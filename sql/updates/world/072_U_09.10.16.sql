@@ -2197,3 +2197,402 @@ DELETE FROM `creature` WHERE `guid` IN (110323);
 INSERT INTO `creature` VALUES (110323, 23143, 530, 1, 0, 0, -5142.57, 581.328, 84.1357, 0.506145, 25, 0, 0, 6542, 0, 0, 0);
 -- Horus <Innkeeper>
 UPDATE `creature_template` SET `npcflag`=`npcflag`|65536|128|1,`unit_flags`=33536,`ScriptName`='npc_innkeeper' WHERE `entry` = 23143;
+
+UPDATE `pool_template` SET `max_limit` = 5, `description` = 'Netherwing eggs (185915) - Dragonmaw Fortrees' WHERE `entry` = 25427; -- 4
+UPDATE `pool_template` SET `max_limit` = 10, `description` = 'Netherwing eggs (185915) - Netherwing Ledge' WHERE `entry` = 25428; -- 7
+UPDATE `pool_template` SET `max_limit` = 5, `description` = 'Netherwing eggs (185915) - Netherwing Mine' WHERE `entry` = 25429; -- 5
+
+UPDATE `gameobject` SET `spawntimesecs` = 3600 WHERE `id` IN (185915,185600);
+
+SET @ENTRY := 2542700;
+DELETE FROM `pool_template`  WHERE `entry` BETWEEN 2542700 AND 2542799;
+INSERT INTO `pool_template` VALUES
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Dragonmaw Fortrees'), -- 121847 50426
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Dragonmaw Fortrees'), -- 121848 3370498
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Dragonmaw Fortrees'), -- 121849 3371109
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Dragonmaw Fortrees'), -- 121850 50427
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Dragonmaw Fortrees'), -- 121851 2056080
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Dragonmaw Fortrees'), -- 121852 50429
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Dragonmaw Fortrees'), -- 121853 50430
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Dragonmaw Fortrees'), -- 121854 50431
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Dragonmaw Fortrees'), -- 121855 50432
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Dragonmaw Fortrees'), -- 121856 3371670
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Dragonmaw Fortrees'); -- 121857 3371716
+
+SET @ENTRY := 2542700;
+DELETE FROM `pool_pool` WHERE `mother_pool` = 25427;
+INSERT INTO `pool_pool` VALUES
+(@ENTRY := @ENTRY + '1',25427,0,'Spawn Point 1 - Netherwing eggs (185915) - Dragonmaw Fortrees'),
+(@ENTRY := @ENTRY + '1',25427,0,'Spawn Point 2 - Netherwing eggs (185915) - Dragonmaw Fortrees'),
+(@ENTRY := @ENTRY + '1',25427,0,'Spawn Point 3 - Netherwing eggs (185915) - Dragonmaw Fortrees'),
+(@ENTRY := @ENTRY + '1',25427,0,'Spawn Point 4 - Netherwing eggs (185915) - Dragonmaw Fortrees'),
+(@ENTRY := @ENTRY + '1',25427,0,'Spawn Point 5 - Netherwing eggs (185915) - Dragonmaw Fortrees'),
+(@ENTRY := @ENTRY + '1',25427,0,'Spawn Point 6 - Netherwing eggs (185915) - Dragonmaw Fortrees'),
+(@ENTRY := @ENTRY + '1',25427,0,'Spawn Point 7 - Netherwing eggs (185915) - Dragonmaw Fortrees'),
+(@ENTRY := @ENTRY + '1',25427,0,'Spawn Point 8 - Netherwing eggs (185915) - Dragonmaw Fortrees'),
+(@ENTRY := @ENTRY + '1',25427,0,'Spawn Point 9 - Netherwing eggs (185915) - Dragonmaw Fortrees'),
+(@ENTRY := @ENTRY + '1',25427,0,'Spawn Point 10 - Netherwing eggs (185915) - Dragonmaw Fortrees'),
+(@ENTRY := @ENTRY + '1',25427,0,'Spawn Point 11 - Netherwing eggs (185915) - Dragonmaw Fortrees');
+
+DELETE FROM `pool_gameobject` WHERE `guid` IN (121847, 50426, 121848, 3370498, 121849, 3371109, 121850, 50427, 121851, 2056080, 121852, 50429, 121853, 50430, 121854, 50431, 121855, 50432, 121856, 3371670, 121857, 3371716);
+INSERT INTO `pool_gameobject` VALUES
+(121847,2542701,0,'Spawn Point 1 - Netherwing eggs (185915) - Dragonmaw Fortrees'),
+(50426,2542701,0,'Spawn Point 1 - Netherwing eggs (185915) - Dragonmaw Fortrees'),
+
+(121848,2542702,0,'Spawn Point 2 - Netherwing eggs (185915) - Dragonmaw Fortrees'),
+(3370498,2542702,0,'Spawn Point 2 - Netherwing eggs (185915) - Dragonmaw Fortrees'),
+
+(121849,2542703,0,'Spawn Point 3 - Netherwing eggs (185915) - Dragonmaw Fortrees'),  
+(3371109,2542703,0,'Spawn Point 3 - Netherwing eggs (185915) - Dragonmaw Fortrees'),
+
+(121850,2542704,0,'Spawn Point 4 - Netherwing eggs (185915) - Dragonmaw Fortrees'),  
+(50427,2542704,0,'Spawn Point 4 - Netherwing eggs (185915) - Dragonmaw Fortrees'),
+
+(121851,2542705,0,'Spawn Point 5 - Netherwing eggs (185915) - Dragonmaw Fortrees'),  
+(2056080,2542705,0,'Spawn Point 5 - Netherwing eggs (185915) - Dragonmaw Fortrees'),
+
+(121852,2542706,0,'Spawn Point 6 - Netherwing eggs (185915) - Dragonmaw Fortrees'),  
+(50429,2542706,0,'Spawn Point 6 - Netherwing eggs (185915) - Dragonmaw Fortrees'),
+
+(121853,2542707,0,'Spawn Point 7 - Netherwing eggs (185915) - Dragonmaw Fortrees'),  
+(50430,2542707,0,'Spawn Point 7 - Netherwing eggs (185915) - Dragonmaw Fortrees'),
+
+(121854,2542708,0,'Spawn Point 8 - Netherwing eggs (185915) - Dragonmaw Fortrees'),  
+(50431,2542708,0,'Spawn Point 8 - Netherwing eggs (185915) - Dragonmaw Fortrees'),
+
+(121855,2542709,0,'Spawn Point 9 - Netherwing eggs (185915) - Dragonmaw Fortrees'),  
+(50432,2542709,0,'Spawn Point 9 - Netherwing eggs (185915) - Dragonmaw Fortrees'),
+
+(121856,2542710,0,'Spawn Point 10 - Netherwing eggs (185915) - Dragonmaw Fortrees'),  
+(3371670,2542710,0,'Spawn Point 10 - Netherwing eggs (185915) - Dragonmaw Fortrees'),
+
+(121857,2542711,0,'Spawn Point 11 - Netherwing eggs (185915) - Dragonmaw Fortrees'),  
+(3371716,2542711,0,'Spawn Point 11 - Netherwing eggs (185915) - Dragonmaw Fortrees');
+
+SET @ENTRY := 2542800;
+DELETE FROM `pool_template`  WHERE `entry` BETWEEN 2542800 AND 2542899;
+INSERT INTO `pool_template` VALUES
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 50417 2057493
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 50418 2057612
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 50419 50428
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 50420 2056954
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 50421 2058488
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 50422 2056430
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 50423 2056646
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 50424 3030869
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 50425 2056079
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121858 50433
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121859 50434
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121860 2056081
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121861 2056082
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121862 2056083
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121863 2056084
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121864 2056085
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121865 2056086
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121866 2056087
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121867 2056088
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121868 2056089
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121869 2056090
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121870 2056091
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121871 2056092
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121872 2056093
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121873 2056094
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121874 2056095
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121875 2056096
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121876 2056097
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121877 2056098
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121878 2056099
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121879 2056100
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121880 2056101
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121881 2056102
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121882 2056103
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121883 2056104
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121884 2056105
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121885 2056106
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121886 2056107
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121887 2056108
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121888 2056109
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121889 2056110
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'), -- 121890 2056111
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Ledge'); -- 121891 2056112
+
+SET @ENTRY := 2542800;
+DELETE FROM `pool_pool` WHERE `mother_pool` = 25428;
+INSERT INTO `pool_pool` VALUES
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 1 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 2 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 3 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 4 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 5 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 6 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 7 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 8 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 9 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 10 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 11 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 12 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 13 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 14 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 15 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 16 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 17 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 18 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 19 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 20 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 21 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 22 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 23 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 24 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 25 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 26 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 27 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 28 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 29 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 30 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 31 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 32 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 33 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 34 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 35 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 36 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 37 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 38 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 39 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 40 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 41 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 42 - Netherwing eggs (185915) - Netherwing Ledge'),
+(@ENTRY := @ENTRY + '1',25428,0,'Spawn Point 43 - Netherwing eggs (185915) - Netherwing Ledge');
+
+DELETE FROM `pool_gameobject` WHERE `guid` BETWEEN 50417 AND 50425;
+DELETE FROM `pool_gameobject` WHERE `guid` BETWEEN 121858 AND 121891;
+DELETE FROM `pool_gameobject` WHERE `guid` BETWEEN 2056081 AND 2056112;
+DELETE FROM `pool_gameobject` WHERE `guid` IN (2057493, 2057612, 50428, 2056954, 2058488, 2056430, 2056646, 3030869, 2056079, 50433, 50434);
+INSERT INTO `pool_gameobject` VALUES
+(50417,2542801,0,'Spawn Point 1 - Netherwing eggs (185915) - Netherwing Ledge'),  
+(2057493,2542801,0,'Spawn Point 1 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(50418,2542802,0,'Spawn Point 2 - Netherwing eggs (185915) - Netherwing Ledge'),  
+(2057612,2542802,0,'Spawn Point 2 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(50419,2542803,0,'Spawn Point 3 - Netherwing eggs (185915) - Netherwing Ledge'),  
+(50428,2542803,0,'Spawn Point 3 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(50420,2542804,0,'Spawn Point 4 - Netherwing eggs (185915) - Netherwing Ledge'),  
+(2056954,2542804,0,'Spawn Point 4 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(50421,2542805,0,'Spawn Point 5 - Netherwing eggs (185915) - Netherwing Ledge'),  
+(2058488,2542805,0,'Spawn Point 5 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(50422,2542806,0,'Spawn Point 6 - Netherwing eggs (185915) - Netherwing Ledge'),  
+(2056430,2542806,0,'Spawn Point 6 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(50423,2542807,0,'Spawn Point 7 - Netherwing eggs (185915) - Netherwing Ledge'),  
+(2056646,2542807,0,'Spawn Point 7 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(50424,2542808,0,'Spawn Point 8 - Netherwing eggs (185915) - Netherwing Ledge'),  
+(3030869,2542808,0,'Spawn Point 8 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(50425,2542809,0,'Spawn Point 9 - Netherwing eggs (185915) - Netherwing Ledge'),  
+(2056079,2542809,0,'Spawn Point 9 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121858,2542810,0,'Spawn Point 10 - Netherwing eggs (185915) - Netherwing Ledge'),  
+(50433,2542810,0,'Spawn Point 10 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121859,2542811,0,'Spawn Point 11 - Netherwing eggs (185915) - Netherwing Ledge'),  
+(50434,2542811,0,'Spawn Point 11 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121860,2542812,0,'Spawn Point 12 - Netherwing eggs (185915) - Netherwing Ledge'),  
+(2056081,2542812,0,'Spawn Point 12 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121861,2542813,0,'Spawn Point 13 - Netherwing eggs (185915) - Netherwing Ledge'),  
+(2056082,2542813,0,'Spawn Point 13 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121862,2542814,0,'Spawn Point 14 - Netherwing eggs (185915) - Netherwing Ledge'),  
+(2056083,2542814,0,'Spawn Point 14 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121863,2542815,0,'Spawn Point 15 - Netherwing eggs (185915) - Netherwing Ledge'),  
+(2056084,2542815,0,'Spawn Point 15 - Netherwing eggs (185915) - Netherwing Ledge'),
+ 
+(121864,2542816,0,'Spawn Point 16 - Netherwing eggs (185915) - Netherwing Ledge'),  
+(2056085,2542816,0,'Spawn Point 16 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121865,2542817,0,'Spawn Point 17 - Netherwing eggs (185915) - Netherwing Ledge'),  
+(2056086,2542817,0,'Spawn Point 17 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121866,2542818,0,'Spawn Point 18 - Netherwing eggs (185915) - Netherwing Ledge'),  
+(2056087,2542818,0,'Spawn Point 18 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121867,2542819,0,'Spawn Point 19 - Netherwing eggs (185915) - Netherwing Ledge'),
+(2056088,2542819,0,'Spawn Point 19 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121868,2542820,0,'Spawn Point 20 - Netherwing eggs (185915) - Netherwing Ledge'),
+(2056089,2542820,0,'Spawn Point 20 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121869,2542821,0,'Spawn Point 21 - Netherwing eggs (185915) - Netherwing Ledge'),
+(2056090,2542821,0,'Spawn Point 21 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121870,2542822,0,'Spawn Point 22 - Netherwing eggs (185915) - Netherwing Ledge'),
+(2056091,2542822,0,'Spawn Point 22 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121871,2542823,0,'Spawn Point 23 - Netherwing eggs (185915) - Netherwing Ledge'),
+(2056092,2542823,0,'Spawn Point 23 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121872,2542824,0,'Spawn Point 24 - Netherwing eggs (185915) - Netherwing Ledge'),
+(2056093,2542824,0,'Spawn Point 24 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121873,2542825,0,'Spawn Point 25 - Netherwing eggs (185915) - Netherwing Ledge'),
+(2056094,2542825,0,'Spawn Point 25 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121874,2542826,0,'Spawn Point 26 - Netherwing eggs (185915) - Netherwing Ledge'),
+(2056095,2542826,0,'Spawn Point 26 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121875,2542827,0,'Spawn Point 27 - Netherwing eggs (185915) - Netherwing Ledge'),
+(2056096,2542827,0,'Spawn Point 27 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121876,2542828,0,'Spawn Point 28 - Netherwing eggs (185915) - Netherwing Ledge'),
+(2056097,2542828,0,'Spawn Point 28 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121877,2542829,0,'Spawn Point 29 - Netherwing eggs (185915) - Netherwing Ledge'),
+(2056098,2542829,0,'Spawn Point 29 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121878,2542830,0,'Spawn Point 30 - Netherwing eggs (185915) - Netherwing Ledge'),
+(2056099,2542830,0,'Spawn Point 30 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121879,2542831,0,'Spawn Point 31 - Netherwing eggs (185915) - Netherwing Ledge'),
+(2056100,2542831,0,'Spawn Point 31 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121880,2542832,0,'Spawn Point 32 - Netherwing eggs (185915) - Netherwing Ledge'),
+(2056101,2542832,0,'Spawn Point 32 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121881,2542833,0,'Spawn Point 33 - Netherwing eggs (185915) - Netherwing Ledge'),
+(2056102,2542833,0,'Spawn Point 33 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121882,2542834,0,'Spawn Point 34 - Netherwing eggs (185915) - Netherwing Ledge'),
+(2056103,2542834,0,'Spawn Point 34 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121883,2542835,0,'Spawn Point 35 - Netherwing eggs (185915) - Netherwing Ledge'),
+(2056104,2542835,0,'Spawn Point 35 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121884,2542836,0,'Spawn Point 36 - Netherwing eggs (185915) - Netherwing Ledge'),
+(2056105,2542836,0,'Spawn Point 36 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121885,2542837,0,'Spawn Point 37 - Netherwing eggs (185915) - Netherwing Ledge'),
+(2056106,2542837,0,'Spawn Point 37 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121886,2542838,0,'Spawn Point 38 - Netherwing eggs (185915) - Netherwing Ledge'),
+(2056107,2542838,0,'Spawn Point 38 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121887,2542839,0,'Spawn Point 39 - Netherwing eggs (185915) - Netherwing Ledge'),
+(2056108,2542839,0,'Spawn Point 39 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121888,2542840,0,'Spawn Point 40 - Netherwing eggs (185915) - Netherwing Ledge'),
+(2056109,2542840,0,'Spawn Point 40 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121889,2542841,0,'Spawn Point 41 - Netherwing eggs (185915) - Netherwing Ledge'),
+(2056110,2542841,0,'Spawn Point 41 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121890,2542842,0,'Spawn Point 42 - Netherwing eggs (185915) - Netherwing Ledge'),
+(2056111,2542842,0,'Spawn Point 42 - Netherwing eggs (185915) - Netherwing Ledge'),
+
+(121891,2542843,0,'Spawn Point 43 - Netherwing eggs (185915) - Netherwing Ledge'),
+(2056112,2542843,0,'Spawn Point 43 - Netherwing eggs (185915) - Netherwing Ledge');
+
+SET @ENTRY := 2542900;
+DELETE FROM `pool_template`  WHERE `entry` BETWEEN 2542900 AND 2542999;
+INSERT INTO `pool_template` VALUES
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Mine'), -- 121892 2056113
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Mine'), -- 121893 3372998
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Mine'), -- 121894 3373115
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Mine'), -- 121895 3372707
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Mine'), -- 121896 3372045
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Mine'), -- 121897 2056114
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Mine'), -- 121898 3372503
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Mine'), -- 121899 2056115
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Mine'), -- 121900 2056119  
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Mine'), -- 121901 2056116
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Mine'), -- 121902 2056117
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Mine'), -- 121903 2056118
+(@ENTRY := @ENTRY + '1', 2,'Netherwing eggs (185915) - Netherwing Mine'); -- 121904 3372273
+
+SET @ENTRY := 2542900;
+DELETE FROM `pool_pool` WHERE `mother_pool` = 25429;
+INSERT INTO `pool_pool` VALUES
+(@ENTRY := @ENTRY + '1',25429,0,'Spawn Point 1 - Netherwing eggs (185915) - Netherwing Mine'),
+(@ENTRY := @ENTRY + '1',25429,0,'Spawn Point 2 - Netherwing eggs (185915) - Netherwing Mine'),
+(@ENTRY := @ENTRY + '1',25429,0,'Spawn Point 3 - Netherwing eggs (185915) - Netherwing Mine'),
+(@ENTRY := @ENTRY + '1',25429,0,'Spawn Point 4 - Netherwing eggs (185915) - Netherwing Mine'),
+(@ENTRY := @ENTRY + '1',25429,0,'Spawn Point 5 - Netherwing eggs (185915) - Netherwing Mine'),
+(@ENTRY := @ENTRY + '1',25429,0,'Spawn Point 6 - Netherwing eggs (185915) - Netherwing Mine'),
+(@ENTRY := @ENTRY + '1',25429,0,'Spawn Point 7 - Netherwing eggs (185915) - Netherwing Mine'),
+(@ENTRY := @ENTRY + '1',25429,0,'Spawn Point 8 - Netherwing eggs (185915) - Netherwing Mine'),
+(@ENTRY := @ENTRY + '1',25429,0,'Spawn Point 9 - Netherwing eggs (185915) - Netherwing Mine'),
+(@ENTRY := @ENTRY + '1',25429,0,'Spawn Point 10 - Netherwing eggs (185915) - Netherwing Mine'),
+(@ENTRY := @ENTRY + '1',25429,0,'Spawn Point 11 - Netherwing eggs (185915) - Netherwing Mine'),
+(@ENTRY := @ENTRY + '1',25429,0,'Spawn Point 12 - Netherwing eggs (185915) - Netherwing Mine'),
+(@ENTRY := @ENTRY + '1',25429,0,'Spawn Point 13 - Netherwing eggs (185915) - Netherwing Mine');
+
+DELETE FROM `pool_gameobject` WHERE `guid` IN (2056113, 3372998, 3373115, 3372707, 3372045, 2056114, 3372503, 2056115, 2056119, 2056116, 2056117, 2056118, 3372273);
+DELETE FROM `pool_gameobject` WHERE `guid` BETWEEN 121892 AND 121904;
+INSERT INTO `pool_gameobject` VALUES
+(121892,2542901,0,'Spawn Point 1 - Netherwing eggs (185915) - Netherwing Mine'),  
+(2056113,2542901,0,'Spawn Point 1 - Netherwing eggs (185915) - Netherwing Mine'),
+
+(121893,2542901,0,'Spawn Point 2 - Netherwing eggs (185915) - Netherwing Mine'),  
+(3372998,2542901,0,'Spawn Point 2 - Netherwing eggs (185915) - Netherwing Mine'),
+
+(121894,2542901,0,'Spawn Point 3 - Netherwing eggs (185915) - Netherwing Mine'),  
+(3373115,2542901,0,'Spawn Point 3 - Netherwing eggs (185915) - Netherwing Mine'),
+
+(121895,2542901,0,'Spawn Point 4 - Netherwing eggs (185915) - Netherwing Mine'),  
+(3372707,2542901,0,'Spawn Point 4 - Netherwing eggs (185915) - Netherwing Mine'),
+
+(121896,2542901,0,'Spawn Point 5 - Netherwing eggs (185915) - Netherwing Mine'),  
+(3372045,2542901,0,'Spawn Point 5 - Netherwing eggs (185915) - Netherwing Mine'),
+
+(121897,2542901,0,'Spawn Point 6 - Netherwing eggs (185915) - Netherwing Mine'),
+(2056114,2542901,0,'Spawn Point 6 - Netherwing eggs (185915) - Netherwing Mine'),
+
+(121898,2542901,0,'Spawn Point 7 - Netherwing eggs (185915) - Netherwing Mine'),  
+(3372503,2542901,0,'Spawn Point 7 - Netherwing eggs (185915) - Netherwing Mine'),
+
+(121899,2542901,0,'Spawn Point 8 - Netherwing eggs (185915) - Netherwing Mine'),  
+(2056115,2542901,0,'Spawn Point 8 - Netherwing eggs (185915) - Netherwing Mine'),
+
+(121900,2542901,0,'Spawn Point 9 - Netherwing eggs (185915) - Netherwing Mine'),  
+(2056119,2542901,0,'Spawn Point 9 - Netherwing eggs (185915) - Netherwing Mine'),
+
+(121901,2542901,0,'Spawn Point 10 - Netherwing eggs (185915) - Netherwing Mine'),  
+(2056116,2542901,0,'Spawn Point 10 - Netherwing eggs (185915) - Netherwing Mine'),
+
+(121902,2542901,0,'Spawn Point 11 - Netherwing eggs (185915) - Netherwing Mine'),  
+(2056117,2542901,0,'Spawn Point 11 - Netherwing eggs (185915) - Netherwing Mine'),
+
+(121903,2542901,0,'Spawn Point 12 - Netherwing eggs (185915) - Netherwing Mine'),  
+(2056118,2542901,0,'Spawn Point 12 - Netherwing eggs (185915) - Netherwing Mine'),
+
+(121904,2542901,0,'Spawn Point 13 - Netherwing eggs (185915) - Netherwing Mine'),  
+(3372273,2542901,0,'Spawn Point 13 - Netherwing eggs (185915) - Netherwing Mine');
+
+SET @GUID := 77645;
+UPDATE `creature` SET `MovementType`='2' WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES (77645, 1, -4100.05, 969.276, 24.9571, 12000, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (77645, 2, -4104.06, 931.187, 18.8469, 1000, 0, 0, 100, 0); -- 2211301
+INSERT INTO `waypoint_data` VALUES (77645, 3, -4105.65, 911.224, 16.1353, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (77645, 4, -4106.05, 889.833, 14.4649, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (77645, 5, -4118.47, 857.928, 8.29486, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (77645, 6, -4122.4, 839.518, 10.4151, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (77645, 7, -4143.45, 803.2, 9.22043, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (77645, 8, -4150.96, 769.769, 6.31908, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (77645, 9, -4153.1, 760.191, 3.47747, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (77645, 10, -4155.08, 747.368, 1.8985, 4000, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (77645, 11, -4151.37, 769.929, 6.42453, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (77645, 12, -4132.84, 797.355, 8.16607, 1000, 0, 0, 100, 0); -- 2211301
+INSERT INTO `waypoint_data` VALUES (77645, 13, -4137.32, 823.672, 9.68296, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (77645, 14, -4119.16, 842.164, 9.89524, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (77645, 15, -4115.26, 851.276, 7.68533, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (77645, 16, -4109.66, 883.088, 13.8876, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (77645, 17, -4110.74, 914.769, 17.723, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (77645, 18, -4106.89, 948.026, 23.0078, 0, 0, 0, 100, 0);
