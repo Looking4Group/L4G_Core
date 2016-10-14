@@ -1941,9 +1941,9 @@ INSERT INTO `creature` VALUES (29056, 22859, 530, 1, 0, 0, -3570.4, 373.56, 32.8
 INSERT INTO `creature` VALUES (29057, 22859, 530, 1, 0, 0, -3617.36, 389.152, 34.4028, 1.58825, 25, 0, 0, 5409, 3080, 0, 0);
 INSERT INTO `creature` VALUES (29058, 22859, 530, 1, 0, 0, -3618.23, 405.728, 32.0895, 4.7822, 25, 0, 0, 5409, 3080, 0, 0);
 
-DELETE FROM `waypoint_scripts` WHERE `id` = 2285701;
-INSERT INTO `waypoint_scripts` VALUES
-(2285701,0,20,0,0,0,0,0,0,0,2285701,'Stop Waypoint Movement'); -- nonfunctional atm as 0 value returns current path.
+-- DELETE FROM `waypoint_scripts` WHERE `id` = 2285701;
+-- INSERT INTO `waypoint_scripts` VALUES
+-- (2285701,0,20,0,0,0,0,0,0,0,2285701,'Stop Waypoint Movement'); -- nonfunctional atm as 0 value returns current path.
 
 INSERT INTO `creature` VALUES (75056, 22860, 530, 1, 0, 0, -3498.94, 395.572, 32.8215, 3.09606, 25, 0, 0, 4890, 7196, 0, 2);
 SET @GUID := 75056;
