@@ -206,6 +206,15 @@ struct boss_hydross_the_unstableAI : public ScriptedAI
         if (pInstance)
             pInstance->SetData(DATA_HYDROSS_EVENT, DONE);
         Summons.DespawnAll();
+
+
+        //NOTE: We think pInstance is SOMETIMES NULL - therefore this solution DOES NOT USE pInstance.
+        if (Map *map = m_creature->GetMap())
+        {
+            //Search distance is 999 yards, which is stupid, but it makes sure it will find the object.
+            if (GameObject *go = GetClosestGameObjectWithEntry(m_creature, 185114, 999.0f)) 
+                go->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_LOCKED);
+        }
     }
 
     void UpdateAI(const uint32 diff)

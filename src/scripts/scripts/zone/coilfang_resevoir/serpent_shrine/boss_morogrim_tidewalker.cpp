@@ -123,6 +123,17 @@ struct boss_morogrim_tidewalkerAI : public ScriptedAI
     {
         DoScriptText(SAY_DEATH, m_creature);
         pInstance->SetData(DATA_MOROGRIM_EVENT, DONE);
+
+        //We're going to assume pInstance is null - SO DO NOT ACCESS IT.
+        Map *map = m_creature->GetMap();
+
+        //NOTE: We think pInstance is SOMETIMES NULL - therefore this solution DOES NOT USE pInstance.
+        if (Map *map = m_creature->GetMap())
+        {
+            //Search distance is 999 yards, which is stupid, but it makes sure it will find the object.
+            if (GameObject *go = GetClosestGameObjectWithEntry(m_creature, 185118, 999.0f)) 
+                go->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_LOCKED);
+        }
     }
 
     void EnterCombat(Unit *who)
