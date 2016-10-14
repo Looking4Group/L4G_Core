@@ -240,7 +240,7 @@ struct boss_the_lurker_belowAI : public BossAI
         m_rotating = true;
 
         events.RescheduleEvent(LURKER_EVENT_WHIRL, 20000);
-        events.RescheduleEvent(LURKER_EVENT_GEYSER, rand()%25000 + 30000); // Geysir can´t come while spout
+        events.RescheduleEvent(LURKER_EVENT_GEYSER, rand()%25000 + 30000); // Geysir canï¿½t come while spout
         events.ScheduleEvent(LURKER_EVENT_SPOUT_EMOTE, 45000);
 
         me->MonsterTextEmote(EMOTE_SPOUT,0,true);
@@ -275,6 +275,17 @@ struct boss_the_lurker_belowAI : public BossAI
     {
         instance->SetData(DATA_LURKER_EVENT, DONE);
         me->RemoveAurasDueToSpell(SPELL_SUBMERGE);
+
+        //We're going to assume pInstance is null - SO DO NOT ACCESS IT.
+        Map *map = m_creature->GetMap();
+
+        //NOTE: We think pInstance is SOMETIMES NULL - therefore this solution DOES NOT USE pInstance.
+        if (Map *map = m_creature->GetMap())
+        {
+            //Search distance is 999 yards, which is stupid, but it makes sure it will find the object.
+            if (GameObject *go = GetClosestGameObjectWithEntry(m_creature, 185115, 999.0f)) 
+                go->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_LOCKED);
+        }
     }
 
     void SummonAdds()

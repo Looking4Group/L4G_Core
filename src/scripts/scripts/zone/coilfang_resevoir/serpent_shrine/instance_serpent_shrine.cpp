@@ -200,74 +200,48 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
         switch (go->GetEntry())
         {
             case 185114: // Serpentshrine Console [Hydross the Lurker]
-                ConsoleGuids[0] = go->GetGUID();
-                go->setActive(true);
-
+                ConsoleGuids[0] = go->GetGUID();               
                 data = GetData(DATA_HYDROSS_EVENT);
                 if ((data == DONE) || (data == SPECIAL))
-                {
                     UnlockGameObject(instance, ConsoleGuids[0]);
-                }
                 break;
             case 185115: // Serpentshrine Console [The Lurker Below]
                 ConsoleGuids[1] = go->GetGUID();
-                go->setActive(true);
-
                 data = GetData(DATA_LURKER_EVENT);
                 if ((data == DONE) || (data == SPECIAL))
-                {
                     UnlockGameObject(instance, ConsoleGuids[1]);
-                }
                 break;
             case 185116: // Serpentshrine Console [Leotheras the Blind]
                 ConsoleGuids[2] = go->GetGUID();
-                go->setActive(true);
-
                 data = GetData(DATA_LEOTHERAS_EVENT);
                 if ((data == DONE) || (data == SPECIAL))
-                {
                     UnlockGameObject(instance, ConsoleGuids[2]);
-                }
                 break;
             case 185117: // Serpentshrine Console [Fathom-Lord Karathress]
                 ConsoleGuids[3] = go->GetGUID();
-                go->setActive(true);
-
                 data = GetData(DATA_KARATHRESS_EVENT);
                 if ((data == DONE) || (data == SPECIAL))
-                {
                     UnlockGameObject(instance, ConsoleGuids[3]);
-                }
                 break;
             case 185118: // Serpentshrine Console [Morogrim Tidewalker]
                 ConsoleGuids[4] = go->GetGUID();
-                go->setActive(true);
-
                 data = GetData(DATA_MOROGRIM_EVENT);
                 if ((data == DONE) || (data == SPECIAL))
-                {
                     UnlockGameObject(instance, ConsoleGuids[4]);
-                }
                 break;
             case 184568: // Lady Vashj Bridge Console
                 BridgeConsoleGuid = go->GetGUID();
-                go->setActive(true); 
                 if (UnlockVashjDoor(this))
-                {
                     UnlockGameObject(instance, BridgeConsoleGuid); 
-                }
                 break;
             case 184203: // Doodad_Coilfang_Raid_Bridge_Part01
                 BridgePartGuids[0] = go->GetGUID();
-                go->setActive(true);
                 break;
             case 184204: // Doodad_Coilfang_Raid_Bridge_Part02
                 BridgePartGuids[1] = go->GetGUID();
-                go->setActive(true);
                 break;
             case 184205: // Doodad_Coilfang_Raid_Bridge_Part03
                 BridgePartGuids[2] = go->GetGUID();
-                go->setActive(true);
                 break;
             case 184956: // Strange Pool
                 StrangePoolGuid = go->GetGUID();
@@ -340,28 +314,6 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
                 break;
         }
         HandleInitCreatureState(creature);
-    }
-
-    void OnCreatureDeath(Creature * creature) 
-    {
-        switch(creature->GetEntry())
-        {
-            case 21215: //Leo
-                UnlockGameObject(instance, ConsoleGuids[2]);
-                break;
-            case 21214: //FLK
-                UnlockGameObject(instance, ConsoleGuids[3]);
-                break;
-            case 21217: //Lurker
-                UnlockGameObject(instance, ConsoleGuids[1]);
-                break;
-            case 21213: //Morogrim
-                UnlockGameObject(instance, ConsoleGuids[4]);
-                break;
-            case 21216: //Hydross
-                UnlockGameObject(instance, ConsoleGuids[0]);
-                break;
-        }
     }
 
     void SetData(uint32 type, uint32 data)
