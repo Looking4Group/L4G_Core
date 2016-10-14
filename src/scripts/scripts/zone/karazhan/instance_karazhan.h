@@ -3,7 +3,8 @@
 
 #include "def_karazhan.h"
 
-#define ENCOUNTERS      15
+#define ENCOUNTERS              15
+#define SPELL_GAME_IN_SESSION   39331
 
 /*
 0  - Attumen + Midnight (optional)
@@ -53,6 +54,7 @@ struct instance_karazhan : public ScriptedInstance
     uint64 MedivhGUID;
     uint64 BarnesGUID;
     uint64 BlizzardGUID;
+    uint64 ChessTriggerGUID;
     uint32 CheckTimer;
 
 
