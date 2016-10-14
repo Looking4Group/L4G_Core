@@ -44,6 +44,7 @@ void instance_karazhan::Initialize()
     AranGUID            = 0;
     BlizzardGUID        = 0;
     BarnesGUID          = 0;
+    ChessTriggerGUID    = 0;
 
     NightbaneGUID       = 0;
 
@@ -162,6 +163,9 @@ void instance_karazhan::OnCreatureCreate(Creature *creature, uint32 entry)
             break;
         case 16812:
             BarnesGUID = creature->GetGUID();
+            break;
+        case 22520:
+            ChessTriggerGUID = creature->GetGUID();
             break;
         case 17645:
             if (creature->GetPositionZ() < 350.0f)
@@ -290,7 +294,11 @@ void instance_karazhan::SetData(uint32 type, uint32 data)
                 Encounters[12] = data;
 
             if (data == DONE)
+            {
                 HandleGameObject(GamesmansExitDoor, true);
+                if (Creature * chess = GetCreature(ChessTriggerGUID))
+                    chess->RemoveAurasDueToSpell(39331);
+            }
             break;
         case DATA_MALCHEZZAR_EVENT:
             if (Encounters[10] != DONE)
