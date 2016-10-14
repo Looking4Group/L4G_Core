@@ -240,7 +240,7 @@ struct boss_the_lurker_belowAI : public BossAI
         m_rotating = true;
 
         events.RescheduleEvent(LURKER_EVENT_WHIRL, 20000);
-        events.RescheduleEvent(LURKER_EVENT_GEYSER, rand()%25000 + 30000); // Geysir can�t come while spout
+        events.RescheduleEvent(LURKER_EVENT_GEYSER, rand()%25000 + 30000); // Geysir can´t come while spout
         events.ScheduleEvent(LURKER_EVENT_SPOUT_EMOTE, 45000);
 
         me->MonsterTextEmote(EMOTE_SPOUT,0,true);
