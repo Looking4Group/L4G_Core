@@ -3,8 +3,7 @@
 
 #include "def_karazhan.h"
 
-#define ENCOUNTERS              15
-#define SPELL_GAME_IN_SESSION   39331
+#define ENCOUNTERS      15
 
 /*
 0  - Attumen + Midnight (optional)
