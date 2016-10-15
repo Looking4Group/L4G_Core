@@ -965,7 +965,7 @@ INSERT INTO `waypoint_data` VALUES (52311, 2, -2747.56, 2369.47, 93.0474, 0, 0, 
 
 DELETE FROM `creature` WHERE `guid` = 52312;
 INSERT INTO `creature` VALUES (52312, 21753, 530, 1, 0, 0, -2763.02, 2362.8, 93.2809, 4.70526, 120, 0, 0, 6326, 0, 0, 2);
-SET @GUID := 52311;
+SET @GUID := 52312;
 DELETE FROM `creature_addon` WHERE `guid` = @GUID;
 INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
 DELETE FROM `waypoint_data` WHERE `id` = @GUID;
@@ -2720,3 +2720,1108 @@ INSERT INTO `waypoint_data` VALUES (85374, 10, 12560, -7331.26, 33.549, 0, 0, 0,
 
 DELETE FROM `gameobject_questrelation` WHERE `quest` = 10781;
 INSERT INTO `gameobject_questrelation` VALUES (185126,10781);
+
+-- ***----------------------------------------------------------***
+--                     Honor Hold
+--  https://github.com/Looking4Group/L4G_Core/issues/1669
+-- ***----------------------------------------------------------***
+
+-- ----------------------------------------------------------
+-- Misc
+-- ----------------------------------------------------------
+-- Honor Hold Scout 20238
+UPDATE `creature_template` SET `AIName`='EventAI',`flags_extra`='0',`type_flags`='4096' WHERE `entry` = 20238; -- 0 0
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 20238;
+INSERT INTO `creature_ai_scripts` VALUES
+('2023801','20238','10','0','50','1','0','15','5000','10000','11','35063','0','0','24','0','0','0','0','0','0','0','Honor Hold Scout - Shoot OOC on Dummy & Reset'),
+('2023802','20238','10','0','50','1','0','15','5000','10000','11','35097','0','0','24','0','0','0','0','0','0','0','Honor Hold Scout - Shoot OOC on Dummy & Reset');
+
+-- Honor Hold Archer 16896
+UPDATE `creature_template` SET `AIName`='EventAI',`unit_flags`='4096',`flags_extra`='2' WHERE `entry` = 16896; -- 0 0
+UPDATE `creature_template_addon` SET `bytes0`='16777472',`bytes2`='4098' WHERE `entry` IN ('16896');
+DELETE FROM `creature_ai_scripts` WHERE `id` BETWEEN 1689601 AND 1689604;
+INSERT INTO `creature_ai_scripts` VALUES
+('1689601','-58449','1','0','75','1','0','5000','5000','10000','11','29120','0','0','24','0','0','0','0','0','0','0','Honor Hold Archer - Shoot OOC on Dummy & Reset'),
+('1689602','-58451','1','0','75','1','0','5000','5000','10000','11','29120','0','0','24','0','0','0','0','0','0','0','Honor Hold Archer - Shoot OOC on Dummy & Reset'),
+('1689603','-58450','1','0','75','1','0','5000','5000','10000','11','29120','0','0','24','0','0','0','0','0','0','0','Honor Hold Archer - Shoot OOC on Dummy & Reset'),
+('1689604','-58454','1','0','75','1','0','5000','5000','10000','11','29120','0','0','24','0','0','0','0','0','0','0','Honor Hold Archer - Shoot OOC on Dummy & Reset');
+
+DELETE FROM `creature_addon` WHERE `guid` IN (58449,58450,58451,58454);
+INSERT INTO `creature_addon` VALUES
+(58449,0,0,16777472,0,4098,376,0,''),
+(58450,0,0,16777472,0,4098,376,0,''),
+(58451,0,0,16777472,0,4098,376,0,''),
+(58454,0,0,16777472,0,4098,376,0,'');
+
+DELETE FROM `spell_script_target` WHERE `entry` = 29120 AND `targetentry` = 19376;
+INSERT INTO `spell_script_target` VALUES
+(29120,1,19376);
+
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=72637; -- Honor hold defender
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=57946; -- Honor hold defender
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=57947; -- Honor hold defender
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=57882; -- Master Sergeant Lorin Thalmerok
+UPDATE `creature` SET `position_x`='-668.5441', `position_y`='2755.5187', `position_z`='93.8881', `spawndist`=2.5,`MovementType`=1 WHERE `guid`=58435; -- War horse
+
+-- horses nonattackable
+UPDATE `creature_template` SET `unit_flags`=`unit_flags`|2 WHERE `entry` = 16884;
+
+UPDATE `creature_addon` SET `bytes1`=1 WHERE `guid`=30752; -- Brumman - Sit
+
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 16825;
+INSERT INTO `creature_ai_scripts` VALUES
+('1682501','16825','1','0','100','1','3000','10000','3000','10000','5','92','0','0','0','0','0','0','0','0','0','0','Father Malgor Devidicus - Drink animation'); -- 46583
+-- ----------------------------------------------------------
+-- Honor Hold Defenders
+-- ----------------------------------------------------------
+-- Update weapons for all Honor Hold Defenders. Was hard to find 100% information on this. Old values: 1: 5163. 2: 18700
+UPDATE `creature_equip_template` SET `equipmodel1`=5163, `equipmodel2`=18700, `equipinfo2`=33490436, `equipslot2`=1038 WHERE  `entry`=368;
+
+-- Outhouse guard GUID: 57942
+-- Had to create a new creature template, since this npc has a gossip menu, and that can only be enabled in a template.
+DELETE FROM `creature_equip_template` WHERE `entry` = 23685;
+INSERT INTO `creature_equip_template` (`entry`, `equipinfo1`, `equipinfo2`, `equipslot1`, `equipslot2`) VALUES (23685, 33490690, 33490690, 781, 781);
+DELETE FROM `creature_template` WHERE `entry` = 77780;
+INSERT INTO `creature_template` (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `subname`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`) VALUES 
+(77780, 0, 16387, 16388, 16387, 16388, 'Honor Hold Defender', '', 68, 68, 7716, 7716, 0, 0, 5200, 1666, 1666, 1, 1.2, 1, 0, 214, 267, 0, 4689, 2000, 0, 0, 0, 0, 0, 0, 0, 0, 277.043, 392.769, 100, 7, 4096, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'EventAI', 1, 3, 0, 1, 23685, 0, 0, '');
+
+DELETE FROM `db_script_string` WHERE `entry` BETWEEN 2000000004 AND 2000000007;
+INSERT INTO `db_script_string` (`entry`,`content_default`) VALUES 
+(2000000004,'Do ya want me to call a medic? Maybe a priest? It''s been over an hour, mate!'),
+(2000000005,'So help me, I''m gonna count to ten and if yer not outta there by the time I reach 10, I''m comin'' in!'),
+(2000000006,'What''s goin'' on in there?? For the love of the LIGHT, hurry it up!'),
+(2000000007,'OY! You in there, this is official Honor Hold business yer holdin'' up!');
+
+DELETE FROM `waypoint_scripts` WHERE `id` BETWEEN 5794201 AND 5794205;
+INSERT INTO `waypoint_scripts` (`id`,`delay`,`dataint`,`guid`,`comment`) VALUES
+(5794201,0,2000000004,5794201,'Outhouse Honor Hold Guard Text1'),
+(5794202,0,2000000005,5794202,'Outhouse Honor Hold Guard Text2'),
+(5794203,0,2000000006,5794203,'Outhouse Honor Hold Guard Text3'),
+(5794204,0,2000000007,5794204,'Outhouse Honor Hold Guard Text4');
+INSERT INTO `waypoint_scripts` (`id`,`delay`,`command`,`datalong`,`datalong2`,`dataint`,`guid`,`comment`) VALUES
+(5794205,0,1,5,0,0,5794205,'Outhouse Honor Hold Guard - Exclamation emote');
+
+DELETE FROM `npc_text` WHERE `id` = 4;
+INSERT INTO `npc_text` (`id`,`text0_0`,`text0_1`,`em0_0`,`em0_1`) VALUES
+(4,'OY! Wait in line, would ya? Outland food doesn''t agree with me at all.','OY! Wait in line, would ya? Outland food doesn''t agree with me at all.',5,5);
+
+DELETE FROM `npc_gossip` WHERE `npc_guid` = 57942;
+INSERT INTO `npc_gossip` VALUES
+(57942,4);
+
+-- Pathing for  Entry: 16821 'TDB FORMAT' 
+SET @GUID := 57942;
+SET @POINT := 0;
+UPDATE `creature` SET `id`=77780,`spawndist`=0,`MovementType`=2,`position_x`=-724.872,`position_y`=2722.862,`position_z`=95.62754 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:51:00
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:51:02
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:51:04
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:51:05
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:51:07
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:51:09
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:51:10
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:51:11
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:51:13
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:51:14
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:51:16
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:51:18
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:51:19
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:51:21
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:51:22
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:51:22
+(@GUID,@POINT := @POINT + '1',-725.5215,2724.479,95.6583,0,0,5794201,100,0), -- Text
+(@GUID,@POINT := @POINT + '1',-725.5215,2724.479,95.6583,15000,0,5794205,100,0), -- Exclamation emote
+(@GUID,@POINT := @POINT + '1',-724.8216,2722.722,95.61582,250,0,0,100,0), -- 14:51:44
+(@GUID,@POINT := @POINT + '1',-724.1487,2726.587,95.32871,250,0,0,100,0), -- 14:51:45
+(@GUID,@POINT := @POINT + '1',-724.8216,2722.722,95.61582,250,0,0,100,0), -- 14:51:46
+(@GUID,@POINT := @POINT + '1',-724.1487,2726.587,95.32871,250,0,0,100,0), -- 14:51:48
+(@GUID,@POINT := @POINT + '1',-724.8216,2722.722,95.61582,250,0,0,100,0), -- 14:51:50
+(@GUID,@POINT := @POINT + '1',-724.1487,2726.587,95.32871,250,0,0,100,0), -- 14:51:51
+(@GUID,@POINT := @POINT + '1',-724.8216,2722.722,95.61582,250,0,0,100,0), -- 14:51:53
+(@GUID,@POINT := @POINT + '1',-724.1487,2726.587,95.32871,250,0,0,100,0), -- 14:51:54
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:51:54
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:51:56
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:51:58
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:51:59
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:52:01
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:52:03
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:52:04
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:52:06
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:52:08
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:52:09
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:52:11
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:52:12
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:52:14
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:52:15
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:52:17
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:52:19
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:52:20
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:52:22
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:52:24
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:52:25
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:52:25
+(@GUID,@POINT := @POINT + '1',-725.5215,2724.479,95.6583,0,0,5794202,100,0), -- Text
+(@GUID,@POINT := @POINT + '1',-725.5215,2724.479,95.6583,15000,0,5794205,100,0), -- Exclamation emote
+(@GUID,@POINT := @POINT + '1',-724.8216,2722.722,95.61582,250,0,0,100,0), -- 14:52:47
+(@GUID,@POINT := @POINT + '1',-724.1487,2726.587,95.32871,250,0,0,100,0), -- 14:52:48
+(@GUID,@POINT := @POINT + '1',-724.8216,2722.722,95.61582,250,0,0,100,0), -- 14:52:50
+(@GUID,@POINT := @POINT + '1',-724.1487,2726.587,95.32871,250,0,0,100,0), -- 14:52:51
+(@GUID,@POINT := @POINT + '1',-724.8216,2722.722,95.61582,250,0,0,100,0), -- 14:52:53
+(@GUID,@POINT := @POINT + '1',-724.1487,2726.587,95.32871,250,0,0,100,0), -- 14:52:54
+(@GUID,@POINT := @POINT + '1',-724.8216,2722.722,95.61582,250,0,0,100,0), -- 14:52:56
+(@GUID,@POINT := @POINT + '1',-724.1487,2726.587,95.32871,250,0,0,100,0), -- 14:52:58
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:52:58
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:52:59
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:53:01
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:53:03
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:53:04
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:53:06
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:53:07
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:53:09
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:53:11
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:53:13
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:53:14
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:53:16
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:53:17
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:53:19
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:53:21
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:53:22
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:53:24
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:53:26
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:53:27
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:53:29
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:53:29
+(@GUID,@POINT := @POINT + '1',-725.5215,2724.479,95.6583,0,0,5794203,100,0), -- Text
+(@GUID,@POINT := @POINT + '1',-725.5215,2724.479,95.6583,15000,0,5794205,100,0), -- Exclamation emote
+(@GUID,@POINT := @POINT + '1',-724.8216,2722.722,95.61582,250,0,0,100,0), -- 14:53:51
+(@GUID,@POINT := @POINT + '1',-724.1487,2726.587,95.32871,250,0,0,100,0), -- 14:53:52
+(@GUID,@POINT := @POINT + '1',-724.8216,2722.722,95.61582,250,0,0,100,0), -- 14:53:53
+(@GUID,@POINT := @POINT + '1',-724.1487,2726.587,95.32871,250,0,0,100,0), -- 14:53:55
+(@GUID,@POINT := @POINT + '1',-724.8216,2722.722,95.61582,250,0,0,100,0), -- 14:53:57
+(@GUID,@POINT := @POINT + '1',-724.1487,2726.587,95.32871,250,0,0,100,0), -- 14:53:58
+(@GUID,@POINT := @POINT + '1',-724.8216,2722.722,95.61582,250,0,0,100,0), -- 14:54:00
+(@GUID,@POINT := @POINT + '1',-724.1487,2726.587,95.32871,250,0,0,100,0), -- 14:54:01
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:54:01
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:54:03
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:54:05
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:54:06
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:54:08
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:54:09
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:54:11
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:54:13
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:54:14
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:54:16
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:54:18
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:54:19
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:54:21
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:54:22
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:54:24
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:54:26
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:54:27
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:54:29
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:54:31
+(@GUID,@POINT := @POINT + '1',-724.872,2722.862,95.62754,250,0,0,100,0), -- 14:54:32
+(@GUID,@POINT := @POINT + '1',-724.4536,2725.909,95.40195,250,0,0,100,0), -- 14:54:32
+(@GUID,@POINT := @POINT + '1',-725.5215,2724.479,95.6583,0,0,5794204,100,0), -- Text
+(@GUID,@POINT := @POINT + '1',-725.5215,2724.479,95.6583,15000,0,5794205,100,0); -- Exclamation emote
+
+DELETE FROM `creature` WHERE `guid` IN (57941,100049);
+INSERT INTO `creature` VALUES (57941, 16842, 530, 1, 0, 0, -659.3486, 2767.7260, 88.4945, 2.9157, 300, 0, 0, 6600, 0, 0, 0);
+INSERT INTO `creature` VALUES (100049, 16842, 530, 1, 0, 0, -750.228, 2716.35, 111.868, 5.25344, 300, 0, 0, 6600, 0, 0, 0);
+
+SET @GUID := 57948; -- Need formation member
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-659.241577,`position_y`=2764.013184,`position_z`=89.648140 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-659.241577,2764.013184,89.648140,500,0,0,100,0), 
+(@GUID,@POINT := @POINT + '1',-676.385315,2769.760254,93.590286,500,0,0,100,0), 
+(@GUID,@POINT := @POINT + '1',-693.940857,2767.547607,95.120773,500,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-676.385315,2769.760254,93.590286,500,0,0,100,0); 
+
+DELETE FROM `creature_formations` WHERE `leaderGUID`= 57948;
+INSERT INTO `creature_formations` (`leaderGUID`,`memberGUID`,`dist`,`angle`,`groupAI`)VALUES
+(57948,57948,0,0,2),
+(57948,57941,3,0,2);
+
+-- Pathing for  Entry: 16842 'TDB FORMAT' 
+SET @GUID := 57943; -- member 57944
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-729.6794,`position_y`=2657.958,`position_z`=95.2814 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,1,-729.6794,2657.958,95.2814,0,0,0,100,0), -- 23:40:32
+(@GUID,2,-725.9243,2657.444,94.29301,0,0,0,100,0), -- 23:40:36
+(@GUID,3,-712.4608,2637.426,91.97912,0,0,0,100,0), -- 23:40:40
+(@GUID,4,-696.0266,2633.286,90.51183,0,0,0,100,0), -- 23:40:47
+(@GUID,5,-681.8851,2640.387,89.54575,0,0,0,100,0), -- 23:40:54
+(@GUID,6,-678.4524,2642.606,89.3196,0,0,0,100,0), -- 23:41:01
+(@GUID,7,-676.4327,2655.729,89.65163,0,0,0,100,0), -- 23:41:06
+(@GUID,8,-686.6949,2675.069,91.69751,0,0,0,100,0), -- 23:41:11
+(@GUID,9,-695.3953,2678.214,93.53847,0,0,0,100,0), -- 23:41:16
+(@GUID,10,-715.9707,2676.224,95.10616,0,0,0,100,0), -- 23:41:22
+(@GUID,11,-720.6448,2670.696,94.86513,0,0,0,100,0), -- 23:41:29
+(@GUID,12,-724.7706,2663.015,94.51012,0,0,0,100,0), -- 23:41:34
+(@GUID,13,-732.2354,2660.108,95.79332,0,0,0,100,0), -- 23:41:37
+(@GUID,14,-743.7416,2658.196,99.50706,0,0,0,100,0), -- 23:41:39
+(@GUID,15,-753.4407,2652.986,104.7612,0,0,0,100,0), -- 23:41:45
+(@GUID,16,-760.7173,2650.15,108.0609,0,0,0,100,0), -- 23:41:49
+(@GUID,17,-763.5579,2646.074,108.1835,0,0,0,100,0), -- 23:41:54
+(@GUID,18,-774.3285,2638.794,108.1835,0,0,0,100,0), -- 23:42:00
+(@GUID,19,-751.5222,2652.918,104.1722,0,0,0,100,0), -- 23:42:06
+(@GUID,20,-734.8468,2657.947,96.88486,0,0,0,100,0); -- 23:42:12
+-- (@GUID,21,-729.4844,2657.844,95.13605,0,0,0,100,0), -- 23:42:20
+-- (@GUID,22,-725.9483,2657.54,94.23397,0,0,0,100,0), -- 23:42:23
+-- (@GUID,23,-712.3545,2637.408,91.95067,0,0,0,100,0); -- 23:42:28
+-- 0x203CCC42401072800031F9000001410D .go -729.6794 2657.958 95.2814
+
+DELETE FROM `creature_formations` WHERE `leaderGUID`=57943;
+INSERT INTO `creature_formations` (`leaderGUID`,`memberGUID`,`dist`,`angle`,`groupAI`)VALUES
+(57943,57943,0,0,2),
+(57943,57944,3,0,2);
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0,`position_x`=-729.6794,`position_y`=2657.958,`position_z`=95.2814 WHERE `guid`=57944;
+UPDATE `creature_addon` SET `path_id` = 0 WHERE `guid` = 57944;
+
+-- Pathing for  Entry: 16842 'TDB FORMAT' 
+SET @GUID := 57923;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-867.476,`position_y`=2718.552,`position_z`=69.17674 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,1,-867.476,2718.552,69.17674,0,0,0,100,0), -- 00:54:49
+(@GUID,2,-867.5676,2699.178,79.64346,0,0,0,100,0), -- 00:54:59
+(@GUID,3,-858.116,2686.463,88.44569,0,0,0,100,0), -- 00:55:08
+(@GUID,4,-842.5492,2678.867,95.29387,0,0,0,100,0), -- 00:55:15
+(@GUID,5,-822.5157,2681.53,102.3271,0,0,0,100,0), -- 00:55:23
+(@GUID,6,-817.6292,2683.223,103.6337,0,0,0,100,0), -- 00:55:32
+(@GUID,7,-817.5452,2683.404,103.4257,0,0,0,100,0), -- 00:55:37
+(@GUID,8,-838.7524,2678.115,96.79544,0,0,0,100,0), -- 00:55:39
+(@GUID,9,-856.3284,2684.984,89.34355,0,0,0,100,0), -- 00:55:48
+(@GUID,10,-867.1521,2697.494,80.28738,0,0,0,100,0), -- 00:55:56
+(@GUID,11,-867.6529,2713.841,71.40306,0,0,0,100,0), -- 00:56:04
+(@GUID,12,-865.4053,2736.819,58.58712,0,0,0,100,0), -- 00:56:12
+(@GUID,13,-866.5761,2765.043,41.56224,0,0,0,100,0), -- 00:56:22
+(@GUID,14,-872.1741,2769.334,37.38614,0,0,0,100,0), -- 00:56:35
+(@GUID,15,-869.7395,2768.148,39.13062,0,0,0,100,0), -- 00:56:41
+(@GUID,16,-865.277,2739.819,56.70834,0,0,0,100,0); -- 00:56:44
+-- 0x203CCC42401072800031F9000101574B .go -867.476 2718.552 69.17674
+DELETE FROM `creature_formations` WHERE `leaderGUID`=57923;
+INSERT INTO `creature_formations` (`leaderGUID`,`memberGUID`,`dist`,`angle`,`groupAI`)VALUES
+(57923,57923,0,0,2),
+(57923,57937,3,4.7,2);
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0,`position_x`=-867.476,`position_y`=2718.552,`position_z`=69.17674 WHERE `guid`=57937;
+UPDATE `creature_addon` SET `path_id` = 0 WHERE `guid` = 57937;
+
+-- Pathing for  Entry: 16842 'TDB FORMAT' 
+SET @GUID := 57951;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-687.996,`position_y`=2675.259,`position_z`=92.00164 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-687.996,2675.259,92.00164,0,0,0,100,0), -- 00:56:54
+(@GUID,@POINT := @POINT + '1',-694.5895,2679.407,93.47656,0,0,0,100,0), -- 00:57:00
+(@GUID,@POINT := @POINT + '1',-699.2542,2681.575,94.0282,0,0,0,100,0), -- 00:57:04
+(@GUID,@POINT := @POINT + '1',-709.6293,2702.073,94.66191,0,0,0,100,0), -- 00:57:07
+(@GUID,@POINT := @POINT + '1',-709.9301,2704.808,94.83853,0,0,0,100,0), -- 00:57:13
+-- (@GUID,@POINT := @POINT + '1',-705.7255,2710.611,95.50642,0,0,0,100,0), -- 00:57:17
+(@GUID,@POINT := @POINT + '1',-709.663208,2714.1892,94.7226,0,0,0,100,0), -- 00:57:24 --C
+(@GUID,@POINT := @POINT + '1',-700.4745,2712.623,94.98143,0,0,0,100,0), -- 00:57:35
+(@GUID,@POINT := @POINT + '1',-703.2124,2713.111,94.98071,0,0,0,100,0), -- 00:57:36
+(@GUID,@POINT := @POINT + '1',-710.6580,2712.3549,94.7205,0,0,0,100,0), -- 00:57:38 --C
+(@GUID,@POINT := @POINT + '1',-710.7588,2702.815,94.6216,0,0,0,100,0), -- 00:57:39
+(@GUID,@POINT := @POINT + '1',-707.4856,2689.286,94.33665,0,0,0,100,0), -- 00:57:44
+(@GUID,@POINT := @POINT + '1',-706.4232,2686.263,94.17517,0,0,0,100,0), -- 00:57:50
+(@GUID,@POINT := @POINT + '1',-694.9254,2679.296,93.42561,0,0,0,100,0), -- 00:57:52
+(@GUID,@POINT := @POINT + '1',-679.5647,2669.552,90.44455,0,0,0,100,0), -- 00:57:57
+(@GUID,@POINT := @POINT + '1',-678.5782,2668.9,89.83815,0,0,0,100,0), -- 00:58:03
+(@GUID,@POINT := @POINT + '1',-662.3951,2684.631,88.87974,0,0,0,100,0), -- 00:58:08
+(@GUID,@POINT := @POINT + '1',-650.7223,2700.149,87.90611,0,0,0,100,0), -- 00:58:16
+(@GUID,@POINT := @POINT + '1',-642.0238,2715.182,86.90927,0,0,0,100,0), -- 00:58:24
+(@GUID,@POINT := @POINT + '1',-640.7755,2717.258,86.57317,0,0,0,100,0), -- 00:58:29
+(@GUID,@POINT := @POINT + '1',-634.3006,2732.866,85.51468,0,0,0,100,0), -- 00:58:31
+(@GUID,@POINT := @POINT + '1',-616.3732,2751.199,83.35973,0,0,0,100,0), -- 00:58:40
+(@GUID,@POINT := @POINT + '1',-605.2081,2765.297,78.54527,0,0,0,100,0), -- 00:58:47
+(@GUID,@POINT := @POINT + '1',-596.5933,2784.522,72.0435,0,0,0,100,0), -- 00:58:54
+(@GUID,@POINT := @POINT + '1',-591.5787,2803.707,66.74985,0,0,0,100,0), -- 00:59:03
+(@GUID,@POINT := @POINT + '1',-590.4258,2822.456,61.94441,0,0,0,100,0), -- 00:59:11
+(@GUID,@POINT := @POINT + '1',-592.53,2835.081,59.69307,0,0,0,100,0), -- 00:59:20
+(@GUID,@POINT := @POINT + '1',-596.1635,2847.102,58.09987,0,0,0,100,0), -- 00:59:26
+(@GUID,@POINT := @POINT + '1',-597.4973,2850.567,57.33707,0,0,0,100,0), -- 00:59:31
+(@GUID,@POINT := @POINT + '1',-592.5145,2859.644,57.5414,0,0,0,100,0), -- 00:59:34
+(@GUID,@POINT := @POINT + '1',-610.3804,2871.98,54.83242,0,0,0,100,0), -- 00:59:37
+(@GUID,@POINT := @POINT + '1',-639.1476,2874.169,50.74456,0,0,0,100,0), -- 00:59:45
+(@GUID,@POINT := @POINT + '1',-647.4047,2872.841,49.71684,0,0,0,100,0), -- 00:59:57
+(@GUID,@POINT := @POINT + '1',-657.5587,2869.095,49.19283,0,0,0,100,0), -- 01:00:05
+(@GUID,@POINT := @POINT + '1',-629.851,2864.712,51.55709,0,0,0,100,0), -- 01:00:06
+(@GUID,@POINT := @POINT + '1',-611.9828,2858.52,55.30186,0,0,0,100,0), -- 01:00:18
+(@GUID,@POINT := @POINT + '1',-601.4695,2847.149,57.85207,0,0,0,100,0), -- 01:00:25
+(@GUID,@POINT := @POINT + '1',-594.7114,2832.047,60.31672,0,0,0,100,0), -- 01:00:31
+(@GUID,@POINT := @POINT + '1',-592.8293,2814.866,64.0257,0,0,0,100,0), -- 01:00:38
+(@GUID,@POINT := @POINT + '1',-597.939,2791.476,70.42447,0,0,0,100,0), -- 01:00:45
+(@GUID,@POINT := @POINT + '1',-606.717,2767.088,77.95975,0,0,0,100,0), -- 01:00:55
+(@GUID,@POINT := @POINT + '1',-614.9818,2755.868,82.00406,0,0,0,100,0), -- 01:01:05
+(@GUID,@POINT := @POINT + '1',-623.3367,2746.366,84.40461,0,0,0,100,0), -- 01:01:12
+(@GUID,@POINT := @POINT + '1',-635.1954,2732.008,85.72681,0,0,0,100,0), -- 01:01:19
+(@GUID,@POINT := @POINT + '1',-642.4907,2714.986,86.78146,0,0,0,100,0), -- 01:01:26
+(@GUID,@POINT := @POINT + '1',-649.691,2702.885,87.69963,0,0,0,100,0), -- 01:01:32
+(@GUID,@POINT := @POINT + '1',-654.83,2695.69,88.33471,0,0,0,100,0), -- 01:01:38
+(@GUID,@POINT := @POINT + '1',-666.5414,2681.097,89.36565,0,0,0,100,0), -- 01:01:43
+(@GUID,@POINT := @POINT + '1',-677.8886,2669.907,90.08049,0,0,0,100,0); -- 01:01:49
+-- (@GUID,@POINT := @POINT + '1',-687.9769,2675.258,91.98616,0,0,0,100,0), -- 01:01:55
+-- (@GUID,@POINT := @POINT + '1',-694.5687,2679.423,93.65937,0,0,0,100,0), -- 01:02:01
+-- (@GUID,@POINT := @POINT + '1',-699.1838,2681.686,94.00005,0,0,0,100,0), -- 01:02:05
+-- (@GUID,@POINT := @POINT + '1',-709.6846,2702.062,94.65549,0,0,0,100,0), -- 01:02:09
+-- (@GUID,@POINT := @POINT + '1',-708.156,2711.113,95.01352,0,0,0,100,0); -- 01:02:26
+-- 0x203CCC42401072800031F900000160EE .go -687.996 2675.259 92.00164
+DELETE FROM `creature_formations` WHERE `leaderGUID`=57951;
+INSERT INTO `creature_formations` (`leaderGUID`,`memberGUID`,`dist`,`angle`,`groupAI`)VALUES
+(57951,57951,0,0,2),
+(57951,57952,3,0,2);
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0,`position_x`=-687.996,`position_y`=2675.259,`position_z`=92.00164 WHERE `guid`=57952;
+UPDATE `creature_addon` SET `path_id` = 0 WHERE `guid` = 57952;
+
+-- ----------------------------------------------------------
+-- Honor Hold Archers
+-- ----------------------------------------------------------
+
+DELETE FROM `creature` WHERE `guid` = 31939;
+INSERT INTO `creature` VALUES (31939, 4026, 1, 1, 10282, 0, 898.094, 1564.78, -16.8351, 6.02495, 300, 15, 0, 582, 618, 0, 1);
+
+SET @GUID := 58441;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-778.086792,`position_y`=2611.213379,`position_z`=133.253265 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-778.086792,2611.213379,133.253265,500,0,0,100,0), 
+(@GUID,@POINT := @POINT + '1',-794.580505,2601.480469,133.253265,500,0,0,100,0); 
+
+SET @GUID := 58440;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-816.596924,`position_y`=2638.899902,`position_z`=133.253357 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-816.596924,2638.899902,133.253357,500,0,0,100,0), 
+(@GUID,@POINT := @POINT + '1',-802.575134,2647.312988,133.253357,500,0,0,100,0); 
+
+SET @GUID := 58448;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-684.023132,`position_y`=2574.477539,`position_z`=100.586746 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-684.023132,2574.477539,100.586746,0,0,0,100,0), 
+(@GUID,@POINT := @POINT + '1',-697.688110,2571.345703,100.598846,0,0,0,100,0), 
+(@GUID,@POINT := @POINT + '1',-696.135071,2564.149170,100.609314,0,0,0,100,0), 
+(@GUID,@POINT := @POINT + '1',-680.653442,2567.783447,100.623665,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-696.135071,2564.149170,100.609314,0,0,0,100,0), 
+(@GUID,@POINT := @POINT + '1',-697.688110,2571.345703,100.598846,0,0,0,100,0);
+
+SET @GUID := 58442;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-764.784241,`position_y`=2575.985352,`position_z`=104.092911 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-764.784241,2575.985352,104.092911,0,0,0,100,0), 
+(@GUID,@POINT := @POINT + '1',-733.677124,2567.583740,104.187248,0,0,0,100,0), 
+(@GUID,@POINT := @POINT + '1',-734.555359,2563.964844,104.136047,0,0,0,100,0), 
+(@GUID,@POINT := @POINT + '1',-765.734924,2572.005371,104.136047,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-734.555359,2563.964844,104.136047,0,0,0,100,0), 
+(@GUID,@POINT := @POINT + '1',-733.677124,2567.583740,104.187248,0,0,0,100,0);
+
+SET @GUID := 58453;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-615.481384,`position_y`=2607.880127,`position_z`=99.092003 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-615.481384,2607.880127,99.092003,0,0,0,100,0), 
+(@GUID,@POINT := @POINT + '1',-603.260986,2615.532715,99.038170,0,0,0,100,0), 
+(@GUID,@POINT := @POINT + '1',-606.086731,2619.775635,99.001106,0,0,0,100,0), 
+(@GUID,@POINT := @POINT + '1',-618.218689,2611.881104,99.001846,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-606.086731,2619.775635,99.001106,0,0,0,100,0), 
+(@GUID,@POINT := @POINT + '1',-603.260986,2615.532715,99.038170,0,0,0,100,0);
+
+SET @GUID := 58452;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-679.087219,`position_y`=2782.460693,`position_z`=110.077003 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-679.087219,2782.460693,110.077003,0,0,0,100,0), 
+(@GUID,@POINT := @POINT + '1',-648.031433,2770.963623,104.529289,0,0,0,100,0), 
+(@GUID,@POINT := @POINT + '1',-645.291565,2776.596680,104.270088,0,0,0,100,0), 
+(@GUID,@POINT := @POINT + '1',-677.481628,2787.628906,110.064980,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-645.291565,2776.596680,104.270088,0,0,0,100,0), 
+(@GUID,@POINT := @POINT + '1',-648.031433,2770.963623,104.529289,0,0,0,100,0);
+
+-- ----------------------------------------------------------
+-- Stormwind cavalrymen
+-- ----------------------------------------------------------
+
+DELETE FROM `creature_formations` WHERE `leaderGUID`=57965;
+INSERT INTO `creature_formations` (`leaderGUID`,`memberGUID`,`dist`,`angle`,`groupAI`)VALUES
+(57965,57965,0,0,2),
+(57965,57966,3,0,2),
+(57965,57967,6,0,2),
+(57965,57968,9,0,2);
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = '16843';
+INSERT INTO `creature_ai_scripts` VALUES
+('1684301','16843','4','0','100','0','0','0','0','0','0','0','0','0','17','154','0','0','19','134217728','0','0','Stormwind Cavalryman - Dismount on Aggro'),
+('1684302','16843','7','0','100','0','0','0','0','0','43','17408','0','0','0','0','0','0','0','0','0','0','Stormwind Cavalryman - Mount on Evade');
+
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0,`position_x`=-606.2551,`position_y`=2519.0322,`position_z`=67.1583 WHERE `guid`=57966;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0,`position_x`=-606.2551,`position_y`=2519.0322,`position_z`=67.1583 WHERE `guid`=57967;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0,`position_x`=-606.2551,`position_y`=2519.0322,`position_z`=67.1583 WHERE `guid`=57968;
+DELETE FROM `creature_addon` WHERE `guid` BETWEEN 57966 AND 57968;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES 
+(57966,0,2410,16843008,0,4097,0, ''),
+(57967,0,2410,16843008,0,4097,0, ''),
+(57968,0,2410,16843008,0,4097,0, '');
+
+-- Pathing for  Entry: 16843 'TDB FORMAT' 
+SET @GUID := 57965;
+SET @POINT := 0;
+UPDATE `creature_template` SET `speed`=2 WHERE `entry` = 16843;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-606.2551,`position_y`=2519.0322,`position_z`=67.1583 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,2410,16843008,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-603.8413,2468.978,57.24754,0,1,0,100,0), -- 02:10:26
+(@GUID,@POINT := @POINT + '1',-604.4803,2435.139,50.4033,0,1,0,100,0), -- 02:10:29
+(@GUID,@POINT := @POINT + '1',-599.3711,2409.698,44.90717,0,1,0,100,0), -- 02:10:31
+(@GUID,@POINT := @POINT + '1',-584.9319,2406.705,43.84761,0,1,0,100,0), -- 02:10:33
+(@GUID,@POINT := @POINT + '1',-582.3895,2430.362,47.80949,0,1,0,100,0), -- 02:10:34
+(@GUID,@POINT := @POINT + '1',-582.2234,2463.364,54.12881,0,1,0,100,0), -- 02:10:36
+(@GUID,@POINT := @POINT + '1',-583.6277,2498.37,61.37954,0,1,0,100,0), -- 02:10:37
+(@GUID,@POINT := @POINT + '1',-558.1464,2532.389,67.1059,0,1,0,100,0), -- 02:10:40
+(@GUID,@POINT := @POINT + '1',-524.2815,2553.872,65.78352,0,1,0,100,0), -- 02:10:42
+(@GUID,@POINT := @POINT + '1',-505.6973,2594.282,68.3791,0,1,0,100,0), -- 02:10:46
+(@GUID,@POINT := @POINT + '1',-504.4495,2604.855,70.36739,0,1,0,100,0), -- 02:10:48
+(@GUID,@POINT := @POINT + '1',-509.9106,2664.477,70.11888,0,1,0,100,0), -- 02:10:51
+(@GUID,@POINT := @POINT + '1',-511.2125,2694.753,68.72308,0,1,0,100,0), -- 02:10:53
+(@GUID,@POINT := @POINT + '1',-517.1431,2716.786,67.86261,0,1,0,100,0), -- 02:10:54
+(@GUID,@POINT := @POINT + '1',-534.4116,2747.668,69.11035,0,1,0,100,0), -- 02:10:57
+(@GUID,@POINT := @POINT + '1',-565.2167,2807.088,63.10085,0,1,0,100,0), -- 02:10:59
+(@GUID,@POINT := @POINT + '1',-596.0338,2836.992,59.53964,0,1,0,100,0), -- 02:11:03
+(@GUID,@POINT := @POINT + '1',-614.9552,2858.75073,54.6820,0,1,0,100,0), -- 02:11:03 -- Added
+(@GUID,@POINT := @POINT + '1',-630.5186,2866.889,51.23105,0,1,0,100,0), -- 02:11:05
+(@GUID,@POINT := @POINT + '1',-678.2933,2883.322,47.20448,0,1,0,100,0), -- 02:11:08
+(@GUID,@POINT := @POINT + '1',-697.3795,2884.9079,41.7335,0,1,0,100,0), -- 02:11:11
+(@GUID,@POINT := @POINT + '1',-723.3648,2887.826,33.06394,0,1,0,100,0), -- 02:11:11
+(@GUID,@POINT := @POINT + '1',-746.0063,2887.6555,27.1176,0,1,0,100,0), -- 02:11:11
+(@GUID,@POINT := @POINT + '1',-762.1984,2886.511,24.12672,0,1,0,100,0), -- 02:11:14
+(@GUID,@POINT := @POINT + '1',-792.9378,2863.699,21.6566,0,1,0,100,0), -- 02:11:16
+(@GUID,@POINT := @POINT + '1',-819.9457,2843.082,18.99449,0,1,0,100,0), -- 02:11:20
+(@GUID,@POINT := @POINT + '1',-873.9966,2815.336,15.86702,0,1,0,100,0), -- 02:11:22
+(@GUID,@POINT := @POINT + '1',-894.1238,2802.419,14.53608,0,1,0,100,0), -- 02:11:26
+(@GUID,@POINT := @POINT + '1',-897.1019,2770.831,21.08281,0,1,0,100,0), -- 02:11:27
+(@GUID,@POINT := @POINT + '1',-867.1028,2775.519,38.11693,0,1,0,100,0), -- 02:11:30
+(@GUID,@POINT := @POINT + '1',-860.3279,2762.119,45.57374,0,1,0,100,0), -- 02:11:31
+(@GUID,@POINT := @POINT + '1',-869.2184,2737.057,57.95547,0,1,0,100,0), -- 02:11:32
+(@GUID,@POINT := @POINT + '1',-871.6135,2701.309,78.26624,0,1,0,100,0), -- 02:11:35
+(@GUID,@POINT := @POINT + '1',-856.28,2675.755,92.30522,0,1,0,100,0), -- 02:11:37
+(@GUID,@POINT := @POINT + '1',-833.6925,2676.522,98.57971,0,1,0,100,0), -- 02:11:39
+(@GUID,@POINT := @POINT + '1',-808.1074,2687.286,104.2635,0,1,0,100,0), -- 02:11:41
+(@GUID,@POINT := @POINT + '1',-790.7687,2689.69,104.2749,0,1,0,100,0), -- 02:11:43
+(@GUID,@POINT := @POINT + '1',-725.1459,2676.275,96.73329,0,1,0,100,0), -- 02:11:45
+(@GUID,@POINT := @POINT + '1',-693.6385,2675.371,93.11407,0,1,0,100,0), -- 02:11:48
+(@GUID,@POINT := @POINT + '1',-678.6763,2653.897,90.2196,0,1,0,100,0), -- 02:11:50
+(@GUID,@POINT := @POINT + '1',-670.2182,2623.38,87.0732,0,1,0,100,0), -- 02:11:51
+(@GUID,@POINT := @POINT + '1',-647.7286,2588.648,83.14568,0,1,0,100,0), -- 02:11:54
+(@GUID,@POINT := @POINT + '1',-620.5898,2546.875,73.73161,0,1,0,100,0), -- 02:11:56
+(@GUID,@POINT := @POINT + '1',-604.7241,2503.232,64.53005,0,1,0,100,0); -- 02:12:00
+-- 0x203CD042401072C00000490000797476 .go -894.1846 2802.289 14.45487
+
+-- ----------------------------------------------------------
+-- Nethergarde Infantry Inside Inn
+-- ----------------------------------------------------------
+DELETE FROM `creature_template` WHERE `entry` = 16913;
+INSERT INTO `creature_template` (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`) 
+VALUES (16913, 0, 16376, 0, 16376, 0, 'Nethergarde Infantry', 58, 60, 2900, 3900, 0, 0, 20, 1667, 1667, 0, 1.05, 1, 0, 17, 64, 0, 855, 2000, 0, 4096, 0, 0, 0, 0, 0, 0, 0, 0, 100, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 1, 3, 0, 1, 23686, 0, 0, '');
+DELETE FROM `creature_equip_template` WHERE `entry` = 23686;
+INSERT INTO `creature_equip_template` (`entry`, `equipmodel1`, `equipmodel2`, `equipinfo1`, `equipinfo2`, `equipslot1`, `equipslot2`) VALUES (23686, 24594, 24117, 33492482, 218235906, 13, 7);
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 16913;
+INSERT INTO `creature_ai_scripts` VALUES
+('1691301','16913','1','0','100','1','3000','10000','3000','10000','5','92','0','0','0','0','0','0','0','0','0','0','Nethergarde Infantry - Drink animation'); -- 46583
+
+UPDATE `creature` SET `id`=16913 WHERE `guid` IN (57896,57897,57898,57899);
+
+-- ----------------------------------------------------------
+-- Nethergarde/Stormwind Infantry
+-- ----------------------------------------------------------
+-- The way these NPCs work is that they have a 50/50 chance of being Stormwind/Nethergarde. However I can't think of any good way to implement that, so I will have to make them static :(
+
+-- DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 16831;
+-- INSERT INTO `creature_ai_scripts` VALUES
+-- ('1683101','16831','11','0','100','0','0','0','0','0','3','16864','0','0','0','0','0','0','0','0','0','0','Nethergarde Infantry - 50% chance if being Stormwind Infantry instead.');
+-- UPDATE `creature_template` SET `AIname` = 'EventAI' WHERE `entry` = 16831;
+
+DELETE FROM `waypoint_scripts` WHERE `id` IN (1095, 5790402);
+INSERT INTO `waypoint_scripts` (`id`,`delay`,`command`,`datalong`,`datalong2`,`dataint`,`x`,`y`,`z`,`guid`,`comment`) VALUES
+-- (5790401,1000,32,16164,0,0,0,0,0,5790401,'Nethergarde Infantry - Equip bottle');
+(5790402,0,1,66,1,0,0,0,0,5790402,'Nethergarde Infantry - Salute Emote');
+
+-- Boxes near gate.
+-- Pathing for  Entry: 16831 'TDB FORMAT' 
+SET @GUID := 57904;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-675.5676,`position_y`=2609.854,`position_z`=86.83054 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-676.6392,2606.2456,86.3983,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-676.6392,2606.2456,86.3983,2000,0,5790402,100,0), -- 17:19:23 -- Salute
+(@GUID,@POINT := @POINT + '1',-679.1447,2609.0058,86.71082,120000,0,1069,100,0), -- 17:19:23 -- Use emote by boxes for 2 mins (120000)
+(@GUID,@POINT := @POINT + '1',-679.1447,2609.0058,86.71082,0,0,1000,100,0), -- 17:19:23 -- Turn off emote
+(@GUID,@POINT := @POINT + '1',-676.3438,2608.4021,86.4456,0,0,0,100,0), -- 17:19:23
+(@GUID,@POINT := @POINT + '1',-673.6891,2610.629,86.79488,0,0,0,100,0), -- 17:19:24
+(@GUID,@POINT := @POINT + '1',-676.3786,2619.2211,87.1581,0,0,0,100,0), -- 17:19:24 -- Added
+(@GUID,@POINT := @POINT + '1',-702.3351,2632.415,90.65683,0,0,0,100,0), -- 17:19:35
+(@GUID,@POINT := @POINT + '1',-710.6298,2636.448,91.78142,0,0,0,100,0), -- 17:19:41
+(@GUID,@POINT := @POINT + '1',-721.761,2645.975,93.45092,0,0,0,100,0), -- 17:19:46
+(@GUID,@POINT := @POINT + '1',-723.8354,2648.165,93.72618,0,0,0,100,0), -- 17:19:51
+(@GUID,@POINT := @POINT + '1',-736.1548,2658.172,96.76268,0,0,0,100,0), -- 17:19:54
+(@GUID,@POINT := @POINT + '1',-745.5068,2656.399,100.4888,0,0,0,100,0), -- 17:19:59
+(@GUID,@POINT := @POINT + '1',-753.444,2652.021,105.0069,0,0,0,100,0), -- 17:20:03
+(@GUID,@POINT := @POINT + '1',-759.5253,2648.16,108.0777,0,0,0,100,0), -- 17:20:08
+(@GUID,@POINT := @POINT + '1',-762.7746,2645.629,108.1487,0,0,0,100,0), -- 17:20:12
+(@GUID,@POINT := @POINT + '1',-781.6511,2634.466,108.0655,0,0,0,100,0), -- 17:20:18
+(@GUID,@POINT := @POINT + '1',-787.555,2630.417,107.7722,0,0,0,100,0), -- 17:20:22
+(@GUID,@POINT := @POINT + '1',-786.5496,2618.983,109.4194,0,0,0,100,0), -- 17:20:26
+(@GUID,@POINT := @POINT + '1',-782.7269,2612.487,109.4225,0,0,0,100,0), -- 17:20:31
+(@GUID,@POINT := @POINT + '1',-781.1051,2609.958,109.422,0,0,0,100,0), -- 17:20:35
+(@GUID,@POINT := @POINT + '1',-769.5511,2615.452,109.422,0,0,0,100,0), -- 17:20:36
+(@GUID,@POINT := @POINT + '1',-769.2007,2622.1369,109.1723,15000,0,1068,100,0), -- 17:20:41 -- Kneel and put down satchels
+(@GUID,@POINT := @POINT + '1',-769.2007,2622.1369,109.1723,0,0,1000,100,0), -- Turn off kneel emote
+(@GUID,@POINT := @POINT + '1',-772.579,2614.799,109.422,0,0,0,100,0), -- 17:20:50
+(@GUID,@POINT := @POINT + '1',-775.0747,2612.723,109.422,0,0,0,100,0), -- 17:20:53
+(@GUID,@POINT := @POINT + '1',-775.0747,2612.7229,109.1721,0,0,0,100,0), -- Added
+(@GUID,@POINT := @POINT + '1',-783.3768,2615.284,109.422,0,0,0,100,0), -- 17:20:55
+(@GUID,@POINT := @POINT + '1',-788.9121,2624.131,108.1715,0,0,0,100,0), -- 17:20:59
+(@GUID,@POINT := @POINT + '1',-789.2635,2626.8117,107.6731,0,0,0,100,0), -- Added
+(@GUID,@POINT := @POINT + '1',-776.8205,2637.103,108.0527,0,0,0,100,0), -- 17:21:05
+(@GUID,@POINT := @POINT + '1',-755.5786,2651.957,105.9618,0,0,0,100,0), -- 17:21:12
+(@GUID,@POINT := @POINT + '1',-742.3715,2657.095,99.17558,0,0,0,100,0), -- 17:21:23
+(@GUID,@POINT := @POINT + '1',-730.1269,2658.817,95.05613,0,0,0,100,0), -- 17:21:28
+(@GUID,@POINT := @POINT + '1',-725.9871,2659.364,94.28555,0,0,0,100,0), -- 17:21:35
+(@GUID,@POINT := @POINT + '1',-721.1169,2645.587,93.1051,0,0,0,100,0), -- 17:21:39
+(@GUID,@POINT := @POINT + '1',-706.5137,2635.195,91.43243,0,0,0,100,0), -- 17:21:43
+(@GUID,@POINT := @POINT + '1',-682.3307,2623.243,88.63831,0,0,0,100,0), -- 17:21:50
+(@GUID,@POINT := @POINT + '1',-675.4275,2616.5568,86.8754,0,0,0,100,0), -- Added
+(@GUID,@POINT := @POINT + '1',-675.5676,2609.854,86.83054,0,0,0,100,0); -- 17:24:30
+-- 0x203CDC4240106FC0005D0100007D011C .go -675.5676 2609.854 86.83054
+
+
+-- Boxes near keep
+-- Pathing for  Entry: 16831 'TDB FORMAT' 
+SET @GUID := 57889;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-801.4343,`position_y`=2643.785,`position_z`=109.4202 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-801.4343,2643.785,109.4202,0,0,0,100,0), -- 17:16:55
+(@GUID,@POINT := @POINT + '1',-796.0193,2651.808,109.422,0,0,0,100,0), -- 17:17:01
+(@GUID,@POINT := @POINT + '1',-785.8399,2655.8332,109.1721,20000,0,1069,100,0), -- 17:17:06 -- Use emote and drop satchels 1m20s (80000)
+(@GUID,@POINT := @POINT + '1',-785.8399,2655.8332,109.1721,0,0,1000,100,0), -- Turn off use emote
+(@GUID,@POINT := @POINT + '1',-796.5684,2651.333,109.422,0,0,0,100,0), -- 17:18:22
+(@GUID,@POINT := @POINT + '1',-799.8857,2645.846,109.422,0,0,0,100,0), -- 17:18:27
+(@GUID,@POINT := @POINT + '1',-794.1083,2633.137,108.1725,0,0,0,100,0), -- 17:18:31
+(@GUID,@POINT := @POINT + '1',-787.5057,2632.853,107.9186,0,0,0,100,0), -- 17:18:37
+(@GUID,@POINT := @POINT + '1',-777.4234,2638.755,108.0459,0,0,0,100,0), -- 17:18:40
+(@GUID,@POINT := @POINT + '1',-754.8186,2655.99,104.2998,0,0,0,100,0), -- 17:18:49
+(@GUID,@POINT := @POINT + '1',-750.262,2666.566,99.67981,0,0,0,100,0), -- 17:18:56
+(@GUID,@POINT := @POINT + '1',-752.3864,2673.738,99.89954,0,0,0,100,0), -- 17:19:01
+(@GUID,@POINT := @POINT + '1',-760.5037,2682.006,101.7457,0,0,0,100,0), -- 17:19:05
+(@GUID,@POINT := @POINT + '1',-762.8121,2683.413,102.0922,0,0,0,100,0), -- 17:19:09
+(@GUID,@POINT := @POINT + '1',-766.9202,2682.946,102.3289,0,0,0,100,0), -- 17:19:11
+(@GUID,@POINT := @POINT + '1',-768.8111,2681.4240,102.1079,0,0,0,100,0), -- Added
+(@GUID,@POINT := @POINT + '1',-767.8975,2680.983,102.1091,130000,0,1069,100,0), -- 17:19:14 -- Work and pick up satchels 2m10s (130000)
+(@GUID,@POINT := @POINT + '1',-767.8975,2680.983,102.1091,0,0,1000,100,0), -- Turn off use emote
+(@GUID,@POINT := @POINT + '1',-760.3657,2682.387,101.792,0,0,0,100,0), -- 17:21:23
+(@GUID,@POINT := @POINT + '1',-750.4936,2674.702,99.7462,0,0,0,100,0), -- 17:21:26
+(@GUID,@POINT := @POINT + '1',-746.1119,2660.125,99.62329,0,0,0,100,0), -- 17:21:32
+(@GUID,@POINT := @POINT + '1',-749.8309,2654.803,103.0287,0,0,0,100,0), -- 17:21:38
+(@GUID,@POINT := @POINT + '1',-757.9945,2648.734,107.6141,0,0,0,100,0), -- 17:21:40
+(@GUID,@POINT := @POINT + '1',-776.5012,2637.151,108.0291,0,0,0,100,0), -- 17:21:45
+(@GUID,@POINT := @POINT + '1',-787.7245,2630.948,107.7993,0,0,0,100,0), -- 17:21:54
+(@GUID,@POINT := @POINT + '1',-791.5713,2630.794,107.9425,0,0,0,100,0); -- 17:21:58
+-- 0x203CDC4240106FC0005D0100007CD71E .go -801.4343 2643.785 109.4202
+
+-- Going from inn to gate boxes
+-- Pathing for  Entry: 16831 'TDB FORMAT' 
+SET @GUID := 58153;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-691.2068,`position_y`=2612.307,`position_z`=86.82053 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-691.2068,2612.307,86.82053,0,0,0,100,0), -- 14:19:27
+(@GUID,@POINT := @POINT + '1',-692.7888,2615.884,89.03557,0,0,0,100,0), -- 14:19:29
+(@GUID,@POINT := @POINT + '1',-694.6949,2622.964,90.10753,0,0,0,100,0), -- 14:19:32
+(@GUID,@POINT := @POINT + '1',-694.8127,2623.512,90.26909,0,0,0,100,0), -- 14:19:34
+(@GUID,@POINT := @POINT + '1',-681.0259,2642.447,89.63081,0,0,0,100,0), -- 14:19:39
+(@GUID,@POINT := @POINT + '1',-679.9601,2643.327,89.52776,0,0,0,100,0), -- 14:19:45
+(@GUID,@POINT := @POINT + '1',-676.0788,2652.33,89.45507,0,0,0,100,0), -- 14:19:49
+(@GUID,@POINT := @POINT + '1',-683.2964,2672.437,91.13505,0,0,0,100,0), -- 14:19:54
+(@GUID,@POINT := @POINT + '1',-691.312,2677.852,92.85458,0,0,0,100,0), -- 14:19:58
+(@GUID,@POINT := @POINT + '1',-697.7299,2679.415,93.82138,0,0,0,100,0), -- 14:20:02
+(@GUID,@POINT := @POINT + '1',-703.9164,2680.697,93.97695,0,0,0,100,0), -- 14:20:07
+(@GUID,@POINT := @POINT + '1',-709.7415,2703.192,94.69138,0,0,0,100,0), -- 14:20:13
+(@GUID,@POINT := @POINT + '1',-709.845,2710.919,94.83158,0,0,0,100,0), -- 14:20:17
+(@GUID,@POINT := @POINT + '1',-709.8132,2713.014,94.97685,0,0,0,100,0), -- 14:20:20
+(@GUID,@POINT := @POINT + '1',-703.2125,2713.8120,94.7370,0,0,0,100,0), -- 14:20:24 --C
+(@GUID,@POINT := @POINT + '1',-702.9235,2721.491,94.4231,0,0,0,100,0), -- 14:20:26
+(@GUID,@POINT := @POINT + '1',-703.556,2730.551,94.98415,0,0,0,100,0), -- 14:20:29
+(@GUID,@POINT := @POINT + '1',-704.699,2735.226,94.90048,0,0,0,100,0), -- 14:20:32
+(@GUID,@POINT := @POINT + '1',-705.576,2736.907,94.73344,5000,0,1001,100,0), -- 14:20:36 --O --ToDo: Add speech
+(@GUID,@POINT := @POINT + '1',-705.576,2736.907,94.73344,0,0,1000,100,0), -- Turn off talk emote
+(@GUID,@POINT := @POINT + '1',-704.5279,2742.1013,94.7331,0,0,0,100,0), -- 14:20:48 --C
+(@GUID,@POINT := @POINT + '1',-711.543,2742.858,94.97518,0,0,0,100,0), -- 14:20:52
+(@GUID,@POINT := @POINT + '1',-713.9904,2745.996,94.95235,0,0,0,100,0), -- 14:20:53
+(@GUID,@POINT := @POINT + '1',-714.3401,2747.434,94.40321,0,0,0,100,0), -- 14:20:54
+(@GUID,@POINT := @POINT + '1',-713.3446,2758.6386,87.9284,0,0,0,100,0), -- 14:20:57 --C
+(@GUID,@POINT := @POINT + '1',-711.1699,2759.309,88.18364,0,0,0,100,0), -- 14:21:00
+(@GUID,@POINT := @POINT + '1',-704.5567,2753.353,87.7123,8000,0,1068,100,0), -- 14:21:03 -- Kneel 
+(@GUID,@POINT := @POINT + '1',-704.5567,2753.353,87.7123,0,0,1000,100,0), -- Turn off kneel emote
+(@GUID,@POINT := @POINT + '1',-711.8190,2759.0969,87.9301,0,0,0,100,0), -- 14:21:13 --C
+(@GUID,@POINT := @POINT + '1',-714.008,2757.465,88.25082,0,0,0,100,0), -- 14:21:16
+(@GUID,@POINT := @POINT + '1',-714.4139,2746.473,94.80678,0,0,0,100,0), -- 14:21:20
+(@GUID,@POINT := @POINT + '1',-704.5270,2743.0043,94.7323,0,0,0,100,0), -- 14:21:24 --C
+(@GUID,@POINT := @POINT + '1',-704.3337,2731.918,94.98073,0,0,0,100,0), -- 14:21:27
+(@GUID,@POINT := @POINT + '1',-703.8024,2728.728,94.42149,0,0,0,100,0), -- 14:21:32
+(@GUID,@POINT := @POINT + '1',-703.2446,2714.0810,94.7372,0,0,0,100,0), -- 14:21:36 --C
+(@GUID,@POINT := @POINT + '1',-709.2371,2711.9323,94.7216,0,0,0,100,0), -- 14:21:41 --C
+(@GUID,@POINT := @POINT + '1',-709.0999,2700.167,94.53326,0,0,0,100,0), -- 14:21:43
+(@GUID,@POINT := @POINT + '1',-709.7512,2696.803,94.39558,0,0,0,100,0), -- 14:21:49
+(@GUID,@POINT := @POINT + '1',-694.2099,2679.308,93.23099,0,0,0,100,0), -- 14:21:56
+(@GUID,@POINT := @POINT + '1',-682.8473,2672.114,91.00636,0,0,0,100,0), -- 14:22:01
+(@GUID,@POINT := @POINT + '1',-679.4442,2666.898,90.3499,0,0,0,100,0), -- 14:22:06
+(@GUID,@POINT := @POINT + '1',-677.2031,2648.906,89.43787,0,0,0,100,0), -- 14:22:10
+(@GUID,@POINT := @POINT + '1',-683.6664,2640.914,89.94809,0,0,0,100,0), -- 14:22:16
+(@GUID,@POINT := @POINT + '1',-689.635,2635.617,89.85884,0,0,0,100,0), -- 14:22:23
+(@GUID,@POINT := @POINT + '1',-691.4574,2610.438,88.27208,0,0,0,100,0), -- 14:22:29
+(@GUID,@POINT := @POINT + '1',-687.9446,2606.449,87.25223,0,0,0,100,0), -- 14:22:34
+(@GUID,@POINT := @POINT + '1',-686.3853,2604.818,86.82053,180000,0,1069,100,0), -- 14:22:38 --O -- Use emote for 3m (180000)
+(@GUID,@POINT := @POINT + '1',-686.3853,2604.818,86.82053,0,0,1000,100,0); -- Turn off use emote
+-- 0x202FD44240106FC00028C9000000CB0A .go -691.2068 2612.307 86.82053
+
+
+
+-- ----------------------------------------------------------
+-- Stormwind Infantry
+-- ----------------------------------------------------------
+
+-- ----------------------------------------------------------
+-- Eye of Honor Hold
+-- ----------------------------------------------------------
+
+-- Pathing for  Entry: 16887 'TDB FORMAT'
+SET @GUID := 58438;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-756.1597,`position_y`=2752.3581,`position_z`=152.2836 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-756.1597,2752.3581,152.2836,0,0,0,100,0), -- 14:19:27
+(@GUID,@POINT := @POINT + '1',-766.7427,2718.9423,176.0424,0,0,0,100,0), -- 14:19:29
+(@GUID,@POINT := @POINT + '1',-787.4961,2726.0864,182.8486,0,0,0,100,0), -- 14:19:32
+(@GUID,@POINT := @POINT + '1',-814.0700,2740.9248,183.3243,0,0,0,100,0), -- 14:19:34
+(@GUID,@POINT := @POINT + '1',-817.7127,2759.0454,162.0388,0,0,0,100,0), -- 14:19:39
+(@GUID,@POINT := @POINT + '1',-815.5086,2769.9328,161.1689,0,0,0,100,0), -- 14:19:45
+(@GUID,@POINT := @POINT + '1',-792.8707,2799.0156,181.775,0,0,0,100,0), -- 14:19:49
+(@GUID,@POINT := @POINT + '1',-755.4234,2782.1103,181.8813,0,0,0,100,0), -- 14:19:54
+(@GUID,@POINT := @POINT + '1',-750.323425,2759.126221,158.256607,0,0,0,100,0), -- 14:19:58
+(@GUID,@POINT := @POINT + '1',-778.1268,2722.9465,187.0669,0,0,0,100,0), -- 14:20:02
+(@GUID,@POINT := @POINT + '1',-805.9296,2730.6369,171.9460,0,0,0,100,0), -- 14:20:07
+(@GUID,@POINT := @POINT + '1',-817.8197,2762.2678,163.0459,0,0,0,100,0), -- 14:20:13
+(@GUID,@POINT := @POINT + '1',-809.7094,2783.0400,160.3302,0,0,0,100,0), -- 14:20:17
+(@GUID,@POINT := @POINT + '1',-786.7590,2796.8569,162.128,0,0,0,100,0), -- 14:20:20
+(@GUID,@POINT := @POINT + '1',-762.4360,2786.7182,162.7843,0,0,0,100,0), -- 14:20:24 
+(@GUID,@POINT := @POINT + '1',-747.3114,2757.143311,148.11193,0,0,0,100,0); -- 14:20:26
+
+-- ----------------------------------------------------------
+-- Magus Filinthus
+-- ----------------------------------------------------------
+DELETE FROM `creature_template` WHERE `entry` IN (1000014,1000015);
+INSERT INTO `creature_template` (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`) VALUES 
+(1000014, 0, 17519, 11686, 17519, 11686, 'Sid speech trigger', 60, 60, 112, 112, 0, 0, 20, 114, 114, 0, 0.91, 1, 0, 0, 0, 0, 0, 2000, 0, 33587968, 0, 0, 0, 0, 0, 0, 1.76, 2.42, 100, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'EventAI', 0, 3, 0, 1, 0, 0, 128, ''),
+(1000015, 0, 17519, 11686, 17519, 11686, 'Magus Filinthus Killer', 60, 60, 112, 112, 0, 0, 20, 114, 114, 0, 0.91, 1, 0, 0, 0, 0, 0, 2000, 0, 33587968, 0, 0, 0, 0, 0, 0, 1.76, 2.42, 100, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'EventAI', 0, 3, 0, 1, 0, 0, 128, '');
+
+-- Move the barkeep slightly to prevent his emotes from going through the table.
+UPDATE `creature` SET `spawndist`=0,`MovementType`=1,`position_x`=-708.8249,`position_y`=2740.1203,`position_z`=94.7337 WHERE `guid`=57884;
+
+DELETE FROM `db_script_string` WHERE `entry` BETWEEN 2000000078 AND 2000000083;
+INSERT INTO `db_script_string` (`entry`,`content_default`) VALUES 
+(2000000078,'What now, Danath? Can you not see that I am imundated with work as is?'),
+(2000000079,'I take my leave now, Commander. Good day!'),
+(2000000080,'A mailbox? Well is that not the salt on the wounds! Twenty years cut-off from the world and now a mailbox! WONDERFUL!'),
+(2000000081,'Sid! Ale, NOW!'),
+(2000000082,'Comin'' right up, yer highness! Is there anythin'' else you''ll be needin''? Perhaps yer hat cleaned or yer nails trimmed?'),
+(2000000083,'Don''t you start with me, Sid! Have it sent to my quarters in the tower instead! Your inn has become a zoo!');
+
+DELETE FROM `creature_ai_texts` WHERE `entry` BETWEEN -11006 AND -11000;
+INSERT INTO `creature_ai_texts` (`entry`,`content_default`,`comment`) VALUES
+(-11000,'Twenty years lost! Twenty! I won''t stand for this! No, no, no...','Magus Filinthus GUID: 16821'),
+(-11001,'What manner of fools opens the very thing we were sent to close?','Magus Filinthus GUID: 16821'),
+(-11002,'To trust an orc? Even if it is the progeny of Durotan himself! This is madness!','Magus Filinthus GUID: 16821'),
+(-11003,'Never! I''ll never abide by their will! I''d sooner be dead.','Magus Filinthus GUID: 16821'),
+(-11004,'I have a good mind to tear down that portal myself! This is outrageous!','Magus Filinthus GUID: 16821'),
+(-11005,'And have you heard? Have you heard the preposterous claims? Alliance and Horde supporting peace? Why the very thought of such things makes my blood boil!','Magus Filinthus GUID: 16821'),
+(-11006,'Comin'' right up, yer highness! Is there anythin'' else you''ll be needin''? Perhaps yer hat cleaned or yer nails trimmed?','Sid Limbardi GUID: 57884');
+
+DELETE FROM `waypoint_scripts` WHERE `id` BETWEEN 5787900 AND 5787910;
+INSERT INTO `waypoint_scripts` (`id`,`delay`,`command`,`datalong`,`datalong2`,`dataint`,`guid`,`comment`) VALUES
+(5787900,0,0,0,0,2000000078,5787901,'Magus Filinthus - What now, Danath? Can you not see that I am imundated with work as is?'),
+(5787900,0,1,6,0,0,5787902,'Magus Filinthus - Question emote'),
+(5787901,0,1,1,0,0,5787903,'Magus Filinthus - Talk emote'),
+(5787902,0,0,0,0,2000000079,5787904,'Magus Filinthus - I take my leave now, Commander. Good day!'),
+(5787902,0,1,1,0,0,5787905,'Magus Filinthus - Talk emote'),
+(5787903,0,1,66,0,0,5787906,'Magus Filinthus - Salute emote'),
+(5787904,0,0,0,0,2000000080,5787907,'Magus Filinthus - Mailbox speech'),
+(5787904,0,1,5,0,0,5787908,'Magus Filinthus - Exclamation emote'),
+(5787905,0,0,0,0,2000000081,5787909,'Magus Filinthus - Sid! Ale, NOW!'),
+(5787905,0,1,22,0,0,5787910,'Magus Filinthus - Shout emote'),
+(5787907,0,0,0,0,2000000083,5787912,'Magus Filinthus - Don''t you start with me, Sid! Have it sent to my quarters in the tower instead! Your inn has becoma a zoo!'),
+(5787907,0,1,5,0,0,5787913,'Magus Filinthus - Exclamation emote'),
+(5787908,0,1,14,0,0,5787914,'Magus Filinthus - Rude emote'),
+(5787909,0,15,7791,1,0,5787915,'Magus Filinthus - Cast teleport on self');
+
+INSERT INTO `waypoint_scripts` (`id`,`delay`,`command`,`datalong`,`datalong2`,`dataint`,`x`,`y`,`z`,`guid`,`comment`) VALUES
+(5787906,0,10,1000014,120000,0,-708.8249,2740.1203,94.7337,5787911,'Magus Filinthus - Spawn invisible Sid speech trigger');
+-- (5787910,0,6,530,1,0,-779.6566,2749.112,155.3301,5787916,'Magus Filinthus - Teleport to starting point'); -- Doesn't work
+
+-- Magus Filinthus
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 16821;
+INSERT INTO `creature_ai_scripts` VALUES
+('1682101','16821','1','0','100','1','60000','60000','120000','120000','1','-11000','-11001','-11002','5','5','0','0','0','0','0','0','Magus Filinthus - Random say1 while OOC'),
+('1682102','16821','1','0','100','1','120000','120000','120000','120000','1','-11003','-11004','-11005','0','0','0','0','0','0','0','0','Magus Filinthus - Random say2 while OOC'),
+('1682603','16821','8','0','100','1','7791','-1','0','0','0','0','0','0','23','1','0','0','0','0','0','0','Magus Filinthus - Set phase 2 after teleport spell'),
+-- ('1682604','16821','1','1','100','1','1000','1000','1000','1000','41','0','0','0','43','0','0','0','23','-1','0','0','Magus Filinthus - Despawn after 1 sec and set phase 1'),
+('1682604','16821','1','1','100','1','1000','1000','1000','1000','100','0','0','0','0','0','0','0','0','0','0','0','Magus Filinthus - Despawn after 1 sec and set phase 1'),
+('1682605','16821','1','1','100','1','1500','1500','1500','1500','12','1000015','0','1000','23','-1','0','0','0','0','0','0','Magus Filinthus - Summon killer after 1 sec and set phase 1');
+-- ('1682605','16821','11','0','100','0','0','0','0','0','24','0','0','0','99','5','0','0','0','0','0','0','Magus Filinthus - Evade and move to random point on respawn, to prevent him not moving to first waypoint on respawn.');
+-- ('1682604','16821','1','1','100','1','1000','1000','1000','1000','11','5','0','0','43','0','0','0','23','-1','0','0','Magus Filinthus - Kill after 1 sec and set phase 1');
+
+-- Magus Filinthus Killer
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 1000015;
+INSERT INTO `creature_ai_scripts` VALUES
+('100001501','1000015','11','0','100','0','0','0','0','0','44','5','57879','0','41','0','0','0','0','0','0','0','Magus Filinthus Killer - Cast Death Touch on Magus Filinthus on spawn. (Have to kill him this way, othersise he bugs on respawn)');
+
+-- Sid
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 16826;
+INSERT INTO `creature_ai_scripts` VALUES
+('1682601','16826','8','0','100','1','33227','-1','0','0','1','-11006','0','0','5','22','0','0','23','1','0','0','Sid Limbardi - Say, Emote, set phase 2'),
+('1682602','16826','1','1','100','1','6000','6000','6000','6000','0','0','0','0','5','14','0','0','23','-1','0','0','Sid Limbardi - Emote, set phase 1');
+UPDATE `creature_template` SET `AIName`='' WHERE `entry` = 16826;
+
+-- Sid invis speech trigger
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 1000014;
+INSERT INTO `creature_ai_scripts` VALUES
+('100001401','1000014','11','0','100','0','0','0','0','0','44','33227','57884','0','41','0','0','0','0','0','0','0','Sid speech trigger - Cast Gossip NPC Periodic Trigger - Talk');
+
+-- Pathing for  Entry: 16821 'TDB FORMAT'
+SET @GUID := 57879;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`spawntimesecs`=1,`position_x`=-779.6566,`position_y`=2749.112,`position_z`=155.3301 WHERE `guid`=@GUID;
+UPDATE `creature_template` SET `flags_extra`='536870912' WHERE `entry` = 16821;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-779.6566,2749.112,155.3301,0,0,0,100,0), -- 01:49:23
+(@GUID,@POINT := @POINT + '1',-772.6121,2754.952,155.5087,0,0,0,100,0), -- 01:49:28
+(@GUID,@POINT := @POINT + '1',-771.3204,2764.6318,155.2341,0,0,0,100,0), -- 01:49:28 --Added
+(@GUID,@POINT := @POINT + '1',-773.6816,2768.407,155.4837,0,0,0,100,0), -- 01:49:31
+-- (@GUID,@POINT := @POINT + '1',-775.764,2769.377,155.2425,0,0,0,100,0), -- 01:49:36
+(@GUID,@POINT := @POINT + '1',-777.0079,2765.431,154.8024,0,0,0,100,0), -- 01:49:37
+(@GUID,@POINT := @POINT + '1',-778.0384,2762.6423,153.2189,0,0,0,100,0), -- 01:49:37
+(@GUID,@POINT := @POINT + '1',-779.8215,2762.42,153.0081,0,0,0,100,0), -- 01:49:40
+(@GUID,@POINT := @POINT + '1',-782.2388,2762.958,151.1028,0,0,0,100,0), -- 01:49:42
+(@GUID,@POINT := @POINT + '1',-782.7231,2765.576,150.01,0,0,0,100,0), -- 01:49:43
+(@GUID,@POINT := @POINT + '1',-781.5016,2767.298,148.831,0,0,0,100,0), -- 01:49:45
+(@GUID,@POINT := @POINT + '1',-778.6078,2766.317,147.1977,0,0,0,100,0), -- 01:49:46
+(@GUID,@POINT := @POINT + '1',-774.1761,2765.54,146.6277,0,0,0,100,0), -- 01:49:48
+(@GUID,@POINT := @POINT + '1',-775.8586,2768.62,146.7117,0,0,0,100,0), -- 01:49:49
+(@GUID,@POINT := @POINT + '1',-779.1277,2771.878,146.7474,0,0,0,100,0), -- 01:49:52
+(@GUID,@POINT := @POINT + '1',-789.3788,2773.089,146.7321,0,0,0,100,0), -- 01:49:54
+(@GUID,@POINT := @POINT + '1',-790.3833,2772.747,146.7375,0,0,0,100,0), -- 01:49:58
+(@GUID,@POINT := @POINT + '1',-794.7836,2766.801,146.7466,0,0,0,100,0), -- 01:50:00
+(@GUID,@POINT := @POINT + '1',-794.671,2761.858,145.4243,0,0,0,100,0), -- 01:50:03
+(@GUID,@POINT := @POINT + '1',-790.5088,2758.7980,142.5738,0,0,0,100,0), -- 01:50:04 -- Added
+-- (@GUID,@POINT := @POINT + '1',-791.5698,2759.788,143.4376,0,0,0,100,0), -- 01:50:04
+(@GUID,@POINT := @POINT + '1',-786.6111,2759.94,141.743,0,0,0,100,0), -- 01:50:06
+(@GUID,@POINT := @POINT + '1',-791.4205,2768.945,137.747,0,0,0,100,0), -- 01:50:08
+(@GUID,@POINT := @POINT + '1',-793.6792,2769.299,137.5086,0,0,0,100,0), -- 01:50:14
+(@GUID,@POINT := @POINT + '1',-797.2106,2760.471,134.9409,0,0,0,100,0), -- 01:50:15
+(@GUID,@POINT := @POINT + '1',-794.3986,2755.097,134.4531,0,0,0,100,0), -- 01:50:19
+(@GUID,@POINT := @POINT + '1',-793.0892,2753.0029,134.1123,0,0,0,100,0), -- 01:50:19
+(@GUID,@POINT := @POINT + '1',-785.8677,2757.643,132.4443,0,0,0,100,0), -- 01:50:22
+(@GUID,@POINT := @POINT + '1',-784.1951,2759.4938,131.4428,0,0,0,100,0), -- 01:50:27 --added
+(@GUID,@POINT := @POINT + '1',-783.5496,2757.546,131.6365,0,0,0,100,0), -- 01:50:27
+(@GUID,@POINT := @POINT + '1',-781.3209,2756.4289,131.2748,0,0,0,100,0), -- 01:50:27 --added
+(@GUID,@POINT := @POINT + '1',-777.0540,2760.9504,128.6305,0,0,0,100,0), -- 01:50:27 --added
+(@GUID,@POINT := @POINT + '1',-777.4893,2761.395,128.855,0,0,0,100,0), -- 01:50:30
+(@GUID,@POINT := @POINT + '1',-777.1847,2764.6511,126.5837,0,0,0,100,0), -- 01:50:32
+(@GUID,@POINT := @POINT + '1',-778.3436,2765.721,126.1166,0,0,0,100,0), -- 01:50:32
+(@GUID,@POINT := @POINT + '1',-777.7507,2769.801,125.8422,0,0,0,100,0), -- 01:50:34
+(@GUID,@POINT := @POINT + '1',-774.1144,2767.114,125.1236,0,0,0,100,0), -- 01:50:36
+(@GUID,@POINT := @POINT + '1',-772.84,2760.124,122.5914,0,0,0,100,0), -- 01:50:38
+(@GUID,@POINT := @POINT + '1',-773.5005,2757.315,121.4295,0,0,0,100,0), -- 01:50:42
+(@GUID,@POINT := @POINT + '1',-777.4531,2752.7463,120.8468,0,0,0,100,0), -- 01:50:50 --added
+(@GUID,@POINT := @POINT + '1',-776.1379,2749.887,120.9658,0,0,0,100,0), -- 01:50:44
+(@GUID,@POINT := @POINT + '1',-774.0491,2746.545,121.0984,0,0,0,100,0), -- 01:50:47
+(@GUID,@POINT := @POINT + '1',-765.1492,2734.124,120.8622,0,0,0,100,0), -- 01:50:50
+(@GUID,@POINT := @POINT + '1',-758.4291,2725.751,116.7763,0,0,0,100,0), -- 01:50:56
+(@GUID,@POINT := @POINT + '1',-750.1381,2711.114,110.9275,0,0,0,100,0), -- 01:51:00
+(@GUID,@POINT := @POINT + '1',-739.2902,2697.994,105.4595,0,0,0,100,0), -- 01:51:06
+(@GUID,@POINT := @POINT + '1',-729.8958,2685.469,100.1962,0,0,0,100,0), -- 01:51:13
+(@GUID,@POINT := @POINT + '1',-719.428,2674.712,95.68393,0,0,0,100,0), -- 01:51:21
+(@GUID,@POINT := @POINT + '1',-722.2224,2666.956,94.55554,0,0,0,100,0), -- 01:51:27
+(@GUID,@POINT := @POINT + '1',-738.5777,2658.926,97.63875,0,0,0,100,0), -- 01:51:33
+(@GUID,@POINT := @POINT + '1',-753.056,2652.202,104.9079,0,0,0,100,0), -- 01:51:39
+(@GUID,@POINT := @POINT + '1',-759.6188,2648.154,108.1811,0,0,0,100,0), -- 01:51:46
+(@GUID,@POINT := @POINT + '1',-781.7079,2634.436,108.0559,0,0,0,100,0), -- 01:51:51
+(@GUID,@POINT := @POINT + '1',-787.824,2630.978,107.8018,0,0,0,100,0), -- 01:51:59
+(@GUID,@POINT := @POINT + '1',-795.3052,2633.888,108.4713,0,0,0,100,0), -- 01:52:03
+(@GUID,@POINT := @POINT + '1',-797.6466,2637.246,109.4505,0,0,0,100,0), -- 01:52:07
+(@GUID,@POINT := @POINT + '1',-802.5181,2644.344,109.4217,0,0,0,100,0), -- 01:52:10
+(@GUID,@POINT := @POINT + '1',-806.1069,2646.608,109.422,0,0,0,100,0), -- 01:52:13
+(@GUID,@POINT := @POINT + '1',-811.4109,2638.948,109.422,0,0,0,100,0), -- 01:52:15
+(@GUID,@POINT := @POINT + '1',-807.3386,2630.296,109.422,0,0,0,100,0), -- 01:52:18
+(@GUID,@POINT := @POINT + '1',-804.3088,2620.307,109.422,0,0,0,100,0), -- 01:52:24
+(@GUID,@POINT := @POINT + '1',-805.9506,2616.556,109.422,0,0,0,100,0), -- 01:52:26
+(@GUID,@POINT := @POINT + '1',-812.9794,2612.111,109.422,0,0,0,100,0), -- 01:52:30
+(@GUID,@POINT := @POINT + '1',-815.412,2612.896,109.6071,0,0,0,100,0), -- 01:52:31
+(@GUID,@POINT := @POINT + '1',-818.4614,2617.128,113.1964,0,0,0,100,0), -- 01:52:35
+(@GUID,@POINT := @POINT + '1',-818.1932,2619.4772,113.1008,0,0,0,100,0), -- 01:52:36
+(@GUID,@POINT := @POINT + '1',-813.9753,2622.237,115.535,0,0,0,100,0), -- 01:52:36
+(@GUID,@POINT := @POINT + '1',-807.1000,2626.0339,117.9942,0,0,0,100,0), -- 01:52:40
+(@GUID,@POINT := @POINT + '1',-811.0223,2634.018,118.2438,0,0,0,100,0), -- 01:52:42
+(@GUID,@POINT := @POINT + '1',-808.3665,2638.212,118.512,0,0,0,100,0), -- 01:52:46
+(@GUID,@POINT := @POINT + '1',-797.8145,2645.19,123.2433,0,0,0,100,0), -- 01:52:49
+(@GUID,@POINT := @POINT + '1',-794.114,2639.995,123.3454,0,0,0,100,0), -- 01:52:53
+(@GUID,@POINT := @POINT + '1',-791.9308,2630.846,123.3454,0,0,0,100,0), -- 01:52:59
+(@GUID,@POINT := @POINT + '1',-792.4211,2630.415,123.3454,0,0,0,100,0), -- 01:53:00
+(@GUID,@POINT := @POINT + '1',-805.3203,2621.029,124.4923,0,0,0,100,0), -- 01:53:05 --
+(@GUID,@POINT := @POINT + '1',-808.9996,2618.0412,124.3892,2000,0,5787900,100,0), -- 01:53:05 -- Greet commander
+(@GUID,@POINT := @POINT + '1',-808.9996,2618.0412,124.3892,4000,0,5787901,100,0), -- 01:53:10 ---- Talk emote
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:53:24
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:53:26
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:53:29
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:53:32
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:53:35
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:53:38
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:53:41
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:53:44
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:53:47
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:53:50
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:53:53
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:53:56
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:53:59
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:54:03
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:54:05
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:54:09
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:54:12
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:54:15
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:54:18
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:54:22
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:54:25
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:54:28
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:54:31
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:54:34
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:54:37
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:54:40
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:54:43
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:54:46
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:54:49
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:54:53
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:54:56
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:54:59
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:55:02
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:55:05
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:55:08
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:55:11
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:55:14
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:55:17
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:55:19
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:55:23
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:55:26
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:55:29
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:55:32
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:55:35
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:55:38
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:55:41
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:55:44
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:55:47
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:55:50
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:55:53
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:55:56
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:56:00
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:56:02
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:56:06
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:56:09
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:56:12
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:56:15
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:56:19
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:56:22
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:56:25
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:56:27
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:56:30
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:56:34
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:56:36
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:56:39
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:56:42
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:56:45
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:56:48
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:56:51
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:56:55
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:56:58
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:57:01
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:57:04
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:57:07
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:57:10
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:57:13
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:57:16
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:57:19
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:57:22
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:57:25
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:57:29
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:57:32
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:57:35
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:57:38
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:57:42
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:57:45
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:57:48
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:57:51
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:57:54
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:57:57
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:58:01
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:58:03
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:58:06
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:58:09
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:58:12
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:58:16
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:58:19
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:58:22
+(@GUID,@POINT := @POINT + '1',-811.1351,2621.082,124.3893,0,0,0,100,0), -- 01:58:25
+(@GUID,@POINT := @POINT + '1',-807.5905,2614.945,124.3893,0,0,0,100,0), -- 01:58:25 -----
+(@GUID,@POINT := @POINT + '1',-808.5327,2618.6135,124.3892,0,0,0,100,0), -- 01:58:25 -- Added
+(@GUID,@POINT := @POINT + '1',-810.0437,2617.4189,124.3892,3000,0,5787902,100,0), -- 01:58:25 -- Added -- Leave commander speech
+(@GUID,@POINT := @POINT + '1',-810.0437,2617.4189,124.3892,3000,0,5787903,100,0), -- Salute commander
+(@GUID,@POINT := @POINT + '1',-793.5458,2626.9306,123.0957,0,0,0,100,0), -- 01:58:25
+(@GUID,@POINT := @POINT + '1',-788.4716,2626.819,123.1638,0,0,0,100,0), -- 01:58:34
+(@GUID,@POINT := @POINT + '1',-782.2244,2621.667,123.3454,0,0,0,100,0), -- 01:58:39
+(@GUID,@POINT := @POINT + '1',-780.3174,2616.45,123.3454,0,0,0,100,0), -- 01:58:43
+(@GUID,@POINT := @POINT + '1',-790.2454,2608.325,118.2946,0,0,0,100,0), -- 01:58:45
+(@GUID,@POINT := @POINT + '1',-794.4955,2607.6281,117.9941,0,0,0,100,0), -- 01:59:01
+(@GUID,@POINT := @POINT + '1',-798.1478,2612.605,118.2438,0,0,0,100,0), -- 01:58:51
+(@GUID,@POINT := @POINT + '1',-807.2708,2626.073,118.2438,0,0,0,100,0), -- 01:58:56
+(@GUID,@POINT := @POINT + '1',-819.8717,2618.3537,113.1008,0,0,0,100,0), -- 01:58:56
+(@GUID,@POINT := @POINT + '1',-813.6469,2610.71,109.5707,0,0,0,100,0), -- 01:59:07
+(@GUID,@POINT := @POINT + '1',-803.081,2616.339,109.3586,0,0,0,100,0), -- 01:59:12
+(@GUID,@POINT := @POINT + '1',-797.3878,2613.336,109.422,0,0,0,100,0), -- 01:59:18
+(@GUID,@POINT := @POINT + '1',-792.3141,2606.875,109.422,0,0,0,100,0), -- 01:59:20
+(@GUID,@POINT := @POINT + '1',-785.1685,2607.075,109.422,0,0,0,100,0), -- 01:59:25
+(@GUID,@POINT := @POINT + '1',-785.0612,2615.707,109.422,0,0,0,100,0), -- 01:59:29
+(@GUID,@POINT := @POINT + '1',-788.5981,2624.276,108.1702,0,0,0,100,0), -- 01:59:33
+(@GUID,@POINT := @POINT + '1',-788.9245,2628.7475,107.6733,0,0,0,100,0), -- 01:59:37
+(@GUID,@POINT := @POINT + '1',-777.4222,2636.925,108.1835,0,0,0,100,0), -- 01:59:43
+(@GUID,@POINT := @POINT + '1',-755.5909,2652.344,105.7743,0,0,0,100,0), -- 01:59:50
+(@GUID,@POINT := @POINT + '1',-729.4761,2658.79,95.0219,0,0,0,100,0), -- 01:59:56
+(@GUID,@POINT := @POINT + '1',-719.9623,2672.204,95.05917,0,0,0,100,0), -- 02:00:07
+(@GUID,@POINT := @POINT + '1',-710.0211,2678.701,94.40421,0,0,0,100,0), -- 02:00:14
+(@GUID,@POINT := @POINT + '1',-705.699,2697.925,94.76318,8000,0,5787904,100,0), -- 02:00:19 --Mailbox speech
+(@GUID,@POINT := @POINT + '1',-709.0976,2699.6367,94.3927,0,0,0,100,0), -- 02:00:31
+(@GUID,@POINT := @POINT + '1',-710.2797,2710.86,94.97627,0,0,0,100,0), -- 02:00:36
+(@GUID,@POINT := @POINT + '1',-701.8185,2714.304,94.98135,0,0,0,100,0), -- 02:00:38
+(@GUID,@POINT := @POINT + '1',-702.9014,2721.559,94.42241,0,0,0,100,0), -- 02:00:41
+(@GUID,@POINT := @POINT + '1',-703.3703,2722.376,94.11028,2000,0,5787905,100,0), -- 02:00:45 -- 
+(@GUID,@POINT := @POINT + '1',-703.3703,2722.376,94.11028,8000,0,5787906,100,0), -- 02:00:45 -----
+(@GUID,@POINT := @POINT + '1',-703.3703,2722.376,94.11028,2000,0,5787907,100,0), -- 02:00:45 -----
+(@GUID,@POINT := @POINT + '1',-703.3703,2722.376,94.11028,4000,0,5787908,100,0), -- 02:00:45 -- 
+(@GUID,@POINT := @POINT + '1',-703.3703,2722.376,94.11028,1000,0,5787909,100,0),
+(@GUID,@POINT := @POINT + '1',-703.3703,2722.376,94.11028,1000,0,5787910,100,0); 
+-- 0x203CD04240106D40002FF700007AD777 .go -779.6566 2749.112 155.3301
+
+-- ----------------------------------------------------------
+-- Caretaker Dilandrus --To do. Fix waypoints and add speech
+-- ----------------------------------------------------------
+
+-- Pathing for  Entry: 16856 'TDB FORMAT' 
+SET @GUID := 58021;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-784.4011,`position_y`=2704.242,`position_z`=107.1181 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-807.2846,2727.0644,112.3538,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-784.4011,2704.242,107.1181,0,0,0,100,0), -- 02:28:27
+(@GUID,@POINT := @POINT + '1',-786.1865,2701.929,106.4698,0,0,0,100,0), -- 02:28:36
+(@GUID,@POINT := @POINT + '1',-787.6518,2700.579,105.934,0,0,0,100,0), -- 02:28:39 --
+(@GUID,@POINT := @POINT + '1',-787.8432,2700.6953,105.8141,0,0,0,100,0), -- A O
+(@GUID,@POINT := @POINT + '1',-792.1684,2694.501,105.0721,0,0,0,100,0), -- 02:28:46
+(@GUID,@POINT := @POINT + '1',-792.685,2693.922,104.7101,0,0,0,100,0), -- 02:28:49 --
+(@GUID,@POINT := @POINT + '1',-795.5505,2696.909,105.3471,0,0,0,100,0), -- 02:28:53
+(@GUID,@POINT := @POINT + '1',-797.916,2697.396,105.4841,0,0,0,100,0), -- 02:28:56 --
+(@GUID,@POINT := @POINT + '1',-792.765,2704.767,106.8859,0,0,0,100,0), -- 02:29:01
+(@GUID,@POINT := @POINT + '1',-792.2449,2707.191,107.5509,0,0,0,100,0), -- 02:29:04
+(@GUID,@POINT := @POINT + '1',-794.0685,2709.671,108.3569,0,0,0,100,0), -- 02:29:05
+(@GUID,@POINT := @POINT + '1',-797.7253,2709.18,108.0311,0,0,0,100,0), -- 02:29:07
+(@GUID,@POINT := @POINT + '1',-800.4393,2705.978,107.5758,0,0,0,100,0), -- 02:29:09
+(@GUID,@POINT := @POINT + '1',-803.6293,2699.97,106.5134,0,0,0,100,0), -- 02:29:11
+(@GUID,@POINT := @POINT + '1',-807.278,2694.193,105.6765,0,0,0,100,0), -- 02:29:13
+(@GUID,@POINT := @POINT + '1',-808.0405,2693.319,105.0343,0,0,0,100,0), -- 02:29:17 --
+(@GUID,@POINT := @POINT + '1',-812.295,2692.416,104.9431,0,0,0,100,0), -- 02:29:24
+(@GUID,@POINT := @POINT + '1',-814.4872,2694.548,105.5211,0,0,0,100,0), -- 02:29:26
+(@GUID,@POINT := @POINT + '1',-812.0645,2698.351,106.6527,0,0,0,100,0), -- 02:29:27
+(@GUID,@POINT := @POINT + '1',-810.0867,2701.277,107.2569,0,0,0,100,0), -- 02:29:29
+(@GUID,@POINT := @POINT + '1',-809.0142,2703.514,107.4949,0,0,0,100,0), -- 02:29:33 --
+(@GUID,@POINT := @POINT + '1',-798.5548,2716.915,111.062,0,0,0,100,0), -- 02:29:37
+(@GUID,@POINT := @POINT + '1',-804.4795,2711.166,108.7988,0,0,0,100,0), -- 02:29:37
+(@GUID,@POINT := @POINT + '1',-803.1904,2712.994,109.2391,0,0,0,100,0), -- 02:29:40
+(@GUID,@POINT := @POINT + '1',-801.8869,2715.421,109.8517,0,0,0,100,0), -- 02:29:43 --
+(@GUID,@POINT := @POINT + '1',-804.9284,2720.378,111.2985,0,0,0,100,0), -- 02:29:47
+(@GUID,@POINT := @POINT + '1',-808.2941,2719.672,110.8294,0,0,0,100,0), -- 02:29:49
+(@GUID,@POINT := @POINT + '1',-810.041,2718.517,110.6133,0,0,0,100,0), -- 02:29:53 --
+(@GUID,@POINT := @POINT + '1',-812.5195,2714.51,109.9449,0,0,0,100,0), -- 02:29:58
+(@GUID,@POINT := @POINT + '1',-814.9861,2710.911,109.4516,0,0,0,100,0), -- 02:30:01
+(@GUID,@POINT := @POINT + '1',-818.0924,2705.116,108.5067,0,0,0,100,0), -- 02:30:02
+(@GUID,@POINT := @POINT + '1',-820.6952,2701.716,107.7344,0,0,0,100,0), -- 02:30:07 --
+(@GUID,@POINT := @POINT + '1',-822.9139,2704.841,108.5406,0,0,0,100,0), -- 02:30:12
+(@GUID,@POINT := @POINT + '1',-824.9557,2707.254,109.1384,0,0,0,100,0), -- 02:30:13
+(@GUID,@POINT := @POINT + '1',-822.1829,2711.187,109.6212,0,0,0,100,0), -- 02:30:15
+(@GUID,@POINT := @POINT + '1',-820.9127,2714.733,110.107,0,0,0,100,0), -- 02:30:18 --
+(@GUID,@POINT := @POINT + '1',-815.1783,2724.23,111.5192,0,0,0,100,0), -- 02:30:24
+(@GUID,@POINT := @POINT + '1',-810.7725,2732.773,113.6527,0,0,0,100,0), -- 02:30:28
+(@GUID,@POINT := @POINT + '1',-808.1324,2738.118,115.3095,0,0,0,100,0), -- 02:30:31
+(@GUID,@POINT := @POINT + '1',-807.3273,2739.819,115.4474,0,0,0,100,0), -- 02:30:36 --
+(@GUID,@POINT := @POINT + '1',-807.5845,2738.5500,115.1652,0,0,0,100,0); -- 15 min wait
+-- 0x203CCC42401076000031F90000015772 .go -784.4011 2704.242 107.1181
