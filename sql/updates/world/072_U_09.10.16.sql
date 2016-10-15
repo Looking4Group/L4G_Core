@@ -3825,3 +3825,63 @@ INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`
 (@GUID,@POINT := @POINT + '1',-807.3273,2739.819,115.4474,0,0,0,100,0), -- 02:30:36 --
 (@GUID,@POINT := @POINT + '1',-807.5845,2738.5500,115.1652,0,0,0,100,0); -- 15 min wait
 -- 0x203CCC42401076000031F90000015772 .go -784.4011 2704.242 107.1181
+
+-- ----------------------------------------------------------
+-- https://github.com/Looking4Group/L4G_Core/issues/886
+-- Event with Huffer/Grulloc doesn't start.
+-- ----------------------------------------------------------
+-- This is only a hackfix for now that will at least allow players to do the quest in a semi-intended way. The quest item and related spell will need to be fixed in the core at some point.
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN (22114);
+INSERT INTO `creature_ai_scripts` VALUES
+('2211401','22114','11','0','100','0','0','0','0','0','102','0','0','0','44','37486','71899','0','0','0','0','0','Huffer - Cast Taunt on Grulloc and set Huffer to passive so he doesnt fight back'),
+('2211402','22114','1','0','100','0','10000','11000','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Huffer - Despawn self');
+
+SET @ENTRY := 22114;
+UPDATE `creature_template` SET `AIName`='EventAI',`MovementType`=2 WHERE `entry` = 22114;
+DELETE FROM `creature_template_addon` WHERE `entry`= @ENTRY;
+INSERT INTO `creature_template_addon` (`entry`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@ENTRY,@ENTRY,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id`= @ENTRY;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@ENTRY,1,'2683.599609','5561.506836','-8.377452',0,1,0,100,0),
+(@ENTRY,2,'2683.599609','5561.506836','-8.377452',6000,1,0,100,0),
+(@ENTRY,3,'2696.265137','5606.458984','-11.300397',0,1,0,100,0),
+(@ENTRY,4,'2696.407471','5635.058594','-12.258788',0,1,0,100,0),
+(@ENTRY,5,'2671.907715','5689.815430','-15.508551',0,1,0,100,0);
+
+UPDATE `creature` SET `position_x`='-170.9876', `position_y`='5530.2988', `position_z`='29.4076', `orientation`='3.4761' WHERE `guid` = 67880;
+
+-- 110k-120k
+DELETE FROM `creature` WHERE `guid` IN (117310,117311,117371,117372,117421,117422,117423,117614,117633,117634,117646,117648,117649);
+UPDATE `creature_template` SET `faction_A` = 1865, `faction_H` = 1865 WHERE `entry` = 23142;
+UPDATE `creature_template` SET `minlevel`='68',`maxlevel`='68',`minhealth`='5311',`maxhealth`='5311',`armor`='5954',`faction_A`='62',`faction_H`='62',`npcflag`=`npcflag`|128|4096  WHERE `entry` = 23144;
+INSERT INTO `creature` VALUES (117310, 23142, 530, 1, 0, 0, -5116.79, 602.136, 85.0878, 4.86947, 180, 0, 0, 6326, 0, 0, 0);
+INSERT INTO `creature` VALUES (117311, 21060, 530, 1, 14515, 0, -2725.46, 817.03, -4.67013, 3.47707, 180, 5, 0, 5409, 3080, 0, 1);
+INSERT INTO `creature` VALUES (117371, 23142, 530, 1, 0, 0, -5113.69, 599.206, 85.202, 3.52556, 180, 0, 0, 6326, 0, 0, 0);
+INSERT INTO `creature` VALUES (117372, 23142, 530, 1, 0, 0, -5120.31, 601.432, 84.8131, 5.48033, 180, 0, 0, 6326, 0, 0, 0);
+INSERT INTO `creature` VALUES (117421, 23142, 530, 1, 0, 0, -5121.04, 598.197, 84.8804, 0.366519, 180, 0, 0, 6326, 0, 0, 0);
+INSERT INTO `creature` VALUES (117422, 23146, 530, 1, 0, 0, -5166.38, 563.994, 80.506, 3.21141, 180, 0, 0, 143620, 0, 0, 0);
+INSERT INTO `creature` VALUES (117423, 23146, 530, 1, 0, 0, -5143.49, 515.507, 84.5, 4.83456, 180, 0, 0, 143620, 0, 0, 0);
+INSERT INTO `creature` VALUES (117614, 23146, 530, 1, 0, 0, -5162.25, 534.28, 82.7053, 5.18363, 180, 0, 0, 143620, 0, 0, 0);
+INSERT INTO `creature` VALUES (117633, 22252, 530, 1, 0, 0, -5121.29, 524.294, 85.979, 5.02271, 180, 0, 0, 3271, 0, 0, 0);
+INSERT INTO `creature` VALUES (117634, 22252, 530, 1, 0, 0, -5116, 526.488, 86.1381, 5.08868, 180, 0, 0, 3271, 0, 0, 0);
+INSERT INTO `creature` VALUES (117646, 22252, 530, 1, 0, 0, -5119.86, 518.446, 85.544, 2.56205, 180, 0, 0, 3271, 0, 0, 0);
+INSERT INTO `creature` VALUES (117648, 22252, 530, 1, 0, 0, -5124.66, 631.394, 86.794, 0.331613, 180, 0, 0, 3271, 0, 0, 0);
+INSERT INTO `creature` VALUES (117649, 22252, 530, 1, 0, 0, -5121.2, 632.552, 86.8863, 3.29867, 180, 0, 0, 3271, 0, 0, 0);
+-- 120k-130k
+DELETE FROM `creature` WHERE `guid` IN (120880,120881,120882,120883,120884,120903,120904,120905,120907,122728,122732,122953,123103,123108,124444);
+INSERT INTO `creature` VALUES (120880, 21060, 530, 1, 14515, 0, -2717.49, 774.845, -16.7461, 4.80831, 180, 5, 0, 5409, 3080, 0, 1);
+INSERT INTO `creature` VALUES (120881, 21736, 530, 1, 0, 0, -3781.84, 2286.79, 82.529, 6.07208, 300, 1, 0, 9489, 0, 0, 1);
+INSERT INTO `creature` VALUES (120882, 21736, 530, 1, 0, 0, -3782.08, 2290.53, 83.5589, 5.4327, 300, 1, 0, 9489, 0, 0, 1);
+INSERT INTO `creature` VALUES (120883, 21736, 530, 1, 0, 0, -3783.26, 2281.75, 82.709, 5.4327, 300, 1, 0, 9489, 0, 0, 1);
+INSERT INTO `creature` VALUES (120884, 21736, 530, 1, 0, 0, -3816.22, 2288.03, 91.8103, 5.4327, 300, 1, 0, 9489, 0, 0, 1);
+INSERT INTO `creature` VALUES (120903, 21736, 530, 1, 0, 0, -3816.1, 2284.48, 91.1192, 5.4327, 300, 1, 0, 9489, 0, 0, 1);
+INSERT INTO `creature` VALUES (120904, 21736, 530, 1, 0, 0, -3785.57, 2248.95, 87.2404, 3.77159, 300, 1, 0, 9489, 0, 0, 1);
+INSERT INTO `creature` VALUES (120905, 21736, 530, 1, 0, 0, -3783.47, 2246.63, 86.9104, 3.77159, 300, 1, 0, 9489, 0, 0, 1);
+INSERT INTO `creature` VALUES (120907, 21736, 530, 1, 0, 0, -3785.35, 2220.39, 86.664, 3.34433, 300, 1, 0, 9489, 0, 0, 1);
+INSERT INTO `creature` VALUES (122728, 13321, 429, 1, 0, 0, -21.3831, -431.467, -58.527, 3.7001, 7200, 0, 0, 40, 0, 0, 0);
+INSERT INTO `creature` VALUES (122732, 13321, 429, 1, 0, 0, 1.08285, -427.635, -58.2154, 0.942478, 7200, 0, 0, 40, 0, 0, 0);
+INSERT INTO `creature` VALUES (122953, 13321, 429, 1, 0, 0, -21.032, -425.93, -58.1864, 1.81514, 7200, 0, 0, 40, 0, 0, 0);
+INSERT INTO `creature` VALUES (123103, 21736, 530, 1, 0, 0, -3783.41, 2216.37, 86.0964, 3.34433, 300, 1, 0, 9489, 0, 0, 1);
+INSERT INTO `creature` VALUES (123108, 21736, 530, 1, 0, 0, -3787.32, 2215.57, 86.4413, 0.932562, 300, 1, 0, 9489, 0, 0, 1);
+INSERT INTO `creature` VALUES (124444, 21736, 530, 1, 0, 0, -3846.24, 2250.47, 95.5393, 4.37575, 300, 1, 0, 9489, 0, 0, 1);
