@@ -185,6 +185,7 @@ enum ChessEventSpells
     SPELL_MOVE_MARKER       = 32261,
     SPELL_POSSES_CHESSPIECE = 30019,
     SPELL_IN_GAME           = 30532,
+    SPELL_GAME_IN_SESSION   = 39331,
     SPELL_RECENTLY_IN_GAME  = 30529,
     SPELL_FURY_OF_MEDIVH    = 39383,  // 1st cheat: AOE spell burn cell under enemy chesspieces.
     SPELL_HAND_OF_MEDIVH    = 39339,  // 2nd cheat: Berserk own chesspieces.
