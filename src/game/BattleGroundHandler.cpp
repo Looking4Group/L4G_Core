@@ -695,7 +695,7 @@ void WorldSession::AnnounceArenaStart(uint8 arenatype)
         return;
     }
 
-    ss << " Team just queued!";
+    ss << "Team just queued!";
 
     sWorld.SendWorldTextForLevels(60, 70, ACC_DISABLED_BGANN, LANG_BG_START_ANNOUNCE, ss.str().c_str());
 }
