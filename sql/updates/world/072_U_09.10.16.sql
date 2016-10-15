@@ -2717,3 +2717,6 @@ INSERT INTO `waypoint_data` VALUES (85374, 7, 11944.6, -7345.69, 50.4382, 0, 0, 
 INSERT INTO `waypoint_data` VALUES (85374, 8, 12150.8, -7318.98, 34.2945, 0, 0, 0, 0, 0);
 INSERT INTO `waypoint_data` VALUES (85374, 9, 12325.4, -7348.72, 38.8826, 0, 0, 0, 0, 0);
 INSERT INTO `waypoint_data` VALUES (85374, 10, 12560, -7331.26, 33.549, 0, 0, 0, 0, 0);
+
+DELETE FROM `gameobject_questrelation` WHERE `quest` = 10781;
+INSERT INTO `gameobject_questrelation` VALUES (185126,10781);
