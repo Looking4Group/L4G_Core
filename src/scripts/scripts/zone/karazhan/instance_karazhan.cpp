@@ -297,7 +297,7 @@ void instance_karazhan::SetData(uint32 type, uint32 data)
             {
                 HandleGameObject(GamesmansExitDoor, true);
                 if (Creature * chess = GetCreature(ChessTriggerGUID))
-                    chess->RemoveAurasDueToSpell(SPELL_GAME_IN_SESSION);
+                    chess->DisappearAndDie();
             }
             break;
         case DATA_MALCHEZZAR_EVENT:
