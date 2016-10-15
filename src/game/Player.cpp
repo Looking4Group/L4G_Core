@@ -20857,7 +20857,7 @@ bool ItemPosCount::isContainedIn(ItemPosCountVec const& vec) const
 
 void Player::HandleFallDamage(MovementInfo& movementInfo)
 {
-    if (movementInfo.GetFallTime() < 500)
+    if (movementInfo.GetFallTime() < 200)
         return;
 
     // calculate total z distance of the fall
