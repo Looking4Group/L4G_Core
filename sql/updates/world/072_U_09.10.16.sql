@@ -3885,3 +3885,96 @@ INSERT INTO `creature` VALUES (122953, 13321, 429, 1, 0, 0, -21.032, -425.93, -5
 INSERT INTO `creature` VALUES (123103, 21736, 530, 1, 0, 0, -3783.41, 2216.37, 86.0964, 3.34433, 300, 1, 0, 9489, 0, 0, 1);
 INSERT INTO `creature` VALUES (123108, 21736, 530, 1, 0, 0, -3787.32, 2215.57, 86.4413, 0.932562, 300, 1, 0, 9489, 0, 0, 1);
 INSERT INTO `creature` VALUES (124444, 21736, 530, 1, 0, 0, -3846.24, 2250.47, 95.5393, 4.37575, 300, 1, 0, 9489, 0, 0, 1);
+
+-- ----------------------------------------------------------
+-- Caretaker Dilandrus
+-- ----------------------------------------------------------
+-- Negative spawntime means the item starts as despawned. When it's spawned by the script this is the number of seconds it takes to despawn again
+UPDATE `gameobject` SET `spawntimesecs`=-301 WHERE `guid` IN (21211,21212,21213,21214,21215,21210);
+ 
+DELETE FROM `waypoint_scripts` WHERE `id` BETWEEN 5802101 AND 5802109;
+INSERT INTO `waypoint_scripts` (`id`,`delay`,`command`,`datalong`,`datalong2`,`guid`,`comment`) VALUES
+(5802101,0,1,66,1,5802101,'Caretaker Dilandrus - Salute Emote'),
+(5802102,0,1,16,1,5802102,'Caretaker Dilandrus - Kneel Emote'),
+(5802103,0,9,21211,300,5802103,'Caretaker Dilandrus - Respawn grave flower 1'),
+(5802104,0,1,18,1,5802104,'Caretaker Dilandrus - Cry Emote'),
+(5802105,0,9,21212,300,5802105,'Caretaker Dilandrus - Respawn grave flower 2'),
+(5802106,0,9,21213,300,5802106,'Caretaker Dilandrus - Respawn grave flower 3'),
+(5802107,0,9,21214,300,5802107,'Caretaker Dilandrus - Respawn grave flower 4'),
+(5802108,0,9,21215,300,5802108,'Caretaker Dilandrus - Respawn grave flower 5'),
+(5802109,0,9,21210,300,5802109,'Caretaker Dilandrus - Respawn grave flower 6');
+ 
+UPDATE `creature_template` SET `speed` = 1 WHERE `entry` = 16856;
+ 
+-- Gossip
+DELETE FROM `npc_text` WHERE `id` = 5;
+INSERT INTO `npc_text` (`id`,`text0_0`,`text0_1`) VALUES
+(5,'I was born here, $R. This is my world - all that I know... As a boy my mother and father would regale me with tales of your world and the splendor it held. How I longed to leave this place.$B$BAlas, fate is a cruel mistress. My mother and father have long since passed, buried in this very graveyard. I remain to uphold their honor and the honor of my family - the Sons of Lothar.','I was born here, $R. This is my world - all that I know... As a boy my mother and father would regale me with tales of your world and the splendor it held. How I longed to leave this place.$B$BAlas, fate is a cruel mistress. My mother and father have long since passed, buried in this very graveyard. I remain to uphold their honor and the honor of my family - the Sons of Lothar.');
+DELETE FROM `npc_gossip` WHERE `npc_guid` = 58021;
+INSERT INTO `npc_gossip` VALUES
+(58021,5);
+ 
+-- Pathing for  Entry: 16856 'TDB FORMAT'
+SET @GUID := 58021;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-784.4011,`position_y`=2704.242,`position_z`=107.1181 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-807.2846,2727.0644,112.3538,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-784.4011,2704.242,107.1181,0,0,0,100,0), -- 02:28:27
+(@GUID,@POINT := @POINT + '1',-786.1865,2701.929,106.4698,0,0,0,100,0), -- 02:28:36
+(@GUID,@POINT := @POINT + '1',-787.6518,2700.579,105.934,0,0,0,100,0), -- 02:28:39 --
+(@GUID,@POINT := @POINT + '1',-787.8432,2700.6953,105.8141,3000,0,5802101,100,0), -- Salute
+(@GUID,@POINT := @POINT + '1',-787.8432,2700.6953,105.8141,0,0,5802103,100,0), -- Kneel
+(@GUID,@POINT := @POINT + '1',-787.8432,2700.6953,105.8141,5000,0,5802102,100,0), -- Spawn flower
+(@GUID,@POINT := @POINT + '1',-792.1684,2694.501,105.0721,0,0,0,100,0), -- 02:28:46
+(@GUID,@POINT := @POINT + '1',-792.685,2693.922,104.7101,0,0,0,100,0), -- 02:28:49 --
+(@GUID,@POINT := @POINT + '1',-793.0121,2694.0087,104.6103,6000,0,1069,100,0), -- Use emote
+(@GUID,@POINT := @POINT + '1',-795.5505,2696.909,105.3471,0,0,1000,100,0), -- Turn off use emote
+(@GUID,@POINT := @POINT + '1',-797.916,2697.396,105.4841,0,0,5802105,100,0), -- Kneel
+(@GUID,@POINT := @POINT + '1',-797.916,2697.396,105.4841,5000,0,5802102,100,0), -- Spawn flower
+(@GUID,@POINT := @POINT + '1',-792.765,2704.767,106.8859,0,0,0,100,0), --
+(@GUID,@POINT := @POINT + '1',-792.2449,2707.191,107.5509,0,0,0,100,0), -- 02:29:04
+(@GUID,@POINT := @POINT + '1',-794.0685,2709.671,108.3569,0,0,0,100,0), -- 02:29:05
+(@GUID,@POINT := @POINT + '1',-797.7253,2709.18,108.0311,0,0,0,100,0), -- 02:29:07
+(@GUID,@POINT := @POINT + '1',-800.4393,2705.978,107.5758,0,0,0,100,0), -- 02:29:09
+(@GUID,@POINT := @POINT + '1',-803.6293,2699.97,106.5134,0,0,0,100,0), -- 02:29:11
+(@GUID,@POINT := @POINT + '1',-807.278,2694.193,105.6765,0,0,0,100,0), -- 02:29:13
+(@GUID,@POINT := @POINT + '1',-808.0405,2693.319,105.0343,0,0,0,100,0), -- 02:29:17 --
+(@GUID,@POINT := @POINT + '1',-808.4829,2693.4536,104.9821,5000,0,5802104,100,0), -- Cry
+(@GUID,@POINT := @POINT + '1',-808.4829,2693.4536,104.9821,2000,0,5802106,100,0), -- Spawn flower
+(@GUID,@POINT := @POINT + '1',-812.295,2692.416,104.9431,0,0,0,100,0), -- 02:29:24
+(@GUID,@POINT := @POINT + '1',-814.4872,2694.548,105.5211,0,0,0,100,0), -- 02:29:26
+(@GUID,@POINT := @POINT + '1',-812.0645,2698.351,106.6527,0,0,0,100,0), -- 02:29:27
+(@GUID,@POINT := @POINT + '1',-810.0867,2701.277,107.2569,0,0,0,100,0), -- 02:29:29
+(@GUID,@POINT := @POINT + '1',-809.0142,2703.514,107.4949,0,0,0,100,0), -- 02:29:33 --
+(@GUID,@POINT := @POINT + '1',-809.2995,2703.7104,107.4316,5000,0,1069,100,0), -- Use emote
+(@GUID,@POINT := @POINT + '1',-804.4795,2711.166,108.7988,0,0,1000,100,0), -- Turn off use emote
+(@GUID,@POINT := @POINT + '1',-803.1904,2712.994,109.2391,0,0,0,100,0), -- 02:29:40
+(@GUID,@POINT := @POINT + '1',-801.8869,2715.421,109.8517,0,0,0,100,0), -- 02:29:43 --
+(@GUID,@POINT := @POINT + '1',-802.0388,2715.5146,109.7917,0,0,5802107,100,0), -- Kneel
+(@GUID,@POINT := @POINT + '1',-802.0388,2715.5146,109.7917,5000,0,5802102,100,0), -- Spawn flower
+(@GUID,@POINT := @POINT + '1',-804.9284,2720.378,111.2985,0,0,0,100,0), -- 02:29:47
+(@GUID,@POINT := @POINT + '1',-808.2941,2719.672,110.8294,0,0,0,100,0), -- 02:29:49
+(@GUID,@POINT := @POINT + '1',-810.041,2718.517,110.6133,0,0,0,100,0), -- 02:29:53 --
+(@GUID,@POINT := @POINT + '1',-810.3601,2718.6601,110.4938,5000,0,5802101,100,0), -- Salute
+(@GUID,@POINT := @POINT + '1',-812.5195,2714.51,109.9449,0,0,0,100,0), -- 02:29:58
+(@GUID,@POINT := @POINT + '1',-814.9861,2710.911,109.4516,0,0,0,100,0), -- 02:30:01
+(@GUID,@POINT := @POINT + '1',-818.0924,2705.116,108.5067,0,0,0,100,0), -- 02:30:02
+(@GUID,@POINT := @POINT + '1',-820.6952,2701.716,107.7344,0,0,0,100,0), -- 02:30:07 --
+(@GUID,@POINT := @POINT + '1',-820.8601,2701.7744,107.6350,0,0,5802108,100,0), -- Kneel
+(@GUID,@POINT := @POINT + '1',-820.8601,2701.7744,107.6350,5000,0,5802102,100,0), -- Spawn flower
+(@GUID,@POINT := @POINT + '1',-822.9139,2704.841,108.5406,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-824.9557,2707.254,109.1384,0,0,0,100,0), -- 02:30:13
+(@GUID,@POINT := @POINT + '1',-822.1829,2711.187,109.6212,0,0,0,100,0), -- 02:30:15
+(@GUID,@POINT := @POINT + '1',-820.9127,2714.733,110.107,0,0,0,100,0), -- 02:30:18 --
+(@GUID,@POINT := @POINT + '1',-821.0661,2714.8603,110.0726,0,0,5802109,100,0), -- Kneel
+(@GUID,@POINT := @POINT + '1',-821.0661,2714.8603,110.0726,5000,0,5802102,100,0), -- Spawn flower
+(@GUID,@POINT := @POINT + '1',-815.1783,2724.23,111.5192,0,0,0,100,0), --
+(@GUID,@POINT := @POINT + '1',-810.7725,2732.773,113.6527,0,0,0,100,0), -- 02:30:28
+(@GUID,@POINT := @POINT + '1',-808.1324,2738.118,115.3095,0,0,0,100,0), -- 02:30:31
+(@GUID,@POINT := @POINT + '1',-807.3273,2739.819,115.4474,0,0,0,100,0), -- 02:30:36 --
+(@GUID,@POINT := @POINT + '1',-807.5845,2738.5500,115.1652,600000,0,0,100,0); -- 10 min wait
+-- 0x203CCC42401076000031F90000015772 .go -784.4011 2704.242 107.1181
