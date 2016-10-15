@@ -3,7 +3,7 @@
 
 #include "def_karazhan.h"
 
-#define ENCOUNTERS              15
+#define ENCOUNTERS      15
 
 /*
 0  - Attumen + Midnight (optional)
