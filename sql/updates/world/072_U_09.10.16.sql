@@ -2580,7 +2580,7 @@ INSERT INTO `pool_gameobject` VALUES
 (3372273,2542901,0,'Spawn Point 13 - Netherwing eggs (185915) - Netherwing Mine');
 
 SET @GUID := 77645;
-UPDATE `creature` SET `MovementType`='2' WHERE `guid` = @GUID;
+UPDATE `creature` SET `position_x`='-4099.6796', `position_y`='980.0801', `position_z`='25.4651', `MovementType`='2' WHERE `guid` = @GUID;
 DELETE FROM `creature_addon` WHERE `guid` = @GUID;
 INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
 DELETE FROM `waypoint_data` WHERE `id` = @GUID;
