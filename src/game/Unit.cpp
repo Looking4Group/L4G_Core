@@ -1047,6 +1047,11 @@ uint32 Unit::DealDamage(DamageLog *damageInfo, DamageEffectType damagetype, cons
         {
             DEBUG_LOG("DealDamageAlive");
 
+
+            //This will be called for every Player > NPC damage.
+            //Gotta test it to make sure its stable.
+            IsElgibleForLeashing(damageInfo, damagetype, spellProto);
+
             pVictim->ModifyHealth(- (int32)damageInfo->damage);
 
             if (damagetype != DOT)
@@ -1159,6 +1164,49 @@ uint32 Unit::DealDamage(DamageLog *damageInfo, DamageEffectType damagetype, cons
 
     DEBUG_LOG("DealDamageEnd returned %d damage", damageInfo->damage);
     return damageInfo->damage;
+}
+
+
+bool Unit::IsElgibleForLeashing(DamageLog *damageInfo, DamageEffectType damagetype, const SpellEntry *spellProto)
+{
+    Unit *pVictim = damageInfo->target;
+
+    //Have no victim. It will crash otherwise.
+    if (!pVictim)
+        return false;
+
+    //If I'm not a player - NPC can't leash an NPC.
+    if (GetTypeId() != TYPEID_PLAYER)
+        return false;
+
+    //If my target isn't a creature - We can't leash a player.
+    if (pVictim->GetTypeId() != TYPEID_UNIT)
+        return false;
+
+    //If the target is in a dungeon
+    if (pVictim->GetMap()->IsDungeon())
+        return false;
+
+    //If the damage is not a direct melee or spell
+    if(damagetype != DIRECT_DAMAGE && damagetype != SPELL_DIRECT_DAMAGE)
+        return false;
+        
+    //If the spell is like Thorns, or Ret Aura, etc
+    if (damagetype == SPELL_DIRECT_DAMAGE)
+    {
+        if (spellProto)
+        {
+            if (spellProto->HasApplyAura(SPELL_AURA_DAMAGE_SHIELD))
+            {
+                return false;
+            }
+        }
+    }
+
+
+
+    //The mob can be leashed.
+    return true;
 }
 
 uint32 Unit::DealDamage(Unit *pVictim, uint32 damage, DamageEffectType damagetype, SpellSchoolMask damageSchoolMask, SpellEntry const *spellProto, bool durabilityLoss)
@@ -7735,9 +7783,6 @@ bool Unit::Attack(Unit *victim, bool meleeAttack)
 
     m_attacking = victim;
     m_attacking->_addAttacker(this);
-
-    //if(m_attacking->GetTypeId()==TYPEID_UNIT && ((Creature*)m_attacking)->IsAIEnabled)
-    //    ((Creature*)m_attacking)->AI()->AttackedBy(this);
 
     if (GetTypeId() == TYPEID_UNIT && !((Creature*)this)->isPet())
     {
