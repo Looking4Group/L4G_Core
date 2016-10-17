@@ -1171,6 +1171,10 @@ bool Unit::IsElgibleForLeashing(DamageLog *damageInfo, DamageEffectType damagety
 {
     Unit *pVictim = damageInfo->target;
 
+    //Have no victim. It will crash otherwise.
+    if (!pVictim)
+        return false;
+
     //If I'm not a player - NPC can't leash an NPC.
     if (GetTypeId() != TYPEID_PLAYER)
         return false;
