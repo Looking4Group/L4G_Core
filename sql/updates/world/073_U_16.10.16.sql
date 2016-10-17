@@ -1990,12 +1990,12 @@ INSERT INTO `waypoint_data` VALUES (99274, 21, -3027.81, 1585.9, 64.2028, 0, 0, 
 
 DELETE FROM `pool_creature` WHERE `pool_entry` = 1187;
 INSERT INTO `pool_creature` VALUES
-(99270,1187,0,'Doomsayer Jurim (18686)'),
-(99271,1187,0,'Doomsayer Jurim (18686)'), 
-(99272,1187,0,'Doomsayer Jurim (18686)'),
-(99273,1187,0,'Doomsayer Jurim (18686)'),
-(99274,1187,0,'Doomsayer Jurim (18686)'),
-(223914,1187,0,'Doomsayer Jurim (18686)');
+(99270,1187,0,'Ambassador Jerrikar (18695)'),
+(99271,1187,0,'Ambassador Jerrikar (18695)'), 
+(99272,1187,0,'Ambassador Jerrikar (18695)'),
+(99273,1187,0,'Ambassador Jerrikar (18695)'),
+(99274,1187,0,'Ambassador Jerrikar (18695)'),
+(223914,1187,0,'Ambassador Jerrikar (18695)');
 
 INSERT INTO `creature` VALUES (99278, 18686, 530, 1, 0, 0, -2595.42, 3495.55, 0.193151, 1.07799, 21600, 0, 0, 9144, 13525, 0, 2);
 SET @GUID := 99278;
@@ -2157,15 +2157,11 @@ DELETE FROM `pool_template` WHERE `entry` = 30030;
 DELETE FROM `pool_creature` WHERE `pool_entry` = 30030;
 DELETE FROM `pool_creature` WHERE `pool_entry` = 1191;
 INSERT INTO `pool_creature` VALUES
-(44068,1191,0,'Rare Spawn Crippler'),
-(99281,1191,0,'Rare Spawn Crippler'), 
-(99282,1191,0,'Rare Spawn Crippler'), 
-(99283,1191,0,'Rare Spawn Crippler'), 
-(99284,1191,0,'Rare Spawn Crippler');
-
--- dublicate pool
-DELETE FROM `pool_template` WHERE `entry` = 30029;
-DELETE FROM `pool_creature` WHERE `pool_entry` = 30029;
+(44068,1191,0,'Crippler (18689)'),
+(99281,1191,0,'Crippler (18689)'), 
+(99282,1191,0,'Crippler (18689)'), 
+(99283,1191,0,'Crippler (18689)'), 
+(99284,1191,0,'Crippler (18689)');
 
 INSERT INTO `creature` VALUES (99285, 18680, 530, 1, 0, 0, 641.629, 5601.53, 21.7289, 1.20404, 104400, 0, 0, 11205, 0, 0, 2);
 SET @GUID := 99285;
