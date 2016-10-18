@@ -2759,3 +2759,6 @@ INSERT INTO `creature_questrelation` VALUES
 (18265,9887);
 
 DELETE FROM `creature` WHERE `guid` IN (16644,17360,29104,29105,29107,29108,29109,29441,29846);
+
+-- Correct Melee Swing Timer for Broggok 17380
+UPDATE `creature_template` SET `baseattacktime`='2000' WHERE `entry` = 17380;
