@@ -799,7 +799,7 @@ struct mob_necromancerAI : public hyjal_trashAI
 
     void Reset()
     {
-        ShadowBoltTimer = 1000+rand()%5000;
+        ShadowBoltTimer = urand(1000, 3000);
         UnholyFrenzyTimer = 5000;
         CrippleTimer = 4000;
         summons.DespawnAll();
@@ -912,7 +912,7 @@ struct mob_necromancerAI : public hyjal_trashAI
         if(ShadowBoltTimer<diff)
         {
             DoCast(m_creature->getVictim(),SPELL_SHADOW_BOLT);
-            ShadowBoltTimer = 5000+rand()%5000;
+            ShadowBoltTimer = urand(1000, 3000);
         }
         else
             ShadowBoltTimer -= diff;
