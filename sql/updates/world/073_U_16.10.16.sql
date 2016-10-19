@@ -2799,3 +2799,92 @@ INSERT INTO `creature_ai_texts` VALUES
 (-10502,'Kil\'jaeden\'s patience wears thin! Destroy the naaru\'s lackeys once and for all!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'Emissary of Hate (25003) on Spawn'),
 (-10503,'Return to your posts! The battle is not yet over!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'Emissary of Hate (25003) on Spawn'),
 (-10504,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Eastern Kingdoms Placeholder');
+
+DELETE FROM `gameobject` WHERE `id` = 187333;
+INSERT INTO `gameobject` VALUES (5788, 187333, 530, 1, 12476.2, -6504.18, 7.68689, 1.97222, 0, 0, 0.833885, 0.551938, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (5792, 187333, 530, 1, 12614.3, -6614.62, 9.22841, 2.26892, 0, 0, 0.906306, 0.422622, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (5794, 187333, 530, 1, 12810.9, -6732.89, 1.9393, -1.88495, 0, 0, -0.809015, 0.587788, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (5795, 187333, 530, 1, 12589.1, -6622.72, 12.1877, 0.942477, 0, 0, 0.45399, 0.891007, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (5796, 187333, 530, 1, 12578.4, -6607.82, 13.6785, 0.244346, 0, 0, 0.121869, 0.992546, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (5797, 187333, 530, 1, 12515, -6563.35, 11.4506, 1.81514, 0, 0, 0.78801, 0.615662, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (5799, 187333, 530, 1, 12627.5, -6681.34, 5.22373, 2.3911, 0, 0, 0.930417, 0.366502, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (5801, 187333, 530, 1, 12606.6, -6755.9, 14.2606, 2.67035, 0, 0, 0.972369, 0.233447, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (5803, 187333, 530, 1, 12766.2, -6739.85, 0.743038, -0.767944, 0, 0, -0.374606, 0.927184, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (5804, 187333, 530, 1, 12508.6, -6572.11, 12.6193, 0.087266, 0, 0, 0.0436192, 0.999048, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (5807, 187333, 530, 1, 12843.6, -6706.06, 0.7145, -2.19912, 0, 0, -0.891008, 0.453988, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (5808, 187333, 530, 1, 12687, -6656, 4.31191, 1.20428, 0, 0, 0.566407, 0.824125, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (5812, 187333, 530, 1, 12718.7, -6809.38, 5.66973, -2.93214, 0, 0, -0.994521, 0.104535, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (5815, 187333, 530, 1, 12875.1, -6730.34, 12.2926, -2.53072, 0, 0, -0.953716, 0.300709, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (5816, 187333, 530, 1, 12733.5, -6685.64, 0.057487, 2.80997, 0, 0, 0.986285, 0.165053, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (27802, 187333, 530, 1, 13006.9, -6687.63, 9.33114, 2.04454, 0, 0, 0.853294, 0.52143, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (27803, 187333, 530, 1, 12910, -6567.19, 10.7515, 4.11956, 0, 0, 0.88281, -0.46973, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (27804, 187333, 530, 1, 12792.4, -6452.4, 9.03202, 5.28823, 0, 0, 0.477209, -0.87879, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (27805, 187333, 530, 1, 12590.4, -6437.78, 8.91063, 5.6503, 0, 0, 0.311187, -0.950349, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (27806, 187333, 530, 1, 12990.8, -6722.41, 7.17799, 3.07184, 0, 0, 0.999392, 0.034869, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (27807, 187333, 530, 1, 12684.6, -6507.9, 7.03268, 6.06028, 0, 0, 0.111222, -0.993796, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (27808, 187333, 530, 1, 12445.9, -6414.55, 5.00344, 0.729782, 0, 0, 0.356848, 0.934163, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (88550, 187333, 530, 1, 12893, -7228.85, 7.59172, 3.10665, 0, 0, 0.999847, 0.0174704, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (88551, 187333, 530, 1, 12879.8, -7225.83, 8.25682, 2.82743, 0, 0, 0.987688, 0.156436, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (88552, 187333, 530, 1, 12866.6, -7307.03, 67.2767, 1.06465, 0, 0, 0.507538, 0.861629, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (88553, 187333, 530, 1, 12674.5, -6899.05, 5.06504, -0.279252, 0, 0, -0.139173, 0.990268, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (88554, 187333, 530, 1, 12628.9, -6941.38, 4.67464, 2.93214, 0, 0, 0.994521, 0.104535, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (88555, 187333, 530, 1, 12692.5, -6801.73, 4.96149, 1.37881, 0, 0, 0.636078, 0.771625, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (88556, 187333, 530, 1, 12998.4, -6866.95, 4.98379, 2.19912, 0, 0, 0.891006, 0.453991, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (88557, 187333, 530, 1, 12995.5, -6833.74, 8.10172, 1.64061, 0, 0, 0.731354, 0.681998, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (88558, 187333, 530, 1, 12632.1, -6900.89, 4.91983, -0.715585, 0, 0, -0.350207, 0.936672, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (88559, 187333, 530, 1, 12601.3, -6928.73, 4.9433, 2.65289, 0, 0, 0.970294, 0.241927, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (88560, 187333, 530, 1, 12889.5, -6765.69, 9.93854, -1.97222, 0, 0, -0.833885, 0.551938, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (88561, 187333, 530, 1, 12930.8, -6765.89, 10.0461, 0.314158, 0, 0, 0.156434, 0.987688, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (88562, 187333, 530, 1, 12778.7, -6796.9, 5.77587, 0.558504, 0, 0, 0.275637, 0.961262, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (88563, 187333, 530, 1, 12883.6, -6749.81, 11.9421, -0.558504, 0, 0, -0.275637, 0.961262, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (88564, 187333, 530, 1, 12865, -6770.13, 9.60709, 1.43117, 0, 0, 0.656059, 0.75471, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (88565, 187333, 530, 1, 12723.7, -6747.62, 0.705014, 1.76278, 0, 0, 0.771624, 0.636079, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (88566, 187333, 530, 1, 12727.6, -6791.19, 5.47884, 0.453785, 0, 0, 0.224951, 0.97437, 120, 255, 1);
+INSERT INTO `gameobject` VALUES (92012, 187333, 530, 1, 12506.8, -7413.87, 2.7512, -0.558504, 0, 0, -0.275637, 0.961262, 120, 255, 1);
+
+DELETE FROM `pool_template` WHERE `entry` = 2991;
+INSERT INTO `pool_template` VALUES
+(2991,20,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)');
+
+DELETE FROM `pool_gameobject` WHERE `pool_entry` = 2991;
+INSERT INTO `pool_gameobject` VALUES
+(5788,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(5792,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(5794,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(5795,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(5796,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(5797,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(5799,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(5801,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(5803,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(5804,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(5807,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(5808,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(5812,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(5815,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(5816,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(27802,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(27803,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(27804,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(27805,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(27806,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(27807,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(27808,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(88550,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(88551,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(88552,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(88553,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(88554,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(88555,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(88556,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(88557,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(88558,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(88559,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(88560,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(88561,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(88562,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(88563,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(88564,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(88565,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(88566,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
+(92012,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)');
