@@ -2762,3 +2762,32 @@ DELETE FROM `creature` WHERE `guid` IN (16644,17360,29104,29105,29107,29108,2910
 
 -- Correct Melee Swing Timer for Broggok 17380
 UPDATE `creature_template` SET `baseattacktime`='2000' WHERE `entry` = 17380;
+
+-- Vorakem Doomspeaker 18679
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 18679;
+INSERT INTO `creature_ai_scripts` VALUES 
+(1867901, 18679, 9, 0, 100, 1, 0, 5, 6000, 9000, 11, 9080, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Vorakem Doomspeaker Cast Hamstring'),
+(1867902, 18679, 0, 0, 100, 1, 10000, 15000, 15000, 25000, 11, 38607, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Vorakem Doomspeaker Cast Flame Wave'),
+(1867903, 18679, 2, 0, 100, 0, 20, 0, 0, 0, 11, 8599, 0, 1, 1, -106, 0, 0, 0, 0, 0, 0, 'Vorakem Doomspeaker Cast Enrage at 20% HP'),
+(1867904, 18679, 1, 0, 100, 1, 5000, 10000, 300000, 600000, 1, -18679, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Vorakem Doomspeaker  - Say Phrase OOC'),
+(1867905, 18679, 11, 0, 100, 0, 0, 0, 0, 0, 11, 29651, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 'Vorakem Doomspeaker - Cast Dual Wield on Spawn');
+
+-- Flame Wave II 22228
+UPDATE `creature_template` SET `minlevel`='70',`maxlevel`='70',`faction_A`='1963',`faction_H`='1963',`unit_flags`='33554432',`flags_extra`='130',`ScriptName`='npc_flame_wave' WHERE `entry` = 22228; -- 1 1 35 35 0 0 NULL
+
+-- Emissary of Hate 25003
+UPDATE `creature_template` SET `maxhealth`='7084',`speed`='1.20' WHERE `entry` = 25003;
+UPDATE `creature_template_addon` SET `path_id` = 0 WHERE `entry` = 25003;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 25003;
+INSERT INTO `creature_ai_scripts` VALUES 
+(2500301, 25003, 9, 0, 100, 1, 0, 5, 15000, 20000, 11, 12054, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Emissary of Hate - Cast Rend'),
+(2500302, 25003, 0, 0, 100, 1, 6000, 12000, 15000, 20000, 11, 38611, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Emissary of Hate - Cast Flame Wave'),
+(2500303, 25003, 11, 0, 100, 0, 0, 0, 0, 0, 11, 29651, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 'Emissary of Hate - Cast Dual Wield on Spawn');
+
+SET @GUID := 200125;
+UPDATE `creature` SET `spawndist` = 0 WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES (200125, 1, 12631.3193, -6915.8442, 4.6, 6000, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (200125, 2, 12585.5830, -6916.2592, 4.6, 3000, 0, 0, 100, 0);
