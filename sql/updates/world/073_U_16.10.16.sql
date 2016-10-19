@@ -2893,3 +2893,26 @@ INSERT INTO `pool_gameobject` VALUES
 DELETE FROM `npc_vendor` WHERE `item` = 24208;
 INSERT INTO `npc_vendor` VALUES (21485, 24208, 1, 86400, 0);
 INSERT INTO `npc_vendor` VALUES (21474, 24208, 1, 86400, 0);
+
+-- Morgroron Movement Script
+SET @GUID := 75407;
+UPDATE `creature` SET `MovementType`='2' WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES (75407, 1, -3344.89, 2947.08, 170.004, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (75407, 2, -3347.48, 2971.63, 170.254, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (75407, 3, -3376.49, 2993.47, 170.129, 20000, 0, 2150001, 100, 0);
+INSERT INTO `waypoint_data` VALUES (75407, 4, -3391.43, 2995.69, 170.004, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (75407, 5, -3425, 2993.65, 170.129, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (75407, 6, -3431.53, 2967.77, 170.629, 20000, 0, 2150001, 100, 0);
+INSERT INTO `waypoint_data` VALUES (75407, 7, -3431.22, 2965.88, 170.504, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (75407, 8, -3399.56, 2957.2, 170.004, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (75407, 9, -3388.71, 2936.74, 170.004, 20000, 0, 2150001, 100, 0);
+INSERT INTO `waypoint_data` VALUES (75407, 10, -3342.88, 2942.85, 170.004, 40000, 0, 2150002, 100, 0);
+
+DELETE FROM `waypoint_scripts` WHERE `id` IN (2150001,2150002);
+INSERT INTO `waypoint_scripts` VALUES (2150001, 1, 1, 1, 0, 0, 0, 0, 0, 0, 2150001,'Morgroron Talk Emote');
+INSERT INTO `waypoint_scripts` VALUES (2150002, 1, 30, 0, 0, 0, 0, 0, 0, 2.79253, 2150002,'Morgroron None Emote');
+INSERT INTO `waypoint_scripts` VALUES (2150002, 2, 1, 1, 0, 0, 0, 0, 0, 0, 2150003,'Morgroron Set Field');
+INSERT INTO `waypoint_scripts` VALUES (2150002, 7, 1, 15, 0, 0, 0, 0, 0, 0, 2150004,'Morgroron Quest');
