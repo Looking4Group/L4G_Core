@@ -2782,7 +2782,7 @@ DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 25003;
 INSERT INTO `creature_ai_scripts` VALUES 
 (2500301, 25003, 9, 0, 100, 1, 0, 5, 15000, 20000, 11, 12054, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Emissary of Hate - Cast Rend'),
 (2500302, 25003, 0, 0, 100, 1, 6000, 12000, 15000, 20000, 11, 38611, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Emissary of Hate - Cast Flame Wave'),
-(2500303, 25003, 11, 0, 100, 0, 0, 0, 0, 0, 11, 29651, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 'Emissary of Hate - Cast Dual Wield on Spawn');
+(2500303, 25003, 11, 0, 100, 0, 0, 0, 0, 0, 11, 29651, 0, 7, 1, -10501, -10502, -10503, 0, 0, 0, 0, 'Emissary of Hate - Cast Dual Wield and Random Yell on Spawn');
 
 SET @GUID := 200125;
 UPDATE `creature` SET `spawndist` = 0 WHERE `guid` = @GUID;
@@ -2791,3 +2791,11 @@ INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2
 DELETE FROM `waypoint_data` WHERE `id` = @GUID;
 INSERT INTO `waypoint_data` VALUES (200125, 1, 12631.3193, -6915.8442, 4.6, 6000, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (200125, 2, 12585.5830, -6916.2592, 4.6, 3000, 0, 0, 100, 0);
+
+-- -10501- -10999
+DELETE FROM `creature_ai_texts` WHERE `entry` BETWEEN -10501 AND -10504;
+INSERT INTO `creature_ai_texts` VALUES
+(-10501,'You fear death? Far worse awaits you, should you fail! Slay the mortals!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'Emissary of Hate (25003) on Spawn'),
+(-10502,'Kil\'jaeden\'s patience wears thin! Destroy the naaru\'s lackeys once and for all!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'Emissary of Hate (25003) on Spawn'),
+(-10503,'Return to your posts! The battle is not yet over!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'Emissary of Hate (25003) on Spawn'),
+(-10504,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Eastern Kingdoms Placeholder');
