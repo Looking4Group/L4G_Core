@@ -16,8 +16,8 @@
 
 /* ScriptData
 SDName: Boss_Midnight
-SD%Complete: 80
-SDComment: Attumen missing Spell 29850, Midnight missing Spell 29711;
+SD%Complete: 90
+SDComment:
 SDCategory: Karazhan
 EndScriptData */
 
@@ -39,6 +39,8 @@ EndScriptData */
 #define SPELL_SHADOWCLEAVE          29832
 #define SPELL_INTANGIBLE_PRESENCE   29833
 #define SPELL_BERSERKER_CHARGE      26561                   //Only when mounted
+#define SPELL_UPPERCUT              29850
+#define SPELL_KNOCKDOWN             29711
 
 #define MOUNTED_DISPLAYID           16040
 
@@ -57,6 +59,7 @@ struct boss_midnightAI : public ScriptedAI
     uint8 Phase;
     uint32 Mount_Timer;
     uint32 CheckTimer;
+    uint32 Knockdown_Timer;
 
     ScriptedInstance *pInstance;
     WorldLocation wLoc;
@@ -67,6 +70,7 @@ struct boss_midnightAI : public ScriptedAI
         Attumen = 0;
         Mount_Timer = 0;
         CheckTimer = 3000;
+        Knockdown_Timer = urand(6000, 9000);
 
         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
         m_creature->SetVisibility(VISIBILITY_ON);
@@ -108,6 +112,14 @@ struct boss_midnightAI : public ScriptedAI
         }
         else
             CheckTimer -= diff;
+            
+        if (Knockdown_Timer < diff)
+        {
+            AddSpellToCast(m_creature->getVictim(), SPELL_KNOCKDOWN);
+            Knockdown_Timer = urand(6000, 9000);
+        }
+        else
+            Knockdown_Timer -= diff;
 
         switch (Phase)
         {
@@ -211,6 +223,7 @@ struct boss_attumenAI : public ScriptedAI
         RandomYellTimer = urand(30000, 61000);         //Occasionally yell
         ChargeTimer = 20000;
         ResetTimer = 0;
+        KnockdownUppercut_Timer = urand(6000, 9000);
     }
 
     ScriptedInstance *pInstance;
@@ -222,6 +235,7 @@ struct boss_attumenAI : public ScriptedAI
     uint32 RandomYellTimer;
     uint32 ChargeTimer;                                     //only when mounted
     uint32 ResetTimer;
+    uint32 KnockdownUppercut_Timer;
 
     void Reset()
     {
@@ -294,6 +308,22 @@ struct boss_attumenAI : public ScriptedAI
         }
         else
             RandomYellTimer -= diff;
+            
+        if (KnockdownUppercut_Timer < diff)
+        {
+            if (m_creature->GetUInt32Value(UNIT_FIELD_DISPLAYID) == MOUNTED_DISPLAYID)
+            {
+                AddSpellToCast(m_creature->getVictim(), SPELL_KNOCKDOWN);
+                KnockdownUppercut_Timer = urand(6000, 9000);
+            }    
+            else
+            {
+                AddSpellToCast(m_creature->getVictim(), SPELL_UPPERCUT);
+                KnockdownUppercut_Timer = urand(6000, 9000);
+            }    
+        }
+        else
+            KnockdownUppercut_Timer -= diff;            
 
         if (m_creature->GetUInt32Value(UNIT_FIELD_DISPLAYID) == MOUNTED_DISPLAYID)
         {
