@@ -2888,3 +2888,8 @@ INSERT INTO `pool_gameobject` VALUES
 (88565,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
 (88566,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)'),
 (92012,2991,0,'Master Herb Pool - Isle of Quel\'Danas (Bloodberry Bush)');
+
+-- Design: Mystic Dawnstone
+DELETE FROM `npc_vendor` WHERE `item` = 24208;
+INSERT INTO `npc_vendor` VALUES (21485, 24208, 1, 86400, 0);
+INSERT INTO `npc_vendor` VALUES (21474, 24208, 1, 86400, 0);
