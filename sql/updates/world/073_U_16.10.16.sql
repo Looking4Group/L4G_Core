@@ -2916,3 +2916,6 @@ INSERT INTO `waypoint_scripts` VALUES (2150001, 1, 1, 1, 0, 0, 0, 0, 0, 0, 21500
 INSERT INTO `waypoint_scripts` VALUES (2150002, 1, 30, 0, 0, 0, 0, 0, 0, 2.79253, 2150002,'Morgroron None Emote');
 INSERT INTO `waypoint_scripts` VALUES (2150002, 2, 1, 1, 0, 0, 0, 0, 0, 0, 2150003,'Morgroron Set Field');
 INSERT INTO `waypoint_scripts` VALUES (2150002, 7, 1, 15, 0, 0, 0, 0, 0, 0, 2150004,'Morgroron Quest');
+
+-- Empoor's Bodyguard 18483
+UPDATE `creature_template` SET `faction_H`='35',`faction_A`='35' WHERE `entry` = 18483; -- 7
