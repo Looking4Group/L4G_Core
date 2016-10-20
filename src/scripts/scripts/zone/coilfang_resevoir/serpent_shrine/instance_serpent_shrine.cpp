@@ -37,79 +37,27 @@ ObjectGuid ConsoleGuids[5];
 ObjectGuid BridgeConsoleGuid;
 
 
-bool UnlockVashjDoor(ScriptedInstance* instance)
-{
-    return (((instance->GetData(DATA_HYDROSS_EVENT) == SPECIAL) && 
-    (instance->GetData(DATA_LURKER_EVENT) == SPECIAL)           && 
-    (instance->GetData(DATA_LEOTHERAS_EVENT) == SPECIAL)        && 
-    (instance->GetData(DATA_KARATHRESS_EVENT) == SPECIAL)       && 
-    (instance->GetData(DATA_MOROGRIM_EVENT) == SPECIAL)));
-}
-
-void UnlockGameObject(Map* map, uint64 GameObjectGUID)
-{
-    if (GameObject *go = map->GetGameObject(GameObjectGUID)) 
-    {
-        go->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_LOCKED);
-    }
-}
-
 bool GOUse_go_vashj_console_access_panel(Player *player, GameObject* go)
 {
     ScriptedInstance* instance = (ScriptedInstance*) go->GetInstanceData();
 
     if (!instance)
-    {
         return false;
-    }
 
-    bool returnVal = true;
+    if (!go)
+        return false;
 
-    uint64 id = go->GetGUID();
-
-    if (id == ConsoleGuids[0])
+    if (go->GetGUID() == BridgeConsoleGuid) 
     {
-        instance->SetData(DATA_HYDROSS_EVENT, SPECIAL);
-        player->TextEmote("activates console #1 [Hydross the Unstable].");
-    }
-    else if (id == ConsoleGuids[1])
-    {
-        instance->SetData(DATA_LURKER_EVENT, SPECIAL);
-        player->TextEmote("activates console #2 [The Lurker Below].");
-    }
-    else if (id == ConsoleGuids[2])
-    {
-        instance->SetData(DATA_LEOTHERAS_EVENT, SPECIAL);
-        player->TextEmote("activates console #3 [Leotheras the Blind].");
-    }
-    else if (id == ConsoleGuids[3])
-    {
-        instance->SetData(DATA_KARATHRESS_EVENT, SPECIAL);
-        player->TextEmote("activates console #4 [Fathom-Lord Karathress].");
-    }
-    else if (id == ConsoleGuids[4])
-    {
-        instance->SetData(DATA_MOROGRIM_EVENT, SPECIAL);
-        player->TextEmote("activates console #5 [Morogrim Tidewalker].");
-    }
-    else if (id == BridgeConsoleGuid) {
         instance->SetData(DATA_BRIDGE_CONSOLE, DONE);
-        player->TextEmote("activates console #6 [Access to Lady Vashj].");
+        player->TextEmote("opened the door and created the platform to Lady Vashj.");
     }
     else
     {
-        returnVal = false;
+        player->TextEmote("clicked the console.");
     }
 
-    if (UnlockVashjDoor(instance))
-    {
-        UnlockGameObject(instance->instance, BridgeConsoleGuid);
-    }
-
-    return returnVal;
-
-    
-
+    return true;
 }
 
 struct instance_serpentshrine_cavern : public ScriptedInstance
@@ -194,6 +142,14 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
         VashjBridgeOpen = false;
     }
 
+    void UnlockGameObject(uint64 GameObjectGUID)
+    {
+        if (GameObject *go = instance->GetGameObject(GameObjectGUID)) 
+        {
+            go->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_LOCKED);
+        }
+    }
+
     void OnObjectCreate(GameObject *go)
     {
         uint32 data = NOT_STARTED;
@@ -203,36 +159,36 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
                 ConsoleGuids[0] = go->GetGUID();               
                 data = GetData(DATA_HYDROSS_EVENT);
                 if ((data == DONE) || (data == SPECIAL))
-                    UnlockGameObject(instance, ConsoleGuids[0]);
+                    UnlockGameObject(ConsoleGuids[0]);
                 break;
             case 185115: // Serpentshrine Console [The Lurker Below]
                 ConsoleGuids[1] = go->GetGUID();
                 data = GetData(DATA_LURKER_EVENT);
                 if ((data == DONE) || (data == SPECIAL))
-                    UnlockGameObject(instance, ConsoleGuids[1]);
+                    UnlockGameObject(ConsoleGuids[1]);
                 break;
             case 185116: // Serpentshrine Console [Leotheras the Blind]
                 ConsoleGuids[2] = go->GetGUID();
                 data = GetData(DATA_LEOTHERAS_EVENT);
                 if ((data == DONE) || (data == SPECIAL))
-                    UnlockGameObject(instance, ConsoleGuids[2]);
+                    UnlockGameObject(ConsoleGuids[2]);
                 break;
             case 185117: // Serpentshrine Console [Fathom-Lord Karathress]
                 ConsoleGuids[3] = go->GetGUID();
                 data = GetData(DATA_KARATHRESS_EVENT);
                 if ((data == DONE) || (data == SPECIAL))
-                    UnlockGameObject(instance, ConsoleGuids[3]);
+                    UnlockGameObject(ConsoleGuids[3]);
                 break;
             case 185118: // Serpentshrine Console [Morogrim Tidewalker]
                 ConsoleGuids[4] = go->GetGUID();
                 data = GetData(DATA_MOROGRIM_EVENT);
                 if ((data == DONE) || (data == SPECIAL))
-                    UnlockGameObject(instance, ConsoleGuids[4]);
+                    UnlockGameObject(ConsoleGuids[4]);
                 break;
             case 184568: // Lady Vashj Bridge Console
                 BridgeConsoleGuid = go->GetGUID();
-                if (UnlockVashjDoor(this))
-                    UnlockGameObject(instance, BridgeConsoleGuid); 
+                if ((GetData(DATA_HYDROSS_EVENT) == SPECIAL) && (GetData(DATA_LURKER_EVENT) == SPECIAL) && (GetData(DATA_LEOTHERAS_EVENT) == SPECIAL) && (GetData(DATA_KARATHRESS_EVENT) == SPECIAL) && (GetData(DATA_MOROGRIM_EVENT) == SPECIAL))
+                    UnlockGameObject(BridgeConsoleGuid); 
                 break;
             case 184203: // Doodad_Coilfang_Raid_Bridge_Part01
                 BridgePartGuids[0] = go->GetGUID();
@@ -362,6 +318,9 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
             case DATA_LURKER_FISHING_EVENT:
                 LurkerFishingEvent = data;
                 break;
+            case DATA_UNLOCK_VASHJ_DOOR:
+                UnlockGameObject(BridgeConsoleGuid); 
+            break;
         }
 
         if (data == DONE || data == SPECIAL)
@@ -600,4 +559,5 @@ void AddSC_instance_serpentshrine_cavern()
     newscript->Name="GOUse_go_vashj_console_access_panel";
     newscript->pGOUse = &GOUse_go_vashj_console_access_panel;
     newscript->RegisterSelf();
+
 }

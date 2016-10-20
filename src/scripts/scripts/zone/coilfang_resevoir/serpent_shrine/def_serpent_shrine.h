@@ -52,6 +52,7 @@ enum DataTypes
     DATA_SHIELD_GENERATOR_FOUR      = 48,
     DATA_CAN_START_PHASE_3          = 49,
     DATA_WATER                      = 50,
+    DATA_UNLOCK_VASHJ_DOOR          = 51
 };
 
 #endif
