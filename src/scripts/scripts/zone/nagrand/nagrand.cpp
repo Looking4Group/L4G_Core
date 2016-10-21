@@ -46,16 +46,32 @@ EndContentData */
 ## mob_shattered_rumbler - this should be done with ACID
 ######*/
 
+#define SPELL_EARTH_RUMBLE  33840
+
 struct mob_shattered_rumblerAI : public ScriptedAI
 {
     bool Spawn;
 
     mob_shattered_rumblerAI(Creature *creature) : ScriptedAI(creature) {}
+    
+    uint32 EarthRumble_Timer;
 
     void Reset()
     {
         Spawn = false;
+        EarthRumble_Timer = urand(12000, 17000);
     }
+    
+    void UpdateAI(const uint32 diff)
+    {
+        if (EarthRumble_Timer < diff)
+        {
+            DoCast(me, SPELL_EARTH_RUMBLE);
+            EarthRumble_Timer = urand(14000, 21000);
+        }
+        else
+            EarthRumble_Timer -= diff;
+    }            
 
     void SpellHit(Unit *caster, const SpellEntry *spell)
     {
