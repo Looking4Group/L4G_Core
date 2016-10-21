@@ -2919,3 +2919,360 @@ INSERT INTO `waypoint_scripts` VALUES (2150002, 7, 1, 15, 0, 0, 0, 0, 0, 0, 2150
 
 -- Empoor's Bodyguard 18483
 UPDATE `creature_template` SET `faction_H`='35',`faction_A`='35' WHERE `entry` = 18483; -- 7
+
+-- ----------------------------------------------------------
+-- Saltgurka Update 10
+-- ----------------------------------------------------------
+
+-- ----------------------------------------------------------
+-- Garadar Wolf Riders. 
+-- https://github.com/Looking4Group/L4G_Core/issues/875
+-- ----------------------------------------------------------
+
+-- Give Garadar Wolf Riders and Garadar Defenders a bow.
+UPDATE `creature_equip_template` SET `equipmodel3`=9060,`equipinfo3`=251789826,`equipslot3`=1  WHERE `entry` = 387;
+
+-- Fix formation distance. It was way too long
+DELETE FROM `creature_formations` WHERE `leaderGUID`=68370;
+INSERT INTO `creature_formations` (`leaderGUID`,`memberGUID`,`dist`,`angle`,`groupAI`)VALUES
+(68370,68370,0,0,2),
+(68370,68371,7,0,2);
+
+DELETE FROM `creature_formations` WHERE `leaderGUID`=68368;
+INSERT INTO `creature_formations` (`leaderGUID`,`memberGUID`,`dist`,`angle`,`groupAI`)VALUES
+(68368,68368,0,0,2),
+(68368,68369,7,0,2);
+
+-- ----------------------------------------------------------
+-- Exodar
+-- ----------------------------------------------------------
+
+-- Missing Blue Moth spawn
+DELETE FROM `creature` WHERE `guid` = 85609;
+INSERT INTO `creature` (`guid`, `id`, `map`, `position_x`, `position_y`, `position_z`, `orientation`, `spawndist`, `curhealth`) VALUES 
+(85609, 21010, 530, -3845.53, -11385.97, -126.89, 0.366519, 0, 650);
+
+
+DELETE FROM `creature_formations` WHERE `leaderGUID`=57721;
+INSERT INTO `creature_formations` (`leaderGUID`,`memberGUID`,`dist`,`angle`,`groupAI`)VALUES
+(57721,57721,0,0,2),
+(57721,57720,1.5,0,2);
+
+DELETE FROM `creature_formations` WHERE `leaderGUID`=57722;
+INSERT INTO `creature_formations` (`leaderGUID`,`memberGUID`,`dist`,`angle`,`groupAI`)VALUES
+(57722,57722,0,0,2),
+(57722,57723,1.5,0,2);
+
+-- Movement types
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=57740; -- Kudrii
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=57709; -- Egomis
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=73800; -- Sixx
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=73799; -- White moth
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=67934; -- Valon
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`BETWEEN 67852 AND 67861; -- Broken miners
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=57747; -- Bildine
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`IN (57727,57728,57715,57714,57718,57719,57720,57723,57724,57725,57734,57713,57726,57729); -- Exodar peacekeepers
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`BETWEEN 67865 AND 67870; -- Exodar Holographic emitter
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`BETWEEN 72980 AND 72981;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=57710; -- Luric
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=57739; -- Deriz
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=63005; -- Kazi
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=67157; -- Worker
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=57752; -- Nurguni
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=73094; -- Herald Bran'daan
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=67938; -- Artificer Drenin
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=67953; -- Artificer Andren
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=57707; -- Phea
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=73557; -- Aalun
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid` BETWEEN 63131 AND 63133; -- Elekk
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=70142; -- Brown Elekk
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=73529; -- Gray Elekk
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=73530; -- Great Blue Elekk
+
+-- ----------------------------------------------------------
+-- Falcon Watch
+-- https://github.com/Looking4Group/L4G_Core/issues/2937
+-- ----------------------------------------------------------
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=57793; -- Falconer Drenna riverwind
+
+-- Gossip
+DELETE FROM `npc_text` WHERE `id` IN (6,7);
+INSERT INTO `npc_text` (`id`,`text0_0`,`text0_1`,`em0_0`,`em0_1`) VALUES
+(6,'I think I''m beginning to regret undertaking this pilgrimage. I anticipated that the road would be rouch and I''m no stranger to travel, but I wasn''t prepared for the rigors of Outland.$B$BOn top of everything else, that Taleris seems to want to push me out of here before I''ve regained my strength completely.','I think I''m beginning to regret undertaking this pilgrimage. I anticipated that the road would be rouch and I''m no stranger to travel, but I wasn''t prepared for the rigors of Outland.$B$BOn top of everything else, that Taleris seems to want to push me out of here before I''ve regained my strength completely.',0,0),
+(7,'Befriending the Sunstriders has paid off: I get to conduct research with subjects I can only find in Outland and they get... my charming personality and rugged good looks.','Befriending the Sunstriders has paid off: I get to conduct research with subjects I can only find in Outland and they get... my charming personality and rugged good looks.',0,0);
+
+DELETE FROM `npc_gossip` WHERE `npc_guid` IN (59423,34080);
+INSERT INTO `npc_gossip` VALUES
+(59423,6),
+(34080,7);
+
+-- Falcon watch rangers random speech
+DELETE FROM `creature_ai_texts` WHERE `entry` BETWEEN -11009 AND -11007;
+INSERT INTO `creature_ai_texts` (`entry`,`content_default`,`comment`) VALUES
+(-11007,'We''re never going to fire one of these, are we?','Falcon Watch Ranger - Random Speech OOC'),
+(-11008,'I wonder how far this would launch that white cat...','Falcon Watch Ranger - Random Speech OOC'),
+(-11009,'Do we even have ammunition for these?','Falcon Watch Ranger - Random Speech OOC');
+
+-- Doing it by GUID to make sure they don't all talk at the same time.
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = -62080;
+INSERT INTO `creature_ai_scripts` VALUES
+('6208001','-62080','1','0','100','1','300000','300000','600000','600000','1','-11007','-11008','-11009','0','0','0','0','0','0','0','0','Falcon Watch Ranger - Random Speech OOC');
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = -62075;
+INSERT INTO `creature_ai_scripts` VALUES
+('6207501','-62075','1','0','100','1','600000','600000','600000','600000','1','-11007','-11008','-11009','0','0','0','0','0','0','0','0','Falcon Watch Ranger - Random Speech OOC');
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = -62074;
+INSERT INTO `creature_ai_scripts` VALUES
+('6207401','-62074','1','0','100','1','300000','300000','600000','600000','1','-11007','-11008','-11009','0','0','0','0','0','0','0','0','Falcon Watch Ranger - Random Speech OOC');
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = -62073;
+INSERT INTO `creature_ai_scripts` VALUES
+('6207301','-62073','1','0','100','1','600000','600000','600000','600000','1','-11007','-11008','-11009','0','0','0','0','0','0','0','0','Falcon Watch Ranger - Random Speech OOC');
+
+
+-- Pathing for  Entry: 17282 'TDB FORMAT' 
+SET @GUID := 62078;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-675.959,`position_y`=4147.495,`position_z`=64.40276 WHERE `guid`=@GUID;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0,`position_x`=-675.959,`position_y`=4147.495,`position_z`=64.40276 WHERE `guid`=62079;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,1,-680.31701,4145.4462,64.575302,0,0,0,100,0), -- 16:37:05 -- C
+(@GUID,2,-683.9642,4153.301,62.90336,0,0,0,100,0), -- 16:37:06
+(@GUID,3,-682.6864,4150.633,63.58012,0,0,0,100,0), -- 16:37:11
+(@GUID,4,-680.981,4148.432,64.21857,0,0,0,100,0), -- 16:37:13
+(@GUID,5,-675.6634,4147.547,64.36858,0,0,0,100,0), -- 16:37:14
+(@GUID,6,-651.1693,4148.922,64.30837,0,0,0,100,0), -- 16:37:24
+(@GUID,7,-626.3674,4155.104,64.23468,0,0,0,100,0), -- 16:37:35
+(@GUID,8,-621.8497,4171.456,62.5696,0,0,0,100,0), -- 16:37:37
+(@GUID,9,-627.3916,4188.663,58.95262,0,0,0,100,0), -- 16:37:43
+(@GUID,10,-620.00207,4173.9189,61.9034,0,0,0,100,0), -- 16:37:53 -- C
+(@GUID,11,-622.348,4163.086,63.33289,0,0,0,100,0), -- 16:37:59
+(@GUID,12,-622.4722,4158.474,63.68102,0,0,0,100,0), -- 16:38:07
+(@GUID,13,-626.4244,4154.84,64.12413,0,0,0,100,0), -- 16:38:08
+(@GUID,14,-651.0526,4147.8007,64.182686,0,0,0,100,0); -- 16:38:19 -- C
+-- 0x2016D4424010E080001965000103A650 .go -675.959 4147.495 64.40276
+DELETE FROM `creature_formations` WHERE `leaderGUID`=62078;
+INSERT INTO `creature_formations` (`leaderGUID`,`memberGUID`,`dist`,`angle`,`groupAI`)VALUES
+(62078,62078,0,0,2),
+(62078,62079,2,1.5,2);
+
+-- Pathing for  Entry: 17282 'TDB FORMAT' 
+SET @GUID := 62071;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-620.1946,`position_y`=4118.648,`position_z`=87.60699 WHERE `guid`=@GUID;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0,`position_x`=-620.1946,`position_y`=4118.648,`position_z`=87.60699 WHERE `guid`=62072;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,1,-620.1946,4118.648,87.60699,0,0,0,100,0), -- 16:36:57
+(@GUID,2,-617.9649,4119.337,88.03029,0,0,0,100,0), -- 16:37:00
+(@GUID,3,-610.7427,4110.473,89.57927,0,0,0,100,0), -- 16:37:02
+(@GUID,4,-606.4417,4101.634,90.58211,0,0,0,100,0), -- 16:37:06
+(@GUID,5,-607.2405,4103.211,90.12807,0,0,0,100,0), -- 16:37:11
+(@GUID,6,-611.9678,4113.065,89.30843,0,0,0,100,0), -- 16:37:14
+(@GUID,7,-621.98488,4121.7260,87.16348,0,0,0,100,0), -- 16:37:18 -- C
+(@GUID,8,-623.6926,4117.603,86.8599,0,0,0,100,0), -- 16:37:20
+(@GUID,9,-647.8553,4102.001,79.39661,0,0,0,100,0), -- 16:37:24
+(@GUID,10,-655.6919,4100.699,77.77136,0,0,0,100,0), -- 16:37:36
+(@GUID,11,-664.7001,4104.133,75.93384,0,0,0,100,0), -- 16:37:38
+(@GUID,12,-675.2422,4122.101,72.00597,0,0,0,100,0), -- 16:37:43
+(@GUID,13,-669.2257,4108.958,74.73109,0,0,0,100,0), -- 16:37:53
+(@GUID,14,-658.0205,4101.176,77.18057,0,0,0,100,0), -- 16:37:59
+(@GUID,15,-646.2822,4100.3745,79.26165,0,0,0,100,0), -- 16:38:04 -- C
+(@GUID,16,-628.0502,4115.556,85.40653,0,0,0,100,0); -- 16:38:07
+-- 0x2016D4424010E080001965000003D098 .go -620.1946 4118.648 87.60699
+DELETE FROM `creature_formations` WHERE `leaderGUID`=62071;
+INSERT INTO `creature_formations` (`leaderGUID`,`memberGUID`,`dist`,`angle`,`groupAI`)VALUES
+(62071,62071,0,0,2),
+(62071,62072,2,4.7,2);
+
+-- Pilgrim Gal'ressa GUID: 59423
+-- Add sit state
+DELETE FROM `creature_addon` WHERE `guid`=59423;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (59423,0,0,1,4097,0, ''); -- 3
+
+-- Taleris Dawngazer
+DELETE FROM `db_script_string` WHERE `entry` BETWEEN 2000000089 AND 2000000095;
+INSERT INTO `db_script_string` (`entry`,`content_default`) VALUES 
+(2000000089,'Wake up, Gal''ressa.'),
+(2000000090,'What do you want, Taleris?'),
+(2000000091,'You''ve had enough time to recover from your wounds, Gal''ressa. The time has come for you to return to the road.'),
+(2000000092,'I''m not going on alone, Taleris, and that''s final. I''m going to wait here for the next group of pilgrims and set out with them when they depart.'),
+(2000000093,'You''ll do no such thing. We simply haven''t the room to keep you here. Now, kindly be on your way.'),
+(2000000094,'By the Sunwell, you''ve a thick skull! You''ll not bully me into leaving, Taleris. Now, begone from my sight!'),
+(2000000095,'Very well then, have it your way. When we turn others away, you will be responsible for their suffering. Think about that.');
+
+DELETE FROM `waypoint_scripts` WHERE `id` IN (5941601, 5941602);
+INSERT INTO `waypoint_scripts` (`id`,`delay`,`command`,`datalong`,`datalong2`,`dataint`,`x`,`y`,`z`,`o`,`guid`,`comment`) VALUES
+(5941601,0,0,0,0,2000000089,0,0,0,0,5941601,'Taleris Dawngazer - Text 1'),
+(5941601,0,1,6,0,0,0,0,0,0,5941602,'Taleris Dawngazer - Question emote 1'),
+(5941601,4,17,59423,5941602,6,0,0,0,0,5941603,'Callscript - Pilgrim Gal''ressa - Text 1'),
+(5941602,0,0,0,0,2000000090,0,0,0,0,5941604,'Pilgrim Gal''ressa - Text 1'),
+(5941601,14,0,0,0,2000000091,0,0,0,0,5941605,'Taleris Dawngazer - Text 2'),
+(5941601,14,1,6,0,0,0,0,0,0,5941606,'Taleris Dawngazer - Question emote 2'),
+(5941602,24,0,0,0,2000000092,0,0,0,0,5941607,'Pilgrim Gal''ressa - Text 2'),
+(5941602,24,1,6,0,0,0,0,0,0,5941608,'Pilgrim Gal''ressa - Talk emote 1'),
+(5941601,34,0,0,0,2000000093,0,0,0,0,5941609,'Taleris Dawngazer - Text 3'),
+(5941601,34,1,25,0,0,0,0,0,0,5941610,'Taleris Dawngazer - Point emote 1'),
+(5941602,44,0,0,0,2000000094,0,0,0,0,5941611,'Pilgrim Gal''ressa - Text 3'),
+(5941602,44,1,274,0,0,0,0,0,0,5941612,'Pilgrim Gal''ressa - No emote 1'),
+(5941601,54,0,0,0,2000000095,0,0,0,0,5941613,'Taleris Dawngazer - Text 4'),
+(5941601,54,1,2,0,0,0,0,0,0,5941614,'Taleris Dawngazer - Bow emote 1');
+
+
+SET @GUID := 59416;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-652.276001,`position_y`=4158.760742,`position_z`=65.635201 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-650.868652,4136.510254,64.627731,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-651.313843,4137.990723,64.578445,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-651.313843,4137.990723,64.578445,300000,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-652.276001,4158.760742,65.635201,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-646.279968,4175.854492,68.506866,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-646.283630,4176.778320,68.506866,60000,0,5941601,100,0),
+(@GUID,@POINT := @POINT + '1',-650.848877,4160.087402,65.973137,0,0,0,100,0);
+
+-- Twinkle
+DELETE FROM `db_script_string` WHERE `entry` BETWEEN 2000000096 AND 2000000098;
+INSERT INTO `db_script_string` (`entry`,`content_default`) VALUES 
+(2000000096,'You''re such a good friend, Twinkle. You''d never leave me, would you?'),
+(2000000097,'It''s just you and me, Twinkle. Daddy''s not going to be coming home.'),
+(2000000098,'Did you find something fun to chase around, Twinkle? I bet you did!');
+
+DELETE FROM `waypoint_scripts` WHERE `id` BETWEEN 6196301 AND 6196306;
+INSERT INTO `waypoint_scripts` (`id`,`delay`,`command`,`datalong`,`datalong2`,`dataint`,`x`,`y`,`z`,`o`,`guid`,`comment`) VALUES
+(6196301,0,17,57796,6196304,6,0,0,0,0,6196302,'Callscript - Magistrix Carinda - Text 1'),
+(6196302,0,17,57796,6196305,6,0,0,0,0,6196303,'Callscript - Magistrix Carinda - Text 2'),
+(6196303,0,17,57796,6196306,6,0,0,0,0,6196304,'Callscript - Magistrix Carinda - Text 3'),
+(6196304,0,0,0,0,2000000096,0,0,0,0,6196305,'Magistrix Carinda - Text 1'),
+(6196304,0,1,16,0,0,0,0,0,0,6196306,'Magistrix Carinda - Kneel emote 1'),
+(6196305,0,0,0,0,2000000097,0,0,0,0,6196307,'Magistrix Carinda - Text 2'),
+(6196305,0,1,16,0,0,0,0,0,0,6196308,'Magistrix Carinda - Kneel emote 2'),
+(6196306,0,0,0,0,2000000098,0,0,0,0,6196309,'Magistrix Carinda - Text 3'),
+(6196306,0,1,16,0,0,0,0,0,0,6196310,'Magistrix Carinda - Kneel emote 3');
+
+SET @GUID := 61963;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-597.483459,`position_y`=4176.919922,`position_z`=64.806366 WHERE `guid`=@GUID;
+UPDATE `creature_template` SET `speed`=1 WHERE `entry`= 17230;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-597.483459,4176.919922,64.806366,0,0,6196301,100,0), -- 1
+(@GUID,@POINT := @POINT + '1',-607.508484,4164.558594,63.904766,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-619.706482,4165.854492,62.840508,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-627.676941,4189.602539,58.413509,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-618.361877,4178.473633,61.900745,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-597.483459,4176.919922,64.806366,300000,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-597.483459,4176.919922,64.806366,0,0,6196302,100,0), -- 2
+(@GUID,@POINT := @POINT + '1',-607.508484,4164.558594,63.904766,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-619.706482,4165.854492,62.840508,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-627.676941,4189.602539,58.413509,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-618.361877,4178.473633,61.900745,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-597.483459,4176.919922,64.806366,300000,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-597.483459,4176.919922,64.806366,0,0,6196303,100,0), -- 3
+(@GUID,@POINT := @POINT + '1',-607.508484,4164.558594,63.904766,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-619.706482,4165.854492,62.840508,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-627.676941,4189.602539,58.413509,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-618.361877,4178.473633,61.900745,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-597.483459,4176.919922,64.806366,300000,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-596.444397,4158.540527,65.215218,0,0,0,100,0), -- Inn
+(@GUID,@POINT := @POINT + '1',-589.353699,4154.989258,68.131844,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-577.918457,4149.429199,68.129044,10000,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-595.511719,4159.074707,65.329483,0,1,0,100,0),
+(@GUID,@POINT := @POINT + '1',-598.438538,4176.257324,64.730957,0,1,0,100,0),
+(@GUID,@POINT := @POINT + '1',-597.483459,4176.919922,64.806366,300000,0,0,100,0);
+
+
+
+-- ----------------------------------------------------------
+-- Stonebreaker Hold
+-- https://github.com/Looking4Group/L4G_Core/issues/2938
+-- ----------------------------------------------------------
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=74300; -- Thadok
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=74327; -- Kugnar
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=68139; -- Stonebreaker Grunt (Should patrol around tower)
+UPDATE `creature` SET `spawndist`=0,`MovementType`=0 WHERE `guid`=66944; -- Keb'ezil
+
+
+
+-- ----------------------------------------------------------
+-- Honor Hold
+-- https://github.com/Looking4Group/L4G_Core/issues/1669
+-- ----------------------------------------------------------
+
+-- These two defenders should always be male
+-- UPDATE `creature` SET `modelid` = 16387 WHERE `guid` IN(72636,72637); -- This method didn't work. Forcing with EventAI instead:
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN(-72636,-72637);
+INSERT INTO `creature_ai_scripts` VALUES
+('72636','-72636','11','0','100','0','0','0','0','0','3','-1','16387','0','0','0','0','0','0','0','0','0','Honor Hold Defender - Force male model'),
+('72637','-72637','11','0','100','0','0','0','0','0','3','-1','16387','0','0','0','0','0','0','0','0','0','Honor Hold Defender - Force male model');
+
+
+DELETE FROM `db_script_string` WHERE `entry` BETWEEN 2000000084 AND 2000000088;
+INSERT INTO `db_script_string` (`entry`,`content_default`) VALUES 
+(2000000084,'Twenty years we''ve been stranded in this hell-hole. It''s all I can do not to run screaming through that blasted Portal. I want to see my loved ones again! I want them to know I''m still alive.'),
+(2000000085,'I feel the same. But there''s still a job to do out here. It''ll all be for naught if this evil finds its way back to Azeroth - back to our homes. We just have to hold on a while longer. Trust Dannath - he''s never let us down before.'),
+(2000000086,'It''s not him I''m worried about. It''s all these new rookies around here - and those creepy purple elves they brought with ''em. They ain''t even proved themselves yet.'),
+(2000000087,'C''mon - you sound like a grumpy old man.'),
+(2000000088,'I am a grumpy old man!');
+
+
+DELETE FROM `waypoint_scripts` WHERE `id` BETWEEN 7263601 AND 7263605;
+INSERT INTO `waypoint_scripts` (`id`,`delay`,`command`,`datalong`,`datalong2`,`dataint`,`x`,`y`,`z`,`o`,`guid`,`comment`) VALUES
+(7263601,0,0,0,0,2000000084,0,0,0,0,7263601,'Honor Hold Defender Speech 1'),
+(7263601,1,1,1,0,0,0,0,0,0,7263602,'Honor Hold Defender Talk Emote'),
+(7263601,10,1,5,0,0,0,0,0,0,7263603,'Honor Hold Defender Exclamation Emote'),
+(7263601,25,17,72637,7263602,6,0,0,0,0,7263704,'Call speech for other defender 1'),
+(7263602,0,0,0,0,2000000085,0,0,0,0,7263605,'Honor Hold Defender Speech 2'),
+(7263602,1,1,1,0,0,0,0,0,0,7263606,'Honor Hold Defender Talk Emote'),
+(7263602,10,1,1,0,0,0,0,0,0,7263607,'Honor Hold Defender Talk Emote'),
+(7263602,25,17,72636,7263603,6,0,0,0,0,7263708,'Call speech for other defender 2'),
+(7263603,0,0,0,0,2000000086,0,0,0,0,7263609,'Honor Hold Defender Speech 3'),
+(7263603,0,1,1,0,0,0,0,0,0,7263610,'Honor Hold Defender Talk Emote'),
+(7263603,15,17,72637,7263604,6,0,0,0,0,7263711,'Call speech for other defender 3'),
+(7263604,0,0,0,0,2000000087,0,0,0,0,7263612,'Honor Hold Defender Speech 4'),
+(7263604,0,1,1,0,0,0,0,0,0,7263613,'Honor Hold Defender Talk Emote'),
+(7263604,7,17,72636,7263605,6,0,0,0,0,7263714,'Call speech for other defender 3'),
+(7263605,0,0,0,0,2000000088,0,0,0,0,7263615,'Honor Hold Defender Speech 5'),
+(7263605,0,1,5,0,0,0,0,0,0,7263616,'Honor Hold Defender Exclamation Emote');
+
+SET @GUID := 72636;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,1,-665.297,2662.18,88.9793,0,0,7263601,100,0), -- Start speech
+(@GUID,2,-665.297,2662.18,88.9793,300000,0,0,100,0); -- Wait for 5 minutes
+
+-- ----------------------------------------------------------
+-- Scout Vanura
+-- https://github.com/Looking4Group/L4G_Core/issues/2941
+-- ----------------------------------------------------------
+
+-- Waypoints from https://github.com/Looking4Group/L4G_Core/blob/cf737c5cf4e0288fa9bb200036ccc1db43a18e20/sql/updates/world/067_U_27.09.16.sql
+-- I just modified it slightly and removed some duplicate waypoints.
+SET @GUID := 57800;
+UPDATE `creature` SET `MovementType`='2' WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES (57800, 1, 192.09, 4333.34, 116.444, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (57800, 2, 166.33, 4333.04, 111.658, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (57800, 3, 122.918, 4333.39, 104.867, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (57800, 4, 90.3435, 4333.23, 101.483, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (57800, 5, 74.0635, 4333.11, 101.473, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (57800, 6, 59.6808, 4332.9, 96.1607, 10000, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (57800, 7, 73.1186, 4333.16, 101.055, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (57800, 8, 90.3435, 4333.23, 101.483, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (57800, 9, 122.918, 4333.39, 104.867, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (57800, 10, 154.94, 4333.25, 107.505, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (57800, 11, 166.33, 4333.04, 111.658, 0, 0, 0, 100, 0);
