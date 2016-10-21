@@ -2793,7 +2793,7 @@ INSERT INTO `waypoint_data` VALUES (200125, 1, 12631.3193, -6915.8442, 4.6, 6000
 INSERT INTO `waypoint_data` VALUES (200125, 2, 12585.5830, -6916.2592, 4.6, 3000, 0, 0, 100, 0);
 
 -- -10501- -10999
-DELETE FROM `creature_ai_texts` WHERE `entry` BETWEEN -10501 AND -10504;
+DELETE FROM `creature_ai_texts` WHERE `entry` IN (-10501,-10502,-10503,-10504);
 INSERT INTO `creature_ai_texts` VALUES
 (-10501,'You fear death? Far worse awaits you, should you fail! Slay the mortals!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'Emissary of Hate (25003) on Spawn'),
 (-10502,'Kil\'jaeden\'s patience wears thin! Destroy the naaru\'s lackeys once and for all!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'Emissary of Hate (25003) on Spawn'),
