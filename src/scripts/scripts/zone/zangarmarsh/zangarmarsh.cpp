@@ -96,7 +96,7 @@ bool GossipSelect_npcs_ashyen_and_keleth(Player *player, Creature *creature, uin
                     DoScriptText(GOSSIP_REWARD_BLESS, creature);
                     break;
                 case REP_HONORED:
-                    creature->CastSpell(player, 31812, true);
+                    creature->CastSpell(player, 31814, true);
                     DoScriptText(GOSSIP_REWARD_BLESS, creature);
                     break;
                 case REP_REVERED:
@@ -104,7 +104,7 @@ bool GossipSelect_npcs_ashyen_and_keleth(Player *player, Creature *creature, uin
                     DoScriptText(GOSSIP_REWARD_BLESS, creature);
                     break;
                 case REP_EXALTED:
-                    creature->CastSpell(player, 31814, true);
+                    creature->CastSpell(player, 31812, true);
                     DoScriptText(GOSSIP_REWARD_BLESS, creature);
                     break;
             }
