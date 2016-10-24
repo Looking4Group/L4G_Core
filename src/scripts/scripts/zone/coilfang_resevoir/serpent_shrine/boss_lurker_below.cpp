@@ -273,19 +273,17 @@ struct boss_the_lurker_belowAI : public BossAI
 
     void JustDied(Unit* Killer)
     {
-        instance->SetData(DATA_LURKER_EVENT, DONE);
+        instance->SetData(DATA_LURKER_EVENT, SPECIAL);
         me->RemoveAurasDueToSpell(SPELL_SUBMERGE);
 
-        //We're going to assume pInstance is null - SO DO NOT ACCESS IT.
-        Map *map = m_creature->GetMap();
-
-        //NOTE: We think pInstance is SOMETIMES NULL - therefore this solution DOES NOT USE pInstance.
         if (Map *map = m_creature->GetMap())
         {
-            //Search distance is 999 yards, which is stupid, but it makes sure it will find the object.
             if (GameObject *go = GetClosestGameObjectWithEntry(m_creature, 185115, 999.0f)) 
                 go->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_LOCKED);
         }
+
+        if ((instance->GetData(DATA_HYDROSS_EVENT) == SPECIAL) && (instance->GetData(DATA_LURKER_EVENT) == SPECIAL) && (instance->GetData(DATA_LEOTHERAS_EVENT) == SPECIAL) && (instance->GetData(DATA_KARATHRESS_EVENT) == SPECIAL) && (instance->GetData(DATA_MOROGRIM_EVENT) == SPECIAL))
+            instance->SetData(DATA_UNLOCK_VASHJ_DOOR, SPECIAL);
     }
 
     void SummonAdds()
