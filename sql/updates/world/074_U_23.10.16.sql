@@ -49,3 +49,6 @@ INSERT INTO `game_event_creature` VALUES
 
 -- Stairs of Destiny NPCs should not be attackable
 UPDATE `creature_template` SET `unit_flags`=`unit_flags`|2 WHERE `entry` IN (20487, 20513);
+
+-- Searing Elemental (Fire Elemental)
+UPDATE `creature_template` SET `resistance2` = -1 WHERE `entry` = 20514;
