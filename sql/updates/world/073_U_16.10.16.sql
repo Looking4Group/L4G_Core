@@ -1376,22 +1376,73 @@ INSERT INTO `pool_creature` VALUES
 (99255, 1180, 0, 'Goretooth (17144)'),
 (99256, 1180, 0, 'Goretooth (17144)');
 
-UPDATE `pool_creature` SET `pool_entry` = 1060 WHERE `pool_entry` = 30031;
+DELETE FROM `pool_creature` WHERE `pool_entry`  = 30031;
 DELETE FROM `pool_template` WHERE `entry` = 30031;
-UPDATE `pool_creature` SET `pool_entry` = 1065 WHERE `pool_entry` = 30032;
+DELETE FROM `pool_creature` WHERE `pool_entry`  = 1060;
+INSERT INTO `pool_creature` VALUES
+(86606,1060,0,'Hed\'mush the Rotting (10821)'),
+(98718,1060,0,'Hed\'mush the Rotting (10821)'),
+(98719,1060,0,'Hed\'mush the Rotting (10821)'),
+(98720,1060,0,'Hed\'mush the Rotting (10821)');
+
+DELETE FROM `pool_creature` WHERE `pool_entry`  = 30032;
 DELETE FROM `pool_template` WHERE `entry` = 30032;
-UPDATE `pool_creature` SET `pool_entry` = 1066 WHERE `pool_entry` = 30033;
+DELETE FROM `pool_creature` WHERE `pool_entry`  = 1065;
+INSERT INTO `pool_creature` VALUES
+(92220,1065,0,'Lord Darkscythe (10826)'),
+(98736,1065,0,'Lord Darkscythe (10826)'),
+(98737,1065,0,'Lord Darkscythe (10826)'),
+(98738,1065,0,'Lord Darkscythe (10826)'),
+(98739,1065,0,'Lord Darkscythe (10826)');
+
+DELETE FROM `pool_creature` WHERE `pool_entry`  = 30033;
 DELETE FROM `pool_template` WHERE `entry` = 30033;
-UPDATE `pool_creature` SET `pool_entry` = 1067 WHERE `pool_entry` = 30034;
+DELETE FROM `pool_creature` WHERE `pool_entry`  = 1066;
+INSERT INTO `pool_creature` VALUES
+(86755,1066,0,'Deathspeaker Selendre (10827)'),
+(98740,1066,0,'Deathspeaker Selendre (10827)');
+
+DELETE FROM `pool_creature` WHERE `pool_entry`  = 30034;
 DELETE FROM `pool_template` WHERE `entry` = 30034;
-UPDATE `pool_creature` SET `pool_entry` = 1094 WHERE `pool_entry` = 30035;
+DELETE FROM `pool_creature` WHERE `pool_entry`  = 1067;
+INSERT INTO `pool_creature` VALUES
+(92657,1067,0,'Lynnia Abbendis (10828)'),
+(98741,1067,0,'Lynnia Abbendis (10828)'),
+(98742,1067,0,'Lynnia Abbendis (10828)');
+
+DELETE FROM `pool_creature` WHERE `pool_entry`  = 30035;
 DELETE FROM `pool_template` WHERE `entry` = 30035;
-UPDATE `pool_creature` SET `pool_entry` = 1103 WHERE `pool_entry` = 30036;
+DELETE FROM `pool_creature` WHERE `pool_entry`  = 1094;
+INSERT INTO `pool_creature` VALUES
+(45220,1094,0,'Seeker Aqualon (14269)'),
+(98809,1094,0,'Seeker Aqualon (14269)'),
+(98810,1094,0,'Seeker Aqualon (14269)');
+
+DELETE FROM `pool_creature` WHERE `pool_entry`  = 30036;
 DELETE FROM `pool_template` WHERE `entry` = 30036;
-UPDATE `pool_creature` SET `pool_entry` = 1176 WHERE `pool_entry` = 30037;
+DELETE FROM `pool_creature` WHERE `pool_entry`  = 1103;
+INSERT INTO `pool_creature` VALUES
+(86602,1103,0,'Scald (8281)'),
+(98874,1103,0,'Scald (8281)');
+
+DELETE FROM `pool_creature` WHERE `pool_entry`  = 30037;
 DELETE FROM `pool_template` WHERE `entry` = 30037;
-UPDATE `pool_creature` SET `pool_entry` = 1177 WHERE `pool_entry` = 30038;
+DELETE FROM `pool_creature` WHERE `pool_entry`  = 1176;
+INSERT INTO `pool_creature` VALUES
+(99238,1176,0,'Speaker Mar\'grom (18693)'),
+(99239,1176,0,'Speaker Mar\'grom (18693)'),
+(99240,1176,0,'Speaker Mar\'grom (18693)'),
+(99241,1176,0,'Speaker Mar\'grom (18693)'),
+(118822,1176,0,'Speaker Mar\'grom (18693)');
+
+DELETE FROM `pool_creature` WHERE `pool_entry`  = 30038;
 DELETE FROM `pool_template` WHERE `entry` = 30038;
+DELETE FROM `pool_creature` WHERE `pool_entry`  = 1177;
+INSERT INTO `pool_creature` VALUES
+(26583,1177,0,'Mekthorg the Wild (18677)'),
+(99243,1177,0,'Mekthorg the Wild (18677)'),
+(99244,1177,0,'Mekthorg the Wild (18677)'),
+(99245,1177,0,'Mekthorg the Wild (18677)');
 
 DELETE FROM `creature` WHERE `id` = 18683;
 DELETE FROM `pool_template` WHERE `entry` IN (1181,1185);
