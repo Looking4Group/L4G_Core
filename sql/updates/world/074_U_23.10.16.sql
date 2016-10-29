@@ -80,3 +80,6 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('2123018','21230','27','95','100','3','38647','1','5000','5000','11','38647','0','32','0','0','0','0','0','0','0','0','Greyheart Nether-Mage - Cast Arcane Destruction on Missing Buff (Phase 5)'),
 ('2123019','21230','0','0','75','3','6000','18000','17000','24000','11','38642','0','1','0','0','0','0','0','0','0','0','Greyheart Nether-Mage - Cast Blink'),
 ('2123020','21230','7','0','100','2','0','0','0','0','30','1','3','5','0','0','0','0','0','0','0','0','Greyheart Nether-Mage - Random Phase Select on Evade');
+
+-- League of Arathor Emissary
+UPDATE `creature_template` SET `unit_flags`=`unit_flags`|4 WHERE `entry` = 14991;
