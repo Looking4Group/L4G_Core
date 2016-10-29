@@ -273,17 +273,8 @@ struct boss_the_lurker_belowAI : public BossAI
 
     void JustDied(Unit* Killer)
     {
-        instance->SetData(DATA_LURKER_EVENT, SPECIAL);
+        instance->SetData(DATA_LURKER_EVENT, DONE);
         me->RemoveAurasDueToSpell(SPELL_SUBMERGE);
-
-        if (Map *map = m_creature->GetMap())
-        {
-            if (GameObject *go = GetClosestGameObjectWithEntry(m_creature, 185115, 999.0f)) 
-                go->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_LOCKED);
-        }
-
-        if ((instance->GetData(DATA_HYDROSS_EVENT) == SPECIAL) && (instance->GetData(DATA_LURKER_EVENT) == SPECIAL) && (instance->GetData(DATA_LEOTHERAS_EVENT) == SPECIAL) && (instance->GetData(DATA_KARATHRESS_EVENT) == SPECIAL) && (instance->GetData(DATA_MOROGRIM_EVENT) == SPECIAL))
-            instance->SetData(DATA_UNLOCK_VASHJ_DOOR, SPECIAL);
     }
 
     void SummonAdds()
