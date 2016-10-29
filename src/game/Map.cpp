@@ -1916,13 +1916,24 @@ void Map::ScriptsProcess()
                     break;
                 }
 
-                if (!sWaypointMgr.GetPath(step.script->datalong))
+                if (!sWaypointMgr.GetPath(step.script->datalong) && step.script->datalong != 0)
                 {
                     sLog.outLog(LOG_DEFAULT, "ERROR: SCRIPT_COMMAND_START_MOVE source mover has an invallid path, skipping.", step.script->datalong2);
                     break;
                 }
-
-                dynamic_cast<Unit*>(source)->GetMotionMaster()->MovePath(step.script->datalong, step.script->datalong2);
+                // If path ID is 0, stop movement.
+                if (step.script->datalong == 0)
+                {
+                    dynamic_cast<Unit*>(source)->GetMotionMaster()->MoveIdle();
+                    break;
+                }
+                else
+                {
+                    // Stop moving on old path and load the new one
+                    dynamic_cast<Unit*>(source)->GetMotionMaster()->MovementExpired();
+                    dynamic_cast<Unit*>(source)->GetMotionMaster()->MovePath(step.script->datalong, step.script->datalong2);
+                    break;
+                }
                 break;
             }
 

@@ -122,7 +122,18 @@ struct boss_morogrim_tidewalkerAI : public ScriptedAI
     void JustDied(Unit *victim)
     {
         DoScriptText(SAY_DEATH, m_creature);
-        pInstance->SetData(DATA_MOROGRIM_EVENT, DONE);
+        pInstance->SetData(DATA_MOROGRIM_EVENT, SPECIAL);
+
+        if (Map *map = m_creature->GetMap())
+        {
+            //Search distance is 999 yards, which is stupid, but it makes sure it will find the object.
+            if (GameObject *go = GetClosestGameObjectWithEntry(m_creature, 185118, 999.0f)) 
+                go->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_LOCKED);
+        }
+
+        if ((pInstance->GetData(DATA_HYDROSS_EVENT) == SPECIAL) && (pInstance->GetData(DATA_LURKER_EVENT) == SPECIAL) && (pInstance->GetData(DATA_LEOTHERAS_EVENT) == SPECIAL) && (pInstance->GetData(DATA_KARATHRESS_EVENT) == SPECIAL) && (pInstance->GetData(DATA_MOROGRIM_EVENT) == SPECIAL))
+            pInstance->SetData(DATA_UNLOCK_VASHJ_DOOR, SPECIAL);
+
     }
 
     void EnterCombat(Unit *who)

@@ -53,6 +53,7 @@ struct instance_karazhan : public ScriptedInstance
     uint64 MedivhGUID;
     uint64 BarnesGUID;
     uint64 BlizzardGUID;
+    uint64 ChessTriggerGUID;
     uint32 CheckTimer;
 
 

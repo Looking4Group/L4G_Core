@@ -3718,10 +3718,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->EffectDieSides[0] = 1501;
                 spellInfo->Targets = 64;
                 spellInfo->EffectImplicitTargetA[0] = 16;
-                break;
-            case 37029: //Kael'Thas Telonicus: Remove DR from remote toy by setting mechanic to 0
-                spellInfo->Mechanic = 0;
-                break;
+                break;            
             case 30834: //Prince infernals targeting
                 spellInfo->Targets = TARGET_UNIT_TARGET_ANY;
                 spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ANY;
@@ -3743,6 +3740,30 @@ void SpellMgr::LoadSpellCustomAttr()
             case 34154:
                 spellInfo->EffectBasePoints[0] = 18;
                 spellInfo->EffectDieSides[0] = 5;
+                break;
+            case 24740: //Hallowed Wand costuomes
+            case 24741:
+            case 24723:
+            case 24724:
+            case 30167:
+            case 24720:
+            case 24708:
+            case 24709:
+            case 24717:
+            case 24710:
+            case 24711:
+            case 24718:
+            case 42365:
+            case 24712:
+            case 24713:
+            case 24719:
+            case 24735:
+            case 24736:
+            case 24737:
+            case 51926:
+            case 24732:
+            case 24733:
+                spellInfo->Mechanic = 0;
                 break;
             default:
                 break;
