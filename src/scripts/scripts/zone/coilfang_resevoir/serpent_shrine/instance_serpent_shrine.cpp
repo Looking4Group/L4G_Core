@@ -36,7 +36,6 @@ EndScriptData */
 ObjectGuid ConsoleGuids[5]; 
 ObjectGuid BridgeConsoleGuid;
 
-
 bool GOUse_go_vashj_console_access_panel(Player *player, GameObject* go)
 {
     ScriptedInstance* instance = (ScriptedInstance*) go->GetInstanceData();
@@ -44,17 +43,33 @@ bool GOUse_go_vashj_console_access_panel(Player *player, GameObject* go)
     if (!instance)
         return false;
 
-    if (!go)
-        return false;
-
-    if (go->GetGUID() == BridgeConsoleGuid) 
+    if (go->GetEntry() == CONSOLE_HYDROSS && (instance->GetData(DATA_HYDROSS_EVENT) == DONE || instance->GetData(DATA_HYDROSS_EVENT) == SPECIAL))
     {
-        instance->SetData(DATA_BRIDGE_CONSOLE, DONE);
-        player->TextEmote("opened the door and created the platform to Lady Vashj.");
+        player->TextEmote("activated the console next to Hydross the Unstable.");
+        instance->SetData(DATA_HYDROSS_EVENT, SPECIAL);
     }
-    else
+
+    if (go->GetEntry() == CONSOLE_LURKER && (instance->GetData(DATA_LURKER_EVENT) == DONE || instance->GetData(DATA_LURKER_EVENT) == SPECIAL))
     {
-        player->TextEmote("clicked the console.");
+        player->TextEmote("activated the console next to The Lurker Below.");
+        instance->SetData(DATA_LURKER_EVENT, SPECIAL);
+    }
+    if (go->GetEntry() == CONSOLE_LEOTHERAS && (instance->GetData(DATA_LEOTHERAS_EVENT) == DONE || instance->GetData(DATA_LEOTHERAS_EVENT) == SPECIAL))
+    {
+        player->TextEmote("activated the console next to Leotheras the Blind.");
+        instance->SetData(DATA_LEOTHERAS_EVENT, SPECIAL);
+    }
+
+    if (go->GetEntry() == CONSOLE_KARATHRESS && (instance->GetData(DATA_KARATHRESS_EVENT) == DONE || instance->GetData(DATA_KARATHRESS_EVENT) == SPECIAL))
+    {
+        player->TextEmote("activated the console next to Fathom-Lord Karathress.");
+        instance->SetData(DATA_KARATHRESS_EVENT, SPECIAL);
+    }
+
+    if (go->GetEntry() == CONSOLE_MOROGRIM && (instance->GetData(DATA_MOROGRIM_EVENT) == DONE || instance->GetData(DATA_MOROGRIM_EVENT) == SPECIAL))
+    {
+        player->TextEmote("activated the console next to Morogrim Tidewalker.");
+        instance->SetData(DATA_MOROGRIM_EVENT, SPECIAL);
     }
 
     return true;
@@ -92,8 +107,6 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
     uint32 WaterCheckTimer;
     uint32 Water;
     uint32 TrashCheckTimer;
-    uint32 VashjBridgeCheckTimer; // remove this and any related code at the earliest opportunity
-    bool VashjBridgeOpen; // remove this and any related code at the earliest opportunity
 
     bool ShieldGeneratorDeactivated[4];
     bool DoSpawnFrenzy;
@@ -129,7 +142,6 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
         BridgeConsoleGuid = 0;
         memset(&BridgePartGuids, 0, sizeof(BridgePartGuids));
      
-
         Water = WATERSTATE_FRENZY;
         ShieldGeneratorDeactivated[0] = false;
         ShieldGeneratorDeactivated[1] = false;
@@ -137,17 +149,6 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
         ShieldGeneratorDeactivated[3] = false;
         WaterCheckTimer = 500;
         TrashCheckTimer = 10000;
-
-        VashjBridgeCheckTimer = 10000;
-        VashjBridgeOpen = false;
-    }
-
-    void UnlockGameObject(uint64 GameObjectGUID)
-    {
-        if (GameObject *go = instance->GetGameObject(GameObjectGUID)) 
-        {
-            go->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_LOCKED);
-        }
     }
 
     void OnObjectCreate(GameObject *go)
@@ -155,49 +156,40 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
         uint32 data = NOT_STARTED;
         switch (go->GetEntry())
         {
-            case 185114: // Serpentshrine Console [Hydross the Lurker]
+            case CONSOLE_HYDROSS: // Serpentshrine Console [Hydross the Unstable]
                 ConsoleGuids[0] = go->GetGUID();               
-                data = GetData(DATA_HYDROSS_EVENT);
-                if ((data == DONE) || (data == SPECIAL))
-                    UnlockGameObject(ConsoleGuids[0]);
                 break;
-            case 185115: // Serpentshrine Console [The Lurker Below]
+            case CONSOLE_LURKER: // Serpentshrine Console [The Lurker Below]
                 ConsoleGuids[1] = go->GetGUID();
-                data = GetData(DATA_LURKER_EVENT);
-                if ((data == DONE) || (data == SPECIAL))
-                    UnlockGameObject(ConsoleGuids[1]);
                 break;
-            case 185116: // Serpentshrine Console [Leotheras the Blind]
+            case CONSOLE_LEOTHERAS: // Serpentshrine Console [Leotheras the Blind]
                 ConsoleGuids[2] = go->GetGUID();
-                data = GetData(DATA_LEOTHERAS_EVENT);
-                if ((data == DONE) || (data == SPECIAL))
-                    UnlockGameObject(ConsoleGuids[2]);
                 break;
-            case 185117: // Serpentshrine Console [Fathom-Lord Karathress]
+            case CONSOLE_KARATHRESS: // Serpentshrine Console [Fathom-Lord Karathress]
                 ConsoleGuids[3] = go->GetGUID();
-                data = GetData(DATA_KARATHRESS_EVENT);
-                if ((data == DONE) || (data == SPECIAL))
-                    UnlockGameObject(ConsoleGuids[3]);
                 break;
-            case 185118: // Serpentshrine Console [Morogrim Tidewalker]
+            case CONSOLE_MOROGRIM: // Serpentshrine Console [Morogrim Tidewalker]
                 ConsoleGuids[4] = go->GetGUID();
-                data = GetData(DATA_MOROGRIM_EVENT);
-                if ((data == DONE) || (data == SPECIAL))
-                    UnlockGameObject(ConsoleGuids[4]);
                 break;
-            case 184568: // Lady Vashj Bridge Console
+            case CONSOLE_BRIDGE: // Lady Vashj Bridge Console
                 BridgeConsoleGuid = go->GetGUID();
                 if ((GetData(DATA_HYDROSS_EVENT) == SPECIAL) && (GetData(DATA_LURKER_EVENT) == SPECIAL) && (GetData(DATA_LEOTHERAS_EVENT) == SPECIAL) && (GetData(DATA_KARATHRESS_EVENT) == SPECIAL) && (GetData(DATA_MOROGRIM_EVENT) == SPECIAL))
-                    UnlockGameObject(BridgeConsoleGuid); 
+                    HandleGameObject(0, true, go);
                 break;
             case 184203: // Doodad_Coilfang_Raid_Bridge_Part01
                 BridgePartGuids[0] = go->GetGUID();
+                if ((GetData(DATA_HYDROSS_EVENT) == SPECIAL) && (GetData(DATA_LURKER_EVENT) == SPECIAL) && (GetData(DATA_LEOTHERAS_EVENT) == SPECIAL) && (GetData(DATA_KARATHRESS_EVENT) == SPECIAL) && (GetData(DATA_MOROGRIM_EVENT) == SPECIAL))
+                    HandleGameObject(0, true, go);
                 break;
             case 184204: // Doodad_Coilfang_Raid_Bridge_Part02
                 BridgePartGuids[1] = go->GetGUID();
+                if ((GetData(DATA_HYDROSS_EVENT) == SPECIAL) && (GetData(DATA_LURKER_EVENT) == SPECIAL) && (GetData(DATA_LEOTHERAS_EVENT) == SPECIAL) && (GetData(DATA_KARATHRESS_EVENT) == SPECIAL) && (GetData(DATA_MOROGRIM_EVENT) == SPECIAL))
+                    HandleGameObject(0, true, go);
                 break;
             case 184205: // Doodad_Coilfang_Raid_Bridge_Part03
                 BridgePartGuids[2] = go->GetGUID();
+                if ((GetData(DATA_HYDROSS_EVENT) == SPECIAL) && (GetData(DATA_LURKER_EVENT) == SPECIAL) && (GetData(DATA_LEOTHERAS_EVENT) == SPECIAL) && (GetData(DATA_KARATHRESS_EVENT) == SPECIAL) && (GetData(DATA_MOROGRIM_EVENT) == SPECIAL))
+                    HandleGameObject(0, true, go);
                 break;
             case 184956: // Strange Pool
                 StrangePoolGuid = go->GetGUID();
@@ -277,18 +269,73 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
         switch(type)
         {
             case DATA_HYDROSS_EVENT:
+                if (data == SPECIAL)
+                {
+                    HandleGameObject(ConsoleGuids[0], true);
+                    if ((GetData(DATA_LURKER_EVENT) == SPECIAL) && (GetData(DATA_LEOTHERAS_EVENT) == SPECIAL) && (GetData(DATA_KARATHRESS_EVENT) == SPECIAL) && (GetData(DATA_MOROGRIM_EVENT) == SPECIAL))
+                    {
+                        HandleGameObject(BridgeConsoleGuid, true);
+                        HandleGameObject(BridgePartGuids[0], true);
+                        HandleGameObject(BridgePartGuids[1], true);
+                        HandleGameObject(BridgePartGuids[2], true);
+                    }
+                }
                 Encounters[0] = data;
                 break;
             case DATA_LURKER_EVENT:
+                if (data == SPECIAL)
+                {
+                    HandleGameObject(ConsoleGuids[0], true);
+                    if ((GetData(DATA_HYDROSS_EVENT) == SPECIAL) && (GetData(DATA_LEOTHERAS_EVENT) == SPECIAL) && (GetData(DATA_KARATHRESS_EVENT) == SPECIAL) && (GetData(DATA_MOROGRIM_EVENT) == SPECIAL))
+                    {
+                        HandleGameObject(BridgeConsoleGuid, true);
+                        HandleGameObject(BridgePartGuids[0], true);
+                        HandleGameObject(BridgePartGuids[1], true);
+                        HandleGameObject(BridgePartGuids[2], true);
+                    }
+                }
                 Encounters[1] = data;
                 break;
             case DATA_LEOTHERAS_EVENT:
+                if (data == SPECIAL)
+                {
+                    HandleGameObject(ConsoleGuids[0], true);
+                    if ((GetData(DATA_HYDROSS_EVENT) == SPECIAL) && (GetData(DATA_LURKER_EVENT) == SPECIAL) && (GetData(DATA_KARATHRESS_EVENT) == SPECIAL) && (GetData(DATA_MOROGRIM_EVENT) == SPECIAL))
+                    {
+                        HandleGameObject(BridgeConsoleGuid, true);
+                        HandleGameObject(BridgePartGuids[0], true);
+                        HandleGameObject(BridgePartGuids[1], true);
+                        HandleGameObject(BridgePartGuids[2], true);
+                    }
+                }
                 Encounters[2] = data;
                 break;
             case DATA_KARATHRESS_EVENT:
+                if (data == SPECIAL)
+                {
+                    HandleGameObject(ConsoleGuids[0], true);
+                    if ((GetData(DATA_HYDROSS_EVENT) == SPECIAL) && (GetData(DATA_LURKER_EVENT) == SPECIAL) && (GetData(DATA_LEOTHERAS_EVENT) == SPECIAL) && (GetData(DATA_MOROGRIM_EVENT) == SPECIAL))
+                    {
+                        HandleGameObject(BridgeConsoleGuid, true);
+                        HandleGameObject(BridgePartGuids[0], true);
+                        HandleGameObject(BridgePartGuids[1], true);
+                        HandleGameObject(BridgePartGuids[2], true);
+                    }
+                }
                 Encounters[3] = data;
                 break;
             case DATA_MOROGRIM_EVENT:
+                if (data == SPECIAL)
+                {
+                    HandleGameObject(ConsoleGuids[0], true);
+                    if ((GetData(DATA_HYDROSS_EVENT) == SPECIAL) && (GetData(DATA_LURKER_EVENT) == SPECIAL) && (GetData(DATA_LEOTHERAS_EVENT) == SPECIAL) && (GetData(DATA_KARATHRESS_EVENT) == SPECIAL))
+                    {
+                        HandleGameObject(BridgeConsoleGuid, true);
+                        HandleGameObject(BridgePartGuids[0], true);
+                        HandleGameObject(BridgePartGuids[1], true);
+                        HandleGameObject(BridgePartGuids[2], true);
+                    }
+                }
                 Encounters[4] = data;
                 break;
             case DATA_VASHJ_EVENT:
@@ -309,18 +356,9 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
                 ShieldGeneratorDeactivated[2] = (data) ? true : false; break;
             case DATA_SHIELD_GENERATOR_FOUR:
                 ShieldGeneratorDeactivated[3] = (data) ? true : false; break;
-            case DATA_BRIDGE_CONSOLE:
-                HandleGameObject(BridgeConsoleGuid, true);
-                HandleGameObject(BridgePartGuids[0], true);
-                HandleGameObject(BridgePartGuids[1], true);
-                HandleGameObject(BridgePartGuids[2], true);
-                break;
             case DATA_LURKER_FISHING_EVENT:
                 LurkerFishingEvent = data;
                 break;
-            case DATA_UNLOCK_VASHJ_DOOR:
-                UnlockGameObject(BridgeConsoleGuid); 
-            break;
         }
 
         if (data == DONE || data == SPECIAL)
@@ -549,15 +587,14 @@ InstanceData* GetInstanceData_instance_serpentshrine_cavern(Map* map)
 void AddSC_instance_serpentshrine_cavern()
 {
     Script *newscript;
-
-    newscript = new Script;
-    newscript->Name = "instance_serpent_shrine";
-    newscript->GetInstanceData = &GetInstanceData_instance_serpentshrine_cavern;
-    newscript->RegisterSelf();
-
+    
     newscript = new Script;
     newscript->Name="GOUse_go_vashj_console_access_panel";
     newscript->pGOUse = &GOUse_go_vashj_console_access_panel;
     newscript->RegisterSelf();
 
+    newscript = new Script;
+    newscript->Name = "instance_serpent_shrine";
+    newscript->GetInstanceData = &GetInstanceData_instance_serpentshrine_cavern;
+    newscript->RegisterSelf();
 }
