@@ -1268,6 +1268,7 @@ GM.TrustedLevel   = 3
 #
 #     Visibility.Distance.ActiveObjectUpdate.Continents
 #     Visibility.Distance.ActiveObjectUpdate.Instances
+#     Visibility.Distance.ActiveObjectUpdate.Battlegrounds
 #        Range in which objects around active objects (not players) will be updated
 #
 #
@@ -1275,8 +1276,10 @@ GM.TrustedLevel   = 3
 
 Visibility.GroupMode = 0
 
-Visibility.Distance.ActiveObjectUpdate.Continents = 132
-Visibility.Distance.ActiveObjectUpdate.Instances = 132
+Visibility.Distance.ActiveObjectUpdate.Continents = 90
+Visibility.Distance.ActiveObjectUpdate.Instances = 120
+Visibility.Distance.ActiveObjectUpdate.Battlegrounds = 180
+
 
 ###################################################################################################################
 # MOVEMENT

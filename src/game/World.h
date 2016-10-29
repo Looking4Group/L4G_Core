@@ -767,6 +767,7 @@ class LOOKING4GROUP_EXPORT World
 
         static int32 GetActiveObjectUpdateDistanceOnContinents() { return m_activeObjectUpdateDistanceOnContinents; }
         static int32 GetActiveObjectUpdateDistanceInInstances() { return m_activeObjectUpdateDistanceInInstances; }
+        static int32 GetActiveObjectUpdateDistanceInBattlegrounds() { return m_activeObjectUpdateDistanceInBattlegrounds; }
 
         void ProcessCliCommands();
         void QueueCliCommand(CliCommandHolder::Print* zprintf, char const* input) { cliCmdQueue.add(new CliCommandHolder(input, zprintf)); }
@@ -899,6 +900,7 @@ class LOOKING4GROUP_EXPORT World
 
         static int32 m_activeObjectUpdateDistanceOnContinents;
         static int32 m_activeObjectUpdateDistanceInInstances;
+        static int32 m_activeObjectUpdateDistanceInBattlegrounds;
 
         static uint32 m_relocationLowerLimitSq;
         static uint32 m_relocationAINotifyDelay;
