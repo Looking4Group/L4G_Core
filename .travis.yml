@@ -5,7 +5,7 @@ dist: trusty
 
 language: cpp
 compiler:
-  - clang
+  - g++
 
 git:
   depth: 1
