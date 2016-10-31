@@ -42,3 +42,6 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('2124601','21246','9','0','50','2','6','30','0','0','11','38461','1','0','11','40602','1','0','0','0','0','0','Serpentshrine Sporebat - Cast Charge on Aggro'), -- 5 22120 -- 38461
 ('2124602','21246','9','0','100','3','0','5','15800','24000','11','38924','0','1','0','0','0','0','0','0','0','0','Serpentshrine Sporebat - Cast Spore Burst'),
 ('2124603','21246','0','0','100','3','10000','15000','10000','15000','11','38461','4','1','11','40602','4','1','0','0','0','0','Serpentshrine Sporebat - Cast Random Charge');
+
+-- Whirling Blade 23369 mob_whirling_blade
+UPDATE `creature_template` SET `modelid_A`='16946' WHERE `entry` = 23369;
