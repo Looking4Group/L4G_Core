@@ -473,6 +473,8 @@ enum RealmZone
 #define SCRIPT_COMMAND_PLAY_SOUND           18              // source = any object, target=any/player, datalong (sound_id), datalong2 (bitmask: 0/1=anyone/target, 0/2=with distance dependent, so 1|2 = 3 is target with distance dependent)
 #define SCRIPT_COMMAND_KILL                 19              // datalong removecorpse
 #define SCRIPT_COMMAND_SET_INST_DATA        20              // source = any, datalong = type, datalong2 = data
+#define SCRIPT_COMMAND_DESPAWN_SELF         21              // target/source = Creature, datalong = despawn delay
+#define SCRIPT_COMMAND_VISIBILITY_SET       22              // source = unit, datalong = Visibility State (VISIBILITY_OFF = 0, VISIBILITY_ON = 1, VISIBILITY_GROUP_STEALTH = 2, VISIBILITY_RESPAWN = 5)
 
 
 /// Storage class for commands issued for delayed execution
