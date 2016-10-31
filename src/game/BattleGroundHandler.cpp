@@ -493,6 +493,29 @@ void WorldSession::HandleBattleGroundPlayerPortOpcode(WorldPacket &recv_data)
                 queueSlot = _player->GetBattleGroundQueueIndex(bgQueueTypeId);
                 sBattleGroundMgr.BuildBattleGroundStatusPacket(&data, bg, _player->GetBGTeam(), queueSlot, STATUS_IN_PROGRESS, 0, bg->GetStartTime());
                 _player->SendPacketToSelf(&data);
+
+
+                //Prevent Queue Hopping.
+                for (int i=0; i < PLAYER_MAX_BATTLEGROUND_QUEUES; i++)
+                {
+                    //Check that we can correctly get the BG --type-- ID:
+                    if (BattleGroundQueueTypeId queueHopID = _player->GetBattleGroundQueueTypeId(i))
+                    {
+                        //Check we're in a queue for this BG:
+                        if (_player->InBattleGroundQueueForBattleGroundQueueType(queueHopID))
+                        {
+                            //Verify that we're not prematurely removing the BG queue we're about to accept:
+                            if (queueHopID != bgQueueTypeId)
+                            {
+                                _player->RemoveBattleGroundQueueId(queueHopID);
+                                //Important to set the bool to 'false' so it doesn't decrement invite count on that BG.
+                                sBattleGroundMgr.m_BattleGroundQueues[ queueHopID ].RemovePlayer(_player->GetGUID(), false);
+                            }
+                        }   
+                    }
+                }
+
+
                 // remove battleground queue status from BGmgr
                 sBattleGroundMgr.m_BattleGroundQueues[bgQueueTypeId].RemovePlayer(_player->GetGUID(), false);
                 // this is still needed here if battleground "jumping" shouldn't add deserter debuff
@@ -677,25 +700,25 @@ void WorldSession::HandleAreaSpiritHealerQueueOpcode(WorldPacket & recv_data)
     bg->AddPlayerToResurrectQueue(guid, _player->GetGUID());
 }
 
-void WorldSession::AnnounceArenaStart(uint8 arenatype, uint32 arenaRating, std::string teamName)
+void WorldSession::AnnounceArenaStart(uint8 arenatype)
 {    
     std::stringstream ss;
     switch (arenatype)
     {
     case 2:
-        ss << "2v2: ";
+        ss << "2v2 ";
         break;
     case 3:
-        ss << "3v3: ";
+        ss << "3v3 ";
         break;
     case 5:
-        ss << "5v5: ";
+        ss << "5v5 ";
         break;   
     default: 
         return;
     }
 
-    ss << "\"" <<teamName << "\" with rating " << arenaRating << " just queued!";
+    ss << "Team just queued!";
 
     sWorld.SendWorldTextForLevels(60, 70, ACC_DISABLED_BGANN, LANG_BG_START_ANNOUNCE, ss.str().c_str());
 }
@@ -832,13 +855,8 @@ void WorldSession::HandleBattleGroundArenaJoin(WorldPacket & recv_data)
         GroupQueueInfo * ginfo = sBattleGroundMgr.m_BattleGroundQueues[bgQueueTypeId].AddGroup(_player, bgTypeId, bgBracketId, arenatype, isRated, false, arenaRating, hiddenRating, ateamId);
         DEBUG_LOG("Battleground: arena join as group start");
         if (isRated) {
-            DEBUG_LOG("Battleground: arena team id %u, leader %s queued with rating %u for type %u", _player->GetArenaTeamId(arenaslot), _player->GetName(), arenaRating, arenatype);
-            
-            ateamId = _player->GetArenaTeamId(arenaslot);
-            ArenaTeam * at = sObjectMgr.GetArenaTeamById(ateamId);
-            if (at) {
-                AnnounceArenaStart(arenatype, arenaRating, at->GetName());
-            }
+                DEBUG_LOG("Battleground: arena team id %u, leader %s queued with rating %u for type %u", _player->GetArenaTeamId(arenaslot), _player->GetName(), arenaRating, arenatype);            
+                AnnounceArenaStart(arenatype);            
         }            
         for (GroupReference *itr = grp->GetFirstMember(); itr != NULL; itr = itr->next())
         {

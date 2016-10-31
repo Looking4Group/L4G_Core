@@ -872,6 +872,7 @@
     <ClInclude Include="..\..\src\scripts\scripts\guard\guard_ai.h" />
     <ClInclude Include="..\..\src\scripts\scripts\zone\aunchindoun\mana_tombs\def_mana_tombs.h" />
     <ClInclude Include="..\..\src\scripts\scripts\zone\blackrock_spire\def_blackrock_spire.h" />
+    <ClInclude Include="..\..\src\scripts\scripts\zone\coilfang_resevoir\slave_pens\slave_pens.h" />
     <ClInclude Include="..\..\src\scripts\scripts\zone\deadmines\def_deadmines.h" />
     <ClInclude Include="..\..\src\scripts\scripts\zone\gruuls_lair\def_gruuls_lair.h" />
     <ClInclude Include="..\..\src\scripts\scripts\zone\karazhan\chess_event.h" />

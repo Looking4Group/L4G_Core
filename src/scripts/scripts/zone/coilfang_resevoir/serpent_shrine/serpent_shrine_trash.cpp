@@ -253,8 +253,7 @@ struct mob_underbog_colossusAI : public ScriptedAI
     void UpdateAI(const uint32 diff)
     {
         if(!UpdateVictim())
-            return;
-
+            return;        
         switch(type)
         {
         case 0:

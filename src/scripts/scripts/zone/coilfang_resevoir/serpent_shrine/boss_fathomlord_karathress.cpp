@@ -230,8 +230,7 @@ struct boss_fathomlord_karathressAI : public ScriptedAI
     {
         DoScriptText(SAY_DEATH, m_creature);
 
-        if(pInstance)
-            pInstance->SetData(DATA_KARATHRESS_EVENT, DONE);
+        pInstance->SetData(DATA_KARATHRESS_EVENT, DONE);
 
         //support for quest 10944
         m_creature->SummonCreature(SEER_OLUM, OLUM_X, OLUM_Y, OLUM_Z, OLUM_O, TEMPSUMMON_TIMED_DESPAWN, 3600000);
@@ -308,8 +307,8 @@ struct boss_fathomlord_karathressAI : public ScriptedAI
         //CataclysmicBolt_Timer
         if(CataclysmicBolt_Timer < diff)
         {
-            //if there aren't other units, cast on the tank
-            if(Unit *target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_CATACLYSMIC_BOLT), true, m_creature->getVictimGUID()))
+            //Exlude targets without mana, if there aren't other units, cast on the tank
+            if(Unit *target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_CATACLYSMIC_BOLT), true, POWER_MANA))
                 DoCast(target, SPELL_CATACLYSMIC_BOLT);
             else
                 DoCast(m_creature->getVictim(), SPELL_CATACLYSMIC_BOLT);

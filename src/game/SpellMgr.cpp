@@ -2396,14 +2396,14 @@ void SpellMgr::LoadSpellChains()
 
     // Greater Blessing of Sanctuary I
     spell_id = 25899;
-    mSpellChains[spell_id].prev = 27168;    // BoS V
+    mSpellChains[spell_id].prev = 20914;    // BoS IV
     mSpellChains[spell_id].next = 27169;    // GBoS II
     mSpellChains[spell_id].first = 20911;   // BoS I
     mSpellChains[spell_id].last = 27169;    // GBoS II
-    mSpellChains[spell_id].rank = 6;
+    mSpellChains[spell_id].rank = 5;        // should not be 6 otherwise BoS V is parent spell
 
-    // link BoS V with GBoS I
-    mSpellChains[27168].next = spell_id;
+    // link BoS IV with GBoS I
+    mSpellChains[20914].next = spell_id;
 
     // Greater Blessing of Sanctuary II
     spell_id = 27169;
@@ -3602,8 +3602,11 @@ void SpellMgr::LoadSpellCustomAttr()
             case 29838: //Second Wind (Rank 2)
                 spellInfo->procFlags &= ~PROC_FLAG_ON_TAKE_PERIODIC;
                 break;
-            case 38971: //acid geysir - spell of ssc colosses
-                spellInfo->EffectBasePoints[0] = 2478;
+            case 38971: //acid geysir - spell of ssc underbog colossus
+                spellInfo->EffectBasePoints[0] = 2478;                
+            case 39032: //Initial Infection - spell of ssc underbog colossus
+            case 39044: //Summon Serpentshrine parasite - spell of ssc underbog colossus
+                spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_PLAYERS_ONLY;
                 break;
             case 39045: //SPELL_SUMMON_SERPENTSHRINE_PARASITE
                 spellInfo->AreaId = 3607;
@@ -3711,15 +3714,57 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 35181: //Al'ar prenerf divebomb
                 spellInfo->AttributesCu |= SPELL_ATTR_CU_SHARE_DAMAGE;
-                spellInfo->EffectBasePoints[0] = 28499; // Up to 30000 Damage
+                spellInfo->EffectBasePoints[0] = 58499; // Up to 60000 Damage
                 spellInfo->EffectDieSides[0] = 1501;
                 spellInfo->Targets = 64;
                 spellInfo->EffectImplicitTargetA[0] = 16;
+                break;            
+            case 30834: //Prince infernals targeting
+                spellInfo->Targets = TARGET_UNIT_TARGET_ANY;
+                spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ANY;
                 break;
-            case 37029: //Kael'Thas Telonicus: Remove DR from remote toy by setting mechanic to 0
+            case 30898: //Prince Phase 3 SWP
+                spellInfo->Targets = TARGET_UNIT_TARGET_ENEMY;
+                spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ENEMY;
+                spellInfo->EffectImplicitTargetB[0] = 0;
+                break;
+            case 33862: //Steam tonk Mortar explosion
+                spellInfo->EffectBasePoints[0] = 35;
+                spellInfo->EffectDieSides[0] = 11;
+                break;
+            case 25099: //Steam tonk detonation
+                spellInfo->EffectBasePoints[0] = 35;
+                spellInfo->EffectDieSides[0] = 11;
+                break;
+            case 24933: //Steam tonk cannon
+            case 34154:
+                spellInfo->EffectBasePoints[0] = 18;
+                spellInfo->EffectDieSides[0] = 5;
+                break;
+            case 24740: //Hallowed Wand costuomes
+            case 24741:
+            case 24723:
+            case 24724:
+            case 30167:
+            case 24720:
+            case 24708:
+            case 24709:
+            case 24717:
+            case 24710:
+            case 24711:
+            case 24718:
+            case 42365:
+            case 24712:
+            case 24713:
+            case 24719:
+            case 24735:
+            case 24736:
+            case 24737:
+            case 51926:
+            case 24732:
+            case 24733:
                 spellInfo->Mechanic = 0;
                 break;
-
             default:
                 break;
         }
@@ -3978,8 +4023,8 @@ bool SpellMgr::IsSpellAllowedInLocation(SpellEntry const *spellInfo,uint32 map_i
                 if (spellInfo->Id==45373)                    // Bloodberry Elixir
                     return zone_id==4075 || zone_id == 4080 || zone_id==4131;
                                   //swp                isle             tdm
-            }
-            if (mask & ELIXIR_UNSTABLE_MASK)
+            } //                               Blue Ogre Brew            Red Ogre Brew
+            if (mask & ELIXIR_UNSTABLE_MASK || spellInfo->Id == 41304 || spellInfo->Id == 41306)
             {
                 // in the Blade's Edge Mountains Plateaus and Gruul's Lair.
                 return zone_id ==3522 || map_id==565;

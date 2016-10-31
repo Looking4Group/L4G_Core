@@ -53,7 +53,13 @@ struct instance_karazhan : public ScriptedInstance
     uint64 MedivhGUID;
     uint64 BarnesGUID;
     uint64 BlizzardGUID;
+    uint64 ChessTriggerGUID;
     uint32 CheckTimer;
+
+
+    uint64 m_LowerRelayGuid;
+
+    std::vector<uint64> m_lInfernalTargetsGuidList;
 
     std::list<uint64> forChessList;
 
@@ -82,6 +88,10 @@ struct instance_karazhan : public ScriptedInstance
     void HandleInitCreatureState(Creature * mob);
 
     void Update(uint32 diff);
+
+    uint64 GetRelayGuid() { return m_LowerRelayGuid; }
+
+    void GetInfernalTargetsList(std::vector<uint64>& lList) { lList = m_lInfernalTargetsGuidList; }
 };
 
 #endif

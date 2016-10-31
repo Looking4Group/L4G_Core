@@ -1019,6 +1019,8 @@ class LOOKING4GROUP_IMPORT_EXPORT Unit : public WorldObject
 
         void SendDamageLog(DamageLog *damageInfo);
 
+        bool IsElgibleForLeashing(DamageLog *damageInfo, DamageEffectType damagetype, SpellEntry const *spellProto = NULL);
+
         uint32 DealDamage(DamageLog *damageInfo, DamageEffectType damagetype = DIRECT_DAMAGE, SpellEntry const *spellProto = NULL, bool durabilityLoss = true);
 
         uint32 DealDamage(Unit *pVictim, uint32 damage, DamageEffectType damagetype = DIRECT_DAMAGE, SpellSchoolMask damageSchoolMask = SPELL_SCHOOL_MASK_NORMAL, SpellEntry const *spellProto = NULL, bool durabilityLoss = true);

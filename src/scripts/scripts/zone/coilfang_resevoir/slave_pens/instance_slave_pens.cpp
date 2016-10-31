@@ -15,10 +15,7 @@ SDCategory: Slave Pens
 EndScriptData */
 
 #include "precompiled.h"
-
-#define ENCOUNTERS          1
-
-#define DATA_AHUNEEVENT     1
+#include "slave_pens.h"
 
 struct instance_slave_pens : public ScriptedInstance
 {
@@ -29,6 +26,7 @@ struct instance_slave_pens : public ScriptedInstance
     };
 
     uint64 AhuneGUID;
+    uint64 CageGUID;
     bool Heroic;
 
     uint32 Encounters[ENCOUNTERS];
@@ -36,6 +34,7 @@ struct instance_slave_pens : public ScriptedInstance
     void Initialize()
     {
         AhuneGUID = 0;
+        CageGUID = 0;
 
         for(uint8 i = 0; i < ENCOUNTERS; ++i)
             Encounters[i] = NOT_STARTED;
@@ -65,12 +64,11 @@ struct instance_slave_pens : public ScriptedInstance
     }
 
     void OnObjectCreate(GameObject* go) //placeholder for GO
-    {/*
-        switch(go->GetEntry())
+    {
+        switch (go->GetEntry())
         {
-        default:
-            break;
-        }*/
+            case 182094: CageGUID = go->GetGUID(); break;
+        }
     }
 
     void OnCreatureCreate(Creature *creature, uint32 creature_entry)
@@ -91,6 +89,7 @@ struct instance_slave_pens : public ScriptedInstance
             switch(identifier)
             {
                 case DATA_AHUNEEVENT:           return AhuneGUID;
+                case DATA_CAGE:                 return CageGUID;
             }
         }
         return 0;
@@ -103,6 +102,9 @@ struct instance_slave_pens : public ScriptedInstance
         case DATA_AHUNEEVENT:
             if(Encounters[0] != DONE)
                 Encounters[0] = data;
+            break;
+        case TYPE_NATURALIST_EVENT:
+            Encounters[1] = data;
             break;
         default:
             break;
@@ -117,6 +119,7 @@ struct instance_slave_pens : public ScriptedInstance
         switch(type)
         {
         case DATA_AHUNEEVENT:         return Encounters[0];
+        case TYPE_NATURALIST_EVENT:   return Encounters[1];
         }
 
         return 0;
@@ -127,7 +130,7 @@ struct instance_slave_pens : public ScriptedInstance
        OUT_SAVE_INST_DATA;
 
         std::ostringstream stream;
-        stream << Encounters[0];
+        stream << Encounters[0] << " " << Encounters[1];
 
         OUT_SAVE_INST_DATA_COMPLETE;
 
@@ -145,7 +148,7 @@ struct instance_slave_pens : public ScriptedInstance
         OUT_LOAD_INST_DATA(in);
 
         std::istringstream loadStream(in);
-        loadStream >> Encounters[0];
+        loadStream >> Encounters[0] >> Encounters[1];
 
         for(uint8 i = 0; i < ENCOUNTERS; ++i)
             if (Encounters[i] == IN_PROGRESS)

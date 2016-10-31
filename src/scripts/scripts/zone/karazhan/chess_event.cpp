@@ -2869,7 +2869,7 @@ void boss_MedivhAI::UpdateAI(const uint32 diff)
                     endGameEventState = GAMEEND_DESPAWN_CHEST;
 
                     if (chestGUID)
-                        endEventTimer = 180000;
+                        endEventTimer = 1800000;
                     break;
                 case GAMEEND_DESPAWN_CHEST:
                     DeleteChest();
@@ -2880,19 +2880,6 @@ void boss_MedivhAI::UpdateAI(const uint32 diff)
         }
         else
             endEventTimer -= diff;
-
-        /*if (endEventLightningTimer < diff)
-        {
-            Creature * tmpC;
-            int count = rand()%5;
-
-            for (int i = 0; i < count; ++i)
-                if (tmpC = me->GetCreature(chessBoard[rand()%8][rand()%8].trigger))
-                    me->CastSpell(tmpC, SPELL_GAME_OVER, true);
-            endEventLightningTimer = urand(100, 1000);
-        }
-        else
-            endEventLightningTimer -= diff;*/
 
         return;
     }

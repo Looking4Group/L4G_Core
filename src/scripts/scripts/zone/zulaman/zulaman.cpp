@@ -960,6 +960,19 @@ struct npc_amanishi_lookoutAI : public ScriptedAI
 
     void EnterCombat(Unit *who)
     {
+        if(me->getVictim())
+            return;
+        // if(EventStarted)
+        //     return;
+
+        if (me->canStartAttack(who))
+        {
+            AttackStart(who);
+            who->CombatStart(me);
+            StartEvent();
+            if(pInstance)
+                pInstance->SetData(DATA_AKILZONGAUNTLET, AKILZON_GAUNTLET_IN_PROGRESS);
+        }
     }
 
     void JustDied(Unit* Killer)
@@ -985,19 +998,6 @@ struct npc_amanishi_lookoutAI : public ScriptedAI
 
     void MoveInLineOfSight(Unit *who)
     {
-        if(me->getVictim())
-            return;
-       // if(EventStarted)
-       //     return;
-
-        if (me->canStartAttack(who))
-        {
-            AttackStart(who);
-            who->CombatStart(me);
-            StartEvent();
-            if(pInstance)
-                pInstance->SetData(DATA_AKILZONGAUNTLET, AKILZON_GAUNTLET_IN_PROGRESS);
-        }
     }
 
     void MovementInform(uint32 type, uint32 id)

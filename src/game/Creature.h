@@ -134,6 +134,7 @@ enum CreatureFlagsExtra
     CREATURE_FLAG_EXTRA_NO_CRUSH                = 0x00000020,       // 32 creature can't do crush attacks
     CREATURE_FLAG_EXTRA_NO_XP_AT_KILL           = 0x00000040,       // 64 creature kill not provide XP
     CREATURE_FLAG_EXTRA_TRIGGER                 = 0x00000080,       // 128 trigger creature
+    CREATURE_FLAG_EXTRA_NO_PLAYER_DAMAGE_REQ    = 0x00000100,       // 256 creature does not need to take player damage for kill credit
     CREATURE_FLAG_EXTRA_WORLDEVENT              = 0x00004000,       // 16384 custom flag for world event creatures (left room for merging)
     CREATURE_FLAG_EXTRA_CHARM_AI                = 0x00008000,       // 32768 use ai when charmed
     CREATURE_FLAG_EXTRA_NO_TAUNT                = 0x00010000,       // 65536 cannot be taunted
@@ -738,7 +739,8 @@ class LOOKING4GROUP_IMPORT_EXPORT Creature : public Unit
 
         void SetDisableReputationGain(bool disable) { DisableReputationGain = disable; }
         bool IsReputationGainDisabled() { return DisableReputationGain; }
-        bool IsDamageEnoughForLootingAndReward() { return m_PlayerDamageReq == 0; }
+        bool IsDamageEnoughForLootingAndReward() { return (m_creatureInfo->flags_extra & CREATURE_FLAG_EXTRA_NO_PLAYER_DAMAGE_REQ) || (m_PlayerDamageReq == 0); }
+
         void LowerPlayerDamageReq(uint32 unDamage)
         {
             if (m_PlayerDamageReq)
