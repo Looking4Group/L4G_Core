@@ -2135,9 +2135,27 @@ void Map::ScriptsProcess()
 						sLog.outLog(LOG_DEFAULT, "ERROR: SCRIPT_COMMAND_VISIBILITY_SET call for non-creature (TypeId: %u), skipping.",source->GetTypeId());
 						break;
 					}
-						((Creature*)source)->LoadEquipment(step.script->datalong);
+					((Creature*)source)->LoadEquipment(step.script->datalong);
 				}
 				break;
+
+			case SCRIPT_COMMAND_MODEL:
+				{
+					// Source must be Creature.
+					if (!source)
+					{
+						sLog.outLog(LOG_DEFAULT, "ERROR: SCRIPT_COMMAND_VISIBILITY_SET call for NULL creature.");
+						break;
+					}
+
+					if (source->GetTypeId()!=TYPEID_UNIT)
+					{
+						sLog.outLog(LOG_DEFAULT, "ERROR: SCRIPT_COMMAND_VISIBILITY_SET call for non-creature (TypeId: %u), skipping.",source->GetTypeId());
+						break;
+					}
+					((Creature*)source)->SetDisplayId(step.script->datalong);	
+					break;
+				}
 
             default:
                 sLog.outLog(LOG_DEFAULT, "ERROR: Unknown script command %u called.",step.script->command);
