@@ -3768,6 +3768,10 @@ void SpellMgr::LoadSpellCustomAttr()
             case 39280: //triggered unknown spell 39305; no information available
                 spellInfo->Effect[2] = 0;
                 break;
+            case 34169:
+                spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_AREA_ALLY_SRC;
+                spellInfo->EffectImplicitTargetA[1] = TARGET_DEST_CASTER_RANDOM_UNKNOWN;
+                break;
             default:
                 break;
         }
