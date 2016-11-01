@@ -475,7 +475,7 @@ enum RealmZone
 #define SCRIPT_COMMAND_SET_INST_DATA        20              // source = any, datalong = type, datalong2 = data
 #define SCRIPT_COMMAND_DESPAWN_SELF         21              // target/source = Creature, datalong = despawn delay
 #define SCRIPT_COMMAND_VISIBILITY_SET       22              // source = unit, datalong = Visibility State (VISIBILITY_OFF = 0, VISIBILITY_ON = 1, VISIBILITY_GROUP_STEALTH = 2, VISIBILITY_RESPAWN = 5)
-
+#define SCRIPT_COMMAND_EQUIP                31              // soucre = Creature, datalong = equipment id
 
 /// Storage class for commands issued for delayed execution
 struct CliCommandHolder
