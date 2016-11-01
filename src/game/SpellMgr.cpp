@@ -3769,7 +3769,8 @@ void SpellMgr::LoadSpellCustomAttr()
             case 24733:
                 spellInfo->Mechanic = 0;
                 break;
-            case 39280: //triggered unknown spell 39305; no information available            
+            case 39280: //triggering unknown spells; no information available            
+            case 37390:
                 spellInfo->Effect[1] = 0;
                 break;
             case 34167: //Sunseeker Geomancer AoE spells targeting
@@ -3777,7 +3778,7 @@ void SpellMgr::LoadSpellCustomAttr()
             case 34170:
                 spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_AREA_ALLY_SRC;
                 spellInfo->EffectImplicitTargetA[1] = TARGET_UNIT_AREA_ENEMY_SRC;
-                break;
+                break;            
             default:
                 break;
         }
