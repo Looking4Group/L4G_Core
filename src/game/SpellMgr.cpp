@@ -3494,7 +3494,11 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->EffectImplicitTargetA[1] = TARGET_UNIT_CASTER;
                 spellInfo->EffectImplicitTargetA[2] = TARGET_UNIT_TARGET_ENEMY;
                 break;
-            case 32785: // Infernal Rain
+            case 32785: // Infernal Rain                
+                spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ENEMY;
+                spellInfo->EffectImplicitTargetB[0] = 0;
+                spellInfo->Effect[2] = 0;
+                break;
             case 30541: // Magtheridon's Blaze
                 spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ENEMY;
                 spellInfo->EffectImplicitTargetB[0] = 0;
@@ -3765,8 +3769,8 @@ void SpellMgr::LoadSpellCustomAttr()
             case 24733:
                 spellInfo->Mechanic = 0;
                 break;
-            case 39280: //triggered unknown spell 39305; no information available
-                spellInfo->Effect[2] = 0;
+            case 39280: //triggered unknown spell 39305; no information available            
+                spellInfo->Effect[1] = 0;
                 break;
             case 34167: //Sunseeker Geomancer AoE spells targeting
             case 34169:
