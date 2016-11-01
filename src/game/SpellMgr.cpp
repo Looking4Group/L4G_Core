@@ -3778,7 +3778,13 @@ void SpellMgr::LoadSpellCustomAttr()
             case 34170:
                 spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_AREA_ALLY_SRC;
                 spellInfo->EffectImplicitTargetA[1] = TARGET_UNIT_AREA_ENEMY_SRC;
-                break;            
+                break;
+            case 40176:
+            case 40177:
+            case 40178:
+            case 40179:
+                spellInfo->Targets = TARGET_FLAG_GAMEOBJECT;
+                break;
             default:
                 break;
         }
