@@ -280,3 +280,32 @@ INSERT INTO `waypoint_data` VALUES
 
 -- Raging Fire-Soul no ai/script
 UPDATE `creature_template` SET `AIName`= NULL WHERE `entry` = 22311;
+
+-- Harbinger Skyriss 20912,21599
+-- 50028 was empty, reused and now back to original values
+DELETE FROM `creature_loot_template` WHERE `item` IN (50028,50033) AND `entry` = 21599;
+INSERT INTO `creature_loot_template` VALUES 
+(21599,50033,40,0,-50033,1,0,0,0);
+
+DELETE FROM `reference_loot_template` WHERE `entry` = 50033;
+INSERT INTO `reference_loot_template` VALUES (50033, 30581, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `reference_loot_template` VALUES (50033, 30575, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `reference_loot_template` VALUES (50033, 30582, 0, 1, 1, 1, 0, 0, 0);
+
+DELETE FROM `reference_loot_template` WHERE `entry` = 50028;
+INSERT INTO `reference_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES ('50028', '31883', '0', '1', '1', '1', '0', '0', '0');
+INSERT INTO `reference_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES ('50028', '31884', '0', '1', '1', '1', '0', '0', '0');
+INSERT INTO `reference_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES ('50028', '31886', '0', '1', '1', '1', '0', '0', '0');
+INSERT INTO `reference_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES ('50028', '31887', '0', '1', '1', '1', '0', '0', '0');
+INSERT INTO `reference_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES ('50028', '31893', '0', '1', '1', '1', '0', '0', '0');
+INSERT INTO `reference_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES ('50028', '31894', '0', '1', '1', '1', '0', '0', '0');
+INSERT INTO `reference_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES ('50028', '31896', '0', '1', '1', '1', '0', '0', '0');
+INSERT INTO `reference_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES ('50028', '31898', '0', '1', '1', '1', '0', '0', '0');
+INSERT INTO `reference_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES ('50028', '31902', '0', '1', '1', '1', '0', '0', '0');
+INSERT INTO `reference_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES ('50028', '31903', '0', '1', '1', '1', '0', '0', '0');
+INSERT INTO `reference_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES ('50028', '31905', '0', '1', '1', '1', '0', '0', '0');
+INSERT INTO `reference_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES ('50028', '31906', '0', '1', '1', '1', '0', '0', '0');
+INSERT INTO `reference_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES ('50028', '31911', '0', '1', '1', '1', '0', '0', '0');
+INSERT INTO `reference_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES ('50028', '31912', '0', '1', '1', '1', '0', '0', '0');
+INSERT INTO `reference_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES ('50028', '31915', '0', '1', '1', '1', '0', '0', '0');
+INSERT INTO `reference_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES ('50028', '31916', '0', '1', '1', '1', '0', '0', '0');
