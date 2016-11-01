@@ -45,3 +45,20 @@ INSERT INTO `creature_ai_scripts` VALUES
 
 -- Whirling Blade 23369 mob_whirling_blade
 UPDATE `creature_template` SET `modelid_A`='16946' WHERE `entry` = 23369;
+
+-- Watcher Moonshade ori GUID + Path
+DELETE FROM `creature` WHERE `guid` IN (78695,511368);
+INSERT INTO `creature` VALUES (78695, 22386, 530, 1, 0, 0, 3108.07, 6131.54, 136.358, 1.36031, 300, 0, 0, 4800, 0, 0, 2);
+SET @GUID := 78695;
+UPDATE `creature` SET `MovementType`='2' WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES
+(78695,1,3109.83,6138.61,136.152,15000,0,0,100,0),
+(78695,2,3106.78,6123.73,136.396,0,0,0,100,0),
+(78695,3,3103.92,6119.18,134.98,0,0,0,100,0),
+(78695,4,3107.08,6115.74,134.479,0,0,0,100,0),
+(78695,5,3106.34,6115.29,134.444,20000,0,0,100,0),
+(78695,6,3100.41,6119.81,134.724,5000,0,0,100,0),
+(78695,7,3108.07,6131.54,136.358,0,0,0,100,0);
