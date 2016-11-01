@@ -855,6 +855,7 @@ void WorldSession::HandleBattleGroundArenaJoin(WorldPacket & recv_data)
         GroupQueueInfo * ginfo = sBattleGroundMgr.m_BattleGroundQueues[bgQueueTypeId].AddGroup(_player, bgTypeId, bgBracketId, arenatype, isRated, false, arenaRating, hiddenRating, ateamId);
         DEBUG_LOG("Battleground: arena join as group start");
         if (isRated) {
+                sLog.outLog(LOG_DEFAULT, "Battleground: arena team id %u, leader %s queued", _player->GetArenaTeamId(arenaslot), _player->GetName());
                 DEBUG_LOG("Battleground: arena team id %u, leader %s queued with rating %u for type %u", _player->GetArenaTeamId(arenaslot), _player->GetName(), arenaRating, arenatype);            
                 AnnounceArenaStart(arenatype);            
         }            
