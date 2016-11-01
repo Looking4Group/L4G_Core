@@ -277,3 +277,6 @@ INSERT INTO `waypoint_data` VALUES
 (72380,9,2304.54,2080.78,75.7481,0,0,0,100,0),
 (72380,10,2304.76,2088.31,76.84,0,0,0,100,0),
 (72380,11,2292.5,2100.48,77.0599,0,0,0,100,0);
+
+-- Raging Fire-Soul no ai/script
+UPDATE `creature_template` SET `AIName`= NULL WHERE `entry` = 22311;
