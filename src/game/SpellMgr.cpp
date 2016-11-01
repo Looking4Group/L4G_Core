@@ -3765,6 +3765,9 @@ void SpellMgr::LoadSpellCustomAttr()
             case 24733:
                 spellInfo->Mechanic = 0;
                 break;
+            case 39280: //triggered unknown spell 39305; no information available
+                spellInfo->Effect[2] = 0;
+                break;
             default:
                 break;
         }
