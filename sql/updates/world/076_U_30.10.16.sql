@@ -328,3 +328,6 @@ UPDATE creature_template SET spell1 = 38800 WHERE entry = 22322;
 
 -- slight ppm-correction for OoC
 UPDATE `spell_proc_event` SET `ppmRate` = 2.5 WHERE `entry` = 16864; -- 2
+
+-- correct respawn timer of potential Chief Engineer Lorthander spawn
+UPDATE `creature` SET `spawntimesecs` = 28800 WHERE `id` = 18697;
