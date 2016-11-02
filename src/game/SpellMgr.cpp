@@ -3785,6 +3785,10 @@ void SpellMgr::LoadSpellCustomAttr()
             case 40179:
                 spellInfo->Targets = TARGET_FLAG_GAMEOBJECT;
                 break;
+            case 26983: //Tranquility targets
+            case 44208: 
+                spellInfo->Targets = TARGET_FLAG_DEST_LOCATION;
+                break;
             default:
                 break;
         }
