@@ -325,3 +325,6 @@ UPDATE creature_template SET spell1 = 33132 WHERE entry = 19899;
 -- Mennu's Healing Ward 20208,22322 
 UPDATE creature_template SET heroic_entry = 22322, spell1 = 34977 WHERE entry = 20208; 
 UPDATE creature_template SET spell1 = 38800 WHERE entry = 22322;
+
+-- slight ppm-correction for OoC
+UPDATE `spell_proc_event` SET `ppmRate` = 2.5 WHERE `entry` = 16864; -- 2
