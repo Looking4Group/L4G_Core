@@ -331,3 +331,12 @@ UPDATE `spell_proc_event` SET `ppmRate` = 2.5 WHERE `entry` = 16864; -- 2
 
 -- correct respawn timer of potential Chief Engineer Lorthander spawn
 UPDATE `creature` SET `spawntimesecs` = 28800 WHERE `id` = 18697;
+
+-- Terocone 181277
+UPDATE `gameobject` SET `spawntimesecs` = 1200 WHERE `id` = 181277 AND `map` = 530;
+
+-- MASTER Herbs Shadowmoon Valley zone 3520
+UPDATE `pool_template` SET `max_limit`='55' WHERE `entry` = 976; -- 45
+
+-- MASTER Herbs Terokkar Forest zone 3519
+UPDATE `pool_template` SET `max_limit`='55' WHERE `entry` = 977; -- 65
