@@ -1,6 +1,6 @@
 -- Delete all existing entries of SSC consoles and bridge gameobjects
-DELETE * FROM `gameobject_template` WHERE `entry` IN (184203,184204,184205,184568,185114,185115,185116,185117,185118);
-DELETE * FROM `gameobject` WHERE `id` IN (184203,184204,184205,184568,185114,185115,185116,185117,185118);
+DELETE FROM `gameobject_template` WHERE `entry` IN (184203,184204,184205,184568,185114,185115,185116,185117,185118);
+DELETE FROM `gameobject` WHERE `id` IN (184203,184204,184205,184568,185114,185115,185116,185117,185118);
 
 -- Re-insert the SSC consoles and bridge gameobjects
 INSERT INTO `gameobject_template` (`entry`, `type`, `displayId`, `name`, `castBarCaption`, `faction`, `flags`, `size`, `data0`, `data1`, `data2`, `data3`, `data4`, `data5`, `data6`, `data7`, `data8`, `data9`, `data10`, `data11`, `data12`, `data13`, `data14`, `data15`, `data16`, `data17`, `data18`, `data19`, `data20`, `data21`, `data22`, `data23`, `ScriptName`) VALUES (184203, 0, 7155, 'Doodad_Coilfang_Raid_Bridge_Part01', '', 1375, 32, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
