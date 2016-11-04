@@ -2157,6 +2157,24 @@ void Map::ScriptsProcess()
 					break;
 				}
 
+			case SCRIPT_COMMAND_ORIENTATION:
+				{
+					// Source must be Unit.
+					if (!source)
+					{
+						sLog.outLog(LOG_DEFAULT, "ERROR: SCRIPT_COMMAND_ORIENTATION call for NULL creature.");
+						break;
+					}
+
+					if (source->GetTypeId()!=TYPEID_UNIT)
+					{
+						sLog.outLog(LOG_DEFAULT, "ERROR: SCRIPT_COMMAND_ORIENTATION call for non-creature (TypeId: %u), skipping.",source->GetTypeId());
+						break;
+					}
+					dynamic_cast<Unit*>(source)->SetFacingTo(step.script->o);
+					break;
+				}
+
             default:
                 sLog.outLog(LOG_DEFAULT, "ERROR: Unknown script command %u called.",step.script->command);
                 break;
