@@ -340,3 +340,6 @@ UPDATE `pool_template` SET `max_limit`='55' WHERE `entry` = 976; -- 45
 
 -- MASTER Herbs Terokkar Forest zone 3519
 UPDATE `pool_template` SET `max_limit`='55' WHERE `entry` = 977; -- 65
+
+-- Solarian
+UPDATE `creature_template` SET `speed`= 3 WHERE `entry` = 18805; -- 2
