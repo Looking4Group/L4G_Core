@@ -477,3 +477,38 @@ INSERT INTO `creature_ai_scripts` VALUES
 
 UPDATE `creature_loot_template` SET `ChanceOrQuestChance` =  2 WHERE `entry` = 19852 AND `item` = 29740; -- 4  
 UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 40 WHERE `entry` = 19852 AND `item` = 30809; -- 60
+
+-- ====================================
+-- Backport Missing Spell Script Target
+-- ====================================
+DELETE FROM `spell_script_target` WHERE `entry` = 38966 AND `targetEntry` = 22358;
+INSERT INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('38966','1','22358');
+
+UPDATE `creature_template` SET `InhabitType` = 7 WHERE `entry` = 22358;
+
+-- Gan'arg Mekgineer 
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN (16949,-59073,-59072,-59071,-59068,-59061);
+INSERT INTO `creature_ai_scripts` VALUES
+('1694901','16949','9','0','100','1','0','5','13000','18000','11','36208','1','0','0','0','0','0','0','0','0','0','Gan\'arg Mekgineer - Cast Steal Weapon'),
+('1694902','16949','2','0','100','1','80','0','10000','14000','11','36825','1','1','0','0','0','0','0','0','0','0','Gan\'arg Mekgineer - Cast Drain Life at 80% HP'),
+('1694903','-59073','1','0','100','1','10000','10000','0','0','11','38966','0','0','0','0','0','0','0','0','0','0','59073 - Cast Nether Gas Drain OOC'),
+('1694904','-59072','1','0','100','1','10000','10000','0','0','11','38966','0','0','0','0','0','0','0','0','0','0','59072 - Cast Nether Gas Drain OOC'),
+('1694905','-59071','1','0','100','1','10000','10000','0','0','11','38966','0','0','0','0','0','0','0','0','0','0','59071 - Cast Nether Gas Drain OOC'),
+('1694906','-59068','1','0','100','1','10000','10000','0','0','11','38966','0','0','0','0','0','0','0','0','0','0','59071 - Cast Nether Gas Drain OOC'),
+('1694907','-59061','1','0','100','1','10000','10000','0','0','11','38966','0','0','0','0','0','0','0','0','0','0','59071 - Cast Nether Gas Drain OOC');
+
+UPDATE `creature` SET `orientation` = 1.5812 WHERE `guid` = 59072;
+UPDATE `creature` SET `position_x`='4418.6269', `position_y`='3266.4255', `position_z`='143.5857', `orientation` = 1.0808 WHERE `guid` = 59073;
+UPDATE `creature` SET `position_x`='4429.4560', `position_y`='3325.6115', `position_z`='149.8019', `orientation`='4.7385',`spawndist`='0',`movementtype`='0' WHERE `guid` = 59061;
+UPDATE `creature` SET `position_x`='4436.5288', `position_y`='3297.8327', `position_z`='147.6649', `orientation`='3.9317',`spawndist`='0',`movementtype`='0' WHERE `guid` = 59068;
+
+-- ========================
+-- Fix a Few Teleport Names
+-- ========================
+UPDATE areatrigger_teleport SET name='Blackfathom Deeps Entrance' WHERE id = 257;
+UPDATE areatrigger_teleport SET name='Blackfathom Deeps Instance Start' WHERE id = 259;
+
+-- ========================
+-- Fix Incorrect NPC Levels
+-- ========================
+UPDATE creature_template SET MinLevel=70, MaxLevel=70 WHERE entry IN (23703,23808,24109);
