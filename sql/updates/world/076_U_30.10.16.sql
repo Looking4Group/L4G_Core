@@ -462,3 +462,18 @@ INSERT INTO `waypoint_data` VALUES (70994, 9, 2808.24, 3051.48, 129.178, 0, 0, 0
 INSERT INTO `waypoint_data` VALUES (70994, 10, 2789.98, 3059.69, 127.263, 0, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (70994, 11, 2808.24, 3051.48, 129.178, 0, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (70994, 12, 2828.05, 3064.03, 130.303, 0, 0, 0, 100, 0);
+
+-- Felblade Doomguard
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 19853;
+INSERT INTO `creature_ai_scripts` VALUES
+('1985301','19853','9','0','100','1','0','5','8000','12000','11','32736','1','0','0','0','0','0','0','0','0','0','Felblade Doomguard - Cast Mortal Strike'),
+('1985302','19853','0','0','100','1','7000','12000','15000','18000','11','35238','1','0','0','0','0','0','0','0','0','0','Felblade Doomguard - Cast War Stomp');
+
+-- Artifact Seeker
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 19852;
+INSERT INTO `creature_ai_scripts` VALUES
+('1985201','19852','0','0','100','1','5000','9000','12000','15000','11','11981','4','0','0','0','0','0','0','0','0','0','Artifact Seeker - Cast Mana Burn'),
+('1985202','19852','9','0','25','1','0','30','10000','15000','11','30849','4','0','0','0','0','0','0','0','0','0','Artifact Seeker - Cast Spell Lock');
+
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` =  2 WHERE `entry` = 19852 AND `item` = 29740; -- 4  
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 40 WHERE `entry` = 19852 AND `item` = 30809; -- 60
