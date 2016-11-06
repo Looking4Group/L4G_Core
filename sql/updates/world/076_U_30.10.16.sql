@@ -1406,3 +1406,528 @@ INSERT INTO `waypoint_data` VALUES (143827, 9, -4936.15, 573.935, 7.7713, 0, 1, 
 INSERT INTO `waypoint_data` VALUES (143827, 10, -4913.7, 588.238, 5.50511, 0, 1, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (143827, 11, -4930.46, 576.111, 6.94406, 0, 1, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (143827, 12, -4955.03, 583.323, 12.0287, 0, 1, 0, 100, 0);
+
+-- ----------------------------------------------------------
+-- Salt Update 12
+-- ----------------------------------------------------------
+ 
+-- Haggard War Veteran GUID := 6803494
+ 
+DELETE FROM `db_script_string` WHERE `entry` = 2000005591;
+INSERT INTO `db_script_string` (`entry`,`content_default`) VALUES
+(2000005591,'What manner of creature is that? Looks like a purple goblin.');
+ 
+DELETE FROM `waypoint_scripts` WHERE `id` = 680349401;
+INSERT INTO `waypoint_scripts` (`id`,`delay`,`command`,`datalong`,`datalong2`,`dataint`,`x`,`y`,`z`,`o`,`guid`,`comments`) VALUES
+(680349401,0,30,0,0,0,0,0,0,2.763599,680349401,'Orientation 1'),
+(680349401,2,0,0,0,2000005591,0,0,0,0,680349402,'Haggard War Veteran - Text 1');
+ 
+SET @GUID := 6803494;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-1954.758423,`position_y`=5185.442383,`position_z`=16.960577 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-1954.758423,5185.442383,16.960577,180000,0,680349401,100,0),
+(@GUID,@POINT := @POINT + '1',-1951.112061,5177.428223,17.068735,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1961.951416,5139.502930,15.096616,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1967.280640,5119.423828,9.577826,180000,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1958.828247,5135.176758,14.468446,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1950.568848,5159.989746,17.074680,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1947.872070,5179.204102,17.013863,0,0,0,100,0);
+ 
+-- ----------------------
+-- Scryer Arcane Guardian
+UPDATE `creature` SET `MovementType` = 0 WHERE `guid` = 66740;
+ 
+DELETE FROM `waypoint_scripts` WHERE `id` BETWEEN 6673601 AND 6673604;
+INSERT INTO `waypoint_scripts` (`id`,`delay`,`command`,`datalong`,`datalong2`,`dataint`,`x`,`y`,`z`,`o`,`guid`,`comments`) VALUES
+(6673601,0,30,0,0,0,0,0,0,1.972222,6673601,'Orientation 1'),
+(6673602,0,30,0,0,0,0,0,0,5.986479,6673602,'Orientation 2'),
+(6673603,0,30,0,0,0,0,0,0,3.787364,6673603,'Orientation 3'),
+(6673604,0,30,0,0,0,0,0,0,2.844887,6673604,'Orientation 4');
+ 
+SET @GUID := 66736;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-2142.382,`position_y`=5538.021,`position_z`=50.1517 WHERE `guid`=@GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,1,-2142.382,5538.021,50.1517,0,0,0,100,0), -- 16:42:55
+(@GUID,2,-2136.229,5539.928,49.93535,20000,0,6673601,100,0), -- 16:43:04
+(@GUID,3,-2109.882,5527.248,50.29749,0,0,0,100,0), -- 16:43:04
+(@GUID,4,-2110.046,5512.396,49.41879,0,0,0,100,0), -- 16:43:22
+(@GUID,5,-2110.046,5512.396,49.41879,20000,0,6673602,100,0), -- 16:43:23
+(@GUID,6,-2127.437,5502.637,48.66403,0,0,0,100,0), -- 16:44:24
+(@GUID,7,-2143.732,5501.709,50.25599,0,0,0,100,0), -- 16:44:24
+(@GUID,8,-2147.418,5506.022,50.09319,20000,0,6673603,100,0), -- 16:44:43
+(@GUID,9,-2150.977,5511.568,50.23061,0,0,0,100,0), -- 16:45:44
+(@GUID,10,-2151.036,5526.115,49.86804,20000,0,6673604,100,0); -- 16:45:53
+-- 0x202FD4424012220000006900001AB7B3 .go -2142.382 5538.021 50.1517
+ 
+ 
+-- --------------------
+-- Group to Nagrand Event
+-- --------------------
+-- Since the event is heavily scripted I couldn't use the creature's GUID for some of the waypoints.
+DELETE FROM `creature_formations` WHERE `leaderguid` = 69137;
+UPDATE `creature_template` SET `speed` = 1.125 WHERE `entry` = 19337;
+UPDATE `creature` SET `MovementType` = 0, `orientation` = 2.692105 WHERE `guid` = 69110;
+UPDATE `creature` SET `orientation` = 6.039524 WHERE `guid` = 68537;
+-- Remove old neophytes
+UPDATE `creature` SET `spawnMask` = 0 WHERE `guid` IN (68492,68493,68494,68923,68924,68925);
+ 
+-- Remove random unscripted speech. These are now included in the waypoint_scripts
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN (19346,19378,19138);
+ 
+DELETE FROM `db_script_string` WHERE `entry` BETWEEN 2000005570 AND 2000005590;
+INSERT INTO `db_script_string` (`entry`,`content_default`) VALUES
+(2000005570,'Listen up soldiers!'),
+(2000005571,'You are here because you displayed exceptional aptitude and ability throughout your training period.'),
+(2000005572,'You are now to be dispatched directly into a hostile environment on a treacherous mission.'),
+(2000005573,'Nagrand, the land to the west, has recently become littered with enemy forge camps that threaten our security.'),
+(2000005574,'With the bulk of our forces focused on illidan, the task of cleansing these lands falls to you.'),
+(2000005575,'You are to return in a week''s time with a detailed report of your actions.'),
+(2000005576,'May the Light be with you... Dismissed!'),
+(2000005577,'By your leave, sir, I have pressing matters to attend to.'),
+(2000005578,'Of course, Harbinger. Dismissed.'),
+(2000005579,'Anchorite Nindumen, I have a request to make of you.'),
+(2000005580,'Of course, my friend. How can I be of service to you?'),
+(2000005581,'We''ve just sent another inexperienced squad into Nagrand. Might you offer a prayer for them?'),
+(2000005582,'A noble request. It would be an honor, Erothem.'),
+(2000005583,'My friends, please join me in humble supplication to the Light.'),
+(2000005584,'Light that we embrace, we beseech thee...'),
+(2000005585,'Into our struggle against the darkness we have sent our children.'),
+(2000005586,'Please bless and protect them, and grant them success over those who seek to do us harm...'),
+(2000005587,'Continue to bless this, our ancient home, we beg.'),
+(2000005588,'Bless us with tolerance for our elven visitors.'),
+(2000005589,'By the Naaru, may it be so.'),
+(2000005590,'May it be so.');
+ 
+DELETE FROM `waypoint_scripts` WHERE `id` BETWEEN 6913901 AND 6913905;
+DELETE FROM `waypoint_scripts` WHERE `id` BETWEEN 6892601 AND 6892901;
+DELETE FROM `waypoint_scripts` WHERE `id` BETWEEN 40000000 AND 40000052;
+DELETE FROM `waypoint_scripts` WHERE `id` BETWEEN 40000101 AND 40000112;
+INSERT INTO `waypoint_scripts` (`id`,`delay`,`command`,`datalong`,`datalong2`,`dataint`,`x`,`y`,`z`,`o`,`guid`,`comments`) VALUES
+(40000052,0,16,0,0,0,0,0,0,0,40000027,'Stop waypoint movement'),
+-- Ready up Harbinger Erothem
+(6913901,0,17,68962,6913905,6,0,0,0,0,6913901,'Callscript - Harbinger Erothem'),
+(6913905,0,16,400001,0,0,0,0,0,0,6913916,'LoadPath - Harbinger Erothem'),
+ 
+-- Call Salute on all Neophyte's
+(40000101,10,17,68929,40000103,6,0,0,0,0,40000101,'Callscript - Aldor Neophyte'),
+(40000101,10,17,68927,40000103,6,0,0,0,0,40000102,'Callscript - Aldor Neophyte'),
+(40000101,10,17,68926,40000103,6,0,0,0,0,40000103,'Callscript - Aldor Neophyte'),
+(40000101,10,17,68928,40000103,6,0,0,0,0,40000104,'Callscript - Aldor Neophyte'),
+-- Row 2
+(40000101,10,17,68495,40000103,6,0,0,0,0,40000105,'Callscript - Aldor Neophyte'),
+(40000101,10,17,68497,40000103,6,0,0,0,0,40000106,'Callscript - Aldor Neophyte'),
+(40000101,10,17,68498,40000103,6,0,0,0,0,40000107,'Callscript - Aldor Neophyte'),
+(40000101,10,17,68496,40000103,6,0,0,0,0,40000108,'Callscript - Aldor Neophyte'),
+-- Row 3
+(40000101,10,17,69136,40000103,6,0,0,0,0,40000109,'Callscript - Aldor Neophyte'),
+(40000101,10,17,69137,40000103,6,0,0,0,0,40000110,'Callscript - Aldor Neophyte'),
+(40000101,10,17,69138,40000103,6,0,0,0,0,40000111,'Callscript - Aldor Neophyte'),
+(40000101,10,17,69139,40000103,6,0,0,0,0,40000112,'Callscript - Aldor Neophyte'),
+ 
+(40000101,20,0,0,0,2000005570,0,0,0,0,40000113,'Harbinger Erothem - Text 1'),
+(40000101,30,0,0,0,2000005571,0,0,0,0,40000114,'Harbinger Erothem - Text 2'),
+(40000101,30,1,1,0,0,0,0,0,0,40000188,'Harbinger Erothem - Talk Emote'),
+(40000101,40,0,0,0,2000005572,0,0,0,0,40000115,'Harbinger Erothem - Text 3'),
+(40000101,50,0,0,0,2000005573,0,0,0,0,40000116,'Harbinger Erothem - Text 4'),
+(40000101,60,0,0,0,2000005574,0,0,0,0,40000117,'Harbinger Erothem - Text 5'),
+(40000101,70,0,0,0,2000005575,0,0,0,0,40000118,'Harbinger Erothem - Text 6'),
+(40000101,80,0,0,0,2000005576,0,0,0,0,40000119,'Harbinger Erothem - Text 7'),
+ 
+-- Call Salute on all Neophyte's
+(40000101,80,17,68929,40000103,6,0,0,0,0,40000120,'Callscript - Aldor Neophyte'),
+(40000101,80,17,68927,40000103,6,0,0,0,0,40000121,'Callscript - Aldor Neophyte'),
+(40000101,80,17,68926,40000103,6,0,0,0,0,40000122,'Callscript - Aldor Neophyte'),
+(40000101,80,17,68928,40000103,6,0,0,0,0,40000123,'Callscript - Aldor Neophyte'),
+-- Row 2
+(40000101,80,17,68495,40000103,6,0,0,0,0,40000124,'Callscript - Aldor Neophyte'),
+(40000101,80,17,68497,40000103,6,0,0,0,0,40000125,'Callscript - Aldor Neophyte'),
+(40000101,80,17,68498,40000103,6,0,0,0,0,40000126,'Callscript - Aldor Neophyte'),
+(40000101,80,17,68496,40000103,6,0,0,0,0,40000127,'Callscript - Aldor Neophyte'),
+-- Row 3
+(40000101,80,17,69136,40000103,6,0,0,0,0,40000128,'Callscript - Aldor Neophyte'),
+(40000101,80,17,69137,40000103,6,0,0,0,0,40000129,'Callscript - Aldor Neophyte'),
+(40000101,80,17,69138,40000103,6,0,0,0,0,40000130,'Callscript - Aldor Neophyte'),
+(40000101,80,17,69139,40000103,6,0,0,0,0,40000131,'Callscript - Aldor Neophyte'),
+ 
+-- Call LoadPath on all Neophyte's
+(40000101,85,17,68929,40000104,6,0,0,0,0,40000132,'Callscript - Aldor Neophyte'),
+(40000101,85,17,68927,40000105,6,0,0,0,0,40000133,'Callscript - Aldor Neophyte'),
+(40000101,85,17,68926,40000105,6,0,0,0,0,40000134,'Callscript - Aldor Neophyte'),
+(40000101,85,17,68928,40000105,6,0,0,0,0,40000135,'Callscript - Aldor Neophyte'),
+-- Row 2
+(40000101,90,17,68495,40000105,6,0,0,0,0,40000136,'Callscript - Aldor Neophyte'),
+(40000101,90,17,68497,40000105,6,0,0,0,0,40000137,'Callscript - Aldor Neophyte'),
+(40000101,90,17,68498,40000105,6,0,0,0,0,40000138,'Callscript - Aldor Neophyte'),
+(40000101,90,17,68496,40000105,6,0,0,0,0,40000139,'Callscript - Aldor Neophyte'),
+-- Row 3
+(40000101,96,17,69136,40000105,6,0,0,0,0,40000140,'Callscript - Aldor Neophyte'),
+(40000101,97.5,17,69137,40000105,6,0,0,0,0,40000141,'Callscript - Aldor Neophyte'),
+(40000101,99,17,69138,40000105,6,0,0,0,0,40000142,'Callscript - Aldor Neophyte'),
+(40000101,100.5,17,69139,40000106,6,0,0,0,0,40000143,'Callscript - Aldor Neophyte'),
+ 
+ 
+-- LoadPaths for each Neophyte
+(40000103,0,1,66,0,0,0,0,0,0,40000145,'Salute - Aldor Neophyte'),
+(40000104,0,16,400002,1,0,0,0,0,0,40000146,'LoadPath - Aldor Neophyte'), -- Kneel
+(40000105,0,16,400003,1,0,0,0,0,0,40000147,'LoadPath - Aldor Neophyte'), -- Nothing
+(40000106,0,16,400004,1,0,0,0,0,0,40000148,'LoadPath - Aldor Neophyte'), -- deKneel
+ 
+-- Speech with Adyen
+(40000107,0,0,0,0,2000005577,0,0,0,0,40000149,'Harbinger Erothem - Text 8'),
+(40000107,0,1,1,0,0,0,0,0,0,40000150,'Harbinger Erothem - Talk Emote'),
+(40000107,10,17,66696,40000108,6,0,0,0,0,40000151,'Callscript - Adyen the Lightwarden'),
+(40000108,0,0,0,0,2000005578,0,0,0,0,40000152,'Adyen the Lightwarden - Text 1'),
+(40000108,0,1,5,0,0,0,0,0,0,40000153,'Adyen the Lightwarden - Exclamation Emote'),
+ 
+-- Speech and event with Nindumen
+(40000109,0,0,0,0,2000005579,0,0,0,0,40000154,'Harbinger Erothem - Text 9'),
+(40000109,0,1,1,0,0,0,0,0,0,40000155,'Harbinger Erothem - Talk Emote'),
+(40000109,10,17,69110,40000110,6,0,0,0,0,40000156,'Callscript - Anchorite Nindumen'),
+(40000110,0,0,0,0,2000005580,0,0,0,0,40000157,'Anchorite Nindumen - Text 1'),
+(40000110,0,1,6,0,0,0,0,0,0,40000158,'Anchorite Nindumen - Question Emote'),
+(40000109,20,0,0,0,2000005581,0,0,0,0,40000159,'Harbinger Erothem - Text 10'),
+(40000109,20,1,1,0,0,0,0,0,0,40000160,'Harbinger Erothem - Talk Emote'),
+(40000110,30,0,0,0,2000005582,0,0,0,0,40000161,'Anchorite Nindumen - Text 2'),
+(40000110,30,1,1,0,0,0,0,0,0,40000162,'Anchorite Nindumen - Talk Emote'),
+(40000110,35,16,400005,0,0,0,0,0,0,40000163,'LoadPath - Anchorite Nindumen'),
+ 
+(40000111,5,0,0,0,2000005583,0,0,0,0,40000164,'Anchorite Nindumen - Text 3'),
+(40000111,5,1,1,0,0,0,0,0,0,40000165,'Anchorite Nindumen - Talk Emote'),
+(40000111,11,17,68962,40000112,6,0,0,0,0,40000173,'Callscript - Harbinger Erothem - Kneel'),
+(40000111,13,2,159,8,0,0,0,0,0,40000166,'Kneel - Anchorite Nindumen'),
+-- 1
+(40000111,13,17,68441,40000112,6,0,0,0,0,40000174,'Callscript - Aldor Anchorite/Anchorite Attendant - Kneel'),
+(40000111,13,17,68463,40000112,6,0,0,0,0,40000175,'Callscript - Aldor Anchorite/Anchorite Attendant - Kneel'),
+(40000111,13,17,68462,40000112,6,0,0,0,0,40000176,'Callscript - Aldor Anchorite/Anchorite Attendant - Kneel'),
+(40000111,13,17,68442,40000112,6,0,0,0,0,40000177,'Callscript - Aldor Anchorite/Anchorite Attendant - Kneel'),
+(40000111,13,17,68443,40000112,6,0,0,0,0,40000178,'Callscript - Aldor Anchorite/Anchorite Attendant - Kneel'),
+-- 2
+(40000111,16,17,68438,40000112,6,0,0,0,0,40000179,'Callscript - Aldor Anchorite/Anchorite Attendant - Kneel'),
+(40000111,16,17,68460,40000112,6,0,0,0,0,40000180,'Callscript - Aldor Anchorite/Anchorite Attendant - Kneel'),
+(40000111,16,17,68440,40000112,6,0,0,0,0,40000181,'Callscript - Aldor Anchorite/Anchorite Attendant - Kneel'),
+-- 3
+(40000111,19,17,68439,40000112,6,0,0,0,0,40000182,'Callscript - Aldor Anchorite/Anchorite Attendant - Kneel'),
+(40000111,19,17,68437,40000112,6,0,0,0,0,40000183,'Callscript - Aldor Anchorite/Anchorite Attendant - Kneel'),
+ 
+(40000111,19,0,0,0,2000005584,0,0,0,0,40000167,'Anchorite Nindumen - Text 4'),
+(40000111,39,0,0,0,2000005585,0,0,0,0,40000168,'Anchorite Nindumen - Text 5'),
+(40000111,49,0,0,0,2000005586,0,0,0,0,40000169,'Anchorite Nindumen - Text 6'),
+(40000111,59,0,0,0,2000005587,0,0,0,0,40000170,'Anchorite Nindumen - Text 7'),
+(40000111,69,0,0,0,2000005588,0,0,0,0,40000171,'Anchorite Nindumen - Text 8'),
+(40000111,79,0,0,0,2000005589,0,0,0,0,40000172,'Anchorite Nindumen - Text 9'),
+(40000111,79,2,159,0,0,0,0,0,0,40000187,'Stop Kneel'),
+ 
+ 
+(40000112,0,2,159,8,0,0,0,0,0,40000184,'Kneel'),
+(40000112,69,0,0,0,2000005590,0,0,0,0,40000185,'May it be so - Text'),
+(40000112,69,2,159,0,0,0,0,0,0,40000186,'Stop Kneel'),
+ 
+ 
+-- Despawn self
+(40000014,0,22,0,0,0,0,0,0,0,40000029,'Visibility Off - Aldor Anchorite/Anchorite Attendant'),
+(40000000,0,21,0,0,0,0,0,0,0,40000028,'Despawn - Aldor Anchorite/Anchorite Attendant'),
+(40000013,0,22,1,0,0,0,0,0,0,40000030,'Visibility On - Aldor Anchorite/Anchorite Attendant'),
+ 
+-- Create kneel state script (1068 doesn't work)
+(40000050,0,2,159,8,0,0,0,0,0,40000000,'Kneel - Neophyte Combatant'),
+-- Remove kneel state
+(40000051,0,2,159,0,0,0,0,0,0,40000001,'Stop Kneel - Neophyte Combatant'),
+-- Call kneel emotes for Neophyte Combatants
+(40000001,0,17,68537,40000050,6,0,0,0,0,40000002,'Callscript - Neophyte Combatant - Kneel'),
+(40000001,0,17,68538,40000050,6,0,0,0,0,40000003,'Callscript - Neophyte Combatant - Kneel'),
+ 
+(40000002,0,17,68544,40000050,6,0,0,0,0,40000004,'Callscript - Neophyte Combatant - Kneel'),
+(40000002,0,17,68545,40000050,6,0,0,0,0,40000005,'Callscript - Neophyte Combatant - Kneel'),
+ 
+(40000003,0,17,68546,40000050,6,0,0,0,0,40000006,'Callscript - Neophyte Combatant - Kneel'),
+(40000003,0,17,68547,40000050,6,0,0,0,0,40000007,'Callscript - Neophyte Combatant - Kneel'),
+ 
+(40000004,0,17,68548,40000050,6,0,0,0,0,40000008,'Callscript - Neophyte Combatant - Kneel'),
+(40000004,0,17,68550,40000050,6,0,0,0,0,40000009,'Callscript - Neophyte Combatant - Kneel'),
+ 
+(40000005,0,17,68549,40000050,6,0,0,0,0,40000010,'Callscript - Neophyte Combatant - Kneel'),
+(40000005,0,17,68551,40000050,6,0,0,0,0,40000011,'Callscript - Neophyte Combatant - Kneel'),
+ 
+(40000006,0,17,68552,40000050,6,0,0,0,0,40000012,'Callscript - Neophyte Combatant - Kneel'),
+(40000006,0,17,68553,40000050,6,0,0,0,0,40000013,'Callscript - Neophyte Combatant - Kneel'),
+ 
+-- Call remove kneel state script for Neophyte Combatants
+(40000007,0,17,68537,40000051,6,0,0,0,0,40000014,'Callscript - Neophyte Combatant - Kneel'),
+(40000007,0,17,68538,40000051,6,0,0,0,0,40000015,'Callscript - Neophyte Combatant - Kneel'),
+ 
+(40000008,0,17,68544,40000051,6,0,0,0,0,40000016,'Callscript - Neophyte Combatant - Kneel'),
+(40000008,0,17,68545,40000051,6,0,0,0,0,40000017,'Callscript - Neophyte Combatant - Kneel'),
+ 
+(40000009,0,17,68546,40000051,6,0,0,0,0,40000018,'Callscript - Neophyte Combatant - Kneel'),
+(40000009,0,17,68547,40000051,6,0,0,0,0,40000019,'Callscript - Neophyte Combatant - Kneel'),
+ 
+(40000010,0,17,68548,40000051,6,0,0,0,0,40000020,'Callscript - Neophyte Combatant - Kneel'),
+(40000010,0,17,68550,40000051,6,0,0,0,0,40000021,'Callscript - Neophyte Combatant - Kneel'),
+ 
+(40000011,0,17,68549,40000051,6,0,0,0,0,40000022,'Callscript - Neophyte Combatant - Kneel'),
+(40000011,0,17,68551,40000051,6,0,0,0,0,40000023,'Callscript - Neophyte Combatant - Kneel'),
+ 
+(40000012,0,17,68552,40000051,6,0,0,0,0,40000024,'Callscript - Neophyte Combatant - Kneel'),
+(40000012,0,17,68553,40000051,6,0,0,0,0,40000025,'Callscript - Neophyte Combatant - Kneel');
+ 
+-- Harbinger Erothem
+SET @GUID := 400001;
+SET @POINT := 0;
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-1764.839966,5726.250000,126.538002,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1764.839966,5726.250000,126.538002,115000,0,40000101,100,0), -- Speech and send away crew
+(@GUID,@POINT := @POINT + '1',-1765.750244,5726.826172,126.539001,20000,0,40000107,100,0), -- Adyen
+(@GUID,@POINT := @POINT + '1',-1758.221191,5748.243164,131.743988,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1748.508057,5776.604980,146.439911,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1734.619385,5811.991211,148.657822,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1733.590698,5812.200684,148.657822,46000,0,40000109,100,0), -- Nindumen
+(@GUID,@POINT := @POINT + '1',-1727.921631,5825.232422,148.657822,88000,0,0,100,0), -- Pray
+(@GUID,@POINT := @POINT + '1',-1747.839722,5776.581543,146.440277,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1753.394043,5760.362305,137.957626,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1758.203003,5746.463867,131.071884,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1764.839966,5726.250000,126.538002,0,0,0,100,0); -- Startpos
+ 
+-- Anchorite Nindumen
+SET @GUID := 400005;
+SET @POINT := 0;
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-1724.098999,5828.570801,148.657608,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1724.098999,5828.570801,148.657608,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1728.618042,5833.832031,148.657608,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1729.031006,5832.623535,148.657608,88000,0,40000111,100,0), -- Pray
+(@GUID,@POINT := @POINT + '1',-1728.325195,5823.335938,148.657608,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1728.540283,5812.527344,148.657608,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1729.370117,5812.933594,148.657608,0,0,0,100,0);
+ 
+ 
+ 
+ 
+-- Path into Nagrand after formations
+-- First NPC (actovates kneels)
+SET @GUID := 400002;
+SET @POINT := 0;
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-1804.833618,5747.886230,128.873413,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1804.833618,5747.886230,128.873413,0,0,0,100,0), -- Intentional duplicate. Npcs sometimes skip first waypoint
+(@GUID,@POINT := @POINT + '1',-1848.541382,5761.246582,129.557983,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1877.399902,5794.128418,129.557983,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1881.900024,5801.779297,130.597031,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1903.518066,5833.953613,128.370102,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1906.642456,5839.646484,130.013214,0,0,40000001,100,0), -- 1
+(@GUID,@POINT := @POINT + '1',-1917.875244,5862.734375,131.880951,0,0,40000002,100,0), -- 2
+(@GUID,@POINT := @POINT + '1',-1926.695557,5880.503418,137.253204,0,0,40000003,100,0), -- 3
+(@GUID,@POINT := @POINT + '1',-1935.022095,5897.732422,142.301300,0,0,40000004,100,0), -- 4
+(@GUID,@POINT := @POINT + '1',-1943.519897,5915.860840,147.687943,0,0,40000005,100,0), -- 5
+(@GUID,@POINT := @POINT + '1',-1952.213135,5936.510742,153.800705,0,0,40000006,100,0), -- 6
+(@GUID,@POINT := @POINT + '1',-1961.204102,5959.910156,159.559097,0,0,40000014,100,0), -- Go invisible
+(@GUID,@POINT := @POINT + '1',-1962.364136,5962.554199,159.560043,0,0,40000000,100,0); -- Despawn
+-- Not activating kneels
+SET @GUID := 400003;
+SET @POINT := 0;
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-1804.833618,5747.886230,128.873413,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1804.833618,5747.886230,128.873413,0,0,0,100,0), -- Intentional duplicate. Npcs sometimes skip first waypoint
+(@GUID,@POINT := @POINT + '1',-1848.541382,5761.246582,129.557983,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1877.399902,5794.128418,129.557983,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1881.900024,5801.779297,130.597031,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1903.518066,5833.953613,128.370102,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1906.642456,5839.646484,130.013214,0,0,0,100,0), -- 1
+(@GUID,@POINT := @POINT + '1',-1917.875244,5862.734375,131.880951,0,0,0,100,0), -- 2
+(@GUID,@POINT := @POINT + '1',-1926.695557,5880.503418,137.253204,0,0,0,100,0), -- 3
+(@GUID,@POINT := @POINT + '1',-1935.022095,5897.732422,142.301300,0,0,0,100,0), -- 4
+(@GUID,@POINT := @POINT + '1',-1943.519897,5915.860840,147.687943,0,0,0,100,0), -- 5
+(@GUID,@POINT := @POINT + '1',-1952.213135,5936.510742,153.800705,0,0,0,100,0), -- 6
+(@GUID,@POINT := @POINT + '1',-1961.204102,5959.910156,159.559097,0,0,40000014,100,0), -- Go invisible
+(@GUID,@POINT := @POINT + '1',-1962.364136,5962.554199,159.560043,0,0,40000000,100,0); -- Despawn
+-- Last NPC (deactivating kneels)
+SET @GUID := 400004;
+SET @POINT := 0;
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-1804.833618,5747.886230,128.873413,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1804.833618,5747.886230,128.873413,0,0,0,100,0), -- Intentional duplicate. Npcs sometimes skip first waypoint
+(@GUID,@POINT := @POINT + '1',-1848.541382,5761.246582,129.557983,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1877.399902,5794.128418,129.557983,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1881.900024,5801.779297,130.597031,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1903.518066,5833.953613,128.370102,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1906.642456,5839.646484,130.013214,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1917.875244,5862.734375,131.880951,0,0,40000007,100,0), -- 1
+(@GUID,@POINT := @POINT + '1',-1926.695557,5880.503418,137.253204,0,0,40000008,100,0), -- 2
+(@GUID,@POINT := @POINT + '1',-1935.022095,5897.732422,142.301300,0,0,40000009,100,0), -- 3
+(@GUID,@POINT := @POINT + '1',-1943.519897,5915.860840,147.687943,0,0,40000010,100,0), -- 4
+(@GUID,@POINT := @POINT + '1',-1952.213135,5936.510742,153.800705,0,0,40000011,100,0), -- 6
+(@GUID,@POINT := @POINT + '1',-1962.364136,5962.554199,159.560043,0,0,40000012,100,0), -- 7
+(@GUID,@POINT := @POINT + '1',-1961.204102,5959.910156,159.559097,0,0,40000014,100,0), -- Go invisible
+(@GUID,@POINT := @POINT + '1',-1962.364136,5962.554199,159.560043,0,0,40000000,100,0); -- Despawn
+ 
+-- Paths from spawn to formations
+-- Row 1
+SET @GUID := 68929;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-1805.717896,`position_y`=5618.445801,`position_z`=130.812286 WHERE `guid`=@GUID; -- original
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,16777472,0,4098,0, ''); --
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-1805.717896,5618.445801,130.812286,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1805.717896,5618.445801,130.812286,3000,0,40000013,100,0),
+(@GUID,@POINT := @POINT + '1',-1782.434692,5689.790039,128.145081,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1772.670044,5722.910156,126.538002,0,0,40000052,100,0),
+(@GUID,@POINT := @POINT + '1',-1772.670044,5722.910156,126.538002,0,0,40000052,100,0);
+ 
+SET @GUID := 68927;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-1803.061157,`position_y`=5616.403320,`position_z`=130.812286 WHERE `guid`=@GUID; -- original
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,16777472,0,4098,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-1803.061157,5616.403320,130.812286,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1803.061157,5616.403320,130.812286,0,0,40000013,100,0),
+(@GUID,@POINT := @POINT + '1',-1779.281006,5688.903320,128.086945,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1768.910034,5721.589844,126.538002,0,0,40000052,100,0),
+(@GUID,@POINT := @POINT + '1',-1768.910034,5721.589844,126.538002,0,0,40000052,100,0);
+ 
+SET @GUID := 68926;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-1799.580933,`position_y`=5616.403320,`position_z`=130.812286 WHERE `guid`=@GUID; -- original
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,16777472,0,4098,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-1799.580933,5616.403320,130.812286,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1799.580933,5616.403320,130.812286,1000,0,40000013,100,0),
+(@GUID,@POINT := @POINT + '1',-1775.268555,5687.584961,128.098465,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1764.969971,5720.310059,126.538002,0,0,40000052,100,0),
+(@GUID,@POINT := @POINT + '1',-1764.969971,5720.310059,126.538002,0,0,40000052,100,0);
+ 
+SET @GUID := 68928;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-1795.994263,`position_y`=5615.209961,`position_z`=130.812286 WHERE `guid`=@GUID; -- original
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,16777472,0,4098,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-1795.994263,5615.209961,130.812286,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1795.994263,5615.209961,130.812286,2000,0,40000013,100,0),
+(@GUID,@POINT := @POINT + '1',-1770.826050,5686.125977,128.169662,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1760.949951,5718.919922,126.538002,0,0,40000052,100,0),
+(@GUID,@POINT := @POINT + '1',-1760.949951,5718.919922,126.538002,0,0,40000052,100,0); -- original
+ 
+-- Row 2
+SET @GUID := 68495;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-1805.717896,`position_y`=5618.445801,`position_z`=130.812286 WHERE `guid`=@GUID; -- original
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-1805.717896,5618.445801,130.812286,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1805.717896,5618.445801,130.812286,5000,0,40000013,100,0),
+(@GUID,@POINT := @POINT + '1',-1782.434692,5689.790039,128.145081,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1773.630005,5720.069824,126.538002,0,0,40000052,100,0),
+(@GUID,@POINT := @POINT + '1',-1773.630005,5720.069824,126.538002,0,0,40000052,100,0);
+ 
+SET @GUID := 68497;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-1803.061157,`position_y`=5616.403320,`position_z`=130.812286 WHERE `guid`=@GUID; -- original
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-1803.061157,5616.403320,130.812286,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1803.061157,5616.403320,130.812286,3000,0,40000013,100,0),
+(@GUID,@POINT := @POINT + '1',-1779.281006,5688.903320,128.086945,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1769.849976,5718.850098,126.538002,0,0,40000052,100,0),
+(@GUID,@POINT := @POINT + '1',-1769.849976,5718.850098,126.538002,0,0,40000052,100,0);
+ 
+SET @GUID := 68498;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-1799.580933,`position_y`=5616.403320,`position_z`=130.812286 WHERE `guid`=@GUID; -- original
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-1799.580933,5616.403320,130.812286,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1799.580933,5616.403320,130.812286,8000,0,40000013,100,0),
+(@GUID,@POINT := @POINT + '1',-1775.268555,5687.584961,128.098465,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1765.719971,5717.479980,126.538002,0,0,40000052,100,0),
+(@GUID,@POINT := @POINT + '1',-1765.719971,5717.479980,126.538002,0,0,40000052,100,0);
+ 
+SET @GUID := 68496;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-1795.994263,`position_y`=5615.209961,`position_z`=130.812286 WHERE `guid`=@GUID; -- original
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,0,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-1795.994263,5615.209961,130.812286,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1795.994263,5615.209961,130.812286,7000,0,40000013,100,0),
+(@GUID,@POINT := @POINT + '1',-1770.826050,5686.125977,128.169662,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1761.790039,5716.160156,126.538002,0,0,40000052,100,0),
+(@GUID,@POINT := @POINT + '1',-1761.790039,5716.160156,126.538002,0,0,40000052,100,0); -- original
+ 
+-- Row 3
+SET @GUID := 69136;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-1805.717896,`position_y`=5618.445801,`position_z`=130.812286 WHERE `guid`=@GUID; -- original
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,19869,16777472,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-1805.717896,5618.445801,130.812286,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1805.717896,5618.445801,130.812286,8000,0,40000013,100,0),
+(@GUID,@POINT := @POINT + '1',-1782.434692,5689.790039,128.145081,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1774.973999,5716.403809,126.538643,0,0,40000052,100,0),
+(@GUID,@POINT := @POINT + '1',-1774.973999,5716.403809,126.538643,0,0,40000052,100,0);
+ 
+SET @GUID := 69137;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-1803.061157,`position_y`=5616.403320,`position_z`=130.812286 WHERE `guid`=@GUID; -- original
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,19869,16777472,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-1803.061157,5616.403320,130.812286,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1803.061157,5616.403320,130.812286,6000,0,40000013,100,0),
+(@GUID,@POINT := @POINT + '1',-1779.281006,5688.903320,128.086945,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1771.214722,5715.131348,126.538643,0,0,40000052,100,0),
+(@GUID,@POINT := @POINT + '1',-1771.214722,5715.131348,126.538643,0,0,40000052,100,0);
+ 
+SET @GUID := 69138;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-1799.580933,`position_y`=5616.403320,`position_z`=130.812286 WHERE `guid`=@GUID; -- original
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,19869,16777472,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-1799.580933,5616.403320,130.812286,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1799.580933,5616.403320,130.812286,7000,0,40000013,100,0),
+(@GUID,@POINT := @POINT + '1',-1775.268555,5687.584961,128.098465,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1767.040039,5713.649902,126.538643,0,0,40000052,100,0),
+(@GUID,@POINT := @POINT + '1',-1767.040039,5713.649902,126.538643,0,0,40000052,100,0);
+ 
+SET @GUID := 69139;
+SET @POINT := 0;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-1795.994263,`position_y`=5615.209961,`position_z`=130.812286 WHERE `guid`=@GUID; -- original
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`auras`) VALUES (@GUID,@GUID,19869,16777472,0,4097,0, '');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + '1',-1795.994263,5615.209961,130.812286,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1795.994263,5615.209961,130.812286,10000,0,40000013,100,0),
+(@GUID,@POINT := @POINT + '1',-1770.826050,5686.125977,128.169662,0,0,0,100,0),
+(@GUID,@POINT := @POINT + '1',-1763.082520,5712.433105,126.538643,0,0,6913901,100,0),
+(@GUID,@POINT := @POINT + '1',-1763.082520,5712.433105,126.538643,0,0,40000052,100,0),
+(@GUID,@POINT := @POINT + '1',-1763.082520,5712.433105,126.538643,0,0,40000052,100,0); -- original
