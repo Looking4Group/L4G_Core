@@ -2379,3 +2379,6 @@ UPDATE `creature_ai_scripts` SET `action1_param2` = 4 WHERE `id` = 2236311;
 
 -- Deathshadow Archon
 UPDATE `creature_template` SET `baseattacktime` = 1400 WHERE `entry` = 22343; -- 3000
+
+-- temp remove some netherwing stuff
+UPDATE `gameobject` SET `spawnmask` = 0 WHERE `id` IN (185877, 185915, 185881);
