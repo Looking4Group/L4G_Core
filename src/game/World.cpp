@@ -2889,7 +2889,12 @@ void World::SelectRandomPvPDaily()
 {
     if (sGameEventMgr.GetEventMap().empty())
         return;
-
+    /*
+        133 Arathi Basin
+        134 Alterac Valley
+        135 Eye of the Storm
+        136 Warsong Gulch
+    */
     const uint32 PvPEventStart = 133;
     const uint32 PvPEventEnd   = 136;
 
@@ -2913,7 +2918,8 @@ void World::SelectRandomPvPDaily()
         return;
 
     uint8 random = urand(PvPEventStart, PvPEventEnd);;
-    while (random == currentId)
+    //Removing Alterac Valley for the time being.
+    while (random == currentId || random == 134)
         random = urand(PvPEventStart, PvPEventEnd);
 
     sGameEventMgr.GetEventMap()[currentId].occurence = 5184000;

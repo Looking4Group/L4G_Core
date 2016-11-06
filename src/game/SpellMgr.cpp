@@ -1981,6 +1981,17 @@ bool SpellMgr::IsSpecialNoStackCase(SpellEntry const *spellInfo_1, SpellEntry co
         }
     }
 
+    // Thunder Clap
+    if (spellInfo_1->Id == 25264)
+    {
+        switch (spellInfo_2->Id)
+        {
+            // Thunderfury
+            case 27648:
+                return true;
+        }
+    }
+
     // Scrolls no stack case
     if (spellInfo_1->AttributesCu & SPELL_ATTR_CU_NO_SCROLL_STACK && spellInfo_2->AttributesCu & SPELL_ATTR_CU_NO_SCROLL_STACK)
     {
