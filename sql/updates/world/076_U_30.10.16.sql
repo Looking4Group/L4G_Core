@@ -2376,3 +2376,6 @@ INSERT INTO `creature_ai_scripts` VALUES
 UPDATE `creature_ai_scripts` SET `action1_param1` = 1 WHERE `id` IN (2236301,2236308);
 UPDATE `creature_ai_scripts` SET `event_param3`='3400',`event_param4`='4800' WHERE `id` = 2236305;
 UPDATE `creature_ai_scripts` SET `action1_param2` = 4 WHERE `id` = 2236311;
+
+-- Deathshadow Archon
+UPDATE `creature_template` SET `baseattacktime` = 1400 WHERE `entry` = 22343; -- 3000
