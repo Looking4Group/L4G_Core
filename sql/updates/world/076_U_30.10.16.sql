@@ -2025,3 +2025,349 @@ INSERT INTO `waypoint_data` VALUES (94309, 5, 12688.5, -6639.19, 4.75524, 0, 0, 
 
 DELETE FROM `waypoint_scripts` WHERE `id` = 449;
 INSERT INTO `waypoint_scripts` VALUES (449, 0, 0, 0, 0, 24425, 0, 0, 0, 0, 493,'Text');
+
+-- Nagrand --
+-- Deathshadow Imp 22362 Spell summoned
+DELETE FROM `creature` WHERE `id` = 22362;
+-- 78634,78635,78636,78637,78638,78639,78640,78641,78642,78643,78644,78645,78646,78647,78648,78649,78650,78651,78652,78653
+
+-- Deathshadow Archon #1 wps (twilight Ridge)
+SET @GUID := 78611;
+UPDATE `creature` SET `MovementType`='2' WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES
+(78611,1,-1267.905640,9545.551758,220.448593,3000,0,0,100,0),
+(78611,2,-1280.399170,9580.519531,207.720047,0,0,0,100,0),
+(78611,3,-1289.732544,9597.518555,205.228790,0,0,0,100,0),
+(78611,4,-1296.621704,9603.653320,204.301422,0,0,0,100,0),
+(78611,5,-1308.981812,9609.740234,203.105667,0,0,0,100,0),
+(78611,6,-1316.372559,9608.896484,202.531708,0,0,0,100,0),
+(78611,7,-1321.986694,9612.332031,202.219528,0,0,0,100,0),
+(78611,8,-1324.194824,9616.838867,202.284058,0,0,0,100,0),
+(78611,9,-1322.844727,9620.883789,202.226776,0,0,0,100,0),
+(78611,10,-1316.260620,9621.416992,201.855804,0,0,0,100,0),
+(78611,11,-1305.432129,9609.016602,203.603531,0,0,0,100,0),
+(78611,12,-1290.433594,9598.067383,205.116760,0,0,0,100,0),
+(78611,13,-1282.566406,9584.443359,206.863831,0,0,0,100,0),
+(78611,14,-1274.841797,9562.782227,212.898209,0,0,0,100,0);
+DELETE FROM `creature` WHERE `guid` = 78729;
+INSERT INTO `creature` VALUES (78729, 22394, 530, 1, 0, 0, -1404.83, 9588.39, 204.283, 5.03002, 300, 0, 0, 3493, 0, 0, 0);
+DELETE FROM `creature_formations` WHERE `leaderguid` = @GUID;
+INSERT INTO `creature_formations` VALUES
+(@GUID,@GUID,100,360,2),
+(@GUID,78729,2,0.7,2);
+
+SET @GUID := 78609;
+UPDATE `creature` SET `MovementType`='2' WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES
+(78609,1,-1353.321045,9586.415039,206.222992,0,0,0,100,0),
+(78609,2,-1358.686401,9598.015625,203.788040,0,0,0,100,0),
+(78609,3,-1383.355225,9599.234375,202.661102,0,0,0,100,0),
+(78609,4,-1403.743164,9590.574219,203.639816,0,0,0,100,0),
+(78609,5,-1407.631714,9581.092773,205.930649,0,0,0,100,0),
+(78609,6,-1405.151855,9573.750977,206.087021,0,0,0,100,0),
+(78609,7,-1406.655884,9584.325195,205.419937,0,0,0,100,0),
+(78609,8,-1390.734253,9596.434570,203.392853,0,0,0,100,0),
+(78609,9,-1369.119263,9601.975586,202.605408,0,0,0,100,0),
+(78609,10,-1358.301025,9597.169922,203.945938,0,0,0,100,0);
+DELETE FROM `creature` WHERE `guid` = 78728;
+INSERT INTO `creature` VALUES (78728, 22394, 530, 1, 0, 0, -1319.21, 9624.37, 202.191, 5.6471, 300, 0, 0, 3493, 0, 0, 2);
+DELETE FROM `creature_formations` WHERE `leaderguid` = @GUID;
+INSERT INTO `creature_formations` VALUES
+(@GUID,@GUID,100,360,2),
+(@GUID,78728,2,0.7,2);
+
+-- Deathshadow Archon #3 wps (twilight Ridge)
+SET @GUID := 78608;
+UPDATE `creature` SET `MovementType`='2' WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES
+(78608,1,-1372.270630,9735.466797,204.738739,0,0,0,100,0),
+(78608,2,-1360.500244,9715.690430,205.423676,0,0,0,100,0),
+(78608,3,-1361.063599,9694.509766,204.307251,0,0,0,100,0),
+(78608,4,-1371.798950,9687.972656,203.449432,0,0,0,100,0),
+(78608,5,-1390.185669,9696.535156,203.666122,0,0,0,100,0),
+(78608,6,-1405.214966,9713.066406,203.505692,0,0,0,100,0),
+(78608,7,-1391.492432,9746.166016,202.498123,0,0,0,100,0);
+DELETE FROM `creature` WHERE `guid` = 78727;
+INSERT INTO `creature` VALUES (78727, 22394, 530, 1, 0, 0, -1380.65, 9741.17, 204.122, 0.875532, 300, 0, 0, 3493, 0, 0, 2);
+DELETE FROM `creature_formations` WHERE `leaderguid` = @GUID;
+INSERT INTO `creature_formations` VALUES
+(@GUID,@GUID,100,360,2),
+(@GUID,78727,2,0.7,2);
+
+-- Deathshadow Archon #4 wps (twilight Ridge)
+SET @GUID := 78607;
+UPDATE `creature` SET `MovementType`='2' WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES
+(78607,1,-1451.110962,9871.834961,200.939758,0,0,0,100,0),
+(78607,2,-1433.159790,9858.834961,200.579803,0,0,0,100,0),
+(78607,3,-1426.648560,9842.492188,200.122971,0,0,0,100,0),
+(78607,4,-1434.507080,9827.099609,200.716766,0,0,0,100,0),
+(78607,5,-1453.956177,9825.764648,199.946869,0,0,0,100,0),
+(78607,6,-1475.439819,9842.912109,199.793030,0,0,0,100,0),
+(78607,7,-1480.052490,9858.860352,200.740036,0,0,0,100,0),
+(78607,8,-1471.409424,9873.511719,200.290131,0,0,0,100,0);
+DELETE FROM `creature` WHERE `guid` = 78726;
+INSERT INTO `creature` VALUES (78726, 22394, 530, 1, 0, 0, -1440.53, 9826.04, 200.204, 0.884089, 300, 0, 0, 3493, 0, 0, 2);
+DELETE FROM `creature_formations` WHERE `leaderguid` = @GUID;
+INSERT INTO `creature_formations` VALUES
+(@GUID,@GUID,100,360,2),
+(@GUID,78726,2,0.7,2);
+
+-- Deathshadow Archon #5 wps (twilight Ridge)
+SET @GUID := 78605;
+UPDATE `creature` SET `MovementType`='2' WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES
+(78605,1,-1522.400269,9733.700195,200.946899,0,0,0,100,0),
+(78605,2,-1529.328735,9758.301758,199.745102,0,0,0,100,0),
+(78605,3,-1551.305420,9763.721680,200.767288,0,0,0,100,0),
+(78605,4,-1569.736694,9749.589844,201.314240,0,0,0,100,0),
+(78605,5,-1567.998291,9733.102539,202.351318,0,0,0,100,0),
+(78605,6,-1564.239990,9712.297852,203.580521,0,0,0,100,0),
+(78605,7,-1553.825195,9695.389648,202.527817,0,0,0,100,0),
+(78605,8,-1542.551880,9689.814453,202.280472,0,0,0,100,0),
+(78605,9,-1526.951904,9707.793945,200.279724,0,0,0,100,0);
+DELETE FROM `creature` WHERE `guid` = 78725;
+INSERT INTO `creature` VALUES (78725, 22394, 530, 1, 0, 0, -1534.35, 9692.92, 201.574, 1.17264, 300, 0, 0, 3493, 0, 0, 2);
+DELETE FROM `creature_formations` WHERE `leaderguid` = @GUID;
+INSERT INTO `creature_formations` VALUES
+(@GUID,@GUID,100,360,2),
+(@GUID,78725,2,0.7,2);
+
+-- Deathshadow Overlord #1 (twilight Ridge)
+SET @GUID := 78724;
+UPDATE `creature` SET `MovementType`='2' WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES
+(78724,1,-1415.207275,9632.897461,201.950714,0,0,0,100,0),
+(78724,2,-1451.027710,9630.882813,201.322815,0,0,0,100,0),
+(78724,3,-1417.325439,9646.276367,202.490555,0,0,0,100,0),
+(78724,4,-1398.104248,9639.552734,199.781006,0,0,0,100,0),
+(78724,5,-1367.176392,9605.332031,202.280685,0,0,0,100,0),
+(78724,6,-1337.876709,9603.137695,203.264908,0,0,0,100,0),
+(78724,7,-1319.133301,9611.508789,202.161316,0,0,0,100,0),
+(78724,8,-1298.064087,9604.429688,204.167725,4000,0,0,100,0),
+(78724,9,-1320.716675,9607.620117,202.823761,0,0,0,100,0),
+(78724,10,-1343.156372,9600.326172,203.339813,0,0,0,100,0),
+(78724,11,-1368.386963,9607.096680,202.030731,0,0,0,100,0),
+(78724,12,-1394.094116,9626.181641,200.450027,0,0,0,100,0);
+
+-- Deathshadow Overlord #2 (twilight Ridge)
+SET @GUID := 78723;
+UPDATE `creature` SET `MovementType`='2' WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES
+(78723,1,-1445.778809,9610.960938,201.568970,0,0,0,100,0),
+(78723,2,-1420.514038,9590.164063,203.023026,0,0,0,100,0),
+(78723,3,-1400.101563,9588.108398,204.789368,4000,0,0,100,0),
+(78723,4,-1430.728760,9596.285156,202.419296,0,0,0,100,0),
+(78723,5,-1451.558105,9617.710938,201.520813,0,0,0,100,0),
+(78723,6,-1454.288818,9635.212891,201.684784,4000,0,0,100,0);
+
+-- Deathshadow Overlord #3 (twilight Ridge)
+SET @GUID := 78722;
+UPDATE `creature` SET `MovementType`='2' WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES
+(78722,1,-1460.584839,9829.385742,200.834808,0,0,0,100,0),
+(78722,2,-1437.839844,9812.268555,201.624420,0,0,0,100,0),
+(78722,3,-1433.713623,9792.051758,201.160156,0,0,0,100,0),
+(78722,4,-1414.730469,9763.765625,203.275009,0,0,0,100,0),
+(78722,5,-1408.635132,9710.680664,203.274261,4000,0,0,100,0),
+(78722,6,-1408.947998,9764.163086,203.891953,0,0,0,100,0),
+(78722,7,-1433.021484,9787.441406,200.860535,0,0,0,100,0),
+(78722,8,-1439.020020,9808.558594,201.836807,0,0,0,100,0),
+(78722,9,-1460.651001,9830.928711,200.843079,0,0,0,100,0),
+(78722,10,-1500.752686,9823.046875,199.886963,4000,0,0,100,0),
+(78722,11,-1487.821899,9825.933594,199.980942,0,0,0,100,0);
+
+-- Deathshadow Overlord #4 (twilight Ridge)
+SET @GUID := 78720;
+UPDATE `creature` SET `MovementType`='2' WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES
+(78720,1,-1521.465332,9733.448242,200.910782,0,0,0,100,0),
+(78720,2,-1521.899414,9690.410156,200.191650,0,0,0,100,0),
+(78720,3,-1508.555908,9674.731445,199.907944,0,0,0,100,0),
+(78720,4,-1483.995605,9672.423828,200.863159,0,0,0,100,0),
+(78720,5,-1469.463623,9677.144531,200.624588,4000,0,0,100,0),
+(78720,6,-1497.765625,9672.143555,200.466476,0,0,0,100,0),
+(78720,7,-1515.891479,9680.020508,199.931519,0,0,0,100,0),
+(78720,8,-1525.458618,9695.654297,200.256058,0,0,0,100,0),
+(78720,9,-1516.648438,9734.353516,201.071579,0,0,0,100,0),
+(78720,10,-1532.499023,9773.758789,199.657608,4000,0,0,100,0);
+
+-- Deathshadow Overlord #5 (twilight Ridge)
+SET @GUID := 78721;
+DELETE FROM `creature` WHERE `guid` = @GUID;
+INSERT INTO `creature` VALUES (78721, 22393, 530, 1, 0, 0, -1586.43, 9870.88, 201.657, 0.576281, 300, 0, 0, 33534, 9465, 0, 2);
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES
+(78721,1,-1549.777954,9889.183594,201.034607,0,0,0,100,0),
+(78721,2,-1475.893555,9889.091797,202.068146,0,0,0,100,0),
+(78721,3,-1554.361328,9886.782227,201.128403,0,0,0,100,0),
+(78721,4,-1603.517090,9853.290039,202.185104,0,0,0,100,0),
+(78721,5,-1604.357544,9803.707031,204.707611,0,0,0,100,0),
+(78721,6,-1603.826294,9761.463867,200.901657,0,0,0,100,0),
+(78721,7,-1611.074097,9785.574219,203.727280,0,0,0,100,0),
+(78721,8,-1615.362793,9828.556641,201.936417,0,0,0,100,0),
+(78721,9,-1605.248169,9852.423828,202.500214,0,0,0,100,0),
+(78721,10,-1587.101929,9870.928711,201.319855,0,0,0,100,0);
+
+-- Wildsparrow Hawk & Twilight Serpent(twilight Ridge) -- they all should have random movement.
+UPDATE creature SET spawndist=5, MovementType=1 WHERE guid IN (81663,81660,81667,81665,90500,81662,90502,90501,81668,81666,81664,81658,81657,81656,18131,41809,81655,54119,81654,56958,54419,63449);
+-- real spawn point for Twilight Serpent  #1
+UPDATE creature SET position_x = -1353.863647, position_y = 9605.740234, position_z = 203.529999, orientation = 5.958357 WHERE guid = 18131;
+-- real spawn point for Warmaul Brute #1
+UPDATE creature SET position_x = -852.286682, position_y = 8888.327148, position_z = 182.986145, orientation = 3.389638 WHERE guid = 63899;
+-- real spawn point for Warmaul Brute #2
+UPDATE creature SET position_x = -769.854797, position_y = 8783.798828, position_z = 184.164734, orientation = 0.533905 WHERE guid = 63891;
+-- real spawn point + correct spawndist for Warmaul Brute #3
+UPDATE creature SET position_x = -745.585571, position_y = 8857.194336, position_z = 182.689667, orientation = 4.797032, spawndist= 10 WHERE guid = 63900;
+-- real spawn point + correct spawndist + movement for Warmaul Brute #4
+UPDATE creature SET position_x = -800.287720, position_y = 8848.184570, position_z = 183.047577, orientation = 4.895202, spawndist= 10, MovementType= 1 WHERE guid = 63890;
+-- real spawn point + correct spawndist + movement for Warmaul Brute #5
+UPDATE creature SET position_x = -806.714905, position_y = 8745.033203, position_z = 194.883362, orientation = 1.192805, spawndist= 0, MovementType= 0 WHERE guid = 63893;
+-- real spawn point for Warmaul Warlock #1
+UPDATE creature SET position_x = -741.645508, position_y = 8790.031250, position_z = 183.590057, orientation = 3.293019 WHERE guid = 63748;
+-- real spawn point for Warmaul Warlock #2
+UPDATE creature SET position_x = -672.554565, position_y = 8779.412109, position_z = 201.774414, orientation = 2.805213 WHERE guid = 63746;
+-- real spawn point for Warmaul Warlock #3
+UPDATE creature SET position_x = -1075.029297, position_y = 8751.921875, position_z = 83.971367, orientation = 3.963444 WHERE guid = 63761;
+-- real spawn point for Warmaul Warlock #4
+UPDATE creature SET position_x = -1011.591614, position_y = 8802.136719, position_z = 126.914368, orientation = 2.953135 WHERE guid = 63763;
+-- Wps for Warmaul Warlock #5
+SET @GUID := 63749;
+UPDATE `creature` SET `MovementType`='2', `spawndist` = '0' WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES
+(63749,1,-755.283875,8839.946289,183.132095,0,0,0,100,0),
+(63749,2,-742.631470,8819.841797,183.815430,0,0,0,100,0),
+(63749,3,-723.057495,8807.382813,184.346680,0,0,0,100,0),
+(63749,4,-664.985535,8798.289063,196.839920,10000,0,0,100,0),
+(63749,5,-695.048584,8806.116211,187.853775,0,0,0,100,0),
+(63749,6,-729.286987,8808.480469,183.762405,0,0,0,100,0),
+(63749,7,-765.166748,8840.986328,183.376892,0,0,0,100,0),
+(63749,8,-801.516785,8831.810547,182.903320,0,0,0,100,0),
+(63749,9,-812.759399,8812.951172,183.211060,0,0,0,100,0),
+(63749,10,-830.129211,8804.833984,184.360672,0,0,0,100,0),
+(63749,11,-839.459167,8785.454102,179.411118,0,0,0,100,0),
+(63749,12,-834.181763,8764.460938,178.806168,0,0,0,100,0),
+(63749,13,-809.979492,8745.994141,180.192154,0,0,0,100,0),
+(63749,14,-834.534180,8763.894531,178.802780,0,0,0,100,0),
+(63749,15,-838.613281,8783.273438,179.054489,0,0,0,100,0),
+(63749,16,-835.288818,8798.407227,182.605560,0,0,0,100,0),
+(63749,17,-819.008301,8809.556641,183.982285,0,0,0,100,0),
+(63749,18,-785.074646,8850.922852,184.654999,0,0,0,100,0);
+
+-- Wps for Warmaul Warlock #6
+SET @GUID := 63768;
+UPDATE `creature` SET `MovementType`='2', `spawndist` = '0' WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES
+(63768,1,-1031.863403,8821.802734,112.913239,0,0,0,100,0),
+(63768,2,-1055.134033,8825.100586,104.011482,0,0,0,100,0),
+(63768,3,-1058.625000,8832.186523,105.413750,0,0,0,100,0),
+(63768,4,-1041.499268,8856.263672,121.251297,0,0,0,100,0),
+(63768,5,-991.898193,8871.938477,140.726807,0,0,0,100,0),
+(63768,6,-970.946533,8885.066406,146.278137,0,0,0,100,0),
+(63768,7,-919.993774,8918.032227,151.878632,0,0,0,100,0),
+(63768,8,-878.952942,8936.513672,155.531448,0,0,0,100,0),
+(63768,9,-843.036011,8924.663086,162.601135,0,0,0,100,0),
+(63768,10,-791.798523,8887.173828,181.749680,0,0,0,100,0),
+(63768,11,-760.280273,8845.501953,182.721909,0,0,0,100,0),
+(63768,12,-756.854553,8806.334961,183.554703,0,0,0,100,0),
+(63768,13,-772.693176,8799.956055,183.207840,0,0,0,100,0),
+(63768,14,-781.739929,8788.936523,184.037888,0,0,0,100,0),
+(63768,15,-778.027100,8762.271484,189.089142,0,0,0,100,0),
+(63768,16,-793.740906,8746.343750,193.251694,0,0,0,100,0),
+(63768,17,-820.323792,8724.781250,208.523895,5000,0,0,100,0),
+(63768,18,-803.051392,8738.272461,196.606277,0,0,0,100,0),
+(63768,19,-778.483582,8762.472656,189.118210,0,0,0,100,0),
+(63768,20,-783.845581,8794.623047,183.247131,0,0,0,100,0),
+(63768,21,-766.683289,8797.849609,183.666336,0,0,0,100,0),
+(63768,22,-754.484070,8806.601563,183.609650,0,0,0,100,0),
+(63768,23,-754.962280,8835.013672,183.291977,0,0,0,100,0),
+(63768,24,-783.027466,8882.618164,182.075775,0,0,0,100,0),
+(63768,25,-848.965454,8929.962891,160.220291,0,0,0,100,0),
+(63768,26,-882.623169,8934.961914,155.438766,0,0,0,100,0),
+(63768,27,-924.173584,8913.105469,151.418045,0,0,0,100,0),
+(63768,28,-982.289795,8880.420898,144.198212,0,0,0,100,0),
+(63768,29,-1039.433716,8858.477539,122.974747,0,0,0,100,0),
+(63768,30,-1049.191650,8836.408203,110.314926,0,0,0,100,0),
+(63768,31,-1035.196289,8814.458008,111.303223,0,0,0,100,0),
+(63768,32,-1034.784546,8783.993164,111.633621,5000,0,0,100,0);
+-- real spawn point + wps for Warmaul Brute #6
+UPDATE creature SET position_x = -1073.936157, position_y = 8728.070313, position_z = 79.932007, orientation = 3.881618, MovementType =2, spawndist =0 WHERE guid = 63909;
+SET @GUID := 63909;
+UPDATE `creature` SET `MovementType`='2', `spawndist` = '0' WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES
+(63909,1,-1102.080444,8703.708984,64.108513,10000,0,0,100,0),
+(63909,2,-1075.758667,8727.969727,79.530060,0,0,0,100,0),
+(63909,3,-1066.865967,8747.861328,84.398506,0,0,0,100,0),
+(63909,4,-1073.304565,8821.553711,100.437836,10000,0,0,100,0),
+(63909,5,-1064.800049,8760.429688,86.339470,0,0,0,100,0),
+(63909,6,-1070.041504,8734.315430,81.997719,0,0,0,100,0),
+(63909,7,-1075.116089,8726.721680,79.307686,0,0,0,100,0);
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 18037;
+INSERT INTO `creature_ai_scripts` (`id`,`entryOrGUID`,`event_type`,`event_inverse_phase_mask`,`event_chance`,`event_flags`,`event_param1`,`event_param2`,`event_param3`,`event_param4`,`action1_type`,`action1_param1`,`action1_param2`,`action1_param3`,`action2_type`,`action2_param1`,`action2_param2`,`action2_param3`,`action3_type`,`action3_param1`,`action3_param2`,`action3_param3`,`comment`) VALUES
+-- Hexenmeister der Totschläger 18037
+('1803701','18037','1','0','100','0','0','0','0','0','21','1','0','0','0','0','0','0','0','0','0','0','Warmaul Warlock - Prevent Combat Movement on Spawn'),
+('1803702','18037','1','0','75','0','1000','1000','0','0','11','11939','0','1','0','0','0','0','0','0','0','0','Warmaul Warlock - Summon Imp on Spawn'),
+('1803703','18037','4','0','100','0','0','0','0','0','11','9613','1','0','23','1','0','0','0','0','0','0','Warmaul Warlock - Cast Shadow Bolt and Set Phase 1 on Aggro'),
+('1803704','18037','9','5','100','1','0','40','2400','3800','11','9613','1','0','0','0','0','0','0','0','0','0','Warmaul Warlock - Cast Shadow Bolt (Phase 1)'),
+('1803705','18037','3','5','100','0','15','0','0','0','21','1','0','0','23','1','0','0','0','0','0','0','Warmaul Warlock - Start Combat Movement and Set Phase 2 when Mana is at 15% (Phase 1)'),
+('1803706','18037','9','5','100','1','35','80','0','0','21','1','0','0','0','0','0','0','0','0','0','0','Warmaul Warlock - Start Combat Movement at 35 Yards (Phase 1)'),
+('1803707','18037','9','5','100','1','5','15','0','0','21','1','0','0','0','0','0','0','0','0','0','0','Warmaul Warlock - Prevent Combat Movement at 15 Yards (Phase 1)'),
+('1803708','18037','9','5','100','1','0','5','0','0','21','1','0','0','0','0','0','0','0','0','0','0','Warmaul Warlock - Start Combat Movement Below 5 Yards'),
+('1803709','18037','3','3','100','1','100','30','1000','1000','23','-1','0','0','0','0','0','0','0','0','0','0','Warmaul Warlock - Set Phase 1 when Mana is above 30% (Phase 2)'),
+('1803710','18037','7','0','100','0','0','0','0','0','22','0','0','0','0','0','0','0','0','0','0','0','Warmaul Warlock - Set Phase to 0 on Evade');
+
+-- Deathshadow Overlord
+UPDATE `creature_ai_scripts` SET `action1_param1` = 1 WHERE `id` IN (2239301,2239306);
+UPDATE `creature_ai_scripts` SET `action1_param2` = 4 WHERE `id` = 2239310;
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 22342;
+INSERT INTO `creature_ai_scripts` VALUES
+-- Deathshadow Spellbinder
+('2234201','22342','4','0','100','0','0','0','0','0','22','1','0','0','0','0','0','0','0','0','0','0','Deathshadow Spellbinder - Set Phase 1 on Aggro'),
+('2234202','22342','9','13','100','1','0','40','3400','4800','11','34447','1','0','0','0','0','0','0','0','0','0','Deathshadow Spellbinder - Cast Arcane Missles (Phase 1)'),
+('2234203','22342','3','13','100','0','7','0','0','0','22','2','0','0','0','0','0','0','0','0','0','0','Deathshadow Spellbinder - Set Phase 2 when Mana is at 7% (Phase 1)'),
+('2234204','22342','3','11','100','1','100','15','1000','1000','22','1','0','0','0','0','0','0','0','0','0','0','Deathshadow Spellbinder - Set Phase 1 when Mana is above 15% (Phase 2)'),
+('2234205','22342','0','0','100','1','9000','14000','14000','20000','11','22744','4','32','0','0','0','0','0','0','0','0','Deathshadow Spellbinder - Cast Chains of Ice'),
+('2234206','22342','0','0','100','1','6000','9000','7000','14000','11','31999','1','0','0','0','0','0','0','0','0','0','Deathshadow Spellbinder - Cast Counterspell'),
+('2234207','22342','2','0','100','0','15','0','0','0','22','3','0','0','0','0','0','0','0','0','0','0','Deathshadow Spellbinder - Disable Dynamic Movement and Set Phase 3 at 15% HP'),
+('2234208','22342','2','7','100','0','15','0','0','0','25','0','0','0','1','-47','0','0','0','0','0','0','Deathshadow Spellbinder - Flee at 15% HP (Phase 3)'),
+('2234209','22342','7','0','100','0','0','0','0','0','22','0','0','0','0','0','0','0','0','0','0','0','Deathshadow Spellbinder - Set Phase to 0 on Evade');
