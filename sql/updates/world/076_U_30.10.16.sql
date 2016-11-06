@@ -2371,3 +2371,8 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('2234207','22342','2','0','100','0','15','0','0','0','22','3','0','0','0','0','0','0','0','0','0','0','Deathshadow Spellbinder - Disable Dynamic Movement and Set Phase 3 at 15% HP'),
 ('2234208','22342','2','7','100','0','15','0','0','0','25','0','0','0','1','-47','0','0','0','0','0','0','Deathshadow Spellbinder - Flee at 15% HP (Phase 3)'),
 ('2234209','22342','7','0','100','0','0','0','0','0','22','0','0','0','0','0','0','0','0','0','0','0','Deathshadow Spellbinder - Set Phase to 0 on Evade');
+
+-- Deathshadow Warlock
+UPDATE `creature_ai_scripts` SET `action1_param1` = 1 WHERE `id` IN (2236301,2236308);
+UPDATE `creature_ai_scripts` SET `event_param3`='3400',`event_param4`='4800' WHERE `id` = 2236305;
+UPDATE `creature_ai_scripts` SET `action1_param2` = 4 WHERE `id` = 2236311;
