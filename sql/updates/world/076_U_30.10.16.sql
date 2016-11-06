@@ -1418,7 +1418,7 @@ INSERT INTO `db_script_string` (`entry`,`content_default`) VALUES
 (2000005591,'What manner of creature is that? Looks like a purple goblin.');
  
 DELETE FROM `waypoint_scripts` WHERE `id` = 680349401;
-INSERT INTO `waypoint_scripts` (`id`,`delay`,`command`,`datalong`,`datalong2`,`dataint`,`x`,`y`,`z`,`o`,`guid`,`comments`) VALUES
+INSERT INTO `waypoint_scripts` (`id`,`delay`,`command`,`datalong`,`datalong2`,`dataint`,`x`,`y`,`z`,`o`,`guid`,`comment`) VALUES
 (680349401,0,30,0,0,0,0,0,0,2.763599,680349401,'Orientation 1'),
 (680349401,2,0,0,0,2000005591,0,0,0,0,680349402,'Haggard War Veteran - Text 1');
  
@@ -1442,7 +1442,7 @@ INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`
 UPDATE `creature` SET `MovementType` = 0 WHERE `guid` = 66740;
  
 DELETE FROM `waypoint_scripts` WHERE `id` BETWEEN 6673601 AND 6673604;
-INSERT INTO `waypoint_scripts` (`id`,`delay`,`command`,`datalong`,`datalong2`,`dataint`,`x`,`y`,`z`,`o`,`guid`,`comments`) VALUES
+INSERT INTO `waypoint_scripts` (`id`,`delay`,`command`,`datalong`,`datalong2`,`dataint`,`x`,`y`,`z`,`o`,`guid`,`comment`) VALUES
 (6673601,0,30,0,0,0,0,0,0,1.972222,6673601,'Orientation 1'),
 (6673602,0,30,0,0,0,0,0,0,5.986479,6673602,'Orientation 2'),
 (6673603,0,30,0,0,0,0,0,0,3.787364,6673603,'Orientation 3'),
@@ -1509,7 +1509,7 @@ DELETE FROM `waypoint_scripts` WHERE `id` BETWEEN 6913901 AND 6913905;
 DELETE FROM `waypoint_scripts` WHERE `id` BETWEEN 6892601 AND 6892901;
 DELETE FROM `waypoint_scripts` WHERE `id` BETWEEN 40000000 AND 40000052;
 DELETE FROM `waypoint_scripts` WHERE `id` BETWEEN 40000101 AND 40000112;
-INSERT INTO `waypoint_scripts` (`id`,`delay`,`command`,`datalong`,`datalong2`,`dataint`,`x`,`y`,`z`,`o`,`guid`,`comments`) VALUES
+INSERT INTO `waypoint_scripts` (`id`,`delay`,`command`,`datalong`,`datalong2`,`dataint`,`x`,`y`,`z`,`o`,`guid`,`comment`) VALUES
 (40000052,0,16,0,0,0,0,0,0,0,40000027,'Stop waypoint movement'),
 -- Ready up Harbinger Erothem
 (6913901,0,17,68962,6913905,6,0,0,0,0,6913901,'Callscript - Harbinger Erothem'),
