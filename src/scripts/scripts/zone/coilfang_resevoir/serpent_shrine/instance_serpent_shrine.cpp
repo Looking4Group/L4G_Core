@@ -264,15 +264,24 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
         HandleInitCreatureState(creature);
     }
     
-    void OpenDoor(ObjectGuid guid)
+    void OpenVashjDoor()
     {
-        GameObject* obj = NULL;
-        obj = instance->GetGameObject(guid);
+        Map::PlayerList const& players = instance->GetPlayers();
 
-        if (obj)
+        if (!players.isEmpty())
         {
-            obj->SetLootState(GO_READY);
-            obj->UseDoorOrButton(10000);
+            for (Map::PlayerList::const_iterator itr = players.begin(); itr != players.end(); ++itr)
+            {
+                if (Player* player = itr->getSource())
+                {
+                    if (GameObject *obj = GetClosestGameObjectWithEntry(player, 184568, 999.0f))
+                    {
+                        obj->SetLootState(GO_READY);
+                        obj->UseDoorOrButton(10000);
+                        break;
+                    }
+                }
+            }
         }
     }
 
@@ -286,7 +295,7 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
                     HandleGameObject(ConsoleGuids[0], true);
                     if ((GetData(DATA_LURKER_EVENT) == SPECIAL) && (GetData(DATA_LEOTHERAS_EVENT) == SPECIAL) && (GetData(DATA_KARATHRESS_EVENT) == SPECIAL) && (GetData(DATA_MOROGRIM_EVENT) == SPECIAL))
                     {
-                        OpenDoor(BridgeConsoleGuid);
+                        OpenVashjDoor();
                         HandleGameObject(BridgePartGuids[0], true);
                         HandleGameObject(BridgePartGuids[1], true);
                         HandleGameObject(BridgePartGuids[2], true);
@@ -300,7 +309,7 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
                     HandleGameObject(ConsoleGuids[1], true);
                     if ((GetData(DATA_HYDROSS_EVENT) == SPECIAL) && (GetData(DATA_LEOTHERAS_EVENT) == SPECIAL) && (GetData(DATA_KARATHRESS_EVENT) == SPECIAL) && (GetData(DATA_MOROGRIM_EVENT) == SPECIAL))
                     {
-                        OpenDoor(BridgeConsoleGuid);
+                        OpenVashjDoor();
                         HandleGameObject(BridgePartGuids[0], true);
                         HandleGameObject(BridgePartGuids[1], true);
                         HandleGameObject(BridgePartGuids[2], true);
@@ -314,7 +323,7 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
                     HandleGameObject(ConsoleGuids[2], true);
                     if ((GetData(DATA_HYDROSS_EVENT) == SPECIAL) && (GetData(DATA_LURKER_EVENT) == SPECIAL) && (GetData(DATA_KARATHRESS_EVENT) == SPECIAL) && (GetData(DATA_MOROGRIM_EVENT) == SPECIAL))
                     {
-                        OpenDoor(BridgeConsoleGuid);
+                        OpenVashjDoor();
                         HandleGameObject(BridgePartGuids[0], true);
                         HandleGameObject(BridgePartGuids[1], true);
                         HandleGameObject(BridgePartGuids[2], true);
@@ -328,7 +337,7 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
                     HandleGameObject(ConsoleGuids[3], true);
                     if ((GetData(DATA_HYDROSS_EVENT) == SPECIAL) && (GetData(DATA_LURKER_EVENT) == SPECIAL) && (GetData(DATA_LEOTHERAS_EVENT) == SPECIAL) && (GetData(DATA_MOROGRIM_EVENT) == SPECIAL))
                     {
-                        OpenDoor(BridgeConsoleGuid);
+                        OpenVashjDoor();
                         HandleGameObject(BridgePartGuids[0], true);
                         HandleGameObject(BridgePartGuids[1], true);
                         HandleGameObject(BridgePartGuids[2], true);
@@ -342,7 +351,7 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
                     HandleGameObject(ConsoleGuids[4], true);
                     if ((GetData(DATA_HYDROSS_EVENT) == SPECIAL) && (GetData(DATA_LURKER_EVENT) == SPECIAL) && (GetData(DATA_LEOTHERAS_EVENT) == SPECIAL) && (GetData(DATA_KARATHRESS_EVENT) == SPECIAL))
                     {
-                        OpenDoor(BridgeConsoleGuid);
+                        OpenVashjDoor();
                         HandleGameObject(BridgePartGuids[0], true);
                         HandleGameObject(BridgePartGuids[1], true);
                         HandleGameObject(BridgePartGuids[2], true);
