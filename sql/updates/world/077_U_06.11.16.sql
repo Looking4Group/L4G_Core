@@ -70,3 +70,9 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('2246104','-78827','1','0','100','1','3000','9000','9000','90000','44','39211','70095','0','0','0','0','0','0','0','0','0','Fel Cannon MKI - Cast Fel Cannon Blast OOC'),
 ('2246105','-78831','1','0','100','1','3000','9000','9000','90000','44','39211','70106','0','0','0','0','0','0','0','0','0','Fel Cannon MKI - Cast Fel Cannon Blast OOC'),
 ('2246106','-78832','1','0','100','1','3000','9000','9000','90000','44','39211','70105','0','0','0','0','0','0','0','0','0','Fel Cannon MKI - Cast Fel Cannon Blast OOC');
+
+-- Skyguard Prisoner 23383
+UPDATE `creature_template` SET `unit_flags` = 32833 WHERE `entry` = 23383;
+-- correct respawntime of sniffed npcs 21911
+UPDATE `creature` SET `spawntimesecs` = 300 WHERE `id` = 21911;
+UPDATE `creature` SET `spawnmask` = 0 WHERE `guid` = 138363; -- cant be used currently
