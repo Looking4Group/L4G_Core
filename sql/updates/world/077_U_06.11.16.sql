@@ -96,3 +96,24 @@ INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2
 DELETE FROM `waypoint_data` WHERE `id` = @GUID;
 INSERT INTO `waypoint_data` VALUES (83087, 1, -56.6067, 566.384, -17.7584, 255, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (83087, 2, -81.0371, 554.711, -17.7842, 255, 0, 0, 100, 0);
+
+SET @GUID := 78723;
+DELETE FROM `creature` WHERE `guid` = @GUID;
+INSERT INTO `creature` VALUES (78723, 22393, 530, 1, 0, 0, -1453.54, 9636.82, 201.688, 1.66862, 300, 0, 0, 33534, 9465, 0, 2);
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES (78723, 1, -1453.54, 9636.82, 201.688, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (78723, 2, -1432.65, 9646.11, 201.194, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (78723, 3, -1405.08, 9634.17, 200.442, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (78723, 4, -1376.06, 9616.1, 201.409, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (78723, 5, -1359.88, 9605.58, 202.905, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (78723, 6, -1340.02, 9602.57, 203.255, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (78723, 7, -1324.82, 9604.7, 203.328, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (78723, 8, -1307.9, 9605.09, 203.847, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (78723, 9, -1324.82, 9604.7, 203.328, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (78723, 10, -1340.02, 9602.57, 203.255, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (78723, 11, -1359.88, 9605.58, 202.905, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (78723, 12, -1376.06, 9616.1, 201.409, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (78723, 13, -1405.08, 9634.17, 200.442, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (78723, 14, -1432.65, 9646.11, 201.194, 0, 0, 0, 100, 0);
