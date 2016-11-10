@@ -76,3 +76,15 @@ UPDATE `creature_template` SET `unit_flags` = 32833 WHERE `entry` = 23383;
 -- correct respawntime of sniffed npcs 21911
 UPDATE `creature` SET `spawntimesecs` = 300 WHERE `id` = 21911;
 UPDATE `creature` SET `spawnmask` = 0 WHERE `guid` = 138363; -- cant be used currently
+
+DELETE FROM `creature` WHERE `guid` BETWEEN 98755 AND 98758;
+INSERT INTO `creature` VALUES (98755, 22062, 530, 1, 0, 0, 6300.91, -6252.88, 77.8134, 4.92138, 5400, 0, 0, 626, 0, 0, 0);
+INSERT INTO `creature` VALUES (98756, 22062, 530, 1, 0, 0, 6305.22, -6475.4, 83.0121, 0.443913, 6300, 0, 0, 626, 0, 0, 0);
+INSERT INTO `creature` VALUES (98757, 22062, 530, 1, 0, 0, 7160.29, -6620.61, 60.6592, 5.59064, 7200, 0, 0, 626, 0, 0, 0);
+INSERT INTO `creature` VALUES (98758, 22062, 530, 1, 0, 0, 7227.19, -6406.61, 56.1656, 2.77106, 9000, 0, 0, 626, 0, 0, 0);
+DELETE FROM `pool_creature` WHERE `pool_entry` = 1077;
+INSERT INTO `pool_creature` VALUES
+(98755,1077,0,'Dr. Whitherlimb (22062)'),
+(98756,1077,0,'Dr. Whitherlimb (22062)'),
+(98757,1077,0,'Dr. Whitherlimb (22062)'),
+(98758,1077,0,'Dr. Whitherlimb (22062)');
