@@ -143,3 +143,32 @@ INSERT INTO `waypoint_data` VALUES (77873, 16, 3116.36, 6174.45, 137.649, 0, 0, 
 INSERT INTO `waypoint_data` VALUES (77873, 17, 3111.84, 6176.62, 137.941, 0, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (77873, 18, 3107.19, 6202.1, 135.244, 0, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (77873, 19, 3111.43, 6216.25, 133.779, 0, 0, 0, 100, 0);
+
+-- Fel Iron Deposit 181555
+DELETE FROM `gameobject_loot_template` WHERE `entry` = 18359;
+INSERT INTO `gameobject_loot_template` VALUES (18359, 0, 4, 2, -12004, 2, 0, 0, 0);
+INSERT INTO `gameobject_loot_template` VALUES (18359, 12004, 1, 1, -12004, 1, 0, 0, 0);
+INSERT INTO `gameobject_loot_template` VALUES (18359, 22573, 10, 0, 1, 2, 0, 0, 0);
+INSERT INTO `gameobject_loot_template` VALUES (18359, 22574, 10, 0, 1, 2, 0, 0, 0);
+INSERT INTO `gameobject_loot_template` VALUES (18359, 23424, 100, 0, 1, 1, 0, 0, 0);
+INSERT INTO `gameobject_loot_template` VALUES (18359, 23427, 2, 0, 1, 1, 0, 0, 0);
+INSERT INTO `gameobject_loot_template` VALUES (18359, 35229, -25, 0, 1, 1, 0, 0, 0);
+
+-- Adamantite Deposit 181556 & Rich Adamantite Deposit 181569 & 181570
+DELETE FROM `gameobject_loot_template` WHERE `entry` = 18361;
+INSERT INTO `gameobject_loot_template` VALUES (18361, 0, 4, 2, -12004, 2, 0, 0, 0);
+INSERT INTO `gameobject_loot_template` VALUES (18361, 12004, 1, 1, -12004, 1, 0, 0, 0);
+INSERT INTO `gameobject_loot_template` VALUES (18361, 22573, 19.9, 0, 2, 4, 0, 0, 0);
+INSERT INTO `gameobject_loot_template` VALUES (18361, 23425, 100, 0, 1, 1, 0, 0, 0);
+INSERT INTO `gameobject_loot_template` VALUES (18361, 23427, 9.9, 0, 1, 1, 0, 0, 0);
+INSERT INTO `gameobject_loot_template` VALUES (18361, 24243, 1, 0, 1, 1, 0, 0, 0);
+INSERT INTO `gameobject_loot_template` VALUES (18361, 35229, -25, 0, 1, 1, 0, 0, 0);
+
+-- Nethercite Deposit 185877
+DELETE FROM `gameobject_loot_template` WHERE `entry` = 22070;
+INSERT INTO `gameobject_loot_template` VALUES (22070, 0, 4, 2, -12004, 2, 0, 0, 0);
+INSERT INTO `gameobject_loot_template` VALUES (22070, 22573, 10, 0, 1, 2, 0, 0, 0);
+INSERT INTO `gameobject_loot_template` VALUES (22070, 22574, 9.8, 0, 1, 2, 0, 0, 0);
+INSERT INTO `gameobject_loot_template` VALUES (22070, 23427, 2, 0, 1, 1, 0, 0, 0);
+INSERT INTO `gameobject_loot_template` VALUES (22070, 32464, 100, 0, 1, 1, 0, 0, 0);
+INSERT INTO `gameobject_loot_template` VALUES (22070, 32506, 1, 0, 1, 1, 0, 0, 0);
