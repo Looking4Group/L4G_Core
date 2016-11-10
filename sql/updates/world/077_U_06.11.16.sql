@@ -285,3 +285,6 @@ INSERT INTO `waypoint_data` VALUES (77191, 7, 1254.09, 6959.13, 109.325, 0, 1, 0
 INSERT INTO `waypoint_data` VALUES (77191, 8, 1213.56, 6978.56, 119.448, 0, 1, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (77191, 9, 1182.2, 7005.04, 122.638, 0, 1, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (77191, 10, 1213.56, 6978.56, 119.448, 0, 1, 0, 100, 0);
+
+DELETE FROM creature_loot_template WHERE Entry in (10925,10684,10698,17887,2462,10928,10388,10389);
+UPDATE `creature_template` SET `mingold` = 0, `maxgold` = 0, `lootid` = 0 WHERE Entry in (10925,10684,10698,17887,2462,10928,10388,10389);
