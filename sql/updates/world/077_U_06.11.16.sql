@@ -88,3 +88,11 @@ INSERT INTO `pool_creature` VALUES
 (98756,1077,0,'Dr. Whitherlimb (22062)'),
 (98757,1077,0,'Dr. Whitherlimb (22062)'),
 (98758,1077,0,'Dr. Whitherlimb (22062)');
+
+SET @GUID := 83087;
+UPDATE `creature` SET `MovementType`='2' WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES (83087, 1, -56.6067, 566.384, -17.7584, 255, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (83087, 2, -81.0371, 554.711, -17.7842, 255, 0, 0, 100, 0);
