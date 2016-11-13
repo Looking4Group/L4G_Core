@@ -85,29 +85,17 @@ namespace Movement
     {
         uint32 last_idx = spline.getPointCount() - 3;
         const Vector3 * real_path = &spline.getPoint(1);
-        Vector3 destination = real_path[last_idx];
 
-
-        size_t lastIndexPos = data.wpos();
         data << last_idx;
-        data << destination;   // destination
+        data << real_path[last_idx];   // destination
         if (last_idx > 1)
         {
+            Vector3 middle = (real_path[0] + real_path[last_idx]) / 2.f;
             Vector3 offset;
             // first and last points already appended
             for(uint32 i = 1; i < last_idx; ++i)
             {
-                offset = destination - real_path[i];
-
-                 // [-ZERO] The client freezes when it gets a zero offset.
-                 // If the offset would be rounded to zero, skip it.
-                 if (fabs(offset.x) < 0.25 && fabs(offset.y) < 0.25 && fabs(offset.z) < 0.25)
-                 {
-                     last_idx--;
-                     data.put(lastIndexPos, last_idx);
-                     continue;
-                 }
-
+                offset = middle - real_path[i];
                 data.appendPackXYZ(offset.x, offset.y, offset.z);
             }
         }
