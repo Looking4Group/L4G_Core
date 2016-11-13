@@ -37,7 +37,7 @@ class BufferedSocket: public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
     protected:
         typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> Base;
 
-        virtual bool OnRead(void) { }
+        virtual bool OnRead(void) { return false; }
         virtual void OnAccept(void) { }
         virtual void OnClose(void) { }
 
