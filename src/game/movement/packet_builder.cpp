@@ -93,12 +93,11 @@ namespace Movement
         data << destination;   // destination
         if (last_idx > 1)
         {
-            Vector3 middle = (real_path[0] + real_path[last_idx]) / 2.f;
             Vector3 offset;
             // first and last points already appended
             for(uint32 i = 1; i < last_idx; ++i)
             {
-                offset = middle - real_path[i];
+                offset = destination - real_path[i];
 
                  // [-ZERO] The client freezes when it gets a zero offset.
                  // If the offset would be rounded to zero, skip it.
@@ -113,7 +112,6 @@ namespace Movement
             }
         }
     }
-
 
     void WriteCatmullRomPath(const Spline<int32>& spline, ByteBuffer& data)
     {
