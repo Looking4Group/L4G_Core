@@ -1224,7 +1224,7 @@ class LOOKING4GROUP_EXPORT Player : public Unit
         void ApplyEnchantment(Item *item,EnchantmentSlot slot,bool apply, bool apply_dur = true, bool ignore_condition = false);
         void ApplyEnchantment(Item *item,bool apply);
         void SendEnchantmentDurations();
-        void EnchantItem(uint32 spellid, uint8 slot); //Neue enchant funktion für den NPC :>
+        void EnchantItem(uint32 spellid, uint8 slot); //Neue enchant funktion fï¿½r den NPC :>
         void AddItemDurations(Item *item);
         void RemoveItemDurations(Item *item);
         void SendItemDurations();
@@ -1909,9 +1909,12 @@ class LOOKING4GROUP_EXPORT Player : public Unit
         void SendNotifyLootMoneyRemoved();
 
         uint8 GetValidForPush();
+        bool GetValidForPushSeventy();
         void PushSixty();
+        void PushSeventy();
         void Push();
         void EquipForPush(uint16 items[]);
+        void EquipForPushSeventy(uint16 items[]);
         void EquipForPushSixty(uint16 items[]);
         void FinishPush();
         void FinishPushSixty();
