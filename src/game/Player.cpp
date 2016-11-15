@@ -18,6 +18,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <iomanip>
+
 #include "Common.h"
 #include "Language.h"
 #include "Database/DatabaseEnv.h"
@@ -71,7 +73,6 @@
 
 #include <cmath>
 #include <cctype>
-#include <iomanip>
 
 #define ZONE_UPDATE_INTERVAL 1000
 
