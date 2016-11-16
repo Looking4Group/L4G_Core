@@ -268,6 +268,7 @@ void WorldSession::HandleMoveSplineDoneOpcode(WorldPacket& recv_data)
     {
         GetPlayer()->RemoveAurasDueToSpell(36573);
         GetPlayer()->CompleteQuest(10525);
+        GetPlayer()->TeleportTo(530,2277.804932,5985.052246,142.595078,4.412777);
     }
 }
 
