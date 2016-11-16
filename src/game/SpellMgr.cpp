@@ -3800,6 +3800,11 @@ void SpellMgr::LoadSpellCustomAttr()
             case 44208: 
                 spellInfo->Targets = TARGET_FLAG_DEST_LOCATION;
                 break;
+            case 18396: //Dismounting blast
+                spellInfo->Effect[0] = 108;
+                spellInfo->EffectImplicitTargetA[0] = 6;
+                spellInfo->EffectMiscValue[0] = 21;
+                break;
             default:
                 break;
         }
