@@ -2203,7 +2203,7 @@ bool QuestAccept_npc_akuno(Player* player, Creature* creature, const Quest* ques
         if (pEscortAI)
         {
             creature->SetStandState(UNIT_STAND_STATE_STAND);
-            creature->setFaction(232); // faction escortee
+            creature->setFaction(1818); // faction escortee
 
             pEscortAI->Start(true, false, player->GetGUID(), quest);
         }
