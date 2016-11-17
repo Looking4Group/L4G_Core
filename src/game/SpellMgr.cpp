@@ -3115,8 +3115,6 @@ void SpellMgr::LoadSpellCustomAttr()
             case 13810: // Frost Trap
             case 34919: // Vampiric Touch (Energize)
             case 15290: // Vampiric Embrace (Healing)
-                spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO; // Do not put caster in combat after use
-                break;
             //bonfire, campfire and other should not put you in combat (SPELL_EFFECT_ENVIRONMENTAL_DAMAGE)
             case 7897:
             case 7902: 
