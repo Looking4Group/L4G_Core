@@ -418,15 +418,7 @@ bool World::RemoveQueuedPlayer(WorldSession* sess)
     // iter point to first not updated socket, position store new position
     for (; iter != m_QueuedPlayer.end(); ++iter, ++position)
         (*iter)->SendAuthWaitQue(position);
-
-    if (!found && getConfig(CONFIG_INTERVAL_DISCONNECT_TOLERANCE))
-    {
-        std::pair<uint32, time_t> tPair;
-        tPair.first = sess->GetAccountId();
-        tPair.second = time(NULL);
-
-        addDisconnectTime(tPair);
-    }
+    
     return found;
 }
 
