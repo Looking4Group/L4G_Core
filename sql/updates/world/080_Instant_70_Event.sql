@@ -151,3 +151,6 @@ INSERT INTO `npc_vendor` VALUES (20278, 31377, 0, 0, 2264);
 INSERT INTO `npc_vendor` VALUES (20278, 31406, 0, 0, 2264);
 INSERT INTO `npc_vendor` VALUES (20278, 31411, 0, 0, 2264);
 INSERT INTO `npc_vendor` VALUES (20278, 31618, 0, 0, 2264);
+
+-- HC Keys at honored 
+UPDATE item_template SET RequiredReputationRank = 5 WHERE entry IN (30634, 30623, 30622, 30637, 30635, 30633);
