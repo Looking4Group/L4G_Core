@@ -19,3 +19,11 @@ UPDATE `creature_template` SET `mindmg`='1450',`maxdmg`='1856' WHERE `entry` = 1
 DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 16492;
 INSERT INTO `creature_ai_scripts` VALUES
 ('1649201','16492','9','0','100','3','0','15','9000','13000','11','29881','4','0','0','0','0','0','0','0','0','0','Syphoner - Cast Drain Mana');
+
+-- Shattered Rumbler mob_shattered_rumbler
+UPDATE `creature_template` SET `ScriptName` = NULL, `AIName` = 'EventAI', `resistance3` = -1 WHERE `entry` = 17157;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17157;
+INSERT INTO `creature_ai_scripts` VALUES
+('1715701','17157','0','0','100','1','7000','14000','14000','21000','11','33840','0','0','0','0','0','0','0','0','0','0','Shattered Rumbler - Cast Earth Rumble'),
+('1715702','17157','8','0','100','0','32001','-1','0','0','12','18181','1','300','12','18181','1','300','12','18181','1','300','Shattered Rumbler - Summon 3 Minion of Gurok on Spellhit: Throw Gordawg''s Boulder'),
+('1715703','17157','8','0','100','0','32001','-1','0','0','37','0','0','0','0','0','0','0','0','0','0','0','Shattered Rumbler - Die on Spellhit: Throw Gordawg''s Boulder');
