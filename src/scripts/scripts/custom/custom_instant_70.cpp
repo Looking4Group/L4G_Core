@@ -119,30 +119,34 @@ bool GossipSelect_custom_instant_70_uncommon(Player* Player, Creature* Creature,
     if (action == ALREADY_USED)
         return true;
 
-
-    if (action > (GOSSIP_ACTION_INFO_DEF + 12)) //HAS SELECTED A CLASS/SPEC - WILL BE TELEPORTED
+    if (!Player->isGameMaster())
     {
-        uint32 account_id = Player->GetSession()->GetAccountId();
-        const char * ip_address = Player->GetSession()->GetRemoteAddress().c_str();
-
-        QueryResultAutoPtr result = AccountsDatabase.PQuery("SELECT 1 FROM account_70_promo WHERE account_id = '%u' OR registration_ip = '%s'", account_id, ip_address);
-
-        //Does this account ID -- OR IP ADDRESS -- exist in the table?
-        if (!result)
+        if (action > (GOSSIP_ACTION_INFO_DEF + 12)) //HAS SELECTED A CLASS/SPEC - WILL BE TELEPORTED
         {
-             if (!AccountsDatabase.PExecute("INSERT INTO account_70_promo(account_id, registration_ip, already_used) VALUES ('%u', '%s', '%s')", account_id, ip_address, "YES"))
-             {
-                 //Failure
-                 action = ALREADY_USED;
-             }
-        }
-        else
-        {
-            //Already exists
-            action = ALREADY_USED;
+            uint32 account_id = Player->GetSession()->GetAccountId();
+            const char * ip_address = Player->GetSession()->GetRemoteAddress().c_str();
+
+            QueryResultAutoPtr result = AccountsDatabase.PQuery("SELECT 1 FROM account_70_promo WHERE account_id = '%u' OR registration_ip = '%s'", account_id, ip_address);
+
+            //Does this account ID -- OR IP ADDRESS -- exist in the table?
+            if (!result)
+            {
+                if (!AccountsDatabase.PExecute("INSERT INTO account_70_promo(account_id, registration_ip, already_used) VALUES ('%u', '%s', '%s')", account_id, ip_address, "YES"))
+                {
+                    //Failure
+                    action = ALREADY_USED;
+                }
+            }
+            else
+            {
+                //Already exists
+                action = ALREADY_USED;
+            }
         }
     }
 
+
+    
     switch (action) 
     {
         case ALREADY_USED:
