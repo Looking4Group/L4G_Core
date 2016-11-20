@@ -89,7 +89,8 @@ void TryToBoost(Player * Player)
 
 bool GossipHello_custom_instant_70_uncommon(Player *Player, Creature *Creature) 
 {
-    if (Player->isGameMaster())
+    //Left in for future reference of time based access
+    /*if (Player->isGameMaster())
     {
         TryToBoost(Player);
     }
@@ -107,8 +108,8 @@ bool GossipHello_custom_instant_70_uncommon(Player *Player, Creature *Creature)
         {
             Player->ADD_GOSSIP_ITEM(0, "Sorry, the event has finished.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
         }
-    }
-
+    }*/
+    TryToBoost(Player);
     Player->PlayerTalkClass->SendGossipMenu(30000, Creature->GetGUID());
     return true;
 }

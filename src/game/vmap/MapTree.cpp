@@ -293,8 +293,17 @@ namespace VMAP
             if (success) success = iTree.readFromFile(rf);
             if (success)
             {
-                iNTreeValues = iTree.primCount();
-                iTreeValues = new ModelInstance[iNTreeValues];
+                try
+                {
+
+                    iNTreeValues = iTree.primCount();
+                    iTreeValues = new ModelInstance[iNTreeValues];
+                }
+                catch (...)
+                {
+                    sLog.outLog(LOG_DEFAULT, "Fatal Error caugh: %s", fname.c_str());
+                    return false;
+                }
             }
 
             if (success && !readChunk(rf, chunk, "GOBJ", 4)) success = false;
