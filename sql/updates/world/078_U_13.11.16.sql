@@ -252,7 +252,7 @@ UPDATE `creature_template` SET `name` = 'Level 60',`minlevel` = '60',`maxlevel` 
 -- Requested I 70 NPC
 SET @GUID := 1688648; 
 DELETE FROM creature WHERE guid = @GUID;
-INSERT INTO creature VALUES (@GUID, 1000003, 1, 1, 0, 0, 16240.457031, 16291.4365, 22.9310, 1.4529, 25, 0, 0, 100000, 0, 0, 0);
+INSERT INTO creature VALUES (@GUID, 1000003, 29, 1, 0, 0, 16.3467, 7.4524, -144.7086, 3.1423, 25, 0, 0, 100000, 0, 0, 0);
 
 -- OHF Patrols Nerfed Respawntime
 UPDATE `creature` SET `spawntimesecs` = 7200 WHERE `id` IN (17840,22128);
