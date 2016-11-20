@@ -264,3 +264,6 @@ UPDATE `gameobject` SET `animprogress`='100' WHERE `id` IN ('185200','185201');
 
 -- Empoor's Bodyguard 18483
 UPDATE `creature_template` SET `faction_H`='35',`faction_A`='35',`flags_extra`=`flags_extra`|2 WHERE `entry` IN ('18483'); -- 7
+
+-- Urdak Movement
+UPDATE `creature_ai_scripts` SET `action1_param1`='1' WHERE `id` IN (1854101,1854107);
