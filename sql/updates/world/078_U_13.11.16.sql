@@ -256,3 +256,8 @@ INSERT INTO creature VALUES (@GUID, 1000003, 29, 1, 0, 0, 16.3467, 7.4524, -144.
 
 -- OHF Patrols Nerfed Respawntime
 UPDATE `creature` SET `spawntimesecs` = 7200 WHERE `id` IN (17840,22128);
+
+-- Eye of Veil Reskk & Eye of Veil Shienor
+DELETE FROM `gameobject` WHERE `guid` IN ('27550','27551');
+UPDATE `gameobject_template` SET `data3`='1' WHERE `entry` IN ('185200','185201');
+UPDATE `gameobject` SET `animprogress`='100' WHERE `id` IN ('185200','185201');
