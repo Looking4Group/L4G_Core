@@ -267,3 +267,6 @@ UPDATE `creature_template` SET `faction_H`='35',`faction_A`='35',`flags_extra`=`
 
 -- Urdak Movement
 UPDATE `creature_ai_scripts` SET `action1_param1`='1' WHERE `id` IN (1854101,1854107);
+
+-- Children Quest
+UPDATE `creature` SET `spawntimesecs` = 180 WHERE `id` = 22314;
