@@ -3,7 +3,7 @@ UPDATE `battleground_template` SET `AllianceStartO` = 4.0551, `HordeStartO` = 0.
 
 -- Arcane Anomaly 16488
 -- some sources say immune to all magic
-UPDATE `creature` SET `spawntimesecs` = 3600;
+UPDATE `creature` SET `spawntimesecs` = 3600 WHERE `id` = 16488;
 UPDATE `creature_template` SET `mindmg`='3396',`maxdmg`='4342',`resistance1` = '0', `resistance2` = '0', `resistance3` = '0', `resistance4` = '0', `resistance5` = '0', `resistance6` = '70' WHERE `entry` = 16488; -- 1308 2660 -- 7,258 - 8,610
 DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 16488;
 INSERT INTO `creature_ai_scripts` VALUES
