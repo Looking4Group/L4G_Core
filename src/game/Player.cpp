@@ -21250,6 +21250,7 @@ void Player::EquipForPushSeventy(uint16 items[])
                     learnSpell(7386);
                     learnSpell(2458);
                     learnSpell(20252);
+                    learnSpell(200);
                     learnSpell(750);
                     learnSpell(197);
                     learnSpell(196);
