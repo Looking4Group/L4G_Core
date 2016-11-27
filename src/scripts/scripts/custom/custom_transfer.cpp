@@ -102,7 +102,7 @@ void GiveGearLevels(Player* Player, uint16 gearList[])
 {
     Player->PushSeventy();
     Player->EquipForPushSeventy(gearList);
-    Player->FinishTransferQuests();
+    //Player->FinishTransferQuests();
     Player->FinishPushTransfer();
 }
 
