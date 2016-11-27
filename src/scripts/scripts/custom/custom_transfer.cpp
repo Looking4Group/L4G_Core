@@ -203,7 +203,7 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
     else if (action == WARRIOR_ARMS)
     {
         GiveGearLevels(Player, WARRIOR_ARMS_ITEMS);
-        Player->AddItem(28253);
+        Player->AddItem(28253, 1);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
@@ -222,7 +222,7 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
     else if (action == DPS_PALADIN)
     {
         GiveGearLevels(Player, PALADIN_RET_ITEMS);
-        Player->AddItem(28253);
+        Player->AddItem(28253, 1);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
@@ -241,7 +241,7 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
     else if (action == DPS_HUNTER)
     {
         GiveGearLevels(Player, HUNTER_ITEMS);
-        Player->AddItem(27903);
+        Player->AddItem(27903, 1);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
@@ -254,7 +254,7 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
     else if (action == DPS_PRIEST)
     {
         GiveGearLevels(Player, PRIEST_SHADOW_ITEMS);        
-        Player->AddItem(28341);
+        Player->AddItem(28341, 1);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
@@ -285,28 +285,28 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
     else if (action == DPS_MAGE)
     {
         GiveGearLevels(Player, MAGE_ITEMS);
-        Player->AddItem(28341);
+        Player->AddItem(28341, 1);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == DPS_WARLOCK)
     {
         GiveGearLevels(Player, WARLOCK_ITEMS);
-        Player->AddItem(28341);
+        Player->AddItem(28341, 1);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == CAT_DRUID)
     {
         GiveGearLevels(Player, DRUID_CAT_ITEMS);
-        Player->AddItem(28325);
+        Player->AddItem(28325, 1);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == BALANCE_DRUID)
     {
         GiveGearLevels(Player, DRUID_BALANCE_ITEMS);
-        Player->AddItem(28341);
+        Player->AddItem(28341, 1);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
@@ -319,7 +319,7 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
     else if (action == TANK_DRUID)
     {
         GiveGearLevels(Player, DRUID_BEAR_ITEMS);
-        Player->AddItem(27757);
+        Player->AddItem(27757, 1);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
