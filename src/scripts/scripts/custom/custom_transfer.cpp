@@ -108,13 +108,16 @@ void GiveGearLevels(Player* Player, uint16 gearList[])
 
 bool GossipHello_custom_transfer(Player *Player, Creature *Creature)
 {
+    if (Player->isGameMaster())
+    {
+        Player->ADD_GOSSIP_ITEM(0, "Level & equip", GOSSIP_SENDER_MAIN, CLASS_SELECT);
+        Player->ADD_GOSSIP_ITEM(0, "Factions", GOSSIP_SENDER_MAIN, FACTION_MAIN_SELECT);
+        Player->ADD_GOSSIP_ITEM(0, "Flying mount", GOSSIP_SENDER_MAIN, FLYING_MOUNT_SELECT);
 
-    Player->ADD_GOSSIP_ITEM(0, "Level & equip", GOSSIP_SENDER_MAIN, CLASS_SELECT);
-    Player->ADD_GOSSIP_ITEM(0, "Factions", GOSSIP_SENDER_MAIN, FACTION_MAIN_SELECT);
-    Player->ADD_GOSSIP_ITEM(0, "Flying mount", GOSSIP_SENDER_MAIN, FLYING_MOUNT_SELECT);
-
-    Player->PlayerTalkClass->SendGossipMenu(30000, Creature->GetGUID());
-    return true;
+        Player->PlayerTalkClass->SendGossipMenu(30000, Creature->GetGUID());
+        return true;
+    }
+    return false;
 }
 
 bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*sender*/, uint32 action)
