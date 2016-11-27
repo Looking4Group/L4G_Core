@@ -110,7 +110,7 @@ void GiveGearLevels(Player* Player, uint16 gearList[])
 
 bool GossipHello_custom_transfer(Player *Player, Creature *Creature)
 {
-    std::cout << "Hello customer transfer" std::endl;
+    std::cout << "Hello customer transfer" << std::endl;
     Player->ADD_GOSSIP_ITEM(0, "Level & equip", GOSSIP_SENDER_MAIN, CLASS_SELECT);
     Player->ADD_GOSSIP_ITEM(0, "Factions", GOSSIP_SENDER_MAIN, FACTION_MAIN_SELECT);
     Player->ADD_GOSSIP_ITEM(0, "Flying mount", GOSSIP_SENDER_MAIN, FLYING_MOUNT_SELECT);
