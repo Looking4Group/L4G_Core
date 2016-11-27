@@ -113,7 +113,7 @@ bool GossipHello_custom_transfer(Player *Player, Creature *Creature)
     Player->ADD_GOSSIP_ITEM(0, "Factions", GOSSIP_SENDER_MAIN, FACTION_MAIN_SELECT);
     Player->ADD_GOSSIP_ITEM(0, "Flying mount", GOSSIP_SENDER_MAIN, FLYING_MOUNT_SELECT);
 
-    Player->PlayerTalkClass->SendGossipMenu(0, Creature->GetGUID());
+    Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     return true;
 }
 
