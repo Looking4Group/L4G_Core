@@ -98,7 +98,7 @@ uint16 WARRIOR_PROT_ITEMS[]      = { 28056, 28350,27871,27803,27804,28262,27459,
 
 
 
-void GiveGearAndLevels(Player* Player, uint16 gearList[])
+void GiveGearLevels(Player* Player, uint16 gearList[])
 {
     Player->PushSeventy();
     Player->EquipForPushSeventy(gearList);
@@ -164,115 +164,115 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
         }
         case WARRIOR_ARMS:
         {
-            GiveGearAndLevels(Player, WARRIOR_ARMS_ITEMS);            
+            GiveGearLevels(Player, WARRIOR_ARMS_ITEMS);
             Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
             break;
         }
         case WARRIOR_FURY:
         {
-            GiveGearAndLevels(Player, WARRIOR_FURY_ITEMS);            
+            GiveGearLevels(Player, WARRIOR_FURY_ITEMS);
             Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
             break;
         }
         case WARRIOR_PROTECTION:
         {
-            GiveGearAndLevels(Player, WARRIOR_PROT_ITEMS);
+            GiveGearLevels(Player, WARRIOR_PROT_ITEMS);
             Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
             break;
         }
         case DPS_PALADIN:
         {
-            GiveGearAndLevels(Player, PALADIN_RET_ITEMS);
+            GiveGearLevels(Player, PALADIN_RET_ITEMS);
             Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
             break;
         }
         case TANK_PALADIN:
         {
-            GiveGearAndLevels(Player, PALADIN_PROT_ITEMS);
+            GiveGearLevels(Player, PALADIN_PROT_ITEMS);
             Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
             break;
         }
         case HEAL_PALADIN:
         {
-            GiveGearAndLevels(Player, PALADIN_HOLY_ITEMS);
+            GiveGearLevels(Player, PALADIN_HOLY_ITEMS);
             Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
             break;
         }
         case DPS_HUNTER:
         {
-            GiveGearAndLevels(Player, HUNTER_ITEMS);
+            GiveGearLevels(Player, HUNTER_ITEMS);
             Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
             break;
         }
         case DPS_ROGUE:
         {
-            GiveGearAndLevels(Player, ROGUE_ITEMS);
+            GiveGearLevels(Player, ROGUE_ITEMS);
             Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
             break;
         }
         case DPS_PRIEST:
         {
-            GiveGearAndLevels(Player, PRIEST_SHADOW_ITEMS);
+            GiveGearLevels(Player, PRIEST_SHADOW_ITEMS);
             Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
             break;
         }
         case HEAL_PRIEST:
         {
-            GiveGearAndLevels(Player, PRIEST_HEAL_ITEMS);
+            GiveGearLevels(Player, PRIEST_HEAL_ITEMS);
             Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
             break;
         }
         case ENHANCE_SHAMAN:
         {
-            GiveGearAndLevels(Player, SHAMAN_ENHANCER_ITEMS);
+            GiveGearLevels(Player, SHAMAN_ENHANCER_ITEMS);
             Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
             break;
         }
         case ELEMENTAL_SHAMAN:
         {
-            GiveGearAndLevels(Player, SHAMAN_ELE_ITEMS);
+            GiveGearLevels(Player, SHAMAN_ELE_ITEMS);
             Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
             break;
         }
         case HEAL_SHAMAN:
         {
-            GiveGearAndLevels(Player, SHAMAN_RESTO_ITEMS);
+            GiveGearLevels(Player, SHAMAN_RESTO_ITEMS);
             Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
             break;
         }
         case DPS_MAGE:
         {
-            GiveGearAndLevels(Player, MAGE_ITEMS);
+            GiveGearLevels(Player, MAGE_ITEMS);
             Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
             break;
         }
         case DPS_WARLOCK:
         {
-            GiveGearAndLevels(Player, WARLOCK_ITEMS);
+            GiveGearLevels(Player, WARLOCK_ITEMS);
             Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
             break;
         }
         case CAT_DRUID:
         {
-            GiveGearAndLevels(Player, DRUID_CAT_ITEMS);
+            GiveGearLevels(Player, DRUID_CAT_ITEMS);
             Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
             break;
         }
         case BALANCE_DRUID:
         {
-            GiveGearAndLevels(Player, DRUID_BALANCE_ITEMS);
+            GiveGearLevels(Player, DRUID_BALANCE_ITEMS);
             Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
             break;
         }
         case HEAL_DRUID:
         {
-            GiveGearAndLevels(Player, DRUID_RESTO_ITEMS);
+            GiveGearLevels(Player, DRUID_RESTO_ITEMS);
             Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
             break;
         }
         case TANK_DRUID:
         {
-            GiveGearAndLevels(Player, DRUID_BEAR_ITEMS);
+            GiveGearLevels(Player, DRUID_BEAR_ITEMS);
             Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
             break;
         }
