@@ -21182,16 +21182,17 @@ void Player::PushSeventy()
     SaveToDB();
 }
 
-
-
+//Sets the reputation for the supplied faction to the supplied reputation value
+void Player::PushFaction(uint16 factionId, uint32 repValue)
+{    
+    m_reputationMgr.SetReputation(sFactionStore.LookupEntry(factionId), repValue);    
+    SaveToDB();
+}
 
 void Player::EquipForPushSeventy(uint16 items[])
 {
     if (!HasItemCount(6948, 1, true))
-        AddItem(6948,1); //Hearthstone
-
-    AddItem(22895, 20); //something to eat
-    AddItem(30703, 20); //something to drink
+        AddItem(6948,1); //Hearthstone    
 
     switch (GetTeam())
     {
@@ -22303,6 +22304,44 @@ void Player::FinishPush()
             break;
         }
     }
+    SaveToDB();
+}
+
+void Player::FinishPushTransfer()
+{
+    m_homebindMapId = 530;
+    m_homebindZoneId = 3703;
+    m_homebindX = -1853.01f;
+    m_homebindY = 5460.62f;
+    m_homebindZ = -12.40f;
+
+    RealmDataDatabase.PExecute("UPDATE character_homebind SET map='%u', zone='%u', position_x='%f', position_y='%f', position_z='%f' WHERE guid='%u'", m_homebindMapId, m_homebindZoneId, m_homebindX, m_homebindY, m_homebindZ, GUID_LOPART(GetGUID()));
+
+    WorldPacket data(SMSG_BINDPOINTUPDATE, (4 + 4 + 4 + 4 + 4));
+    data << float(m_homebindX);
+    data << float(m_homebindY);
+    data << float(m_homebindZ);
+    data << uint32(m_homebindMapId);
+    data << uint32(m_homebindZoneId);
+    GetSession()->SendPacket(&data);
+
+    SaveToDB();
+
+    switch (GetTeam())
+    {
+        case ALLIANCE:
+        {
+            m_taxi.LoadTaxiMask("3456411898 2148078929 805356359 2605711384 137366529 262240 1052676 0 ");
+            break;
+        }
+        case HORDE:
+        {
+            m_taxi.LoadTaxiMask("830150144 315656864 449720 3869245476 3227522050 262180 1048576 0 ");
+        
+            break;
+        }
+    }
+    InitTaxiNodesForLevel();
     SaveToDB();
 }
 
