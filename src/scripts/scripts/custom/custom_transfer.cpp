@@ -113,7 +113,7 @@ bool GossipHello_custom_transfer(Player *Player, Creature *Creature)
     return true;
 }
 
-bool GossipSelect_custom_instant_70_uncommon(Player* Player, Creature* Creature, uint32 /*sender*/, uint32 action)
+bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*sender*/, uint32 action)
 {
     switch (action) 
     {
