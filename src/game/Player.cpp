@@ -21179,7 +21179,7 @@ void Player::PushSeventy()
 {
     GiveLevel(70);
     learnSpell(33391); //riding skill of 100
-    SaveToDB();
+    //SaveToDB();
 }
 
 //Sets the reputation for the supplied faction to the supplied reputation value
@@ -21205,6 +21205,8 @@ void Player::FinishTransferQuests()
     Quest const* shattrathEscortQuest = sObjectMgr.GetQuestTemplate(10211);
     AddQuest(shattrathEscortQuest, NULL);
     CompleteQuest(10211);
+
+    //SaveToDB();
 }
 
 void Player::EquipForPushSeventy(uint16 items[])
@@ -21535,7 +21537,7 @@ void Player::EquipForPushSeventy(uint16 items[])
                 item->SendCreateUpdateToPlayer(this);
         }
     }
-    SaveToDB();
+    //SaveToDB();
 }
 
 
@@ -22360,7 +22362,7 @@ void Player::FinishPushTransfer()
         }
     }
     InitTaxiNodesForLevel();
-    SaveToDB();
+    //SaveToDB();
 }
 
 void Player::FinishPushSixty()
