@@ -491,7 +491,7 @@ void AddSC_custom_transfer() {
 
     Script *newscript;
     newscript = new Script;
-    newscript->Name = "customer_transfer";
+    newscript->Name = "custom_transfer";
     newscript->pGossipHello = &GossipHello_custom_transfer;
     newscript->pGossipSelect = &GossipHello_custom_transfer;
     newscript->RegisterSelf();
