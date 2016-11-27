@@ -66,7 +66,7 @@ enum Instant_70_Conversations
     FACTION_ALDOR_SELECT = GOSSIP_ACTION_INFO_DEF + 67,
     FACTION_SCRYER_SELECT = GOSSIP_ACTION_INFO_DEF + 68,
     CLASS_SELECT = GOSSIP_ACTION_INFO_DEF + 69,
-    FACTION_MAIN_SELECT = GOSSIP_ACTION_INFO_DEF + 70
+    FACTION_MAIN_SELECT = GOSSIP_ACTION_INFO_DEF + 70    
 };
 
 
@@ -164,8 +164,6 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
             Player->ADD_GOSSIP_ITEM(0, "Balance", GOSSIP_SENDER_MAIN, HEAL_DRUID);
             Player->ADD_GOSSIP_ITEM(0, "Restoration", GOSSIP_SENDER_MAIN, TANK_DRUID);
         }
-        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
-        Player->PlayerTalkClass->SendGossipMenu(1,Creature->GetGUID());
     }
     else if (action == WARRIOR_ARMS)
     {
@@ -480,7 +478,7 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
         {
             Player->AddItem(25470, 1);
         }
-        if (action == HORDE) {
+        else if (Player->GetTeam() == HORDE) {
             Player->AddItem(25475, 1);
         }
     }
