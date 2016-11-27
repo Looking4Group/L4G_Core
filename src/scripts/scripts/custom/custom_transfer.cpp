@@ -110,6 +110,7 @@ void GiveGearLevels(Player* Player, uint16 gearList[])
 
 bool GossipHello_custom_transfer(Player *Player, Creature *Creature)
 {
+    std::cout << "Hello customer transfer" std::endl;
     Player->ADD_GOSSIP_ITEM(0, "Level & equip", GOSSIP_SENDER_MAIN, CLASS_SELECT);
     Player->ADD_GOSSIP_ITEM(0, "Factions", GOSSIP_SENDER_MAIN, FACTION_MAIN_SELECT);
     Player->ADD_GOSSIP_ITEM(0, "Flying mount", GOSSIP_SENDER_MAIN, FLYING_MOUNT_SELECT);
@@ -187,7 +188,7 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
         ////GiveGearLevels(Player, WARRIOR_ARMS_ITEMS);
         //Player->ADD_GOSSIP_ITEM(0, "continue", GOSSIP_SENDER_MAIN, FACTION_LOWER_CITY);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
-        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());        
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == WARRIOR_FURY)
     {
@@ -505,6 +506,7 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
     {
 
     }
+    std::cout << action << std::endl;
     else if (action == GOSSIP_ACTION_INFO_DEF + 0) {
         GossipHello_custom_transfer(Player, Creature);
     }
