@@ -1912,11 +1912,14 @@ class LOOKING4GROUP_EXPORT Player : public Unit
         bool GetValidForPushSeventy();
         void PushSixty();
         void PushSeventy();
+        void PushFaction(uint16 factionId, uint32 repValue);
+        void FinishTransferQuests();
         void Push();
         void EquipForPush(uint16 items[]);
         void EquipForPushSeventy(uint16 items[]);
         void EquipForPushSixty(uint16 items[]);
         void FinishPush();
+        void FinishPushTransfer();
         void FinishPushSixty();
         void PvpPush(uint16 items[]);
         void AddItem(uint32 itemID, uint32 Count);
