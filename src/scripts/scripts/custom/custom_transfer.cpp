@@ -165,6 +165,7 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
         case WARRIOR_ARMS:
         {
             GiveGearLevels(Player, WARRIOR_ARMS_ITEMS);
+            Player->ADD_GOSSIP_ITEM(0, "continue", GOSSIP_SENDER_MAIN, FACTION_LOWER_CITY);
             Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
             break;
         }
