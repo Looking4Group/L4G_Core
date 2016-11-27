@@ -490,7 +490,7 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
     }
     
     else if (action == GOSSIP_ACTION_INFO_DEF + 0) {
-        GossipHello_enchant_npc(Player, Creature);
+        GossipHello_custom_transfer(Player, Creature);
     }
     Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
     Player->PlayerTalkClass->SendGossipMenu(0, Creature->GetGUID());
