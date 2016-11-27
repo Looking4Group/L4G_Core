@@ -507,7 +507,7 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
 
     }
     std::cout << action << std::endl;
-    else if (action == GOSSIP_ACTION_INFO_DEF + 0) {
+    if (action == GOSSIP_ACTION_INFO_DEF + 0) {
         GossipHello_custom_transfer(Player, Creature);
     }
     return true;
