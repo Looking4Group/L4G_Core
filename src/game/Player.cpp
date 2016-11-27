@@ -22345,7 +22345,7 @@ void Player::FinishPushTransfer()
     data << uint32(m_homebindZoneId);
     GetSession()->SendPacket(&data);
 
-    SaveToDB();
+    //SaveToDB();
 
     switch (GetTeam())
     {
