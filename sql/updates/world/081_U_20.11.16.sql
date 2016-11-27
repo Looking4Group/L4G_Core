@@ -46,3 +46,13 @@ UPDATE `creature` SET `spawnmask` = 0 WHERE `id` = 24937;
 
 -- Trigger NPC
 UPDATE `creature` SET `InhabitType` = 7 WHERE `entry` = 24921;
+
+SET @GUID := 64246;
+INSERT INTO `creature` VALUES (64246, 18121, 530, 1, 0, 0, 1487.56, 8615.63, -25.3721, 0.142035, 300, 0, 0, 4422, 2620, 0, 2);
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES (64246, 1, 1526.74, 8614.7, -31.361, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (64246, 2, 1610.06, 8604.58, -28.9488, 5000, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (64246, 3, 1543.33, 8612.67, -32.8239, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (64246, 4, 1481, 8617.21, -22.3273, 5000, 0, 0, 0, 0);
