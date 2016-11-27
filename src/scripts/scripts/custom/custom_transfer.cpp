@@ -366,8 +366,7 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == LOWER_CITY_NEUTRAL)
-    {
-        Player->ADD_GOSSIP_ITEM(0, "Cenarion Expedition", GOSSIP_SENDER_MAIN, FACTION_CENARION_EXPEDITION);        
+    {       
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
@@ -415,7 +414,7 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
     }
     else if (action == THRALLMAR_HONORED)
     {
-        Player->AddItem(30637, 1);        
+        Player->AddItem(30637, 1);
         Player->PushFaction(947, 9001);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
@@ -523,13 +522,16 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
     {
         //225 riding
         Player->learnSpell(34090);
+        std::cout << "Flying yes" << std::endl;
         if (Player->GetTeam() == ALLIANCE)
         {
+            std::cout << "alliance flying" << std::endl;
             Player->AddItem(25470, 1);
             Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
             Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
         }
         if (action == HORDE) {
+            std::cout << "alliance flying" << std::endl;
             Player->AddItem(25475, 1);
             Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
             Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
@@ -537,6 +539,7 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
     }
     else if (action == FLYING_MOUNT_NO)
     {
+        std::cout << "Flying no" << std::endl;
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
