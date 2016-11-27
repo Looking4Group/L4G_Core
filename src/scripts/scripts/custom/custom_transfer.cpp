@@ -282,46 +282,55 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
             Player->ADD_GOSSIP_ITEM(0, "Neutral", GOSSIP_SENDER_MAIN, LOWER_CITY_NEUTRAL);
             Player->ADD_GOSSIP_ITEM(0, "Friendly", GOSSIP_SENDER_MAIN, LOWER_CITY_FRIENDLY);
             Player->ADD_GOSSIP_ITEM(0, "Honored", GOSSIP_SENDER_MAIN, LOWER_CITY_HONORED);
+            Player->PlayerTalkClass->SendGossipMenu(9, Creature->GetGUID());
+            break;
         }
         case FACTION_CENARION_EXPEDITION:
         {
             Player->ADD_GOSSIP_ITEM(0, "Neutral", GOSSIP_SENDER_MAIN, CENARION_EXPEDITION_NEUTRAL);
             Player->ADD_GOSSIP_ITEM(0, "Friendly", GOSSIP_SENDER_MAIN, CENARION_EXPEDITION_FRIENDLY);
             Player->ADD_GOSSIP_ITEM(0, "Honored", GOSSIP_SENDER_MAIN, CENARION_EXPEDITION_HONORED);
+            break;
         }
         case FACTION_THRALLMAR:
         {
             Player->ADD_GOSSIP_ITEM(0, "Neutral", GOSSIP_SENDER_MAIN, THRALLMAR_NEUTRAL);
             Player->ADD_GOSSIP_ITEM(0, "Friendly", GOSSIP_SENDER_MAIN, THRALLMAR_FRIENDLY);
             Player->ADD_GOSSIP_ITEM(0, "Honored", GOSSIP_SENDER_MAIN, THRALLMAR_HONORED);
+            break;
         }
         case FACTION_HONOR_HOLD:
         {
             Player->ADD_GOSSIP_ITEM(0, "Neutral", GOSSIP_SENDER_MAIN, HONOR_HOLD_NEUTRAL);
             Player->ADD_GOSSIP_ITEM(0, "Friendly", GOSSIP_SENDER_MAIN, HONOR_HOLD_FRIENDLY);
             Player->ADD_GOSSIP_ITEM(0, "Honored", GOSSIP_SENDER_MAIN, HONOR_HOLD_HONORED);
+            break;
         }
         case FACTION_SHA_TAR:
         {
             Player->ADD_GOSSIP_ITEM(0, "Neutral", GOSSIP_SENDER_MAIN, SHA_TAR_NEUTRAL);
             Player->ADD_GOSSIP_ITEM(0, "Friendly", GOSSIP_SENDER_MAIN, SHA_TAR_FRIENDLY);
             Player->ADD_GOSSIP_ITEM(0, "Honored", GOSSIP_SENDER_MAIN, SHA_TAR_HONORED);
+            break;
         }
         case FACTION_KEEPERS_OF_TIME:
         {
             Player->ADD_GOSSIP_ITEM(0, "Neutral", GOSSIP_SENDER_MAIN, KEEPERS_OF_TIME_NEUTRAL);
             Player->ADD_GOSSIP_ITEM(0, "Friendly", GOSSIP_SENDER_MAIN, KEEPERS_OF_TIME_FRIENDLY);
             Player->ADD_GOSSIP_ITEM(0, "Honored", GOSSIP_SENDER_MAIN, KEEPERS_OF_TIME_HONORED);
+            break;
         }
         case LOWER_CITY_NEUTRAL:
         {
-            break;
-            Player->PlayerTalkClass->SendGossipMenu(30033, Creature->GetGUID());
+            Player->PlayerTalkClass->SendGossipMenu(9, Creature->GetGUID());
+            Player->ADD_GOSSIP_ITEM(0, "Cenarion Expedition", GOSSIP_SENDER_MAIN, FACTION_CENARION_EXPEDITION);
+            Player->PlayerTalkClass->SendGossipMenu(9, Creature->GetGUID());
+            break;            
         }
         case LOWER_CITY_FRIENDLY:
         {
             Player->PushFaction(1011, 3001);
-            Player->PlayerTalkClass->SendGossipMenu(30033, Creature->GetGUID());
+            Player->PlayerTalkClass->SendGossipMenu(9, Creature->GetGUID());
             break;
         }
         case LOWER_CITY_HONORED:
