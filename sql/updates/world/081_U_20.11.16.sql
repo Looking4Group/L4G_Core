@@ -40,3 +40,6 @@ INSERT INTO `waypoint_data` VALUES (86748, 9, 5090.15, 2937.53, 83.9492, 0, 0, 0
 INSERT INTO `waypoint_data` VALUES (86748, 10, 5049.37, 2951.28, 87.6848, 0, 0, 0, 0, 0);
 INSERT INTO `waypoint_data` VALUES (86748, 11, 5044.55, 2913.1, 88.6466, 0, 0, 0, 0, 0);
 INSERT INTO `waypoint_data` VALUES (86748, 12, 5050.4, 2896.25, 83.7468, 0, 0, 0, 0, 0);
+
+-- Magistrix Seyla
+UPDATE `creature` SET `spawnmask` = 0 WHERE `id` = 24937;
