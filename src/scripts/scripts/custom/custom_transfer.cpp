@@ -183,6 +183,25 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
             Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
         }        
     }
+    if (action == FACTION_MAIN_SELECT) {
+        Player->ADD_GOSSIP_ITEM(0, "Lower city", GOSSIP_SENDER_MAIN, FACTION_LOWER_CITY);
+        Player->ADD_GOSSIP_ITEM(0, "Cenarion Expedition", GOSSIP_SENDER_MAIN, FACTION_CENARION_EXPEDITION);
+        Player->ADD_GOSSIP_ITEM(0, "Thrallmar", GOSSIP_SENDER_MAIN, FACTION_THRALLMAR);
+        Player->ADD_GOSSIP_ITEM(0, "Honor Hold", GOSSIP_SENDER_MAIN, FACTION_HONOR_HOLD);
+        Player->ADD_GOSSIP_ITEM(0, "Sha'tar", GOSSIP_SENDER_MAIN, FACTION_SHA_TAR);
+        Player->ADD_GOSSIP_ITEM(0, "Keepers of Time", GOSSIP_SENDER_MAIN, FACTION_KEEPERS_OF_TIME);
+        Player->ADD_GOSSIP_ITEM(0, "Aldor", GOSSIP_SENDER_MAIN, FACTION_ALDOR_SELECT);
+        Player->ADD_GOSSIP_ITEM(0, "Scryer", GOSSIP_SENDER_MAIN, FACTION_SCRYER_SELECT);
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
+    }
+    if (action == FLYING_MOUNT_SELECT)
+    {
+        Player->ADD_GOSSIP_ITEM(0, "Yes", GOSSIP_SENDER_MAIN, FLYING_MOUNT_YES);
+        Player->ADD_GOSSIP_ITEM(0, "No", GOSSIP_SENDER_MAIN, FLYING_MOUNT_NO);
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
+    }
     else if (action == WARRIOR_ARMS)
     {
         ////GiveGearLevels(Player, WARRIOR_ARMS_ITEMS);
@@ -499,14 +518,7 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
         Player->PushFaction(934, 5501);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
-    }
-    else if (action == FLYING_MOUNT_SELECT)
-    {
-        Player->ADD_GOSSIP_ITEM(0, "Yes", GOSSIP_SENDER_MAIN, FLYING_MOUNT_YES);
-        Player->ADD_GOSSIP_ITEM(0, "No", GOSSIP_SENDER_MAIN, FLYING_MOUNT_NO);
-        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
-        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
-    }
+    }  
     else if (action == FLYING_MOUNT_YES)
     {
         //225 riding
