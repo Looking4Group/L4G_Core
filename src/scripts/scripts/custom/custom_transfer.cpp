@@ -69,31 +69,34 @@ enum Instant_70_Conversations
 
 
 
-uint16 DRUID_BALANCE_ITEMS[]    = { 28193, 28134, 27796, 0, 27799, 27783, 27907, 29242, 29240, 27465, 28394, 27784, 28223, 28418, 28570, 0 ,0 , 27518 };
-uint16 DRUID_BEAR_ITEMS[]       = { 28414, 27871, 27776, 0, 31285, 28124, 30538, 28339, 28514, 27509, 27436, 28121, 27891, 32658, 28256, 0, 0, 23198};
-uint16 DRUID_CAT_ITEMS[]        = { 28414, 27779, 27995, 0, 27461, 28124, 30538, 27867, 27712, 27509, 25962, 27925, 28288, 28034, 27892, 0, 0, 28372 };
-uint16 DRUID_RESTO_ITEMS[]      = { 27866, 28419, 27775, 0, 28230, 28652, 27875, 28251, 28511, 28304, 27780, 27491, 28190, 24390, 27946, 28257, 27714, 27886 };
+// Head, Neck, Should, 0, Chest, Waist,  Legs,  Feet,Wrists, Hands,    F1,    F2,    T1,    T2,  Back, MHand, OHand, Ranged 
+uint16 DRUID_BALANCE_ITEMS[] = { 28193, 28134, 27796, 0, 27799, 27783, 27907, 29242, 29240, 27465, 28394, 27784, 28223, 28418, 28570, 28341, 0, 27518 };
+uint16 DRUID_BEAR_ITEMS[] = { 28414, 27871, 27776, 0, 31285, 28124, 30538, 28339, 28514, 27509, 27436, 28121, 27891, 32658, 28256, 27757, 0, 23198 };
+uint16 DRUID_CAT_ITEMS[] = { 28414, 27779, 27995, 0, 27461, 28124, 30538, 27867, 27712, 27509, 25962, 27925, 28288, 28034, 27892, 28325,     0, 28372 };
+uint16 DRUID_RESTO_ITEMS[] = { 27866, 28419, 27775, 0, 28230, 28652, 27875, 28251, 28511, 28304, 27780, 27491, 28190, 24390, 27946, 28257, 27714, 27886 };
 
-uint16 HUNTER_ITEMS[]           = { 28192, 27779, 27713, 0, 28401, 31293, 27936, 27915, 27712, 27528, 25962, 27925, 28034, 28288, 27892, 0, 0, 31303 };
-uint16 MAGE_ITEMS[]             = { 28193, 28134, 27796, 0, 27799, 27742, 27907, 29242, 29240, 27465, 28394, 27784, 28418, 28223, 28570, 0, 0, 28386 };
-uint16 WARLOCK_ITEMS[]          = { 28193, 28134, 27796, 0, 27799, 27742, 27907, 29242, 29240, 27465, 28394, 27784, 28418, 28223, 28570, 0, 0, 28386 };
+uint16 HUNTER_ITEMS[] = { 28192, 27779, 27713, 0, 28401, 31293, 27936, 27915, 27712, 27528, 25962, 27925, 28034, 28288, 27892, 27903,     0, 31303 };
 
-uint16 PALADIN_HOLY_ITEMS[]     = { 27790, 28419, 27775, 0, 27897, 27548, 27458, 28221, 28194, 28304, 28259, 27780, 24390, 28190, 27946, 28257, 31292, 28296 };
-uint16 PALADIN_PROT_ITEMS[]     = { 28285, 27792, 27739, 0, 28203, 27672, 27839, 29239, 27459, 27535, 27822, 28407, 27891, 27529, 27804, 27905, 28316, 27917 };
-uint16 PALADIN_RET_ITEMS[]      = { 28225, 27551, 27771, 0, 28403, 27985, 30538, 28318, 27712, 27497, 27925, 28323, 28034, 28288, 27892, 0, 0, 23203 };
+uint16 MAGE_ITEMS[] = { 28193, 28134, 27796, 0, 27799, 27742, 27907, 29242, 29240, 27465, 28394, 27784, 28418, 28223, 28570, 28341,     0, 28386 };
 
-uint16 PRIEST_HEAL_ITEMS[]      = { 27866, 28419, 27775, 0, 28230, 28652, 27875, 27525, 28511, 28304, 27491, 27780, 28190, 24390, 27946, 28257, 27714, 27885 };
-uint16 PRIEST_SHADOW_ITEMS[]    = { 28193, 28134, 27796, 0, 27799, 28565, 27907, 29242, 29240, 27465, 28394, 27784, 28223, 28418, 28570, 0, 0, 28386 };
+uint16 WARLOCK_ITEMS[] = { 28193, 28134, 27796, 0, 27799, 27742, 27907, 29242, 29240, 27465, 28394, 27784, 28418, 28223, 28570, 28341,     0, 28386 };
 
-uint16 ROGUE_ITEMS[]            = { 28224, 27779, 27797, 0, 28204, 28124, 30538, 27867, 27712, 27509, 27925, 25962, 28034, 28288, 27892, 28189, 28267, 27526 };
+uint16 PALADIN_HOLY_ITEMS[] = { 27790, 28419, 27775, 0, 27897, 27548, 27458, 28221, 28194, 28304, 28259, 27780, 24390, 28190, 27946, 28257, 31292, 28296 };
+uint16 PALADIN_PROT_ITEMS[] = { 28285, 27792, 27739, 0, 28203, 27672, 27839, 29239, 27459, 27535, 27822, 28407, 27891, 27529, 27804, 27905, 28316, 27917 };
+uint16 PALADIN_RET_ITEMS[] = { 28225, 27551, 27771, 0, 28403, 27985, 30538, 28318, 27712, 27497, 27925, 28323, 28034, 28288, 27892, 28253,     0, 23203 };
 
-uint16 SHAMAN_ELE_ITEMS[]       = { 28349, 28134, 27802, 0, 27799, 27783, 27909, 29242, 29240, 27510, 28394, 27784, 28223, 28418, 28570, 27741, 27910, 28248 };
-uint16 SHAMAN_ENHANCER_ITEMS[]  = { 28192, 29349, 27713, 0, 28401, 31293, 30538, 27867, 27712, 27528, 27925, 25962, 28034, 28288, 27892, 27872, 27872, 22395 };
-uint16 SHAMAN_RESTO_ITEMS[]     = { 27759, 28419, 27775, 0, 27912, 27835, 27458, 27549, 28194, 28304, 28259, 27780, 28190, 24390, 27946, 28257, 31292, 27544 };
+uint16 PRIEST_HEAL_ITEMS[] = { 27866, 28419, 27775, 0, 28230, 28652, 27875, 27525, 28511, 28304, 27491, 27780, 28190, 24390, 27946, 28257, 27714, 27885 };
+uint16 PRIEST_SHADOW_ITEMS[] = { 28193, 28134, 27796, 0, 27799, 28565, 27907, 29242, 29240, 27465, 28394, 27784, 28223, 28418, 28570, 28341,     0, 28386 };
 
-uint16 WARRIOR_ARMS_ITEMS[]     = { 28225, 27551, 27771, 0, 28403, 27985, 30538, 28318, 27712, 27497, 27925, 28323, 28288, 28034, 27892, 0, 0, 27526 };
-uint16 WARRIOR_FURY_ITEMS[]     = { 28225, 27551, 27771, 0, 28403, 27985, 30538, 28318, 27712, 27497, 27925, 28323, 28034, 28288, 27892, 27872, 27872, 27526 };
-uint16 WARRIOR_PROT_ITEMS[]     = { 28350, 27871, 27803, 0, 28262, 27672, 27527, 29239, 27459, 27475, 27822, 28407, 27529, 27891, 27804, 29362, 27887, 28258 };
+uint16 ROGUE_ITEMS[] = { 28224, 27779, 27797, 0, 28204, 28124, 30538, 27867, 27712, 27509, 27925, 25962, 28034, 28288, 27892, 28189, 28267, 27526 };
+
+uint16 SHAMAN_ELE_ITEMS[] = { 28349, 28134, 27802, 0, 27799, 27783, 27909, 29242, 29240, 27510, 28394, 27784, 28223, 28418, 28570, 27741, 27910, 28248 };
+uint16 SHAMAN_ENHANCER_ITEMS[] = { 28192, 29349, 27713, 0, 28401, 31293, 30538, 27867, 27712, 27528, 27925, 25962, 28034, 28288, 27892, 27872, 27872, 22395 };
+uint16 SHAMAN_RESTO_ITEMS[] = { 27759, 28419, 27775, 0, 27912, 27835, 27458, 27549, 28194, 28304, 28259, 27780, 28190, 24390, 27946, 28257, 31292, 27544 };
+
+uint16 WARRIOR_ARMS_ITEMS[] = { 28225, 27551, 27771, 0, 28403, 27985, 30538, 28318, 27712, 27497, 27925, 28323, 28288, 28034, 27892, 28253,     0, 27526 };
+uint16 WARRIOR_FURY_ITEMS[] = { 28225, 27551, 27771, 0, 28403, 27985, 30538, 28318, 27712, 27497, 27925, 28323, 28034, 28288, 27892, 27872, 27872, 27526 };
+uint16 WARRIOR_PROT_ITEMS[] = { 28350, 27871, 27803, 0, 28262, 27672, 27527, 29239, 27459, 27475, 27822, 28407, 27529, 27891, 27804, 29362, 27887, 28258 };
 
 void GiveGearLevels(Player* Player, uint16 gearList[])
 {
@@ -199,8 +202,7 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
     }
     else if (action == WARRIOR_ARMS)
     {
-        GiveGearLevels(Player, WARRIOR_ARMS_ITEMS);
-        Player->AddItem(28253, 1);
+        GiveGearLevels(Player, WARRIOR_ARMS_ITEMS);        
         Player->AddItem(28056, 200);            
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
@@ -221,8 +223,7 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
     }
     else if (action == DPS_PALADIN)
     {
-        GiveGearLevels(Player, PALADIN_RET_ITEMS);
-        Player->AddItem(28253, 1);
+        GiveGearLevels(Player, PALADIN_RET_ITEMS);        
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
@@ -240,8 +241,7 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
     }
     else if (action == DPS_HUNTER)
     {
-        GiveGearLevels(Player, HUNTER_ITEMS);
-        Player->AddItem(27903, 1);
+        GiveGearLevels(Player, HUNTER_ITEMS);        
         Player->AddItem(28056, 200);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
@@ -255,8 +255,7 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
     }
     else if (action == DPS_PRIEST)
     {
-        GiveGearLevels(Player, PRIEST_SHADOW_ITEMS);        
-        Player->AddItem(28341, 1);
+        GiveGearLevels(Player, PRIEST_SHADOW_ITEMS);                
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
@@ -286,29 +285,25 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
     }
     else if (action == DPS_MAGE)
     {
-        GiveGearLevels(Player, MAGE_ITEMS);
-        Player->AddItem(28341, 1);
+        GiveGearLevels(Player, MAGE_ITEMS);        
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == DPS_WARLOCK)
     {
-        GiveGearLevels(Player, WARLOCK_ITEMS);
-        Player->AddItem(28341, 1);
+        GiveGearLevels(Player, WARLOCK_ITEMS);        
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == CAT_DRUID)
     {
-        GiveGearLevels(Player, DRUID_CAT_ITEMS);
-        Player->AddItem(28325, 1);
+        GiveGearLevels(Player, DRUID_CAT_ITEMS);        
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == BALANCE_DRUID)
     {
-        GiveGearLevels(Player, DRUID_BALANCE_ITEMS);
-        Player->AddItem(28341, 1);
+        GiveGearLevels(Player, DRUID_BALANCE_ITEMS);        
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
@@ -320,8 +315,7 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
     }
     else if (action == TANK_DRUID)
     {
-        GiveGearLevels(Player, DRUID_BEAR_ITEMS);
-        Player->AddItem(27757, 1);
+        GiveGearLevels(Player, DRUID_BEAR_ITEMS);        
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
