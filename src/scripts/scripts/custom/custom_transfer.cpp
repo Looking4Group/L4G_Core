@@ -35,9 +35,7 @@ enum Instant_70_Conversations
     FACTION_HONOR_HOLD = GOSSIP_ACTION_INFO_DEF + 35,
     FACTION_SHA_TAR = GOSSIP_ACTION_INFO_DEF + 36,
     FACTION_KEEPERS_OF_TIME = GOSSIP_ACTION_INFO_DEF + 37,
-    ALDOR_SCRYER_SELECT = GOSSIP_ACTION_INFO_DEF + 39,
-    FACTION_ALDOR = GOSSIP_ACTION_INFO_DEF + 40,
-    FACTION_SCRYER = GOSSIP_ACTION_INFO_DEF + 41,
+    ALDOR_SCRYER_SELECT = GOSSIP_ACTION_INFO_DEF + 39,    
     FLYING_MOUNT_SELECT = GOSSIP_ACTION_INFO_DEF + 42,
     FLYING_MOUNT_YES = GOSSIP_ACTION_INFO_DEF + 43,
     FLYING_MOUNT_NO = GOSSIP_ACTION_INFO_DEF + 44,
@@ -71,31 +69,31 @@ enum Instant_70_Conversations
 
 
 
-uint16 DRUID_BALANCE_ITEMS[] = { 28193,28134,27796,28570,27799,29240,27465,27783,27907,29242,27784,28394,28223,28418,28341,27518 };
-uint16 DRUID_BEAR_ITEMS[] = { 28414,27871,27776,28256,31285,28514,27509,28124,30538,28339,27436,27436,28121,27891,27757,23198 };
-uint16 DRUID_CAT_ITEMS[] = { 28414,27779,27995,27892,27461,27712,27509,28124,30538,27867,27925,25962,28288,28034,28325,28372 };
-uint16 DRUID_RESTO_ITEMS[] = { 27866,28419,27775,27946,28230,28511,28304,28652,27875,28251,27780,27491,28190,24390,28257,27714,27886 };
+uint16 DRUID_BALANCE_ITEMS[] = { 28193,28134,27796,27783,27907,29242,29240,27465,28394,27784,28223,28418,28570,28341,27799,27518 };
+uint16 DRUID_BEAR_ITEMS[] = { 28414,27871,27776,31285,28124,30538,28339,28514,27509,27436,28121,27891,28256,27757,23198 };
+uint16 DRUID_CAT_ITEMS[] = { 28414,27779,27995,27461,28124,30538,27867,27712,27509,25962,27925,28288,28034,27892,28325,28372 };
+uint16 DRUID_RESTO_ITEMS[] = { 27866,28419,27775,28652,27875,28251,28511,28304,27780,27491,28190,24390,27946,28230,28257,27714,27886 };
 
-uint16 HUNTER_ITEMS[] = { 28192,27779,27713,27892,28401,27712,27528,31293,27936,27915,27925,25962,28034,28288,27903,31303 };
-uint16 MAGE_ITEMS[] = { 28193,28134,27796,28570,27799,29240,27465,27742,27907,29242,27784,28394,28223,28418,28341,28386 };
-uint16 WARLOCK_ITEMS[] = { 28193,28134,27796,28570,27799,29240,27465,27742,27907,29242,27784,28394,28223,28418,28341,28386 };
+uint16 HUNTER_ITEMS[] = { 28192,27779,27713,28401,31293,27936,27915,27712,27528,25962,27925,28034,28288,31303,27892,27903 };
+uint16 MAGE_ITEMS[] = { 28193,28134,27796,27742,27907,29242,29240,27465,28394,27784,28418,28223,28570,28341,27799,28386 };
+uint16 WARLOCK_ITEMS[] = { 28193,28134,27796,27742,27907,29242,29240,27465,28394,27784,28418,28223,28570,28341,27799,28386 };
 
-uint16 PALADIN_HOLY_ITEMS[] = { 27790,28419,27775,27946,27897,28194,28304,27548,27458,28221,27780,28259,28190,24390,28257,31292,28296 };
-uint16 PALADIN_PROT_ITEMS[] = { 28285,27792,27739,27804,28203,27459,27535,27672,27839,29239,27805,27805,27529,27891,27905,28316,27917 };
-uint16 PALADIN_RET_ITEMS[] = { 28225,27551,27771,27892,28403,27712,27497,27985,30538,28318,27925,28323,28034,28288,27497,23203 };
+uint16 PALADIN_HOLY_ITEMS[] = { 27790,28419,27775,27897,27548,27458,28221,28194,28304,28259,27780,24390,28190,31292,27946,28257,28296 };
+uint16 PALADIN_PROT_ITEMS[] = { 28285,27792,27739,28203,27672,27839,29239,27459,27535,27805,27891,27529,28316,27804,27905,27917 };
+uint16 PALADIN_RET_ITEMS[] = { 28225,27551,27771,28403,27985,30538,28318,27712,27497,27925,28323,28034,28288,27892,23203 };
 
-uint16 PRIEST_HEAL_ITEMS[] = { 27866,28419,27775,27946,28230,28511,28304,28652,27875,27525,27780,27491,28190,24390,28257,27714,27885 };
-uint16 PRIEST_SHADOW_ITEMS[] = { 28193,28134,27796,28570,27799,29240,27465,28565,27907,29242,27784,28394,28223,28418,28341,28386 };
+uint16 PRIEST_HEAL_ITEMS[] = { 27866,28419,27775,28652,27875,27525,28511,28304,27491,27780,28190,24390,27946,28230,28257,27714,27885 };
+uint16 PRIEST_SHADOW_ITEMS[] = { 28193,28134,27796,28565,27907,29242,29240,27465,28394,27784,28223,28418,28570,28341,27799,28386 };
 
-uint16 ROGUE_ITEMS[] = { 28224,27779,27797,27892,28204,27712,27509,28124,30538,27867,27925,25962,28034,28288,28267,28189,27526 };
+uint16 ROGUE_ITEMS[] = { 28224,27779,27797,28204,28124,30538,27867,27712,27509,27925,25962,28034,28288,28189,28267,27526,27892 };
 
-uint16 SHAMAN_ELE_ITEMS[] = { 28349,28134,27802,28570,27799,29240,27510,27783,27909,29242,27784,28394,28223,28418,27741,27910,28248,5175,5176,5177,5178 };
-uint16 SHAMAN_ENHANCER_ITEMS[] = { 28192,29349,27713,27892,28401,27712,27528,31293,30538,27867,27925,25962,28034,28288,27872,27872,22395,5175,5176,5177,5178 };
-uint16 SHAMAN_RESTO_ITEMS[] = { 27759,28419,27775,27946,27912,28194,28304,27835,27458,27549,27780,28259,28190,24390,28257,31292,27544,5175,5176,5177,5178 };
+uint16 SHAMAN_ELE_ITEMS[] = { 5175,5176,5177,5178,28349,28134,27802,27783,27909,29242,29240,27510,28394,27784,28223,28418,27910,28570,27799,27741,28248 };
+uint16 SHAMAN_ENHANCER_ITEMS[] = { 5175,5176,5177,5178,28192,29349,27713,28401,31293,30538,27867,27712,27528,27925,25962,28034,28288,27872,27892,22395 };
+uint16 SHAMAN_RESTO_ITEMS[] = { 5175,5176,5177,5178,27759,28419,27775,27912,27835,27458,27549,28194,28304,28259,27780,28190,24390,31292,27946,28257,27544 };
 
-uint16 WARRIOR_ARMS_ITEMS[] = { 28056, 28225,27551,27771,27892,28403,27712,27497,27985,30538,28318,27925,28323,28034,28288,27497,27526 };
-uint16 WARRIOR_FURY_ITEMS[] = { 28056, 28225,27551,27771,27892,28403,27712,27497,27985,30538,28318,27925,28323,28034,28288,27872,27872,27526 };
-uint16 WARRIOR_PROT_ITEMS[] = { 28056, 28350,27871,27803,27804,28262,27459,27475,27672,27527,29239,28407,27822,27529,27891,29362,27887,28258 };
+uint16 WARRIOR_ARMS_ITEMS[] = { 28225,27551,27771,28403,27985,30538,28318,27712,27497,27925,28323,28288,28034,27526,27892,28056 };
+uint16 WARRIOR_FURY_ITEMS[] = { 28225,27551,27771,28403,27985,30538,28318,27712,27497,27925,28323,28034,28288,27872,27526,27892,28056 };
+uint16 WARRIOR_PROT_ITEMS[] = { 28350,27871,27803,28262,27672,27527,29239,27459,27475,27822,28407,27529,27891,29362,27887,27804,28056,28258 };
 
 
 
@@ -104,13 +102,13 @@ void GiveGearLevels(Player* Player, uint16 gearList[])
 {
     Player->PushSeventy();
     Player->EquipForPushSeventy(gearList);
-    //Player->FinishTransferQuests();
+    Player->FinishTransferQuests();
     Player->FinishPushTransfer();
 }
 
 bool GossipHello_custom_transfer(Player *Player, Creature *Creature)
 {
-    std::cout << "Hello customer transfer" << std::endl;
+
     Player->ADD_GOSSIP_ITEM(0, "Level & equip", GOSSIP_SENDER_MAIN, CLASS_SELECT);
     Player->ADD_GOSSIP_ITEM(0, "Factions", GOSSIP_SENDER_MAIN, FACTION_MAIN_SELECT);
     Player->ADD_GOSSIP_ITEM(0, "Flying mount", GOSSIP_SENDER_MAIN, FLYING_MOUNT_SELECT);
@@ -181,7 +179,7 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
             Player->ADD_GOSSIP_ITEM(0, "Restoration", GOSSIP_SENDER_MAIN, TANK_DRUID);
             Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
             Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
-        }        
+        }
     }
     if (action == FACTION_MAIN_SELECT) {
         Player->ADD_GOSSIP_ITEM(0, "Lower city", GOSSIP_SENDER_MAIN, FACTION_LOWER_CITY);
@@ -204,116 +202,115 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
     }
     else if (action == WARRIOR_ARMS)
     {
-        ////GiveGearLevels(Player, WARRIOR_ARMS_ITEMS);
-        //Player->ADD_GOSSIP_ITEM(0, "continue", GOSSIP_SENDER_MAIN, FACTION_LOWER_CITY);
+        GiveGearLevels(Player, WARRIOR_ARMS_ITEMS);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == WARRIOR_FURY)
     {
-        //GiveGearLevels(Player, WARRIOR_FURY_ITEMS);
+        GiveGearLevels(Player, WARRIOR_FURY_ITEMS);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == WARRIOR_PROTECTION)
     {
-        //GiveGearLevels(Player, WARRIOR_PROT_ITEMS);
+        GiveGearLevels(Player, WARRIOR_PROT_ITEMS);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == DPS_PALADIN)
     {
-        //GiveGearLevels(Player, PALADIN_RET_ITEMS);
+        GiveGearLevels(Player, PALADIN_RET_ITEMS);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == TANK_PALADIN)
     {
-        //GiveGearLevels(Player, PALADIN_PROT_ITEMS);
+        GiveGearLevels(Player, PALADIN_PROT_ITEMS);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == HEAL_PALADIN)
     {
-        //GiveGearLevels(Player, PALADIN_HOLY_ITEMS);
+        GiveGearLevels(Player, PALADIN_HOLY_ITEMS);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == DPS_HUNTER)
     {
-        //GiveGearLevels(Player, HUNTER_ITEMS);        
+        GiveGearLevels(Player, HUNTER_ITEMS);        
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == DPS_ROGUE)
     {
-        //GiveGearLevels(Player, ROGUE_ITEMS);
+        GiveGearLevels(Player, ROGUE_ITEMS);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == DPS_PRIEST)
     {
-        //GiveGearLevels(Player, PRIEST_SHADOW_ITEMS);
+        GiveGearLevels(Player, PRIEST_SHADOW_ITEMS);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == HEAL_PRIEST)
     {
-        //GiveGearLevels(Player, PRIEST_HEAL_ITEMS);
+        GiveGearLevels(Player, PRIEST_HEAL_ITEMS);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == ENHANCE_SHAMAN)
     {
-        //GiveGearLevels(Player, SHAMAN_ENHANCER_ITEMS);
+        GiveGearLevels(Player, SHAMAN_ENHANCER_ITEMS);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == ELEMENTAL_SHAMAN)
     {
-        //GiveGearLevels(Player, SHAMAN_ELE_ITEMS);
+        GiveGearLevels(Player, SHAMAN_ELE_ITEMS);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == HEAL_SHAMAN)
     {
-        //GiveGearLevels(Player, SHAMAN_RESTO_ITEMS);
+        GiveGearLevels(Player, SHAMAN_RESTO_ITEMS);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == DPS_MAGE)
     {
-        //GiveGearLevels(Player, MAGE_ITEMS);
+        GiveGearLevels(Player, MAGE_ITEMS);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == DPS_WARLOCK)
     {
-        //GiveGearLevels(Player, WARLOCK_ITEMS);
+        GiveGearLevels(Player, WARLOCK_ITEMS);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == CAT_DRUID)
     {
-        //GiveGearLevels(Player, DRUID_CAT_ITEMS);
+        GiveGearLevels(Player, DRUID_CAT_ITEMS);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == BALANCE_DRUID)
     {
-        //GiveGearLevels(Player, DRUID_BALANCE_ITEMS);
+        GiveGearLevels(Player, DRUID_BALANCE_ITEMS);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == HEAL_DRUID)
     {
-        //GiveGearLevels(Player, DRUID_RESTO_ITEMS);
+        GiveGearLevels(Player, DRUID_RESTO_ITEMS);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == TANK_DRUID)
     {
-        //GiveGearLevels(Player, DRUID_BEAR_ITEMS);
+        GiveGearLevels(Player, DRUID_BEAR_ITEMS);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
@@ -366,48 +363,48 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == LOWER_CITY_NEUTRAL)
-    {       
+    {
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == LOWER_CITY_FRIENDLY)
     {
-        Player->PushFaction(1011, 3001);        
+        Player->PushFaction(1011, 3001);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == LOWER_CITY_HONORED)
     {
         Player->PushFaction(1011, 9001);
-        Player->AddItem(30633, 1);        
+        Player->AddItem(30633, 1);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == CENARION_EXPEDITION_NEUTRAL)
-    {        
+    {
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == CENARION_EXPEDITION_FRIENDLY)
-    {        
+    {
         Player->PushFaction(942, 3001);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == CENARION_EXPEDITION_HONORED)
     {
-        Player->AddItem(30623, 1);        
+        Player->AddItem(30623, 1);
         Player->PushFaction(942, 9001);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == THRALLMAR_NEUTRAL)
-    {        
+    {
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == THRALLMAR_FRIENDLY)
-    {        
+    {
         Player->PushFaction(947, 3001);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
@@ -426,50 +423,50 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
 
     }
     else if (action == HONOR_HOLD_FRIENDLY)
-    {        
+    {
         Player->PushFaction(946, 3001);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == HONOR_HOLD_HONORED)
     {
-        Player->AddItem(30622, 1);        
+        Player->AddItem(30622, 1);
         Player->PushFaction(946, 9001);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == SHA_TAR_NEUTRAL)
-    {        
+    {
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == SHA_TAR_FRIENDLY)
-    {        
+    {
         Player->PushFaction(935, 3001);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == SHA_TAR_HONORED)
     {
-        Player->AddItem(30634, 1);        
+        Player->AddItem(30634, 1);
         Player->PushFaction(935, 9001);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == KEEPERS_OF_TIME_NEUTRAL)
-    {        
+    {
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == KEEPERS_OF_TIME_FRIENDLY)
-    {        
+    {
         Player->PushFaction(989, 3001);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == KEEPERS_OF_TIME_HONORED)
     {
-        Player->AddItem(30635, 1);        
+        Player->AddItem(30635, 1);
         Player->PushFaction(989, 9001);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
@@ -502,7 +499,7 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == ALDOR_HONORED)
-    {        
+    {
         Player->PushFaction(932, 5501);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
@@ -513,26 +510,26 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == SCRYER_HONORED)
-    {        
+    {
         Player->PushFaction(934, 5501);
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
-    }  
+    }
     else if (action == FLYING_MOUNT_YES)
     {
         //225 riding
         Player->learnSpell(34090);
-        std::cout << "Flying yes" << std::endl;
-        std::cout << Player->GetTeam() << std::endl;
+
+
         if (Player->GetTeam() == 469)
         {
-            std::cout << "alliance flying" << std::endl;
+
             Player->AddItem(25470, 1);
             Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
             Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
         }
         if (Player->GetTeam() == 67) {
-            std::cout << "horde flying" << std::endl;
+
             Player->AddItem(25475, 1);
             Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
             Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
@@ -540,11 +537,11 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
     }
     else if (action == FLYING_MOUNT_NO)
     {
-        std::cout << "Flying no" << std::endl;
+
         Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
-    std::cout << action << std::endl;
+
     if (action == 0) {
         GossipHello_custom_transfer(Player, Creature);
     }
