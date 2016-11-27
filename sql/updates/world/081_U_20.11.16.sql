@@ -43,3 +43,6 @@ INSERT INTO `waypoint_data` VALUES (86748, 12, 5050.4, 2896.25, 83.7468, 0, 0, 0
 
 -- Magistrix Seyla
 UPDATE `creature` SET `spawnmask` = 0 WHERE `id` = 24937;
+
+-- Trigger NPC
+UPDATE `creature` SET `InhabitType` = 7 WHERE `entry` = 24921;
