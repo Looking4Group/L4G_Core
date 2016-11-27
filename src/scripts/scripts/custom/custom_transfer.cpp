@@ -126,32 +126,32 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
             Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
             Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
         }
-        else if (action == CLASS_PALADIN) {
-            Player->ADD_GOSSIP_ITEM(0, "Holy", GOSSIP_SENDER_MAIN, DPS_PALADIN);
+        else if (Player->getClass() == CLASS_PALADIN) {
+            Player->ADD_GOSSIP_ITEM(0, "Holy", GOSSIP_SENDER_MAIN, HEAL_PALADIN);
             Player->ADD_GOSSIP_ITEM(0, "Protection", GOSSIP_SENDER_MAIN, TANK_PALADIN);
-            Player->ADD_GOSSIP_ITEM(0, "Retribution", GOSSIP_SENDER_MAIN, HEAL_PALADIN);
+            Player->ADD_GOSSIP_ITEM(0, "Retribution", GOSSIP_SENDER_MAIN, DPS_PALADIN);
             Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
             Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
         }
-        else if (action == CLASS_HUNTER)
+        else if (Player->getClass() == CLASS_HUNTER)
         {
             Player->ADD_GOSSIP_ITEM(0, "DPS", GOSSIP_SENDER_MAIN, DPS_HUNTER);
             Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
             Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
 
         }
-        else if (action == CLASS_ROGUE) {
+        else if (Player->getClass() == CLASS_ROGUE) {
             Player->ADD_GOSSIP_ITEM(0, "DPS", GOSSIP_SENDER_MAIN, DPS_ROGUE);
             Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
             Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
         }
-        else if (action == CLASS_PRIEST) {
+        else if (Player->getClass() == CLASS_PRIEST) {
             Player->ADD_GOSSIP_ITEM(0, "DPS", GOSSIP_SENDER_MAIN, DPS_PRIEST);
             Player->ADD_GOSSIP_ITEM(0, "Healer", GOSSIP_SENDER_MAIN, HEAL_PRIEST);
             Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
             Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
         }
-        else if (action == CLASS_SHAMAN) {
+        else if (Player->getClass() == CLASS_SHAMAN) {
             Player->ADD_GOSSIP_ITEM(0, "DPS - Enhancer", GOSSIP_SENDER_MAIN, ENHANCE_SHAMAN);
             Player->ADD_GOSSIP_ITEM(0, "DPS - Elemental", GOSSIP_SENDER_MAIN, ELEMENTAL_SHAMAN);
             Player->ADD_GOSSIP_ITEM(0, "Restoration", GOSSIP_SENDER_MAIN, HEAL_SHAMAN);
@@ -159,21 +159,21 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
             Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
         }
 
-        else if (action == CLASS_MAGE) {
+        else if (Player->getClass() == CLASS_MAGE) {
             Player->ADD_GOSSIP_ITEM(0, "DPS", GOSSIP_SENDER_MAIN, DPS_MAGE);
             Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
             Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
         }
-        else if (action == CLASS_WARLOCK) {
+        else if (Player->getClass() == CLASS_WARLOCK) {
             Player->ADD_GOSSIP_ITEM(0, "DPS", GOSSIP_SENDER_MAIN, DPS_WARLOCK);
             Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
             Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
         }
-        else if (action == CLASS_DRUID) {
+        else if (Player->getClass() == CLASS_DRUID) {
             Player->ADD_GOSSIP_ITEM(0, "Feral - Cat", GOSSIP_SENDER_MAIN, CAT_DRUID);
-            Player->ADD_GOSSIP_ITEM(0, "Feral - Bear", GOSSIP_SENDER_MAIN, BALANCE_DRUID);
-            Player->ADD_GOSSIP_ITEM(0, "Balance", GOSSIP_SENDER_MAIN, HEAL_DRUID);
-            Player->ADD_GOSSIP_ITEM(0, "Restoration", GOSSIP_SENDER_MAIN, TANK_DRUID);
+            Player->ADD_GOSSIP_ITEM(0, "Feral - Bear", GOSSIP_SENDER_MAIN, TANK_DRUID);
+            Player->ADD_GOSSIP_ITEM(0, "Balance", GOSSIP_SENDER_MAIN, BALANCE_DRUID);
+            Player->ADD_GOSSIP_ITEM(0, "Restoration", GOSSIP_SENDER_MAIN, HEAL_DRUID);
             Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
             Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
         }
