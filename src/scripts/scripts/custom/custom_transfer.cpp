@@ -523,6 +523,7 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
         //225 riding
         Player->learnSpell(34090);
         std::cout << "Flying yes" << std::endl;
+        std::cout << Player->GetTeam() << std::endl;
         if (Player->GetTeam() == ALLIANCE)
         {
             std::cout << "alliance flying" << std::endl;
