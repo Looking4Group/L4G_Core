@@ -129,43 +129,43 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
             Player->ADD_GOSSIP_ITEM(0, "Protection", GOSSIP_SENDER_MAIN, WARRIOR_PROTECTION);
             Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         }
-        elseif(action == CLASS_PALADIN) {
+        else if (action == CLASS_PALADIN) {
             Player->ADD_GOSSIP_ITEM(0, "Holy", GOSSIP_SENDER_MAIN, DPS_PALADIN);
             Player->ADD_GOSSIP_ITEM(0, "Protection", GOSSIP_SENDER_MAIN, TANK_PALADIN);
             Player->ADD_GOSSIP_ITEM(0, "Retribution", GOSSIP_SENDER_MAIN, HEAL_PALADIN);
             Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
 
         }
-        elseif(action == CLASS_HUNTER)
+        else if (action == CLASS_HUNTER)
         {
             Player->ADD_GOSSIP_ITEM(0, "DPS", GOSSIP_SENDER_MAIN, DPS_HUNTER);
             Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
 
         }
-        elseif(action == CLASS_ROGUE) {
+        else if (action == CLASS_ROGUE) {
             Player->ADD_GOSSIP_ITEM(0, "DPS", GOSSIP_SENDER_MAIN, DPS_ROGUE);
             Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         }
-        elseif(action == CLASS_PRIEST) {
+        else if (action == CLASS_PRIEST) {
             Player->ADD_GOSSIP_ITEM(0, "DPS", GOSSIP_SENDER_MAIN, DPS_PRIEST);
             Player->ADD_GOSSIP_ITEM(0, "Healer", GOSSIP_SENDER_MAIN, HEAL_PRIEST);
             Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         }
-        elseif(action == CLASS_SHAMAN) {
+        else if (action == CLASS_SHAMAN) {
             Player->ADD_GOSSIP_ITEM(0, "DPS - Enhancer", GOSSIP_SENDER_MAIN, ENHANCE_SHAMAN);
             Player->ADD_GOSSIP_ITEM(0, "DPS - Elemental", GOSSIP_SENDER_MAIN, ELEMENTAL_SHAMAN);
             Player->ADD_GOSSIP_ITEM(0, "Restoration", GOSSIP_SENDER_MAIN, HEAL_SHAMAN);
         }
 
-        elseif(action == CLASS_MAGE) {
+        else if (action == CLASS_MAGE) {
             Player->ADD_GOSSIP_ITEM(0, "DPS", GOSSIP_SENDER_MAIN, DPS_MAGE);
             Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         }
-        elseif(action == CLASS_WARLOCK) {
+        else if (action == CLASS_WARLOCK) {
             Player->ADD_GOSSIP_ITEM(0, "DPS", GOSSIP_SENDER_MAIN, DPS_WARLOCK);
             Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
         }
-        elseif(action == CLASS_DRUID) {
+        else if (action == CLASS_DRUID) {
             Player->ADD_GOSSIP_ITEM(0, "Feral - Cat", GOSSIP_SENDER_MAIN, CAT_DRUID);
             Player->ADD_GOSSIP_ITEM(0, "Feral - Bear", GOSSIP_SENDER_MAIN, BALANCE_DRUID);
             Player->ADD_GOSSIP_ITEM(0, "Balance", GOSSIP_SENDER_MAIN, HEAL_DRUID);
@@ -174,121 +174,121 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
         }
         Player->PlayerTalkClass->SendGossipMenu(30012, Creature->GetGUID());
     }
-    elseif(action == WARRIOR_ARMS)
+    else if (action == WARRIOR_ARMS)
     {
         ////GiveGearLevels(Player, WARRIOR_ARMS_ITEMS);
         //Player->ADD_GOSSIP_ITEM(0, "continue", GOSSIP_SENDER_MAIN, FACTION_LOWER_CITY);
         //Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
     }
-    elseif(action == WARRIOR_FURY)
+    else if (action == WARRIOR_FURY)
     {
         //GiveGearLevels(Player, WARRIOR_FURY_ITEMS);
         Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
 
     }
-    elseif(action == WARRIOR_PROTECTION)
+    else if (action == WARRIOR_PROTECTION)
     {
         //GiveGearLevels(Player, WARRIOR_PROT_ITEMS);
         Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
 
     }
-    elseif(action == DPS_PALADIN)
+    else if (action == DPS_PALADIN)
     {
         //GiveGearLevels(Player, PALADIN_RET_ITEMS);
         Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
 
     }
-    elseif(action == TANK_PALADIN)
+    else if (action == TANK_PALADIN)
     {
         //GiveGearLevels(Player, PALADIN_PROT_ITEMS);
         Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
 
     }
-    elseif(action == HEAL_PALADIN)
+    else if (action == HEAL_PALADIN)
     {
         //GiveGearLevels(Player, PALADIN_HOLY_ITEMS);
         Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
 
     }
-    elseif(action == DPS_HUNTER)
+    else if (action == DPS_HUNTER)
     {
         //GiveGearLevels(Player, HUNTER_ITEMS);
         Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
 
     }
-    elseif(action == DPS_ROGUE)
+    else if (action == DPS_ROGUE)
     {
         //GiveGearLevels(Player, ROGUE_ITEMS);
         Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
 
     }
-    elseif(action == DPS_PRIEST)
+    else if (action == DPS_PRIEST)
     {
         //GiveGearLevels(Player, PRIEST_SHADOW_ITEMS);
         Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
 
     }
-    elseif(action == HEAL_PRIEST)
+    else if (action == HEAL_PRIEST)
     {
         //GiveGearLevels(Player, PRIEST_HEAL_ITEMS);
         Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
 
     }
-    elseif(action == ENHANCE_SHAMAN)
+    else if (action == ENHANCE_SHAMAN)
     {
         //GiveGearLevels(Player, SHAMAN_ENHANCER_ITEMS);
         Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
 
     }
-    elseif(action == ELEMENTAL_SHAMAN)
+    else if (action == ELEMENTAL_SHAMAN)
     {
         //GiveGearLevels(Player, SHAMAN_ELE_ITEMS);
         Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
 
     }
-    elseif(action == HEAL_SHAMAN)
+    else if (action == HEAL_SHAMAN)
     {
         //GiveGearLevels(Player, SHAMAN_RESTO_ITEMS);
         Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
 
     }
-    elseif(action == DPS_MAGE)
+    else if (action == DPS_MAGE)
     {
         //GiveGearLevels(Player, MAGE_ITEMS);
         Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
 
     }
-    elseif(action == DPS_WARLOCK)
+    else if (action == DPS_WARLOCK)
     {
         //GiveGearLevels(Player, WARLOCK_ITEMS);
         Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
 
     }
-    elseif(action == CAT_DRUID)
+    else if (action == CAT_DRUID)
     {
         //GiveGearLevels(Player, DRUID_CAT_ITEMS);
         Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
 
     }
-    elseif(action == BALANCE_DRUID)
+    else if (action == BALANCE_DRUID)
     {
         //GiveGearLevels(Player, DRUID_BALANCE_ITEMS);
         Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
 
     }
-    elseif(action == HEAL_DRUID)
+    else if (action == HEAL_DRUID)
     {
         //GiveGearLevels(Player, DRUID_RESTO_ITEMS);
         Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
 
     }
-    elseif(action == TANK_DRUID)
+    else if (action == TANK_DRUID)
     {
         //GiveGearLevels(Player, DRUID_BEAR_ITEMS);
         Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
 
     }
-    elseif(action == FACTION_LOWER_CITY)
+    else if (action == FACTION_LOWER_CITY)
     {
         Player->ADD_GOSSIP_ITEM(0, "Neutral", GOSSIP_SENDER_MAIN, LOWER_CITY_NEUTRAL);
         Player->ADD_GOSSIP_ITEM(0, "Friendly", GOSSIP_SENDER_MAIN, LOWER_CITY_FRIENDLY);
@@ -296,203 +296,203 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
         Player->PlayerTalkClass->SendGossipMenu(9, Creature->GetGUID());
 
     }
-    elseif(action == FACTION_CENARION_EXPEDITION)
+    else if (action == FACTION_CENARION_EXPEDITION)
     {
         Player->ADD_GOSSIP_ITEM(0, "Neutral", GOSSIP_SENDER_MAIN, CENARION_EXPEDITION_NEUTRAL);
         Player->ADD_GOSSIP_ITEM(0, "Friendly", GOSSIP_SENDER_MAIN, CENARION_EXPEDITION_FRIENDLY);
         Player->ADD_GOSSIP_ITEM(0, "Honored", GOSSIP_SENDER_MAIN, CENARION_EXPEDITION_HONORED);
 
     }
-    elseif(action == FACTION_THRALLMAR)
+    else if (action == FACTION_THRALLMAR)
     {
         Player->ADD_GOSSIP_ITEM(0, "Neutral", GOSSIP_SENDER_MAIN, THRALLMAR_NEUTRAL);
         Player->ADD_GOSSIP_ITEM(0, "Friendly", GOSSIP_SENDER_MAIN, THRALLMAR_FRIENDLY);
         Player->ADD_GOSSIP_ITEM(0, "Honored", GOSSIP_SENDER_MAIN, THRALLMAR_HONORED);
 
     }
-    elseif(action == FACTION_HONOR_HOLD)
+    else if (action == FACTION_HONOR_HOLD)
     {
         Player->ADD_GOSSIP_ITEM(0, "Neutral", GOSSIP_SENDER_MAIN, HONOR_HOLD_NEUTRAL);
         Player->ADD_GOSSIP_ITEM(0, "Friendly", GOSSIP_SENDER_MAIN, HONOR_HOLD_FRIENDLY);
         Player->ADD_GOSSIP_ITEM(0, "Honored", GOSSIP_SENDER_MAIN, HONOR_HOLD_HONORED);
 
     }
-    elseif(action == FACTION_SHA_TAR)
+    else if (action == FACTION_SHA_TAR)
     {
         Player->ADD_GOSSIP_ITEM(0, "Neutral", GOSSIP_SENDER_MAIN, SHA_TAR_NEUTRAL);
         Player->ADD_GOSSIP_ITEM(0, "Friendly", GOSSIP_SENDER_MAIN, SHA_TAR_FRIENDLY);
         Player->ADD_GOSSIP_ITEM(0, "Honored", GOSSIP_SENDER_MAIN, SHA_TAR_HONORED);
 
     }
-    elseif(action == FACTION_KEEPERS_OF_TIME)
+    else if (action == FACTION_KEEPERS_OF_TIME)
     {
         Player->ADD_GOSSIP_ITEM(0, "Neutral", GOSSIP_SENDER_MAIN, KEEPERS_OF_TIME_NEUTRAL);
         Player->ADD_GOSSIP_ITEM(0, "Friendly", GOSSIP_SENDER_MAIN, KEEPERS_OF_TIME_FRIENDLY);
         Player->ADD_GOSSIP_ITEM(0, "Honored", GOSSIP_SENDER_MAIN, KEEPERS_OF_TIME_HONORED);
 
     }
-    elseif(action == LOWER_CITY_NEUTRAL)
+    else if (action == LOWER_CITY_NEUTRAL)
     {
         Player->ADD_GOSSIP_ITEM(0, "Cenarion Expedition", GOSSIP_SENDER_MAIN, FACTION_CENARION_EXPEDITION);
         Player->PlayerTalkClass->SendGossipMenu(9, Creature->GetGUID());
 
     }
-    elseif(action == LOWER_CITY_FRIENDLY)
+    else if (action == LOWER_CITY_FRIENDLY)
     {
         Player->PushFaction(1011, 3001);
         Player->PlayerTalkClass->SendGossipMenu(9, Creature->GetGUID());
 
     }
-    elseif(action == LOWER_CITY_HONORED)
+    else if (action == LOWER_CITY_HONORED)
     {
         Player->PushFaction(1011, 9001);
         Player->AddItem(30633, 1);
         Player->PlayerTalkClass->SendGossipMenu(30033, Creature->GetGUID());
 
     }
-    elseif(action == CENARION_EXPEDITION_NEUTRAL)
+    else if (action == CENARION_EXPEDITION_NEUTRAL)
     {
         Player->PlayerTalkClass->SendGossipMenu(30034, Creature->GetGUID());
 
     }
-    elseif(action == CENARION_EXPEDITION_FRIENDLY)
+    else if (action == CENARION_EXPEDITION_FRIENDLY)
     {
         Player->PlayerTalkClass->SendGossipMenu(30034, Creature->GetGUID());
         Player->PushFaction(942, 3001);
 
     }
-    elseif(action == CENARION_EXPEDITION_HONORED)
+    else if (action == CENARION_EXPEDITION_HONORED)
     {
         Player->AddItem(30623, 1);
         Player->PlayerTalkClass->SendGossipMenu(30034, Creature->GetGUID());
         Player->PushFaction(942, 9001);
 
     }
-    elseif(action == THRALLMAR_NEUTRAL)
+    else if (action == THRALLMAR_NEUTRAL)
     {
         Player->PlayerTalkClass->SendGossipMenu(30035, Creature->GetGUID());
 
     }
-    elseif(action == THRALLMAR_FRIENDLY)
+    else if (action == THRALLMAR_FRIENDLY)
     {
         Player->PlayerTalkClass->SendGossipMenu(30035, Creature->GetGUID());
         Player->PushFaction(947, 3001);
 
     }
-    elseif(action == THRALLMAR_HONORED)
+    else if (action == THRALLMAR_HONORED)
     {
         Player->AddItem(30637, 1);
         Player->PlayerTalkClass->SendGossipMenu(30035, Creature->GetGUID());
         Player->PushFaction(947, 9001);
 
     }
-    elseif(action == HONOR_HOLD_NEUTRAL)
+    else if (action == HONOR_HOLD_NEUTRAL)
     {
         Player->PlayerTalkClass->SendGossipMenu(30036, Creature->GetGUID());
 
     }
-    elseif(action == HONOR_HOLD_FRIENDLY)
+    else if (action == HONOR_HOLD_FRIENDLY)
     {
         Player->PlayerTalkClass->SendGossipMenu(30036, Creature->GetGUID());
         Player->PushFaction(946, 3001);
 
     }
-    elseif(action == HONOR_HOLD_HONORED)
+    else if (action == HONOR_HOLD_HONORED)
     {
         Player->AddItem(30622, 1);
         Player->PlayerTalkClass->SendGossipMenu(30036, Creature->GetGUID());
         Player->PushFaction(946, 9001);
 
     }
-    elseif(action == SHA_TAR_NEUTRAL)
+    else if (action == SHA_TAR_NEUTRAL)
     {
         Player->PlayerTalkClass->SendGossipMenu(30037, Creature->GetGUID());
 
     }
-    elseif(action == SHA_TAR_FRIENDLY)
+    else if (action == SHA_TAR_FRIENDLY)
     {
         Player->PlayerTalkClass->SendGossipMenu(30037, Creature->GetGUID());
         Player->PushFaction(935, 3001);
 
     }
-    elseif(action == SHA_TAR_HONORED)
+    else if (action == SHA_TAR_HONORED)
     {
         Player->AddItem(30634, 1);
         Player->PlayerTalkClass->SendGossipMenu(30037, Creature->GetGUID());
         Player->PushFaction(935, 9001);
 
     }
-    elseif(action == KEEPERS_OF_TIME_NEUTRAL)
+    else if (action == KEEPERS_OF_TIME_NEUTRAL)
     {
         Player->PlayerTalkClass->SendGossipMenu(30039, Creature->GetGUID());
 
     }
-    elseif(action == KEEPERS_OF_TIME_FRIENDLY)
+    else if (action == KEEPERS_OF_TIME_FRIENDLY)
     {
         Player->PlayerTalkClass->SendGossipMenu(30039, Creature->GetGUID());
         Player->PushFaction(989, 3001);
 
     }
-    elseif(action == KEEPERS_OF_TIME_HONORED)
+    else if (action == KEEPERS_OF_TIME_HONORED)
     {
         Player->AddItem(30635, 1);
         Player->PlayerTalkClass->SendGossipMenu(30039, Creature->GetGUID());
         Player->PushFaction(989, 9001);
 
     }
-    elseif(action == ALDOR_SCRYER_SELECT)
+    else if (action == ALDOR_SCRYER_SELECT)
     {
         Player->ADD_GOSSIP_ITEM(0, "Aldor", GOSSIP_SENDER_MAIN, FACTION_ALDOR_SELECT);
         Player->ADD_GOSSIP_ITEM(0, "Scryer", GOSSIP_SENDER_MAIN, FACTION_SCRYER_SELECT);
     }
-    elseif(action == FACTION_ALDOR_SELECT)
+    else if (action == FACTION_ALDOR_SELECT)
     {
         Player->ADD_GOSSIP_ITEM(0, "Nothing", GOSSIP_SENDER_MAIN, ALDOR_NOTHING);
         Player->ADD_GOSSIP_ITEM(0, "Honored", GOSSIP_SENDER_MAIN, ALDOR_HONORED);
     }
-    elseif(action == FACTION_SCRYER_SELECT)
+    else if (action == FACTION_SCRYER_SELECT)
     {
         Player->ADD_GOSSIP_ITEM(0, "Nothing", GOSSIP_SENDER_MAIN, SCRYER_NOTHING);
         Player->ADD_GOSSIP_ITEM(0, "Honored", GOSSIP_SENDER_MAIN, SCRYER_HONORED);
     }
-    elseif(action == ALDOR_NOTHING)
+    else if (action == ALDOR_NOTHING)
     {
 
     }
-    elseif(action == ALDOR_HONORED)
+    else if (action == ALDOR_HONORED)
     {
         Player->PlayerTalkClass->SendGossipMenu(30042, Creature->GetGUID());
         Player->PushFaction(932, 5501);
 
     }
-    elseif(action == SCRYER_NOTHING)
+    else if (action == SCRYER_NOTHING)
     {
 
     }
-    elseif(action == SCRYER_HONORED)
+    else if (action == SCRYER_HONORED)
     {
         Player->PlayerTalkClass->SendGossipMenu(30042, Creature->GetGUID());
         Player->PushFaction(934, 5501);
 
     }
-    elseif(action == FLYING_MOUNT_SELECT)
+    else if (action == FLYING_MOUNT_SELECT)
     {
         Player->ADD_GOSSIP_ITEM(0, "Yes", GOSSIP_SENDER_MAIN, FLYING_MOUNT_YES);
         Player->ADD_GOSSIP_ITEM(0, "No", GOSSIP_SENDER_MAIN, FLYING_MOUNT_NO);
     }
-    elseif(action == FLYING_MOUNT_YES)
+    else if (action == FLYING_MOUNT_YES)
     {
         //225 riding
         Player->learnSpell(34090);
-        if(Player->GetTeam() == ALLIANCE)
+        if (Player->GetTeam() == ALLIANCE)
         {
-           Player->AddItem(25470, 1);
+            Player->AddItem(25470, 1);
         }
         if (action == HORDE) {
             Player->AddItem(25475, 1);
         }
     }
-    elseif(action == FLYING_MOUNT_NO)
+    else if (action == FLYING_MOUNT_NO)
     {
 
     }
