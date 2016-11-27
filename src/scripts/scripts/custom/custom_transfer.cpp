@@ -193,302 +193,319 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
     else if (action == WARRIOR_FURY)
     {
         //GiveGearLevels(Player, WARRIOR_FURY_ITEMS);
-        Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == WARRIOR_PROTECTION)
     {
         //GiveGearLevels(Player, WARRIOR_PROT_ITEMS);
-        Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == DPS_PALADIN)
     {
         //GiveGearLevels(Player, PALADIN_RET_ITEMS);
-        Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == TANK_PALADIN)
     {
         //GiveGearLevels(Player, PALADIN_PROT_ITEMS);
-        Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == HEAL_PALADIN)
     {
         //GiveGearLevels(Player, PALADIN_HOLY_ITEMS);
-        Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == DPS_HUNTER)
     {
-        //GiveGearLevels(Player, HUNTER_ITEMS);
-        Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
-
+        //GiveGearLevels(Player, HUNTER_ITEMS);        
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == DPS_ROGUE)
     {
         //GiveGearLevels(Player, ROGUE_ITEMS);
-        Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == DPS_PRIEST)
     {
         //GiveGearLevels(Player, PRIEST_SHADOW_ITEMS);
-        Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == HEAL_PRIEST)
     {
         //GiveGearLevels(Player, PRIEST_HEAL_ITEMS);
-        Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == ENHANCE_SHAMAN)
     {
         //GiveGearLevels(Player, SHAMAN_ENHANCER_ITEMS);
-        Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == ELEMENTAL_SHAMAN)
     {
         //GiveGearLevels(Player, SHAMAN_ELE_ITEMS);
-        Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == HEAL_SHAMAN)
     {
         //GiveGearLevels(Player, SHAMAN_RESTO_ITEMS);
-        Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == DPS_MAGE)
     {
         //GiveGearLevels(Player, MAGE_ITEMS);
-        Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == DPS_WARLOCK)
     {
         //GiveGearLevels(Player, WARLOCK_ITEMS);
-        Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == CAT_DRUID)
     {
         //GiveGearLevels(Player, DRUID_CAT_ITEMS);
-        Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == BALANCE_DRUID)
     {
         //GiveGearLevels(Player, DRUID_BALANCE_ITEMS);
-        Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == HEAL_DRUID)
     {
         //GiveGearLevels(Player, DRUID_RESTO_ITEMS);
-        Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == TANK_DRUID)
     {
         //GiveGearLevels(Player, DRUID_BEAR_ITEMS);
-        Player->PlayerTalkClass->SendGossipMenu(30032, Creature->GetGUID());
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == FACTION_LOWER_CITY)
     {
         Player->ADD_GOSSIP_ITEM(0, "Neutral", GOSSIP_SENDER_MAIN, LOWER_CITY_NEUTRAL);
         Player->ADD_GOSSIP_ITEM(0, "Friendly", GOSSIP_SENDER_MAIN, LOWER_CITY_FRIENDLY);
         Player->ADD_GOSSIP_ITEM(0, "Honored", GOSSIP_SENDER_MAIN, LOWER_CITY_HONORED);
-        Player->PlayerTalkClass->SendGossipMenu(9, Creature->GetGUID());
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == FACTION_CENARION_EXPEDITION)
     {
         Player->ADD_GOSSIP_ITEM(0, "Neutral", GOSSIP_SENDER_MAIN, CENARION_EXPEDITION_NEUTRAL);
         Player->ADD_GOSSIP_ITEM(0, "Friendly", GOSSIP_SENDER_MAIN, CENARION_EXPEDITION_FRIENDLY);
         Player->ADD_GOSSIP_ITEM(0, "Honored", GOSSIP_SENDER_MAIN, CENARION_EXPEDITION_HONORED);
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == FACTION_THRALLMAR)
     {
         Player->ADD_GOSSIP_ITEM(0, "Neutral", GOSSIP_SENDER_MAIN, THRALLMAR_NEUTRAL);
         Player->ADD_GOSSIP_ITEM(0, "Friendly", GOSSIP_SENDER_MAIN, THRALLMAR_FRIENDLY);
         Player->ADD_GOSSIP_ITEM(0, "Honored", GOSSIP_SENDER_MAIN, THRALLMAR_HONORED);
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == FACTION_HONOR_HOLD)
     {
         Player->ADD_GOSSIP_ITEM(0, "Neutral", GOSSIP_SENDER_MAIN, HONOR_HOLD_NEUTRAL);
         Player->ADD_GOSSIP_ITEM(0, "Friendly", GOSSIP_SENDER_MAIN, HONOR_HOLD_FRIENDLY);
         Player->ADD_GOSSIP_ITEM(0, "Honored", GOSSIP_SENDER_MAIN, HONOR_HOLD_HONORED);
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == FACTION_SHA_TAR)
     {
         Player->ADD_GOSSIP_ITEM(0, "Neutral", GOSSIP_SENDER_MAIN, SHA_TAR_NEUTRAL);
         Player->ADD_GOSSIP_ITEM(0, "Friendly", GOSSIP_SENDER_MAIN, SHA_TAR_FRIENDLY);
         Player->ADD_GOSSIP_ITEM(0, "Honored", GOSSIP_SENDER_MAIN, SHA_TAR_HONORED);
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == FACTION_KEEPERS_OF_TIME)
     {
         Player->ADD_GOSSIP_ITEM(0, "Neutral", GOSSIP_SENDER_MAIN, KEEPERS_OF_TIME_NEUTRAL);
         Player->ADD_GOSSIP_ITEM(0, "Friendly", GOSSIP_SENDER_MAIN, KEEPERS_OF_TIME_FRIENDLY);
         Player->ADD_GOSSIP_ITEM(0, "Honored", GOSSIP_SENDER_MAIN, KEEPERS_OF_TIME_HONORED);
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == LOWER_CITY_NEUTRAL)
     {
-        Player->ADD_GOSSIP_ITEM(0, "Cenarion Expedition", GOSSIP_SENDER_MAIN, FACTION_CENARION_EXPEDITION);
-        Player->PlayerTalkClass->SendGossipMenu(9, Creature->GetGUID());
-
+        Player->ADD_GOSSIP_ITEM(0, "Cenarion Expedition", GOSSIP_SENDER_MAIN, FACTION_CENARION_EXPEDITION);        
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == LOWER_CITY_FRIENDLY)
     {
-        Player->PushFaction(1011, 3001);
-        Player->PlayerTalkClass->SendGossipMenu(9, Creature->GetGUID());
-
+        Player->PushFaction(1011, 3001);        
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == LOWER_CITY_HONORED)
     {
         Player->PushFaction(1011, 9001);
-        Player->AddItem(30633, 1);
-        Player->PlayerTalkClass->SendGossipMenu(30033, Creature->GetGUID());
-
+        Player->AddItem(30633, 1);        
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == CENARION_EXPEDITION_NEUTRAL)
-    {
-        Player->PlayerTalkClass->SendGossipMenu(30034, Creature->GetGUID());
-
+    {        
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == CENARION_EXPEDITION_FRIENDLY)
-    {
-        Player->PlayerTalkClass->SendGossipMenu(30034, Creature->GetGUID());
+    {        
         Player->PushFaction(942, 3001);
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == CENARION_EXPEDITION_HONORED)
     {
-        Player->AddItem(30623, 1);
-        Player->PlayerTalkClass->SendGossipMenu(30034, Creature->GetGUID());
+        Player->AddItem(30623, 1);        
         Player->PushFaction(942, 9001);
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == THRALLMAR_NEUTRAL)
-    {
-        Player->PlayerTalkClass->SendGossipMenu(30035, Creature->GetGUID());
-
+    {        
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == THRALLMAR_FRIENDLY)
-    {
-        Player->PlayerTalkClass->SendGossipMenu(30035, Creature->GetGUID());
+    {        
         Player->PushFaction(947, 3001);
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == THRALLMAR_HONORED)
     {
-        Player->AddItem(30637, 1);
-        Player->PlayerTalkClass->SendGossipMenu(30035, Creature->GetGUID());
+        Player->AddItem(30637, 1);        
         Player->PushFaction(947, 9001);
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == HONOR_HOLD_NEUTRAL)
     {
-        Player->PlayerTalkClass->SendGossipMenu(30036, Creature->GetGUID());
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
 
     }
     else if (action == HONOR_HOLD_FRIENDLY)
-    {
-        Player->PlayerTalkClass->SendGossipMenu(30036, Creature->GetGUID());
+    {        
         Player->PushFaction(946, 3001);
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == HONOR_HOLD_HONORED)
     {
-        Player->AddItem(30622, 1);
-        Player->PlayerTalkClass->SendGossipMenu(30036, Creature->GetGUID());
+        Player->AddItem(30622, 1);        
         Player->PushFaction(946, 9001);
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == SHA_TAR_NEUTRAL)
-    {
-        Player->PlayerTalkClass->SendGossipMenu(30037, Creature->GetGUID());
-
+    {        
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == SHA_TAR_FRIENDLY)
-    {
-        Player->PlayerTalkClass->SendGossipMenu(30037, Creature->GetGUID());
+    {        
         Player->PushFaction(935, 3001);
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == SHA_TAR_HONORED)
     {
-        Player->AddItem(30634, 1);
-        Player->PlayerTalkClass->SendGossipMenu(30037, Creature->GetGUID());
+        Player->AddItem(30634, 1);        
         Player->PushFaction(935, 9001);
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == KEEPERS_OF_TIME_NEUTRAL)
-    {
-        Player->PlayerTalkClass->SendGossipMenu(30039, Creature->GetGUID());
-
+    {        
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == KEEPERS_OF_TIME_FRIENDLY)
-    {
-        Player->PlayerTalkClass->SendGossipMenu(30039, Creature->GetGUID());
+    {        
         Player->PushFaction(989, 3001);
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == KEEPERS_OF_TIME_HONORED)
     {
-        Player->AddItem(30635, 1);
-        Player->PlayerTalkClass->SendGossipMenu(30039, Creature->GetGUID());
+        Player->AddItem(30635, 1);        
         Player->PushFaction(989, 9001);
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
 
     }
     else if (action == ALDOR_SCRYER_SELECT)
     {
         Player->ADD_GOSSIP_ITEM(0, "Aldor", GOSSIP_SENDER_MAIN, FACTION_ALDOR_SELECT);
         Player->ADD_GOSSIP_ITEM(0, "Scryer", GOSSIP_SENDER_MAIN, FACTION_SCRYER_SELECT);
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == FACTION_ALDOR_SELECT)
     {
         Player->ADD_GOSSIP_ITEM(0, "Nothing", GOSSIP_SENDER_MAIN, ALDOR_NOTHING);
         Player->ADD_GOSSIP_ITEM(0, "Honored", GOSSIP_SENDER_MAIN, ALDOR_HONORED);
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == FACTION_SCRYER_SELECT)
     {
         Player->ADD_GOSSIP_ITEM(0, "Nothing", GOSSIP_SENDER_MAIN, SCRYER_NOTHING);
         Player->ADD_GOSSIP_ITEM(0, "Honored", GOSSIP_SENDER_MAIN, SCRYER_HONORED);
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == ALDOR_NOTHING)
     {
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == ALDOR_HONORED)
-    {
-        Player->PlayerTalkClass->SendGossipMenu(30042, Creature->GetGUID());
+    {        
         Player->PushFaction(932, 5501);
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == SCRYER_NOTHING)
     {
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == SCRYER_HONORED)
-    {
-        Player->PlayerTalkClass->SendGossipMenu(30042, Creature->GetGUID());
+    {        
         Player->PushFaction(934, 5501);
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == FLYING_MOUNT_SELECT)
     {
         Player->ADD_GOSSIP_ITEM(0, "Yes", GOSSIP_SENDER_MAIN, FLYING_MOUNT_YES);
         Player->ADD_GOSSIP_ITEM(0, "No", GOSSIP_SENDER_MAIN, FLYING_MOUNT_NO);
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     else if (action == FLYING_MOUNT_YES)
     {
@@ -497,14 +514,19 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
         if (Player->GetTeam() == ALLIANCE)
         {
             Player->AddItem(25470, 1);
+            Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+            Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
         }
         if (action == HORDE) {
             Player->AddItem(25475, 1);
+            Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+            Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
         }
     }
     else if (action == FLYING_MOUNT_NO)
     {
-
+        Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
     }
     std::cout << action << std::endl;
     if (action == 0) {
