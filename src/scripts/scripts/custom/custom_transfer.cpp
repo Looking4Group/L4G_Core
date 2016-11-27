@@ -170,8 +170,7 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
     else if (action == WARRIOR_ARMS)
     {
         ////GiveGearLevels(Player, WARRIOR_ARMS_ITEMS);
-        //Player->ADD_GOSSIP_ITEM(0, "continue", GOSSIP_SENDER_MAIN, FACTION_LOWER_CITY);
-        //Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
+        //Player->ADD_GOSSIP_ITEM(0, "continue", GOSSIP_SENDER_MAIN, FACTION_LOWER_CITY);        
     }
     else if (action == WARRIOR_FURY)
     {
@@ -489,6 +488,11 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
     {
 
     }
+    
+    else if (action == GOSSIP_ACTION_INFO_DEF + 0) {
+        GossipHello_enchant_npc(Player, Creature);
+    }
+    Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
     Player->PlayerTalkClass->SendGossipMenu(0, Creature->GetGUID());
 }
 
