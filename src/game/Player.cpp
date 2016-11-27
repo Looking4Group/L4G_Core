@@ -21186,7 +21186,7 @@ void Player::PushSeventy()
 void Player::PushFaction(uint16 factionId, uint32 repValue)
 {    
     m_reputationMgr.SetReputation(sFactionStore.LookupEntry(factionId), repValue);    
-    SaveToDB();
+    //SaveToDB();
 }
 
 void Player::FinishTransferQuests()
@@ -22335,7 +22335,7 @@ void Player::FinishPushTransfer()
     m_homebindY = 5460.62f;
     m_homebindZ = -12.40f;
 
-    RealmDataDatabase.PExecute("UPDATE character_homebind SET map='%u', zone='%u', position_x='%f', position_y='%f', position_z='%f' WHERE guid='%u'", m_homebindMapId, m_homebindZoneId, m_homebindX, m_homebindY, m_homebindZ, GUID_LOPART(GetGUID()));
+    //RealmDataDatabase.PExecute("UPDATE character_homebind SET map='%u', zone='%u', position_x='%f', position_y='%f', position_z='%f' WHERE guid='%u'", m_homebindMapId, m_homebindZoneId, m_homebindX, m_homebindY, m_homebindZ, GUID_LOPART(GetGUID()));
 
     WorldPacket data(SMSG_BINDPOINTUPDATE, (4 + 4 + 4 + 4 + 4));
     data << float(m_homebindX);
