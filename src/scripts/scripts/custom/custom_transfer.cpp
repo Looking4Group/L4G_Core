@@ -524,15 +524,15 @@ bool GossipSelect_custom_transfer(Player* Player, Creature* Creature, uint32 /*s
         Player->learnSpell(34090);
         std::cout << "Flying yes" << std::endl;
         std::cout << Player->GetTeam() << std::endl;
-        if (Player->GetTeam() == ALLIANCE)
+        if (Player->GetTeam() == 469)
         {
             std::cout << "alliance flying" << std::endl;
             Player->AddItem(25470, 1);
             Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
             Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
         }
-        if (action == HORDE) {
-            std::cout << "alliance flying" << std::endl;
+        if (Player->GetTeam() == 67) {
+            std::cout << "horde flying" << std::endl;
             Player->AddItem(25475, 1);
             Player->ADD_GOSSIP_ITEM(0, "Back to main select", 0, 0);
             Player->PlayerTalkClass->SendGossipMenu(1, Creature->GetGUID());
