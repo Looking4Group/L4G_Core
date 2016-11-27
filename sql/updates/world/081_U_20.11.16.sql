@@ -57,3 +57,6 @@ INSERT INTO `waypoint_data` VALUES (64246, 1, 1526.74, 8614.7, -31.361, 0, 0, 0,
 INSERT INTO `waypoint_data` VALUES (64246, 2, 1610.06, 8604.58, -28.9488, 5000, 0, 0, 0, 0);
 INSERT INTO `waypoint_data` VALUES (64246, 3, 1543.33, 8612.67, -32.8239, 0, 0, 0, 0, 0);
 INSERT INTO `waypoint_data` VALUES (64246, 4, 1481, 8617.21, -22.3273, 5000, 0, 0, 0, 0);
+
+-- Ango'rosh Souleater - Movement
+UPDATE `creature_ai_scripts` SET `action1_param1`='1' WHERE `id` IN (1812101,1812107);
