@@ -35,12 +35,34 @@ enum Instant_70_Conversations
     FACTION_HONOR_HOLD = GOSSIP_ACTION_INFO_DEF + 35,
     FACTION_SHA_TAR = GOSSIP_ACTION_INFO_DEF + 36,
     FACTION_KEEPERS_OF_TIME = GOSSIP_ACTION_INFO_DEF + 37,
-    FACTION_ALDOR_SCRYER_SELECT = GOSSIP_ACTION_INFO_DEF + 39,
+    ALDOR_SCRYER_SELECT = GOSSIP_ACTION_INFO_DEF + 39,
     FACTION_ALDOR = GOSSIP_ACTION_INFO_DEF + 40,
     FACTION_SCRYER = GOSSIP_ACTION_INFO_DEF + 41,
     FLYING_MOUNT_SELECT = GOSSIP_ACTION_INFO_DEF + 42,
     FLYING_MOUNT_YES = GOSSIP_ACTION_INFO_DEF + 43,
-    FLYING_MOUNT_NO = GOSSIP_ACTION_INFO_DEF + 44
+    FLYING_MOUNT_NO = GOSSIP_ACTION_INFO_DEF + 44,
+    LOWER_CITY_NEUTRAL = GOSSIP_ACTION_INFO_DEF + 45,
+    LOWER_CITY_FRIENDLY = GOSSIP_ACTION_INFO_DEF + 46,
+    LOWER_CITY_HONORED = GOSSIP_ACTION_INFO_DEF + 47,
+    CENARION_EXPEDITION_NEUTRAL = GOSSIP_ACTION_INFO_DEF + 48,
+    CENARION_EXPEDITION_FRIENDLY = GOSSIP_ACTION_INFO_DEF + 49,
+    CENARION_EXPEDITION_HONORED = GOSSIP_ACTION_INFO_DEF + 50,
+    THRALLMAR_NEUTRAL = GOSSIP_ACTION_INFO_DEF + 51,
+    THRALLMAR_FRIENDLY = GOSSIP_ACTION_INFO_DEF + 52,
+    THRALLMAR_HONORED = GOSSIP_ACTION_INFO_DEF + 53,
+    HONOR_HOLD_NEUTRAL = GOSSIP_ACTION_INFO_DEF + 54,
+    HONOR_HOLD_FRIENDLY = GOSSIP_ACTION_INFO_DEF + 55,
+    HONOR_HOLD_HONORED = GOSSIP_ACTION_INFO_DEF + 56,
+    SHA_TAR_NEUTRAL = GOSSIP_ACTION_INFO_DEF + 57,
+    SHA_TAR_FRIENDLY = GOSSIP_ACTION_INFO_DEF + 58,
+    SHA_TAR_HONORED = GOSSIP_ACTION_INFO_DEF + 59,
+    KEEPERS_OF_TIME_NEUTRAL = GOSSIP_ACTION_INFO_DEF + 60,
+    KEEPERS_OF_TIME_FRIENDLY = GOSSIP_ACTION_INFO_DEF + 61,
+    KEEPERS_OF_TIME_HONORED = GOSSIP_ACTION_INFO_DEF + 62,
+    ALDOR_NOTHING = GOSSIP_ACTION_INFO_DEF + 63,
+    ALDOR_HONORED = GOSSIP_ACTION_INFO_DEF + 64,
+    SCRYER_NOTHING = GOSSIP_ACTION_INFO_DEF + 65,
+    SCRYER_HONORED = GOSSIP_ACTION_INFO_DEF + 66
 };
 
 
@@ -78,6 +100,7 @@ void GiveGearAndLevels(Player* Player, uint16 gearList[])
 {
     Player->PushSeventy();
     Player->EquipForPushSeventy(gearList);
+    Player->FinishTransferQuests();
     Player->FinishPushTransfer();
 }
 
@@ -397,8 +420,8 @@ bool GossipSelect_custom_instant_70_uncommon(Player* Player, Creature* Creature,
         }
         case ALDOR_SCRYER_SELECT:
         {
-            Player->ADD_GOSSIP_ITEM(0, "Aldor", GOSSIP_SENDER_MAIN, FACTION_ALDOR);
-            Player->ADD_GOSSIP_ITEM(0, "Scryer", GOSSIP_SENDER_MAIN, FACTION_SCRYER);
+            Player->ADD_GOSSIP_ITEM(0, "Aldor", GOSSIP_SENDER_MAIN, FACTION_ALDOR_SELECT);
+            Player->ADD_GOSSIP_ITEM(0, "Scryer", GOSSIP_SENDER_MAIN, FACTION_SCRYER_SELECT);
         }
         case FACTION_ALDOR_SELECT:
         {
@@ -457,21 +480,7 @@ bool GossipSelect_custom_instant_70_uncommon(Player* Player, Creature* Creature,
         }
         default:
             return false;
-    }
-    //City of Light
-    Quest const* cityOfLightQuest = sObjectMgr.GetQuestTemplate(10210);
-    player->AddQuest(cityOfLightQuest, NULL);
-    player->CompleteQuest(10210);
-
-    //Kara attunement
-    Quest const* karaAttunementQuest = sObjectMgr.GetQuestTemplate(9837);
-    player->AddQuest(karaAttunementQuest, NULL);
-    player->CompleteQuest(9837);
-
-    //Shattrath Escort quest
-    Quest const* shattrathEscortQuest = sObjectMgr.GetQuestTemplate(10211);
-    player->AddQuest(shattrathEscortQuest, NULL);
-    player->CompleteQuest(10211);
+    }   
 
     return true;
 }

@@ -21189,6 +21189,24 @@ void Player::PushFaction(uint16 factionId, uint32 repValue)
     SaveToDB();
 }
 
+void Player::FinishTransferQuests()
+{
+    //City of Light
+    Quest const* cityOfLightQuest = sObjectMgr.GetQuestTemplate(10210);
+    AddQuest(cityOfLightQuest, NULL);
+    CompleteQuest(10210);
+
+    //Kara attunement
+    Quest const* karaAttunementQuest = sObjectMgr.GetQuestTemplate(9837);
+    AddQuest(karaAttunementQuest, NULL);
+    CompleteQuest(9837);
+
+    //Shattrath Escort quest
+    Quest const* shattrathEscortQuest = sObjectMgr.GetQuestTemplate(10211);
+    AddQuest(shattrathEscortQuest, NULL);
+    CompleteQuest(10211);
+}
+
 void Player::EquipForPushSeventy(uint16 items[])
 {
     if (!HasItemCount(6948, 1, true))

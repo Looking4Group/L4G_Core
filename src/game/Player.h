@@ -1913,6 +1913,7 @@ class LOOKING4GROUP_EXPORT Player : public Unit
         void PushSixty();
         void PushSeventy();
         void PushFaction(uint16 factionId, uint32 repValue);
+        void FinishTransferQuests();
         void Push();
         void EquipForPush(uint16 items[]);
         void EquipForPushSeventy(uint16 items[]);
