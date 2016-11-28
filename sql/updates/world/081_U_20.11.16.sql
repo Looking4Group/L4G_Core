@@ -63,3 +63,8 @@ UPDATE `creature_ai_scripts` SET `action1_param1`='1' WHERE `id` IN (1812101,181
 
 -- Quest Convenience
 UPDATE item_template SET stackable = 1 WHERE entry = 31346; -- 1
+
+-- Poor Weapons (Gold Inflation) 24001
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 3 WHERE `mincountOrRef` = -24001; -- 5
+-- Poor Armor (Gold Inflation) 24002
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 3 WHERE `mincountOrRef` = -24002; -- 5
