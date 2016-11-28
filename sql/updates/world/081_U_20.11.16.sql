@@ -60,3 +60,6 @@ INSERT INTO `waypoint_data` VALUES (64246, 4, 1481, 8617.21, -22.3273, 5000, 0, 
 
 -- Ango'rosh Souleater - Movement
 UPDATE `creature_ai_scripts` SET `action1_param1`='1' WHERE `id` IN (1812101,1812107);
+
+-- Quest Convenience
+UPDATE item_template SET stackable = 1 WHERE entry = 31346; -- 1
