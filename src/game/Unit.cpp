@@ -6081,6 +6081,10 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, Aura* triggeredByAu
             // Seal of Blood do damage trigger
             if (dummySpell->SpellFamilyFlags & 0x0000040000000000LL)
             {
+                // don't proc from Seal of Blood (self proc) or Crusader Strike
+                if (procSpell && (procSpell->Id == 31893 || procSpell->Id == 31892 || procSpell->Id == 35395))
+                    return false;
+
                 switch (triggeredByAura->GetEffIndex())
                 {
                     case 0:
@@ -6089,7 +6093,7 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, Aura* triggeredByAu
                     case 1:
                     {
                         // damage
-                        damage += CalculateDamage(BASE_ATTACK, false) * 35 / 100; // add spell damage from prev effect (35%)
+                        damage += CalculateDamage(BASE_ATTACK, false) * 10 / 100; // add spell damage from prev effect (10%)
                         basepoints0 =  triggeredByAura->GetModifier()->m_amount * damage / 100;
 
                         target = this;
@@ -6855,6 +6859,10 @@ bool Unit::HandleProcTriggerSpell(Unit *pVictim, uint32 damage, Aura* triggeredB
          // Judgement of Light and Judgement of Wisdom
          else if (auraSpellInfo->SpellFamilyFlags & 0x0000000000080000LL)
          {
+             // Seal of Blood (It will NOT activate Judgement of Light and Judgement of Wisdom)
+             if (procSpell && procSpell->Id == 31893)
+                 return false;
+
              switch (auraSpellInfo->Id)
              {
                  // Judgement of Light
