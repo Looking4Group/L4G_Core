@@ -3089,9 +3089,6 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->AttributesCu |= SPELL_ATTR_CU_NO_SCROLL_STACK;
                 break;
             /* ROGUE CUSTOM ATTRIBUTES */
-            case 2094:                     // Blind
-                spellInfo->AttributesCu |= SPELL_ATTR_CU_FAKE_DELAY; // add const fake delay
-                break;
             case 5171:
             case 6774:                     // Slice'n'Dice
         spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
@@ -3117,18 +3114,6 @@ void SpellMgr::LoadSpellCustomAttr()
         case 15290: // Vampiric Embrace (Healing)
         spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO; // Do not put caster in combat after use
         break;
-            // Triggered spells that should be delayed
-            case 32848:                     // Mana Restore
-            case 14189:                     // Seal Fate
-            case 14157:                     // Ruthlessness
-            case 14181:                     // Relentless Strikes
-            case 17794:                     // Improved Shadow Bolt ranks 1-5
-            case 17797:
-            case 17798:
-            case 17799:
-            case 17800:
-                spellInfo->AttributesCu |= SPELL_ATTR_CU_FAKE_DELAY;
-                break;
             /* UNSORTED */
             /* Damage Corrections */
             case 33627: // Rain of Fire (Pit Commander)
@@ -3644,7 +3629,6 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->RecoveryTime = 120000;
                 break;
             case 20272: //Illumination
-                spellInfo->AttributesCu |= SPELL_ATTR_CU_FAKE_DELAY;
                 spellInfo->Attributes |= SPELL_ATTR_UNAFFECTED_BY_INVULNERABILITY;
                 break;
             case 19588: //Place ghost magnet
