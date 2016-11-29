@@ -56,6 +56,108 @@
 
 extern pEffect SpellEffects[TOTAL_SPELL_EFFECTS];
 
+// Custom Spell Delay
+uint64 GetCustomSpellDelay(SpellEntry const *spellInfo)
+{
+    // Warrior ---------------------------------------------------------------
+    // Sword Specialisation Proc
+    if (spellInfo->SpellIconID == 1462 && spellInfo->SpellVisual == 6560 && spellInfo->SpellFamilyName == SPELLFAMILY_WARRIOR)
+        return 500;
+    // Charge Stun
+    if (spellInfo->SpellFamilyFlags & 0x1000000 && spellInfo->SpellFamilyName == SPELLFAMILY_WARRIOR)
+        return 200;
+    // Intercept Stun, Mace Stun Effect (Improved Concussive Shot - Hunter)
+    if (spellInfo->SpellVisual == 2816 && spellInfo->SpellIconID == 15)
+        return 200;
+
+    // Paladin ---------------------------------------------------------------
+    // Hammer of Justice
+    if (spellInfo->SpellVisual == 322 && spellInfo->SpellFamilyName == SPELLFAMILY_PALADIN)
+        return 200;
+    // Seal of Command Proc Attack
+    if (spellInfo->Id == 20424)
+        return 500;
+    // Seal of Blood Judgement
+    if (spellInfo->Id == 32220)
+        return 1000;
+    // Repentance
+    if (spellInfo->Id == 20066)
+        return 200;
+    // Seal of Blood Proc
+    if (spellInfo->Id == 31893)
+        return 500;
+    // Illumination Proc
+    if (spellInfo->Id == 20272)
+        return 100;
+
+    // Shaman ----------------------------------------------------------------
+    // Windfury
+    if (spellInfo->SpellIconID == 220 && spellInfo->SpellFamilyName == SPELLFAMILY_SHAMAN)
+        return 500;
+    // Windfury totem effect
+    if (spellInfo->SpellIconID == 8251 && spellInfo->SpellVisual == 1397 && spellInfo->SpellFamilyName == SPELLFAMILY_SHAMAN)
+        return 500;
+
+    // Druids -----------------------------------------------------------------
+    // Pounce
+    if (spellInfo->SpellIconID == 495 && spellInfo->SpellFamilyName == SPELLFAMILY_DRUID)
+        return 200;
+
+    // Rogues ------------------------------------------------------------------
+    // Gouge
+    if (spellInfo->SpellVisual == 256 && spellInfo->SpellFamilyName == SPELLFAMILY_ROGUE)
+        return 200;
+    // Blind
+    if (spellInfo->SpellIconID == 48 && spellInfo->SpellFamilyName == SPELLFAMILY_ROGUE)
+        return 200;
+    // Sap
+    if (spellInfo->SpellIconID == 249 && spellInfo->SpellFamilyName == SPELLFAMILY_ROGUE)
+        return 200;
+    // Cheap Shot
+    if (spellInfo->SpellIconID == 244 && spellInfo->SpellFamilyName == SPELLFAMILY_ROGUE)
+        return 200;
+    // Ruthlessness
+    if (spellInfo->Id == 14157)
+        return 100;
+    // Seal Fate
+    if (spellInfo->Id == 14189)
+        return 100;
+
+    // Mage --------------------------------------------------------------------
+    // Polymorph
+    if (spellInfo->SpellFamilyFlags & 0x1000000LL && spellInfo->SpellFamilyName == SPELLFAMILY_MAGE)
+        return 200;
+
+    // Warlock -----------------------------------------------------------------
+    // Shadowfury
+    if (spellInfo->SpellFamilyFlags & 0x0000100000000000LL && spellInfo->SpellFamilyName == SPELLFAMILY_WARLOCK)
+        return 200;
+
+    // Misc.
+    switch(spellInfo->Id)
+    {
+        case 31616: // Nature's Guardian
+        case 17794: // Shadow Vulnerability (Rank 1)
+        case 17797: // Shadow Vulnerability (Rank 2)
+        case 17798: // Shadow Vulnerability (Rank 3)
+        case 17799: // Shadow Vulnerability (Rank 4)
+        case 17800: // Shadow Vulnerability (Rank 5)
+        case 12966: // Flury (Rank 1)
+        case 12967: // Flury (Rank 2)
+        case 12968: // Flury (Rank 3)
+        case 12969: // Flury (Rank 4)
+        case 12970: // Flury (Rank 5)
+        case 33076: // Prayer of Mending
+        case 32848: // Mana Restore (From Insightful Earthstorm Diamond)
+            return 100;
+        case 14181: // Relentless Strikes Effect
+            return 500;
+            break;
+    }
+    // Default - Return none
+    return 0;
+}
+
 bool IsQuestTameSpell(uint32 spellId)
 {
     SpellEntry const *spellproto = sSpellStore.LookupEntry(spellId);
@@ -786,6 +888,9 @@ void Spell::AddUnitTarget(Unit* pVictim, uint32 effIndex, bool redirected)
     }
     else
         target.timeDelay = 0LL;
+
+    // Calculate Additional Custom PvP spell delays
+    m_delayMoment = GetCustomSpellDelay(m_spellInfo) ? GetCustomSpellDelay(m_spellInfo) : target.timeDelay;
 
     // If target reflect spell back to caster
     if (target.missCondition == SPELL_MISS_REFLECT)
