@@ -443,7 +443,7 @@ class Spell
         }
         bool IsDelayedSpell() const
         {
-            return GetSpellInfo()->speed > 0.0f || GetSpellInfo()->AttributesCu & SPELL_ATTR_CU_FAKE_DELAY;
+            return m_delayMoment || GetSpellInfo()->speed > 0.0f || GetSpellInfo()->AttributesCu & SPELL_ATTR_CU_FAKE_DELAY;
         }
         bool IsChannelActive() const { return m_caster->GetUInt32Value(UNIT_CHANNEL_SPELL) != 0; }
         bool IsMeleeAttackResetSpell() const { return !m_IsTriggeredSpell && (GetSpellInfo()->InterruptFlags & SPELL_INTERRUPT_FLAG_AUTOATTACK);  }
