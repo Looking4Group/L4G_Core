@@ -277,8 +277,11 @@ Player::Player (WorldSession *session): Unit(), m_reputationMgr(this), m_camera(
     m_AC_timer = 0;
     m_AC_NoFall_count = 0;
 
-    m_speakTime = 0;
+    m_speakTimer = 0;
     m_speakCount = 0;
+
+    m_repeatIT = 0;
+    m_repeatTO = 0;
 
     m_GMfollowtarget_GUID = 0;
     m_GMfollow_GUID = 0;
@@ -514,6 +517,10 @@ Player::~Player ()
     }
 
     delete m_declinedname;
+
+    // clean up the MessageCache
+    if (!MessageCache.empty())
+        MessageCache.clear();
 
     DeleteCharmAI();
 }
@@ -17016,42 +17023,145 @@ void Player::outDebugValues() const
 /***               FLOOD FILTER SYSTEM                 ***/
 /*********************************************************/
 
-void Player::UpdateSpeakTime()
+void Player::UpdateSpeakTime(bool Emote)
 {
     // ignore chat spam protection for GMs in any mode
-    if (GetSession()->HasPermissions(PERM_GMT))
+    if (GetSession()->GetPermissions() > PERM_PLAYER)
         return;
 
     time_t current = time (NULL);
-    if (m_speakTime > current)
+    if (m_speakTimer > current)
     {
-        uint32 max_count = sWorld.getConfig(CONFIG_CHATFLOOD_MESSAGE_COUNT);
+        uint32 max_count = (Emote ? sWorld.getConfig(CONFIG_CHATFLOOD_EMOTE_COUNT) : sWorld.getConfig(CONFIG_CHATFLOOD_MESSAGE_COUNT));
         if (!max_count)
             return;
 
-        ++m_speakCount;
+        m_speakCount++;
         if (m_speakCount >= max_count)
         {
             // prevent overwrite mute time, if message send just before mutes set, for example.
             time_t new_mute = current + sWorld.getConfig(CONFIG_CHATFLOOD_MUTE_TIME);
             if (GetSession()->m_muteTime < new_mute)
-            {
                 GetSession()->m_muteTime = new_mute;
-                GetSession()->m_muteReason = "Flood protection";
-            }
 
             m_speakCount = 0;
         }
     }
     else
-        m_speakCount = 0;
+       m_speakCount = 0;
 
-    m_speakTime = current + sWorld.getConfig(CONFIG_CHATFLOOD_MESSAGE_DELAY);
+    m_speakTimer = current + (Emote ? sWorld.getConfig(CONFIG_CHATFLOOD_EMOTE_DELAY) : sWorld.getConfig(CONFIG_CHATFLOOD_MESSAGE_DELAY));
 }
 
 bool Player::CanSpeak() const
 {
     return GetSession()->m_muteTime <= time (NULL);
+}
+
+bool Player::DoSpamCheck(std::string message)
+{
+    // Capslock Flood System
+    if (message.length() >= sWorld.getConfig(CONFIG_CHATFLOOD_CAPS_LENGTH))
+    {
+        uint32 fc = 0;
+        uint32 slength = message.length();
+        uint32 clength = 0;
+        for (; fc < slength; ++fc)
+        {
+            if (message[fc] >= 'A' && message[fc] <= 'Z')
+                ++clength;
+        }
+
+        float pctcaps = (float(clength) / float(slength)) * 100.0f;
+        float MaxPct = sWorld.getConfig(CONFIG_CHATFLOOD_CAPS_PCT);
+        uint32 ReqLength = sWorld.getConfig(CONFIG_CHATFLOOD_CAPS_LENGTH);
+
+        if (pctcaps >= MaxPct)
+        {
+            ChatHandler(this).PSendSysMessage("Your message was blocked by the server. Please do not type too many capitals in your message, such is considered spamming. You are allowed %.2f%% caps in a message of %u characters.\n\n", MaxPct, ReqLength);
+            return false;
+        }
+    }
+
+    // Repeating Messages System
+
+    // Check if we need to clear the cache when the time ran out.
+    if ((time(NULL) - m_repeatTO) > sWorld.getConfig(CONFIG_CHATFLOOD_REPEAT_TIMEOUT))
+    {
+        MessageCache.clear();
+        m_repeatIT = 0;
+    }
+    transform(message.begin(), message.end(), message.begin(), toupper);
+
+    if (MessageCache.find(message) == MessageCache.end())// Not found, add it
+    {
+        MessageCache.insert(message);
+
+        if (m_repeatTO == NULL)
+            m_repeatTO = time(NULL);
+
+        // Double check if we need to reset the time in case of a fast spammer who would be able to say something twice.
+        if ((time(NULL) - m_repeatTO) > sWorld.getConfig(CONFIG_CHATFLOOD_REPEAT_TIMEOUT)) // Reset the time
+            m_repeatTO = time(NULL);
+    }
+    else // We have found a double message
+    {
+        std::cout << "Repeated: " + sWorld.getConfig(CONFIG_CHATFLOOD_REPEAT_MESSAGES) << std::endl;
+        ++m_repeatIT;
+        if (m_repeatIT > sWorld.getConfig(CONFIG_CHATFLOOD_REPEAT_MESSAGES))
+        {
+            time_t mutetime = time(NULL) + sWorld.getConfig(CONFIG_CHATFLOOD_REPEAT_MUTE);
+            GetSession()->m_muteTime = mutetime;
+            ChatHandler(this).PSendSysMessage("Yor chat has been blocked for %u Seconds because you repeated youself for over %u times in a time of %u seconds.\n\n", sWorld.getConfig(CONFIG_CHATFLOOD_REPEAT_MESSAGES), sWorld.getConfig(CONFIG_CHATFLOOD_REPEAT_MESSAGES), sWorld.getConfig(CONFIG_CHATFLOOD_REPEAT_TIMEOUT));
+            return false;
+        }
+
+        time_t TimeLeft = sWorld.getConfig(CONFIG_CHATFLOOD_REPEAT_TIMEOUT) - (time(NULL) - m_repeatTO);
+       ChatHandler(this).PSendSysMessage("Please don't repeat yourself. You are allowed to send 1 identical message every %u seconds. Please wait %u seconds before sending the same message again.\n\n", sWorld.getConfig(CONFIG_CHATFLOOD_REPEAT_TIMEOUT), TimeLeft);
+        return false;
+    }
+    return true;
+}
+
+bool Player::SpamCheckForType(uint32 Type, uint32 Lang)
+{    
+    if (GetSession()->GetPermissions() > PERM_PLAYER || Lang == LANG_ADDON)
+        return false; // addon chatter is ignored
+
+    uint32 SpamTypeConfig = sWorld.getConfig(CONFIG_CHATFLOOD_CHATTYPE);
+
+    // Say
+    if (SpamTypeConfig & CHAT_FLOOD_SAY && Type == CHAT_MSG_SAY)
+        return true;
+
+    // Yell
+    if (SpamTypeConfig & CHAT_FLOOD_YELL && Type == CHAT_MSG_YELL)
+        return true;
+
+    // Emote
+    if (SpamTypeConfig & CHAT_FLOOD_EMOTE && Type == CHAT_MSG_EMOTE)
+        return true;
+
+    // Channel
+    if (SpamTypeConfig & CHAT_FLOOD_CHANNEL && Type == CHAT_MSG_CHANNEL)
+        return true;
+
+    // Whisper
+    if (SpamTypeConfig & CHAT_FLOOD_WHISPER && Type == CHAT_MSG_WHISPER)
+        return true;
+    // Party
+    if (SpamTypeConfig & CHAT_FLOOD_PARTY && Type == CHAT_MSG_PARTY)
+        return true;
+
+    // Guild
+    if (SpamTypeConfig & CHAT_FLOOD_GUILD && Type == CHAT_MSG_GUILD)
+        return true;
+
+    // Battleground
+    if (SpamTypeConfig & CHAT_FLOOD_BG && Type == CHAT_MSG_BATTLEGROUND)
+        return true;
+
+    return false;
 }
 
 /*********************************************************/
