@@ -938,8 +938,8 @@ void World::LoadConfigSettings(bool reload)
     m_configs[CONFIG_CHATFLOOD_CAPS_LENGTH] = sConfig.GetIntDefault("ChatFlood.CMessageLength", 100);
     m_configs[CONFIG_CHATFLOOD_CAPS_PCT] = sConfig.GetFloatDefault("ChatFlood.CMessagePct", 70);
     m_configs[CONFIG_CHATFLOOD_REPEAT_MESSAGES] = sConfig.GetIntDefault("ChatFlood.RepeatMessages", 5);
-    m_configs[CONFIG_CHATFLOOD_REPEAT_TIMEOUT] = sConfig.GetIntDefault("ChatFlood.RepeatTimeOut", 10);
-    m_configs[CONFIG_CHATFLOOD_REPEAT_MUTE] = sConfig.GetIntDefault("ChatFlood.RepeatMute", 20);
+    m_configs[CONFIG_CHATFLOOD_REPEAT_TIMEOUT] = sConfig.GetIntDefault("ChatFlood.RepeatTimeOut", 20);
+    m_configs[CONFIG_CHATFLOOD_REPEAT_MUTE] = sConfig.GetIntDefault("ChatFlood.RepeatMute", 5);
     m_configs[CONFIG_CHATFLOOD_CHATTYPE] = sConfig.GetIntDefault("ChatFlood.ChatType", 159);
     m_configs[CONFIG_CHATFLOOD_EMOTE_COUNT] = sConfig.GetIntDefault("ChatFlood.EmoteCount", 5);
     m_configs[CONFIG_CHATFLOOD_EMOTE_DELAY] = sConfig.GetIntDefault("ChatFlood.EmoteDelay", 5);
