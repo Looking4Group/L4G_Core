@@ -381,7 +381,7 @@ INSERT INTO `waypoint_data` VALUES (43598, 4, -869.792, 8008.34, 41.453, 0, 0, 0
 
 SET @GUID := 42920;
 DELETE FROM `creature` WHERE `guid` = @GUID;
-INSERT INTO `creature` VALUES (42920, 23399, 564, 16, 16255, 0, 629.089, 47.3309, 112.777, 2.51799, 30, 0, 0, 49560, 66180, 0, 2);
+INSERT INTO `creature` VALUES (42920, 23399, 564, 1, 16255, 0, 629.089, 47.3309, 112.777, 2.51799, 30, 0, 0, 49560, 66180, 0, 2);
 DELETE FROM `creature_addon` WHERE `guid` = @GUID;
 INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
 DELETE FROM `waypoint_data` WHERE `id` = @GUID;
