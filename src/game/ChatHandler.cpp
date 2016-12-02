@@ -176,7 +176,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
                 lang = ModLangAuras.front()->GetModifier()->m_miscvalue;
         }
 
-        if (type != CHAT_MSG_AFK && type != CHAT_MSG_DND)
+        if (type != CHAT_MSG_AFK && type != CHAT_MSG_DND && type != CHAT_MSG_RAID)
             GetPlayer()->UpdateSpeakTime();
     }
 
@@ -262,6 +262,10 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
             if (msg.empty())
                 break;
 
+            if (GetPlayer()->SpamCheckForType(type, lang))
+                if (!GetPlayer()->DoSpamCheck(msg))
+                    return;
+
             if (ChatHandler(this).ContainsNotAllowedSigns(msg))
                 return;
 
@@ -290,6 +294,10 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
 
             if (msg.empty())
                 break;
+
+            if (GetPlayer()->SpamCheckForType(type, lang))
+                if (!GetPlayer()->DoSpamCheck(msg))
+                    return;
 
             if (ChatHandler(this).ContainsNotAllowedSigns(msg))
                 return;
@@ -337,6 +345,10 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
             if (msg.empty())
                 break;
 
+            if (GetPlayer()->SpamCheckForType(type, lang))
+                if (!GetPlayer()->DoSpamCheck(msg))
+                    return;
+
             if (ChatHandler(this).ContainsNotAllowedSigns(msg))
                 return;
 
@@ -357,6 +369,10 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
 
             if (msg.empty())
                 break;
+
+            if (GetPlayer()->SpamCheckForType(type, lang))
+                if (!GetPlayer()->DoSpamCheck(msg))
+                    return;
 
             if (ChatHandler(this).ContainsNotAllowedSigns(msg))
                 return;
@@ -458,6 +474,10 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
             if (msg.empty())
                 break;
 
+            if (GetPlayer()->SpamCheckForType(type, lang))
+                if (!GetPlayer()->DoSpamCheck(msg))
+                    return;
+
             Group *group = GetPlayer()->GetGroup();
             if (!group || !group->isBGGroup())
                 return;
@@ -493,6 +513,10 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket & recv_data)
 
             if (msg.empty())
                 break;
+
+            if (GetPlayer()->SpamCheckForType(type, lang))
+                if (!GetPlayer()->DoSpamCheck(msg))
+                    return;
 
             if (ChatHandler(this).ContainsNotAllowedSigns(msg))
                 return;
@@ -598,6 +622,8 @@ void WorldSession::HandleTextEmoteOpcode(WorldPacket & recv_data)
         ChatHandler(player).PSendSysMessage(LANG_YOUR_CHAT_IS_DISABLED, timeStr.c_str(), m_muteReason.c_str());
         return;
     }
+
+    GetPlayer()->UpdateSpeakTime(true);
 
     CHECK_PACKET_SIZE(recv_data, 4+4+8);
 

@@ -2090,7 +2090,16 @@ class LOOKING4GROUP_EXPORT Player : public Unit
         /***               FLOOD FILTER SYSTEM                 ***/
         /*********************************************************/
 
-        void UpdateSpeakTime();
+        std::set<std::string> MessageCache;           // The message cache for the messages will be cleared every x seconds
+        uint32 m_repeatIT;                            // Repeating messages in specific time
+        uint32 m_repeatTO;                            // Repeat time out
+        uint32 m_speakTimer;                          // The time we last spoken
+        uint32 m_speakCount;                          // The total messages
+
+        bool DoSpamCheck(std::string message);
+        bool SpamCheckForType(uint32 Type, uint32 Lang);
+
+        void UpdateSpeakTime(bool Emote = false);
         bool CanSpeak() const;
         void ChangeSpeakTime(int utime);
 
@@ -2407,8 +2416,6 @@ class LOOKING4GROUP_EXPORT Player : public Unit
 
         uint32 m_team;
         uint32 m_nextSave;
-        time_t m_speakTime;
-        uint32 m_speakCount;
         uint32 m_dungeonDifficulty;
 
         uint32 m_atLoginFlags;
