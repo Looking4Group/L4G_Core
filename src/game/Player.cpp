@@ -519,8 +519,7 @@ Player::~Player ()
     delete m_declinedname;
 
     // clean up the MessageCache
-    if (!MessageCache.empty())
-        MessageCache.clear();
+    MessageCache.clear();
 
     DeleteCharmAI();
 }
@@ -17023,7 +17022,7 @@ void Player::outDebugValues() const
 /***               FLOOD FILTER SYSTEM                 ***/
 /*********************************************************/
 
-void Player::UpdateSpeakTime(bool Emote)
+void Player::UpdateSpeakTime(bool emote)
 {
     // ignore chat spam protection for GMs in any mode
     if (GetSession()->GetPermissions() > PERM_PLAYER)
@@ -17032,7 +17031,7 @@ void Player::UpdateSpeakTime(bool Emote)
     time_t current = time (NULL);
     if (m_speakTimer > current)
     {
-        uint32 max_count = (Emote ? sWorld.getConfig(CONFIG_CHATFLOOD_EMOTE_COUNT) : sWorld.getConfig(CONFIG_CHATFLOOD_MESSAGE_COUNT));
+        uint32 max_count = (emote ? sWorld.getConfig(CONFIG_CHATFLOOD_EMOTE_COUNT) : sWorld.getConfig(CONFIG_CHATFLOOD_MESSAGE_COUNT));
         if (!max_count)
             return;
 
@@ -17050,7 +17049,7 @@ void Player::UpdateSpeakTime(bool Emote)
     else
        m_speakCount = 0;
 
-    m_speakTimer = current + (Emote ? sWorld.getConfig(CONFIG_CHATFLOOD_EMOTE_DELAY) : sWorld.getConfig(CONFIG_CHATFLOOD_MESSAGE_DELAY));
+    m_speakTimer = current + (emote ? sWorld.getConfig(CONFIG_CHATFLOOD_EMOTE_DELAY) : sWorld.getConfig(CONFIG_CHATFLOOD_MESSAGE_DELAY));
 }
 
 bool Player::CanSpeak() const
@@ -17063,10 +17062,9 @@ bool Player::DoSpamCheck(std::string message)
     // Capslock Flood System
     if (message.length() >= sWorld.getConfig(CONFIG_CHATFLOOD_CAPS_LENGTH))
     {
-        uint32 fc = 0;
         uint32 slength = message.length();
         uint32 clength = 0;
-        for (; fc < slength; ++fc)
+        for (uint32 fc = 0; fc < slength; ++fc)
         {
             if (message[fc] >= 'A' && message[fc] <= 'Z')
                 ++clength;
@@ -17093,9 +17091,9 @@ bool Player::DoSpamCheck(std::string message)
     }
     transform(message.begin(), message.end(), message.begin(), toupper);
 
-    if (MessageCache.find(message) == MessageCache.end())// Not found, add it
+    if (std::find(MessageCache.begin(), MessageCache.end(), message) == MessageCache.end()) // Not found, add it
     {
-        MessageCache.insert(message);
+        MessageCache.insert(MessageCache.end(), message);
 
         if (m_repeatTO == NULL)
             m_repeatTO = time(NULL);
@@ -17122,42 +17120,42 @@ bool Player::DoSpamCheck(std::string message)
     return true;
 }
 
-bool Player::SpamCheckForType(uint32 Type, uint32 Lang)
+bool Player::SpamCheckForType(uint32 type, uint32 lang)
 {    
-    if (GetSession()->GetPermissions() > PERM_PLAYER || Lang == LANG_ADDON)
+    if (GetSession()->GetPermissions() > PERM_PLAYER || lang == LANG_ADDON)
         return false; // addon chatter is ignored
 
     uint32 SpamTypeConfig = sWorld.getConfig(CONFIG_CHATFLOOD_CHATTYPE);
 
     // Say
-    if (SpamTypeConfig & CHAT_FLOOD_SAY && Type == CHAT_MSG_SAY)
+    if (SpamTypeConfig & CHAT_FLOOD_SAY && type == CHAT_MSG_SAY)
         return true;
 
     // Yell
-    if (SpamTypeConfig & CHAT_FLOOD_YELL && Type == CHAT_MSG_YELL)
+    if (SpamTypeConfig & CHAT_FLOOD_YELL && type == CHAT_MSG_YELL)
         return true;
 
     // Emote
-    if (SpamTypeConfig & CHAT_FLOOD_EMOTE && Type == CHAT_MSG_EMOTE)
+    if (SpamTypeConfig & CHAT_FLOOD_EMOTE && type == CHAT_MSG_EMOTE)
         return true;
 
     // Channel
-    if (SpamTypeConfig & CHAT_FLOOD_CHANNEL && Type == CHAT_MSG_CHANNEL)
+    if (SpamTypeConfig & CHAT_FLOOD_CHANNEL && type == CHAT_MSG_CHANNEL)
         return true;
 
     // Whisper
-    if (SpamTypeConfig & CHAT_FLOOD_WHISPER && Type == CHAT_MSG_WHISPER)
+    if (SpamTypeConfig & CHAT_FLOOD_WHISPER && type == CHAT_MSG_WHISPER)
         return true;
     // Party
-    if (SpamTypeConfig & CHAT_FLOOD_PARTY && Type == CHAT_MSG_PARTY)
+    if (SpamTypeConfig & CHAT_FLOOD_PARTY && type == CHAT_MSG_PARTY)
         return true;
 
     // Guild
-    if (SpamTypeConfig & CHAT_FLOOD_GUILD && Type == CHAT_MSG_GUILD)
+    if (SpamTypeConfig & CHAT_FLOOD_GUILD && type == CHAT_MSG_GUILD)
         return true;
 
     // Battleground
-    if (SpamTypeConfig & CHAT_FLOOD_BG && Type == CHAT_MSG_BATTLEGROUND)
+    if (SpamTypeConfig & CHAT_FLOOD_BG && type == CHAT_MSG_BATTLEGROUND)
         return true;
 
     return false;

@@ -2090,7 +2090,7 @@ class LOOKING4GROUP_EXPORT Player : public Unit
         /***               FLOOD FILTER SYSTEM                 ***/
         /*********************************************************/
 
-        std::set<std::string> MessageCache;           // The message cache for the messages will be cleared every x seconds
+        std::vector<std::string> MessageCache;        // The message cache for the messages will be cleared every x seconds
         uint32 m_repeatIT;                            // Repeating messages in specific time
         uint32 m_repeatTO;                            // Repeat time out
         uint32 m_speakTimer;                          // The time we last spoken

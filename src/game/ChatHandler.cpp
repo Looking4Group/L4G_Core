@@ -612,7 +612,7 @@ namespace Looking4group
 void WorldSession::HandleTextEmoteOpcode(WorldPacket & recv_data)
 {
     Player * player = GetPlayer();
-    if (!player->isAlive() || player->isPossessed() || player->isCharmed())
+    if (!player || !player->isAlive() || player->isPossessed() || player->isCharmed())
         return;
 
     if (!player->CanSpeak())
@@ -623,7 +623,7 @@ void WorldSession::HandleTextEmoteOpcode(WorldPacket & recv_data)
         return;
     }
 
-    GetPlayer()->UpdateSpeakTime(true);
+    player->UpdateSpeakTime(true);
 
     CHECK_PACKET_SIZE(recv_data, 4+4+8);
 
