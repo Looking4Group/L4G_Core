@@ -1403,11 +1403,13 @@ void WorldSession::HandleReportSpamOpcode(WorldPacket & recv_data)
     switch (spam_type)
     {
         case SPAM_MESSAGE_TYPE_MAIL:
+            CHECK_PACKET_SIZE(recv_data, recv_data.rpos()+4+4+4);
             recv_data >> mailUnk1;          // const 0
             recv_data >> mailId;            // probably mail id
             recv_data >> mailUnk3;          // const 0
             break;
         case SPAM_MESSAGE_TYPE_CHAT:
+            CHECK_PACKET_SIZE(recv_data, recv_data.rpos()+4+4+4+4+1);
             recv_data >> chatLanguage;      // probably language
             recv_data >> chatMessageType;   // message type?
             recv_data >> chatChannelId;     // probably channel id
