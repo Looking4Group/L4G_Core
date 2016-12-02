@@ -2091,9 +2091,9 @@ class LOOKING4GROUP_EXPORT Player : public Unit
         /*********************************************************/
 
         std::vector<std::string> MessageCache;        // The message cache for the messages will be cleared every x seconds
-        uint32 m_repeatIT;                            // Repeating messages in specific time
-        uint32 m_repeatTO;                            // Repeat time out
-        uint32 m_speakTimer;                          // The time we last spoken
+        uint32 m_repeatIT;                            // Repeating messages in specific time. When this exceeds CONFIG_CHATFLOOD_REPEAT_MESSAGES the player gets muted (from all channels)
+        uint32 m_repeatTO;                            // The time until the player is allowed to use the same phrase again in the specific channel. (Timeout)
+        uint32 m_speakTimer;                          // The time since we last spoke
         uint32 m_speakCount;                          // The total messages
 
         bool DoSpamCheck(std::string message);
