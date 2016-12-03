@@ -2269,6 +2269,18 @@ enum ChatMsg
     CHAT_MSG_RESTRICTED             = 0x2E,
 };
 
+enum ChatFloodType
+{
+    CHAT_FLOOD_SAY                  = 1,
+    CHAT_FLOOD_YELL                 = 2,
+    CHAT_FLOOD_EMOTE                = 4,
+    CHAT_FLOOD_CHANNEL              = 8,
+    CHAT_FLOOD_WHISPER              = 16,
+    CHAT_FLOOD_PARTY                = 32,
+    CHAT_FLOOD_GUILD                = 64,
+    CHAT_FLOOD_BG                   = 128,
+};
+
 #define MAX_CHAT_MSG_TYPE 0x2F
 
 // Values from ItemPetFood (power of (value-1) used for compare with CreatureFamilyEntry.petDietMask
