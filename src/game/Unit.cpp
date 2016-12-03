@@ -2259,6 +2259,8 @@ void Unit::AttackerStateUpdate (Unit *pVictim, WeaponAttackType attType, bool ex
         if (dynamic_cast<Player *>(pVictim)->HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_SANCTUARY))
             AttackStop();
     }
+    if ((attType == BASE_ATTACK || attType == OFF_ATTACK) && !IsWithinLOSInMap(pVictim))
+        return;
 
     CombatStart(pVictim);
     RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_ATTACK);
