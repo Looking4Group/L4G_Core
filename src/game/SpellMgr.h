@@ -794,6 +794,9 @@ class LOOKING4GROUP_IMPORT_EXPORT SpellMgr
         static SpellSchoolMask GetSpellSchoolMask(SpellEntry const* spellInfo);
 
         static uint32 GetSpellMechanicMask(SpellEntry const* spellInfo, int32 effect);
+
+        static uint32 GetAllSpellMechanicMask(SpellEntry const* spellInfo);
+
         static Mechanics GetEffectMechanic(SpellEntry const* spellInfo, int32 effect);
 
         // Diminishing Returns interaction with spells
