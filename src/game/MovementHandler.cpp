@@ -220,6 +220,10 @@ void WorldSession::HandleMovementOpcodes(WorldPacket & recv_data)
     recv_data >> movementInfo;
 
     /*----------------*/
+
+    if (!mover || !mover->IsInWorld())
+        return;
+
     if (recv_data.size() != recv_data.rpos())
     {
         sLog.outLog(LOG_DEFAULT, "ERROR: MovementHandler: player %s (guid %d, account %u) sent a packet (opcode %u) that is %u bytes larger than it should be. Kicked as cheater.", _player->GetName(), _player->GetGUIDLow(), _player->GetSession()->GetAccountId(), recv_data.GetOpcode(), recv_data.size() - recv_data.rpos());
