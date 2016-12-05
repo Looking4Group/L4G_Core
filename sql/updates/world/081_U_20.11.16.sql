@@ -53,10 +53,18 @@ INSERT INTO `creature` VALUES (64246, 18121, 530, 1, 0, 0, 1487.56, 8615.63, -25
 DELETE FROM `creature_addon` WHERE `guid` = @GUID;
 INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
 DELETE FROM `waypoint_data` WHERE `id` = @GUID;
-INSERT INTO `waypoint_data` VALUES (64246, 1, 1526.74, 8614.7, -31.361, 0, 0, 0, 0, 0);
-INSERT INTO `waypoint_data` VALUES (64246, 2, 1610.06, 8604.58, -28.9488, 5000, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (64246, 1, 1502.9443, 8616.0058, -26.6611, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (64246, 2, 1526.74, 8614.7, -31.361, 0, 0, 0, 0, 0);
 INSERT INTO `waypoint_data` VALUES (64246, 3, 1543.33, 8612.67, -32.8239, 0, 0, 0, 0, 0);
-INSERT INTO `waypoint_data` VALUES (64246, 4, 1481, 8617.21, -22.3273, 5000, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (64246, 4, 1550.0433, 8611.8701, -33.8301, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (64246, 5, 1562.4114, 8612.3642, -35.7223, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (64246, 6, 1610.06, 8604.58, -28.9488, 5000, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (64246, 7, 1562.4114, 8612.3642, -35.7223, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (64246, 8, 1550.0433, 8611.8701, -33.8301, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (64246, 9, 1543.33, 8612.67, -32.8239, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (64246, 10, 1526.74, 8614.7, -31.361, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (64246, 11, 1502.9443, 8616.0058, -26.6611, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (64246, 12, 1481, 8617.21, -22.3273, 5000, 0, 0, 0, 0);
 
 -- Ango'rosh Souleater - Movement
 UPDATE `creature_ai_scripts` SET `action1_param1`='1' WHERE `id` IN (1812101,1812107);
