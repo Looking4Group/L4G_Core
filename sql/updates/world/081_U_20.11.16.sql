@@ -462,3 +462,59 @@ INSERT INTO `waypoint_data` VALUES (40446, 2, 564.992, 66.6809, 111.341, 0, 0, 0
 INSERT INTO `waypoint_data` VALUES (40446, 3, 586.732, 43.2198, 112.591, 0, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (40446, 4, 602.589, 101.523, 112.376, 0, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (40446, 5, 560.133, 104.79, 113.416, 0, 0, 0, 100, 0);
+
+SET @GUID := 62850; 
+DELETE FROM `creature` WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid`= @GUID;
+DELETE FROM `waypoint_data` WHERE `id`= @GUID;
+
+DELETE FROM `spell_script_target` WHERE `entry` = 29120;
+INSERT INTO `spell_script_target` VALUES
+(29120,1,16897),
+(29120,1,16898),
+(29120,1,16899),
+(29120,1,19376),
+(29120,1,5202);
+
+-- Dawnblade Marksman 24979
+UPDATE `creature_template` SET `speed`='1.20',`inhabittype`='3',`modelid_H`='22792',`modelid_H2`='22794' WHERE `entry` = 24979; 
+UPDATE `creature` SET `spawntimesecs`='300' WHERE `id` = 24979;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 24979 OR `entryOrGUID` IN (-94249,-94250,-94251);
+INSERT INTO `creature_ai_scripts` VALUES
+('2497901','24979','0','0','100','1','1000','1000','2000','2000','21','1','0','0','40','1','0','0','0','0','0','0','Dawnblade Marksman - Start Movement and Set Melee Weapon Model'),
+('2497902','24979','4','0','100','0','0','0','0','0','21','1','0','0','22','1','0','0','0','0','0','0','Dawnblade Marksman - Start Combat Movement and Set Phase 1 on Aggro'),
+('2497903','24979','9','5','100','1','5','30','2500','3000','11','6660','1','0','40','2','0','0','21','0','0','0','Dawnblade Marksman - Cast Shoot and Set Ranged Weapon Model and Stop Movement (Phase 1)'),
+('2497904','24979','9','5','100','1','10','40','13000','17000','11','37847','4','32','40','2','0','0','21','0','0','0','Dawnblade Marksman - Cast Immolation Arrow and Set Ranged Weapon Model and Stop Movement (Phase 1)'),
+('2497905','24979','2','0','100','0','15','0','0','0','22','2','0','0','0','0','0','0','0','0','0','0','Dawnblade Marksman - Set Phase 2 at 15% HP'),
+('2497906','24979','2','3','100','0','15','0','0','0','21','1','0','0','25','0','0','0','1','-47','0','0','Dawnblade Marksman - Start Combat Movement and Flee at 15% HP (Phase 2)'),
+('2497907','24979','7','0','100','0','0','0','0','0','22','1','0','0','40','2','0','0','0','0','0','0','Dawnblade Marksman - Set Phase 1 and Set Ranged Weapon Model on Evade'),
+('2497908','24979','9','0','100','1','0','5','0','0','21','1','0','0','40','1','0','0','0','0','0','0','Dawnblade Marksman - Start Movement and Set Melee Weapon Model Below 6 Yards'),
+('2497909','24979','9','0','100','1','6','20','0','0','21','0','0','0','40','2','0','0','0','0','0','0','Dawnblade Marksman - Stop Movement and Set Ranged Weapon Model Above 5 Yards'),
+-- ('2497910','-94249','1','0','75','1','5000','10000','5000','10000','11','29120','0','0','24','0','0','0','0','0','0','0','Dawnblade Marksman (94249) - Shoot OOC on Dummy & Reset'),
+-- ('2497911','-94250','1','0','75','1','5000','10000','5000','10000','11','29120','0','0','24','0','0','0','0','0','0','0','Dawnblade Marksman (94250) - Shoot OOC on Dummy & Reset'),
+-- ('2497912','-94251','1','0','75','1','5000','10000','5000','10000','11','29120','0','0','24','0','0','0','0','0','0','0','Dawnblade Marksman (94251) - Shoot OOC on Dummy & Reset');
+('2497910','-94249','1','0','75','1','5000','10000','5000','15000','44','29120','94241','0','24','0','0','0','0','0','0','0','Dawnblade Marksman (94249) - Shoot OOC on Dummy & Reset'),
+('2497911','-94250','1','0','75','1','5000','10000','5000','15000','44','29120','94242','0','24','0','0','0','0','0','0','0','Dawnblade Marksman (94250) - Shoot OOC on Dummy & Reset'),
+('2497912','-94251','1','0','75','1','5000','10000','5000','15000','44','29120','94246','0','24','0','0','0','0','0','0','0','Dawnblade Marksman (94251) - Shoot OOC on Dummy & Reset');
+
+UPDATE `creature` SET `position_x`='12706.8876', `position_y`='-6748.7294', `position_z`='4.1605', `orientation`='3.5732' WHERE `guid` = 94250;
+
+-- Silvermoon Ranger 18147
+-- 16897,16898,16899
+UPDATE `creature_template` SET `modelid_A`='17539',`modelid_A2`='17541',`modelid_H`='17539',`modelid_H2`='17541',`AIName`='EventAI' WHERE `entry` IN ('18147');
+DELETE FROM `creature_ai_scripts` WHERE `id` BETWEEN 1814701 AND 1814704;
+INSERT INTO `creature_ai_scripts` VALUES
+('1814701','-64950','1','0','75','1','5000','15000','5000','15000','44','29120','58464','0','24','0','0','0','0','0','0','0','Silvermoon Ranger (64950) - Shoot OOC on Dummy & Reset'),
+('1814702','-64951','1','0','75','1','5000','15000','5000','15000','44','29120','58464','0','24','0','0','0','0','0','0','0','Silvermoon Ranger (64951) - Shoot OOC on Dummy & Reset'),
+('1814703','-64952','1','0','75','1','5000','15000','5000','15000','44','29120','58456','0','24','0','0','0','0','0','0','0','Silvermoon Ranger (64952) - Shoot OOC on Dummy & Reset'),
+('1814704','-64953','1','0','75','1','5000','15000','5000','15000','44','29120','58460','0','24','0','0','0','0','0','0','0','Silvermoon Ranger (64953) - Shoot OOC on Dummy & Reset');
+
+-- Honor Hold Archer 16896
+UPDATE `creature_template` SET `AIName`='EventAI',`unit_flags`='4096',`flags_extra`='2' WHERE `entry` = 16896; -- 0 0
+UPDATE `creature_template_addon` SET `bytes0`='16777472',`bytes2`='4098' WHERE `entry` IN ('16896');
+DELETE FROM `creature_ai_scripts` WHERE `id` BETWEEN 1689601 AND 1689604;
+INSERT INTO `creature_ai_scripts` VALUES
+('1689601','-58449','1','0','75','1','0','5000','5000','10000','44','29120','58457','0','24','0','0','0','0','0','0','0','Honor Hold Archer (58449) - Shoot OOC on Dummy & Reset'),
+('1689602','-58451','1','0','75','1','0','5000','5000','10000','44','29120','58455','0','24','0','0','0','0','0','0','0','Honor Hold Archer (58451) - Shoot OOC on Dummy & Reset'),
+('1689603','-58450','1','0','75','1','0','5000','5000','10000','44','29120','58461','0','24','0','0','0','0','0','0','0','Honor Hold Archer (58450) - Shoot OOC on Dummy & Reset'),
+('1689604','-58454','1','0','75','1','0','5000','5000','10000','44','29120','69107','0','24','0','0','0','0','0','0','0','Honor Hold Archer (58454) - Shoot OOC on Dummy & Reset');
