@@ -76,3 +76,14 @@ INSERT INTO `waypoint_data` VALUES (12794, 7, 748.388, 284.961, 125.142, 700, 0,
 INSERT INTO `waypoint_data` VALUES (12794, 8, 723.082, 263.289, 125.158, 0, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (12794, 9, 719.945, 263.568, 125.177, 700, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (12794, 10, 681.224, 266.071, 125.149, 0, 0, 0, 100, 0);
+
+-- Reinforced Fel Iron Chest 185168,185169
+UPDATE `gameobject_template` SET `size` = 1.5 WHERE `entry` IN (185168,185169);
+
+-- Hellfire Ramparts Epic Gems
+DELETE FROM `reference_loot_template` WHERE `entry` = 50002 AND `item` = 30592;
+INSERT INTO `reference_loot_template` VALUES (50002, 30592, 0, 1, 1, 1, 0, 0, 0);
+
+UPDATE `gameobject_loot_template` SET `ChanceOrQuestChance` = 100 WHERE `entry` = 21764 AND `item` = 12020;
+DELETE FROM `gameobject_loot_template` WHERE `entry` = 21764 AND `item` = 50002;
+INSERT INTO `gameobject_loot_template` VALUES (21764, 50002, 40, 1, -50002, 1, 0, 0, 0);
