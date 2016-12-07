@@ -798,7 +798,7 @@ void Unit::RemoveSpellbyDamageTaken(AuraType auraType, uint32 damage, DamageEffe
 
 	uint32 currentDamage = GetDamageTakenWithActiveAuraType(auraType);
 	uint32 damageMultiplier = damage * (damagetype == DIRECT_DAMAGE ? 1.5f : 1.0f);
-	SetDamageTakenWithActiveAuraType(SPELL_AURA_MOD_FEAR, currentDamage + damageMultiplier);
+	SetDamageTakenWithActiveAuraType(auraType, currentDamage + damageMultiplier);
 
 	// The chance to dispel an aura depends on the damage taken with respect to the casters level.
 	uint32 calcDmg = getLevel() > 8 ? 25 * getLevel() + 150 : 50;
@@ -819,7 +819,10 @@ void Unit::RemoveSpellbyDamageTaken(AuraType auraType, uint32 damage, DamageEffe
 
 	float chance = float(damage) / calcDmg * 100.0f;
 	if (canBreak && (roll_chance_f(chance) || GetDamageTakenWithActiveAuraType(auraType) >= maxDmg))
+    {
 		RemoveSpellsCausingAura(auraType);
+        SetDamageTakenWithActiveAuraType(auraType, 0); // Reset damage taken. ToDo: Find a better way to do this. It should be reset after aura expire, not just when removed by damage.
+    }
  }
 
 void Unit::SendDamageLog(DamageLog *damageInfo)
