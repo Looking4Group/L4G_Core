@@ -4013,16 +4013,16 @@ void Aura::HandleModConfuse(bool apply, bool Real)
 
 void Aura::HandleModFear(bool apply, bool Real)
 {
-	if (!Real)
-		return;
+    if (!Real)
+        return;
 
-	if (!apply)
-	{
-		m_target->SetDamageTakenWithActiveAuraType(SPELL_AURA_MOD_FEAR, 0);
+    if (!apply)
+    {
+        m_target->SetDamageTakenWithActiveAuraType(SPELL_AURA_MOD_FEAR, 0);
 
-		if (GetTarget()->HasAuraType(GetModifier()->m_auraname))
-			return;
-	}
+        if (GetTarget()->HasAuraType(GetModifier()->m_auraname))
+            return;
+    }
 
     if (GetTarget()->HasAuraTypeWithFamilyFlags(SPELL_AURA_PREVENTS_FLEEING,5,2147483648) || GetTarget()->HasAura(16231)) //Curse of Recklessnes
         return;
@@ -4346,8 +4346,8 @@ void Aura::HandleAuraModRoot(bool apply, bool Real)
     if (!Real)
         return;
 
-	if (!apply)
-		m_target->SetDamageTakenWithActiveAuraType(SPELL_AURA_MOD_ROOT, 0);
+    if (!apply)
+        m_target->SetDamageTakenWithActiveAuraType(SPELL_AURA_MOD_ROOT, 0);
 
     if (apply)
         m_target->GetUnitStateMgr().PushAction(UNIT_ACTION_ROOT);
