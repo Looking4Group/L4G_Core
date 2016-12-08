@@ -1021,7 +1021,8 @@ class LOOKING4GROUP_IMPORT_EXPORT Unit : public WorldObject
         void Unmount();
 
         uint16 GetMaxSkillValueForLevel(Unit const* target = NULL) const { return (target ? getLevelForTarget(target) : getLevel()) * 5; }
-        void RemoveSpellbyDamageTaken(uint32 damage, uint32 spell);
+        
+        void RemoveSpellbyDamageTaken(AuraType auraType, uint32 damage, DamageEffectType damagetype, uint32 spellId = 0);
 
         void SendDamageLog(DamageLog *damageInfo);
 
@@ -1625,6 +1626,9 @@ class LOOKING4GROUP_IMPORT_EXPORT Unit : public WorldObject
 
         bool IsAIEnabled, NeedChangeAI;
 
+        uint32 GetDamageTakenWithActiveAuraType(AuraType auraType) const { return m_damageTakenCounter[auraType]; }
+        void SetDamageTakenWithActiveAuraType(AuraType auraType, uint32 damageAmount) { m_damageTakenCounter[auraType] = damageAmount; }
+
         float GetDeterminativeSize() const;
 
         Player* GetGMToSendCombatStats() const { return m_GMToSendCombatStats ? GetPlayer(m_GMToSendCombatStats) : NULL; }
@@ -1712,6 +1716,8 @@ class LOOKING4GROUP_IMPORT_EXPORT Unit : public WorldObject
 
         uint32 m_CombatTimer;
         uint32 m_lastManaUse;                               // msecs
+
+        uint32 m_damageTakenCounter[TOTAL_AURAS];
 
         UnitVisibility m_Visibility;
 
