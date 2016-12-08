@@ -2422,7 +2422,7 @@ struct mob_storm_furyAI : public ScriptedAI
     {
         ClearCastQueue();
 
-        StormBlink = urand(15000, 25000);
+        StormBlink = urand(5000, 9000);
     }
     void EnterCombat(Unit*) { DoZoneInCombat(80.0f); }
 
@@ -2434,7 +2434,7 @@ struct mob_storm_furyAI : public ScriptedAI
         if(StormBlink < diff)
         {
             AddSpellToCast(me, SPELL_STORM_BLINK);
-            StormBlink = 25000;
+            StormBlink = urand(16000, 21000);
         }
         else
             StormBlink -= diff;
@@ -4951,7 +4951,7 @@ enum TempleConcubine
     SPELL_LOVE_TAP  = 41338
 };
 
-#define YELL_TEMPLE_CONCUBINE "Business… or pleasure?"
+#define YELL_TEMPLE_CONCUBINE "BusinessÂ… or pleasure?"
 
 struct mob_temple_concubineAI: public ScriptedAI
 {
