@@ -821,7 +821,6 @@ void Unit::RemoveSpellbyDamageTaken(AuraType auraType, uint32 damage, DamageEffe
 	if (canBreak && (roll_chance_f(chance) || GetDamageTakenWithActiveAuraType(auraType) >= maxDmg))
     {
 		RemoveSpellsCausingAura(auraType);
-        SetDamageTakenWithActiveAuraType(auraType, 0); // Reset damage taken. ToDo: Find a better way to do this. It should be reset after aura expire, not just when removed by damage.
     }
  }
 
