@@ -769,37 +769,59 @@ bool Unit::HasAuraByCasterWithFamilyFlags(uint64 pCaster, uint32 familyName,  ui
 }
 
 /* Called by DealDamage for auras that have a chance to be dispelled on damage taken. */
-void Unit::RemoveSpellbyDamageTaken(uint32 damage, uint32 spell)
+void Unit::RemoveSpellbyDamageTaken(AuraType auraType, uint32 damage, DamageEffectType damagetype, uint32 spellId)
 {
     // The chance to dispel an aura depends on the damage taken with respect to the casters level.
-    uint32 max_dmg = getLevel() > 8 ? 30 * getLevel() - 100 : 50;
-    float chance = float(damage) / max_dmg * 100.0f;
-    bool roll;
+    // auras can't break from self damage
+    if (damagetype == (NODAMAGE | SELF_DAMAGE))
+        return;
 
-    std::list<std::pair<uint32, uint64> > aurasToRemove;
-    std::set<std::pair<uint32, uint64> > aurasDone;
-    for (AuraList::iterator i = m_ccAuras.begin(); i != m_ccAuras.end(); ++i)
+    // don't increase damageTakenCounter when not having correct auratype
+    if (!HasAuraType(auraType))
+        return;
+
+    // don't increase damageTakenCounter when having aura that should not break on damage or ...
+    AuraList const& mRemoveAuraList = GetAurasByType(auraType);
+    for (AuraList::const_iterator iter = mRemoveAuraList.begin(); iter != mRemoveAuraList.end(); ++iter)
     {
-        std::pair<uint32, uint64> auraPair((*i)->GetId(), (*i)->GetCasterGUID());
-        // prevent rolling twice for two effects of the same spell
-        if(aurasDone.find(auraPair) != aurasDone.end())
-            continue;
-
-        aurasDone.insert(auraPair);
-
-        if (*i && (!spell || (*i)->GetId() != spell))
+        if (SpellEntry const* iterSpellProto = (*iter)->GetSpellProto())
         {
-            if (SpellMgr::GetDiminishingReturnsGroupForSpell((*i)->GetSpellProto(), false) == DIMINISHING_ENSLAVE)
-                continue;
+            // We don't have this spell attribute atm. Commenting out for now
+            // if (sSpellMgr.GetSpellCustomAttr(iterSpellProto->Id) & SPELL_ATTR_CU_DONT_BREAK_ON_DAMAGE)
+            //	 return;
 
-            roll = roll_chance_f(chance);
-            if (roll)
-                aurasToRemove.push_back(auraPair);
+            // ... damage spell is removable spell
+            if (spellId && (*iter)->GetSpellProto()->Id == spellId)
+                return;
         }
     }
 
-    for (std::list<std::pair<uint32, uint64> >::iterator i = aurasToRemove.begin(); i != aurasToRemove.end(); ++i)
-        RemoveAurasByCasterSpell(i->first, i->second);
+    uint32 currentDamage = GetDamageTakenWithActiveAuraType(auraType);
+    uint32 damageMultiplier = damage * (damagetype == DIRECT_DAMAGE ? 1.5f : 1.0f);
+    SetDamageTakenWithActiveAuraType(auraType, currentDamage + damageMultiplier);
+
+    // The chance to dispel an aura depends on the damage taken with respect to the casters level.
+    uint32 calcDmg = getLevel() > 8 ? 25 * getLevel() + 150 : 50;
+    uint32 maxDmg = getLevel() > 8 ? 50 * getLevel() : 50;
+    uint32 minDmg = getLevel() > 8 ? 7 * getLevel() + 10 : 10;
+    bool canBreak = true;
+
+    switch (auraType)
+    {
+    case SPELL_AURA_MOD_FEAR:
+    case SPELL_AURA_MOD_ROOT:
+        if (damagetype == DOT && GetDamageTakenWithActiveAuraType(auraType) <= minDmg)
+            canBreak = false;
+        break;
+    default:
+        break;
+    }
+
+    float chance = float(damage) / calcDmg * 100.0f;
+    if (canBreak && (roll_chance_f(chance) || GetDamageTakenWithActiveAuraType(auraType) >= maxDmg))
+    {
+        RemoveSpellsCausingAura(auraType);
+    }
 }
 
 void Unit::SendDamageLog(DamageLog *damageInfo)
@@ -914,13 +936,22 @@ uint32 Unit::DealDamage(DamageLog *damageInfo, DamageEffectType damagetype, cons
 
     if (damageInfo->damage || damageInfo->absorb)
     {
-        if (!spellProto || !(spellProto->AttributesEx4 & SPELL_ATTR_EX4_DAMAGE_DOESNT_BREAK_AURAS))
-        {
-            pVictim->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_DAMAGE, spellProto ? spellProto->Id : 0);
-            pVictim->RemoveSpellbyDamageTaken(damageInfo->damage, spellProto ? spellProto->Id : 0);
-        }
-        else// if (spellProto->AttributesEx4 & SPELL_ATTR_EX4_DAMAGE_DOESNT_BREAK_AURAS) // if got here - 100% got this attribute
-            pVictim->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_DAMAGE, spellProto->Id, true);
+        if (spellProto)
+		{
+			if (!(spellProto->AttributesEx4 & SPELL_ATTR_EX4_DAMAGE_DOESNT_BREAK_AURAS))
+			{
+				pVictim->RemoveSpellbyDamageTaken(SPELL_AURA_MOD_FEAR, damageInfo->damage, damagetype, spellProto->Id);
+				pVictim->RemoveSpellbyDamageTaken(SPELL_AURA_MOD_ROOT, damageInfo->damage, damagetype, spellProto->Id);
+				pVictim->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_DAMAGE, spellProto->Id);
+			}
+		}
+		else
+		{
+			pVictim->RemoveSpellbyDamageTaken(SPELL_AURA_MOD_FEAR, damageInfo->damage, damagetype);
+			pVictim->RemoveSpellbyDamageTaken(SPELL_AURA_MOD_ROOT, damageInfo->damage, damagetype);
+			pVictim->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_DAMAGE, 0);
+		}
+
         // Rage from any damage taken
         if (pVictim->GetTypeId() == TYPEID_PLAYER && (pVictim->getPowerType() == POWER_RAGE))
             ((Player*)pVictim)->RewardRage(damageInfo->rageDamage, 0, false);
