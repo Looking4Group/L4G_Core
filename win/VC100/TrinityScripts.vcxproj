@@ -473,6 +473,8 @@
     <ClCompile Include="..\..\src\scripts\scripts\creature\simple_ai.cpp" />
     <ClCompile Include="..\..\src\scripts\scripts\custom\barber.cpp" />
     <ClCompile Include="..\..\src\scripts\scripts\custom\boss_easter_event.cpp" />
+    <ClCompile Include="..\..\src\scripts\scripts\custom\custom_instant_70.cpp" />
+    <ClCompile Include="..\..\src\scripts\scripts\custom\custom_transfer.cpp" />
     <ClCompile Include="..\..\src\scripts\scripts\custom\enchant_npc.cpp" />
     <ClCompile Include="..\..\src\scripts\scripts\custom\lootbox.cpp" />
     <ClCompile Include="..\..\src\scripts\scripts\guard\guard_ai.cpp" />

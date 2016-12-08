@@ -1573,6 +1573,12 @@
     <ClCompile Include="..\..\src\scripts\scripts\zone\redridge_mountains\redridge_mountains.cpp">
       <Filter>Scripts\zone\Redridge Mountains</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\scripts\scripts\custom\custom_instant_70.cpp">
+      <Filter>Scripts\custom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scripts\scripts\custom\custom_transfer.cpp">
+      <Filter>Scripts\custom</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\scripts\scripts\creature\simple_ai.h">
