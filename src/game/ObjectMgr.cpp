@@ -3907,8 +3907,7 @@ void ObjectMgr::GetTaxiPath(uint32 source, uint32 destination, uint32 &path, uin
         return;
     }
 
-    //cost = dest_i->second.price;
-	cost = 0; //Set taxi cost to 0 during free taxi event
+    cost = dest_i->second.price;
     path = dest_i->second.ID;
 }
 
