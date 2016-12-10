@@ -4629,7 +4629,7 @@ DiminishingGroup SpellMgr::GetDiminishingReturnsGroupForSpell(SpellEntry const* 
         return DIMINISHING_DISARM;
     if (mechanic & (1 << (MECHANIC_FREEZE - 1)))
         return DIMINISHING_FREEZE;
-    if (mechanic & ((1 << (MECHANIC_KNOCKOUT - 1)) | (1 << (MECHANIC_SAPPED - 1))) | (1 << (MECHANIC_POLYMORPH - 1)) | (1 << (MECHANIC_SHACKLE - 1)))
+    if (mechanic & ((1 << (MECHANIC_KNOCKOUT - 1)) | (1 << (MECHANIC_SAPPED - 1)) | (1 << (MECHANIC_POLYMORPH - 1)) | (1 << (MECHANIC_SHACKLE - 1))))
         return DIMINISHING_DISORIENT;
     if (mechanic & (1 << (MECHANIC_BANISH - 1)))
         return DIMINISHING_BANISH;
