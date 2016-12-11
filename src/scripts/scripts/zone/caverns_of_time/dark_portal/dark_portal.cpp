@@ -279,7 +279,6 @@ struct npc_medivh_bmAI : public ScriptedAI
                 {
                     DoScriptText(SAY_WEAK25, m_creature);
                     LifeAt25 = false;
-                    CheckTimer = 0;
                 }
                 else if (LifeAt50 && pct <= 50)
                 {
