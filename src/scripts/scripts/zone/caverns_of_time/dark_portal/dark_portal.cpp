@@ -16,8 +16,8 @@
 
 /* ScriptData
 SDName: Dark_Portal
-SD%Complete: 90
-SDComment: Still post-event needed and support for Time Keepers
+SD%Complete: 99
+SDComment: Need support for Time Keepers???
 SDCategory: Caverns of Time, The Dark Portal
 EndScriptData */
 

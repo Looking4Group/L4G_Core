@@ -16,8 +16,8 @@
 
 /* ScriptData
 SDName: Instance_Dark_Portal
-SD%Complete: 90
-SDComment: Quest support: 9836, 10297. Still needs post-event support.
+SD%Complete: 99
+SDComment: 
 SDCategory: Caverns of Time, The Dark Portal
 EndScriptData */
 
