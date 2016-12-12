@@ -76,10 +76,20 @@ bool GossipHello_npc_jaina_proudmoore(Player *player, Creature *_Creature)
 
     uint32 RageEncounter = ai->GetInstanceData(DATA_RAGEWINTERCHILLEVENT);
     uint32 AnetheronEncounter = ai->GetInstanceData(DATA_ANETHERONEVENT);
-    if(RageEncounter == NOT_STARTED)
-        player->ADD_GOSSIP_ITEM( 0, GOSSIP_ITEM_BEGIN_ALLY, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-    else if(RageEncounter == DONE && AnetheronEncounter == NOT_STARTED)
-        player->ADD_GOSSIP_ITEM( 0, GOSSIP_ITEM_ANETHERON, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+    if (RageEncounter == NOT_STARTED)
+    {
+        player->ADD_GOSSIP_ITEM(0, GOSSIP_ITEM_BEGIN_ALLY, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+
+        if (player->GetSession()->GetPermissions() > PERM_PLAYER) // isGameMaster() won't work here because it requires .GM to be on
+            player->ADD_GOSSIP_ITEM(0, "<GM> Skip trash waves and spawn Rage Winterchill", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4);
+    }
+    else if (RageEncounter == DONE && AnetheronEncounter == NOT_STARTED)
+    {
+        player->ADD_GOSSIP_ITEM(0, GOSSIP_ITEM_ANETHERON, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+
+        if (player->GetSession()->GetPermissions() > PERM_PLAYER) // isGameMaster() won't work here because it requires .GM to be on
+            player->ADD_GOSSIP_ITEM(0, "<GM> Skip trash waves and spawn Anetheron", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 5);
+    }
     else if(RageEncounter == DONE && AnetheronEncounter == DONE)
         player->ADD_GOSSIP_ITEM( 0, GOSSIP_ITEM_RETREAT, GOSSIP_SENDER_MAIN,    GOSSIP_ACTION_INFO_DEF + 3);
 
@@ -105,6 +115,15 @@ bool GossipSelect_npc_jaina_proudmoore(Player *player, Creature *_Creature, uint
             break;
         case GOSSIP_ACTION_INFO_DEF + 3:
             ai->Retreat();
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 4: // GM Spawn Winterchill
+            ai->StartEvent(player);
+            ai->WaveCount = 8;
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 5: // GM Spawn Anetheron
+            ai->FirstBossDead = true;
+            ai->WaveCount = 17;
+            ai->StartEvent(player);
             break;
          case GOSSIP_ACTION_INFO_DEF:
             ai->Debug = !ai->Debug;
@@ -147,10 +166,20 @@ bool GossipHello_npc_thrall(Player *player, Creature *_Creature)
     {
         uint32 KazrogalEvent = ai->GetInstanceData(DATA_KAZROGALEVENT);
         uint32 AzgalorEvent  = ai->GetInstanceData(DATA_AZGALOREVENT);
-        if(KazrogalEvent == NOT_STARTED)
-            player->ADD_GOSSIP_ITEM( 0, GOSSIP_ITEM_BEGIN_HORDE, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-        else if(KazrogalEvent == DONE && AzgalorEvent != DONE && AzgalorEvent != IN_PROGRESS)
-            player->ADD_GOSSIP_ITEM( 0, GOSSIP_ITEM_AZGALOR, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+        if (KazrogalEvent == NOT_STARTED)
+        {
+            player->ADD_GOSSIP_ITEM(0, GOSSIP_ITEM_BEGIN_HORDE, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+
+            if (player->GetSession()->GetPermissions() > PERM_PLAYER) // isGameMaster() won't work here because it requires .GM to be on
+                player->ADD_GOSSIP_ITEM(0, "<GM> Skip trash waves and spawn Kazrogal", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4);
+        }
+        else if (KazrogalEvent == DONE && AzgalorEvent != DONE && AzgalorEvent != IN_PROGRESS)
+        {
+            player->ADD_GOSSIP_ITEM(0, GOSSIP_ITEM_AZGALOR, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+
+            if (player->GetSession()->GetPermissions() > PERM_PLAYER) // isGameMaster() won't work here because it requires .GM to be on
+                player->ADD_GOSSIP_ITEM(0, "<GM> Skip trash waves and spawn Azgalor", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 5);
+        }
         else if(AzgalorEvent == DONE)
             player->ADD_GOSSIP_ITEM( 0, GOSSIP_ITEM_RETREAT, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
     }
@@ -178,6 +207,15 @@ bool GossipSelect_npc_thrall(Player *player, Creature *_Creature, uint32 sender,
             break;
         case GOSSIP_ACTION_INFO_DEF + 3:
             ai->Retreat();
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 4:
+            ai->WaveCount = 8;
+            ai->StartEvent(player);
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 5:
+            ai->FirstBossDead = true;
+            ai->WaveCount = 17;
+            ai->StartEvent(player);
             break;
         case GOSSIP_ACTION_INFO_DEF:
             ai->Debug = !ai->Debug;
