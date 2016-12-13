@@ -11849,8 +11849,8 @@ void Unit::UpdateReactives(uint32 p_time)
 Unit* Unit::SelectNearbyTarget(float dist, Unit* erase, bool los) const
 {
     std::list<Unit *> targets;
-    Looking4group::AnyUnfriendlyUnitInObjectRangeCheck u_check(this, this, dist);
-    Looking4group::UnitListSearcher<Looking4group::AnyUnfriendlyUnitInObjectRangeCheck> searcher(targets, u_check);
+    Looking4group::AnyUnfriendlyNoTotemUnitInObjectRangeCheck u_check(this, this, dist);
+    Looking4group::UnitListSearcher<Looking4group::AnyUnfriendlyNoTotemUnitInObjectRangeCheck> searcher(targets, u_check);
 
     Cell::VisitAllObjects(this, searcher, dist);
 
