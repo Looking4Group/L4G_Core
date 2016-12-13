@@ -1075,6 +1075,10 @@ bool SpellMgr::IsBinaryResistable(SpellEntry const* spellInfo)
 
     if(spellInfo->SpellFamilyName)         // only player's spells, bosses don't follow that simple rule
     {
+        //  Frostbolt is no longer a Binary Spell as it was prior to WoW 2.3
+        if (spellInfo->SpellFamilyName == SPELLFAMILY_MAGE && spellInfo->SpellFamilyFlags == 0x000180020LL)
+            return false;
+
         for(int eff = 0; eff < 3; eff++)
         {
             if(!spellInfo->Effect[eff])
