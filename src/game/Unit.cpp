@@ -2705,7 +2705,7 @@ float Unit::CalculateLevelPenalty(SpellEntry const* spellProto) const
 
     // should we check spellLevel, baseLevel or levelReq ? Oo
     if (spellProto->spellLevel < 20)
-        lvlPenalty = 20.0f - spellProto->spellLevel * 3.75f;
+        lvlPenalty = (20.0f - spellProto->spellLevel) * 3.75f;
 
     // next rank min lvl + 5 = current rank maxLevel + 6 for most spells
     float lvlFactor = (float(spellProto->maxLevel) + 6.0f) / float(getLevel());
