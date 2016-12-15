@@ -317,3 +317,8 @@ INSERT INTO `creature` VALUES (85640, 21736, 530, 1, 0, 0, -3882.44, 1951.4, 98.
 INSERT INTO `creature` VALUES (85644, 21736, 530, 1, 0, 0, -3922.99, 1949.45, 93.1716, 0.0019, 300, 1, 0, 8700, 0, 0, 1);
 INSERT INTO `creature` VALUES (85645, 21736, 530, 1, 0, 0, -3919.64, 1943.73, 93.0026, 0.885561, 300, 1, 0, 8700, 0, 0, 1);
 INSERT INTO `creature` VALUES (85651, 21736, 530, 1, 0, 0, -3917.5, 1910.61, 91.6558, 1.36073, 300, 1, 0, 8700, 0, 0, 1);
+
+-- BT Pre
+DELETE FROM `creature_questrelation` WHERE `quest` IN (10568,10683);
+INSERT INTO `creature_questrelation` VALUES (21402, 10568);
+INSERT INTO `creature_questrelation` VALUES (21955, 10683);
