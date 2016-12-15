@@ -1422,8 +1422,8 @@ struct mob_ashtongue_battlelordAI : public ScriptedAI
         ClearCastQueue();
 
         Cleave = urand(3000, 10000);
-        ConcussionBlow = urand(10500, 25000);
-        ConcussionThrow = urand(10500, 25000);
+        ConcussionBlow = urand(10500, 15000);
+        ConcussionThrow = urand(9000, 12000);
         Frenzy = 5000;
     }
     void EnterCombat(Unit*) { DoZoneInCombat(80.0f); }
@@ -1436,7 +1436,7 @@ struct mob_ashtongue_battlelordAI : public ScriptedAI
         if(Cleave < diff)
         {
             AddSpellToCast(me->getVictim(), SPELL_CLEAVE_1);
-            Cleave = 10000;
+            Cleave = urand(5000, 8000);
         }
         else
             Cleave -= diff;
@@ -1444,7 +1444,7 @@ struct mob_ashtongue_battlelordAI : public ScriptedAI
         if(ConcussionBlow < diff)
         {
             AddSpellToCast(me->getVictim(), SPELL_CONCUSSION_BLOW);
-            ConcussionBlow = 25000;
+            ConcussionBlow = urand(12000, 15000);
         }
         else
             ConcussionBlow -= diff;
@@ -1455,7 +1455,7 @@ struct mob_ashtongue_battlelordAI : public ScriptedAI
             {
                 AddSpellToCast(target, SPELL_CONCUSSION_THROW);
             }
-            ConcussionThrow = 22000;
+            ConcussionThrow = urand(9000, 12000);
         }
         else
             ConcussionThrow -= diff;
@@ -4951,7 +4951,7 @@ enum TempleConcubine
     SPELL_LOVE_TAP  = 41338
 };
 
-#define YELL_TEMPLE_CONCUBINE "Business… or pleasure?"
+#define YELL_TEMPLE_CONCUBINE "BusinessÂ… or pleasure?"
 
 struct mob_temple_concubineAI: public ScriptedAI
 {
