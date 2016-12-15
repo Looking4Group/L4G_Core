@@ -3132,10 +3132,8 @@ void SpellMgr::LoadSpellCustomAttr()
             /* UNSORTED */
             case 26635: // Troll Racial Berserker
                 spellInfo->Effect[0] = 0;
-                spellInfo->Effect[1] = SPELL_EFFECT_APPLY_AURA;
-                spellInfo->EffectBasePoints[1] = 5;
                 spellInfo->EffectApplyAuraName[1] = SPELL_AURA_MOD_HASTE;
-                spellInfo->EffectBasePoints[2] = 0;
+                spellInfo->EffectBasePoints[1] = 5;
                 break;
             /* Damage Corrections */
             case 33627: // Rain of Fire (Pit Commander)
