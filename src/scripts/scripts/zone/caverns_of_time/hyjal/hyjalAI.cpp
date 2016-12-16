@@ -598,7 +598,7 @@ void hyjalAI::StartEvent(Player* player)
     CheckTimer = 5000;
     PlayerGUID = player->GetGUID();
 
-    m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+    //m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
 
     UpdateWorldState(WORLD_STATE_WAVES, 0);
     UpdateWorldState(WORLD_STATE_ENEMY, 0);
