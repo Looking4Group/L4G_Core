@@ -16,8 +16,8 @@
 
 /* ScriptData
 SDName: Hyjal
-SD%Complete: 80
-SDComment: gossip text id's unknown
+SD%Complete: 99
+SDComment: 
 SDCategory: Caverns of Time, Mount Hyjal
 EndScriptData */
 
@@ -30,15 +30,37 @@ EndContentData */
 #include "precompiled.h"
 #include "hyjalAI.h"
 
+enum HyjalGossipMenu
+{
+    // Jaina
+    GOSSIP_MENU_WINTERCHILL_NOT_STARTED     = 20000,
+    GOSSIP_MENU_WINTERCHILL_STARTED         = 20001,
+    GOSSIP_MENU_JAINA_EVENT_IN_PROGRESS     = 20002,
+    GOSSIP_MENU_WINTERCHILL_KILLED          = 20013,
+    GOSSIP_MENU_ANETHERON_STARTED           = 20004,
+    GOSSIP_MENU_ANETHERON_KILLED            = 20005,
+
+    // Thrall
+    GOSSIP_MENU_KAZROGAL_NOT_STARTED        = 20006,
+    GOSSIP_MENU_KAZROGAL_STARTED            = 20007,
+    GOSSIP_MENU_THRALL_EVENT_IN_PROGRESS    = 20008,
+    GOSSIP_MENU_KAZROGAL_KILLED             = 20009,
+    GOSSIP_MENU_AZGALOR_STARTED             = 20010,
+    GOSSIP_MENU_AZGALOR_KILLED              = 20011,
+
+    // Tyrande
+    GOSSIP_MENU_TYRANDE                     = 20012
+};
+
 #define GOSSIP_ITEM_BEGIN_ALLY      "My companions and I are with you, Lady Proudmoore."
 #define GOSSIP_ITEM_ANETHERON       "We are ready for whatever Archimonde might send our way, Lady Proudmoore."
+#define GOSSIP_ITEM_RETREAT_JAINA   "Until we meet again, Lady Proudmoore."
 
 #define GOSSIP_ITEM_BEGIN_HORDE     "I am with you, Thrall."
 #define GOSSIP_ITEM_AZGALOR         "We have nothing to fear."
+#define GOSSIP_ITEM_RETREAT_THRALL  "Until we meet again, Thrall."
 
-#define GOSSIP_ITEM_RETREAT         "We can't keep this up. Let's retreat!"
-
-#define GOSSIP_ITEM_TYRANDE         "Aid us in defending Nordrassil"
+#define GOSSIP_ITEM_TYRANDE         "I would be grateful for any aid you can provide, Priestess."
 #define ITEM_TEAR_OF_GODDESS        24494
 
 
@@ -71,22 +93,41 @@ CreatureAI* GetAI_npc_jaina_proudmoore(Creature *_Creature)
 bool GossipHello_npc_jaina_proudmoore(Player *player, Creature *_Creature)
 {
     hyjalAI* ai = ((hyjalAI*)_Creature->AI());
-    if(ai->EventBegun)
-        return false;
 
     uint32 RageEncounter = ai->GetInstanceData(DATA_RAGEWINTERCHILLEVENT);
     uint32 AnetheronEncounter = ai->GetInstanceData(DATA_ANETHERONEVENT);
-    if(RageEncounter == NOT_STARTED)
-        player->ADD_GOSSIP_ITEM( 0, GOSSIP_ITEM_BEGIN_ALLY, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-    else if(RageEncounter == DONE && AnetheronEncounter == NOT_STARTED)
-        player->ADD_GOSSIP_ITEM( 0, GOSSIP_ITEM_ANETHERON, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
-    else if(RageEncounter == DONE && AnetheronEncounter == DONE)
-        player->ADD_GOSSIP_ITEM( 0, GOSSIP_ITEM_RETREAT, GOSSIP_SENDER_MAIN,    GOSSIP_ACTION_INFO_DEF + 3);
 
-    if(player->isGameMaster())
+    if (player->isGameMaster())
         player->ADD_GOSSIP_ITEM(2, "[GM] Toggle Debug Timers", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
 
-    player->SEND_GOSSIP_MENU(907, _Creature->GetGUID());
+    if (ai->EventBegun)
+    {
+        player->SEND_GOSSIP_MENU(GOSSIP_MENU_JAINA_EVENT_IN_PROGRESS, _Creature->GetGUID());
+    }
+    else if (RageEncounter == NOT_STARTED)
+    {
+        player->ADD_GOSSIP_ITEM(0, GOSSIP_ITEM_BEGIN_ALLY, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+
+        if (player->GetSession()->GetPermissions() > PERM_PLAYER) // isGameMaster() won't work here because it requires .GM to be on
+            player->ADD_GOSSIP_ITEM(0, "<GM> Skip trash waves and spawn Rage Winterchill", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4);
+
+        player->SEND_GOSSIP_MENU(GOSSIP_MENU_WINTERCHILL_NOT_STARTED, _Creature->GetGUID());
+    }
+    else if (RageEncounter == DONE && AnetheronEncounter == NOT_STARTED)
+    {
+        player->ADD_GOSSIP_ITEM(0, GOSSIP_ITEM_ANETHERON, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+
+        if (player->GetSession()->GetPermissions() > PERM_PLAYER) // isGameMaster() won't work here because it requires .GM to be on
+            player->ADD_GOSSIP_ITEM(0, "<GM> Skip trash waves and spawn Anetheron", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 5);
+
+        player->SEND_GOSSIP_MENU(GOSSIP_MENU_WINTERCHILL_KILLED, _Creature->GetGUID());
+    }
+    else if (RageEncounter == DONE && AnetheronEncounter == DONE)
+    {
+        player->ADD_GOSSIP_ITEM(0, GOSSIP_ITEM_RETREAT_JAINA, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
+        player->SEND_GOSSIP_MENU(GOSSIP_MENU_ANETHERON_KILLED, _Creature->GetGUID());
+    }
+
     return true;
 }
 
@@ -96,15 +137,27 @@ bool GossipSelect_npc_jaina_proudmoore(Player *player, Creature *_Creature, uint
     switch(action)
     {
         case GOSSIP_ACTION_INFO_DEF + 1:
+            player->SEND_GOSSIP_MENU(GOSSIP_MENU_WINTERCHILL_STARTED, _Creature->GetGUID());
             ai->StartEvent(player);
             break;
         case GOSSIP_ACTION_INFO_DEF + 2:
+            player->SEND_GOSSIP_MENU(GOSSIP_MENU_ANETHERON_STARTED, _Creature->GetGUID());
             ai->FirstBossDead = true;
             ai->WaveCount = 9;
             ai->StartEvent(player);
             break;
         case GOSSIP_ACTION_INFO_DEF + 3:
+            player->SEND_GOSSIP_MENU(GOSSIP_MENU_ANETHERON_KILLED, _Creature->GetGUID());
             ai->Retreat();
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 4: // GM Spawn Winterchill
+            ai->StartEvent(player);
+            ai->WaveCount = 8;
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 5: // GM Spawn Anetheron
+            ai->FirstBossDead = true;
+            ai->WaveCount = 17;
+            ai->StartEvent(player);
             break;
          case GOSSIP_ACTION_INFO_DEF:
             ai->Debug = !ai->Debug;
@@ -138,27 +191,52 @@ CreatureAI* GetAI_npc_thrall(Creature *_Creature)
 bool GossipHello_npc_thrall(Player *player, Creature *_Creature)
 {
     hyjalAI* ai = ((hyjalAI*)_Creature->AI());
-    if (ai->EventBegun)
-        return false;
 
     uint32 AnetheronEvent = ai->GetInstanceData(DATA_ANETHERONEVENT);
+
     // Only let them start the Horde phases if Anetheron is dead.
     if (AnetheronEvent == DONE && ai->GetInstanceData(DATA_ALLIANCE_RETREAT))
     {
         uint32 KazrogalEvent = ai->GetInstanceData(DATA_KAZROGALEVENT);
         uint32 AzgalorEvent  = ai->GetInstanceData(DATA_AZGALOREVENT);
-        if(KazrogalEvent == NOT_STARTED)
-            player->ADD_GOSSIP_ITEM( 0, GOSSIP_ITEM_BEGIN_HORDE, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-        else if(KazrogalEvent == DONE && AzgalorEvent != DONE && AzgalorEvent != IN_PROGRESS)
-            player->ADD_GOSSIP_ITEM( 0, GOSSIP_ITEM_AZGALOR, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
-        else if(AzgalorEvent == DONE)
-            player->ADD_GOSSIP_ITEM( 0, GOSSIP_ITEM_RETREAT, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
+
+        if (player->isGameMaster())
+            player->ADD_GOSSIP_ITEM(2, "[GM] Toggle Debug Timers", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
+
+        if (ai->EventBegun)
+        {
+            player->SEND_GOSSIP_MENU(GOSSIP_MENU_THRALL_EVENT_IN_PROGRESS, _Creature->GetGUID());
+        }
+        else if (KazrogalEvent == NOT_STARTED)
+        {
+            player->ADD_GOSSIP_ITEM(0, GOSSIP_ITEM_BEGIN_HORDE, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+
+            if (player->GetSession()->GetPermissions() > PERM_PLAYER) // isGameMaster() won't work here because it requires .GM to be on
+                player->ADD_GOSSIP_ITEM(0, "<GM> Skip trash waves and spawn Kazrogal", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4);
+
+            player->SEND_GOSSIP_MENU(GOSSIP_MENU_KAZROGAL_NOT_STARTED, _Creature->GetGUID());
+        }
+        else if (KazrogalEvent == DONE && AzgalorEvent != DONE && AzgalorEvent != IN_PROGRESS)
+        {
+            player->ADD_GOSSIP_ITEM(0, GOSSIP_ITEM_AZGALOR, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+
+            if (player->GetSession()->GetPermissions() > PERM_PLAYER) // isGameMaster() won't work here because it requires .GM to be on
+                player->ADD_GOSSIP_ITEM(0, "<GM> Skip trash waves and spawn Azgalor", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 5);
+
+            player->SEND_GOSSIP_MENU(GOSSIP_MENU_KAZROGAL_KILLED, _Creature->GetGUID());
+        }
+        else if (AzgalorEvent == DONE)
+        {
+            player->ADD_GOSSIP_ITEM(0, GOSSIP_ITEM_RETREAT_THRALL, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
+            player->SEND_GOSSIP_MENU(GOSSIP_MENU_AZGALOR_KILLED, _Creature->GetGUID());
+        }
+    }
+    else
+    {
+        // Anetheron has not been killed yet.
+        player->SEND_GOSSIP_MENU(907, _Creature->GetGUID());
     }
 
-    if(player->isGameMaster())
-        player->ADD_GOSSIP_ITEM(2, "[GM] Toggle Debug Timers", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
-
-    player->SEND_GOSSIP_MENU(907, _Creature->GetGUID());
     return true;
 }
 
@@ -169,15 +247,27 @@ bool GossipSelect_npc_thrall(Player *player, Creature *_Creature, uint32 sender,
     switch(action)
     {
         case GOSSIP_ACTION_INFO_DEF + 1:
+            player->SEND_GOSSIP_MENU(GOSSIP_MENU_KAZROGAL_STARTED, _Creature->GetGUID());
             ai->StartEvent(player);
             break;
         case GOSSIP_ACTION_INFO_DEF + 2:
+            player->SEND_GOSSIP_MENU(GOSSIP_MENU_AZGALOR_STARTED, _Creature->GetGUID());
             ai->FirstBossDead = true;
             ai->WaveCount = 9;
             ai->StartEvent(player);
             break;
         case GOSSIP_ACTION_INFO_DEF + 3:
+            player->SEND_GOSSIP_MENU(GOSSIP_MENU_AZGALOR_KILLED, _Creature->GetGUID());
             ai->Retreat();
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 4:
+            ai->WaveCount = 8;
+            ai->StartEvent(player);
+            break;
+        case GOSSIP_ACTION_INFO_DEF + 5:
+            ai->FirstBossDead = true;
+            ai->WaveCount = 17;
+            ai->StartEvent(player);
             break;
         case GOSSIP_ACTION_INFO_DEF:
             ai->Debug = !ai->Debug;
@@ -201,9 +291,20 @@ bool GossipHello_npc_tyrande_whisperwind(Player* player, Creature* _Creature)
     uint32 AzgalorEvent = ai->GetInstanceData(DATA_AZGALOREVENT);
 
     // Only let them get item if Azgalor is dead.
-    if (AzgalorEvent == DONE && !player->HasItemCount(ITEM_TEAR_OF_GODDESS,1))
-        player->ADD_GOSSIP_ITEM(0, GOSSIP_ITEM_TYRANDE, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
-    player->SEND_GOSSIP_MENU(907, _Creature->GetGUID());
+    if (AzgalorEvent == DONE)
+    {
+        if (!player->HasItemCount(ITEM_TEAR_OF_GODDESS, 1))
+        {
+            player->ADD_GOSSIP_ITEM(0, GOSSIP_ITEM_TYRANDE, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
+        }
+
+        player->SEND_GOSSIP_MENU(GOSSIP_MENU_TYRANDE, _Creature->GetGUID());
+    }
+    else
+    {
+        player->SEND_GOSSIP_MENU(907, _Creature->GetGUID()); // Azgalor not killed yet
+    }
+
     return true;
 }
 
@@ -219,7 +320,7 @@ bool GossipSelect_npc_tyrande_whisperwind(Player *player, Creature *_Creature, u
                  if(item && player)
                      player->SendNewItem(item,1,true,false,true);
             }
-            player->SEND_GOSSIP_MENU(907, _Creature->GetGUID());
+            player->SEND_GOSSIP_MENU(GOSSIP_MENU_TYRANDE, _Creature->GetGUID());
             hyjalAI* ai = ((hyjalAI*)_Creature->AI());
     }
     return true;

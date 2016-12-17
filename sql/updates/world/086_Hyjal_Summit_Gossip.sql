@@ -1,0 +1,15 @@
+DELETE FROM `npc_text` WHERE `ID` BETWEEN 20000 AND 20013;
+INSERT INTO `npc_text` (`ID`,`text0_0`) VALUES
+(20000,'I have no idea who you are, but your presence is most welcome. Archimonde and his Scourge army could attack at any time, $C. Will you stand with us against this evil?'), -- Jaina before starting Winterchill
+(20001,'Thank you, $R. Now prepare yourselves. Archimonde is on the march, and we must hold off the inevitable for as long as we can.'), -- Jaina after starting Winterchill event
+(20002,'We must continue to hold on for as long as we can! Fight on!'), -- Jaina while an event is running
+(20013,'Well done, adventurer. Rage Winterchill''s death has earned us all a small pause in the enemy''s advance. Use this short time wisely. Tend to your wounded and prepare your defenses, as soon Archimonde will send even deadlier forces at us. My meager force of reserve units will reinforce you when battle is joined again.'), -- Jaina after Winterchill death
+(20004,'Then let Archimonde do his worst.'), -- Jaina after starting Anatheron event
+(20005,'Amazing! Anatheron''s defeat at your hands has delayed Archimonde from his objective, and brought us that much closer to victory. My forces cannot stay here, however. My troops and I are exhausted, and now is the time for retreat. If your strength has not waned, head east to Thrall''s encampment. That is where we make another stand. Be well.'), -- Jaina after killing Anatheron
+(20006,'Lady Proudmoore''s forces have bled to delay Archimonde and his Burning Legion, and now this grim task falls to us. Are you ready to stand with me against the onslaught?'), -- Thrall before starting Kas'rogal event
+(20007,'Then let the Legion do their worst!'), -- Thrall after starting Kaz'rogal event
+(20008,'The Burning Legion presses us hard, but our defenses hold. Every moment we keep Archimonde away from the World Tree brings us closer to victory.'), -- Thrall while an event is running
+(20009,'Outstanding! Kaz''rogal''s death cry should strike fear into the core of the Burning Legion. They now know the power your forces possess, so expect the worst the Legion can offer.'), -- Thrall after killing Kaz'rogal
+(20010,'May the spirits be with you.'), -- Thrall after starting Azgalor event
+(20011,'Outstanding! Killing a Pit Lord such as Azgalor is no small feat, my friend. If we had more time, I would love to hear the story of you and your companions. Archimonde will not give us that pause, however. My scouts have already reported that the Legion is amassing an immense force outside our camp, and Archimonde is very close to the World Tree. We are evacuating with the help of Lady Proudmoore. You should head to the World Tree at once. The fate of our world is still undecided.'), -- Thrall after killing Azgalor
+(20012,'The moment we''ve been dreading is now at hand, $C. Archimonde has made his way to Nordrassil, and is beginning to devour the World Tree''s energies. Malfurion needs more time for his plan to work, so we must do the unthinkable. You must attack Archimonde directly, while my own troops hold off the streams of Burning Legion forces approaching the top of the mount.'); -- Tyrande
