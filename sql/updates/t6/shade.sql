@@ -1,31 +1,31 @@
 -- Set Akama to Untargettable
-UPDATE `progress_world`.`creature_template` SET `unit_flags`='' WHERE `entry`='22841';
+UPDATE `creature_template` SET `unit_flags`='' WHERE `entry`='22841';
 
 
 -- Spiritbinder
-UPDATE `progress_world`.`creature_template` SET `ScriptName`='', `AIName`='EventAI' WHERE `entry`='23524';
+UPDATE `creature_template` SET `ScriptName`='', `AIName`='EventAI' WHERE `entry`='23524';
 
 
 -- Elementalist
-UPDATE `progress_world`.`creature_template` SET `ScriptName`='', `AIName`='EventAI' WHERE `entry`='23523';
+UPDATE `creature_template` SET `ScriptName`='', `AIName`='EventAI' WHERE `entry`='23523';
 
 
 -- Rogue
-UPDATE `progress_world`.`creature_template` SET `ScriptName`='', `AIName`='EventAI' WHERE `entry`='23318';
+UPDATE `creature_template` SET `ScriptName`='', `AIName`='EventAI' WHERE `entry`='23318';
 
 
 -- Sorcerer
-UPDATE `progress_world`.`creature_template` SET `ScriptName`='', `AIName`='EventAI' WHERE `entry`='23215';
+UPDATE `creature_template` SET `ScriptName`='', `AIName`='EventAI' WHERE `entry`='23215';
 
 
 -- Defender
-UPDATE `progress_world`.`creature_template` SET `ScriptName`='', `AIName`='EventAI' WHERE `entry`='23216';
+UPDATE `creature_template` SET `ScriptName`='', `AIName`='EventAI' WHERE `entry`='23216';
 
 
-DELETE FROM `progress_world`.`creature_ai_scripts` WHERE entryOrGuid IN(23523,23524);
+DELETE FROM `creature_ai_scripts` WHERE entryOrGuid IN(23523,23524);
 
 
-INSERT INTO `progress_world`.`creature_ai_scripts` VALUES 
+INSERT INTO `creature_ai_scripts` VALUES 
 -- Ashtongue Elementalist
 ('2352301','23523','4','0','100','2','0','0','0','0','49','1','0','0','22','1','0','0','0','0','0','0','Ashtongue Elementalist - Enable Dynamic Movement and Set Phase 1 on Aggro'),
 ('2352302','23523','9','5','100','3','8','50','3400','4800','11','42024','1','0','0','0','0','0','0','0','0','0','Ashtongue Elementalist - Cast Lightning Bolt (Phase 1)'),
