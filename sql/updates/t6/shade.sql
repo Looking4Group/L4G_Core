@@ -22,7 +22,7 @@ UPDATE `creature_template` SET `ScriptName`='', `AIName`='EventAI' WHERE `entry`
 UPDATE `creature_template` SET `ScriptName`='', `AIName`='EventAI' WHERE `entry`='23216';
 
 
-DELETE FROM `creature_ai_scripts` WHERE entryOrGuid IN(23523,23524);
+DELETE FROM `creature_ai_scripts` WHERE entryOrGuid IN(23523,23524,23216,23318);
 
 
 INSERT INTO `creature_ai_scripts` VALUES 
