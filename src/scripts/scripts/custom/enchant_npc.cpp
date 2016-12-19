@@ -16,7 +16,7 @@ bool GossipHello_enchant_npc(Player *Player, Creature *Creature)
 {
     if (Player->isInCombat())
     {
-        Creature->Say("You are infight!",LANG_UNIVERSAL, 0);
+        Creature->Say("You are in combat!",LANG_UNIVERSAL, 0);
         return true;
     }
 
