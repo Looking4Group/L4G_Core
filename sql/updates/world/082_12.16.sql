@@ -531,3 +531,5 @@ INSERT INTO `waypoint_data` VALUES (70923, 25, -4173.1, 1522.57, 111.377, 0, 0, 
 INSERT INTO `waypoint_data` VALUES (70923, 26, -4179.2, 1518.33, 112.695, 0, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (70923, 27, -4186.46, 1515.45, 114.312, 0, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (70923, 28, -4208.12, 1518.04, 119.038, 0, 0, 0, 100, 0);
+
+UPDATE `creature_template` SET `faction_A` = 35, `faction_H` = 35 WHERE `entry` = 22860;
