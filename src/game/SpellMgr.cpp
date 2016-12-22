@@ -270,6 +270,9 @@ uint32 SpellMgr::GetSpellCastTime(SpellEntry const* spellInfo, Spell const* spel
     if (!castTime)
         return 0;
 
+    if (spellInfo->Attributes & SPELL_ATTR_RANGED && (!spell || !(spell->IsAutoRepeat())))
+        castTime += 500;
+
     if (spell)
     {
         if (Player* modOwner = spell->GetCaster()->GetSpellModOwner())
@@ -283,9 +286,6 @@ uint32 SpellMgr::GetSpellCastTime(SpellEntry const* spellInfo, Spell const* spel
                 castTime = int32(castTime * spell->GetCaster()->m_modAttackSpeedPct[RANGED_ATTACK]);
         }
     }
-
-    if (spellInfo->Attributes & SPELL_ATTR_RANGED && (!spell || !(spell->IsAutoRepeat())))
-        castTime += 500;
 
     return (castTime > 0) ? uint32(castTime) : 0;
 }
