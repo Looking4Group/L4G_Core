@@ -2705,7 +2705,7 @@ float Unit::CalculateLevelPenalty(SpellEntry const* spellProto) const
 
     // should we check spellLevel, baseLevel or levelReq ? Oo
     if (spellProto->spellLevel < 20)
-        lvlPenalty = (20.0f - spellProto->spellLevel) * 3.75f;
+        lvlPenalty = 20.0f - spellProto->spellLevel * 3.75f;
 
     // next rank min lvl + 5 = current rank maxLevel + 6 for most spells
     float lvlFactor = (float(spellProto->maxLevel) + 6.0f) / float(getLevel());
@@ -11849,8 +11849,8 @@ void Unit::UpdateReactives(uint32 p_time)
 Unit* Unit::SelectNearbyTarget(float dist, Unit* erase, bool los) const
 {
     std::list<Unit *> targets;
-    Looking4group::AnyUnfriendlyNoTotemUnitInObjectRangeCheck u_check(this, this, dist);
-    Looking4group::UnitListSearcher<Looking4group::AnyUnfriendlyNoTotemUnitInObjectRangeCheck> searcher(targets, u_check);
+    Looking4group::AnyUnfriendlyUnitInObjectRangeCheck u_check(this, this, dist);
+    Looking4group::UnitListSearcher<Looking4group::AnyUnfriendlyUnitInObjectRangeCheck> searcher(targets, u_check);
 
     Cell::VisitAllObjects(this, searcher, dist);
 

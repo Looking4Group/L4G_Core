@@ -3976,12 +3976,8 @@ SpellCastResult Spell::CheckCast(bool strict)
         {
             if (GetSpellInfo()->EffectImplicitTargetA[j] == TARGET_UNIT_PET)
             {
-                if (Unit* pet = m_caster->GetPet())
-                {
-                    if (!(m_spellInfo->AttributesEx2 & SPELL_ATTR_EX2_IGNORE_LOS) && !m_caster->IsWithinLOSInMap(pet))
-                        return SPELL_FAILED_LINE_OF_SIGHT;
-                }
-                else
+                target = m_caster->GetPet();
+                if (!target)
                 {
                     if (m_triggeredByAuraSpell)              // not report pet not existence for triggered spells
                         return SPELL_FAILED_DONT_REPORT;
