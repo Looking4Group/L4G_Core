@@ -270,6 +270,9 @@ uint32 SpellMgr::GetSpellCastTime(SpellEntry const* spellInfo, Spell const* spel
     if (!castTime)
         return 0;
 
+    if (spellInfo->SpellFamilyName == SPELLFAMILY_HUNTER && spellInfo->SpellFamilyFlags & 0x100020000LL)
+        castTime += 500;
+
     if (spell)
     {
         if (Player* modOwner = spell->GetCaster()->GetSpellModOwner())
@@ -284,7 +287,8 @@ uint32 SpellMgr::GetSpellCastTime(SpellEntry const* spellInfo, Spell const* spel
         }
     }
 
-    if (spellInfo->Attributes & SPELL_ATTR_RANGED && (!spell || !(spell->IsAutoRepeat())))
+    if (!(spellInfo->SpellFamilyFlags & 0x100020000LL) 
+        && spellInfo->Attributes & SPELL_ATTR_RANGED && (!spell || !(spell->IsAutoRepeat())))
         castTime += 500;
 
     return (castTime > 0) ? uint32(castTime) : 0;
