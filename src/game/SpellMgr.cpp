@@ -270,7 +270,7 @@ uint32 SpellMgr::GetSpellCastTime(SpellEntry const* spellInfo, Spell const* spel
     if (!castTime)
         return 0;
 
-    if (spellInfo->SpellFamilyName == SPELLFAMILY_HUNTER && spellInfo->SpellFamilyFlags & 0x100020000LL) //steady shot and autoshot
+    if (spellInfo->SpellFamilyName == SPELLFAMILY_HUNTER && spellInfo->SpellFamilyFlags & 0x100020000LL) //steady shot and aimed shot
         castTime += 500;
 
     if (spell)
@@ -287,7 +287,7 @@ uint32 SpellMgr::GetSpellCastTime(SpellEntry const* spellInfo, Spell const* spel
         }
     }
 
-    if (!(spellInfo->SpellFamilyFlags & 0x100020000LL) //steady shot and autoshot allready included above
+    if (!(spellInfo->SpellFamilyFlags & 0x100020000LL) //steady shot and aimed shot allready included above
         && spellInfo->Attributes & SPELL_ATTR_RANGED && (!spell || !(spell->IsAutoRepeat())))
         castTime += 500;
 
