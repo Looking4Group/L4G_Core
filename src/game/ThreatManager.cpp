@@ -103,7 +103,7 @@ void HostilReference::fireStatusChanged(ThreatRefStatusChangeEvent& pThreatRefSt
 void HostilReference::addThreat(float pMod)
 {
     if (pMod + iThreat < 0)
-    pMod = -iThreat;
+        pMod = -iThreat;
 
     iThreat += pMod;
     // the threat is changed. Source and target unit have to be availabe

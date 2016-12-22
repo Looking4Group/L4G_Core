@@ -3982,6 +3982,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                         return SPELL_FAILED_LINE_OF_SIGHT;
                 }
                 else
+                {
                     if (m_triggeredByAuraSpell)              // not report pet not existence for triggered spells
                         return SPELL_FAILED_DONT_REPORT;
                     else
