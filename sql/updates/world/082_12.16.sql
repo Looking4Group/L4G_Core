@@ -533,3 +533,6 @@ INSERT INTO `waypoint_data` VALUES (70923, 27, -4186.46, 1515.45, 114.312, 0, 0,
 INSERT INTO `waypoint_data` VALUES (70923, 28, -4208.12, 1518.04, 119.038, 0, 0, 0, 100, 0);
 
 UPDATE `creature_template` SET `faction_A` = 35, `faction_H` = 35 WHERE `entry` = 22860;
+
+-- Remove waypoints spawned with the old system
+DELETE FROM `creature` WHERE `id` = 1;
