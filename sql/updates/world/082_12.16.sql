@@ -536,3 +536,7 @@ UPDATE `creature_template` SET `faction_A` = 35, `faction_H` = 35 WHERE `entry` 
 
 -- Remove waypoints spawned with the old system
 DELETE FROM `creature` WHERE `id` = 1;
+
+-- BT Pre Cont.
+DELETE FROM `creature_questrelation` WHERE `quest` = 10944;
+INSERT INTO `creature_questrelation` (`id`,`quest`) VALUES ('22820','10944');
