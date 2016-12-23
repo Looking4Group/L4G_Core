@@ -3118,13 +3118,24 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->speed = 0;
                 spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
                 break;
-        // Spells that should not put you in combat credits by robinsch
-        case 33619: // Reflective Shield
-        case 13810: // Frost Trap
-        case 34919: // Vampiric Touch (Energize)
-        case 15290: // Vampiric Embrace (Healing)
-        spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO; // Do not put caster in combat after use
-        break;
+            // Spells that should not put you in combat credits by robinsch
+            case 33619: // Reflective Shield
+            case 13810: // Frost Trap
+            case 34919: // Vampiric Touch (Energize)
+            case 15290: // Vampiric Embrace (Healing)
+            //bonfire, campfire and other should not put you in combat (SPELL_EFFECT_ENVIRONMENTAL_DAMAGE)
+            case 7897:
+            case 7902: 
+            case 12796:
+            case 20533:
+            case 20676:
+            case 21650:
+            case 23485: 
+            case 29115:
+            case 32204:
+            case 33826:
+                spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
+                break;
             // Triggered spells that should be delayed
             case 32848:                     // Mana Restore
             case 14189:                     // Seal Fate
