@@ -557,6 +557,7 @@ void WorldSession::LogoutPlayer(bool Save)
             {
                  _player->RemoveSpellsCausingAura(SPELL_AURA_MOD_UNATTACKABLE);
                  _player->RemoveCharmAuras();
+                 _player->RemoveFlag(UNIT_FIELD_FLAGS_2, UNIT_FLAG2_FEIGN_DEATH);
             }
         }
 
