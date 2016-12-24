@@ -553,15 +553,15 @@ void WorldSession::LogoutPlayer(bool Save)
                 _player->BuildPlayerRepop();
                 _player->RepopAtGraveyard();
             }
-            else if (_player->HasFlag(UNIT_FIELD_FLAGS_2, UNIT_FLAG2_FEIGN_DEATH))
-            {
-                // this will fix permanent death state bug after relog
-                 _player->RemoveFlag(UNIT_FIELD_FLAGS_2, UNIT_FLAG2_FEIGN_DEATH);
-            }
             else
             {
-                 _player->RemoveSpellsCausingAura(SPELL_AURA_MOD_UNATTACKABLE);
-                 _player->RemoveCharmAuras();
+                _player->RemoveSpellsCausingAura(SPELL_AURA_MOD_UNATTACKABLE);
+                _player->RemoveCharmAuras();
+            }
+            if (_player->HasFlag(UNIT_FIELD_FLAGS_2, UNIT_FLAG2_FEIGN_DEATH)) 
+            {
+                // this will fix permanent death state bug after relog
+                _player->RemoveFlag(UNIT_FIELD_FLAGS_2, UNIT_FLAG2_FEIGN_DEATH);
             }
         }
 
