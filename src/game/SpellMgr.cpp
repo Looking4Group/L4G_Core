@@ -3102,7 +3102,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 5171:
             case 6774:                     // Slice'n'Dice
-        spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
+                spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
                 break;
             /* SHAMAN CUSTOM ATTRIBUTES */
             case 2895:                      // Wrath of Air Totem - disallow weird stacking
@@ -3118,13 +3118,13 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->speed = 0;
                 spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
                 break;
-        // Spells that should not put you in combat credits by robinsch
-        case 33619: // Reflective Shield
-        case 13810: // Frost Trap
-        case 34919: // Vampiric Touch (Energize)
-        case 15290: // Vampiric Embrace (Healing)
-        spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO; // Do not put caster in combat after use
-        break;
+            // Spells that should not put you in combat credits by robinsch
+            case 33619: // Reflective Shield
+            case 13810: // Frost Trap
+            case 34919: // Vampiric Touch (Energize)
+            case 15290: // Vampiric Embrace (Healing)
+                spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO; // Do not put caster in combat after use
+                break;
             // Triggered spells that should be delayed
             case 32848:                     // Mana Restore
             case 14189:                     // Seal Fate
