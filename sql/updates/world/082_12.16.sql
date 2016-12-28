@@ -556,3 +556,8 @@ INSERT INTO `creature` (`guid`, `id`, `map`, `spawnMask`, `modelid`, `equipment_
 -- Makes small combat dummies not targetable.
 
 UPDATE `creature_template` SET `unit_flags`=33554688 WHERE `entry` = 17060;
+
+-- https://github.com/cmangos/tbc-db/issues/6
+-- Add stealth detection to Phantom Valets (Karazhan)
+DELETE FROM `creature_template_addon` WHERE `entry` = 16408;
+INSERT INTO `creature_template_addon` VALUES (16408, 0, 0, 0, 0, 0, 0, 0, '18950 0 18950 1');
