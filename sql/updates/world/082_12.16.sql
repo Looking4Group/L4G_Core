@@ -544,3 +544,15 @@ INSERT INTO `creature_questrelation` (`id`,`quest`) VALUES ('22820','10944');
 -- Fixed return lines for GO 21004 (Monument to Grom Hellscream) in Ashenvale
 -- Thanks @Phatcat for reporting
 UPDATE `page_text` SET `text` = 'Here lies Grommash Hellscream, Chieftain of the Warsong Clan$B$BIn many ways, the curse of our people began and ended with Grom.$BHis name meant \'giants heart\' in our ancient tongue. He earned that \nname a hundred-fold as he stood alone before the demon Mannoroth$B- and won our freedom with his blood.$B$BLok\'Tar ogar, big brother. May the Warsong never fade.$B$B-Thrall, Warchief of the Horde' WHERE `entry` = 2211;
+
+SET @CGUID := 150195;
+DELETE FROM `creature` WHERE `guid` BETWEEN @CGUID AND @CGUID+3;
+INSERT INTO `creature` (`guid`, `id`, `map`, `spawnMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES 
+(@CGUID+0, 17059, 530, 1, 0, 0, -1309.493, 2774.156, -26.95394, 4.363323, 300, 0, 0, 2200, 0, 0, 0), -- 17059 (Area: 3546)
+(@CGUID+1, 17059, 530, 1, 0, 0, -1304.588, 2771.275, -27.02782, 3.996804, 300, 0, 0, 2200, 0, 0, 0), -- 17059 (Area: 3546)
+(@CGUID+2, 17059, 530, 1, 0, 0, -1321.134, 2771.165, -26.57714, 5.654867, 300, 0, 0, 2200, 0, 0, 0), -- 17059 (Area: 3546)
+(@CGUID+3, 17059, 530, 1, 0, 0, -1315.754, 2774.218, -26.85213, 5.009095, 300, 0, 0, 2200, 0, 0, 0); -- 17059 (Area: 3546)?
+
+-- Makes small combat dummies not targetable.
+
+UPDATE `creature_template` SET `unit_flags`=33554688 WHERE `entry` = 17060;
