@@ -578,3 +578,12 @@ UPDATE `creature` SET `spawntimesecs`= 43200 WHERE `id` = 23008;
 
 -- Remove Seasonal Winter Hats as they should have the gameevent as loot condition
 DELETE FROM `creature_loot_template` WHERE `entry` IN (9019,9237,10997,17862,20521,19221,21536,17975,21558,1853,10899,11486,16807,20568,18732,20653,18373,20306) AND `item` IN (21524,21525);
+
+-- Madrigosa script target fix
+-- not implemented yet
+DELETE FROM spell_script_target WHERE entry = 46609;
+INSERT INTO spell_script_target (entry,type,targetEntry) VALUES
+(46609,1,19871);
+
+-- Void Sentinal Summoner 25782
+UPDATE creature_template SET `MinLevel` = 70, `MaxLevel` = 70, `Faction_A`=114, `Faction_H` = 114, `MinHealth` = 6602, `MaxHealth` = 6602, `mindmg` = 252, `maxdmg` = 357, `minrangedmg` = 215, `maxrangedmg` = 320, `unit_flags` = `unit_flags`|33554688, `armor` = 6792, `attackpower` = 304, `rangedattackpower` = 44 WHERE `entry` = 25782;
