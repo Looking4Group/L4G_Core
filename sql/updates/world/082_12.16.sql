@@ -566,3 +566,12 @@ INSERT INTO `creature_template_addon` VALUES (16408, 0, 0, 0, 0, 0, 0, 0, '18950
 UPDATE gameobject SET spawntimesecs = 450 WHERE id IN (141812,141857,141858,141859);
 UPDATE gameobject_template SET flags = 4 WHERE entry IN (141812,141857,141858,141859);
 UPDATE `creature` SET `spawntimesecs` = 450 WHERE `id`  IN (7668,7669,7670,7671);
+
+-- https://github.com/Looking4Group/L4G_Core/issues/2064
+-- temporary remove pooling of heavily farmed npcs due to core issue
+DELETE FROM `pool_creature` WHERE `pool_entry` = 30047;
+UPDATE `creature` SET `spawntimesecs`= 3600 WHERE `id` = 23029;
+-- https://github.com/Looking4Group/L4G_Core/issues/2717
+-- should not even be ingame on current patch
+DELETE FROM `pool_creature` WHERE `pool_entry` = 30041;
+UPDATE `creature` SET `spawntimesecs`= 43200 WHERE `id` = 23008;
