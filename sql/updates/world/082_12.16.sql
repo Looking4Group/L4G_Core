@@ -587,3 +587,75 @@ INSERT INTO spell_script_target (entry,type,targetEntry) VALUES
 
 -- Void Sentinal Summoner 25782
 UPDATE creature_template SET `MinLevel` = 70, `MaxLevel` = 70, `Faction_A`=114, `Faction_H` = 114, `MinHealth` = 6602, `MaxHealth` = 6602, `mindmg` = 252, `maxdmg` = 357, `minrangedmg` = 215, `maxrangedmg` = 320, `unit_flags` = `unit_flags`|33554688, `armor` = 6792, `attackpower` = 304, `rangedattackpower` = 44 WHERE `entry` = 25782;
+
+-- ===============
+-- Fix Portal Name
+-- ===============
+UPDATE areatrigger_teleport SET name='Blackrock Depths - Main Entrance' WHERE id=2890;
+
+-- ===============================================================
+-- Fix Creature_Template For Vendor Data (Missing From Innkeepers)
+-- ===============================================================
+UPDATE creature_template set NpcFlag=NpcFlag|640 WHERE entry IN (15433,21088);
+
+DELETE FROM `npc_vendor` WHERE `entry` = 15433;
+INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost`) VALUES (15433, 159, 0, 0, 0);
+INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost`) VALUES (15433, 1179, 0, 0, 0);
+INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost`) VALUES (15433, 1205, 0, 0, 0);
+INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost`) VALUES (15433, 1645, 0, 0, 0);
+INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost`) VALUES (15433, 1708, 0, 0, 0);
+INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost`) VALUES (15433, 4540, 0, 0, 0);
+INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost`) VALUES (15433, 4541, 0, 0, 0);
+INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost`) VALUES (15433, 4542, 0, 0, 0);
+INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost`) VALUES (15433, 4544, 0, 0, 0);
+INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost`) VALUES (15433, 4601, 0, 0, 0);
+INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost`) VALUES (15433, 8766, 0, 0, 0);
+INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost`) VALUES (15433, 8950, 0, 0, 0);
+
+-- ===============================================
+-- Add Several Spell Targets (Gnarlpine Vengeance)
+-- ===============================================
+DELETE FROM `spell_script_target` WHERE `entry` = 5628;
+INSERT INTO spell_script_target VALUES 
+(5628, 1, 2006),
+(5628, 1, 2007),
+(5628, 1, 2008),
+(5628, 1, 2009),
+(5628, 1, 2010),
+(5628, 1, 2011),
+(5628, 1, 2012),
+(5628, 1, 2013),
+(5628, 1, 2014);
+
+-- Gnarlpine Augur
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 2011;
+INSERT INTO `creature_ai_scripts` VALUES
+('201101','2011','0','0','100','1','6000','11000','9000','16000','11','702','4','32','0','0','0','0','0','0','0','0','Gnarlpine Augur - Cast Curse of Weakness'),
+('201102','2011','6','0','100','0','0','0','0','0','11','5628','0','7','0','0','0','0','0','0','0','0','Gnarlpine Augur - Cast Gnarlpine Vengeance on Death');
+
+-- Razormane Hunter
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 3265;
+INSERT INTO `creature_ai_scripts` VALUES
+('326500','3265','0','0','100','7','1000','1000','2000','2000','21','1','0','0','40','1','0','0','0','0','0','0','Razormane Hunter - Start Movement and Set Melee Weapon Model'),
+('326501','3265','1','0','100','0','0','0','0','0','11','6479','0','7','0','0','0','0','0','0','0','0','Razormane Hunter - Spawn Razormane Wolf (Entry 3939) on Spawn'),
+('326502','3265','9','0','100','1','5','25','2300','3900','40','2','0','0','11','6660','1','0','0','0','0','0','Razormane Hunter - Set Ranged Weapon Model and Cast Shoot'),
+('326503','3265','9','0','100','1','25','80','0','0','21','1','1','0','20','1','0','0','0','0','0','0','Razormane Hunter - Start Combat Movement and Start Melee over 25th yard'),
+('326504','3265','9','0','100','1','10','25','0','0','21','0','1','0','20','0','0','0','0','0','0','0','Razormane Hunter - Prevent Combat Movement and Prevent Melee between 10 and 25 yard '),
+('326505','3265','2','0','100','0','15','0','0','0','25','0','0','0','1','-47','0','0','0','0','0','0','Razormane Hunter - Flee at 15% HP'),
+('326506','3265','9','1','100','3','0','5','0','0','21','1','0','0','40','1','0','0','22','0','0','0','Razormane Hunter - Start Movement and Set Melee Weapon Model and Set Phase 0 Below 6 Yards (Phase 1)'),
+('326507','3265','7','0','100','0','0','0','0','0','22','1','0','0','40','1','0','0','21','1','0','0','Razormane Hunter - Set Phase 1 and Set Melee Weapon Model and Start Movement on Evade'),
+('326508','3265','9','0','100','7','6','30','0','0','21','0','0','0','40','2','0','0','22','1','0','0','Razormane Hunter - Stop Movement and Set Ranged Weapon Model and Set Phase 1 Above 5 Yards (Phase 0)');
+
+DELETE FROM `creature_ai_texts` WHERE `entry` BETWEEN -10020 AND -10001;
+
+-- Son of Cenarius 4057
+UPDATE `creature_template` SET `AIName`='EventAI' WHERE `entry` = 4057;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 4057;
+INSERT INTO `creature_ai_scripts` VALUES    
+('405701','4057','11','0','100','0','0','0','0','0','11','7993','0','7','0','0','0','0','0','0','0','0','Son of Cenarius - Summon Treant Ally on Spawn');
+
+-- =======================================================
+-- Delete Extra Trent Ally Spawns (Summoned By Spell Only)
+-- =======================================================
+DELETE FROM creature WHERE id = 5806;
+DELETE FROM creature_addon WHERE guid IN (29974,29975,29976,29977,29978,29979,29980);
