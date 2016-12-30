@@ -575,3 +575,6 @@ UPDATE `creature` SET `spawntimesecs`= 3600 WHERE `id` = 23029;
 -- should not even be ingame on current patch
 DELETE FROM `pool_creature` WHERE `pool_entry` = 30041;
 UPDATE `creature` SET `spawntimesecs`= 43200 WHERE `id` = 23008;
+
+-- Remove Seasonal Winter Hats as they should have the gameevent as loot condition
+DELETE FROM `creature_loot_template` WHERE `entry` IN (9019,9237,10997,17862,20521,19221,21536,17975,21558,1853,10899,11486,16807,20568,18732,20653,18373,20306) AND `item` IN (21524,21525);
