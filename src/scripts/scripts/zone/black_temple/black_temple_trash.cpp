@@ -4001,7 +4001,7 @@ struct mob_bonechewer_brawlerAI: public ScriptedAI
     {
         ClearCastQueue();
 
-        Enrage = urand(15000, 25000);
+        Enrage = urand(7000, 14000);
     }
 
     void EnterCombat(Unit *) { DoZoneInCombat(80.0f); }
@@ -4023,7 +4023,7 @@ struct mob_bonechewer_brawlerAI: public ScriptedAI
         if(Enrage < diff)
         {
             AddSpellToCast(me, SPELL_ENRAGE_2);
-            Enrage = 25000;
+            Enrage = urand(21000, 28000);
         }
         else
             Enrage -= diff;
