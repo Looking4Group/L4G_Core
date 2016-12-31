@@ -837,7 +837,7 @@ struct mob_bonechewer_taskmasterAI : public ScriptedAI
 
     void Reset()
     {
-        disgruntledTimer = 20000;
+        disgruntledTimer = urand(7000, 13000);
         disgruntledCasted = false;
     }
 
