@@ -663,3 +663,52 @@ DELETE FROM creature_addon WHERE guid IN (29974,29975,29976,29977,29978,29979,29
 DELETE FROM `creature_equip_template` WHERE `entry` = 4001;
 INSERT INTO `creature_equip_template` (`entry`, `equipmodel1`, `equipmodel2`, `equipmodel3`, `equipinfo1`, `equipinfo2`, `equipinfo3`, `equipslot1`, `equipslot2`, `equipslot3`) VALUES
 (4001, 45947, 0, 0, 50268674, 0, 0, 529, 0, 0);
+
+-- trigger
+UPDATE `creature_template` SET `InhabitType` = 7 WHERE `entry` = 20736;
+
+DELETE FROM `creature` WHERE `guid` = 56870;
+INSERT INTO `creature` (`guid`, `id`, `map`, `spawnMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES (56870, 16221, 530, 1, 0, 0, 9310.94, -7261.34, 13.2628, 5.12366, 300, 0, 0, 267, 0, 0, 2);
+DELETE FROM `creature_addon` WHERE `guid` = 56870;
+INSERT INTO `creature_addon` VALUES (56870, 56870, 0, 16777472, 0, 4097, 0, 0, '');
+DELETE FROM `waypoint_data` WHERE `id` = 56870;
+INSERT INTO `waypoint_data` (`id`, `point`, `position_x`, `position_y`, `position_z`, `delay`, `move_type`, `action`, `action_chance`, `wpguid`) VALUES (56870, 1, 9313.76, -7233.52, 14.3607, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` (`id`, `point`, `position_x`, `position_y`, `position_z`, `delay`, `move_type`, `action`, `action_chance`, `wpguid`) VALUES (56870, 2, 9321.56, -7210.41, 14.9568, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` (`id`, `point`, `position_x`, `position_y`, `position_z`, `delay`, `move_type`, `action`, `action_chance`, `wpguid`) VALUES (56870, 3, 9324.87, -7190.41, 15.5912, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` (`id`, `point`, `position_x`, `position_y`, `position_z`, `delay`, `move_type`, `action`, `action_chance`, `wpguid`) VALUES (56870, 4, 9322.9, -7169.13, 15.6939, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` (`id`, `point`, `position_x`, `position_y`, `position_z`, `delay`, `move_type`, `action`, `action_chance`, `wpguid`) VALUES (56870, 5, 9315.66, -7141.71, 16.3783, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` (`id`, `point`, `position_x`, `position_y`, `position_z`, `delay`, `move_type`, `action`, `action_chance`, `wpguid`) VALUES (56870, 6, 9308.27, -7128.08, 16.3927, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` (`id`, `point`, `position_x`, `position_y`, `position_z`, `delay`, `move_type`, `action`, `action_chance`, `wpguid`) VALUES (56870, 7, 9288.27, -7098.95, 15.0777, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` (`id`, `point`, `position_x`, `position_y`, `position_z`, `delay`, `move_type`, `action`, `action_chance`, `wpguid`) VALUES (56870, 8, 9282.51, -7083.99, 12.7755, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` (`id`, `point`, `position_x`, `position_y`, `position_z`, `delay`, `move_type`, `action`, `action_chance`, `wpguid`) VALUES (56870, 9, 9283.83, -7072.6, 11.6658, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` (`id`, `point`, `position_x`, `position_y`, `position_z`, `delay`, `move_type`, `action`, `action_chance`, `wpguid`) VALUES (56870, 10, 9279.03, -7084.2, 12.8351, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` (`id`, `point`, `position_x`, `position_y`, `position_z`, `delay`, `move_type`, `action`, `action_chance`, `wpguid`) VALUES (56870, 11, 9285.3, -7100.68, 15.1796, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` (`id`, `point`, `position_x`, `position_y`, `position_z`, `delay`, `move_type`, `action`, `action_chance`, `wpguid`) VALUES (56870, 12, 9305.98, -7130.13, 16.3521, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` (`id`, `point`, `position_x`, `position_y`, `position_z`, `delay`, `move_type`, `action`, `action_chance`, `wpguid`) VALUES (56870, 13, 9313.23, -7142.95, 16.3343, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` (`id`, `point`, `position_x`, `position_y`, `position_z`, `delay`, `move_type`, `action`, `action_chance`, `wpguid`) VALUES (56870, 14, 9320.03, -7170.39, 15.744, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` (`id`, `point`, `position_x`, `position_y`, `position_z`, `delay`, `move_type`, `action`, `action_chance`, `wpguid`) VALUES (56870, 15, 9321.99, -7191.2, 15.5395, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` (`id`, `point`, `position_x`, `position_y`, `position_z`, `delay`, `move_type`, `action`, `action_chance`, `wpguid`) VALUES (56870, 16, 9318.65, -7209.67, 15.0213, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` (`id`, `point`, `position_x`, `position_y`, `position_z`, `delay`, `move_type`, `action`, `action_chance`, `wpguid`) VALUES (56870, 17, 9311.12, -7233.62, 14.4968, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` (`id`, `point`, `position_x`, `position_y`, `position_z`, `delay`, `move_type`, `action`, `action_chance`, `wpguid`) VALUES (56870, 18, 9310.98, -7261.15, 13.2516, 180000, 0, 0, 0, 0);
+DELETE FROM `creature_formations` WHERE `leaderguid` = 56871;
+INSERT INTO `creature_formations` VALUES
+(56870,56870,100,360,2),
+(56870,56871,2,4.71,2);
+
+UPDATE `creature` SET `spawndist` = 5, `MovementType` = 1 WHERE `id` = 18467;
+UPDATE `creature` SET `position_x`='-2794.2963', `position_y`='4552.5883', `position_z`='-5.3070' WHERE `guid` = 66272;
+UPDATE `creature` SET `spawndist` = 5 WHERE `guid` = 86064;
+UPDATE `creature` SET `spawndist` = 0, `MovementType` = 0 WHERE `guid` IN (13092,23709,43211,43212);
+
+-- Cleanup
+UPDATE `creature`, `creature_template` SET `creature`.`curhealth` = `creature_template`.`MinHealth`, `creature`.`curmana` = `creature_template`.`MinMana` WHERE `creature`.`id` = `creature_template`.`entry` AND `creature_template`.`RegenHealth` & '1';
+DELETE FROM `creature_addon` WHERE `path_id`=0 AND `mount`=0 AND `bytes1`=0 AND `bytes2`=0 AND `emote`=0 AND `auras` IS NULL;
+DELETE FROM `creature_template_addon` WHERE `path_id`=0 AND `mount`=0 AND `bytes1`=0 AND `bytes2`=0 AND `emote`=0 AND `auras` IS NULL;
+UPDATE `creature` SET `MovementType` = 0 WHERE `spawndist` = 0 AND `MovementType`=1;
+UPDATE `creature` SET `spawndist`=0 WHERE `MovementType`=0;
+UPDATE creature_addon SET moveflags=moveflags &~ 0x00000100; -- MONSTER_MOVE_TELEPORT
+UPDATE creature_addon SET moveflags=moveflags &~ 0x00000800; -- MONSTER_MOVE_UNK1 (can crash client)
+UPDATE creature_addon SET moveflags=moveflags &~ 0x00200000; -- MONSTER_MOVE_UNK4 (can crash client)
+UPDATE creature_template_addon SET moveflags=moveflags &~ 0x00000100;
+UPDATE creature_template_addon SET moveflags=moveflags &~ 0x00000800;
+UPDATE creature_template_addon SET moveflags=moveflags &~ 0x00200000;
