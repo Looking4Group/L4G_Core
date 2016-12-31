@@ -659,3 +659,7 @@ INSERT INTO `creature_ai_scripts` VALUES
 -- =======================================================
 DELETE FROM creature WHERE id = 5806;
 DELETE FROM creature_addon WHERE guid IN (29974,29975,29976,29977,29978,29979,29980);
+
+DELETE FROM `creature_equip_template` WHERE `entry` = 4001;
+INSERT INTO `creature_equip_template` (`entry`, `equipmodel1`, `equipmodel2`, `equipmodel3`, `equipinfo1`, `equipinfo2`, `equipinfo3`, `equipslot1`, `equipslot2`, `equipslot3`) VALUES
+(4001, 45947, 0, 0, 50268674, 0, 0, 529, 0, 0);
