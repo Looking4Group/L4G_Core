@@ -3026,7 +3026,7 @@ struct mob_shadowmoon_reaverAI : public ScriptedAI
     {
         ClearCastQueue();
 
-        SpellAbsorption = 10000;
+        SpellAbsorption = urand(5000, 11000);
         ShadowResonance = urand(5000, 20000);
     }
     void EnterCombat(Unit*) { DoZoneInCombat(80.0f); }
@@ -3039,7 +3039,7 @@ struct mob_shadowmoon_reaverAI : public ScriptedAI
         if(SpellAbsorption < diff)
         {
             AddSpellToCast(me, SPELL_SPELL_ABSORPTION);
-            SpellAbsorption = 40000;
+            SpellAbsorption = urand(20000, 24000);
         }
         else
             SpellAbsorption -= diff;
