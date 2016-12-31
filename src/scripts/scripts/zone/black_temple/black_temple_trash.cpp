@@ -1281,9 +1281,9 @@ struct mob_illidari_fearbringerAI : public ScriptedAI
         ClearCastQueue();
 
         checkTimer = 2000;
-        flamesTimer = 5000 + urand(0, 10000);
-        rainTimer = 15000 + urand(0, 10000);
-        stompTimer = 10000 + urand(0, 10000);
+        flamesTimer = urand(12000, 19000);
+        rainTimer = urand(8000, 14000);
+        stompTimer = urand(9000, 14000);
     }
 
     void EnterCombat(Unit *who) { DoZoneInCombat(80.0f); }
@@ -1303,7 +1303,7 @@ struct mob_illidari_fearbringerAI : public ScriptedAI
         if (flamesTimer < diff)
         {
             AddSpellToCast(me->getVictim(), SPELL_FEARBRINGER_ILLIDARI_FLAMES);
-            flamesTimer = 10000 + urand(0, 10000);
+            flamesTimer = urand(15000, 20000);
         }
         else
             flamesTimer -= diff;
@@ -1311,7 +1311,7 @@ struct mob_illidari_fearbringerAI : public ScriptedAI
         if (rainTimer < diff)
         {
             AddSpellToCast(SelectUnit(SELECT_TARGET_RANDOM, 0, 50, true), SPELL_FEARBRINGER_RAIN_OF_CHAOS);
-            rainTimer = 20000 + urand(0, 10000);
+            rainTimer = urand(19000, 24000);
         }
         else
             rainTimer -= diff;
@@ -1320,7 +1320,7 @@ struct mob_illidari_fearbringerAI : public ScriptedAI
         {
             AddSpellToCast(me, SPELL_FEARBRINGER_WAR_STOMP);
 
-            stompTimer = 15000 + urand(0, 10000);
+            stompTimer = urand(21000, 26000);
         }
         else
             stompTimer -= diff;
