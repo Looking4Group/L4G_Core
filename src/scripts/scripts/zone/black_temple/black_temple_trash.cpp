@@ -2483,7 +2483,7 @@ struct mob_hand_of_gorefiendAI : public ScriptedAI
 
     void Reset()
     {
-        Enrage = 10000;
+        Enrage = urand(5000, 16000);
     }
     void EnterCombat(Unit*) { DoZoneInCombat(80.0f); }
 
@@ -2495,7 +2495,7 @@ struct mob_hand_of_gorefiendAI : public ScriptedAI
         if(Enrage < diff)
         {
             DoCast(me, SPELL_ENRAGE);
-            Enrage = 30000;
+            Enrage = urand(45000, 60000);
         }
         else
             Enrage -= diff;
