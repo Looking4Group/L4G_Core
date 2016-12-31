@@ -4216,7 +4216,7 @@ struct mob_angered_soul_fragmentAI: public ScriptedAI
     {
         ClearCastQueue();
 
-        Anger = urand(1500, 6000);
+        Anger = 1000;
     }
 
     void EnterCombat(Unit *)
@@ -4237,7 +4237,7 @@ struct mob_angered_soul_fragmentAI: public ScriptedAI
         if(Anger < diff)
         {
             AddSpellToCast(me, SPELL_ANGER);
-            Anger = urand(6000, 16000);
+            Anger = urand(7000, 11000);
         }
         else
             Anger -=diff;
