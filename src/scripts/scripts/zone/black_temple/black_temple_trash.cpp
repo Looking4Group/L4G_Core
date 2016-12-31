@@ -4424,7 +4424,7 @@ struct mob_pristess_of_dementiaAI: public ScriptedAI
                 if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, 200.0f, true))
                 {
                     target->GetNearPoint(x, y, z, 5.0f);
-                    me->SummonCreature(NPC_IMAGE_OF_DEMENTIA, x, y, z, 0, TEMPSUMMON_TIMED_DESPAWN, 17500);
+                    me->SummonCreature(NPC_IMAGE_OF_DEMENTIA, x, y, z, 0, TEMPSUMMON_TIMED_DESPAWN, 20000);
                 }
             }
             ImageSummon = urand(25000, 35000);
