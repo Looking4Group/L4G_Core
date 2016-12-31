@@ -690,7 +690,7 @@ INSERT INTO `waypoint_data` (`id`, `point`, `position_x`, `position_y`, `positio
 INSERT INTO `waypoint_data` (`id`, `point`, `position_x`, `position_y`, `position_z`, `delay`, `move_type`, `action`, `action_chance`, `wpguid`) VALUES (56870, 16, 9318.65, -7209.67, 15.0213, 0, 0, 0, 0, 0);
 INSERT INTO `waypoint_data` (`id`, `point`, `position_x`, `position_y`, `position_z`, `delay`, `move_type`, `action`, `action_chance`, `wpguid`) VALUES (56870, 17, 9311.12, -7233.62, 14.4968, 0, 0, 0, 0, 0);
 INSERT INTO `waypoint_data` (`id`, `point`, `position_x`, `position_y`, `position_z`, `delay`, `move_type`, `action`, `action_chance`, `wpguid`) VALUES (56870, 18, 9310.98, -7261.15, 13.2516, 180000, 0, 0, 0, 0);
-DELETE FROM `creature_formations` WHERE `leaderguid` = 56871;
+DELETE FROM `creature_formations` WHERE `leaderguid` = 56870;
 INSERT INTO `creature_formations` VALUES
 (56870,56870,100,360,2),
 (56870,56871,2,4.71,2);
