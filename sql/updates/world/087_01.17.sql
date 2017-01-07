@@ -55,3 +55,14 @@ INSERT INTO `creature_ai_texts` (`entry`, `content_default`, `sound`, `type`, `l
 ('-31','is splashed by the blood and becomes irradiated!','0','2','0','Common Gnomeregan Emote','0'),
 ('-32','Electric justice!','5811','1','0','6235','0'),
 ('-33','Warning! Warning! Intruder alert! Intruder alert!','0','1','0','7849','0');
+
+-- Invis Legion Hold Caster
+UPDATE `creature` SET `spawndist` = 0, `MovementType` = 0 WHERE `id` = 21403;
+UPDATE `creature_template` SET `AIName`='EventAI' WHERE `entry` = 21403;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 21403;
+INSERT INTO `creature_ai_scripts` VALUES
+(2140301, 21403, 1, 0, 100, 1, 1000, 1000, 4000, 4000, 11, 36804, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Invis Legion Hold Caster - Cast Electrical Shock OOC');
+
+DELETE FROM `spell_script_target` WHERE `entry` = 36804;
+INSERT INTO `spell_script_target` VALUES
+(36804, 1, 21404);
