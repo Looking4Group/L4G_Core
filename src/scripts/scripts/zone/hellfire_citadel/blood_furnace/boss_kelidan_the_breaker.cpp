@@ -304,7 +304,7 @@ struct mob_shadowmoon_channelerAI : public ScriptedAI
         if (Creature *Kelidan = (Creature *)FindCreature(ENTRY_KELIDAN, 30, m_creature))
             ((boss_kelidan_the_breakerAI*)Kelidan->AI())->m_creature->GetPosition(kelidanWorldLoc);
 
-        m_creature->GetPosition(wLoc);
+        m_creature->GetPosition(summonerWorldLoc);
     }
 
     ScriptedInstance* pInstance;
@@ -314,7 +314,7 @@ struct mob_shadowmoon_channelerAI : public ScriptedAI
     uint32 check_Timer;
 
     WorldLocation kelidanWorldLoc;
-    WorldLocation wLoc;
+    WorldLocation summonerWorldLoc;
 
     void Reset()
     {
@@ -348,7 +348,7 @@ struct mob_shadowmoon_channelerAI : public ScriptedAI
         {
             if (check_Timer < diff)
             {
-                if (!m_creature->IsWithinDistInMap(&wLoc, 0.5f))
+                if (!m_creature->IsWithinDistInMap(&summonerWorldLoc, 0.5f))
                 {
                     EnterEvadeMode();
                 }
