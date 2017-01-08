@@ -374,7 +374,7 @@ struct mob_shadowmoon_channelerAI : public ScriptedAI
         {
             if (check_Timer < diff)
             {
-                if (!m_creature->IsWithinDistInMap(&kelidanWorldLoc, 120.0f)) // If they die too far away from Kelidan he will be forever non-attackable. Search range is 100. 120 is safe because there's about 20y between the summoners and the boss's home locations and only one summoner needs to be in range on death.
+                if (!m_creature->IsWithinDistInMap(&kelidanWorldLoc, 120.0f)) // If they die too far away from Kelidan he will be forever non-attackable. 
                 {
                     EnterEvadeMode();
                 }
