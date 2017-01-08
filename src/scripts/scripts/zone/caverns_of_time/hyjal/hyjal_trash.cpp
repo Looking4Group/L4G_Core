@@ -1098,7 +1098,7 @@ struct mob_crypt_fiendAI : public hyjal_trashAI
 
     void Reset()
     {
-        WebTimer = 20000+rand()%5000;
+        WebTimer = urand(5000, 10000);
     }
 
     void WaypointReached(uint32 i)
@@ -1177,7 +1177,7 @@ struct mob_crypt_fiendAI : public hyjal_trashAI
         if(WebTimer<diff)
         {
             DoCast(m_creature->getVictim(),SPELL_WEB);
-            WebTimer = 20000+rand()%5000;
+            WebTimer = urand(10000, 14000);
         }
         else
             WebTimer -= diff;
