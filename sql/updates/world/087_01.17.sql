@@ -66,3 +66,16 @@ INSERT INTO `creature_ai_scripts` VALUES
 DELETE FROM `spell_script_target` WHERE `entry` = 36804;
 INSERT INTO `spell_script_target` VALUES
 (36804, 1, 21404);
+
+DELETE FROM `creature_ai_texts` WHERE `entry` BETWEEN -9219 AND -9208;
+DELETE FROM `creature_ai_texts` WHERE `entry` BETWEEN -9399 AND -9301;
+DELETE FROM `creature_ai_texts` WHERE `entry` BETWEEN -9499 AND -9400;
+DELETE FROM `creature_ai_texts` WHERE `entry` BETWEEN -9699 AND -9603;
+DELETE FROM `creature_ai_texts` WHERE `entry` BETWEEN -9720 AND -9707;
+DELETE FROM `creature_ai_texts` WHERE `entry` BETWEEN -9794 AND -9790; 
+DELETE FROM `creature_ai_texts` WHERE `entry` BETWEEN -9847 AND -9830; 
+DELETE FROM `creature_ai_texts` WHERE `entry` BETWEEN -9856 AND -9850;   
+DELETE FROM `creature_ai_texts` WHERE `entry` BETWEEN -9874 AND -9860;  
+DELETE FROM `creature_ai_texts` WHERE `entry` BETWEEN -9896 AND -9880;   
+DELETE FROM `creature_ai_texts` WHERE `entry` BETWEEN -9956 AND -9950;
+DELETE FROM `creature_ai_texts` WHERE `entry` IN (-9900,-9930,-9931,-9990,-9991);
