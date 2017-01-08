@@ -5,8 +5,8 @@
 #include "hyjalAI.h"
 
 #define SPELL_METEOR       33814     //infernal visual
-#define SPELL_IMMOLATION   39007
-#define SPELL_FLAME_BUFFET 31724
+#define SPELL_IMMOLATION   39007    //37059
+#define SPELL_FLAME_BUFFET 31724    //40719
 #define NPC_TRIGGER        21987     //World Trigger (Tiny)
 #define MODEL_INVIS        11686     //invisible model
 
@@ -411,7 +411,7 @@ struct mob_giant_infernalAI : public hyjal_trashAI
     void Reset()
     {
         spawnTimer = 2000;
-        FlameBuffetTimer= 2000;
+        FlameBuffetTimer= urand(2000, 5000);
         imol = false;
     }
 
@@ -512,7 +512,7 @@ struct mob_giant_infernalAI : public hyjal_trashAI
         if(FlameBuffetTimer < diff)
         {
             DoCast(m_creature->getVictim(),SPELL_FLAME_BUFFET,true);
-            FlameBuffetTimer = 7000;
+            FlameBuffetTimer = urand(4000, 7000);
         }
         else
             FlameBuffetTimer -= diff;
