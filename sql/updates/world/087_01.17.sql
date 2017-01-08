@@ -79,3 +79,6 @@ DELETE FROM `creature_ai_texts` WHERE `entry` BETWEEN -9874 AND -9860;
 DELETE FROM `creature_ai_texts` WHERE `entry` BETWEEN -9896 AND -9880;   
 DELETE FROM `creature_ai_texts` WHERE `entry` BETWEEN -9956 AND -9950;
 DELETE FROM `creature_ai_texts` WHERE `entry` IN (-9900,-9930,-9931,-9990,-9991);
+
+-- Reduce Plans: Copper Chain Vest Dropchance on Siltfin Murloc
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 1 WHERE `entry` = 17190 AND `item` = 3609;
