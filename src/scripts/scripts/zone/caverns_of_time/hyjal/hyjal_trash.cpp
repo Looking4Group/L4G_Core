@@ -545,7 +545,7 @@ struct mob_abominationAI : public hyjal_trashAI
     uint32 pos;
     void Reset()
     {
-        KnockDownTimer = 10000;
+        KnockDownTimer = urand(8000,12000);
     }
 
     void WaypointReached(uint32 i)
@@ -619,7 +619,7 @@ struct mob_abominationAI : public hyjal_trashAI
         if(KnockDownTimer<diff)
         {
             DoCast(m_creature->getVictim(),SPELL_KNOCKDOWN);
-            KnockDownTimer = 15000+rand()%10000;
+            KnockDownTimer = urand(12000, 19000);
         }
         else
             KnockDownTimer -= diff;
