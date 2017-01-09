@@ -82,3 +82,29 @@ DELETE FROM `creature_ai_texts` WHERE `entry` IN (-9900,-9930,-9931,-9990,-9991)
 
 -- Reduce Plans: Copper Chain Vest Dropchance on Siltfin Murloc
 UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 1 WHERE `entry` = 17190 AND `item` = 3609;
+
+-- ---------------------------------
+-- [Quest]: How to Serve Goblins. ID: 10238
+-- Solves https://github.com/Looking4Group/L4G_Core/issues/2932 when combined with corescript
+-- ---------------------------------
+
+-- Moh
+UPDATE gameobject_template SET ScriptName = 'go_moh_cage' WHERE entry = 183940; 
+UPDATE creature_template SET ScriptName = 'npc_moh' WHERE entry = 19764;
+UPDATE creature SET spawntimesecs = 181 WHERE guid = 70700; -- 300
+
+-- Jakk
+UPDATE gameobject_template SET ScriptName = 'go_jakk_cage' WHERE entry = 183941;
+UPDATE creature_template SET ScriptName = 'npc_jakk' WHERE entry = 19766;
+UPDATE creature SET spawntimesecs = 181 WHERE guid = 70709; -- 300
+
+-- Manni
+UPDATE gameobject_template SET ScriptName = 'go_manni_cage' WHERE entry = 183936;
+UPDATE creature_template SET ScriptName = 'npc_manni' WHERE entry = 19763;
+UPDATE creature SET spawntimesecs = 181 WHERE guid = 70699; -- 300
+
+DELETE FROM `script_texts` WHERE `entry` BETWEEN -1999972 AND -1999970;
+INSERT INTO `script_texts` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES 
+(-1999972, 'I thought I was a goner for sure.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 71, 'SAY_MOH'),
+(-1999971, 'I don''t know which is worse, getting eaten by fel orcs or working for that slave master Razelcraz! Oh well, thanks anyways!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 66, 'SAY_JAKK'),
+(-1999970, 'Thank goodness you got here, it was almost dinner time!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 70, 'SAY_MANNI');
