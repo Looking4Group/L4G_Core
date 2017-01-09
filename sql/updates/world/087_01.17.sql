@@ -108,3 +108,6 @@ INSERT INTO `script_texts` (`entry`, `content_default`, `content_loc1`, `content
 (-1999972, 'I thought I was a goner for sure.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 71, 'SAY_MOH'),
 (-1999971, 'I don''t know which is worse, getting eaten by fel orcs or working for that slave master Razelcraz! Oh well, thanks anyways!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 66, 'SAY_JAKK'),
 (-1999970, 'Thank goodness you got here, it was almost dinner time!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 70, 'SAY_MANNI');
+
+-- Increase Spawndist due to stacked spawns w8ing for repopulation
+UPDATE `creature` SET `spawndist` = 30 WHERE `id` BETWEEN 17325 AND 17330; -- 5
