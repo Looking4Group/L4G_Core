@@ -111,3 +111,6 @@ INSERT INTO `script_texts` (`entry`, `content_default`, `content_loc1`, `content
 
 -- Increase Spawndist due to stacked spawns w8ing for repopulation
 UPDATE `creature` SET `spawndist` = 30 WHERE `id` BETWEEN 17325 AND 17330; -- 5
+
+-- misplacement
+UPDATE `creature` SET `position_x`='-3840.9509', `position_y`='3430.9916', `position_z`='325.1050', `orientation`='5.8567' WHERE `guid` = 3258602;
