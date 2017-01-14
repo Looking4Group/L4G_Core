@@ -270,6 +270,9 @@ uint32 SpellMgr::GetSpellCastTime(SpellEntry const* spellInfo, Spell const* spel
     if (!castTime)
         return 0;
 
+    if (spellInfo->SpellFamilyName == SPELLFAMILY_HUNTER && spellInfo->SpellFamilyFlags & 0x100020000LL) //steady shot and aimed shot
+        castTime += 500;
+
     if (spell)
     {
         if (Player* modOwner = spell->GetCaster()->GetSpellModOwner())
@@ -284,7 +287,8 @@ uint32 SpellMgr::GetSpellCastTime(SpellEntry const* spellInfo, Spell const* spel
         }
     }
 
-    if (spellInfo->Attributes & SPELL_ATTR_RANGED && (!spell || !(spell->IsAutoRepeat())))
+    if (!(spellInfo->SpellFamilyFlags & 0x100020000LL) //steady shot and aimed shot allready included above
+        && spellInfo->Attributes & SPELL_ATTR_RANGED && (!spell || !(spell->IsAutoRepeat())))
         castTime += 500;
 
     return (castTime > 0) ? uint32(castTime) : 0;
@@ -1075,6 +1079,10 @@ bool SpellMgr::IsBinaryResistable(SpellEntry const* spellInfo)
 
     if(spellInfo->SpellFamilyName)         // only player's spells, bosses don't follow that simple rule
     {
+        //  Frostbolt is no longer a Binary Spell as it was prior to WoW 2.3
+        if (spellInfo->SpellFamilyName == SPELLFAMILY_MAGE && spellInfo->SpellFamilyFlags == 0x000180020LL)
+            return false;
+
         for(int eff = 0; eff < 3; eff++)
         {
             if(!spellInfo->Effect[eff])
@@ -1977,6 +1985,17 @@ bool SpellMgr::IsSpecialNoStackCase(SpellEntry const *spellInfo_1, SpellEntry co
             case 32182:
             // Bloodlust
             case 2825:
+                return true;
+        }
+    }
+
+    // Thunder Clap
+    if (spellInfo_1->Id == 25264)
+    {
+        switch (spellInfo_2->Id)
+        {
+            // Thunderfury
+            case 27648:
                 return true;
         }
     }
@@ -3083,7 +3102,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 5171:
             case 6774:                     // Slice'n'Dice
-        spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
+                spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
                 break;
             /* SHAMAN CUSTOM ATTRIBUTES */
             case 2895:                      // Wrath of Air Totem - disallow weird stacking
@@ -3099,13 +3118,13 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->speed = 0;
                 spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
                 break;
-        // Spells that should not put you in combat credits by robinsch
-        case 33619: // Reflective Shield
-        case 13810: // Frost Trap
-        case 34919: // Vampiric Touch (Energize)
-        case 15290: // Vampiric Embrace (Healing)
-        spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO; // Do not put caster in combat after use
-        break;
+            // Spells that should not put you in combat credits by robinsch
+            case 33619: // Reflective Shield
+            case 13810: // Frost Trap
+            case 34919: // Vampiric Touch (Energize)
+            case 15290: // Vampiric Embrace (Healing)
+                spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO; // Do not put caster in combat after use
+                break;
             // Triggered spells that should be delayed
             case 32848:                     // Mana Restore
             case 14189:                     // Seal Fate
@@ -3119,6 +3138,11 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->AttributesCu |= SPELL_ATTR_CU_FAKE_DELAY;
                 break;
             /* UNSORTED */
+            case 26635: // Troll Racial Berserker
+                spellInfo->Effect[0] = 0;
+                spellInfo->EffectApplyAuraName[1] = SPELL_AURA_MOD_HASTE;
+                spellInfo->EffectBasePoints[1] = 5;
+                break;
             /* Damage Corrections */
             case 33627: // Rain of Fire (Pit Commander)
                 spellInfo->EffectBasePoints[0] = urand(48000, 58000); // Sure not correct WoWhead comments saying about 45 - 58k damage per tick
@@ -3494,7 +3518,11 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->EffectImplicitTargetA[1] = TARGET_UNIT_CASTER;
                 spellInfo->EffectImplicitTargetA[2] = TARGET_UNIT_TARGET_ENEMY;
                 break;
-            case 32785: // Infernal Rain
+            case 32785: // Infernal Rain                
+                spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ENEMY;
+                spellInfo->EffectImplicitTargetB[0] = 0;
+                spellInfo->Effect[2] = 0;
+                break;
             case 30541: // Magtheridon's Blaze
                 spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ENEMY;
                 spellInfo->EffectImplicitTargetB[0] = 0;
@@ -3764,6 +3792,31 @@ void SpellMgr::LoadSpellCustomAttr()
             case 24732:
             case 24733:
                 spellInfo->Mechanic = 0;
+                break;
+            case 39280: //triggering unknown spells; no information available            
+            case 37390:
+                spellInfo->Effect[1] = 0;
+                break;
+            case 34167: //Sunseeker Geomancer AoE spells targeting
+            case 34169:
+            case 34170:
+                spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_AREA_ALLY_SRC;
+                spellInfo->EffectImplicitTargetA[1] = TARGET_UNIT_AREA_ENEMY_SRC;
+                break;
+            case 40176:
+            case 40177:
+            case 40178:
+            case 40179:
+                spellInfo->Targets = TARGET_FLAG_GAMEOBJECT;
+                break;
+            case 26983: //Tranquility targets
+            case 44208: 
+                spellInfo->Targets = TARGET_FLAG_DEST_LOCATION;
+                break;
+            case 18396: //Dismounting blast
+                spellInfo->Effect[0] = 108;
+                spellInfo->EffectImplicitTargetA[0] = 6;
+                spellInfo->EffectMiscValue[0] = 21;
                 break;
             default:
                 break;
@@ -4407,6 +4460,17 @@ uint32 SpellMgr::GetSpellMechanicMask( SpellEntry const* spellInfo, int32 effect
     return mask;
 }
 
+uint32 SpellMgr::GetAllSpellMechanicMask( SpellEntry const* spellInfo )
+{
+    uint32 mask = 0;
+    if (spellInfo->Mechanic)
+        mask |= 1 << (spellInfo->Mechanic - 1);
+    for (int i = 0; i < 3; ++i) // 3 = MAX_EFFECT_INDEX
+        if (spellInfo->EffectMechanic[i])
+            mask |= 1 << (spellInfo->EffectMechanic[i] - 1);
+    return mask;
+}
+
 Mechanics SpellMgr::GetEffectMechanic( SpellEntry const* spellInfo, int32 effect )
 {
     if (spellInfo->EffectMechanic[effect])
@@ -4450,11 +4514,40 @@ DiminishingGroup SpellMgr::GetDiminishingReturnsGroupForSpell(SpellEntry const* 
     // Explicit Diminishing Groups
     switch (spellproto->SpellFamilyName)
     {
+        case SPELLFAMILY_GENERIC:
+ 		{
+            // some generic arena related spells have by some strange reason MECHANIC_TURN
+             if (spellproto->Mechanic == MECHANIC_TURN)
+                 return DIMINISHING_NONE;
+ 			// Hunter Pet Intimidation
+             else if (spellproto->Id == 24394)
+                 return DIMINISHING_CONTROL_STUN;
+ 			// Warlock Pet Intercept (Felguard)
+             else if (spellproto->Id == 30198)
+                 return DIMINISHING_CONTROL_STUN;
+            // Warlock Pet Inferno (Infernal)
+             else if (spellproto->Id == 1122)
+                 return DIMINISHING_CONTROL_STUN;
+ 			// Shaman Stoneclaw Stun (Totem) Trigger
+             else if (spellproto->Id == 39796)
+                 return DIMINISHING_TRIGGER_STUN;
+ 			// Frostbite
+             else if (spellproto->Id == 12494) 
+                 return DIMINISHING_TRIGGER_ROOT;
+             // Stun (Stormherald/Deep Thunder) Needs Trigger Flag
+            else if (spellproto->Id == 34510)
+                return DIMINISHING_TRIGGER_STUN;
+             // Mace Specialization 0 -> Id
+            if (spellproto->Id == 5530)
+                return DIMINISHING_TRIGGER_STUN;
+ 			break;
+ 		}
+
         case SPELLFAMILY_MAGE:
         {
-            // Polymorph
-            if ((spellproto->SpellFamilyFlags & 0x00001000000LL) && spellproto->EffectApplyAuraName[0]==SPELL_AURA_MOD_CONFUSE)
-                return DIMINISHING_POLYMORPH;
+            // Dragon's Breath. This has it's own separate DR for now. It should definitely not be in the same DR as other disorients. It is unclear if it should share DR with Scatter Shot or not.
+            if (spellproto->SpellFamilyFlags & 0x00000800000LL)
+                return DIMINISHING_DRAGONS_BREATH;
             break;
         }
         case SPELLFAMILY_ROGUE:
@@ -4462,38 +4555,25 @@ DiminishingGroup SpellMgr::GetDiminishingReturnsGroupForSpell(SpellEntry const* 
             // Kidney Shot
             if (spellproto->SpellFamilyFlags & 0x00000200000LL)
                 return DIMINISHING_KIDNEYSHOT;
-            // Sap
-            else if (spellproto->SpellFamilyFlags & 0x00000000080LL)
-                return DIMINISHING_POLYMORPH;
-            // Gouge
-            else if (spellproto->SpellFamilyFlags & 0x00000000008LL)
-                return DIMINISHING_POLYMORPH;
             // Blind
             else if (spellproto->SpellFamilyFlags & 0x00001000000LL)
                 return DIMINISHING_BLIND_CYCLONE;
             break;
         }
+        
         case SPELLFAMILY_HUNTER:
         {
             // Freezing trap
             if (spellproto->SpellFamilyFlags & 0x00000000008LL)
                 return DIMINISHING_FREEZE;
-            // Intimidation
-            else if (spellproto->Id == 24394)
-                return DIMINISHING_CONTROL_STUN;
             break;
         }
+        
         case SPELLFAMILY_WARLOCK:
         {
-            // Death Coil
-            if (spellproto->SpellFamilyFlags & 0x00000080000LL)
-                return DIMINISHING_DEATHCOIL;
             // Seduction
-            else if (spellproto->SpellFamilyFlags & 0x00040000000LL)
+            if (spellproto->SpellFamilyFlags & 0x00040000000LL)
                 return DIMINISHING_FEAR;
-            // Fear
-            //else if (spellproto->SpellFamilyFlags & 0x40840000000LL)
-            //    return DIMINISHING_WARLOCK_FEAR;
             // Curses/etc
             else if (spellproto->SpellFamilyFlags & 0x00080000000LL)
                 return DIMINISHING_LIMITONLY;
@@ -4513,6 +4593,9 @@ DiminishingGroup SpellMgr::GetDiminishingReturnsGroupForSpell(SpellEntry const* 
             // Nature's Grasp trigger
             else if (spellproto->SpellFamilyFlags & 0x00000000200LL && spellproto->Attributes == 0x49010000)
                 return DIMINISHING_CONTROL_ROOT;
+            // Celestial Focus Id 16922
+			else if (spellproto->Id == 16922)
+			    return DIMINISHING_TRIGGER_STUN;
             // Feral Charge Root Effect
             else if (spellproto->Id == 45334)
                 return DIMINISHING_NONE;    
@@ -4530,47 +4613,41 @@ DiminishingGroup SpellMgr::GetDiminishingReturnsGroupForSpell(SpellEntry const* 
             // Turn Evil - share group with fear, seduction
             if (spellproto->Id == 10326)
                 return DIMINISHING_FEAR;
+            // Seal of Justice (Seal) trigger
+            else if (spellproto->Id == 20170)
+                return DIMINISHING_TRIGGER_STUN;
             break;
         }
         case SPELLFAMILY_POTION:
             return DIMINISHING_NONE;
         default:
-        {
-            if (spellproto->Id == 12494) // frostbite
-                return DIMINISHING_TRIGGER_ROOT;
             break;
-        }
     }
 
-    // Get by mechanic
-    for (uint8 i=0;i<3;++i)
-    {
-        if (spellproto->Mechanic      == MECHANIC_STUN    || spellproto->EffectMechanic[i] == MECHANIC_STUN)
-            return triggered ? DIMINISHING_TRIGGER_STUN : DIMINISHING_CONTROL_STUN;
-        else if (spellproto->Mechanic == MECHANIC_SLEEP   || spellproto->EffectMechanic[i] == MECHANIC_SLEEP)
-            return DIMINISHING_SLEEP;
-        else if (spellproto->Mechanic == MECHANIC_ROOT    || spellproto->EffectMechanic[i] == MECHANIC_ROOT)
-            return triggered ? DIMINISHING_TRIGGER_ROOT : DIMINISHING_CONTROL_ROOT;
-        else if (spellproto->Mechanic == MECHANIC_FEAR    || spellproto->EffectMechanic[i] == MECHANIC_FEAR)
-            return DIMINISHING_FEAR;
-        else if (spellproto->Mechanic == MECHANIC_CHARM   || spellproto->EffectMechanic[i] == MECHANIC_CHARM)
-            return DIMINISHING_CHARM;
-        /*
-            Patch 3.0.8 (2009-01-20): All Silence spells now have diminishing returns.
-            This includes: Arcane Torrent, Garrote silence effect, Improved Counterspell effect, Improved Kick effect, Silence, Gag Order, Silencing Shot, Spell Lock, and Strangulate.
-        */
-        //else if (spellproto->Mechanic == MECHANIC_SILENCE || spellproto->EffectMechanic[i] == MECHANIC_SILENCE)
-        //    return DIMINISHING_SILENCE;
-        else if (spellproto->Mechanic == MECHANIC_DISARM  || spellproto->EffectMechanic[i] == MECHANIC_DISARM)
-            return DIMINISHING_DISARM;
-        else if (spellproto->Mechanic == MECHANIC_FREEZE  || spellproto->EffectMechanic[i] == MECHANIC_FREEZE)
-            return DIMINISHING_FREEZE;
-        else if (spellproto->Mechanic == MECHANIC_KNOCKOUT|| spellproto->EffectMechanic[i] == MECHANIC_KNOCKOUT ||
-                 spellproto->Mechanic == MECHANIC_SAPPED  || spellproto->EffectMechanic[i] == MECHANIC_SAPPED)
-            return DIMINISHING_KNOCKOUT;
-        else if (spellproto->Mechanic == MECHANIC_BANISH  || spellproto->EffectMechanic[i] == MECHANIC_BANISH)
-            return DIMINISHING_BANISH;
-    }
+    uint32 mechanic = GetAllSpellMechanicMask(spellproto);
+    if (!mechanic)
+        return DIMINISHING_NONE;
+
+    if (mechanic & (1 << (MECHANIC_STUN - 1)))
+        return triggered ? DIMINISHING_TRIGGER_STUN : DIMINISHING_CONTROL_STUN;
+    if (mechanic & (1 << (MECHANIC_SLEEP - 1)))
+        return DIMINISHING_SLEEP;
+    if (mechanic & (1 << (MECHANIC_ROOT - 1)))
+        return triggered ? DIMINISHING_TRIGGER_ROOT : DIMINISHING_CONTROL_ROOT;
+    if (mechanic & (1 << (MECHANIC_FEAR - 1)))
+        return DIMINISHING_FEAR;
+    if (mechanic & (1 << (MECHANIC_CHARM - 1)))
+        return DIMINISHING_CHARM;
+    if (mechanic & (1 << (MECHANIC_DISARM - 1)))
+        return DIMINISHING_DISARM;
+    if (mechanic & (1 << (MECHANIC_FREEZE - 1)))
+        return DIMINISHING_FREEZE;
+    if (mechanic & ((1 << (MECHANIC_KNOCKOUT - 1)) | (1 << (MECHANIC_SAPPED - 1)) | (1 << (MECHANIC_POLYMORPH - 1)) | (1 << (MECHANIC_SHACKLE - 1))))
+        return DIMINISHING_DISORIENT;
+    if (mechanic & (1 << (MECHANIC_BANISH - 1)))
+        return DIMINISHING_BANISH;
+    if (mechanic & (1 << (MECHANIC_HORROR - 1)))
+        return DIMINISHING_DEATHCOIL;
 
     return DIMINISHING_NONE;
 }
@@ -4588,9 +4665,9 @@ bool SpellMgr::IsDiminishingReturnsGroupDurationLimited(DiminishingGroup group)
         case DIMINISHING_FEAR:
         case DIMINISHING_WARLOCK_FEAR:
         case DIMINISHING_CHARM:
-        case DIMINISHING_POLYMORPH:
+        case DIMINISHING_DISORIENT:
+        case DIMINISHING_DRAGONS_BREATH:
         case DIMINISHING_FREEZE:
-        case DIMINISHING_KNOCKOUT:
         case DIMINISHING_BLIND_CYCLONE:
         case DIMINISHING_BANISH:
         case DIMINISHING_LIMITONLY:
@@ -4613,14 +4690,14 @@ DiminishingReturnsType SpellMgr::GetDiminishingReturnsGroupType(DiminishingGroup
         case DIMINISHING_TRIGGER_ROOT:
         case DIMINISHING_FEAR:
         case DIMINISHING_CHARM:
-        case DIMINISHING_POLYMORPH:
+        case DIMINISHING_DISORIENT:
+        case DIMINISHING_DRAGONS_BREATH:
         case DIMINISHING_UNSTABLE_AFFLICTION:
         case DIMINISHING_DISARM:
         case DIMINISHING_DEATHCOIL:
         case DIMINISHING_FREEZE:
         case DIMINISHING_BANISH:
         case DIMINISHING_WARLOCK_FEAR:
-        case DIMINISHING_KNOCKOUT:
             return DRTYPE_PLAYER;
     }
 

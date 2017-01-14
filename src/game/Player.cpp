@@ -18,6 +18,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <iomanip>
+
 #include "Common.h"
 #include "Language.h"
 #include "Database/DatabaseEnv.h"
@@ -71,7 +73,6 @@
 
 #include <cmath>
 #include <cctype>
-#include <iomanip>
 
 #define ZONE_UPDATE_INTERVAL 1000
 
@@ -276,8 +277,11 @@ Player::Player (WorldSession *session): Unit(), m_reputationMgr(this), m_camera(
     m_AC_timer = 0;
     m_AC_NoFall_count = 0;
 
-    m_speakTime = 0;
+    m_speakTimer = 0;
     m_speakCount = 0;
+
+    m_repeatIT = 0;
+    m_repeatTO = 0;
 
     m_GMfollowtarget_GUID = 0;
     m_GMfollow_GUID = 0;
@@ -513,6 +517,9 @@ Player::~Player ()
     }
 
     delete m_declinedname;
+
+    // clean up the MessageCache
+    MessageCache.clear();
 
     DeleteCharmAI();
 }
@@ -10095,6 +10102,9 @@ uint8 Player::CanEquipItem(uint8 slot, uint16 &dest, Item *pItem, bool swap, boo
                         return EQUIP_ERR_CANT_DO_RIGHT_NOW;
                 }
 
+                // prevent equip item in Spirit of Redemption (Aura: 27827)
+                if (HasAuraType(SPELL_AURA_SPIRIT_OF_REDEMPTION))
+                    return EQUIP_ERR_CANT_DO_RIGHT_NOW;
             }
 
             uint8 eslot = FindEquipSlot(pProto, slot, swap);
@@ -17012,42 +17022,143 @@ void Player::outDebugValues() const
 /***               FLOOD FILTER SYSTEM                 ***/
 /*********************************************************/
 
-void Player::UpdateSpeakTime()
+void Player::UpdateSpeakTime(bool emote)
 {
     // ignore chat spam protection for GMs in any mode
-    if (GetSession()->HasPermissions(PERM_GMT))
+    if (GetSession()->GetPermissions() > PERM_PLAYER)
         return;
 
     time_t current = time (NULL);
-    if (m_speakTime > current)
+    if (m_speakTimer > current)
     {
-        uint32 max_count = sWorld.getConfig(CONFIG_CHATFLOOD_MESSAGE_COUNT);
+        uint32 max_count = (emote ? sWorld.getConfig(CONFIG_CHATFLOOD_EMOTE_COUNT) : sWorld.getConfig(CONFIG_CHATFLOOD_MESSAGE_COUNT));
         if (!max_count)
             return;
 
-        ++m_speakCount;
+        m_speakCount++;
         if (m_speakCount >= max_count)
         {
             // prevent overwrite mute time, if message send just before mutes set, for example.
             time_t new_mute = current + sWorld.getConfig(CONFIG_CHATFLOOD_MUTE_TIME);
             if (GetSession()->m_muteTime < new_mute)
-            {
                 GetSession()->m_muteTime = new_mute;
-                GetSession()->m_muteReason = "Flood protection";
-            }
 
             m_speakCount = 0;
         }
     }
     else
-        m_speakCount = 0;
+       m_speakCount = 0;
 
-    m_speakTime = current + sWorld.getConfig(CONFIG_CHATFLOOD_MESSAGE_DELAY);
+    m_speakTimer = current + (emote ? sWorld.getConfig(CONFIG_CHATFLOOD_EMOTE_DELAY) : sWorld.getConfig(CONFIG_CHATFLOOD_MESSAGE_DELAY));
 }
 
 bool Player::CanSpeak() const
 {
     return GetSession()->m_muteTime <= time (NULL);
+}
+
+bool Player::DoSpamCheck(std::string message)
+{
+    // Capslock Flood System
+    if (message.length() >= sWorld.getConfig(CONFIG_CHATFLOOD_CAPS_LENGTH))
+    {
+        uint32 slength = message.length();
+        uint32 clength = 0;
+        for (uint32 fc = 0; fc < slength; ++fc)
+        {
+            if (message[fc] >= 'A' && message[fc] <= 'Z')
+                ++clength;
+        }
+
+        float pctcaps = (float(clength) / float(slength)) * 100.0f;
+        float MaxPct = sWorld.getConfig(CONFIG_CHATFLOOD_CAPS_PCT);
+        uint32 ReqLength = sWorld.getConfig(CONFIG_CHATFLOOD_CAPS_LENGTH);
+
+        if (pctcaps >= MaxPct)
+        {
+            ChatHandler(this).PSendSysMessage("Your message was blocked by the server. Please do not type too many capitals in your message, such is considered spamming. You are allowed %.2f%% caps in a message of %u characters.\n\n", MaxPct, ReqLength);
+            return false;
+        }
+    }
+
+    // Repeating Messages System
+
+    // Check if we need to clear the cache when the time ran out.
+    if ((time(NULL) - m_repeatTO) > sWorld.getConfig(CONFIG_CHATFLOOD_REPEAT_TIMEOUT))
+    {
+        MessageCache.clear();
+        m_repeatIT = 0;
+    }
+    transform(message.begin(), message.end(), message.begin(), toupper);
+
+    if (std::find(MessageCache.begin(), MessageCache.end(), message) == MessageCache.end()) // Not found, add it
+    {
+        MessageCache.insert(MessageCache.end(), message);
+
+        if (m_repeatTO == NULL)
+            m_repeatTO = time(NULL);
+
+        // Double check if we need to reset the time in case of a fast spammer who would be able to say something twice.
+        if ((time(NULL) - m_repeatTO) > sWorld.getConfig(CONFIG_CHATFLOOD_REPEAT_TIMEOUT)) // Reset the time
+            m_repeatTO = time(NULL);
+    }
+    else // We have found a double message
+    {
+        ++m_repeatIT;
+        if (m_repeatIT > sWorld.getConfig(CONFIG_CHATFLOOD_REPEAT_MESSAGES))
+        {
+            time_t mutetime = time(NULL) + sWorld.getConfig(CONFIG_CHATFLOOD_REPEAT_MUTE);
+            GetSession()->m_muteTime = mutetime;
+            ChatHandler(this).PSendSysMessage("Yor chat has been blocked for %u Seconds because you repeated youself for over %u times in a time of %u seconds.\n\n", sWorld.getConfig(CONFIG_CHATFLOOD_REPEAT_MESSAGES), sWorld.getConfig(CONFIG_CHATFLOOD_REPEAT_MESSAGES), sWorld.getConfig(CONFIG_CHATFLOOD_REPEAT_TIMEOUT));
+            return false;
+        }
+
+        time_t TimeLeft = sWorld.getConfig(CONFIG_CHATFLOOD_REPEAT_TIMEOUT) - (time(NULL) - m_repeatTO);
+       ChatHandler(this).PSendSysMessage("Please don't repeat yourself. You are allowed to send 1 identical message every %u seconds. Please wait %u seconds before sending the same message again.\n\n", sWorld.getConfig(CONFIG_CHATFLOOD_REPEAT_TIMEOUT), TimeLeft);
+        return false;
+    }
+    return true;
+}
+
+bool Player::SpamCheckForType(uint32 type, uint32 lang)
+{    
+    if (GetSession()->GetPermissions() > PERM_PLAYER || lang == LANG_ADDON)
+        return false; // addon chatter is ignored
+
+    uint32 SpamTypeConfig = sWorld.getConfig(CONFIG_CHATFLOOD_CHATTYPE);
+
+    // Say
+    if (SpamTypeConfig & CHAT_FLOOD_SAY && type == CHAT_MSG_SAY)
+        return true;
+
+    // Yell
+    if (SpamTypeConfig & CHAT_FLOOD_YELL && type == CHAT_MSG_YELL)
+        return true;
+
+    // Emote
+    if (SpamTypeConfig & CHAT_FLOOD_EMOTE && type == CHAT_MSG_EMOTE)
+        return true;
+
+    // Channel
+    if (SpamTypeConfig & CHAT_FLOOD_CHANNEL && type == CHAT_MSG_CHANNEL)
+        return true;
+
+    // Whisper
+    if (SpamTypeConfig & CHAT_FLOOD_WHISPER && type == CHAT_MSG_WHISPER)
+        return true;
+    // Party
+    if (SpamTypeConfig & CHAT_FLOOD_PARTY && type == CHAT_MSG_PARTY)
+        return true;
+
+    // Guild
+    if (SpamTypeConfig & CHAT_FLOOD_GUILD && type == CHAT_MSG_GUILD)
+        return true;
+
+    // Battleground
+    if (SpamTypeConfig & CHAT_FLOOD_BG && type == CHAT_MSG_BATTLEGROUND)
+        return true;
+
+    return false;
 }
 
 /*********************************************************/
@@ -21142,6 +21253,15 @@ uint8 Player::GetValidForPush()
     return 5;
 }
 
+bool Player::GetValidForPushSeventy()
+{
+// return: 1 = zu hohes level; 2 = bereits zu viele auf zu hohem level; 3 = alles okay, gib feuer; 4 = second account, nix machen
+    if (getLevel() >= 70)
+        return false;
+
+    return true;
+}
+
 void Player::Push()
 {
     GiveLevel(60);
@@ -21161,6 +21281,380 @@ void Player::PushSixty()
     
     SaveToDB();
 }
+
+void Player::PushSeventy()
+{
+    GiveLevel(70);
+    learnSpell(33391); //riding skill of 100
+    SaveToDB();
+}
+
+//Sets the reputation for the supplied faction to the supplied reputation value
+void Player::PushFaction(uint16 factionId, uint32 repValue)
+{    
+    m_reputationMgr.SetReputation(sFactionStore.LookupEntry(factionId), repValue);    
+    SaveToDB();
+}
+
+void Player::FinishTransferQuests()
+{
+    //City of Light
+    Quest const* cityOfLightQuest = sObjectMgr.GetQuestTemplate(10210);
+    AddQuest(cityOfLightQuest, NULL);
+    CompleteQuest(10210);
+
+    //Kara attunement
+    Quest const* karaAttunementQuest = sObjectMgr.GetQuestTemplate(9837);
+    AddQuest(karaAttunementQuest, NULL);
+    CompleteQuest(9837);
+
+    //Shattrath Escort quest
+    Quest const* shattrathEscortQuest = sObjectMgr.GetQuestTemplate(10211);
+    AddQuest(shattrathEscortQuest, NULL);
+    CompleteQuest(10211);
+
+    SaveToDB();
+}
+
+void Player::EquipForPushSeventy(uint16 items[])
+{
+    if (!HasItemCount(6948, 1, true))
+        AddItem(6948,1); //Hearthstone    
+
+    switch (GetTeam())
+    {
+        case ALLIANCE:
+        {
+            switch (getRace())
+            {
+                case RACE_HUMAN:
+                    if (!HasItemCount(18778, 1, true))  //Mount
+                        AddItem(18778, 1);
+                    break;
+                case RACE_DWARF:
+                    if (!HasItemCount(18787, 1, true))  //Mount
+                        AddItem(18787, 1);
+                    break;
+                case RACE_NIGHTELF:
+                    if (!HasItemCount(18767, 1, true))  //Mount
+                        AddItem(18767, 1);
+                    break;
+                case RACE_GNOME:
+                    if (!HasItemCount(18772, 1, true))  //Mount
+                    AddItem(18772, 1);
+                    break;
+                case RACE_DRAENEI:
+                    if (!HasItemCount(29745, 1, true))  //Mount
+                        AddItem(29745, 1);
+                    break;
+            }
+
+            switch (getClass())
+            {
+                case CLASS_WARRIOR:
+                    learnSpell(71);
+                    learnSpell(355);
+                    learnSpell(7386);
+                    learnSpell(2458);
+                    learnSpell(20252);
+                    learnSpell(200);
+                    learnSpell(750);
+                    learnSpell(197);
+                    learnSpell(196);
+                    learnSpell(201);
+                    learnSpell(2567);
+                    learnSpell(266);
+                    learnSpell(15590);
+                    learnSpell(264);
+                    learnSpell(674);
+                    learnSpell(198);
+                    break;
+                case CLASS_PALADIN:
+                    learnSpell(750);
+                    learnSpell(7328);
+                    learnSpell(198);
+                    learnSpell(199);
+                    learnSpell(201);
+                    learnSpell(200);
+                    if (!HasItemCount(21177, 100, true))
+                        AddItem(21177, 100);
+                    if (!HasItemCount(17033, 5, true))
+                    AddItem(17033, 5);
+                    break;
+                case CLASS_HUNTER:
+                {
+                    learnSpell(1515);
+                    learnSpell(883);
+                    learnSpell(2641);
+                    learnSpell(5149);
+                    learnSpell(6991);
+                    learnSpell(982);
+                    learnSpell(200);
+                    learnSpell(264);
+                    learnSpell(197);
+                    learnSpell(1180);
+                    learnSpell(674);
+                    learnSpell(5011);
+                    if (!HasItemCount(28056, 1000, true)) //arrows
+                        AddItem(28056, 1000);
+                    learnSpell(8737);
+                    if (getRace() == RACE_DWARF)
+                        if (!HasItemCount(2101, 1, true)) //quiver
+                            AddItem(2101, 1);
+                }
+                    break;
+                case CLASS_ROGUE:
+                    learnSpell(1804);
+                    SetSkill(633, 350, 300);
+                    learnSpell(2842);
+                    SetSkill(40, 350, 300);
+                    learnSpell(201);
+                    learnSpell(674);
+                    learnSpell(2567);
+                    learnSpell(15590);
+                    if (!HasItemCount(5140, 20, true))
+                        AddItem(5140, 20);
+                    break;
+                case CLASS_PRIEST:
+                    learnSpell(198);
+                    learnSpell(227);
+                    if (!HasItemCount(17029, 20, true))
+                        AddItem(17029, 20);
+                    break;
+                case CLASS_SHAMAN:
+                    AddItem(5175, 1);
+                    AddItem(5176, 1);
+                    AddItem(5177, 1);
+                    AddItem(5178, 1);
+                    learnSpell(8071);
+                    learnSpell(3599);
+                    learnSpell(5394);
+                    learnSpell(196);
+                    learnSpell(15590);
+                    learnSpell(8737);
+                    learnSpell(227);
+                    learnSpell(198);
+                    learnSpell(197);
+                    learnSpell(1180);
+                    AddItem(17030, 10);
+                    AddItem(17058, 20);
+                    AddItem(17057, 20);
+                    break;
+                case CLASS_MAGE:
+                    learnSpell(227);
+                    if (!HasItemCount(17020, 20, true))
+                        AddItem(17020, 20);
+                    if (!HasItemCount(17032, 5, true))
+                        AddItem(17032, 5);
+                    if (!HasItemCount(17031, 5, true))
+                        AddItem(17031, 5);
+                    learnSpell(201);
+                    break;
+                case CLASS_DRUID:
+                    learnSpell(18960);
+                    learnSpell(1066);
+                    learnSpell(6795);
+                    learnSpell(5487);
+                    learnSpell(6807);
+                    learnSpell(227);
+                    learnSpell(198);
+                    if (!HasItemCount(17026, 20, true))
+                        AddItem(17026, 20);
+                    if (!HasItemCount(22147, 10, true))
+                        AddItem(22147, 10);
+                    break;
+                case CLASS_WARLOCK:
+                    learnSpell(688);
+                    learnSpell(697);
+                    learnSpell(712);
+                    learnSpell(691);
+                    if (!HasItemCount(6265, 5, true))
+                        AddItem(6265, 5);
+                    learnSpell(227);
+                    learnSpell(201);
+                    break;
+            }
+            break;
+    }
+        case HORDE:
+        {
+            switch (getRace())
+            {
+                case RACE_BLOODELF:
+                    if (!HasItemCount(29223, 1, true))
+                        AddItem(29223, 1);
+                    break;
+                case RACE_ORC:
+                    if (!HasItemCount(18797, 1, true))
+                        AddItem(18797, 1);
+                    break;
+                case RACE_UNDEAD_PLAYER:
+                    if (!HasItemCount(13334, 1, true))
+                        AddItem(13334, 1);
+                    break;
+                case RACE_TAUREN:
+                    if (!HasItemCount(18795, 1, true))
+                        AddItem(18795, 1);
+                    break;
+                case RACE_TROLL:
+                    if (!HasItemCount(18788, 1, true))
+                        AddItem(18788, 1);
+                    break;
+            }
+
+            switch (getClass())
+            {
+                case CLASS_WARRIOR:
+                    learnSpell(71);
+                    learnSpell(355);
+                    learnSpell(7386);
+                    learnSpell(2458);
+                    learnSpell(20252);
+                    learnSpell(750);
+                    learnSpell(197);
+                    learnSpell(196);
+                    learnSpell(201);
+                    learnSpell(2567);
+                    learnSpell(266);
+                    learnSpell(264);
+                    learnSpell(15590);
+                    learnSpell(15590);
+                    learnSpell(674);
+                    learnSpell(198);
+                    break;
+                case CLASS_PALADIN:
+                    learnSpell(7328);
+                    learnSpell(750);
+                    learnSpell(198);
+                    learnSpell(199);
+                    learnSpell(201);
+                    learnSpell(200);
+                    learnSpell(202);
+                    if (!HasItemCount(21177, 100, true))
+                        AddItem(21177, 100);
+                    if (!HasItemCount(17033, 5, true))
+                        AddItem(17033, 5);
+                    break;
+                case CLASS_HUNTER:
+                {
+                    learnSpell(1515);
+                    learnSpell(883);
+                    learnSpell(2641);
+                    learnSpell(5149);
+                    learnSpell(6991);
+                    learnSpell(982);
+                    learnSpell(200);
+                    learnSpell(264);
+                    learnSpell(197);
+                    learnSpell(1180);
+                    learnSpell(674);
+                    learnSpell(5011);
+                    if (!HasItemCount(28056, 1000, true))
+                        AddItem(28056, 1000);
+                    learnSpell(8737);
+                    if (getRace() == RACE_TAUREN)
+                        if (!HasItemCount(2101, 1, true))
+                            AddItem(2101, 1);
+                }
+                    break;
+                case CLASS_ROGUE:
+                    learnSpell(1804);
+                    SetSkill(633, 350, 300);
+                    learnSpell(2842);
+                    SetSkill(40, 350, 300);
+                    learnSpell(201);
+                    learnSpell(674);
+                    learnSpell(2567);
+                    learnSpell(15590);
+                    if (!HasItemCount(5140, 20, true))
+                        AddItem(5140, 20);
+                    break;
+                case CLASS_PRIEST:
+                    learnSpell(198);
+                    learnSpell(227);
+                    if (!HasItemCount(17029, 20, true))
+                        AddItem(17029, 20);
+                    break;
+                case CLASS_SHAMAN:
+                    AddItem(5175, 1);
+                    AddItem(5176, 1);
+                    AddItem(5177, 1);
+                    AddItem(5178, 1);
+                    learnSpell(8071);
+                    learnSpell(3599);
+                    learnSpell(5394);
+                    learnSpell(196);
+                    learnSpell(15590);
+                    learnSpell(8737);
+                    learnSpell(227);
+                    learnSpell(198);
+                    learnSpell(197);
+                    learnSpell(1180);
+                    AddItem(17030, 10);
+                    AddItem(17058, 20);
+                    AddItem(17057, 20);
+                    break;
+                case CLASS_MAGE:
+                    learnSpell(227);
+                    if (!HasItemCount(17020, 20, true))
+                        AddItem(17020, 20);
+                    if (!HasItemCount(17032, 5, true))
+                        AddItem(17032, 5);
+                    if (!HasItemCount(17031, 5, true))
+                        AddItem(17031, 5);
+                    break;
+                case CLASS_DRUID:
+                    learnSpell(18960);
+                    learnSpell(1066);
+                    learnSpell(6795);
+                    learnSpell(5487);
+                    learnSpell(6807);
+                    learnSpell(227);
+                    learnSpell(198);
+                    if (!HasItemCount(17026, 20, true))
+                        AddItem(17026, 20);
+                    if (!HasItemCount(22147, 10, true))
+                        AddItem(22147, 10);
+                    break;
+                case CLASS_WARLOCK:
+                    learnSpell(688);
+                    learnSpell(697);
+                    learnSpell(712);
+                    learnSpell(691);
+                    if (!HasItemCount(6265, 5, true))
+                        AddItem(6265, 5);
+                    learnSpell(227);
+                    break;
+            }
+            break;
+        }
+    }
+    UpdateSkillsToMaxSkillsForLevel();
+
+    for (uint16 i = 0; i < 18; i++)
+    {
+        DestroyItem(255, i, true);
+    }
+
+    for (uint16 i = 0; i < 18; i++)
+    {
+        if (items[i] != 0)
+        {
+            Item *item = EquipNewItem(i, items[i], true);
+            if (item)
+                item->SendCreateUpdateToPlayer(this);
+        }
+    }
+    SaveToDB();
+}
+
+
+
+
+
+
+
+
 
 void Player::EquipForPush(uint16 items[])
 {
@@ -21938,6 +22432,44 @@ void Player::FinishPush()
             break;
         }
     }
+    SaveToDB();
+}
+
+void Player::FinishPushTransfer()
+{
+    m_homebindMapId = 530;
+    m_homebindZoneId = 3703;
+    m_homebindX = -1853.01f;
+    m_homebindY = 5460.62f;
+    m_homebindZ = -12.40f;
+
+    RealmDataDatabase.PExecute("UPDATE character_homebind SET map='%u', zone='%u', position_x='%f', position_y='%f', position_z='%f' WHERE guid='%u'", m_homebindMapId, m_homebindZoneId, m_homebindX, m_homebindY, m_homebindZ, GUID_LOPART(GetGUID()));
+
+    WorldPacket data(SMSG_BINDPOINTUPDATE, (4 + 4 + 4 + 4 + 4));
+    data << float(m_homebindX);
+    data << float(m_homebindY);
+    data << float(m_homebindZ);
+    data << uint32(m_homebindMapId);
+    data << uint32(m_homebindZoneId);
+    GetSession()->SendPacket(&data);
+
+    SaveToDB();
+
+    switch (GetTeam())
+    {
+        case ALLIANCE:
+        {
+            m_taxi.LoadTaxiMask("3456411898 2148078929 805356359 2605711384 137366529 262240 1052676 0 ");
+            break;
+        }
+        case HORDE:
+        {
+            m_taxi.LoadTaxiMask("830150144 315656864 449720 3869245476 3227522050 262180 1048576 0 ");
+        
+            break;
+        }
+    }
+    InitTaxiNodesForLevel();
     SaveToDB();
 }
 

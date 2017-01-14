@@ -147,6 +147,7 @@ struct instance_magtheridons_lair : public ScriptedInstance
                         break;
                     case NOT_STARTED:
                         RespawnTimer = 10000;
+                        CageTimer = 0;
                     default:
                         HandleGameObject(DoorGUID, true);
                         break;

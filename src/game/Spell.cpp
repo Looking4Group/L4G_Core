@@ -3976,8 +3976,12 @@ SpellCastResult Spell::CheckCast(bool strict)
         {
             if (GetSpellInfo()->EffectImplicitTargetA[j] == TARGET_UNIT_PET)
             {
-                target = m_caster->GetPet();
-                if (!target)
+                if (Unit* pet = m_caster->GetPet())
+                {
+                    if (!(m_spellInfo->AttributesEx2 & SPELL_ATTR_EX2_IGNORE_LOS) && !m_caster->IsWithinLOSInMap(pet))
+                        return SPELL_FAILED_LINE_OF_SIGHT;
+                }
+                else
                 {
                     if (m_triggeredByAuraSpell)              // not report pet not existence for triggered spells
                         return SPELL_FAILED_DONT_REPORT;
@@ -4080,6 +4084,10 @@ SpellCastResult Spell::CheckCast(bool strict)
         {
             return SPELL_FAILED_TARGET_AFFECTING_COMBAT;
         }
+
+        // check if target is affected by Spirit of Redemption (Aura: 27827)
+        if (target->HasAuraType(SPELL_AURA_SPIRIT_OF_REDEMPTION))
+            return SPELL_FAILED_BAD_TARGETS;
     }
     else if (!IsTriggeredSpell())
     {

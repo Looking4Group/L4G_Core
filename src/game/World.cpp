@@ -418,15 +418,7 @@ bool World::RemoveQueuedPlayer(WorldSession* sess)
     // iter point to first not updated socket, position store new position
     for (; iter != m_QueuedPlayer.end(); ++iter, ++position)
         (*iter)->SendAuthWaitQue(position);
-
-    if (!found && getConfig(CONFIG_INTERVAL_DISCONNECT_TOLERANCE))
-    {
-        std::pair<uint32, time_t> tPair;
-        tPair.first = sess->GetAccountId();
-        tPair.second = time(NULL);
-
-        addDisconnectTime(tPair);
-    }
+    
     return found;
 }
 
@@ -943,6 +935,14 @@ void World::LoadConfigSettings(bool reload)
     m_configs[CONFIG_CHATFLOOD_MESSAGE_COUNT] = sConfig.GetIntDefault("ChatFlood.MessageCount",10);
     m_configs[CONFIG_CHATFLOOD_MESSAGE_DELAY] = sConfig.GetIntDefault("ChatFlood.MessageDelay",1);
     m_configs[CONFIG_CHATFLOOD_MUTE_TIME]     = sConfig.GetIntDefault("ChatFlood.MuteTime",10);
+    m_configs[CONFIG_CHATFLOOD_CAPS_LENGTH] = sConfig.GetIntDefault("ChatFlood.CMessageLength", 100);
+    m_configs[CONFIG_CHATFLOOD_CAPS_PCT] = sConfig.GetFloatDefault("ChatFlood.CMessagePct", 70);
+    m_configs[CONFIG_CHATFLOOD_REPEAT_MESSAGES] = sConfig.GetIntDefault("ChatFlood.RepeatMessages", 5);
+    m_configs[CONFIG_CHATFLOOD_REPEAT_TIMEOUT] = sConfig.GetIntDefault("ChatFlood.RepeatTimeOut", 20);
+    m_configs[CONFIG_CHATFLOOD_REPEAT_MUTE] = sConfig.GetIntDefault("ChatFlood.RepeatMute", 5);
+    m_configs[CONFIG_CHATFLOOD_CHATTYPE] = sConfig.GetIntDefault("ChatFlood.ChatType", 159);
+    m_configs[CONFIG_CHATFLOOD_EMOTE_COUNT] = sConfig.GetIntDefault("ChatFlood.EmoteCount", 5);
+    m_configs[CONFIG_CHATFLOOD_EMOTE_DELAY] = sConfig.GetIntDefault("ChatFlood.EmoteDelay", 5);
 
     m_configs[CONFIG_EVENT_ANNOUNCE] = sConfig.GetIntDefault("Event.Announce",0);
 
@@ -2889,7 +2889,12 @@ void World::SelectRandomPvPDaily()
 {
     if (sGameEventMgr.GetEventMap().empty())
         return;
-
+    /*
+        133 Arathi Basin
+        134 Alterac Valley
+        135 Eye of the Storm
+        136 Warsong Gulch
+    */
     const uint32 PvPEventStart = 133;
     const uint32 PvPEventEnd   = 136;
 
@@ -2913,7 +2918,8 @@ void World::SelectRandomPvPDaily()
         return;
 
     uint8 random = urand(PvPEventStart, PvPEventEnd);;
-    while (random == currentId)
+    //Removing Alterac Valley for the time being.
+    while (random == currentId || random == 134)
         random = urand(PvPEventStart, PvPEventEnd);
 
     sGameEventMgr.GetEventMap()[currentId].occurence = 5184000;

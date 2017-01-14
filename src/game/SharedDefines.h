@@ -2269,6 +2269,18 @@ enum ChatMsg
     CHAT_MSG_RESTRICTED             = 0x2E,
 };
 
+enum ChatFloodType
+{
+    CHAT_FLOOD_SAY                  = 1,
+    CHAT_FLOOD_YELL                 = 2,
+    CHAT_FLOOD_EMOTE                = 4,
+    CHAT_FLOOD_CHANNEL              = 8,
+    CHAT_FLOOD_WHISPER              = 16,
+    CHAT_FLOOD_PARTY                = 32,
+    CHAT_FLOOD_GUILD                = 64,
+    CHAT_FLOOD_BG                   = 128,
+};
+
 #define MAX_CHAT_MSG_TYPE 0x2F
 
 // Values from ItemPetFood (power of (value-1) used for compare with CreatureFamilyEntry.petDietMask
@@ -2327,7 +2339,7 @@ enum DiminishingGroup
     DIMINISHING_FEAR,                                       // Non-warlock fears
     DIMINISHING_CHARM,
     // Mage Specific
-    DIMINISHING_POLYMORPH,
+    DIMINISHING_DRAGONS_BREATH,
     // Rogue Specific
     DIMINISHING_KIDNEYSHOT,                                 // Kidney Shot is not diminished with Cheap Shot
     // Warlock Specific
@@ -2338,8 +2350,8 @@ enum DiminishingGroup
     DIMINISHING_DISARM,                                     // From 2.3.0
     DIMINISHING_UNSTABLE_AFFLICTION,                        // From 2.3.0
     DIMINISHING_FREEZE,                                     // Hunter's Freezing Trap
-    DIMINISHING_KNOCKOUT,                                   // Also with Sap, all Knockout mechanics are here
     DIMINISHING_BANISH,
+    DIMINISHING_DISORIENT,									// Polymorph, Sap, Gouge, Repentance, Maim
     // Other
     // Don't Diminish, but limit duration to 10s
     DIMINISHING_LIMITONLY,
@@ -2551,9 +2563,15 @@ enum BattleGroundTypeId
 #define CONTACT_DISTANCE            0.5f
 #define INTERACTION_DISTANCE        5.0f
 #define MAX_VISIBILITY_DISTANCE     500.0f      // max distance for visible object show, limited in 500 yards
-#define DEFAULT_VISIBILITY_DISTANCE 210.0f       // default visible distance, 90 yards on continents
+#define DEFAULT_VISIBILITY_DISTANCE 135.0f       // default visible distance, 90 yards on continents
 #define DEFAULT_VISIBILITY_INSTANCE 120.0f      // default visible distance in instances, 120 yards
 #define DEFAULT_VISIBILITY_BGARENAS 180.0f      // default visible distance in BG/Arenas, 180 yards
+
+enum SpamMessageType
+{
+    SPAM_MESSAGE_TYPE_MAIL      = 0,
+    SPAM_MESSAGE_TYPE_CHAT      = 1
+};
 
 // we need to stick to 1 version or half of the stuff will work for someone
 // others will not and opposite

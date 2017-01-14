@@ -1121,9 +1121,43 @@ AutoActive.Combat.PlayersOnly = 0
 #        Chat anti-flood protection, minimum message delay to count message
 #        Default: 1 (in secs)
 #
+#   ChatFlood.CMessageLength
+#       The minimum Message length needed for the Capslock Checker to check the message
+#       Default: 100
+#
+#   ChatFlood.CMessagePct
+#       The Precentage Capital characters in a message of x length
+#       Default: 70
+#
+#   ChatFlood.RepeatMessages
+#       The max amount of repeating messages in a time of x seconds
+#       Default: 5
+#
+#   ChatFlood.RepeatTimeOut
+#       The time it takes before the Repeating Message cache gets wiped
+#       Default: 20
+#
+#   ChatFlood.RepeatMute
+#       The time a player will be muted in Seconds after he send X amount of repeats in a time of x Seconds
+#       Default: 5
+#
+#	ChatFlood.ChatType
+#		Defines which Chat Types should be checked for Spam, sum up each numbers for a correct configuration value.
+#		Example: Say + Yell = 1 + 2 = 3
+#			Say: 1, Yell: 2, Emote(Text Only, Not /lol): 4, Channel: 8, Whisper: 16, Party: 32, Guild: 64, BG: 128
+#		Default: 159 (Say + Yell + Emote + Channel + Whisper + BG)
+#
+#   ChatFlood.EmoteCount
+#       The amount of Emotes allowed in a time of (ChatFlood.MessageDelay) Seconds
+#       Default: 5
+#
+#   ChatFlood.EmoteDelay
+#       The time it takes before the EmoteCounter is reset
+#       Default: 5
+#
 #    ChatFlood.MuteTime
-#        Chat anti-flood protection, mute time at activation flood protection (not saved)
-#        Default: 10 (in secs)
+#        Chat anti-flood protection, mute time at activation flood protection 
+#        Default: 10 (in secs) 
 #
 #    Channel.RestrictedLfg
 #        Restrict use LookupForGroup channel only registered in LFG tool players
@@ -1161,6 +1195,14 @@ ChatFakeMessagePreventing = 0
 ChatFlood.MessageCount = 10
 ChatFlood.MessageDelay = 1
 ChatFlood.MuteTime = 10
+ChatFlood.CMessageLength = 100
+ChatFlood.CMessagePct = 70
+ChatFlood.RepeatMessages = 5
+ChatFlood.RepeatTimeOut = 20
+ChatFlood.RepeatMute = 5
+ChatFlood.ChatType = 159
+Chat.EmoteCount = 5
+Chat.EmoteDelay = 5
 Channel.RestrictedLfg = 1
 Channel.SilentlyGMJoin = 0
 Channel.PrivateLimitCount = 20

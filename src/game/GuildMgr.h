@@ -23,6 +23,7 @@
 
 #include "ace/Singleton.h"
 #include "Utilities/UnorderedMap.h"
+#include <vector>
 
 class Guild;
 

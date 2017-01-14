@@ -4016,9 +4016,14 @@ void Aura::HandleModFear(bool apply, bool Real)
     if (!Real)
         return;
 
-    if (!apply && GetTarget()->HasAuraType(GetModifier()->m_auraname))
-        return;
-    
+    if (!apply)
+    {
+        m_target->SetDamageTakenWithActiveAuraType(SPELL_AURA_MOD_FEAR, 0);
+
+        if (GetTarget()->HasAuraType(GetModifier()->m_auraname))
+            return;
+    }
+
     if (GetTarget()->HasAuraTypeWithFamilyFlags(SPELL_AURA_PREVENTS_FLEEING,5,2147483648) || GetTarget()->HasAura(16231)) //Curse of Recklessnes
         return;
 
@@ -4340,6 +4345,9 @@ void Aura::HandleAuraModRoot(bool apply, bool Real)
     // only at real add/remove aura
     if (!Real)
         return;
+
+    if (!apply)
+        m_target->SetDamageTakenWithActiveAuraType(SPELL_AURA_MOD_ROOT, 0);
 
     if (apply)
         m_target->GetUnitStateMgr().PushAction(UNIT_ACTION_ROOT);
@@ -6761,7 +6769,12 @@ void Aura::HandleSpiritOfRedemption(bool apply, bool Real)
                 m_target->SetStandState(PLAYER_STATE_NONE);
         }
 
-        m_target->SetHealth(1);
+        // interrupt casting when entering Spirit of Redemption
+        if (m_target->IsNonMeleeSpellCasted(false))
+            m_target->InterruptNonMeleeSpells(false);
+
+        // set health and mana to maximum
+        m_target->SetHealth(m_target->GetMaxHealth());
         m_target->SetPower(POWER_MANA, m_target->GetMaxPower(POWER_MANA));
     }
     // die at aura end
@@ -7270,7 +7283,10 @@ void Aura::PeriodicTick()
             uint32 heal = pCaster->SpellHealingBonus(spellProto, uint32(new_damage * multiplier), DOT, pCaster);
 
             int32 gain = pCaster->ModifyHealth(heal);
-            pCaster->getHostilRefManager().threatAssist(pCaster, gain * 0.5f, spellProto);
+
+            // Health Leech effects do not generate healing aggro
+            if (m_modifier.m_auraname != SPELL_AURA_PERIODIC_LEECH)
+                pCaster->getHostilRefManager().threatAssist(pCaster, gain * 0.5f, spellProto);
 
             // change it
             pCaster->SendHealSpellLog(pCaster, spellProto->Id, heal);

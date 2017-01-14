@@ -263,6 +263,27 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
         }
         HandleInitCreatureState(creature);
     }
+    
+    void OpenVashjDoor()
+    {
+        Map::PlayerList const& players = instance->GetPlayers();
+
+        if (!players.isEmpty())
+        {
+            for (Map::PlayerList::const_iterator itr = players.begin(); itr != players.end(); ++itr)
+            {
+                if (Player* player = itr->getSource())
+                {
+                    if (GameObject *obj = GetClosestGameObjectWithEntry(player, 184568, 999.0f))
+                    {
+                        obj->SetLootState(GO_READY);
+                        obj->UseDoorOrButton(10000);
+                        break;
+                    }
+                }
+            }
+        }
+    }
 
     void SetData(uint32 type, uint32 data)
     {
@@ -274,7 +295,7 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
                     HandleGameObject(ConsoleGuids[0], true);
                     if ((GetData(DATA_LURKER_EVENT) == SPECIAL) && (GetData(DATA_LEOTHERAS_EVENT) == SPECIAL) && (GetData(DATA_KARATHRESS_EVENT) == SPECIAL) && (GetData(DATA_MOROGRIM_EVENT) == SPECIAL))
                     {
-                        HandleGameObject(BridgeConsoleGuid, true);
+                        OpenVashjDoor();
                         HandleGameObject(BridgePartGuids[0], true);
                         HandleGameObject(BridgePartGuids[1], true);
                         HandleGameObject(BridgePartGuids[2], true);
@@ -285,10 +306,10 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
             case DATA_LURKER_EVENT:
                 if (data == SPECIAL)
                 {
-                    HandleGameObject(ConsoleGuids[0], true);
+                    HandleGameObject(ConsoleGuids[1], true);
                     if ((GetData(DATA_HYDROSS_EVENT) == SPECIAL) && (GetData(DATA_LEOTHERAS_EVENT) == SPECIAL) && (GetData(DATA_KARATHRESS_EVENT) == SPECIAL) && (GetData(DATA_MOROGRIM_EVENT) == SPECIAL))
                     {
-                        HandleGameObject(BridgeConsoleGuid, true);
+                        OpenVashjDoor();
                         HandleGameObject(BridgePartGuids[0], true);
                         HandleGameObject(BridgePartGuids[1], true);
                         HandleGameObject(BridgePartGuids[2], true);
@@ -299,10 +320,10 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
             case DATA_LEOTHERAS_EVENT:
                 if (data == SPECIAL)
                 {
-                    HandleGameObject(ConsoleGuids[0], true);
+                    HandleGameObject(ConsoleGuids[2], true);
                     if ((GetData(DATA_HYDROSS_EVENT) == SPECIAL) && (GetData(DATA_LURKER_EVENT) == SPECIAL) && (GetData(DATA_KARATHRESS_EVENT) == SPECIAL) && (GetData(DATA_MOROGRIM_EVENT) == SPECIAL))
                     {
-                        HandleGameObject(BridgeConsoleGuid, true);
+                        OpenVashjDoor();
                         HandleGameObject(BridgePartGuids[0], true);
                         HandleGameObject(BridgePartGuids[1], true);
                         HandleGameObject(BridgePartGuids[2], true);
@@ -313,10 +334,10 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
             case DATA_KARATHRESS_EVENT:
                 if (data == SPECIAL)
                 {
-                    HandleGameObject(ConsoleGuids[0], true);
+                    HandleGameObject(ConsoleGuids[3], true);
                     if ((GetData(DATA_HYDROSS_EVENT) == SPECIAL) && (GetData(DATA_LURKER_EVENT) == SPECIAL) && (GetData(DATA_LEOTHERAS_EVENT) == SPECIAL) && (GetData(DATA_MOROGRIM_EVENT) == SPECIAL))
                     {
-                        HandleGameObject(BridgeConsoleGuid, true);
+                        OpenVashjDoor();
                         HandleGameObject(BridgePartGuids[0], true);
                         HandleGameObject(BridgePartGuids[1], true);
                         HandleGameObject(BridgePartGuids[2], true);
@@ -327,10 +348,10 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
             case DATA_MOROGRIM_EVENT:
                 if (data == SPECIAL)
                 {
-                    HandleGameObject(ConsoleGuids[0], true);
+                    HandleGameObject(ConsoleGuids[4], true);
                     if ((GetData(DATA_HYDROSS_EVENT) == SPECIAL) && (GetData(DATA_LURKER_EVENT) == SPECIAL) && (GetData(DATA_LEOTHERAS_EVENT) == SPECIAL) && (GetData(DATA_KARATHRESS_EVENT) == SPECIAL))
                     {
-                        HandleGameObject(BridgeConsoleGuid, true);
+                        OpenVashjDoor();
                         HandleGameObject(BridgePartGuids[0], true);
                         HandleGameObject(BridgePartGuids[1], true);
                         HandleGameObject(BridgePartGuids[2], true);

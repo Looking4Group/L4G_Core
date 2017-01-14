@@ -16,8 +16,8 @@
 
 /* ScriptData
 SDName: Dark_Portal
-SD%Complete: 90
-SDComment: Still post-event needed and support for Time Keepers
+SD%Complete: 99
+SDComment: Need support for Time Keepers??? 
 SDCategory: Caverns of Time, The Dark Portal
 EndScriptData */
 
@@ -30,38 +30,65 @@ EndContentData */
 #include "precompiled.h"
 #include "def_dark_portal.h"
 
-#define SAY_ENTER               -1269020        //intro speach by Medivh when entering instance
-#define SAY_INTRO               -1269021
-#define SAY_WEAK75              -1269022
-#define SAY_WEAK50              -1269023
-#define SAY_WEAK25              -1269024
-#define SAY_DEATH               -1269025
-#define SAY_WIN                 -1269026
-#define SAY_ORCS_ENTER          -1269027
-#define SAY_ORCS_ANSWER         -1269028
+enum medivhSays
+{
+    SAY_ENTER          = -1269020,
+    SAY_INTRO          = -1269021,
+    SAY_WEAK75         = -1269022,
+    SAY_WEAK50         = -1269023,
+    SAY_WEAK25         = -1269024,
+    SAY_DEATH          = -1269025,
+    SAY_WIN            = -1269026,
+    SAY_ORCS_ENTER     = -1269027,
+    SAY_ORCS_ANSWER    = -1269028
+};
 
-#define SPELL_CHANNEL           31556
+enum medivhSpells
+{
+    SPELL_MANA_SHIELD           = 31635,
+    SPELL_MEDIVH_CHANNEL        = 31556,
+    SPELL_BLACK_CRYSTAL         = 32563,    // Aura
+    SPELL_PORTAL_CRYSTALS       = 32564,    // Summon
+    SPELL_BANISH_PURPLE         = 32566,    // Aura
+    SPELL_BANISH_GREEN          = 32567,    // Aura
+    SPELL_PORTAL_RUNE           = 32570,    // Aura (portal on ground effect)
+    SPELL_CORRUPT               = 31326,
+    SPELL_CORRUPT_AEONUS        = 37853
+};
 
-#define SPELL_PORTAL_RUNE       32570                       //aura(portal on ground effect)
+enum medivhCreatures
+{
+    C_COUNCIL_ENFORCER    = 17023,
+    C_CHRON               = 17892,
+    C_EXECU               = 18994,
+    C_VANQU               = 18995,
+    C_ASSAS               = 17835,
+    C_RLORD               = 17839,
+    C_RKEEP               = 21104,
+    C_WHELP               = 21818,
+};
 
-#define SPELL_BLACK_CRYSTAL     32563                       //aura
-#define SPELL_PORTAL_CRYSTAL    32564                       //summon
+enum medivhMisc
+{
+	C_DP_EMITTER_STALKER     = 18582,
+	C_DP_CRYSTAL_STALKER     = 18553,
+	GO_DARK_PORTAL           = 185103
+};
 
-#define SPELL_BANISH_PURPLE     32566                       //aura
-#define SPELL_BANISH_GREEN      32567                       //aura
+class NpcRunToHome : public BasicEvent
+{
+public:
+    NpcRunToHome(Creature& owner) : _owner(owner) { }
 
-#define SPELL_CORRUPT           31326
-#define SPELL_CORRUPT_AEONUS    37853
+    bool Execute(uint64 /*eventTime*/, uint32 /*updateTime*/)
+    {
+        _owner.GetMotionMaster()->MoveTargetedHome();
+        return true;
+    }
 
-#define C_COUNCIL_ENFORCER      17023
-
-#define C_RKEEP 21104
-#define C_RLORD 17839
-#define C_ASSAS 17835
-#define C_WHELP 21818
-#define C_CHRON 17892
-#define C_EXECU 18994
-#define C_VANQU 18995
+private:
+    Creature& _owner;
+};
 
 struct npc_medivh_bmAI : public ScriptedAI
 {
@@ -74,14 +101,15 @@ struct npc_medivh_bmAI : public ScriptedAI
 
     ScriptedInstance *pInstance;
 
-    uint32 SpellCorrupt_Timer;
-    uint32 DamageMelee_Timer;
-    uint32 Check_Timer;
-    uint32 Delay_Timer;
+    uint32 SpellCorruptTimer;
+    uint32 DamageMeleeTimer;
+    uint32 CheckTimer;
+    uint32 DelayTimer;
+    uint8  PostStep;
 
-    bool Life75;
-    bool Life50;
-    bool Life25;
+    bool LifeAt75;
+    bool LifeAt50;
+    bool LifeAt25;
 
     bool HeroicMode;
     bool Intro;
@@ -89,33 +117,32 @@ struct npc_medivh_bmAI : public ScriptedAI
 
     void Reset()
     {
-        SpellCorrupt_Timer = 0;
-        DamageMelee_Timer = 0;
-        Delay_Timer = 0;
+        SpellCorruptTimer = 0;
+        DamageMeleeTimer  = 0;
+        DelayTimer        = 0;
+        PostStep          = 0;
 
-        Life75 = true;
-        Life50 = true;
-        Life25 = true;
+        LifeAt75 = true;
+        LifeAt50 = true;
+        LifeAt25 = true;
 
         Intro = false;
         Delay = false;
 
-        if (pInstance->GetData(TYPE_MEDIVH) == IN_PROGRESS)
-            m_creature->CastSpell(m_creature,SPELL_CHANNEL, true);
-        else if (m_creature->HasAura(SPELL_CHANNEL,0))
-            m_creature->RemoveAura(SPELL_CHANNEL,0);
+        if (pInstance->GetData(TYPE_MEDIVH) != DONE)
+            m_creature->CastSpell(m_creature, SPELL_MEDIVH_CHANNEL, false);
     }
 
     void MoveInLineOfSight(Unit *who)
     {
-        //say enter phrase when in 50yd distance
-        if (!Intro && pInstance->GetData(TYPE_MEDIVH) != DONE && who->GetTypeId() == TYPEID_PLAYER  && m_creature->IsWithinDistInMap(who, 50.0f))
+        // Say enter phrase when in 20 yards distance
+        if (!Intro && pInstance->GetData(TYPE_MEDIVH) != DONE && who->GetTypeId() == TYPEID_PLAYER && m_creature->IsWithinDistInMap(who, 20.0f))
         {
-            m_creature->CastSpell(m_creature,SPELL_PORTAL_RUNE,true);
-            m_creature->CastSpell(m_creature,SPELL_CHANNEL,false);
             DoScriptText(SAY_ENTER, m_creature);
+            m_creature->CastSpell(m_creature,SPELL_PORTAL_RUNE,true);
+            m_creature->CastSpell(m_creature,SPELL_MEDIVH_CHANNEL,false);
             Intro = true;
-            Delay_Timer = 15000;
+            DelayTimer = 15000;
         }
 
         if (pInstance->GetData(TYPE_MEDIVH) != DONE && who->GetTypeId() == TYPEID_PLAYER  && !((Player*)who)->isGameMaster() && m_creature->IsWithinDistInMap(who, 10.0f))
@@ -123,15 +150,15 @@ struct npc_medivh_bmAI : public ScriptedAI
             if (pInstance->GetData(TYPE_MEDIVH) == IN_PROGRESS)
                 return;
 
-            if(!Delay_Timer)
+            if(!DelayTimer)
                 DoScriptText(SAY_INTRO, m_creature);
             else
                 Delay = true;
 
             pInstance->SetData(TYPE_MEDIVH,IN_PROGRESS);
-            Check_Timer = 5000;
+            CheckTimer = 5000;
         }
-        else if (who->GetTypeId() == TYPEID_UNIT  && who->getVictim() && who->getVictim() == m_creature && m_creature->IsWithinDistInMap(who, 15.0f))
+        else if (who->GetTypeId() == TYPEID_UNIT && who->getVictim() && who->getVictim() == m_creature && m_creature->IsWithinDistInMap(who, 15.0f))
         {
             if (pInstance->GetData(TYPE_MEDIVH) != IN_PROGRESS)
                 return;
@@ -140,12 +167,12 @@ struct npc_medivh_bmAI : public ScriptedAI
             if (entry == C_ASSAS || entry == C_WHELP || entry == C_CHRON || entry == C_EXECU || entry == C_VANQU)
             {
                 who->StopMoving();
-                who->CastSpell(m_creature,SPELL_CORRUPT,false);
+                who->CastSpell(m_creature, SPELL_CORRUPT, false);
             }
-            else if (entry == 20737 || entry == 17881)  //Aeonus
+            else if (entry == 20737 || entry == 17881)  // Aeonus
             {
                 who->StopMoving();
-                who->CastSpell(m_creature,SPELL_CORRUPT_AEONUS,false);
+                who->CastSpell(m_creature, SPELL_CORRUPT_AEONUS, false);
             }
         }
     }
@@ -154,14 +181,14 @@ struct npc_medivh_bmAI : public ScriptedAI
 
     void SpellHit(Unit* caster, const SpellEntry* spell)
     {
-        if (SpellCorrupt_Timer)
+        if (SpellCorruptTimer)
             return;
 
         if (spell->Id == SPELL_CORRUPT_AEONUS)
-            SpellCorrupt_Timer = 1000;
+            SpellCorruptTimer = 1000;
 
         if (spell->Id == SPELL_CORRUPT)
-            SpellCorrupt_Timer = 3000;
+            SpellCorruptTimer = 3000;
     }
 
     void DamageTaken(Unit *done_by, uint32 &damage)
@@ -169,13 +196,13 @@ struct npc_medivh_bmAI : public ScriptedAI
         if (done_by != m_creature)
             damage = 0;
 
-        if (DamageMelee_Timer > 0)
+        if (DamageMeleeTimer > 0)
             return;
 
         if (done_by->GetEntry() == C_RLORD || done_by->GetEntry() == C_RKEEP)
-            DamageMelee_Timer = 5000;
+            DamageMeleeTimer = 5000;
         else
-            DamageMelee_Timer = 1000;
+            DamageMeleeTimer = 1000;
     }
 
     void JustDied(Unit* Killer)
@@ -185,71 +212,83 @@ struct npc_medivh_bmAI : public ScriptedAI
         DoScriptText(SAY_DEATH, m_creature);
     }
 
+    void SummonOrcs(float x, float y, uint32 duration, uint32 homeTime, bool first)
+    {
+        for (uint8 i = 0; i < 6; ++i)
+        {
+            if (Creature* cr = me->SummonCreature(C_COUNCIL_ENFORCER, -2091.731f, 7133.083f - 3.0f*i, 34.589f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0))
+            {
+                cr->GetMotionMaster()->MovePoint(0, (first && i == 3) ? x+2.0f : x, cr->GetPositionY()+y, cr->GetTerrain()->GetHeight(x, cr->GetPositionY()+y, MAX_HEIGHT, true));
+                cr->m_Events.AddEvent(new NpcRunToHome(*cr), cr->m_Events.CalculateTime(homeTime+urand(0, 2000)));
+                cr->ForcedDespawn(duration+urand(0, 2000));
+            }
+        }
+    }
+
     void UpdateAI(const uint32 diff)
     {
-        if (Delay_Timer)
+        if (DelayTimer)
         {
-            if (Delay_Timer <= diff)
+            if (DelayTimer <= diff)
             {
                 if (Delay)
                     DoScriptText(SAY_INTRO, m_creature);
-                Delay_Timer = 0;
+                DelayTimer = 0;
             }
             else
-                Delay_Timer -= diff;
+                DelayTimer -= diff;
         }
 
-        if (SpellCorrupt_Timer)
+        if (SpellCorruptTimer)
         {
-            if (SpellCorrupt_Timer <= diff)
+            if (SpellCorruptTimer <= diff)
             {
                 pInstance->SetData(TYPE_MEDIVH,SPECIAL);
 
-                if (m_creature->HasAura(SPELL_CORRUPT_AEONUS,0))
-                    SpellCorrupt_Timer = 1000;
-                else if (m_creature->HasAura(SPELL_CORRUPT,0))
-                    SpellCorrupt_Timer = 3000;
+                if (m_creature->HasAura(SPELL_CORRUPT_AEONUS, 0))
+                    SpellCorruptTimer = 1000;
+                else if (m_creature->HasAura(SPELL_CORRUPT, 0))
+                    SpellCorruptTimer = 3000;
                 else
-                    SpellCorrupt_Timer = 0;
+                    SpellCorruptTimer = 0;
             }
             else
-                SpellCorrupt_Timer -= diff;
+                SpellCorruptTimer -= diff;
         }
 
-        if (DamageMelee_Timer)
+        if (DamageMeleeTimer)
         {
-            if (DamageMelee_Timer <= diff)
+            if (DamageMeleeTimer <= diff)
             {
-                pInstance->SetData(TYPE_MEDIVH,SPECIAL);
-                DamageMelee_Timer = 0;
+                pInstance->SetData(TYPE_MEDIVH, SPECIAL);
+                DamageMeleeTimer = 0;
             }
             else
-                DamageMelee_Timer -= diff;
+                DamageMeleeTimer -= diff;
         }
 
-        if (Check_Timer)
+        if (CheckTimer)
         {
-            if (Check_Timer <= diff)
+            if (CheckTimer <= diff)
             {
                 uint32 pct = pInstance->GetData(DATA_SHIELD);
 
-                Check_Timer = 5000;
+                CheckTimer = 5000;
 
-                if (Life25 && pct <= 25)
+                if (LifeAt25 && pct <= 25)
                 {
                     DoScriptText(SAY_WEAK25, m_creature);
-                    Life25 = false;
-                    Check_Timer = 0;
+                    LifeAt25 = false;
                 }
-                else if (Life50 && pct <= 50)
+                else if (LifeAt50 && pct <= 50)
                 {
                     DoScriptText(SAY_WEAK50, m_creature);
-                    Life50 = false;
+                    LifeAt50 = false;
                 }
-                else if (Life75 && pct <= 75)
+                else if (LifeAt75 && pct <= 75)
                 {
                     DoScriptText(SAY_WEAK75, m_creature);
-                    Life75 = false;
+                    LifeAt75 = false;
                 }
 
                 //if we reach this it means event was running but at some point reset.
@@ -263,13 +302,66 @@ struct npc_medivh_bmAI : public ScriptedAI
 
                 if (pInstance->GetData(TYPE_MEDIVH) == DONE)
                 {
-                    DoScriptText(SAY_WIN, m_creature);
-                    Check_Timer = 0;
-                    //TODO: start the post-event here
+                    switch (PostStep)
+                   {
+                       case 0:
+                            m_creature->RemoveAurasDueToSpell(SPELL_MEDIVH_CHANNEL);
+                            m_creature->InterruptNonMeleeSpells(true);
+                            m_creature->SummonGameObject(GO_DARK_PORTAL, -2086.0f, 7125.6215f, 30.5f, 6.148f, 0.0f, 0.0f, 0.0f, 0.0f, 0);
+                            PostStep++;
+                            CheckTimer = 4000;
+                            break;
+                       case 1:
+                            m_creature->SetFacingTo(6.21f);
+                            DoScriptText(SAY_WIN, m_creature);
+                            PostStep++;
+                            CheckTimer = 17000;
+                            break;
+                       case 2:
+                            m_creature->SetFacingTo(3.07f);
+                            PostStep++;
+                            CheckTimer = 2000;
+                            break;
+                       case 3:
+                            SummonOrcs(-2046.158f, -3.0f, 37000, 30000, true);
+                            PostStep++;
+                            CheckTimer = 2000;
+                            break;
+                       case 4:
+                            SummonOrcs(-2055.97f, -2.0f, 33000, 28000, false);
+                            PostStep++;
+                            CheckTimer = 2000;
+                            break;
+                       case 5:
+                            SummonOrcs(-2064.0f, -1.5f, 29000, 26000, false);
+                            PostStep++;
+                            CheckTimer = 2000;
+                            break;
+                       case 6:
+                            SummonOrcs(-2074.35f, -0.1f, 26000, 24000, false);
+                            PostStep++;
+                            CheckTimer = 7000;
+                            break;
+                        case 7:
+                            DoScriptText(SAY_ORCS_ENTER, m_creature);
+                            PostStep++;
+                            CheckTimer = 7000;
+                            break;
+                        case 8:
+                            if (Unit* cr = FindCreature(C_COUNCIL_ENFORCER, 20.0f, m_creature))
+                            {
+                                cr->SetFacingTo(3.07f);
+                                DoScriptText(SAY_ORCS_ANSWER, cr);
+                            }
+                            CheckTimer = 0;
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
             else
-                Check_Timer -= diff;
+                CheckTimer -= diff;
         }
     }
 };

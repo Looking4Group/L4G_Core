@@ -1224,7 +1224,7 @@ class LOOKING4GROUP_EXPORT Player : public Unit
         void ApplyEnchantment(Item *item,EnchantmentSlot slot,bool apply, bool apply_dur = true, bool ignore_condition = false);
         void ApplyEnchantment(Item *item,bool apply);
         void SendEnchantmentDurations();
-        void EnchantItem(uint32 spellid, uint8 slot); //Neue enchant funktion für den NPC :>
+        void EnchantItem(uint32 spellid, uint8 slot); //Neue enchant funktion fï¿½r den NPC :>
         void AddItemDurations(Item *item);
         void RemoveItemDurations(Item *item);
         void SendItemDurations();
@@ -1909,11 +1909,17 @@ class LOOKING4GROUP_EXPORT Player : public Unit
         void SendNotifyLootMoneyRemoved();
 
         uint8 GetValidForPush();
+        bool GetValidForPushSeventy();
         void PushSixty();
+        void PushSeventy();
+        void PushFaction(uint16 factionId, uint32 repValue);
+        void FinishTransferQuests();
         void Push();
         void EquipForPush(uint16 items[]);
+        void EquipForPushSeventy(uint16 items[]);
         void EquipForPushSixty(uint16 items[]);
         void FinishPush();
+        void FinishPushTransfer();
         void FinishPushSixty();
         void PvpPush(uint16 items[]);
         void AddItem(uint32 itemID, uint32 Count);
@@ -2084,7 +2090,16 @@ class LOOKING4GROUP_EXPORT Player : public Unit
         /***               FLOOD FILTER SYSTEM                 ***/
         /*********************************************************/
 
-        void UpdateSpeakTime();
+        std::vector<std::string> MessageCache;        // The message cache for the messages will be cleared every x seconds
+        uint32 m_repeatIT;                            // Repeating messages in specific time. When this exceeds CONFIG_CHATFLOOD_REPEAT_MESSAGES the player gets muted (from all channels)
+        uint32 m_repeatTO;                            // The time until the player is allowed to use the same phrase again in the specific channel. (Timeout)
+        uint32 m_speakTimer;                          // The time since we last spoke
+        uint32 m_speakCount;                          // The total messages
+
+        bool DoSpamCheck(std::string message);
+        bool SpamCheckForType(uint32 Type, uint32 Lang);
+
+        void UpdateSpeakTime(bool Emote = false);
         bool CanSpeak() const;
         void ChangeSpeakTime(int utime);
 
@@ -2401,8 +2416,6 @@ class LOOKING4GROUP_EXPORT Player : public Unit
 
         uint32 m_team;
         uint32 m_nextSave;
-        time_t m_speakTime;
-        uint32 m_speakCount;
         uint32 m_dungeonDifficulty;
 
         uint32 m_atLoginFlags;

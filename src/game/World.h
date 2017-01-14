@@ -182,6 +182,14 @@ enum WorldConfigs
     CONFIG_CHATFLOOD_MESSAGE_COUNT,
     CONFIG_CHATFLOOD_MESSAGE_DELAY,
     CONFIG_CHATFLOOD_MUTE_TIME,
+    CONFIG_CHATFLOOD_CAPS_LENGTH,
+    CONFIG_CHATFLOOD_CAPS_PCT,
+    CONFIG_CHATFLOOD_REPEAT_MESSAGES,
+    CONFIG_CHATFLOOD_REPEAT_TIMEOUT,
+    CONFIG_CHATFLOOD_REPEAT_MUTE,
+    CONFIG_CHATFLOOD_CHATTYPE,
+    CONFIG_CHATFLOOD_EMOTE_COUNT,
+    CONFIG_CHATFLOOD_EMOTE_DELAY,
     CONFIG_EVENT_ANNOUNCE,
     CONFIG_CREATURE_FAMILY_FLEE_ASSISTANCE_RADIUS,
     CONFIG_CREATURE_FAMILY_ASSISTANCE_RADIUS,
@@ -469,11 +477,15 @@ enum RealmZone
 #define SCRIPT_COMMAND_REMOVE_AURA          14              // source (datalong2!=0) or target (datalong==0) unit, datalong = spell_id
 #define SCRIPT_COMMAND_CAST_SPELL           15              // source (datalong2!=0) or target (datalong==0) unit, datalong = spell_id
 #define SCRIPT_COMMAND_LOAD_PATH            16              // source = unit, path = datalong, repeatable datalong2
-#define SCRIPT_COMMAND_CALLSCRIPT_TO_UNIT   17              // datalong scriptid, lowguid datalong2, dataint table
+#define SCRIPT_COMMAND_CALLSCRIPT_TO_UNIT   17              // source = WorldObject (if present used as a search center), datalong = unit lowguid, datalong2 = script id, dataint = script table to use
 #define SCRIPT_COMMAND_PLAY_SOUND           18              // source = any object, target=any/player, datalong (sound_id), datalong2 (bitmask: 0/1=anyone/target, 0/2=with distance dependent, so 1|2 = 3 is target with distance dependent)
-#define SCRIPT_COMMAND_KILL                 19              // datalong removecorpse
+#define SCRIPT_COMMAND_KILL                 19              // datalong = (0=source kills source, 1=target kills source, 2=source kills target), dataint = 1 to remove corpse.
 #define SCRIPT_COMMAND_SET_INST_DATA        20              // source = any, datalong = type, datalong2 = data
-
+#define SCRIPT_COMMAND_DESPAWN_SELF         21              // target/source = Creature, datalong = despawn delay
+#define SCRIPT_COMMAND_VISIBILITY_SET       22              // source = unit, datalong = Visibility State (VISIBILITY_OFF = 0, VISIBILITY_ON = 1, VISIBILITY_GROUP_STEALTH = 2, VISIBILITY_RESPAWN = 5)
+#define SCRIPT_COMMAND_ORIENTATION          30              // source = Unit. o = orientation
+#define SCRIPT_COMMAND_EQUIP                31              // soucre = Creature, datalong = equipment id
+#define SCRIPT_COMMAND_MODEL                32              // source = Creature, datalong = model id
 
 /// Storage class for commands issued for delayed execution
 struct CliCommandHolder

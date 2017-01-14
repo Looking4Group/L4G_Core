@@ -1844,13 +1844,9 @@ void Spell::EffectDummy(uint32 i)
                     if (healthPerc < 100 && healthPerc > 40)
                         melee_mod = 10+(100-healthPerc)/3;
 
-                    int32 hasteModBasePoints0 = melee_mod;          // (EffectBasePoints[0]+1)-1+(5-melee_mod) = (melee_mod-1+1)-1+5-melee_mod = 5-1
-                    int32 hasteModBasePoints1 = (5-melee_mod);
-                    int32 hasteModBasePoints2 = 5;
-
                     // FIXME: custom spell required this aura state by some unknown reason, we not need remove it anyway
                     m_caster->ModifyAuraState(AURA_STATE_BERSERKING,true);
-                    m_caster->CastCustomSpell(m_caster,26635,&hasteModBasePoints0,&hasteModBasePoints1,&hasteModBasePoints2,true,NULL);
+                    m_caster->CastCustomSpell(m_caster,26635,0,&melee_mod,&melee_mod,true,NULL);
                     return;
                 }
             }
@@ -4303,20 +4299,23 @@ void Spell::EffectPull(uint32 /*i*/)
 
 void Spell::EffectDistract(uint32 /*i*/)
 {
-    // Check for possible target
+        // Check for possible target
     if (!unitTarget || unitTarget->isInCombat())
         return;
 
     // target must be OK to do this
-    if (unitTarget->hasUnitState(UNIT_STAT_CONFUSED | UNIT_STAT_STUNNED | UNIT_STAT_FLEEING))
+    if (unitTarget->hasUnitState(UNIT_STAT_CAN_NOT_REACT))
         return;
 
-    unitTarget->SetFacingTo(unitTarget->GetAngle(m_targets.m_destX, m_targets.m_destY));
-
-    unitTarget->SetStandState(PLAYER_STATE_NONE);
+    unitTarget->clearUnitState(UNIT_STAT_MOVING);
 
     if (unitTarget->GetTypeId() == TYPEID_UNIT)
         unitTarget->GetMotionMaster()->MoveDistract(damage * IN_MILISECONDS);
+
+    float orientation = unitTarget->GetAngle(m_targets.m_destX, m_targets.m_destY);
+    unitTarget->SetFacingTo(orientation);
+    // This is needed to change the facing server side as well (and it must be after the MoveDistract call)
+    unitTarget->SetOrientation(orientation);
 }
 
 void Spell::EffectPickPocket(uint32 /*i*/)

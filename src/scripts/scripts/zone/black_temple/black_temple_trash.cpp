@@ -837,7 +837,7 @@ struct mob_bonechewer_taskmasterAI : public ScriptedAI
 
     void Reset()
     {
-        disgruntledTimer = 20000;
+        disgruntledTimer = urand(7000, 13000);
         disgruntledCasted = false;
     }
 
@@ -1422,8 +1422,8 @@ struct mob_ashtongue_battlelordAI : public ScriptedAI
         ClearCastQueue();
 
         Cleave = urand(3000, 10000);
-        ConcussionBlow = urand(10500, 25000);
-        ConcussionThrow = urand(10500, 25000);
+        ConcussionBlow = urand(10500, 15000);
+        ConcussionThrow = urand(9000, 12000);
         Frenzy = 5000;
     }
     void EnterCombat(Unit*) { DoZoneInCombat(80.0f); }
@@ -1436,7 +1436,7 @@ struct mob_ashtongue_battlelordAI : public ScriptedAI
         if(Cleave < diff)
         {
             AddSpellToCast(me->getVictim(), SPELL_CLEAVE_1);
-            Cleave = 10000;
+            Cleave = urand(5000, 8000);
         }
         else
             Cleave -= diff;
@@ -1444,7 +1444,7 @@ struct mob_ashtongue_battlelordAI : public ScriptedAI
         if(ConcussionBlow < diff)
         {
             AddSpellToCast(me->getVictim(), SPELL_CONCUSSION_BLOW);
-            ConcussionBlow = 25000;
+            ConcussionBlow = urand(12000, 15000);
         }
         else
             ConcussionBlow -= diff;
@@ -1455,7 +1455,7 @@ struct mob_ashtongue_battlelordAI : public ScriptedAI
             {
                 AddSpellToCast(target, SPELL_CONCUSSION_THROW);
             }
-            ConcussionThrow = 22000;
+            ConcussionThrow = urand(9000, 12000);
         }
         else
             ConcussionThrow -= diff;
@@ -2483,7 +2483,7 @@ struct mob_hand_of_gorefiendAI : public ScriptedAI
 
     void Reset()
     {
-        Enrage = 10000;
+        Enrage = urand(5000, 16000);
     }
     void EnterCombat(Unit*) { DoZoneInCombat(80.0f); }
 
@@ -2495,7 +2495,7 @@ struct mob_hand_of_gorefiendAI : public ScriptedAI
         if(Enrage < diff)
         {
             DoCast(me, SPELL_ENRAGE);
-            Enrage = 30000;
+            Enrage = urand(45000, 60000);
         }
         else
             Enrage -= diff;
@@ -3026,7 +3026,7 @@ struct mob_shadowmoon_reaverAI : public ScriptedAI
     {
         ClearCastQueue();
 
-        SpellAbsorption = 10000;
+        SpellAbsorption = urand(5000, 11000);
         ShadowResonance = urand(5000, 20000);
     }
     void EnterCombat(Unit*) { DoZoneInCombat(80.0f); }
@@ -3039,7 +3039,7 @@ struct mob_shadowmoon_reaverAI : public ScriptedAI
         if(SpellAbsorption < diff)
         {
             AddSpellToCast(me, SPELL_SPELL_ABSORPTION);
-            SpellAbsorption = 40000;
+            SpellAbsorption = urand(20000, 24000);
         }
         else
             SpellAbsorption -= diff;
@@ -4001,7 +4001,7 @@ struct mob_bonechewer_brawlerAI: public ScriptedAI
     {
         ClearCastQueue();
 
-        Enrage = urand(15000, 25000);
+        Enrage = urand(7000, 14000);
     }
 
     void EnterCombat(Unit *) { DoZoneInCombat(80.0f); }
@@ -4023,7 +4023,7 @@ struct mob_bonechewer_brawlerAI: public ScriptedAI
         if(Enrage < diff)
         {
             AddSpellToCast(me, SPELL_ENRAGE_2);
-            Enrage = 25000;
+            Enrage = urand(21000, 28000);
         }
         else
             Enrage -= diff;
@@ -4216,7 +4216,7 @@ struct mob_angered_soul_fragmentAI: public ScriptedAI
     {
         ClearCastQueue();
 
-        Anger = urand(1500, 6000);
+        Anger = 1000;
     }
 
     void EnterCombat(Unit *)
@@ -4237,7 +4237,7 @@ struct mob_angered_soul_fragmentAI: public ScriptedAI
         if(Anger < diff)
         {
             AddSpellToCast(me, SPELL_ANGER);
-            Anger = urand(6000, 16000);
+            Anger = urand(7000, 11000);
         }
         else
             Anger -=diff;
@@ -4951,7 +4951,7 @@ enum TempleConcubine
     SPELL_LOVE_TAP  = 41338
 };
 
-#define YELL_TEMPLE_CONCUBINE "Business… or pleasure?"
+#define YELL_TEMPLE_CONCUBINE "BusinessÂ… or pleasure?"
 
 struct mob_temple_concubineAI: public ScriptedAI
 {
