@@ -4380,8 +4380,8 @@ struct mob_pristess_of_dementiaAI: public ScriptedAI
     {
         ClearCastQueue();
 
-        Confusion = urand(5000, 15000);
-        Dementia = 3000;
+        Confusion = urand(5000, 8000);
+        Dementia = urand(10000, 14000);
         ImageSummon = 15000;
     }
 
@@ -4398,7 +4398,7 @@ struct mob_pristess_of_dementiaAI: public ScriptedAI
         if(Confusion < diff)
         {
             AddSpellToCast(me, SPELL_CONFUSION);
-            Confusion = urand(15000, 25000);
+            Confusion = urand(12000, 18000);
         }
         else
             Confusion -= diff;
@@ -4406,7 +4406,7 @@ struct mob_pristess_of_dementiaAI: public ScriptedAI
         if(Dementia < diff)
         {
             AddSpellToCast(me, SPELL_DEMENTIA);
-            Dementia = urand(40000, 50000);
+            Dementia = urand(35000, 45000);
         }
         else
             Dementia -= diff;
@@ -4419,7 +4419,7 @@ struct mob_pristess_of_dementiaAI: public ScriptedAI
                 if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, 200.0f, true))
                 {
                     target->GetNearPoint(x, y, z, 5.0f);
-                    me->SummonCreature(NPC_IMAGE_OF_DEMENTIA, x, y, z, 0, TEMPSUMMON_TIMED_DESPAWN, 15000);
+                    me->SummonCreature(NPC_IMAGE_OF_DEMENTIA, x, y, z, 0, TEMPSUMMON_TIMED_DESPAWN, 20000);
                 }
             }
             ImageSummon = urand(25000, 35000);
