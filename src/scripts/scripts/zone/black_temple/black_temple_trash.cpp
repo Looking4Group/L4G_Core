@@ -195,7 +195,7 @@ enum CoilscarGeneral
 
     SPELL_BOOMING_VOICE      = 40080,
     SPELL_FREE_FRIEND        = 40081,
-    SPELL_CLEAVE             = 40504    // guessed
+    SPELL_DUAL_WIELD         = 29651
 };
 
 struct mob_coilskar_generalAI : public ScriptedAI
@@ -210,25 +210,20 @@ struct mob_coilskar_generalAI : public ScriptedAI
     {
         ClearCastQueue();
 
-        FreeFriend = 1000;
-        Cleave = 10000;
-        BoomingVoice = 40000;
+        FreeFriend = urand(2000, 6000);
+        BoomingVoice = urand(1000, 3000);
     }
 
-    void EnterCombat(Unit*) { DoZoneInCombat(80.0f); }
+    void EnterCombat(Unit*)
+    {
+    DoZoneInCombat(80.0f); 
+    ForceSpellCast(me, SPELL_DUAL_WIELD);
+    }
 
     void UpdateAI(const uint32 diff)
     {
         if(!UpdateVictim())
             return;
-
-        if(Cleave < diff)
-        {
-            AddSpellToCast(me->getVictim(), SPELL_CLEAVE);
-            Cleave = urand(15000, 25000);
-        }
-        else
-            Cleave -= diff;
 
         if(FreeFriend < diff )
         {
@@ -255,11 +250,11 @@ struct mob_coilskar_generalAI : public ScriptedAI
                     if(!me->HasAura(SPELL_BOOMING_VOICE, 0))
                     {
                         AddSpellToCast(me, SPELL_BOOMING_VOICE);
-                        BoomingVoice = urand(30000, 60000);
+                        BoomingVoice = urand(30000, 48000);
                     }
                 }
             }
-            FreeFriend = urand(10000, 15000);
+            FreeFriend = urand(12000, 17500);
         }
         else
             FreeFriend -= diff;
@@ -267,7 +262,7 @@ struct mob_coilskar_generalAI : public ScriptedAI
         if(BoomingVoice < diff)     //make Booming Voice from time to time even if no creature in CC
         {
             AddSpellToCast(me, SPELL_BOOMING_VOICE);
-            BoomingVoice = urand(40000, 60000);
+            BoomingVoice = urand(40000, 48000);
         }
         else
             BoomingVoice -= diff;
