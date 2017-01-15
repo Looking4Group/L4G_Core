@@ -59,9 +59,9 @@ struct mob_aqueous_lordAI : public ScriptedAI
     {
         ClearCastQueue();
 
-        VileSlime = 5000;
-        SummonTimer = urand(5000,10000);
-        CrashingWave = 15000;
+        VileSlime = urand(9000,15000);
+        SummonTimer = urand(14000,18000);
+        CrashingWave = urand(7000,11000);
     }
     void EnterCombat(Unit*) { DoZoneInCombat(80.0f); }
 
@@ -74,7 +74,7 @@ struct mob_aqueous_lordAI : public ScriptedAI
         {
             if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, 100, true))
                 AddSpellToCast(target, SPELL_VILE_SLIME);
-            VileSlime = urand(20000, 30000);
+            VileSlime = urand(12000, 18000);
         }
         else
             VileSlime -= diff;
@@ -91,7 +91,7 @@ struct mob_aqueous_lordAI : public ScriptedAI
                     Spawn->AI()->AttackStart(target);
                 }
             }
-            SummonTimer = urand(20000, 40000);
+            SummonTimer = urand(30000, 45000);
         }
         else
             SummonTimer -= diff;
@@ -99,7 +99,7 @@ struct mob_aqueous_lordAI : public ScriptedAI
         if(CrashingWave < diff)
         {
             AddSpellToCast(me->getVictim(), SPELL_CRASHING_WAVE);
-            CrashingWave = 15000;
+            CrashingWave = urand(9000, 13000);
         }
         else
             CrashingWave -= diff;
