@@ -59,9 +59,9 @@ struct mob_aqueous_lordAI : public ScriptedAI
     {
         ClearCastQueue();
 
-        VileSlime = 5000;
-        SummonTimer = urand(5000,10000);
-        CrashingWave = 15000;
+        VileSlime = urand(9000,15000);
+        SummonTimer = urand(14000,18000);
+        CrashingWave = urand(7000,11000);
     }
     void EnterCombat(Unit*) { DoZoneInCombat(80.0f); }
 
@@ -74,7 +74,7 @@ struct mob_aqueous_lordAI : public ScriptedAI
         {
             if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, 100, true))
                 AddSpellToCast(target, SPELL_VILE_SLIME);
-            VileSlime = urand(20000, 30000);
+            VileSlime = urand(12000, 18000);
         }
         else
             VileSlime -= diff;
@@ -91,7 +91,7 @@ struct mob_aqueous_lordAI : public ScriptedAI
                     Spawn->AI()->AttackStart(target);
                 }
             }
-            SummonTimer = urand(20000, 40000);
+            SummonTimer = urand(30000, 45000);
         }
         else
             SummonTimer -= diff;
@@ -99,7 +99,7 @@ struct mob_aqueous_lordAI : public ScriptedAI
         if(CrashingWave < diff)
         {
             AddSpellToCast(me->getVictim(), SPELL_CRASHING_WAVE);
-            CrashingWave = 15000;
+            CrashingWave = urand(9000, 13000);
         }
         else
             CrashingWave -= diff;
@@ -195,7 +195,7 @@ enum CoilscarGeneral
 
     SPELL_BOOMING_VOICE      = 40080,
     SPELL_FREE_FRIEND        = 40081,
-    SPELL_CLEAVE             = 40504    // guessed
+    SPELL_DUAL_WIELD         = 29651
 };
 
 struct mob_coilskar_generalAI : public ScriptedAI
@@ -210,25 +210,20 @@ struct mob_coilskar_generalAI : public ScriptedAI
     {
         ClearCastQueue();
 
-        FreeFriend = 1000;
-        Cleave = 10000;
-        BoomingVoice = 40000;
+        FreeFriend = urand(2000, 6000);
+        BoomingVoice = urand(1000, 3000);
     }
 
-    void EnterCombat(Unit*) { DoZoneInCombat(80.0f); }
+    void EnterCombat(Unit*)
+    {
+    DoZoneInCombat(80.0f); 
+    ForceSpellCast(me, SPELL_DUAL_WIELD);
+    }
 
     void UpdateAI(const uint32 diff)
     {
         if(!UpdateVictim())
             return;
-
-        if(Cleave < diff)
-        {
-            AddSpellToCast(me->getVictim(), SPELL_CLEAVE);
-            Cleave = urand(15000, 25000);
-        }
-        else
-            Cleave -= diff;
 
         if(FreeFriend < diff )
         {
@@ -255,11 +250,11 @@ struct mob_coilskar_generalAI : public ScriptedAI
                     if(!me->HasAura(SPELL_BOOMING_VOICE, 0))
                     {
                         AddSpellToCast(me, SPELL_BOOMING_VOICE);
-                        BoomingVoice = urand(30000, 60000);
+                        BoomingVoice = urand(30000, 48000);
                     }
                 }
             }
-            FreeFriend = urand(10000, 15000);
+            FreeFriend = urand(12000, 17500);
         }
         else
             FreeFriend -= diff;
@@ -267,7 +262,7 @@ struct mob_coilskar_generalAI : public ScriptedAI
         if(BoomingVoice < diff)     //make Booming Voice from time to time even if no creature in CC
         {
             AddSpellToCast(me, SPELL_BOOMING_VOICE);
-            BoomingVoice = urand(40000, 60000);
+            BoomingVoice = urand(40000, 48000);
         }
         else
             BoomingVoice -= diff;
@@ -1281,9 +1276,9 @@ struct mob_illidari_fearbringerAI : public ScriptedAI
         ClearCastQueue();
 
         checkTimer = 2000;
-        flamesTimer = 5000 + urand(0, 10000);
-        rainTimer = 15000 + urand(0, 10000);
-        stompTimer = 10000 + urand(0, 10000);
+        flamesTimer = urand(12000, 19000);
+        rainTimer = urand(8000, 14000);
+        stompTimer = urand(9000, 14000);
     }
 
     void EnterCombat(Unit *who) { DoZoneInCombat(80.0f); }
@@ -1303,7 +1298,7 @@ struct mob_illidari_fearbringerAI : public ScriptedAI
         if (flamesTimer < diff)
         {
             AddSpellToCast(me->getVictim(), SPELL_FEARBRINGER_ILLIDARI_FLAMES);
-            flamesTimer = 10000 + urand(0, 10000);
+            flamesTimer = urand(15000, 20000);
         }
         else
             flamesTimer -= diff;
@@ -1311,7 +1306,7 @@ struct mob_illidari_fearbringerAI : public ScriptedAI
         if (rainTimer < diff)
         {
             AddSpellToCast(SelectUnit(SELECT_TARGET_RANDOM, 0, 50, true), SPELL_FEARBRINGER_RAIN_OF_CHAOS);
-            rainTimer = 20000 + urand(0, 10000);
+            rainTimer = urand(19000, 24000);
         }
         else
             rainTimer -= diff;
@@ -1320,7 +1315,7 @@ struct mob_illidari_fearbringerAI : public ScriptedAI
         {
             AddSpellToCast(me, SPELL_FEARBRINGER_WAR_STOMP);
 
-            stompTimer = 15000 + urand(0, 10000);
+            stompTimer = urand(21000, 26000);
         }
         else
             stompTimer -= diff;
@@ -2423,7 +2418,7 @@ struct mob_storm_furyAI : public ScriptedAI
     {
         ClearCastQueue();
 
-        StormBlink = urand(15000, 25000);
+        StormBlink = urand(5000, 9000);
     }
     void EnterCombat(Unit*) { DoZoneInCombat(80.0f); }
 
@@ -2435,7 +2430,7 @@ struct mob_storm_furyAI : public ScriptedAI
         if(StormBlink < diff)
         {
             AddSpellToCast(me, SPELL_STORM_BLINK);
-            StormBlink = 25000;
+            StormBlink = urand(16000, 21000);
         }
         else
             StormBlink -= diff;
@@ -4386,8 +4381,8 @@ struct mob_pristess_of_dementiaAI: public ScriptedAI
     {
         ClearCastQueue();
 
-        Confusion = urand(5000, 15000);
-        Dementia = 3000;
+        Confusion = urand(5000, 8000);
+        Dementia = urand(10000, 14000);
         ImageSummon = 15000;
     }
 
@@ -4404,7 +4399,7 @@ struct mob_pristess_of_dementiaAI: public ScriptedAI
         if(Confusion < diff)
         {
             AddSpellToCast(me, SPELL_CONFUSION);
-            Confusion = urand(15000, 25000);
+            Confusion = urand(12000, 18000);
         }
         else
             Confusion -= diff;
@@ -4412,7 +4407,7 @@ struct mob_pristess_of_dementiaAI: public ScriptedAI
         if(Dementia < diff)
         {
             AddSpellToCast(me, SPELL_DEMENTIA);
-            Dementia = urand(40000, 50000);
+            Dementia = urand(35000, 45000);
         }
         else
             Dementia -= diff;
@@ -4425,7 +4420,7 @@ struct mob_pristess_of_dementiaAI: public ScriptedAI
                 if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, 200.0f, true))
                 {
                     target->GetNearPoint(x, y, z, 5.0f);
-                    me->SummonCreature(NPC_IMAGE_OF_DEMENTIA, x, y, z, 0, TEMPSUMMON_TIMED_DESPAWN, 15000);
+                    me->SummonCreature(NPC_IMAGE_OF_DEMENTIA, x, y, z, 0, TEMPSUMMON_TIMED_DESPAWN, 20000);
                 }
             }
             ImageSummon = urand(25000, 35000);
