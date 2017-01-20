@@ -118,3 +118,7 @@ UPDATE `creature` SET `position_x`='-3840.9509', `position_y`='3430.9916', `posi
 -- 7899,7901,7902
 UPDATE `creature_loot_template` SET `ChanceOrQuestChance`= -100 WHERE `item` = 9275; -- -100
 UPDATE `creature_loot_template` SET `maxcount` = 2 WHERE `item` = 4306 AND `entry` IN (7899,7901,7902); -- 2
+
+UPDATE `creature` SET `orientation` = '5.06145' WHERE `guid` = 98243;
+UPDATE `creature` SET `orientation` = '3.92699' WHERE `guid` = 98244;
+UPDATE `gameobject` SET `orientation` = 0 WHERE `guid` = 3487154;
