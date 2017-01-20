@@ -2897,6 +2897,7 @@ struct mob_shadowmoon_houndmasterAI: public ScriptedAI
     void Reset()
     {
         ClearCastQueue();
+	 me->GetMotionMaster()->Initialize();
 
         if(Creature* Hound = GetClosestCreatureWithEntry(me, MOB_SHADOWMOON_RIDING_HOUND, 80))
         {
@@ -2904,19 +2905,18 @@ struct mob_shadowmoon_houndmasterAI: public ScriptedAI
             Hound->RemoveCorpse();
         }
         me->Mount(14334);
-        Shoot = 2000;
-        FreezingTrap = 15000;
-        SilencingShot = urand(5000, 15000);
-        Volley = urand(10000, 25000);
+        Shoot = 1000;
+	 FreezingTrap = urand(5000, 8000);
+        SilencingShot = urand(8000, 12000);
+        Volley = urand(16000, 20000);
         WingClip = urand(8000, 20000);
-        Flare = urand(2000, 20000);
+	 Flare = urand(2000, 20000);
     }
 
     void EnterCombat(Unit *)
     {
         me->Unmount();
         DoCast(me, SPELL_SUMMON_RIDING_WARHOUND);
-        DoCast(me, SPELL_FREEZING_TRAP);
         DoZoneInCombat(80.0f);
     }
 
@@ -2935,7 +2935,7 @@ struct mob_shadowmoon_houndmasterAI: public ScriptedAI
         if (FreezingTrap < diff)
         {
             DoCast(me, SPELL_FREEZING_TRAP);
-            FreezingTrap = 15000;
+	     FreezingTrap = urand(25000, 35000);
         }
         else
             FreezingTrap -= diff;
@@ -2945,7 +2945,7 @@ struct mob_shadowmoon_houndmasterAI: public ScriptedAI
             if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, 40.0f, true, 0.0f, 10.0f))
             {
                 AddSpellToCast(target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), SPELL_VOLLEY);
-                Volley = 25000;
+		 Volley = urand(25000, 31000);
             }
             else
                 Volley = 3000;
@@ -2955,10 +2955,10 @@ struct mob_shadowmoon_houndmasterAI: public ScriptedAI
 
         if(Shoot < diff)
         {
-            if (Unit* target = SelectUnit(SELECT_TARGET_TOPAGGRO, 0, 100, true))
+            if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, 100, true))
                 AddSpellToCast(target, SPELL_SHOOT_1);
 
-            Shoot = 2000;
+            Shoot = urand(3000, 4500);
         }
         else
             Shoot -= diff;
@@ -2968,7 +2968,7 @@ struct mob_shadowmoon_houndmasterAI: public ScriptedAI
             if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 1, 35.0f, true, 0 , 8.0f))
             {
                 ForceSpellCast(target, SPELL_SILENCING_SHOT);
-                SilencingShot = 15000;
+		 SilencingShot = urand(9000, 13000);
             }
             else
                 SilencingShot = 4000;
@@ -2981,7 +2981,7 @@ struct mob_shadowmoon_houndmasterAI: public ScriptedAI
             if(me->IsWithinDistInMap(me->getVictim(), 5.0))
             {
                 AddSpellToCast(me->getVictim(), SPELL_WING_CLIP);
-                WingClip = 20000;
+                WingClip = urand(7000, 12000);
             }
             else
                 WingClip = 2500;
@@ -4951,7 +4951,7 @@ enum TempleConcubine
     SPELL_LOVE_TAP  = 41338
 };
 
-#define YELL_TEMPLE_CONCUBINE "Business or pleasure?"
+#define YELL_TEMPLE_CONCUBINE "Business or pleasure?"
 
 struct mob_temple_concubineAI: public ScriptedAI
 {
