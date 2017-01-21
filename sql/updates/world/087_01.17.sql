@@ -192,3 +192,12 @@ INSERT INTO `creature_linked_respawn` VALUES (85266, 56327);
 INSERT INTO `creature_linked_respawn` VALUES (85267, 56327);
 INSERT INTO `creature_linked_respawn` VALUES (85268, 56327);
 INSERT INTO `creature_linked_respawn` VALUES (56327, 56327);
+
+-- Deathsworn Captain (Shadowfang Keep)(3872)
+UPDATE `pool_creature` SET `chance` = 0 WHERE `guid` IN (657,99291);
+
+DELETE FROM `creature` WHERE `guid` = 42593;
+INSERT INTO `creature` VALUES (42593, 25369, 580, 1, 0, 0, 1757.44, 995.046, 16.0957, 0.715585, 604800, 0, 0, 240000, 0, 0, 0);
+
+DELETE FROM `creature_linked_respawn` WHERE `guid` IN (48044,84986,85004,85357,126600,134711,240198,240807,240957,240995,241085,241141,241960,242412,242681,242745,243224,244331,245098,16800046);
+DELETE FROM `creature_linked_respawn` WHERE `linkedguid` IN (84387,84572,85780,85784,16777006,16777195);
