@@ -3818,6 +3818,11 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->EffectImplicitTargetA[0] = 6;
                 spellInfo->EffectMiscValue[0] = 21;
                 break;
+			case 31538: //Hyjal Ghoul Cannibalize
+				spellInfo->Effect[0] = 136;
+				spellInfo->EffectDieSides[0] = 7;
+				spellInfo->EffectBaseDice[0] = 5;
+				break;
             default:
                 break;
         }
