@@ -655,7 +655,7 @@ struct mob_ghoulAI : public hyjal_trashAI
     bool RandomMove;
     void Reset()
     {
-        FrenzyTimer = 5000+rand()%5000;
+        FrenzyTimer = urand(3000, 7000);
         MoveTimer = 2000;
         RandomMove = false;
         cannibalize_casted = false;
@@ -748,7 +748,7 @@ struct mob_ghoulAI : public hyjal_trashAI
         if(FrenzyTimer<diff)
         {
             DoCast(m_creature,SPELL_FRENZY);
-            FrenzyTimer = 15000+rand()%15000;
+            FrenzyTimer = urand(15000, 25000);
         }
         else
             FrenzyTimer -= diff;
