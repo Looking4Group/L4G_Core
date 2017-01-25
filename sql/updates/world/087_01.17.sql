@@ -201,3 +201,6 @@ INSERT INTO `creature` VALUES (42593, 25369, 580, 1, 0, 0, 1757.44, 995.046, 16.
 
 DELETE FROM `creature_linked_respawn` WHERE `guid` IN (48044,84986,85004,85357,126600,134711,240198,240807,240957,240995,241085,241141,241960,242412,242681,242745,243224,244331,245098,16800046);
 DELETE FROM `creature_linked_respawn` WHERE `linkedguid` IN (84387,84572,85780,85784,16777006,16777195);
+
+DELETE FROM `creature` WHERE `guid` = 55353;
+INSERT INTO `creature` (`guid`, `id`, `map`, `spawnMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES (55353, 15397, 530, 1, 0, 0, 8700.38, -6638.36, 72.8276, 5.51524, 300, 0, 0, 210, 0, 0, 0);
