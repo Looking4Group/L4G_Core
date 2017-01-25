@@ -1761,13 +1761,13 @@ struct mob_ashtongue_primalistAI : public ScriptedAI
 
     void Reset()
     {
-	 ClearCastQueue();
-	 me->GetMotionMaster()->Initialize();
+        ClearCastQueue();
+        me->GetMotionMaster()->Initialize();
 
-	 MultiShot = urand(20000, 40000);
-	 Shoot = 500;
-	 WyvernSting = urand(7000, 15000);
-	 SweepingWingClip = urand(20000, 37000);
+        MultiShot = urand(20000, 40000);
+        Shoot = 500;
+        WyvernSting = urand(7000, 15000);
+        SweepingWingClip = urand(20000, 37000);
     }
 
     void AttackStart(Unit* who)
@@ -1798,9 +1798,11 @@ struct mob_ashtongue_primalistAI : public ScriptedAI
         if(Shoot < diff)
         {
             Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, 30.0f, true);
-            if(target && !me->IsWithinDist(target, 5.0f))
+            if (target && !me->IsWithinDist(target, 5.0f))
+            {
                 ForceSpellCast(target, SPELL_AP_SHOOT);
-	     Shoot = urand(2300, 3900);
+                Shoot = urand(2300, 3900);
+            }
         }
         else
             Shoot -= diff;
@@ -1823,12 +1825,12 @@ struct mob_ashtongue_primalistAI : public ScriptedAI
         {
             if(me->IsWithinDistInMap(me->getVictim(), 5.0))
             {
-		  AddSpellToCast(me->getVictim(), SPELL_SWEEPING_WING_CLIP);
-
-		  float x, y, z;
-		  me->GetNearPoint(x,y,z,0.0f, urand(10,15), frand(0.0f, 2*M_PI));
-		  me->GetMotionMaster()->MovePoint(1, x,y,z);
-		  SweepingWingClip = urand(5000, 8000);
+                AddSpellToCast(me->getVictim(), SPELL_SWEEPING_WING_CLIP);
+            
+                float x, y, z;
+                me->GetNearPoint(x,y,z,0.0f, urand(10,15), frand(0.0f, 2*M_PI));
+                me->GetMotionMaster()->MovePoint(1, x,y,z);
+                SweepingWingClip = urand(5000, 8000);
             }
             else
                 SweepingWingClip = 2500;
