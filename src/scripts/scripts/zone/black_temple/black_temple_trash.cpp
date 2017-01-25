@@ -1826,7 +1826,7 @@ struct mob_ashtongue_primalistAI : public ScriptedAI
             if(me->IsWithinDistInMap(me->getVictim(), 5.0))
             {
                 AddSpellToCast(me->getVictim(), SPELL_SWEEPING_WING_CLIP);
-            
+
                 float x, y, z;
                 me->GetNearPoint(x,y,z,0.0f, urand(10,15), frand(0.0f, 2*M_PI));
                 me->GetMotionMaster()->MovePoint(1, x,y,z);
