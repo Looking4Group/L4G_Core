@@ -2906,11 +2906,11 @@ struct mob_shadowmoon_houndmasterAI: public ScriptedAI
         }
         me->Mount(14334);
         Shoot = 1000;
-	 FreezingTrap = urand(5000, 8000);
+        FreezingTrap = urand(5000, 8000);
         SilencingShot = urand(8000, 12000);
         Volley = urand(16000, 20000);
         WingClip = urand(8000, 20000);
-	 Flare = urand(2000, 20000);
+        Flare = urand(2000, 20000);
     }
 
     void EnterCombat(Unit *)
@@ -2935,7 +2935,7 @@ struct mob_shadowmoon_houndmasterAI: public ScriptedAI
         if (FreezingTrap < diff)
         {
             DoCast(me, SPELL_FREEZING_TRAP);
-	     FreezingTrap = urand(25000, 35000);
+            FreezingTrap = urand(25000, 35000);
         }
         else
             FreezingTrap -= diff;
@@ -2945,7 +2945,7 @@ struct mob_shadowmoon_houndmasterAI: public ScriptedAI
             if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, 40.0f, true, 0.0f, 10.0f))
             {
                 AddSpellToCast(target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), SPELL_VOLLEY);
-		 Volley = urand(25000, 31000);
+                Volley = urand(25000, 31000);
             }
             else
                 Volley = 3000;
@@ -2968,7 +2968,7 @@ struct mob_shadowmoon_houndmasterAI: public ScriptedAI
             if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 1, 35.0f, true, 0 , 8.0f))
             {
                 ForceSpellCast(target, SPELL_SILENCING_SHOT);
-		 SilencingShot = urand(9000, 13000);
+                SilencingShot = urand(9000, 13000);
             }
             else
                 SilencingShot = 4000;
