@@ -2784,3 +2784,7 @@ INSERT INTO `creature_loot_template` VALUES
 (17842, 34999, 10, 9, -34999, 1, 0, 0, 0),
 (17968, 34999, 15, 9, -34999, 1, 0, 0, 0);
 
+
+-- Blood Knight Dawnstar 17832
+UPDATE `creature` SET `modelid` = 0 WHERE `guid` = 39681;
+
