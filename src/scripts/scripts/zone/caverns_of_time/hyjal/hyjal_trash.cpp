@@ -655,7 +655,7 @@ struct mob_ghoulAI : public hyjal_trashAI
     bool RandomMove;
     void Reset()
     {
-        FrenzyTimer = 5000+rand()%5000;
+        FrenzyTimer = urand(3000, 7000);
         MoveTimer = 2000;
         RandomMove = false;
         cannibalize_casted = false;
@@ -748,7 +748,7 @@ struct mob_ghoulAI : public hyjal_trashAI
         if(FrenzyTimer<diff)
         {
             DoCast(m_creature,SPELL_FRENZY);
-            FrenzyTimer = 15000+rand()%15000;
+            FrenzyTimer = urand(15000, 25000);
         }
         else
             FrenzyTimer -= diff;
@@ -1210,7 +1210,7 @@ struct mob_fel_stalkerAI : public hyjal_trashAI
 
     void Reset()
     {
-        ManaBurnTimer = 9000+rand()%5000;
+        ManaBurnTimer = urand(3000, 9000);
     }
 
     void WaypointReached(uint32 i)
@@ -1287,9 +1287,16 @@ struct mob_fel_stalkerAI : public hyjal_trashAI
             return;
         if(ManaBurnTimer<diff)
         {
-            DoCast(m_creature->getVictim(),SPELL_MANA_BURN);
-            ManaBurnTimer = 9000+rand()%5000;
-        }else ManaBurnTimer -= diff;
+            if(Unit *target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_MANA_BURN), true, POWER_MANA))
+                DoCast(target, SPELL_MANA_BURN);
+            else
+                DoCast(m_creature->getVictim(), SPELL_MANA_BURN);
+                
+            ManaBurnTimer = urand(6000, 9000);
+        }
+        else
+            ManaBurnTimer -= diff;
+        
         DoMeleeAttackIfReady();
     }
 };
