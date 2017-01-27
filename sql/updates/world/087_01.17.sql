@@ -672,7 +672,7 @@ INSERT INTO `creature_template_addon` VALUES (23339, 0, 0, 16777472, 0, 4097, 0,
 
 -- Ashtongue Stalker 23374- mob_ashtongue_stalker
 UPDATE `creature` SET `modelid` = 0, `equipment_id` = 0, `spawntimesecs` = 7200 WHERE `id` = 23374;
-UPDATE `creature_template` SET `speed`='1.48',`mindmg`='8364',`maxdmg`='10421',`mechanic_immune_mask`='570568513' WHERE `entry` = 23374; -- 2551 6151 -- 14,637 - 18,237
+UPDATE `creature_template` SET `speed`='1.48',`mindmg`='5855',`maxdmg`='7295',`mechanic_immune_mask`='570568513' WHERE `entry` = 23374; -- 2551 6151 -- 14,637 - 18,237 /2.5
 DELETE FROM `creature_template_addon` WHERE `entry` = 23374;
 INSERT INTO `creature_template_addon` VALUES (23374, 0, 0, 16777472, 0, 4097, 0, 0, '');	
 
@@ -730,7 +730,7 @@ UPDATE `creature_template` SET `speed`='1.48',`mindmg`='8401',`maxdmg`='11259',`
 
 -- Illidari Assassin 23403- mob_illidari_assassin
 UPDATE `creature` SET `modelid` = 0, `spawntimesecs` = 7200 WHERE `id` = 23403;
-UPDATE `creature_template` SET `speed`='1.48',`mindmg`='9956',`maxdmg`='12074',`mechanic_immune_mask`='109064151',`flags_extra`='1078001664' WHERE `entry` = 23403; -- 5591 9297 -- 17,423 - 21,129
+UPDATE `creature_template` SET `speed`='1.48',`mindmg`='6969',`maxdmg`='8452',`mechanic_immune_mask`='109064151',`flags_extra`='1078001664' WHERE `entry` = 23403; -- 5591 9297 -- 17,423 - 21,129 /2.5
 
 -- Teleport NPCs
 -- Spirit of Udalo (23410) - npc_spirit_of_udalo
