@@ -164,6 +164,7 @@ struct mob_aqueous_spawnAI : public ScriptedAI
             if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, 30, true))
                     AddSpellToCast(target, SPELL_SLUDGE_NOVA);
             SludgeNova = urand(15000,18000);
+            Zcheck = 5000;
         }
         else
             SludgeNova -= diff;
