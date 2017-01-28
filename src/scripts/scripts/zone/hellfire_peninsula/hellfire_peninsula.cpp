@@ -2346,6 +2346,213 @@ CreatureAI* GetAI_npc_barracks(Creature* creature)
     return new npc_barracksAI(creature);
 }
 
+/*####
+# npc_moh / go_moh_cage
+####*/
+
+enum
+{
+    QUEST_HOW_TO_SERVE_GOBLINS_MOH = 10238,
+    NPC_MOH = 19764,
+    GO_CAGE_MOH = 183940,
+    SAY_MOH = -1999972
+};
+
+struct npc_mohAI : public npc_escortAI
+{
+    npc_mohAI(Creature* creature) : npc_escortAI(creature) { Reset(); }
+
+    void Reset()
+    {
+        if (GameObject* Cage = FindGameObject(GO_CAGE_MOH, 5, m_creature))
+            Cage->SetGoState(GO_STATE_READY);
+    }
+
+    void StartRun(Player* player)
+    {
+        AddWaypoint(0, -71.1f, 3135.35f, -4.56f, 10000);
+        AddWaypoint(1, -71.1f, 3135.35f, -4.56f);
+        Start(false, false, player->GetGUID());
+        return;
+    }
+
+    void WaypointReached(uint32 i)
+    {
+        switch (i)
+        {
+        case 0:
+            DoScriptText(SAY_MOH, m_creature);
+            break;
+        case 1:
+            m_creature->ForcedDespawn();
+        }
+    }
+};
+
+CreatureAI* GetAI_npc_moh(Creature* creature)
+{
+    return new npc_mohAI(creature);
+}
+
+bool go_moh_cage(Player* player, GameObject* go)
+{
+    Creature* Moh = NULL;
+
+    if (player->GetQuestStatus(QUEST_HOW_TO_SERVE_GOBLINS_MOH) == QUEST_STATUS_INCOMPLETE)
+    {
+        // We don't need to complete the quest here, it's done anyways since the quest objective is just to use the cage.
+
+        Moh = GetClosestCreatureWithEntry(go, NPC_MOH, 5);
+
+        if (npc_mohAI* escortAI = CAST_AI(npc_mohAI, Moh->AI()))
+        {
+            escortAI->StartRun(player);
+            go->SetGoState(GO_STATE_ACTIVE);
+        }
+
+        return false;
+    }
+    return true;
+}
+
+
+/*####
+# npc_jakk / go_jakk_cage
+####*/
+
+enum
+{
+    QUEST_HOW_TO_SERVE_GOBLINS_JAKK = 10238,
+    NPC_JAKK = 19766,
+    GO_CAGE_JAKK = 183941,
+    SAY_JAKK = -1999971
+};
+
+struct npc_jakkAI : public npc_escortAI
+{
+    npc_jakkAI(Creature* creature) : npc_escortAI(creature) { Reset(); }
+
+    void Reset()
+    {
+        if (GameObject* Cage = FindGameObject(GO_CAGE_JAKK, 5, m_creature))
+            Cage->SetGoState(GO_STATE_READY);
+    }
+
+    void StartRun(Player* player)
+    {
+        AddWaypoint(0, -118.87f, 3088.65f, 3.16f, 10000);
+        AddWaypoint(1, -118.87f, 3088.65f, 3.16f);
+        Start(false, false, player->GetGUID());
+        return;
+    }
+
+    void WaypointReached(uint32 i)
+    {
+        switch (i)
+        {
+        case 0:
+            DoScriptText(SAY_JAKK, m_creature);
+            break;
+        case 1:
+            m_creature->ForcedDespawn();
+        }
+    }
+};
+
+CreatureAI* GetAI_npc_jakk(Creature* creature)
+{
+    return new npc_jakkAI(creature);
+}
+
+bool go_jakk_cage(Player* player, GameObject* go)
+{
+    Creature* Jakk = NULL;
+
+    if (player->GetQuestStatus(QUEST_HOW_TO_SERVE_GOBLINS_JAKK) == QUEST_STATUS_INCOMPLETE)
+    {
+        // We don't need to complete the quest here, it's done anyways since the quest objective is just to use the cage.
+
+        Jakk = GetClosestCreatureWithEntry(go, NPC_JAKK, 5);
+
+        if (npc_jakkAI* escortAI = CAST_AI(npc_jakkAI, Jakk->AI()))
+        {
+            escortAI->StartRun(player);
+            go->SetGoState(GO_STATE_ACTIVE);
+        }
+
+        return false;
+    }
+    return true;
+}
+
+/*####
+# npc_manni / go_manni_cage
+####*/
+enum
+{
+    QUEST_HOW_TO_SERVE_GOBLINS_MANNI = 10238,
+    NPC_MANNI = 19763,
+    GO_CAGE_MANNI = 183936,
+    SAY_MANNI = -1999970
+};
+
+struct npc_manniAI : public npc_escortAI
+{
+    npc_manniAI(Creature* creature) : npc_escortAI(creature) { Reset(); }
+
+    void Reset()
+    {
+        if (GameObject* Cage = FindGameObject(GO_CAGE_MANNI, 5, m_creature))
+            Cage->SetGoState(GO_STATE_READY);
+    }
+
+    void StartRun(Player* player)
+    {
+        AddWaypoint(0, 72.37f, 3208.83f, 32.19f, 10000);
+        AddWaypoint(1, 72.37f, 3208.83f, 32.19f);
+        Start(false, false, player->GetGUID());
+        return;
+    }
+
+    void WaypointReached(uint32 i)
+    {
+        switch (i)
+        {
+        case 0:
+            DoScriptText(SAY_MANNI, m_creature);
+            break;
+        case 1:
+            m_creature->ForcedDespawn();
+        }
+    }
+};
+
+CreatureAI* GetAI_npc_manni(Creature* creature)
+{
+    return new npc_manniAI(creature);
+}
+
+bool go_manni_cage(Player* player, GameObject* go)
+{
+    Creature* Manni = NULL;
+
+    if (player->GetQuestStatus(QUEST_HOW_TO_SERVE_GOBLINS_MANNI) == QUEST_STATUS_INCOMPLETE)
+    {
+        // We don't need to complete the quest here, it's done anyways since the quest objective is just to use the cage.
+
+        Manni = GetClosestCreatureWithEntry(go, NPC_MANNI, 5);
+
+        if (npc_manniAI* escortAI = CAST_AI(npc_manniAI, Manni->AI()))
+        {
+            escortAI->StartRun(player);
+            go->SetGoState(GO_STATE_ACTIVE);
+        }
+
+        return false;
+    }
+    return true;
+}
+
 void AddSC_hellfire_peninsula()
 {
     Script *newscript;
@@ -2498,5 +2705,35 @@ void AddSC_hellfire_peninsula()
     newscript = new Script;
     newscript->Name = "npc_barracks";
     newscript->GetAI = &GetAI_npc_barracks;
+    newscript->RegisterSelf();
+
+    newscript = new Script;
+    newscript->Name = "go_moh_cage";
+    newscript->pGOUse = &go_moh_cage;
+    newscript->RegisterSelf();
+
+    newscript = new Script;
+    newscript->Name = "npc_moh";
+    newscript->GetAI = &GetAI_npc_moh;
+    newscript->RegisterSelf();
+
+    newscript = new Script;
+    newscript->Name = "go_jakk_cage";
+    newscript->pGOUse = &go_jakk_cage;
+    newscript->RegisterSelf();
+
+    newscript = new Script;
+    newscript->Name = "npc_jakk";
+    newscript->GetAI = &GetAI_npc_jakk;
+    newscript->RegisterSelf();
+
+    newscript = new Script;
+    newscript->Name = "go_manni_cage";
+    newscript->pGOUse = &go_manni_cage;
+    newscript->RegisterSelf();
+
+    newscript = new Script;
+    newscript->Name = "npc_manni";
+    newscript->GetAI = &GetAI_npc_manni;
     newscript->RegisterSelf();
 }

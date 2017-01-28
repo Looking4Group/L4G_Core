@@ -142,7 +142,7 @@ UPDATE `creature` SET `MovementType`='0',`spawndist`='0' WHERE `id` = 21347;
 -- UPDATE `creature_template` SET `unit_flags`=`unit_flags`|'' WHERE `entry` = 21347;
 
 -- Anveena
-UPDATE `creature_template` SET `MovementType`='5' WHERE `entry` = 26046;
+UPDATE `creature_template` SET `InhabitType` = 5, `MovementType`='0' WHERE `entry` = 26046;
 DELETE FROM `creature_template_addon` WHERE `entry` = 26046;
 INSERT INTO `creature_template_addon` VALUES
 (26046,0,0,0,0,0,0,33554432,'');

@@ -239,8 +239,8 @@ struct mob_lesser_doomguardAI : public hyjal_trashAI
 
     void Reset()
     {
-        CrippleTimer = 50000;
-        WarstompTimer = 10000;
+        CrippleTimer = urand(12000, 18000);
+        WarstompTimer = urand(7000, 11000);
         CheckTimer = 2000;
     }
 
@@ -286,7 +286,7 @@ struct mob_lesser_doomguardAI : public hyjal_trashAI
         if(WarstompTimer < diff)
         {
             DoCast(m_creature, SPELL_WARSTOMP);
-            WarstompTimer = urand(10000, 25000);
+            WarstompTimer = urand(11000, 18000);
         }
         else
             WarstompTimer -= diff;
@@ -296,7 +296,7 @@ struct mob_lesser_doomguardAI : public hyjal_trashAI
             if(Unit *target = SelectUnit(SELECT_TARGET_RANDOM,0,100,true))
             {
                 DoCast(target, SPELL_CRIPPLE);
-                CrippleTimer = urand(25000, 30000);
+                CrippleTimer = urand(13000, 20000);
             }
         }
         else
