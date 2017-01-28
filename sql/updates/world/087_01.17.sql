@@ -3574,3 +3574,22 @@ UPDATE `creature_template` SET `minhealth`='230000',`maxhealth`='230000' WHERE `
 -- Crystalcore Mechanic 20052
 UPDATE `creature_template` SET `minhealth`='180000',`maxhealth`='180000' WHERE `entry` = 20052; -- 180000 -- 234000
 
+
+-- ================
+-- 2.1 Units
+-- ================
+
+-- ========
+-- Phase IN
+-- ========
+
+UPDATE `creature` SET `spawnmask`=1 WHERE `id` IN (18528,22861,22862,22863,22864);
+UPDATE `creature` SET `spawnmask`=1 WHERE `guid` IN (84715);
+UPDATE `creature` SET `id` = '23029' WHERE `id` = 21844; -- 23029
+
+-- ========
+-- Phase OUT
+-- ========
+
+UPDATE `creature` SET `spawnmask`=0 WHERE `id` IN (22201,22221,22217,22218,22287,22289,22451,22174,22283,22385);
+
