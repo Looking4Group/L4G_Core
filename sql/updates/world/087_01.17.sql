@@ -2416,6 +2416,7 @@ UPDATE `creature_template` SET `speed`='1.2',`mindmg`='1400',`maxdmg`='1600',`dm
 UPDATE `creature_template` SET `speed`='1.2',`mindmg`='1392',`maxdmg`='1653' WHERE `entry` = 17916; -- 1.2 1000 2045 -- 5,567 - 6,612 /4
 
 -- Alliance Footman 17919
+UPDATE `creature` SET `spawntimesecs` = 300 WHERE `id` = 17919;
 UPDATE `creature_template` SET `armor` = 6800 WHERE `entry` = 17919; -- 0
 DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17919;
 INSERT INTO `creature_ai_scripts` VALUES
@@ -2425,6 +2426,7 @@ INSERT INTO `creature_ai_scripts` VALUES
 (1791904, 17919, 12, 0, 25, 2, 2, 0, 0, 0, 1, -989, -990, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Alliance Footman - Say on Kill');
 
 -- Alliance Knight 17920
+UPDATE `creature` SET `spawntimesecs` = 300 WHERE `id` = 17920;
 UPDATE `creature_template` SET `armor` = 6200, `speed` = '1.20' WHERE `entry` = 17920; -- 0 2
 DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17920;
 INSERT INTO `creature_ai_scripts` VALUES
@@ -2434,8 +2436,10 @@ INSERT INTO `creature_ai_scripts` VALUES
 (1792004, 17920, 12, 0, 25, 2, 2, 0, 0, 0, 1, -981, -982, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Alliance Knight - Say on Kill');
 
 -- Alliance Rifleman 17921- alliance_rifleman
+UPDATE `creature` SET `spawntimesecs` = 300 WHERE `id` = 17921;
 
 -- Alliance Sorceress 17922
+UPDATE `creature` SET `spawntimesecs` = 300 WHERE `id` = 17922;
 DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17922;
 INSERT INTO `creature_ai_scripts` VALUES
 ('1792201','17922','4','0','100','2','0','0','0','0','22','0','0','0','0','0','0','0','0','0','0','0','Alliance Sorceress - Set Phase 1 on Aggro'),
@@ -2447,6 +2451,7 @@ INSERT INTO `creature_ai_scripts` VALUES
 (1792207, 17922, 6, 0, 25, 0, 0, 0, 0, 0, 1, -991, -992, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Alliance Sorceress - Say on Death');
 
 -- Alliance Priest 17928
+UPDATE `creature` SET `spawntimesecs` = 300 WHERE `id` = 17928;
 DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17928;
 INSERT INTO `creature_ai_scripts` VALUES
 ('1792801','17928','4','0','100','2','0','0','0','0','22','1','0','0','0','0','0','0','0','0','0','0','Alliance Priest - Set Phase 1 on Aggro'),
@@ -2459,11 +2464,22 @@ INSERT INTO `creature_ai_scripts` VALUES
 
 -- Alliance Peasant 17931
 -- http://www.wowhead.com/npc=17931/alliance-peasant#english-comments
+UPDATE `creature` SET `spawntimesecs` = 300 WHERE `id` = 17931;
 DELETE FROM `creature_template_addon` WHERE `entry` = 17931;
 INSERT INTO `creature_template_addon` VALUES
 (17931,0,0,0,0,4097,173,0,'');
 
+-- Horde Grunt 17932
+UPDATE `creature` SET `spawntimesecs` = 300 WHERE `id` = 17932;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17932;
+INSERT INTO `creature_ai_scripts` VALUES 
+(1793201, 17932, 9, 0, 100, 3, 0, 5, 10000, 15000, 11, 31754, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Horde Grunt - Cast Strike'),
+(1793202, 17932, 4, 0, 25, 0, 0, 0, 0, 0, 1, -800, -801, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Horde Grunt - Text on Aggro'),
+(1793203, 17932, 6, 0, 25, 0, 0, 0, 0, 0, 1, -802, -803, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Horde Grunt - Text on Death'),
+(1793204, 17932, 12, 0, 25, 0, 2, 0, 500, 1000, 1, -804, -805, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Horde Grunt - Text on Kill');
+
 -- Tauren Warrior 17933
+UPDATE `creature` SET `spawntimesecs` = 300 WHERE `id` = 17933;
 DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17933;
 INSERT INTO `creature_ai_scripts` VALUES
 ('1793301','17933','9','0','100','3','0','15','7000','11000','11','31755','0','0','0','0','0','0','0','0','0','0','Tauren Warrior - Cast War Stomp'),
@@ -2472,6 +2488,7 @@ INSERT INTO `creature_ai_scripts` VALUES
 (1793304, 17933, 12, 0, 25, 0, 2, 0, 500, 1000, 1, -975, -976, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Tauren Warrior - Say on Kill');
 
 -- Horde Headhunter 17934
+UPDATE `creature` SET `spawntimesecs` = 300 WHERE `id` = 17934;
 DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17934;
 INSERT INTO `creature_ai_scripts` VALUES
 ('1793401','17934','0','0','100','3','1000','1000','2000','2000','21','1','0','0','40','1','0','0','0','0','0','0','Horde Headhunter - Start Movement and Set Melee Weapon Model'),
@@ -2484,6 +2501,7 @@ INSERT INTO `creature_ai_scripts` VALUES
 (1793408, 17934, 12, 0, 25, 0, 2, 0, 500, 1000, 1, -968, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Horde Headhunter - Say on Kill');
 
 -- Horde Witch Doctor 17935
+UPDATE `creature` SET `spawntimesecs` = 300 WHERE `id` = 17935;
 DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17935;
 INSERT INTO `creature_ai_scripts` VALUES
 ('1793501','17935','4','0','100','2','0','0','0','0','11','31760','0','0','0','0','0','0','0','0','0','0','Horde Witch Doctor - Cast Healing Ward on Aggro'),
@@ -2492,6 +2510,7 @@ INSERT INTO `creature_ai_scripts` VALUES
 (1793504, 17935, 6, 0, 25, 0, 0, 0, 0, 0, 1, -970, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Horde Witch Doctor - Say on Death');
 
 -- Horde Shaman 17936
+UPDATE `creature` SET `spawntimesecs` = 300 WHERE `id` = 17936;
 DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17936;
 INSERT INTO `creature_ai_scripts` VALUES
 ('1793601','17936','1','0','100','3','1000','1000','600000','600000','11','31765','0','1','0','0','0','0','0','0','0','0','Horde Shaman - Cast Lightning Shield OOC'),
@@ -2501,6 +2520,7 @@ INSERT INTO `creature_ai_scripts` VALUES
 (1793605, 17936, 6, 0, 25, 0, 0, 0, 0, 0, 1, -969, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Horde Shaman - Say on Death');
 
 -- Horde Peon 17937
+UPDATE `creature` SET `spawntimesecs` = 300 WHERE `id` = 17937;
 DELETE FROM `creature_template_addon` WHERE `entry` = 17937;
 INSERT INTO `creature_template_addon` VALUES
 (17937,0,0,0,0,4097,173,0,'');
@@ -2588,6 +2608,13 @@ UPDATE `creature_template` SET `speed`='2.4',`mindmg`='18182',`maxdmg`='21242',`
 -- Visuals & Positioning & Movement
 -- ======================================================
 
+DELETE FROM `creature_addon` WHERE `guid` IN (49163,49164,49988,49995);
+INSERT INTO `creature_addon` VALUES 
+(49163,0,0,512,0,4097,333,0,''),
+(49164,0,0,512,0,4097,333,0,''),
+(49988,0,0,512,0,4097,214,0,''),
+(49995,0,0,512,0,4097,214,0,'');
+
 UPDATE `creature` SET `position_x`='5183.02', `position_y`='-3382.98', `position_z`='1638.14', `orientation`='6.03443',`spawndist`='0',`movementtype`='0' WHERE `guid` = 52080;
 
 -- Delete wrong movement
@@ -2649,9 +2676,32 @@ INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`
 (@GUID,@POINT := @POINT + 1, 5014.2958, -1827.2132, 1321.6782,0,0,0,100,0),
 (@GUID,@POINT := @POINT + 1, 5016.2309, -1821.8514, 1321.8298,0,0,0,100,0),
 (@GUID,@POINT := @POINT + 1, 5030.5507, -1778.0809, 1321.8430,0,0,0,100,0),
-(@GUID,@POINT := @POINT + 1, 5023.7495, -1767.4716, 1322.2296,0,0,0,100,0),
-(@GUID,@POINT := @POINT + 1, 5030.4970, -1782.4370, 1321.7009,0,0,0,100,0);
--- path back missing
+(@GUID,@POINT := @POINT + 1, 5023.7495, -1767.4716, 1322.2296,10000,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 5030.4970, -1782.4370, 1321.7009,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 5023.1923, -1812.6506, 1321.7681,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 5016.2309, -1821.8514, 1321.8298,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 4994.4121, -1846.3155, 1321.6802,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 4974.6821, -1869.4301, 1321.1088,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 4973.8300, -1871.4394, 1321.1518,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 4976.6030, -1883.3793, 1321.6474,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 4982.3364, -1886.0722, 1322.4235,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 5004.2299, -1892.4552, 1325.9412,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 5049.2622, -1886.9235, 1331.6601,30000,0,0,100,0);
+
+SET @GUID := 52946;
+SET @POINT := 0;
+UPDATE `creature` SET `MovementType`='2' WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,NULL);
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@GUID,@POINT := @POINT + 1, XXX, YYY, ZZZ,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 5436.8325, -2652.5925, 1485.2058,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 5448.3828, -2664.9121, 1485.2918,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 5461.2944, -2707.1530, 1485.5791,15000,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 5448.3828, -2664.9121, 1485.2918,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 5436.8325, -2652.5925, 1485.2058,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 5397.3999, -2634.8000, 1486.3599,15000,0,0,100,0);
 
 -- 52528 movement 
 
@@ -2661,7 +2711,27 @@ INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`
 
 -- 52679 / 52695 movement
 
--- 52982 movement
+SET @GUID := 52953;
+SET @POINT := 0;
+UPDATE `creature` SET `MovementType`='2' WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,NULL);
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@GUID,@POINT := @POINT + 1, XXX, YYY, ZZZ,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 5468.3818, -2949.1467, 1537.6992,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 5457.8393, -2932.4338, 1534.6328,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 5416.5107, -2896.8491, 1522.7535,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 5416.9399, -2892.7543, 1521.9375,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 5419.4677, -2873.1367, 1517.0444,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 5415.6152, -2856.8845, 1513.1450,15000,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 5419.4677, -2873.1367, 1517.0444,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 5416.5107, -2896.8491, 1522.7535,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 5420.8706, -2900.8623, 1523.6153,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 5457.8393, -2932.4338, 1534.6328,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 5479.4702, -2960.3500, 1538.4300,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 5501.1220, -2971.8000, 1537.5042,15000,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 5479.4702, -2960.3500, 1538.4300,0,0,0,100,0);
 
 -- 53024 movement
 
@@ -2671,13 +2741,17 @@ INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`
 -- Linking
 -- ======================================================
 
-DELETE FROM `creature_formations` WHERE `leaderguid` IN (51901,51877,51860,48408,48411,48415,48412,48413,48414,48425);
+DELETE FROM `creature_formations` WHERE `leaderguid` IN (52953,52946,51901,51877,51860,48408,48411,48415,48412,48413,48414,48425);
 DELETE FROM `creature_formations` WHERE `memberguid` IN (48408,48411,48415,48412,48413,48414,48425);
 INSERT INTO `creature_formations` VALUES
 
--- 52953,52982,52981
+(52953, 52953, 100, 360, 2),
+(52953, 52981, 3, 0.78, 2),
+(52953, 52982, 3, 5.50, 2),
 
--- 52946,52947,52948
+(52946, 52946, 100, 360, 2),
+(52946, 52947, 3, 0.78, 2),
+(52946, 52948, 3, 5.50, 2),
 
 -- 52695,52679
 
