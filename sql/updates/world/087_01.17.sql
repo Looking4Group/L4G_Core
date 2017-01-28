@@ -2871,3 +2871,12 @@ UPDATE `creature` SET `modelid` = 0 WHERE `guid` = 39681;
 
 -- Xi'ri
 UPDATE `creature` SET `spawnMask` = 1 WHERE `id` = 18528;
+
+SET @GUID := 79402;
+UPDATE `creature` SET `position_x`='135.8590',`position_y`='-0.0621',`position_z`='-10.1021',`movementtype`='2',`spawndist`='0' WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid`=@GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,16908544,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id`=@GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,1,169.1991, 0.0123, -10.1011,15000,1,0,100,0),
+(@GUID,2,105.4535, 0.0491, -10.1740,15000,1,0,100,0);
