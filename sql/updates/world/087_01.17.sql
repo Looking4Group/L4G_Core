@@ -2862,3 +2862,6 @@ INSERT INTO `creature_loot_template` VALUES
 -- Blood Knight Dawnstar 17832
 UPDATE `creature` SET `modelid` = 0 WHERE `guid` = 39681;
 
+
+-- Xi'ri
+UPDATE `creature` SET `spawnMask` = 1 WHERE `id` = 18528;
