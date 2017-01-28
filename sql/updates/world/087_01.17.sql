@@ -2590,7 +2590,7 @@ UPDATE `creature_template` SET `speed`='1.48',`mindmg`='4616',`maxdmg`='5482',`f
 -- Kaz'rogal 17888- boss_kazrogal
 -- https://web.archive.org/web/20100907205452/http://www.hordeguides.de/Schlachtzug/TBC/Boss/17888/Kazrogal/index.htm
 -- Warstomp cant be fixed as spell range is calculated from bounding radius.
-UPDATE `creature_template` SET `speed`='1.71',`mindmg`='10867',`maxdmg`='12898',`mechanic_immune_mask`='650854387' WHERE `entry` = 17888; -- 4888 9966 -- 8717 10744 -- 27,167 - 32,245
+UPDATE `creature_template` SET `speed`='1.71',`mindmg`='6792',`maxdmg`='8061',`mechanic_immune_mask`='650854387' WHERE `entry` = 17888; -- 4888 9966 -- 8717 10744 -- 10867 12898 -- 27,167 - 32,245 /4
 UPDATE `creature_model_info` SET `bounding_radius` = 13, `combat_reach` = 13 WHERE `modelid` = 17886; -- 0
 
 -- Azgalor 17842- boss_azgalor
