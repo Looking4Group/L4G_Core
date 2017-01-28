@@ -2981,3 +2981,596 @@ INSERT INTO `creature_ai_scripts` VALUES
 
 UPDATE `creature_ai_scripts` SET `action3_param1` = 100 WHERE `id` = 2316503;
 UPDATE `creature_ai_scripts` SET `action2_param1` = 100 WHERE `id` = 2316304;
+
+-- 2.1 changes
+UPDATE `creature` SET `position_x`='361.872009', `position_y`='-724.400024', `position_z`='-14.0032', `orientation`='3.2655',`spawndist`='0',`movementtype`='0' WHERE `guid` = 82974; -- `position_x`='354.7654', `position_y`='-723.9628', `position_z`='-13.8946' Post 2.1 `position_x`='361.872009', `position_y`='-724.400024', `position_z`='-14.0032'
+
+-- Serpentshrine Lurker 21863
+UPDATE `creature_template` SET `speed`='1.48',`mindmg`='8358',`maxdmg`='9926',`baseattacktime`='1400',`resistance3`= -1,`mechanic_immune_mask`='1073561599' WHERE `entry` = 21863;
+
+-- Coilfang Priestess 21220
+UPDATE `creature_template` SET `armor`='5950',`speed`='1.71',`mindmg`='5607',`maxdmg`='6657',`baseattacktime`='1400',`mechanic_immune_mask`='0',`flags_extra`='0' WHERE `entry` = 21220;
+
+-- 2.1 (Re)Activate Mark of the Illidari
+UPDATE `creature_loot_template` SET `mincountOrRef`=1, `maxcount`=1 WHERE `item` =32897; -- 1 1
+
+-- 2.1 (Re)Activate Trash Patterns
+-- <~1% fist entry 0,984
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance`=`ChanceOrQuestChance`*9 WHERE `item` IN (30321,30322,30323,30324,30280,30281,30282,30283,30301,30302,30303,30304,30305,30306,30307,30308);
+UPDATE `creature_loot_template` SET `mincountOrRef`=1,`maxcount`=1 WHERE `item` IN (30321,30322,30323,30324,30280,30281,30282,30283,30301,30302,30303,30304,30305,30306,30307,30308); -- 1 1
+
+-- 2.1 (Re)Activate Boss Pattern
+UPDATE `reference_loot_template` SET `mincountOrRef`=1, `maxcount`=1 WHERE `entry` = 34052; -- 1 1
+
+-- 2.1 (Re)Activate 32902,32905 Bottled Nethergon Energy / Bottled Nethergon Vapor
+UPDATE `creature_loot_template` SET `mincountOrRef` = 1, `maxcount` = 3 WHERE `item` IN (32902,32905); -- 1 3
+
+-- 2.1 (Re)Activate Coilfang Armaments
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 12 WHERE `entry` = 21863 AND `item` = 24368; -- 12
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 12 WHERE `entry` = 21339 AND `item` = 24368; -- 12
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 12 WHERE `entry` = 21301 AND `item` = 24368; -- 12
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 12 WHERE `entry` = 21299 AND `item` = 24368; -- 12
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 12 WHERE `entry` = 21298 AND `item` = 24368; -- 12
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 16 WHERE `entry` = 21263 AND `item` = 24368; -- 16
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 12 WHERE `entry` = 21251 AND `item` = 24368; -- 12
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 12 WHERE `entry` = 21232 AND `item` = 24368; -- 12
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 12 WHERE `entry` = 21231 AND `item` = 24368; -- 12
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 16 WHERE `entry` = 21230 AND `item` = 24368; -- 16
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 16 WHERE `entry` = 21229 AND `item` = 24368; -- 16
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 12 WHERE `entry` = 21228 AND `item` = 24368; -- 12
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 12 WHERE `entry` = 21227 AND `item` = 24368; -- 12
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 12 WHERE `entry` = 21226 AND `item` = 24368; -- 12
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 12 WHERE `entry` = 21225 AND `item` = 24368; -- 12
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 12 WHERE `entry` = 21224 AND `item` = 24368; -- 12
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 12 WHERE `entry` = 21221 AND `item` = 24368; -- 12
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 12 WHERE `entry` = 21220 AND `item` = 24368; -- 12
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 12 WHERE `entry` = 21218 AND `item` = 24368; -- 12
+
+-- Netherwing
+DELETE FROM `creature_questrelation` WHERE `id` = 22112;
+INSERT INTO `creature_questrelation` VALUES (22112, 10870);
+
+-- ======================================================
+-- https://github.com/Looking4Group/L4G_Core/issues/258
+-- T4 Content + 20% -- Original 2.4.3 Prenerf Value -- Hellfire Tuned Value -> T6 10% ZA  5% SWP 0%
+-- T5 Content + 30% -- Original 2.4.3 Prenerf Value -- Hellfire Tuned Value -> T6 20% ZA 10% SWP 0%
+-- Zul'Aman   + 20% -- Original 2.4.3 Prenerf Value -- Hellfire Tuned Value -> SWP 10%
+-- T6 Content + 20% -- Original 2.4.3 Prenerf Value -- Hellfire Tuned Value -> SWP 10%
+-- SWP        + 10% -- Original 2.4.3 Prenerf Value -- Hellfire Tuned Value
+--
+-- ======================================================
+-- Karazhan
+-- https://github.com/Looking4Group/L4G_Core/issues/637
+-- ======================================================
+
+-- Attumen the Huntsman 15550
+UPDATE `creature_template` SET `minhealth`='417340',`maxhealth`='417340' WHERE `entry` = 15550; -- 379400 -- 455280 417340
+
+-- Midnight 16151
+UPDATE `creature_template` SET `minhealth`='417340',`maxhealth`='417340' WHERE `entry` = 16151; -- 379400
+
+-- Moroes 15687
+UPDATE `creature_template` SET `minhealth`='425687',`maxhealth`='425687' WHERE `entry` = 15687; -- 386988 -- 464386 425687
+
+-- Maiden of Virtue 16457
+UPDATE `creature_template` SET `minhealth`='467390',`maxhealth`='467390' WHERE `entry` = 16457; -- 424900 -- 509880 467390
+
+-- Dorothee 17535
+UPDATE `creature_template` SET `minhealth`='166925',`maxhealth`='166925' WHERE `entry` = 17535; -- 151750 -- 182100 166925
+
+-- Roar 17546
+UPDATE `creature_template` SET `minhealth`='121770',`maxhealth`='121770' WHERE `entry` = 17546; -- 110700 -- 132840 121770
+
+-- Strawman 17543
+UPDATE `creature_template` SET `minhealth`='121770',`maxhealth`='121770' WHERE `entry` = 17543; -- 110700
+
+-- Tinhead 17547
+UPDATE `creature_template` SET `minhealth`='121770',`maxhealth`='121770' WHERE `entry` = 17547; -- 110700
+
+-- The Crone 18168
+UPDATE `creature_template` SET `minhealth`='166925',`maxhealth`='166925' WHERE `entry` = 18168; -- 151750
+
+-- Tito 17548
+UPDATE `creature_template` SET `minhealth`='38423',`maxhealth`='38423' WHERE `entry` = 17548; -- 34930 -- 41916 38423
+
+-- Julianne 17534
+UPDATE `creature_template` SET `minhealth`='166925',`maxhealth`='166925' WHERE `entry` = 17534; -- 151750
+
+-- Romulo 17533
+UPDATE `creature_template` SET `minhealth`='208670',`maxhealth`='208670' WHERE `entry` = 17533; -- 189700 -- 227640 208670
+
+-- The Big Bad Wolf 17521
+UPDATE `creature_template` SET `minhealth`='417340',`maxhealth`='417340' WHERE `entry` = 17521; -- 379400 --
+
+-- The Curator 15691
+UPDATE `creature_template` SET `minhealth`='1264230',`maxhealth`='1264230' WHERE `entry` = 15691; -- 1149300 -- 1379160 1264230
+
+-- Terestian Illhoof 15688
+UPDATE `creature_template` SET `minhealth`='768460',`maxhealth`='768460' WHERE `entry` = 15688; -- 698600 -- 838320 768460
+
+-- Kil'rek 17229
+UPDATE `creature_template` SET `minhealth`='64548',`maxhealth`='64548' WHERE `entry` = 17229; -- 58680 -- 70416 64548
+
+-- Shade of Aran 16524
+UPDATE `creature_template` SET `minhealth`='943736',`maxhealth`='943736' WHERE `entry` = 16524; -- 849760 -- 1019712 943736
+
+-- Prince Malchezaar 15690
+UPDATE `creature_template` SET `minhealth`='1365840',`maxhealth`='1365840' WHERE `entry` = 15690; -- 1138200 -- 1365840
+
+-- Netherspite 15689
+UPDATE `creature_template` SET `minhealth`='1250920',`maxhealth`='1250920' WHERE `entry` = 15689; -- 1117800 -- 1364640 1250920
+
+-- Nightbane 17225
+UPDATE `creature_template` SET `minhealth`='1460690',`maxhealth`='1460690' WHERE `entry` = 17225; -- 1327900 -- 1593480 1460690
+
+-- ======================================================
+-- Gruul's Lair
+-- https://github.com/Looking4Group/L4G_Core/issues/1650
+-- ======================================================
+
+-- High King Maulgar – Hochkönig Maulgar 18831
+UPDATE `creature_template` SET `minhealth`='834680',`maxhealth`='834680' WHERE `entry` = 18831; -- 758800 -- 910560 834680
+
+-- Krosh Firehand – Krosh Feuerhand 18832
+UPDATE `creature_template` SET `minhealth`='333850',`maxhealth`='333850' WHERE `entry` = 18832; -- 303500 -- 364200 333850
+
+-- Olm the Summoner – Olm der Beschwörer 18834
+UPDATE `creature_template` SET `minhealth`='333850',`maxhealth`='333850' WHERE `entry` = 18834; -- 303500
+
+-- Kiggler the Crazed – Gicherer der Wahnsinnige 18835
+UPDATE `creature_template` SET `minhealth`='333850',`maxhealth`='333850' WHERE `entry` = 18835; -- 303500
+
+-- Blindeye the Seer – Blindauge der Seher 18836
+UPDATE `creature_template` SET `minhealth`='333850',`maxhealth`='333850' WHERE `entry` = 18836; -- 303500
+
+-- Gruul the Dragonkiller - Gruul der Drachenschlächter 19044
+UPDATE `creature_template` SET `minhealth`='4950000',`maxhealth`='4950000' WHERE `entry` = 19044; -- 3415000->4500000? -- 5400000 49500000
+
+-- ======================================================
+-- Magtheridon's Lair
+-- https://github.com/Looking4Group/L4G_Core/issues/1648
+-- ======================================================
+
+-- Hellfire Channeler – Kanalisierer des Höllenfeuers 17256
+UPDATE `creature_template` SET `minhealth`='267080',`maxhealth`='291360' WHERE `entry` = 17256; -- 242800 -- 291360 267080
+
+-- Magtheridon 17257
+UPDATE `creature_template` SET `minhealth`='5300218',`maxhealth`='5300218' WHERE `entry` = 17257; -- 4818380 -- 5782056 5300218
+
+-- =======================================================
+
+-- Doomwalker 17711
+UPDATE `creature_template` SET `minhealth`='2504040',`maxhealth`='2504040' WHERE `entry` = 17711; -- 2276400 -- 2731680 2504040
+
+-- Doomlord Kazzak 18728
+UPDATE `creature_template` SET `minhealth`='1430000',`maxhealth`='1430000' WHERE `entry` = 18728; -- 1300000 -- 1560000 1430000
+
+-- =======================================================
+-- SSC
+-- https://github.com/Looking4Group/L4G_Core/issues/2326
+-- ======================================================
+
+-- Hydross the Unstable <Duke of Currents> 21216
+UPDATE `creature_template` SET `minhealth`='4468171',`maxhealth`='4468171' WHERE `entry` = 21216; -- 3723476 --  4840519 4468171
+
+-- Tainted Spawn of Hydross 22036
+UPDATE `creature_template` SET `minhealth`='75500',`maxhealth`='75500' WHERE `entry` = 22036; -- 62917(51k) -- 81792 75500
+
+-- Pure Spawn of Hydross 22035
+UPDATE `creature_template` SET `minhealth`='67100',`maxhealth`='67100' WHERE `entry` = 22035; -- 55917(49k) -- 72692 67100
+
+-- ===============
+
+-- The Lurker Below 21217
+UPDATE `creature_template` SET `minhealth`='6373920',`maxhealth`='6373920' WHERE `entry` = 21217; -- 5311600 -- 6905080 6373920
+
+-- Coilfang Ambusher 21865
+UPDATE `creature_template` SET `minhealth`='34800',`maxhealth`='34800' WHERE `entry` = 21865; -- 29000 -- 37700 34800
+
+-- Coilfang Guardian 21873
+UPDATE `creature_template` SET `minhealth`='83832',`maxhealth`='83832' WHERE `entry` = 21873; -- 69860 -- 90818 83832
+
+-- ===============
+
+-- Leotheras the Blind 21215
+UPDATE `creature_template` SET `minhealth`='5392800',`maxhealth`='5392800' WHERE `entry` = 21215; -- 4494000 -- 5842200 5392800
+
+-- Shadow of Leotheras 21875
+UPDATE `creature_template` SET `minhealth`='5392800',`maxhealth`='5392800' WHERE `entry` = 21875; -- 4494000
+
+-- Leotheras (Phase 3) 21845
+UPDATE `creature_template` SET `minhealth`='5392800',`maxhealth`='5392800' WHERE `entry` = 21845; -- 4494000
+
+-- Greyheart Spellbinder 21806
+UPDATE `creature_template` SET `minhealth`='202800',`maxhealth`='202800' WHERE `entry` = 21806; -- 169000 -- 355000 202800
+
+-- ===============
+
+-- Fathom-Lord Karathress 21214
+UPDATE `creature_template` SET `minhealth`='2185200',`maxhealth`='2185200' WHERE `entry` = 21214; -- 1821000 -- 2367300 2185200
+
+-- Fathom-Guard Caribdis 21964
+UPDATE `creature_template` SET `minhealth`='1033920',`maxhealth`='1033920' WHERE `entry` = 21964; -- 861600 -- 1154400 1033920
+
+-- Fathom-Guard Tidalvess 21965
+UPDATE `creature_template` SET `minhealth`='1033920',`maxhealth`='1033920' WHERE `entry` = 21965; -- 861600
+
+-- Fathom-Guard Sharkkis 21966
+UPDATE `creature_template` SET `minhealth`='1033920',`maxhealth`='1033920' WHERE `entry` = 21966; -- 861600
+
+-- Fathom Lurker 22119
+UPDATE `creature_template` SET `minhealth`='215430',`maxhealth`='215430' WHERE `entry` = 22119; -- 179525 -- 233383 215430
+
+-- Fathom Sporebat 22120
+UPDATE `creature_template` SET `minhealth`='215430',`maxhealth`='215430' WHERE `entry` = 22120; -- 179525 -- 233383
+
+-- Spitfire Totem 22091
+UPDATE `creature_template` SET `minhealth`='30000',`maxhealth`='30000' WHERE `entry` = 22091; -- 25000 -- 32500 30000
+
+-- Greater Earthbind Totem 22486
+UPDATE `creature_template` SET `minhealth`='25200',`maxhealth`='25200' WHERE `entry` = 22486; -- 21000 -- 27300 25200
+
+-- Greater Poison Cleansing Totem 22487
+UPDATE `creature_template` SET `minhealth`='5160',`maxhealth`='5160' WHERE `entry` = 22487; -- 4300 -- 5590 5160
+
+-- ===============
+
+-- Morogrim Tidewalker 21213
+UPDATE `creature_template` SET `minhealth`='6829200',`maxhealth`='6829200' WHERE `entry` = 21213; -- 5691000 -- 7398300 6829200
+
+-- Tidewalker Lurker 21920
+UPDATE `creature_template` SET `minhealth`='21542',`maxhealth`='21542' WHERE `entry` = 21920; -- 17952 -- 23338 21542
+
+-- ===============
+
+-- Lady Vashj <Coilfang Matron> 21212
+UPDATE `creature_template` SET `minhealth`='6427200',`maxhealth`='6427200' WHERE `entry` = 21212; -- 5356000 -- 6962800 6427200
+
+-- Tainted Elemental 22009
+UPDATE `creature_template` SET `minhealth`='11100',`maxhealth`='11100' WHERE `entry` = 22009; -- 9250 -- 12025 11100
+
+-- Enchanted Elemental 21958
+UPDATE `creature_template` SET `minhealth`='9240',`maxhealth`='9240' WHERE `entry` = 21958; -- 7700 -- 10010 9240
+
+-- Coilfang Elite 22055
+UPDATE `creature_template` SET `minhealth`='192500',`maxhealth`='192500' WHERE `entry` = 22055; -- 175000 -- 210000 192500
+
+-- Toxic Spore Bat 22140
+UPDATE `creature_template` SET `minhealth`='8910',`maxhealth`='8910' WHERE `entry` = 22140; -- 8100 -- 10530 8910
+
+-- ======================================================
+-- TK
+-- https://github.com/Looking4Group/L4G_Core/issues/2327
+-- ======================================================
+
+-- Al'ar <Phoenix God> 19514
+UPDATE `creature_template` SET `minhealth`='3960000',`maxhealth`='3960000' WHERE `entry` = 19514; -- 3300000 -- 4290000 3960000
+
+-- ===============
+
+-- Void Reaver 19516
+UPDATE `creature_template` SET `minhealth`='5400000',`maxhealth`='5400000' WHERE `entry` = 19516; -- 4500000 -- 5850000 5400000
+
+-- ===============
+
+-- High Astromancer Solarian 18805
+UPDATE `creature_template` SET `minhealth`='4006200',`maxhealth`='4006200' WHERE `entry` = 18805; -- 3338500 -- 4340050 4006200
+
+-- ===============
+
+-- Kael'thas Sunstrider <Lord of the Blood Elves> 19622
+
+-- Thaladred the Darkener <Advisor to Kael'thas> 20064
+UPDATE `creature_template` SET `minhealth`='378000',`maxhealth`='378000' WHERE `entry` = 20064; -- 378000(756000) -- 434700(869400)
+
+-- Lord Sanguinar <The Blood Hammer> 20060
+UPDATE `creature_template` SET `minhealth`='376000',`maxhealth`='376000' WHERE `entry` = 20060; -- 376000(752000)-- 432400(864800)
+
+-- Grand Astromancer Capernian <Advisor to Kael'thas> 20062
+UPDATE `creature_template` SET `minhealth`='281000',`maxhealth`='281000' WHERE `entry` = 20062; -- 281000(562000) -- 323150(646300)
+
+-- Master Engineer Telonicus <Advisor to Kael'thas> 20063
+UPDATE `creature_template` SET `minhealth`='377000',`maxhealth`='377000' WHERE `entry` = 20063; -- 377000(754000) -- 433550(867100)
+
+-- Netherstrand Longbow 21268
+UPDATE `creature_template` SET `minhealth`='210000',`maxhealth`='210000' WHERE `entry` = 21268; -- 210000 -- 231000
+
+-- Devastation 21269
+UPDATE `creature_template` SET `minhealth`='230000',`maxhealth`='230000' WHERE `entry` = 21269; -- 230000 -- 253000
+
+-- Cosmic Infuser 21270
+UPDATE `creature_template` SET `minhealth`='280000',`maxhealth`='280000' WHERE `entry` = 21270; -- 280000 -- 308000
+
+-- Infinity Blades 21271
+UPDATE `creature_template` SET `minhealth`='210000',`maxhealth`='210000' WHERE `entry` = 21271; -- 210000 -- 231000
+
+-- Warp Slicer 21272
+UPDATE `creature_template` SET `minhealth`='290000',`maxhealth`='290000' WHERE `entry` = 21272; -- 290000 -- 319000
+
+-- Phaseshift Bulwark 21273
+UPDATE `creature_template` SET `minhealth`='290000',`maxhealth`='290000' WHERE `entry` = 21273; -- 290000 -- 319000
+
+-- Staff of Disintegration 21274
+UPDATE `creature_template` SET `minhealth`='170000',`maxhealth`='170000' WHERE `entry` = 21274; -- 170000 -- 187000
+
+-- Phoenix Egg 21364
+UPDATE `creature_template` SET `minhealth`='70000',`maxhealth`='70000' WHERE `entry` = 21274; -- 70000 -- 77000
+
+-- Phoenix 21362
+UPDATE `creature_template` SET `minhealth`='174650',`maxhealth`='174650' WHERE `entry` = 21362; -- 174650 -- 195204
+
+-- ======================================================
+-- Hyjal
+-- https://github.com/Looking4Group/L4G_Core/issues/641
+-- ======================================================
+
+-- Rage Winterchill 17767
+UPDATE `creature_template` SET `minhealth`='5098800',`maxhealth`='5098800' WHERE `entry` = '17767'; -- 4249000 -- 5098800
+
+-- ===============
+
+-- Anetheron 17808
+UPDATE `creature_template` SET `minhealth`='5098800',`maxhealth`='5098800' WHERE `entry` = '17808'; -- 4249000 -- 5098800
+
+-- Towering Infernal 17818
+UPDATE `creature_template` SET `minhealth`='265680',`maxhealth`='265680' WHERE `entry` = '17818'; -- 221400 -- 265680
+
+-- ===============
+
+-- Kaz'rogal 17888- boss_kazrogal
+UPDATE `creature_template` SET `minhealth`='5098800',`maxhealth`='5098800' WHERE `entry` = '17888'; -- 4249000 -- 5098800
+
+-- ===============
+
+-- Azgalor 17842
+UPDATE `creature_template` SET `minhealth`='5098800',`maxhealth`='5098800' WHERE `entry` = '17842'; -- 4249000 -- 5098800
+
+-- Lesser Doomguard 17864- mob_lesser_doomguard
+UPDATE `creature_template` SET `minhealth`='174000',`maxhealth`='174000' WHERE `entry` = '17864'; -- 145000 -- 174000
+
+-- ===============
+
+-- Archimonde 17968- boss_archimonde
+UPDATE `creature_template` SET `minhealth`='5463000',`maxhealth`='5463000' WHERE `entry` = '17968'; -- 4552500 -- 5463000
+
+-- ======================================================
+-- Black Temple
+-- https://github.com/Looking4Group/L4G_Core/issues/634
+-- ======================================================
+
+-- High Warlord Naj'entus 22887 - boss_najentus
+UPDATE `creature_template` SET `minhealth`='4552800',`maxhealth`='4552800' WHERE `entry` = '17968'; -- 3794000 -- 4552800
+
+-- ===============
+
+-- Supremus 22898- boss_supremus
+
+-- ===============
+
+-- Shade of Akama 22841- boss_shade_of_akama
+UPDATE `creature_template` SET `minhealth`='1152848',`maxhealth`='13271184' WHERE `entry` = '22841'; -- 960707-1105932 -- 1152848-13271184
+
+-- Ashtongue Channeler 23421- mob_ashtongue_channeler
+UPDATE `creature_template` SET `minhealth`='150810',`maxhealth`='150810' WHERE `entry` = 23421; -- 125675 -- 150810
+
+-- Ashtongue Sorcerer 23215- mob_ashtongue_sorcerer
+UPDATE `creature_template` SET `minhealth`='105600',`maxhealth`='120938' WHERE `entry` = 23215; -- 88000-100782 -- 105600-120938
+
+-- Ashtongue Defender 23216- mob_ashtongue_defender
+UPDATE `creature_template` SET `minhealth`='94800',`maxhealth`='110135' WHERE `entry` = 23216; -- 79000-91779 -- 94800-110135
+
+-- Ashtongue Elementalist 23523- mob_ashtongue_elementalist
+UPDATE `creature_template` SET `minhealth`='25349',`maxhealth`='28643' WHERE `entry` = 23523; -- 21124-23869 -- 25349-28643
+
+-- Ashtongue Spiritbinder 23524- mob_ashtongue_spiritbinder
+UPDATE `creature_template` SET `minhealth`='27485',`maxhealth`='29048' WHERE `entry` = 23524; -- 22904-24207 -- 27485-29048
+
+-- Ashtongue Rogue 23318- mob_ashtongue_rogue
+UPDATE `creature_template` SET `minhealth`='34289',`maxhealth`='36248' WHERE `entry` = 23318; -- 28574-30207 -- 34289-36248
+
+-- ===============
+
+-- Teron Gorefiend 22871- boss_teron_gorefiend
+UPDATE `creature_template` SET `minhealth`='6009300',`maxhealth`='6009300' WHERE `entry` = 22871; -- 5007750 -- 6009300
+
+-- ===============
+
+-- Gurtogg Bloodboil 22948- boss_gurtogg_bloodboil
+UPDATE `creature_template` SET `minhealth`='6829200',`maxhealth`='6829200' WHERE `entry` = 22948; -- 5691000 -- 6829200
+
+-- ===============
+
+-- Essence of Suffering 23418- boss_essence_of_suffering
+UPDATE `creature_template` SET `minhealth`='2691960',`maxhealth`='2764800' WHERE `entry` = 23418; -- 2243300-2304000 -- 2691960-2764800
+
+-- Essence of Desire 23419- boss_essence_of_desire
+UPDATE `creature_template` SET `minhealth`='3600000',`maxhealth`='3600000' WHERE `entry` = 23419; -- 3000000 -- 3600000
+
+-- Essence of Anger 23420- boss_essence_of_anger
+UPDATE `creature_template` SET `minhealth`='3600000',`maxhealth`='3600000' WHERE `entry` = 23420; -- 3000000 -- 3600000
+
+-- ===============
+
+-- Mother Shahraz 22947- boss_mother_shahraz
+UPDATE `creature_template` SET `minhealth`='5463000',`maxhealth`='5463000' WHERE `entry` = 22947; -- 4552500 -- 5463000
+
+-- ===============
+
+-- Gathios the Shatterer 22949- boss_gathios_the_shatterer
+-- UPDATE `creature_template` SET `minhealth`='1785000',`maxhealth`='1785000' WHERE `entry` = 22949; -- 1785000 -- 2142000
+-- High Nethermancer Zerevor 22950- boss_high_nethermancer_zerevor
+-- Lady Malande 22951- boss_lady_malande
+-- Veras Darkshadow 22952- boss_veras_darkshadow
+
+-- ===============
+
+-- Illidan Stormrage 22917- boss_illidan_stormrage
+UPDATE `creature_template` SET `minhealth`='7284480',`maxhealth`='7284480' WHERE `entry` = 22917; -- 6070400 -- 2142000
+
+-- Flame of Azzinoth 22997- boss_illidan_flameofazzinoth
+UPDATE `creature_template` SET `minhealth`='1365840',`maxhealth`='1365840' WHERE `entry` = 22917; -- 1138200 -- 1365840
+
+-- ======================================================
+-- Zul'aman
+-- https://github.com/Looking4Group/L4G_Core/issues/633
+-- ======================================================
+
+
+-- ======================================================
+-- Sunwell
+-- https://github.com/Looking4Group/L4G_Core/issues/511
+-- ======================================================
+
+
+-- =============
+-- Magtheridon & SSC Trash HP Reset
+-- =============
+
+-- Hellfire Warder – Höllenfeuerwärter 18829
+UPDATE `creature_template` SET `minhealth`='188896',`maxhealth`='188896' WHERE `entry` = 18829; -- 188896 -- 245565 207786
+
+-- Vashj'ir Honor Guard 21218
+UPDATE `creature_template` SET `maxhealth`='260000',`maxhealth`='260000' WHERE `entry` = 21218; -- 260000 -- 338000
+
+-- Underbog Colossus 21251
+UPDATE `creature_template` SET `minhealth`='620000',`maxhealth`='620000' WHERE `entry` = 21251; -- 620000 -- 806000
+
+-- Coilfang Priestess 21220
+UPDATE `creature_template` SET `minhealth`='143600',`maxhealth`='153600' WHERE `entry` = 21220; -- 143600-153600 -- 195000
+
+-- Tidewalker Depth-Seer 21224
+UPDATE `creature_template` SET `minhealth`='143600',`maxhealth`='153600' WHERE `entry` = 21224; -- 143600-153600 -- 186680-195000
+
+-- Coilfang Serpentguard 21298
+UPDATE `creature_template` SET `minhealth`='179525',`maxhealth`='179525' WHERE `entry` = 21298; -- 179525 -- 233383
+
+-- Coilfang Shatterer 21301
+UPDATE `creature_template` SET `minhealth`='200000',`maxhealth`='200000' WHERE `entry` = 21301; -- 200000 -- 260000
+
+-- Colossus Lurker 22347
+UPDATE `creature_template` SET `minhealth`='160000',`maxhealth`='160000' WHERE `entry` = 22347; -- 160000 -- 208000
+
+-- Greyheart Nether-Mage 21230
+UPDATE `creature_template` SET `minhealth`='143600',`maxhealth`='153600' WHERE `entry` = 21230; -- 143600-153600 -- 186680
+
+-- Colossus Rager 22352
+UPDATE `creature_template` SET `minhealth`='46944',`maxhealth`='46944' WHERE `entry` = 22352; -- 46944(27944) -- 61027
+
+-- Serpentshrine Lurker 21863
+UPDATE `creature_template` SET `minhealth`='120000',`maxhealth`='120000' WHERE `entry` = 21863; -- 120000 -- 156000
+
+-- Greyheart Shield-Bearer 21231
+UPDATE `creature_template` SET `minhealth`='200000',`maxhealth`='200000' WHERE `entry` = 21231; -- 200000 -- 260000
+
+-- Greyheart Technician 21263
+UPDATE `creature_template` SET `minhealth`='24000',`maxhealth`='24000' WHERE `entry` = 21263; -- 24000 -- 31200
+
+-- Tidewalker Warrior 21225
+UPDATE `creature_template` SET `minhealth`='210000',`maxhealth`='210000' WHERE `entry` = 21225; -- 210000 -- 273000
+
+-- Tidewalker Shaman 21226
+UPDATE `creature_template` SET `minhealth`='143600',`maxhealth`='153600' WHERE `entry` = 21226; -- 143600-153600 -- 186680-195000
+
+-- Tidewalker Harpooner 21227 http://wowwiki.wikia.com/wiki/Tidewalker...id=1234855
+UPDATE `creature_template` SET `minhealth`='179525',`maxhealth`='190000' WHERE `entry` = 21227; -- 179525-190000 -- 233383-247000
+
+-- Tidewalker Hydromancer 21228 http://wowwiki.wikia.com/wiki/Tidewalker_Hydromancer
+UPDATE `creature_template` SET `minhealth`='143600',`maxhealth`='153600' WHERE `entry` = 21228; -- 143600-153600 -- 186680-195000
+
+-- Coilfang Beast-Tamer 21221
+UPDATE `creature_template` SET `minhealth`='250000',`maxhealth`='250000' WHERE `entry` = 21221; -- 250000 -- 400000
+
+-- Coilfang Fathom-Witch 21299
+UPDATE `creature_template` SET `minhealth`='143600',`maxhealth`='153600' WHERE `entry` = 21299; -- 143600-153600 -- 186680
+
+-- Coilfang Hate-Screamer 21339
+UPDATE `creature_template` SET `minhealth`='143600',`maxhealth`='153600' WHERE `entry` = 21339; -- 143600-153600 -- 186680
+
+-- Greyheart Skulker 21232
+UPDATE `creature_template` SET `minhealth`='179525',`maxhealth`='179525' WHERE `entry` = 21232; -- 179525 -- 233383
+
+-- Greyheart Tidecaller 21229
+UPDATE `creature_template` SET `minhealth`='143600',`maxhealth`='153600' WHERE `entry` = 21229; -- 143600-153600 -- 186680
+
+-- Water Elemental Totem 22236
+UPDATE `creature_template` SET `minhealth`='4300',`maxhealth`='4300' WHERE `entry` = 22236; -- 4300 -- 5590
+
+-- Serpentshrine Tidecaller 22238
+UPDATE `creature_template` SET `minhealth`='86160',`maxhealth`='86160' WHERE `entry` = 22238; -- 86160 -- 86160
+
+-- Serpentshrine Sporebat 21246
+UPDATE `creature_template` SET `minhealth`='214300',`maxhealth`='214300' WHERE `entry` = 21246; -- 214300 -- 214300
+
+-- Tainted Water Elemental 21253
+UPDATE `creature_template` SET `minhealth`='10772',`maxhealth`='11000' WHERE `entry` = 21253; -- 10772-11000-- 14004-14300
+
+-- Purified Water Elemental 21260
+UPDATE `creature_template` SET `minhealth`='10772',`maxhealth`='12000' WHERE `entry` = 21260; -- 11772-12000-- 15304-15600
+
+-- =====================
+-- TK Trash HP Reset
+-- ======================
+
+-- Bloodwarder Legionnaire 20031
+UPDATE `creature_template` SET `minhealth`='180000',`maxhealth`='180000' WHERE `entry` = 20031; -- 180000 -- 234000
+
+-- Bloodwarder Vindicator 20032
+UPDATE `creature_template` SET `minhealth`='229760',`maxhealth`='229760' WHERE `entry` = 20032; -- 229760 -- 289697
+
+-- Astromancer 20033
+UPDATE `creature_template` SET `minhealth`='150000',`maxhealth`='150000' WHERE `entry` = 20033; -- 150000 -- 195000
+
+-- Star Scryer 20034
+UPDATE `creature_template` SET `minhealth`='160000',`maxhealth`='160000' WHERE `entry` = 20034; -- 160000 -- 208000
+
+-- Bloodwarder Marshal 20035
+UPDATE `creature_template` SET `minhealth`='295200',`maxhealth`='295200' WHERE `entry` = 20035; -- 295200 -- 383760
+
+-- Bloodwarder Squire 20036
+UPDATE `creature_template` SET `minhealth`='150000',`maxhealth`='150000' WHERE `entry` = 20036; -- 150000 -- 195000
+
+-- Tempest Falconer 20037
+UPDATE `creature_template` SET `minhealth`='150000',`maxhealth`='150000' WHERE `entry` = 20037; -- 150000 -- 195000
+
+-- Phoenix-Hawk Hatchling 20038
+UPDATE `creature_template` SET `minhealth`='72000',`maxhealth`='72000' WHERE `entry` = 20038; -- ~72000 -- 91000
+
+-- Phoenix-Hawk 20039 x1.6
+UPDATE `creature_template` SET `minhealth`='550000',`maxhealth`='550000' WHERE `entry` = 20039; -- 550000 -- 880000
+
+-- Crystalcore Devastator 20040 x1.7
+UPDATE `creature_template` SET `minhealth`='553500',`maxhealth`='553500' WHERE `entry` = 20040; -- 553500 -- 940950
+
+-- Crystalcore Sentinel 20041 x1.7
+UPDATE `creature_template` SET `minhealth`='295200',`maxhealth`='295200' WHERE `entry` = 20041; -- 295200 -- 501840
+
+-- Tempest-Smith 20042
+UPDATE `creature_template` SET `minhealth`='190000',`maxhealth`='190000' WHERE `entry` = 20042; -- 190000 -- 234000
+ 
+-- Apprentice Star Scryer 20043
+UPDATE `creature_template` SET `minhealth`='25000',`maxhealth`='25000' WHERE `entry` = 20043; -- 25000 -- 32500
+
+-- Novice Astromancer 20044
+UPDATE `creature_template` SET `minhealth`='26000',`maxhealth`='26000' WHERE `entry` = 20044; -- 26000 -- 33800
+
+-- Nether Scryer 20045
+UPDATE `creature_template` SET `minhealth`='190000',`maxhealth`='190000' WHERE `entry` = 20045; -- 190000 -- 234000
+
+-- Astromancer Lord 20046
+UPDATE `creature_template` SET `minhealth`='236120',`maxhealth`='236120' WHERE `entry` = 20046; -- 236120 -- 312000
+
+-- Crimson Hand Battle Mage 20047
+UPDATE `creature_template` SET `minhealth`='140000',`maxhealth`='140000' WHERE `entry` = 20047; -- 140000 -- 182000
+
+-- Crimson Hand Centurion 20048
+UPDATE `creature_template` SET `minhealth`='180000',`maxhealth`='180000' WHERE `entry` = 20048; -- 180000 -- 234000
+
+-- Crimson Hand Blood Knight 20049
+UPDATE `creature_template` SET `minhealth`='230000',`maxhealth`='230000' WHERE `entry` = 20049; -- 230000 -- 299000
+
+-- Crimson Hand Inquisitor 20050
+UPDATE `creature_template` SET `minhealth`='230000',`maxhealth`='230000' WHERE `entry` = 20050; -- 230000 -- 299000
+
+-- Crystalcore Mechanic 20052
+UPDATE `creature_template` SET `minhealth`='180000',`maxhealth`='180000' WHERE `entry` = 20052; -- 180000 -- 234000
+
