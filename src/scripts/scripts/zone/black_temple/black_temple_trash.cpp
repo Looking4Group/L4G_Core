@@ -2018,6 +2018,7 @@ CreatureAI* GetAI_mob_ashtongue_stormcaller(Creature *_Creature)
 #define SPELL_GOUGE                         24698
 #define SPELL_SHADOWSTEP                    41176
 #define SPELL_WOUND_POISON                  39665
+#define SPELL_DUAL_WIELD2                   42459 
 
 struct mob_illidari_boneslicerAI : public ScriptedAI
 {
@@ -2032,7 +2033,7 @@ struct mob_illidari_boneslicerAI : public ScriptedAI
     {
         ClearCastQueue();
 
-        CloakOfShadows = 15000;
+        CloakOfShadows = urand(12000, 16000);
         Gouge = urand(1000, 10000);
         Shadowstep = urand(5000, 15000);
         WoundPoison = urand(1000, 3000);
@@ -2040,6 +2041,7 @@ struct mob_illidari_boneslicerAI : public ScriptedAI
     void EnterCombat(Unit*)
     {
         DoCast(me, SPELL_CLOAK_OF_SHADOWS);
+        DoCast(me, SPELL_DUAL_WIELD2);
         DoZoneInCombat(80.0f);
     }
 
@@ -2056,7 +2058,7 @@ struct mob_illidari_boneslicerAI : public ScriptedAI
         if(CloakOfShadows < diff)
         {
             AddSpellToCast(me, SPELL_CLOAK_OF_SHADOWS);
-            CloakOfShadows = 15000;
+            CloakOfShadows = urand(18000, 23000);
         }
         else
             CloakOfShadows -= diff;
@@ -2064,7 +2066,7 @@ struct mob_illidari_boneslicerAI : public ScriptedAI
         if(Gouge < diff)
         {
             AddSpellToCast(me->getVictim(), SPELL_GOUGE);
-            Gouge = 10000;
+            Gouge = urand(9000, 13000);
         }
         else
             Gouge -= diff;
@@ -2072,7 +2074,7 @@ struct mob_illidari_boneslicerAI : public ScriptedAI
         if(Shadowstep < diff)
         {
             AddSpellToCast(me->getVictim(), SPELL_SHADOWSTEP);
-            Shadowstep = 15000;
+            Shadowstep = urand(25000, 38000);
         }
         else
             Shadowstep -= diff;
