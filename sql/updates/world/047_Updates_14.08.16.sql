@@ -94,12 +94,12 @@ UPDATE `creature_loot_template` SET `maxcount` = 1 WHERE `entry` = 19622 AND `it
 --
 -- <~1% fist entry 0,984
 -- Patterns & Mark of Illidari
-UPDATE `creature_loot_template` SET `ChanceOrQuestChance`=`ChanceOrQuestChance`/3,`mincountOrRef`=0,`maxcount`=0 WHERE `item` IN (30321,30322,30323,30324,30280,30281,30282,30283,30301,30302,30303,30304,30305,30306,30307,30308);
+-- UPDATE `creature_loot_template` SET `ChanceOrQuestChance`=`ChanceOrQuestChance`/3,`mincountOrRef`=0,`maxcount`=0 WHERE `item` IN (30321,30322,30323,30324,30280,30281,30282,30283,30301,30302,30303,30304,30305,30306,30307,30308);
 -- >~1% first entry 1,0475
 -- Nether Vortex
-UPDATE `creature_loot_template` SET `ChanceOrQuestChance`=`ChanceOrQuestChance`/3 WHERE `item` = 30183;
+-- UPDATE `creature_loot_template` SET `ChanceOrQuestChance`=`ChanceOrQuestChance`/3 WHERE `item` = 30183;
 -- Random Epics <~1% first entry 0,3
-UPDATE `creature_loot_template` SET `ChanceOrQuestChance`=`ChanceOrQuestChance`/3,`mincountOrRef`=0,`maxcount`=0 WHERE `item` IN (30020,30021,30022,30023,30024,30025,30026,30027,30028,30029,30030,30620);
+-- UPDATE `creature_loot_template` SET `ChanceOrQuestChance`=`ChanceOrQuestChance`/3,`mincountOrRef`=0,`maxcount`=0 WHERE `item` IN (30020,30021,30022,30023,30024,30025,30026,30027,30028,30029,30030,30620);
 --
 -- Kael
 UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 100 WHERE `item` IN (32405,34056,50032) AND `entry` = 19622;
