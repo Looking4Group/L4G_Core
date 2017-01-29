@@ -828,7 +828,7 @@ UPDATE `creature_template` SET `speed`='1.71',`mindmg`='14489',`maxdmg`='17198',
 
 -- Shadowy Construct 23111- mob_shadowy_construct
 -- maybe increase speed slightly
-UPDATE `creature_template` SET `mindmg`='800',`maxdmg`='1400',`mechanic_immune_mask`='12582928',`flags_extra`='1078001664' WHERE `entry` = 23111; -- 600 900
+UPDATE `creature_template` SET `speed`='1.20',`mindmg`='1500',`maxdmg`='3000',`mechanic_immune_mask`='12582928',`flags_extra`='1078001664' WHERE `entry` = 23111; -- 600 900 -- 1600 2800
 
 -- Vengeful Spirit (23109) - NSR
 
