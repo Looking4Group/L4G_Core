@@ -4280,3 +4280,7 @@ INSERT INTO `npc_trainer` VALUES (17637, 41321, 50000, 202, 350, 0);
 INSERT INTO `npc_trainer` VALUES (19576, 41321, 50000, 202, 350, 0);
 INSERT INTO `npc_trainer` VALUES (18752, 41321, 50000, 202, 350, 0);
 
+
+DELETE FROM `creature_questrelation` WHERE `id` = 12042 AND `quest` = 10955;
+INSERT INTO `creature_questrelation` VALUES (12042, 10955);
+
