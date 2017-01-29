@@ -4088,6 +4088,30 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('1082605','10826','0','0','100','1','3000','5000','6000','8000','11','15284','1','0','0','0','0','0','0','0','0','0','Lord Darkscythe - Cast Cleave'),
 ('1082606','10826','7','0','100','0','0','0','0','0','22','0','0','0','0','0','0','0','0','0','0','0','Lord Darkscythe - Set Phase to 0 on Evade');
 
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 6224;
+INSERT INTO `creature_ai_scripts` VALUES
+('622401','6224','1','0','100','3','10000','45000','30000','70000','11','10348','0','1','0','0','0','0','0','0','0','0','Leprous Machinesmith - Cast Tune Up OOC'),
+('622402','6224','1','0','100','2','0','0','0','0','22','1','0','0','0','0','0','0','0','0','0','0','Leprous Machinesmith - Set Phase 1 on Spawn'),
+('622404','6224','4','0','100','2','0','0','0','0','39','10','0','0','0','0','0','0','0','0','0','0','Leprous Machinesmith - Call for Help on Aggro'),
+('622405','6224','9','5','100','3','8','30','1200','2500','11','13398','1','0','40','2','0','0','0','0','0','0','Leprous Machinesmith - Cast Throw Wrench and Set Ranged Weapon Model (Phase 1)'),
+-- ('622406','6224','9','5','100','3','9','80','1000','1000','49','1','0','0','0','0','0','0','0','0','0','0','Leprous Machinesmith - Enable Dynamic Movement at 9-80 Yards (Phase 1)'),
+-- ('622407','6224','9','0','100','3','0','8','1000','1000','49','0','0','0','20','1','0','0','40','1','0','0','Leprous Machinesmith - Disable Dynamic Movement and Enable Melee and Set Melee Weapon Model at 0-8 Yards'),
+('622408','6224','8','0','100','2','9798','-1','0','0','1','-31','0','0','0','0','0','0','0','0','0','0','Leprous Machinesmith - Emote on Radiation Spellhit'),
+('622409','6224','14','0','100','3','2000','15','28900','28900','11','10732','6','1','0','0','0','0','0','0','0','0','Leprous Machinesmith - Cast Supercharge on Mechanical Friendlies'),
+('622410','6224','7','0','100','2','0','0','0','0','22','1','0','0','40','1','0','0','0','0','0','0','Leprous Machinesmith - Set Phase 1 and Set Melee Weapon Model on Evade');
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 6222;
+INSERT INTO `creature_ai_scripts` VALUES
+('622201','6222','1','0','100','3','10000','45000','30000','70000','11','10348','0','1','0','0','0','0','0','0','0','0','Leprous Technician - Cast Tune Up OOC'),
+('622202','6222','1','0','100','2','0','0','0','0','22','1','0','0','0','0','0','0','0','0','0','0','Leprous Technician - Prevent Melee and Set Phase 1 on Spawn'),
+('622204','6222','4','0','100','2','0','0','0','0','39','10','0','0','0','0','0','0','0','0','0','0','Leprous Technician - Call For Help on Aggro'),
+('622205','6222','9','5','100','3','8','30','1200','2500','11','13398','1','0','40','2','0','0','0','0','0','0','Leprous Technician - Cast Throw Wrench and Set Ranged Weapon Model (Phase 1)'),
+-- ('622206','6222','9','5','100','3','9','80','1000','1000','49','1','0','0','0','0','0','0','0','0','0','0','Leprous Technician - Enable Dynamic Movement at 9-80 Yards (Phase 1)'),
+-- ('622207','6222','9','0','100','3','0','8','1000','1000','49','0','0','0','20','1','0','0','40','1','0','0','Leprous Technician - Disable Dynamic Movement and Enable Melee and Set Melee Weapon Model at 0-8 Yards'),
+('622208','6222','8','0','100','2','9798','-1','0','0','1','-31','0','0','0','0','0','0','0','0','0','0','Leprous Technician - Emote on Radiation Spellhit'),
+('622209','6222','14','0','100','3','2000','15','28900','28900','11','10732','6','1','0','0','0','0','0','0','0','0','Leprous Technician - Cast Supercharge on Mechanical Friendlies'),
+('622210','6222','7','0','100','2','0','0','0','0','22','1','0','0','40','1','0','0','0','0','0','0','Leprous Technician - Set Phase 1 and Set Melee Weapon Model on Evade');
+
 DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 6228;
 INSERT INTO `creature_ai_scripts` VALUES
 ('622801','6228','1','0','100','3','1000','1000','1800000','1800000','11','12544','0','1','0','0','0','0','0','0','0','0','Dark Iron Ambassador - Cast Frost Armor on Spawn'),
@@ -4182,4 +4206,12 @@ INSERT INTO `creature_formations` VALUES
 ('89322','89227','120','360','0'),
 ('89322','89323','120','360','0'),
 ('89322','89314','120','360','0');
+
+DELETE FROM `npc_vendor` WHERE `entry` IN (12781,12793) AND `item` IN (32227,32228,32229,32230,32231,32249);
+
+-- Lhara <Darkmoon Faire Exotic Goods>
+UPDATE `creature_template` SET `npcflag`='129' WHERE `entry` = 14846; -- 129
+
+-- Professor Thaddeus Paleo <Darkmoon Faire Cards & Exotic Goods>
+UPDATE `creature_template` SET `npcflag`='131' WHERE `entry` = 14847; -- 131
 
