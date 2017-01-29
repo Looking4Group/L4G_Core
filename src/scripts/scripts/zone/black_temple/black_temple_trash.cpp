@@ -1773,6 +1773,7 @@ struct mob_ashtongue_primalistAI : public ScriptedAI
     void Reset()
     {
         ClearCastQueue();
+        me->GetMotionMaster()->Initialize();
 
         MultiShot = urand(20000, 40000);
         Shoot = 500;
@@ -1808,9 +1809,11 @@ struct mob_ashtongue_primalistAI : public ScriptedAI
         if(Shoot < diff)
         {
             Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, 30.0f, true);
-            if(target && !me->IsWithinDist(target, 5.0f))
+            if (target && !me->IsWithinDist(target, 5.0f))
+            {
                 ForceSpellCast(target, SPELL_AP_SHOOT);
-            Shoot = 1500;
+                Shoot = urand(2300, 3900);
+            }
         }
         else
             Shoot -= diff;
@@ -1838,7 +1841,7 @@ struct mob_ashtongue_primalistAI : public ScriptedAI
                 float x, y, z;
                 me->GetNearPoint(x,y,z,0.0f, urand(10,15), frand(0.0f, 2*M_PI));
                 me->GetMotionMaster()->MovePoint(1, x,y,z);
-                SweepingWingClip = 37000;
+                SweepingWingClip = urand(5000, 8000);
             }
             else
                 SweepingWingClip = 2500;
