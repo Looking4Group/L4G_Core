@@ -4215,3 +4215,10 @@ UPDATE `creature_template` SET `npcflag`='129' WHERE `entry` = 14846; -- 129
 -- Professor Thaddeus Paleo <Darkmoon Faire Cards & Exotic Goods>
 UPDATE `creature_template` SET `npcflag`='131' WHERE `entry` = 14847; -- 131
 
+
+DELETE FROM `creature_formations` WHERE `leaderguid` IN (30816,68001,113952,114153,320869,16779010);
+DELETE FROM `creature_formations` WHERE `memberguid` IN (32794,59476,52355,52356,178782);
+
+DELETE FROM `creature` WHERE `guid` = 134711;
+INSERT INTO `creature` VALUES (134711, 17670, 540, 3, 0, 0, 518.815, 171.06, 1.94158, 3.09919, 7200, 0, 0, 20259, 0, 0, 0);
+
