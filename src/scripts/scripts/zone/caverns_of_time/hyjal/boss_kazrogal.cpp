@@ -54,11 +54,11 @@ struct boss_kazrogalAI : public hyjal_trashAI
     {
         damageTaken = 0;
         CleaveTimer = 5000;
-        WarStompTimer = 15000;
+        WarStompTimer = urand(12000, 18000);
         MarkTimer = 45000;
         MarkTimerBase = 45000;
         CheckTimer = 3000;
-        CrippleTimer = 15000+rand()%10000;
+        CrippleTimer = urand(6000, 11000);
 
         if(pInstance && IsEvent)
             pInstance->SetData(DATA_KAZROGALEVENT, NOT_STARTED);
@@ -160,7 +160,7 @@ struct boss_kazrogalAI : public hyjal_trashAI
         if(CleaveTimer < diff)
         {
             DoCast(m_creature->getVictim(), SPELL_CLEAVE);
-            CleaveTimer = 6000+rand()%15000;
+            CleaveTimer = urand(6000, 21000);
         }
         else
             CleaveTimer -= diff;
@@ -168,7 +168,7 @@ struct boss_kazrogalAI : public hyjal_trashAI
         if(WarStompTimer < diff)
         {
             DoCast(m_creature, SPELL_WARSTOMP);
-            WarStompTimer = 60000;
+            WarStompTimer = urand(15000, 25000);
         }
         else
             WarStompTimer -= diff;
@@ -178,7 +178,7 @@ struct boss_kazrogalAI : public hyjal_trashAI
             if(Unit *target = SelectUnit(SELECT_TARGET_RANDOM, 1, 20, true))
                 DoCast(target, SPELL_CRIPPLE);
 
-            CrippleTimer = 20000+rand()%10000;
+            CrippleTimer = urand(10000, 12000);
         }
         else
             CrippleTimer -= diff;
