@@ -4288,3 +4288,4 @@ INSERT INTO `creature_questrelation` VALUES (12042, 10955);
 -- http://www.wowhead.com/quest=10704/how-to-break-into-the-arcatraz
 UPDATE `quest_template` SET `MinLevel` = 67 WHERE `entry` = 10704;
 
+UPDATE `creature_ai_scripts` SET `action1_param2` = -9910 WHERE `id` = 1999304;
