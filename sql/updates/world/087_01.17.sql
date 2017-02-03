@@ -4289,3 +4289,5 @@ INSERT INTO `creature_questrelation` VALUES (12042, 10955);
 UPDATE `quest_template` SET `MinLevel` = 67 WHERE `entry` = 10704;
 
 UPDATE `creature_ai_scripts` SET `action1_param2` = -9910 WHERE `id` = 1999304;
+
+UPDATE `gameobject` SET `spawntimesecs`= 900,`animprogress`= 100 WHERE `id` IN (183043,183044,183045,183046,181270,181271,181272,181275,181276,181277,181278,181279,181280,181281,181282,181284,181285,185877,185881,185915,185600) AND `map`= 530; -- 2700
