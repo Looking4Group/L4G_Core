@@ -422,7 +422,7 @@ namespace VMAP
     bool WorldModel::IntersectRay(const G3D::Ray &ray, float &distance, bool stopAtFirstHit, uint32 mapID, bool checkLOS) const
     {
         // M2 models are not taken into account for LoS calculation
-        if (checkLOS && (Flags & MOD_M2) && mapID != 489)
+        if (checkLOS && (Flags & MOD_M2) && (mapID != 489)) // exclude warsong
             return false;
 
         // small M2 workaround, maybe better make separate class with virtual intersection funcs
