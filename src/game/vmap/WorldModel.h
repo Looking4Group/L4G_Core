@@ -123,12 +123,12 @@ namespace VMAP
             bool writeFile(const std::string &filename);
             bool readFile(const std::string &filename);
             void setModelFlags(uint32 newFlags) { Flags = newFlags; }
-            uint32 getModelFlags() const { return Flags; }            
+            uint32 getModelFlags() const { return Flags; } 
+            uint32 Flags;
         protected:
             uint32 RootWMOID;
             std::vector<GroupModel> groupModels;
             BIH groupTree;
-            uint32 Flags
 
 #ifdef MMAP_GENERATOR
         public:
