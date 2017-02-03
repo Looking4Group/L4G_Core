@@ -5048,10 +5048,12 @@ SpellCastResult Spell::CheckRange(bool strict)
     // TODO verify that such spells really use bounding radius
     if (m_targets.m_targetMask == TARGET_FLAG_DEST_LOCATION && m_targets.m_destX != 0 && m_targets.m_destY != 0 && m_targets.m_destZ != 0)
     {
-        if(!m_caster->IsWithinDist3d(m_targets.m_destX, m_targets.m_destY, m_targets.m_destZ, max_range - m_caster->GetObjectSize()))
+        if (!m_caster->IsWithinDist3d(m_targets.m_destX, m_targets.m_destY, m_targets.m_destZ, max_range - m_caster->GetObjectSize()))
             return SPELL_FAILED_OUT_OF_RANGE;
-        if(min_range && m_caster->IsWithinDist3d(m_targets.m_destX, m_targets.m_destY, m_targets.m_destZ, min_range))
+        if (min_range && m_caster->IsWithinDist3d(m_targets.m_destX, m_targets.m_destY, m_targets.m_destZ, min_range))
             return SPELL_FAILED_TOO_CLOSE;
+        if (!m_caster->IsWithinLOS(m_targets.m_destX, m_targets.m_destY, m_targets.m_destZ))
+            return SPELL_FAILED_LINE_OF_SIGHT;
     }
 
     return SPELL_CAST_OK;
