@@ -42,6 +42,11 @@ enum
 
     NPC_STALKER             = 23095
 };
+const float RANGE_START_DASH = 60.0;
+const float RANGE_MIN_DASHING = 20.0;
+const float SPEED_DASHING = 5.0;
+const float SPEED_CHASE = 0.9f;
+const float SPEED_NORMAL = 1.7f;
 
 struct boss_supremusAI : public ScriptedAI
 {
@@ -221,21 +226,37 @@ struct boss_supremusAI : public ScriptedAI
                     SwitchTargetTimer = urand(10000, 16666); // He should switch target 3-5 times per phase (first target not included)
 
                     // If Supremus is very far away from his new target he will charge to it. (Hard to find an exact value here)
-                    if (!m_creature->IsWithinDistInMap(target, 60))
+                    //if (!m_creature->IsWithinDistInMap(target, 60))
+                    //{
+                    //    m_creature->GetMotionMaster()->MovementExpired();
+                    //    m_creature->CastSpell(target, SPELL_CHARGE, true);
+                    //    CustomDiveTimer = urand(8000, 12000); // Give the new target some time to get away if charged
+                    //}
+
+                    // Try the cmangos(ish) way of doing the dash 
+                    if (m_creature->GetCombatDistance(m_creature->getVictim()) > RANGE_START_DASH)
                     {
-                        m_creature->GetMotionMaster()->MovementExpired();
-                        m_creature->CastSpell(target, SPELL_CHARGE, true);
-                        CustomDiveTimer = urand(8000, 12000); // Give the new target some time to get away if charged
+                        m_creature->RemoveAurasDueToSpell(SPELL_SLOW_SELF);
+                        m_creature->SetSpeed(MOVE_RUN, SPEED_DASHING);
                     }
                 }
             }
             else
                 SwitchTargetTimer -= diff;
 
+            // Try the cmangos(ish) way of doing the dash 
+            if (m_creature->GetSpeedRate(MOVE_RUN) > SPEED_CHASE && m_creature->GetCombatDistance(m_creature->getVictim()) < RANGE_MIN_DASHING && !m_creature->HasAura(SPELL_SLOW_SELF))
+            {
+                m_creature->SetSpeed(MOVE_RUN, SPEED_NORMAL);
+                DoCast(m_creature, SPELL_SLOW_SELF);
+                //m_creature->SetSpeed(MOVE_RUN, SPEED_CHASE);
+            }
+
+
             if (CustomDiveTimer <= diff)
             {
                 Unit *target = m_creature->getVictim();
-                float customDiveRange = 40.0 - (m_creature->GetFloatValue(UNIT_FIELD_BOUNDINGRADIUS) / 2); // Since distance is currently calculated from bounding radius in our core
+                float customDiveRange = 30.0 - (m_creature->GetFloatValue(UNIT_FIELD_BOUNDINGRADIUS) / 2); // Since distance is currently calculated from bounding radius in our core
                 if (target)
                 {
                     if (m_creature->IsWithinDistInMap(target, customDiveRange)) 
