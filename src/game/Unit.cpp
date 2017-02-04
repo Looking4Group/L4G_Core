@@ -736,6 +736,45 @@ bool Unit::HasAuraTypeWithFamilyFlags(AuraType auraType, uint32 familyName  ,uin
     return false;
 }
 
+void Unit::GetDispellableAuraList(Unit* caster, uint32 dispelMask, dispel_list& dispelList, bool checkPositiveWhenFriendly)
+{
+    Unit::AuraMap const& auras = GetAuras();
+    for (Unit::AuraMap::const_iterator itr = auras.begin(); itr != auras.end(); ++itr)
+    {
+        Aura *aura = (*itr).second;
+
+        // don't try to remove passive auras
+        if (aura->IsPassive())
+            continue;
+
+        if (aura && (1 << aura->GetSpellProto()->Dispel) & dispelMask)
+        {
+            if (aura->GetSpellProto()->Dispel == DISPEL_MAGIC)
+            {
+                // do not remove positive auras if friendly target
+                //               negative auras if non-friendly target
+                if (checkPositiveWhenFriendly && aura->IsPositive() == IsFriendlyTo(caster))
+                {
+                    // Mind control works vise vera, allow to dispel negative debuffs if !friendly
+                    if (!(aura->GetSpellProto()->SpellFamilyName == SPELLFAMILY_PRIEST &&
+                        aura->GetSpellProto()->SpellFamilyFlags & (0x0000000000020000LL) &&
+                        aura->GetSpellProto()->SpellIconID == 235))
+                        continue;
+                }
+            }
+
+            // 2.4.3 Patch Notes: "Dispel effects will no longer attempt to remove effects that have 100% dispel resistance."
+            uint32 chance = aura->CalcDispelChance(this, !this->IsFriendlyTo(caster));
+            if (!chance)
+                continue;
+
+            // Add every aura stack to dispel list
+            for (uint32 stack_amount = 0; stack_amount < aura->GetStackAmount(); ++stack_amount)
+                dispelList.push_back(aura);
+        }
+    }
+}
+
 uint32 Unit::GetAurasAmountByMiscValue(AuraType auraType, uint32 misc)
 {
     uint32 count = 0;
