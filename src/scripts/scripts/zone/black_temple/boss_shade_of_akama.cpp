@@ -726,9 +726,6 @@ struct npc_akamaAI : public Scripted_NoMovementAI
     {
         instance = (ScriptedInstance *)c->GetInstanceData();
         ShadeGUID = instance ? instance->GetData64(DATA_SHADEOFAKAMA) : 0;
-
-		if (Unit *pShade = me->GetUnit(*me, ShadeGUID))
-			shadeOfAkamaBoss = pShade;
     }
 
     void ShadeKilled()
@@ -749,8 +746,6 @@ struct npc_akamaAI : public Scripted_NoMovementAI
 
     uint32 m_talk;
     uint32 m_talkTimer;
-
-	Unit * shadeOfAkamaBoss;
 
     bool m_yell;
 	bool isCasting;
@@ -818,10 +813,10 @@ struct npc_akamaAI : public Scripted_NoMovementAI
                     return;
                 }
 
-                if (shadeOfAkamaBoss)
+                if (Unit *pShade = me->GetUnit(*me, ShadeGUID))
                 {
 					me->SetSelection(ShadeGUID);
-                    DoCast(shadeOfAkamaBoss, SPELL_AKAMA_SOUL_CHANNEL);
+                    DoCast(pShade, SPELL_AKAMA_SOUL_CHANNEL);
 					isCasting = true;
                 }
             }
