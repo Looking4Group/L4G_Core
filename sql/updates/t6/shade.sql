@@ -1,5 +1,5 @@
 -- Set Akama to Untargettable
-UPDATE `creature_template` SET `unit_flags`='' WHERE `entry`='22841';
+UPDATE `creature_template` SET `unit_flags`=0 WHERE `entry`='22841';
 
 
 -- Spiritbinder
