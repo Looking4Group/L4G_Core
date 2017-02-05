@@ -93,6 +93,8 @@ struct boss_supremusAI : public ScriptedAI
 
         Phase1 = true;
         summons.DespawnAll();
+
+        m_creature->SetSpeed(MOVE_RUN, SPEED_NORMAL);
     }
 
     void EnterCombat(Unit *who)
@@ -224,7 +226,6 @@ struct boss_supremusAI : public ScriptedAI
                     m_creature->AddThreat(target, 5000000.0f);
                     DoScriptText(EMOTE_NEW_TARGET, m_creature, 0, true);
                     SwitchTargetTimer = urand(10000, 16666); // He should switch target 3-5 times per phase (first target not included)
-
                     // If Supremus is very far away from his new target he will charge to it. (Hard to find an exact value here)
                     //if (!m_creature->IsWithinDistInMap(target, 60))
                     //{
@@ -236,7 +237,7 @@ struct boss_supremusAI : public ScriptedAI
                     // Try the cmangos(ish) way of doing the dash 
                     if (m_creature->GetCombatDistance(m_creature->getVictim()) > RANGE_START_DASH)
                     {
-                        m_creature->RemoveAurasDueToSpell(SPELL_SLOW_SELF);
+                        //m_creature->RemoveAurasDueToSpell(SPELL_SLOW_SELF);
                         m_creature->SetSpeed(MOVE_RUN, SPEED_DASHING);
                     }
                 }
@@ -245,34 +246,35 @@ struct boss_supremusAI : public ScriptedAI
                 SwitchTargetTimer -= diff;
 
             // Try the cmangos(ish) way of doing the dash 
-            if (m_creature->GetSpeedRate(MOVE_RUN) > SPEED_CHASE && m_creature->GetCombatDistance(m_creature->getVictim()) < RANGE_MIN_DASHING && !m_creature->HasAura(SPELL_SLOW_SELF))
+            if (m_creature->GetSpeedRate(MOVE_RUN) > SPEED_CHASE && m_creature->GetCombatDistance(m_creature->getVictim()) < RANGE_MIN_DASHING)
             {
-                m_creature->SetSpeed(MOVE_RUN, SPEED_NORMAL);
-                DoCast(m_creature, SPELL_SLOW_SELF);
-                //m_creature->SetSpeed(MOVE_RUN, SPEED_CHASE);
+                //m_creature->SetSpeed(MOVE_RUN, SPEED_NORMAL);
+                //DoCast(m_creature, SPELL_SLOW_SELF);
+                m_creature->SetSpeed(MOVE_RUN, SPEED_CHASE);
             }
 
 
-            if (CustomDiveTimer <= diff)
-            {
-                Unit *target = m_creature->getVictim();
-                float customDiveRange = 30.0 - (m_creature->GetFloatValue(UNIT_FIELD_BOUNDINGRADIUS) / 2); // Since distance is currently calculated from bounding radius in our core
-                if (target)
-                {
-                    if (m_creature->IsWithinDistInMap(target, customDiveRange)) 
-                    {
-                        // Workaround to make dmg when distance is < 40yd
-                        // All sources say Molten Punch is the ability that should deal this damage, but Molten Punch has no such effect. (Confusing)
-                        int32 damage = 5600;
-                        int32 knock = 175;
-                        m_creature->GetMotionMaster()->MovementExpired();
-                        m_creature->CastCustomSpell(target, SPELL_DIVE_CUSTOM, NULL, &damage, &knock, false);
-                    }
-                }
-                CustomDiveTimer = urand(8000,12000);
-            }
-            else
-                CustomDiveTimer -= diff;
+            //if (CustomDiveTimer <= diff)
+            //{
+            //    Unit *target = m_creature->getVictim();
+            //    float customDiveRange = 30.0 - (m_creature->GetFloatValue(UNIT_FIELD_BOUNDINGRADIUS) / 2); // Since distance is currently calculated from bounding radius in our core
+            //    if (target)
+            //    {
+            //        if (m_creature->IsWithinDistInMap(target, customDiveRange)) 
+            //        {
+            //            // Workaround to make dmg when distance is < 40yd
+            //            // All sources say Molten Punch is the ability that should deal this damage, but Molten Punch has no such effect. (Confusing)
+            //            int32 damage = 5600;
+            //            int32 knock = 175;
+            //            m_creature->GetMotionMaster()->MovementExpired();
+            //            m_creature->CastCustomSpell(target, SPELL_DIVE_CUSTOM, NULL, &damage, &knock, false);
+            //            m_creature->SetSpeed(MOVE_RUN, SPEED_CHASE);
+            //        }
+            //    }
+            //    CustomDiveTimer = urand(8000,12000);
+            //}
+            //else
+            //    CustomDiveTimer -= diff;
 
             if (SummonVolcanoTimer <= diff)
             {
@@ -293,7 +295,8 @@ struct boss_supremusAI : public ScriptedAI
                 Phase1 = true;
                 DoResetThreat();
                 PhaseSwitchTimer = 60000;
-                m_creature->RemoveAurasDueToSpell(SPELL_SLOW_SELF);
+                //m_creature->RemoveAurasDueToSpell(SPELL_SLOW_SELF);
+                m_creature->SetSpeed(MOVE_RUN, SPEED_NORMAL);
                 DoScriptText(EMOTE_PUNCH_GROUND, m_creature, 0, true);
                 DoZoneInCombat();
                 m_creature->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_TAUNT, false);
@@ -302,10 +305,11 @@ struct boss_supremusAI : public ScriptedAI
             {
                 Phase1 = false;
                 DoResetThreat();
-                SwitchTargetTimer = urand(10000, 16666);
+                SwitchTargetTimer = 1000; // Pick a fixate target right away
                 SummonVolcanoTimer = 2000;
                 PhaseSwitchTimer = 60000;
-                DoCast(m_creature, SPELL_SLOW_SELF);
+                //DoCast(m_creature, SPELL_SLOW_SELF);
+                m_creature->SetSpeed(MOVE_RUN, SPEED_CHASE);
                 DoScriptText(EMOTE_GROUND_CRACK, m_creature, 0, true);
                 DoZoneInCombat();
                 m_creature->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_MOD_TAUNT, true);
