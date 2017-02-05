@@ -4294,3 +4294,23 @@ UPDATE `gameobject` SET `spawntimesecs`= 900,`animprogress`= 100 WHERE `id` IN (
 
 UPDATE `creature`, `creature_template` SET `creature`.`curhealth` = `creature_template`.`MinHealth`, `creature`.`curmana` = `creature_template`.`MinMana` WHERE `creature`.`id` = `creature_template`.`entry` AND `creature_template`.`RegenHealth` & '1';
 
+DELETE FROM `creature_ai_texts` WHERE `entry` BETWEEN -9699 AND -9600;
+INSERT INTO `creature_ai_texts` VALUES
+(-9600,'Destroy them! Destroy them all!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, '11980'),
+(-9601,'Indeed, the time has come to end this charade.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, '11980'),
+(-9602,'Foolish mortals. Did you think that I would not strike you down for your transgressions?', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, '11980'),
+(-9603,'Come, mortals, face the lord of fire!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'-174 21181'),
+(-9604,'You will suffer eternally!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'-175 21181'),
+(-9605,'Little creature made of flesh, your wish is granted! Death comes for you!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'-176 21181');
+-- (-9606,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'SchattenmondtalPlatzhalter'),
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 21181;
+INSERT INTO `creature_ai_scripts` VALUES
+('2118101','21181','1','0','100','0','0','0','0','0','11','36329','0','0','1','-9603','-9604','0','0','0','0','0','Cyrukh the Firelord - Cast Cyrukh Fire Kit and Text on Spawn'),
+('2118102','21181','4','0','100','0','0','0','0','0','1','-9605','0','0','0','0','0','0','0','0','0','0','Cyrukh the Firelord - Yell on Aggro'),
+('2118103','21181','9','0','100','1','0','30','12000','19000','11','39429','4','0','0','0','0','0','0','0','0','0','Cyrukh the Firelord - Cast Fel Flamestrike'),
+('2118104','21181','9','0','100','1','0','5','6000','12000','11','18945','1','0','0','0','0','0','0','0','0','0','Cyrukh the Firelord - Cast Knock Away'),
+('2118105','21181','0','0','100','1','8000','13000','8000','13000','11','39425','0','0','0','0','0','0','0','0','0','0','Cyrukh the Firelord - Cast Trample'),
+('2118106','21181','6','0','100','0','0','0','0','0','11','37235','0','2','0','0','0','0','0','0','0','0','Cyrukh the Firelord - Cast Cyrukh Defeated on Death'),
+('2118107','21181','1','0','100','1','15000','15000','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Cyrukh the Firelord - Forced Despawn OOC');
+
