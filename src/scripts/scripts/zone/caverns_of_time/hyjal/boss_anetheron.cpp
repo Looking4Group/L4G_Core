@@ -7,6 +7,7 @@
 #define SPELL_SLEEP 31298
 #define SPELL_VAMPIRIC_AURA 31317
 #define SPELL_INFERNO 31299
+#define SPELL_ENRAGE 26662
 
 #define SAY_ONDEATH "The clock... is still... ticking."
 #define SOUND_ONDEATH 10982
@@ -49,6 +50,7 @@ struct boss_anetheronAI : public hyjal_trashAI
     uint32 SleepTimer;
     uint32 CheckTimer;
     uint32 InfernoTimer;
+    uint32 EnrageTimer;
     bool go;
     uint32 pos;
 
@@ -58,9 +60,10 @@ struct boss_anetheronAI : public hyjal_trashAI
 
         damageTaken = 0;
         SwarmTimer = 10000;
-        SleepTimer = 60000;
+        SleepTimer = urand(25000, 32000);
         InfernoTimer = 60000;
         CheckTimer = 3000;
+        EnrageTimer = 600000;
 
         if(pInstance && IsEvent)
             pInstance->SetData(DATA_ANETHERONEVENT, NOT_STARTED);
@@ -172,7 +175,7 @@ struct boss_anetheronAI : public hyjal_trashAI
             if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0,65,true))
             {
                 AddSpellToCast(target, SPELL_CARRION_SWARM, false, true);
-                SwarmTimer = 12000+rand()%6000;
+                SwarmTimer = urand(10000, 15000);
 
                 switch(rand()%2)
                 {
@@ -194,7 +197,7 @@ struct boss_anetheronAI : public hyjal_trashAI
         {
             DoCast(m_creature, SPELL_SLEEP, true);
 
-            SleepTimer = 60000;
+            SleepTimer = urand(35000, 48000);
 
             switch(rand()%2)
             {
@@ -234,6 +237,14 @@ struct boss_anetheronAI : public hyjal_trashAI
         }
         else
             InfernoTimer -= diff;
+
+        if (EnrageTimer <= diff)
+        {
+            DoCast(m_creature, SPELL_ENRAGE, true);
+            EnrageTimer = 300000;
+        }
+        else
+            EnrageTimer -= diff;
 
         CastNextSpellIfAnyAndReady();
         DoMeleeAttackIfReady();

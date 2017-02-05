@@ -1938,7 +1938,7 @@ static float SuccubPos2[4] = {-3730.46,1041.40,55.95,4.60};
 
 // BT prelude after quest 10944 creatures & spells & emotes
 #define ILLIDAN                     22083
-#define    SEER_OLUM                   22820
+#define SEER_OLUM                   22820
 #define OLUMS_SPIRIT                22870
 #define SPELL_OLUMS_SACRIFICE       39552
 #define STATE_DROWNED                 383

@@ -270,6 +270,9 @@ uint32 SpellMgr::GetSpellCastTime(SpellEntry const* spellInfo, Spell const* spel
     if (!castTime)
         return 0;
 
+    if (spellInfo->SpellFamilyName == SPELLFAMILY_HUNTER && spellInfo->SpellFamilyFlags & 0x100020000LL) //steady shot and aimed shot
+        castTime += 500;
+
     if (spell)
     {
         if (Player* modOwner = spell->GetCaster()->GetSpellModOwner())
@@ -284,7 +287,8 @@ uint32 SpellMgr::GetSpellCastTime(SpellEntry const* spellInfo, Spell const* spel
         }
     }
 
-    if (spellInfo->Attributes & SPELL_ATTR_RANGED && (!spell || !(spell->IsAutoRepeat())))
+    if (!(spellInfo->SpellFamilyFlags & 0x100020000LL) //steady shot and aimed shot allready included above
+        && spellInfo->Attributes & SPELL_ATTR_RANGED && (!spell || !(spell->IsAutoRepeat())))
         castTime += 500;
 
     return (castTime > 0) ? uint32(castTime) : 0;
@@ -1075,6 +1079,10 @@ bool SpellMgr::IsBinaryResistable(SpellEntry const* spellInfo)
 
     if(spellInfo->SpellFamilyName)         // only player's spells, bosses don't follow that simple rule
     {
+        //  Frostbolt is no longer a Binary Spell as it was prior to WoW 2.3
+        if (spellInfo->SpellFamilyName == SPELLFAMILY_MAGE && spellInfo->SpellFamilyFlags == 0x000180020LL)
+            return false;
+
         for(int eff = 0; eff < 3; eff++)
         {
             if(!spellInfo->Effect[eff])
@@ -3094,7 +3102,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 5171:
             case 6774:                     // Slice'n'Dice
-        spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
+                spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
                 break;
             /* SHAMAN CUSTOM ATTRIBUTES */
             case 2895:                      // Wrath of Air Totem - disallow weird stacking
@@ -3110,13 +3118,13 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->speed = 0;
                 spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
                 break;
-        // Spells that should not put you in combat credits by robinsch
-        case 33619: // Reflective Shield
-        case 13810: // Frost Trap
-        case 34919: // Vampiric Touch (Energize)
-        case 15290: // Vampiric Embrace (Healing)
-        spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO; // Do not put caster in combat after use
-        break;
+            // Spells that should not put you in combat credits by robinsch
+            case 33619: // Reflective Shield
+            case 13810: // Frost Trap
+            case 34919: // Vampiric Touch (Energize)
+            case 15290: // Vampiric Embrace (Healing)
+                spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO; // Do not put caster in combat after use
+                break;
             // Triggered spells that should be delayed
             case 32848:                     // Mana Restore
             case 14189:                     // Seal Fate
@@ -3809,6 +3817,11 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->Effect[0] = 108;
                 spellInfo->EffectImplicitTargetA[0] = 6;
                 spellInfo->EffectMiscValue[0] = 21;
+                break;
+            case 31538: //Hyjal Ghoul Cannibalize
+                spellInfo->Effect[0] = 136;
+                spellInfo->EffectDieSides[0] = 7;
+                spellInfo->EffectBaseDice[0] = 5;
                 break;
             default:
                 break;

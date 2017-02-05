@@ -894,17 +894,20 @@ CreatureAI* GetAI_npc_zulaman_door_trigger(Creature *_Creature)
 # Akilzon Gauntlet event
 #######################*/
 
-#define AKILZON_GAUNTLET_NOT_STARTED        0
-#define AKILZON_GAUNTLET_IN_PROGRESS        10
-#define AKILZON_GAUNTLET_TEMPEST_ENGAGED    11
-#define AKILZON_GAUNTLET_TEMPEST_DEAD       12
+enum AkilzonGauntletEvent
+{
+    AKILZON_GAUNTLET_NOT_STARTED        = 0,
+    AKILZON_GAUNTLET_IN_PROGRESS        = 1,
+    AKILZON_GAUNTLET_TEMPEST_ENGAGED    = 2,
+    AKILZON_GAUNTLET_TEMPEST_DEAD       = 3,
 
-#define NPC_AMANISHI_WARRIOR        24225
-#define NPC_AMANISHI_EAGLE          24159
-#define SPELL_TALON                 43517
-#define SPELL_CHARGE                43519
-#define SPELL_KICK                  43518
-#define SAY_GAUNTLET_START          -1568025
+    NPC_AMANISHI_WARRIOR            = 24225,
+    NPC_AMANISHI_EAGLE              = 24159,
+    SPELL_TALON                     = 43517,
+    SPELL_CHARGE                    = 43519,
+    SPELL_KICK                      = 43518,
+    SAY_GAUNTLET_START           = -1568025
+};
 
 int32 GauntletWP[][3] =
 {
@@ -935,8 +938,6 @@ struct npc_amanishi_lookoutAI : public ScriptedAI
 
     void Reset()
     {
-        //me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-        me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
         me->SetReactState(REACT_AGGRESSIVE);
         me->SetVisibility(VISIBILITY_ON);
         me->setActive(true);
@@ -944,6 +945,7 @@ struct npc_amanishi_lookoutAI : public ScriptedAI
         warriorsTimer = 40000;
         eaglesTimer = 1000;
         Move = false;
+        Summons.DespawnAll();
 
         if(pInstance)
             pInstance->SetData(DATA_AKILZONGAUNTLET, AKILZON_GAUNTLET_NOT_STARTED);
@@ -951,28 +953,12 @@ struct npc_amanishi_lookoutAI : public ScriptedAI
 
     void StartEvent()
     {
+        me->SetUnitMovementFlags(0);
         me->GetMotionMaster()->MovePoint(0, 226, 1461, 26);
         EventStarted = true;
         DoZoneInCombat();
         if(pInstance && pInstance->GetData(DATA_AKILZONEVENT) != DONE)
             DoGlobalScriptText(SAY_GAUNTLET_START, AKILZON, me->GetMap());
-    }
-
-    void EnterCombat(Unit *who)
-    {
-        if(me->getVictim())
-            return;
-        // if(EventStarted)
-        //     return;
-
-        if (me->canStartAttack(who))
-        {
-            AttackStart(who);
-            who->CombatStart(me);
-            StartEvent();
-            if(pInstance)
-                pInstance->SetData(DATA_AKILZONGAUNTLET, AKILZON_GAUNTLET_IN_PROGRESS);
-        }
     }
 
     void JustDied(Unit* Killer)
@@ -998,6 +984,17 @@ struct npc_amanishi_lookoutAI : public ScriptedAI
 
     void MoveInLineOfSight(Unit *who)
     {
+        if(me->getVictim())
+            return;
+
+        if (me->canStartAttack(who))
+        {
+            AttackStart(who);
+            who->CombatStart(me);
+            StartEvent();
+            if(pInstance)
+                pInstance->SetData(DATA_AKILZONGAUNTLET, AKILZON_GAUNTLET_IN_PROGRESS);
+        }
     }
 
     void MovementInform(uint32 type, uint32 id)
@@ -1062,13 +1059,12 @@ struct npc_amanishi_lookoutAI : public ScriptedAI
         {
             Reset();
             me->Kill(me, false);
+            me->ForcedDespawn(0);
         }
 
         if(EventStarted && !UpdateVictim())
         {
-            EnterEvadeMode();
-            EventStarted = false;
-            Summons.DespawnAll();
+            Reset();
         }
     }
 };

@@ -3976,8 +3976,12 @@ SpellCastResult Spell::CheckCast(bool strict)
         {
             if (GetSpellInfo()->EffectImplicitTargetA[j] == TARGET_UNIT_PET)
             {
-                target = m_caster->GetPet();
-                if (!target)
+                if (Unit* pet = m_caster->GetPet())
+                {
+                    if (!(m_spellInfo->AttributesEx2 & SPELL_ATTR_EX2_IGNORE_LOS) && !m_caster->IsWithinLOSInMap(pet))
+                        return SPELL_FAILED_LINE_OF_SIGHT;
+                }
+                else
                 {
                     if (m_triggeredByAuraSpell)              // not report pet not existence for triggered spells
                         return SPELL_FAILED_DONT_REPORT;
@@ -4560,19 +4564,45 @@ SpellCastResult Spell::CheckCast(bool strict)
                 break;
             }
             case SPELL_EFFECT_TELEPORT_UNITS:
-                {
-                    //Do not allow use of Trinket before BG starts
-                    if (m_caster->GetTypeId()==TYPEID_PLAYER)
-                        if (GetSpellInfo()->Id == 22563 || GetSpellInfo()->Id == 22564)
-                            if (BattleGround const *bg = ((Player*)m_caster)->GetBattleGround())
-                                if (bg->GetStatus() != STATUS_IN_PROGRESS)
-                                    return SPELL_FAILED_TRY_AGAIN;
-                    break;
-                }
+            {
+                //Do not allow use of Trinket before BG starts
+                if (m_caster->GetTypeId()==TYPEID_PLAYER)
+                    if (GetSpellInfo()->Id == 22563 || GetSpellInfo()->Id == 22564)
+                        if (BattleGround const *bg = ((Player*)m_caster)->GetBattleGround())
+                            if (bg->GetStatus() != STATUS_IN_PROGRESS)
+                                return SPELL_FAILED_TRY_AGAIN;
+                break;
+            }
             case SPELL_EFFECT_STEAL_BENEFICIAL_BUFF:
             {
                 if (m_targets.getUnitTarget()==m_caster)
                     return SPELL_FAILED_BAD_TARGETS;
+                if (Unit* target = m_targets.getUnitTarget())
+                {
+                    if (target->GetTypeId() == TYPEID_PLAYER)
+                    {
+                        // Create dispel mask by dispel type
+                        bool hasOtherEffects = false;
+                        uint32 dispelMask = 0;
+
+                        for (uint8 i = 0; i < 3; ++i)
+                        {
+                            if (m_spellInfo->Effect[i] == SPELL_EFFECT_STEAL_BENEFICIAL_BUFF)
+                            {
+                                // itr through all dispel types and add them to mask
+                                dispelMask |= SpellMgr::GetDispellMask(DispelType(m_spellInfo->EffectMiscValue[i]));
+                            }
+                            else if (m_spellInfo->Effect[i] > 0)
+                                hasOtherEffects = true;
+                        }
+
+                        // check if dispel makes sense
+                        std::vector <Aura *> dispel_list;
+                        target->GetDispellableAuraList(m_caster, dispelMask, dispel_list);
+                        if (dispel_list.empty() && !hasOtherEffects)
+                            return SPELL_FAILED_NOTHING_TO_STEAL;
+                    }
+                }
                 break;
             }
             case SPELL_EFFECT_ENERGIZE:
@@ -4612,6 +4642,37 @@ SpellCastResult Spell::CheckCast(bool strict)
                         return SPELL_FAILED_NOTHING_TO_DISPEL;
                 }
                 break;
+                
+            case SPELL_EFFECT_DISPEL:
+            {
+                if (Unit* target = m_targets.getUnitTarget())
+                {
+                    if (target->GetTypeId() == TYPEID_PLAYER)
+                    {
+                        // Create dispel mask by dispel type
+                        bool hasOtherEffects = false;
+                        uint32 dispelMask = 0;
+
+                        for (uint8 i = 0; i < 3; ++i)
+                        {
+                            if (m_spellInfo->Effect[i] == SPELL_EFFECT_DISPEL)
+                            {
+                                // itr through all dispel types and add them to mask
+                                dispelMask |= SpellMgr::GetDispellMask(DispelType(m_spellInfo->EffectMiscValue[i]));
+                            }
+                            else if (m_spellInfo->Effect[i] > 0)
+                                hasOtherEffects = true;
+                        }
+
+                        // check if dispel makes sense
+                        std::vector <Aura *> dispel_list;
+                        target->GetDispellableAuraList(m_caster, dispelMask, dispel_list);
+                        if (dispel_list.empty() && !hasOtherEffects)
+                            return SPELL_FAILED_NOTHING_TO_DISPEL;
+                    }
+                }
+                break;
+            }
             }
             default:break;
         }
@@ -5044,10 +5105,12 @@ SpellCastResult Spell::CheckRange(bool strict)
     // TODO verify that such spells really use bounding radius
     if (m_targets.m_targetMask == TARGET_FLAG_DEST_LOCATION && m_targets.m_destX != 0 && m_targets.m_destY != 0 && m_targets.m_destZ != 0)
     {
-        if(!m_caster->IsWithinDist3d(m_targets.m_destX, m_targets.m_destY, m_targets.m_destZ, max_range - m_caster->GetObjectSize()))
+        if (!m_caster->IsWithinDist3d(m_targets.m_destX, m_targets.m_destY, m_targets.m_destZ, max_range - m_caster->GetObjectSize()))
             return SPELL_FAILED_OUT_OF_RANGE;
-        if(min_range && m_caster->IsWithinDist3d(m_targets.m_destX, m_targets.m_destY, m_targets.m_destZ, min_range))
+        if (min_range && m_caster->IsWithinDist3d(m_targets.m_destX, m_targets.m_destY, m_targets.m_destZ, min_range))
             return SPELL_FAILED_TOO_CLOSE;
+        if (!m_caster->IsWithinLOS(m_targets.m_destX, m_targets.m_destY, m_targets.m_destZ))
+            return SPELL_FAILED_LINE_OF_SIGHT;
     }
 
     return SPELL_CAST_OK;

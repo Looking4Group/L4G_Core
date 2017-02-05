@@ -53,10 +53,10 @@ struct boss_azgalorAI : public hyjal_trashAI
     void Reset()
     {
         damageTaken = 0;
-        RainTimer = 20000;
-        DoomTimer = 50000;
-        HowlTimer = 20000;
-        CleaveTimer = 10000;
+        RainTimer = urand(9000, 20000);
+        DoomTimer = urand(35000, 45000);
+        HowlTimer = urand(15000, 21000);
+        CleaveTimer = urand(5000, 10000);
         EnrageTimer = 600000;
         CheckTimer = 3000;
         enraged = false;
@@ -185,7 +185,7 @@ struct boss_azgalorAI : public hyjal_trashAI
         if(HowlTimer < diff)
         {
             DoCast(m_creature, SPELL_HOWL_OF_AZGALOR);
-            HowlTimer = urand(15000, 20000);
+            HowlTimer = urand(15000, 22000);
         }
         else
             HowlTimer -= diff;
@@ -195,7 +195,7 @@ struct boss_azgalorAI : public hyjal_trashAI
             if(Unit *target = m_creature->getVictim())
             {
                 DoCast(target, SPELL_CLEAVE);
-                CleaveTimer = urand(10000, 15000);
+                CleaveTimer = urand(10000, 16000);
             }
         }
         else
@@ -239,8 +239,8 @@ struct mob_lesser_doomguardAI : public hyjal_trashAI
 
     void Reset()
     {
-        CrippleTimer = 50000;
-        WarstompTimer = 10000;
+        CrippleTimer = urand(12000, 18000);
+        WarstompTimer = urand(7000, 11000);
         CheckTimer = 2000;
     }
 
@@ -286,7 +286,7 @@ struct mob_lesser_doomguardAI : public hyjal_trashAI
         if(WarstompTimer < diff)
         {
             DoCast(m_creature, SPELL_WARSTOMP);
-            WarstompTimer = urand(10000, 25000);
+            WarstompTimer = urand(11000, 18000);
         }
         else
             WarstompTimer -= diff;
@@ -296,7 +296,7 @@ struct mob_lesser_doomguardAI : public hyjal_trashAI
             if(Unit *target = SelectUnit(SELECT_TARGET_RANDOM,0,100,true))
             {
                 DoCast(target, SPELL_CRIPPLE);
-                CrippleTimer = urand(25000, 30000);
+                CrippleTimer = urand(13000, 20000);
             }
         }
         else

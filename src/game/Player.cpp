@@ -4190,7 +4190,15 @@ void Player::SetMovement(PlayerMovementType pType)
     }
     data << GetPackGUID();
     data << uint32(0);
-    SendPacketToSelf(&data);
+
+    if (GetMover() && GetMover()->GetTypeId() == TYPEID_PLAYER)
+    {
+        Player* pMover = (Player*)GetMover();
+        if (pMover != this)
+            pMover->GetSession()->SendPacket(&data);
+    }
+
+    GetSession()->SendPacket(&data);
 }
 
 /* Preconditions:
