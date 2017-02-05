@@ -2996,8 +2996,8 @@ UPDATE `creature_loot_template` SET `mincountOrRef`=1, `maxcount`=1 WHERE `item`
 
 -- 2.1 (Re)Activate Trash Patterns
 -- <~1% fist entry 0,984
-UPDATE `creature_loot_template` SET `ChanceOrQuestChance`=`ChanceOrQuestChance`*9 WHERE `item` IN (30321,30322,30323,30324,30280,30281,30282,30283,30301,30302,30303,30304,30305,30306,30307,30308);
-UPDATE `creature_loot_template` SET `ChanceOrQuestChance`=`ChanceOrQuestChance`*30 WHERE `item` = 30323;
+-- UPDATE `creature_loot_template` SET `ChanceOrQuestChance`=`ChanceOrQuestChance`*9 WHERE `item` IN (30321,30322,30323,30324,30280,30281,30282,30283,30301,30302,30303,30304,30305,30306,30307,30308);
+-- UPDATE `creature_loot_template` SET `ChanceOrQuestChance`=`ChanceOrQuestChance`*30 WHERE `item` = 30323;
 UPDATE `creature_loot_template` SET `mincountOrRef`=1,`maxcount`=1 WHERE `item` IN (30321,30322,30323,30324,30280,30281,30282,30283,30301,30302,30303,30304,30305,30306,30307,30308); -- 1 1
 
 -- 2.1 (Re)Activate Boss Pattern
