@@ -1,1 +1,11 @@
 
+DELETE FROM `npc_trainer` WHERE `spell` = 41307;
+INSERT INTO `npc_trainer` VALUES (17637, 41307, 50000, 202, 375, 0);
+INSERT INTO `npc_trainer` VALUES (18775, 41307, 50000, 202, 375, 0);
+INSERT INTO `npc_trainer` VALUES (17634, 41307, 50000, 202, 375, 0);
+INSERT INTO `npc_trainer` VALUES (19576, 41307, 50000, 202, 375, 0);
+INSERT INTO `npc_trainer` VALUES (18752, 41307, 50000, 202, 375, 0);
+
+UPDATE `item_template` SET `RequiredLevel` = 70 WHERE `entry` = 32756;
+UPDATE `item_template` SET `RequiredLevel` = 62 WHERE `entry` IN (32461,32472,32473,32474,32475,32476,32478,32479,32480,32494,32495);
+
