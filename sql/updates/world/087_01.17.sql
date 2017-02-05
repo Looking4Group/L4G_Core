@@ -4339,3 +4339,20 @@ UPDATE `creature_ai_scripts` SET `action1_param1` = 0 WHERE `id` IN (72636, 7263
 UPDATE `creature_ai_texts` SET `emote` = 0 WHERE `entry` IN (-32,-33);
 UPDATE `creature_ai_texts` SET `sound` = 0 WHERE `entry` IN (-628,-629,-630,-631,-632,-633);
 
+-- Lady Vashj 21212
+UPDATE `creature_loot_template` SET `maxcount` = 2 WHERE `entry` = 21212 AND `item` = 50031; -- 3
+-- Leotheras the Blind 21215
+UPDATE `creature_loot_template` SET `maxcount` = 2 WHERE `entry` = 21215 AND `item` = 34059; -- 3
+-- Fathom-Lord Karathress 21214
+UPDATE `creature_loot_template` SET `maxcount` = 2 WHERE `entry` = 21214 AND `item` = 34060; -- 3
+-- Void Reaver 19516
+UPDATE `creature_loot_template` SET `maxcount` = 2 WHERE `entry` = 19516 AND `item` = 34054; -- 3
+-- Kael'thas Sunstrider 19622
+UPDATE `creature_loot_template` SET `maxcount` = 2 WHERE `entry` = 19622 AND `item` = 50032; -- 3
+-- High King Maulgar 18831
+UPDATE `creature_loot_template` SET `maxcount` = 2 WHERE `entry` = 18831 AND `item` = 34050; -- 3
+-- Gruul the Dragonkiller 19044
+UPDATE `creature_loot_template` SET `maxcount` = 2 WHERE `entry` = 19044 AND `item` = 190039; -- 3
+-- Magtheridon 17257
+UPDATE `creature_loot_template` SET `maxcount` = 2 WHERE `entry` = 17257 AND `item` = 34039; -- 3
+
