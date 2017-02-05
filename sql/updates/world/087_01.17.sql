@@ -4314,3 +4314,27 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('2118106','21181','6','0','100','0','0','0','0','0','11','37235','0','2','0','0','0','0','0','0','0','0','Cyrukh the Firelord - Cast Cyrukh Defeated on Death'),
 ('2118107','21181','1','0','100','1','15000','15000','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Cyrukh the Firelord - Forced Despawn OOC');
 
+UPDATE `creature_ai_scripts` SET `action1_type` = 103 WHERE `id` = 2086915;
+UPDATE `creature_ai_scripts` SET `event_param1` = 70, `event_param2` = 0 WHERE `id` IN (2021112,2016111);
+UPDATE `creature_ai_scripts` SET `event_param3` = 120000, `event_param4` = 150000 WHERE `id` = 2016112;
+DELETE FROM `creature_ai_texts` WHERE `entry` = -9711;
+INSERT INTO `creature_ai_texts` VALUES (-9711,'\'s hand begins to glow with Arcane energy.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,2,0,0,'20041 on Overcharged Arcane Explosion Spellcast');
+UPDATE `creature_ai_scripts` SET `event_param3` = 3000, `event_param4` = 15000 WHERE `id` = 1869351;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 18693;
+INSERT INTO `creature_ai_scripts` VALUES
+(1869301, 18693, 1, 0, 100, 1, 1000, 5000, 300000, 600000, 1, -18000, -18001, -18002, 0, 0, 0, 0, 0, 0, 0, 0, 'Speaker Mar\'grom - Text OOC'),
+(1869302, 18693, 4, 0, 100, 0, 0, 0, 0, 0, 1, -18003, -18004, -18005, 0, 0, 0, 0, 0, 0, 0, 0, 'Speaker Mar\'grom - Text on Aggro'),
+(1869303, 18693, 4, 0, 100, 0, 0, 0, 0, 0, 11, 15497, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 'Speaker Mar\'grom - Cast Frostbolt on Aggro'),
+(1869304, 18693, 8, 0, 100, 1, 0, 4, 3000, 15000, 11, 37844, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Speaker Mar\'grom - Cast Fire Ward on Fire Spellhit'),
+(1869305, 18693, 0, 0, 100, 1, 4000, 6000, 2000, 3000, 11, 15241, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Speaker Mar\'grom - Cast Scorch'),
+(1869306, 18693, 0, 0, 100, 1, 8000, 10000, 5500, 11000, 11, 12466, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Speaker Mar\'grom - Cast Fireball');
+
+UPDATE `creature_ai_scripts` SET `event_param1` = 50, `event_param2` = 0 WHERE `id` IN (1811810);
+UPDATE `creature_ai_scripts` SET `event_param1` = 30, `event_param2` = 0 WHERE `id` IN (1811811);
+UPDATE `creature_ai_scripts` SET `event_param1` = 15, `event_param2` = 0 WHERE `id` IN (1652303,1652304);
+UPDATE `creature_ai_scripts` SET `event_param3` = 8000 WHERE `id` = 1645907;
+UPDATE `creature_ai_scripts` SET `action2_param2` = 0 WHERE `id` = 1688005;
+UPDATE `creature_ai_scripts` SET `action1_param1` = 0 WHERE `id` IN (72636, 72637);
+UPDATE `creature_ai_texts` SET `emote` = 0 WHERE `entry` IN (-32,-33);
+UPDATE `creature_ai_texts` SET `sound` = 0 WHERE `entry` IN (-628,-629,-630,-631,-632,-633);
+
