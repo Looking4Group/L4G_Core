@@ -1204,3 +1204,5 @@ UPDATE `creature_template` SET `ScriptName`='mob_ashtongue_elementalist', `AINam
 UPDATE `creature_template` SET `ScriptName`='mob_ashtongue_spiritbinder', `AIName`='' WHERE `entry`= 23524;
 UPDATE `creature_template` SET `flags_extra` = 65536, `AIName` = '', `ScriptName`='mob_ashtongue_defender' WHERE `entry` = 23216;
 
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 1 WHERE `mincountOrRef` IN (-14099,-39534,-34069); -- 1.5 2 2
+
