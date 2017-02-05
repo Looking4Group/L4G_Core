@@ -1190,3 +1190,11 @@ INSERT INTO `creature` VALUES (@GUID := @GUID + 1, 22310, 530, 1, 0, 0, -888.137
 INSERT INTO `creature` VALUES (@GUID := @GUID + 1, 22310, 530, 1, 0, 0, -707.569, 6357.68, 171.682, 5.56257, 300, 5, 0, 7447, 3155, 0, 1);
 INSERT INTO `creature` VALUES (@GUID := @GUID + 1, 22311, 530, 1, 0, 0, -786.216, 6540.73, 173.12, 2.0817, 300, 5, 0, 9082, 4000, 0, 1);
 
+
+DELETE FROM `creature_questrelation` WHERE `quest` =11012;
+INSERT INTO `creature_questrelation` (`id`,`quest`) VALUES
+(22113,11013);
+DELETE FROM `creature_questrelation` WHERE `quest` =11013;
+INSERT INTO `creature_questrelation` (`id`,`quest`) VALUES
+(22113,11012);
+
