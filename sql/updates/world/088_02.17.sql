@@ -1198,3 +1198,9 @@ DELETE FROM `creature_questrelation` WHERE `quest` =11013;
 INSERT INTO `creature_questrelation` (`id`,`quest`) VALUES
 (22113,11012);
 
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN (23318,23523,23524,23216);
+UPDATE `creature_template` SET `ScriptName`='mob_ashtongue_rogue', `AIName`='' WHERE `entry`= 23318;
+UPDATE `creature_template` SET `ScriptName`='mob_ashtongue_elementalist', `AIName`='' WHERE `entry`= 23523;
+UPDATE `creature_template` SET `ScriptName`='mob_ashtongue_spiritbinder', `AIName`='' WHERE `entry`= 23524;
+UPDATE `creature_template` SET `flags_extra` = 65536, `AIName` = '', `ScriptName`='mob_ashtongue_defender' WHERE `entry` = 23216;
+
