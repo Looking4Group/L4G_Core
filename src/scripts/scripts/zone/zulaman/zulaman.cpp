@@ -1181,10 +1181,15 @@ CreatureAI* GetAI_npc_amani_eagle(Creature *_Creature)
     return ai;
 }
 
-#define YELL_SCOUT_AGGRO            -1811003
-#define SPELL_ALERT_DRUMS           42177
-#define SPELL_SUMMON_SENTRIES       42183
-#define MOB_SENTRY                  23587
+enum AmanishiScout
+{
+    YELL_SCOUT_AGGRO        = -1811003,
+    SPELL_ALERT_DRUMS       =    42177,
+    SPELL_SUMMON_SENTRIES1  =    42183,
+    SPELL_SUMMON_SENTRIES2  =    42182,
+    SPELL_SUMMON_SENTRIES3  =    42181,
+    MOB_SENTRY              =    23587
+};
 
 struct npc_amanishi_scoutAI : public ScriptedAI
 {
@@ -1199,6 +1204,8 @@ struct npc_amanishi_scoutAI : public ScriptedAI
     void Reset()
     {
         SummonTimer = 0;
+        me->GetMotionMaster()->Initialize();
+
     }
 
     void AttackStart(Unit *pWho)
@@ -1214,15 +1221,13 @@ struct npc_amanishi_scoutAI : public ScriptedAI
     void MovementInform(uint32 type, uint32 id)
     {
         if(type == POINT_MOTION_TYPE && id == 1)
-        {
-            //DoCast(me, SPELL_ALERT_DRUMS, false);
             SummonTimer = 1;
-        }
     }
 
     void EnterCombat(Unit *who)
     {
         DoScriptText(YELL_SCOUT_AGGRO, me);
+        me->SetWalk(false);
         Unit *drums = FindCreature(22515, 50, me);
         if(drums)
             me->GetMotionMaster()->MovePoint(1, drums->GetPositionX(), drums->GetPositionY(), drums->GetPositionZ());
@@ -1235,26 +1240,20 @@ struct npc_amanishi_scoutAI : public ScriptedAI
 
         if(SummonTimer)
         {
-            /*
-            Unit *drums = FindCreature(22515, 5, me);
-            if(drums)
-                me->GetMotionMaster()->MoveFollow(drums, 0, 0);
-*/
             if(SummonTimer <= diff)
             {
+                me->GetMotionMaster()->Clear();
                 DoCast(me, SPELL_ALERT_DRUMS, false);
-                //DoCast(me, SPELL_SUMMON_SENTRIES, true);
-                //DoCast(me, SPELL_SUMMON_SENTRIES, true);
-                float x,y,z;
-                me->GetPosition(x, y, z);
-                me->SummonCreature(MOB_SENTRY, x+1, y+1, z, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 10000);
-                me->SummonCreature(MOB_SENTRY, x-1, y-1, z, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 10000);
-                SummonTimer = 5000;
+                DoCast(me, SPELL_SUMMON_SENTRIES1, false);
+                DoCast(me, SPELL_SUMMON_SENTRIES2, false);
+                if (urand(0, 100) < 25)
+                DoCast(me, SPELL_SUMMON_SENTRIES3, false);
+
+                SummonTimer = urand(2000, 3000);
             } else
                 SummonTimer -= diff;
         }
     }
-
 };
 
 CreatureAI* GetAI_npc_amanishi_scout(Creature *_Creature)
