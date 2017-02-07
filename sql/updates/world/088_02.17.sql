@@ -1206,3 +1206,5 @@ UPDATE `creature_template` SET `flags_extra` = 65536, `AIName` = '', `ScriptName
 
 UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 1 WHERE `mincountOrRef` IN (-14099,-39534,-34069); -- 1.5 2 2
 
+DELETE FROM `creature_ai_scripts` WHERE `id` = 2192002;
+
