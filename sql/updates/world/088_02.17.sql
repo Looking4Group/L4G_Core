@@ -1208,3 +1208,5 @@ UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 1 WHERE `mincountOrR
 
 DELETE FROM `creature_ai_scripts` WHERE `id` = 2192002;
 
+UPDATE `creature_template` SET `faction_A`='14',`faction_H`='14' WHERE `entry` IN (23326, 23286, 23169);
+
