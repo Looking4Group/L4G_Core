@@ -1357,3 +1357,12 @@ INSERT INTO `npc_vendor` VALUES (18525, 32090, 0, 0, 1040);
 
 UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 100 WHERE `entry` = 17257 AND `item` IN (34846,34845); -- cond 6, value 67 / 469
 
+DELETE FROM `creature_template_addon` WHERE `entry` IN (16700,20589,17464,20586);
+INSERT INTO `creature_template_addon` VALUES
+(16700,0,0,0,0,4097,0,0,'30472 0 30472 1'),
+(20589,0,0,0,0,4097,0,0,'30472 0 30472 1'),
+(17464,0,0,0,0,4097,389,0,''),
+(20586,0,0,0,0,4097,389,0,'');
+
+UPDATE `creature_addon` SET `auras` = '30472 0 30472 1' WHERE `guid` IN (11612,19314,57693,57694,57695,57696,123402,187294);
+
