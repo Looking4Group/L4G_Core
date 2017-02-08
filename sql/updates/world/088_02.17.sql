@@ -1366,3 +1366,5 @@ INSERT INTO `creature_template_addon` VALUES
 
 UPDATE `creature_addon` SET `auras` = '30472 0 30472 1' WHERE `guid` IN (11612,19314,57693,57694,57695,57696,123402,187294);
 
+UPDATE `creature_template` SET `faction_A`='16',`faction_H`='16' WHERE `entry` IN (23324,23305);
+
