@@ -1371,3 +1371,35 @@ UPDATE `creature_template` SET `faction_A`='16',`faction_H`='16' WHERE `entry` I
 -- Pathing Breaks Script npc_minion_of_sarthis
 UPDATE `creature` SET `position_x` = '-2459.6398', `position_y` = '4754.6401', `position_z` = '153.1999', `MovementType` = 0 WHERE `guid` = 96675; -- -2452.38 4760.84 153.167
 
+-- Azgalor Token
+UPDATE `creature_loot_template` SET `maxcount` = 2 WHERE `entry` = 17842 AND `item` = 34067;
+
+-- Archimonde Token
+UPDATE `creature_loot_template` SET `maxcount` = 2 WHERE `entry` = 17968 AND `item` = 34068;
+
+-- Mother Shahraz Token
+UPDATE `creature_loot_template` SET `maxcount` = 2 WHERE `entry` = 22947 AND `item` = 34076;
+
+-- Council
+DELETE FROM `creature_loot_template` WHERE `entry` IN (22949,22950,22952);
+INSERT INTO `creature_loot_template` VALUES (22949, 31098, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22949, 31099, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22949, 31100, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22950, 29434, 0, 0, 2, 2, 0, 0, 0);
+-- INSERT INTO `creature_loot_template` VALUES (22950, 31098, 0, 2, 1, 1, 0, 0, 0);
+-- INSERT INTO `creature_loot_template` VALUES (22950, 31099, 0, 2, 1, 1, 0, 0, 0);
+-- INSERT INTO `creature_loot_template` VALUES (22950, 31100, 0, 2, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22950, 32331, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22950, 32373, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22950, 32376, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22950, 32505, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22950, 32518, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22950, 32519, 0, 1, 1, 1, 0, 0, 0);
+-- 22951 Epic GEM
+INSERT INTO `creature_loot_template` VALUES (22952, 31098, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22952, 31099, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22952, 31100, 0, 1, 1, 1, 0, 0, 0);
+
+-- Illidan Stormrage <The Betrayer> Token
+UPDATE `creature_loot_template` SET `maxcount` = 2 WHERE `entry` = 22917 AND `item` = 34077;
+
