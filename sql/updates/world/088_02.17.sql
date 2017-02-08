@@ -1355,3 +1355,5 @@ INSERT INTO `npc_vendor` VALUES (18525, 32090, 0, 0, 1040);
 -- INSERT INTO `npc_vendor` VALUES (18525, 35324, 0, 0, 2059);
 -- INSERT INTO `npc_vendor` VALUES (18525, 35326, 0, 0, 2049);
 
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 100 WHERE `entry` = 17257 AND `item` IN (34846,34845); -- cond 6, value 67 / 469
+
