@@ -1368,3 +1368,6 @@ UPDATE `creature_addon` SET `auras` = '30472 0 30472 1' WHERE `guid` IN (11612,1
 
 UPDATE `creature_template` SET `faction_A`='16',`faction_H`='16' WHERE `entry` IN (23324,23305);
 
+-- Pathing Breaks Script npc_minion_of_sarthis
+UPDATE `creature` SET `position_x` = '-2459.6398', `position_y` = '4754.6401', `position_z` = '153.1999', `MovementType` = 0 WHERE `guid` = 96675; -- -2452.38 4760.84 153.167
+
