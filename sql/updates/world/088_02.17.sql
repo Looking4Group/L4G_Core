@@ -1403,3 +1403,27 @@ INSERT INTO `creature_loot_template` VALUES (22952, 31100, 0, 1, 1, 1, 0, 0, 0);
 -- Illidan Stormrage <The Betrayer> Token
 UPDATE `creature_loot_template` SET `maxcount` = 2 WHERE `entry` = 22917 AND `item` = 34077;
 
+-- Indormi 23437
+UPDATE `creature` SET `spawnmask` = 1 WHERE `id` = 23437;
+
+-- Epic GEM Patterns
+DELETE FROM `reference_loot_template` WHERE `entry` = 34999;
+INSERT INTO `reference_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES 
+(34999, 32285, 0, 9, 1, 1, 7, 755, 1), -- Flashing Crimson Spinel
+(34999, 32289, 0, 9, 1, 1, 7, 755, 1), -- Stormy Empyrean Sapphire
+(34999, 32295, 0, 9, 1, 1, 7, 755, 1), -- Mystic Lionseye
+(34999, 32296, 0, 9, 1, 1, 7, 755, 1), -- Great Lionseye
+(34999, 32297, 0, 9, 1, 1, 7, 755, 1), -- Sovereign Shadowsong Amethyst
+(34999, 32298, 0, 9, 1, 1, 7, 755, 1), -- Shifting Shadowsong Amethyst
+(34999, 32303, 0, 9, 1, 1, 7, 755, 1), -- Inscribed Pyrestone
+(34999, 32307, 0, 9, 1, 1, 7, 755, 1); -- Veiled Pyrestone
+
+DELETE FROM `creature_loot_template` WHERE `item` IN (32274,32277,32281,32282,32283,32284,32285,32286,32287,32288,32289,32290,32291,32292,32293,32294,32295,32296,32297,32298,32299,32300,32301,32302,32303,32304,32305,32306,32307,32308,32309,32310,32311,32312,35762,35763,35764,35765,35766,35767,35768,35769);
+DELETE FROM `creature_loot_template` WHERE `mincountOrRef` = -34999;
+INSERT INTO `creature_loot_template` VALUES
+(17767, 34999, 15, 9, -34999, 1, 0, 0, 0),
+(17808, 34999, 15, 9, -34999, 1, 0, 0, 0),
+(17888, 34999, 20, 9, -34999, 1, 0, 0, 0),
+(17842, 34999, 20, 9, -34999, 1, 0, 0, 0),
+(17968, 34999, 30, 9, -34999, 1, 0, 0, 0);
+
