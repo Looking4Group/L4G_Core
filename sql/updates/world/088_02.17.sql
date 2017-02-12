@@ -5110,3 +5110,44 @@ UPDATE `item_template` SET `displayid` = 1026, `sheath` = 1 WHERE `entry` = 1450
 UPDATE `item_template` SET `displayid` = 8593, `sheath` = 1 WHERE `entry` = 1385;
 UPDATE `item_template` SET `displayid` = 6458, `sheath` = 3 WHERE `entry` = 1313;
 
+-- epoch_hunter npcs
+-- Transformation NPCs should not have `equipment_id` !
+
+-- Tarren Mill Guardsman 18092,20545
+UPDATE `creature_template` SET `modelid_A2`=18249,`modelid_H2`=18249,`equipment_id`=0 WHERE `entry` = 18092;
+UPDATE `creature_template` SET `modelid_A2`=18249,`modelid_H2`=18249,`speed` = '1.48',`equipment_id`=0 WHERE `entry` = 20545;
+
+-- Tarren Mill Protector 18093,20547
+UPDATE `creature_template` SET `modelid_A`=18265,`modelid_H`=18265,`modelid_A2`=18267,`modelid_H2`=18267,`equipment_id`=0 WHERE `entry` = 18093;
+UPDATE `creature_template` SET `modelid_A`=18265,`modelid_H`=18265,`modelid_A2`=18267,`modelid_H2`=18267,`baseattacktime`=1400,`equipment_id`=0 WHERE `entry` = 20547;
+
+-- Tarren Mill Lookout 18094,20546
+UPDATE `creature_template` SET `modelid_A`=18252,`modelid_H`=18252,`modelid_A2`=18263,`modelid_H2`=18263,`armor`=4800,`equipment_id`=0 WHERE `entry` = 18094;
+UPDATE `creature_template` SET `modelid_A`=18252,`modelid_H`=18252,`modelid_A2`=18263,`modelid_H2`=18263,`minlevel`=71,`speed` = '1.48',`baseattacktime`=1400,`lootid`=18094,`pickpocketloot`=18094,`equipment_id` = '0',`equipment_id`=0 WHERE `entry` = 20546;
+
+-- Trash & Patrols
+
+-- Tarren Mill Guardsman 23175,23181
+UPDATE `creature_template` SET `heroic_entry` = 23181,`modelid_A2`=18249,`modelid_H2`=18249,`armor`=6200,`speed` = '1.48',`equipment_id` = '1801' WHERE `entry` = 23175;
+UPDATE `creature_template` SET `modelid_H`=18247,`modelid_A2`=18249,`modelid_H2`=18249,`minlevel`='71',`maxlevel`='72',`minmana`='0',`maxmana`='0',`minhealth`='28712',`maxhealth`='28893',`armor`='7068',`mindmg`='2389',`maxdmg`='3005',`baseattacktime` = '1400', `faction_A`='1748',`faction_H`='1748',`speed` = '1.48',`unit_flags`='1',`equipment_id` = '1801' WHERE `entry` = 23181;
+-- Tarren Mill Guardsman 23176,23182
+UPDATE `creature_template` SET `heroic_entry` = 23182,`modelid_A2`=18249,`modelid_H2`=18249,`armor`=6200,`speed` = '1.48',`equipment_id` = '1801' WHERE `entry` = 23176;
+UPDATE `creature_template` SET `modelid_H`=18247,`modelid_A2`=18249,`modelid_H2`=18249,`minlevel`='71',`maxlevel`='72',`minmana`='0',`maxmana`='0',`minhealth`='28712',`maxhealth`='28893',`armor`='7068',`mindmg`='2389',`maxdmg`='3005',`baseattacktime` = '1400', `faction_A`='1748',`faction_H`='1748',`speed` = '1.48',`unit_flags`='1',`equipment_id` = '1801' WHERE `entry` = 23182;
+
+-- Tarren Mill Lookout 23177,23183
+UPDATE `creature_template` SET `modelid_A`=18252,`modelid_H`=18252,`modelid_A2`=18263,`modelid_H2`=18263,`heroic_entry` = 23183,`minmana`='3309',`maxmana`='3309',`armor`=4800,`speed` = '1.48',`equipment_id` = '8008' WHERE `entry` = 23177;
+UPDATE `creature_template` SET `modelid_A`=18252,`modelid_H`=18252,`modelid_A2`=18263,`modelid_H2`=18263,`minlevel`='71',`maxlevel`='72',`minmana`='3309',`maxmana`='3309',`minhealth`='22892',`maxhealth`='23110',`armor`='5289',`mindmg`='1038',`maxdmg`='2129',`baseattacktime` = '1400', `faction_A`='1748',`faction_H`='1748',`speed` = '1.48',`unit_flags`='1',`equipment_id` = '8008' WHERE `entry` = 23183;
+-- Tarren Mill Lookout 23178,23184
+UPDATE `creature_template` SET `modelid_A`=18252,`modelid_H`=18252,`modelid_A2`=18263,`modelid_H2`=18263,`heroic_entry` = 23184,`minmana`='3309',`maxmana`='3309',`armor`=4800,`speed` = '1.48',`equipment_id` = '8008' WHERE `entry` = 23178;
+UPDATE `creature_template` SET `modelid_A`=18252,`modelid_H`=18252,`modelid_A2`=18263,`modelid_H2`=18263,`minlevel`='71',`maxlevel`='72',`minmana`='3309',`maxmana`='3309',`minhealth`='22892',`maxhealth`='23110',`armor`='5289',`mindmg`='1038',`maxdmg`='2129',`baseattacktime` = '1400', `faction_A`='1748',`faction_H`='1748',`speed` = '1.48',`unit_flags`='1',`equipment_id` = '8008' WHERE `entry` = 23184;
+
+-- Tarren Mill Protector 23179,23185
+UPDATE `creature_template` SET `modelid_A`=18265,`modelid_H`=18265,`modelid_A2`=18267,`modelid_H2`=18267,`heroic_entry` = 23185,`armor`=6200,`speed` = '1.48',`baseattacktime`=2000,`equipment_id`=8020 WHERE `entry` = 23179;
+UPDATE `creature_template` SET `modelid_A`=18265,`modelid_H`=18265,`modelid_A2`=18267,`modelid_H2`=18267,`minlevel`='71',`maxlevel`='72',`minmana`='15399',`maxmana`='16545',`minhealth`='23110',`maxhealth`='23456',`armor`='7100',`mindmg`='1172',`maxdmg`='1911',`baseattacktime` = '2000', `faction_A`='1748',`faction_H`='1748',`speed` = '1.48',`unit_flags`='1',`equipment_id` = '8020' WHERE `entry` = 23185;
+-- Tarren Mill Protector 23180,23186
+UPDATE `creature_template` SET `modelid_A`=18265,`modelid_H`=18265,`modelid_A2`=18267,`modelid_H2`=18267,`heroic_entry` = 23186,`armor`=6200,`speed` = '1.48'`baseattacktime`=2000 WHERE `entry` = 23180;
+UPDATE `creature_template` SET `modelid_A`=18265,`modelid_H`=18265,`modelid_A2`=18267,`modelid_H2`=18267,`minlevel`='71',`maxlevel`='72',`minmana`='15399',`maxmana`='16545',`minhealth`='23110',`maxhealth`='23456',`armor`='7100',`mindmg`='1172',`maxdmg`='1911',`baseattacktime` = '2000', `faction_A`='1748',`faction_H`='1748',`speed` = '1.48', `unit_flags`='1',`equipment_id` = '8020' WHERE `entry` = 23186;
+
+UPDATE `creature_template` SET `npcflag`='0' WHERE `entry` = 24857;
+UPDATE `creature_template` SET `heroic_entry`='0' WHERE `entry` = 25354;
+
