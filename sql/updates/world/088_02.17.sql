@@ -5090,3 +5090,23 @@ INSERT INTO `pool_gameobject` VALUES
 UPDATE `quest_template` SET `RewRepFaction1` = 0 WHERE `entry` = 16;
 UPDATE `quest_template` SET `RewRepFaction2`= 730 WHERE `entry` IN (7168,7170,7171,7172);
 
+DELETE FROM `item_template` WHERE `entry` IN (66666,29484,23051,22199,905);
+UPDATE `item_template` SET `RequiredReputationRank` = 0 WHERE `entry` IN  (35348,35349,35396,35417);
+UPDATE `item_template` SET `displayid` =  34107,`sheath` = 0 WHERE `entry` = 21554; -- 31747 1
+UPDATE `item_template` SET `displayid` =  23669 WHERE `entry` = 13160;
+UPDATE `item_template` SET `displayid` =  30791 WHERE `entry` = 18419;
+UPDATE `item_template` SET `displayid` =  4775 WHERE `entry` = 11683;
+UPDATE `item_template` SET `displayid` =  42195 WHERE `entry` = 32104;
+UPDATE `item_template` SET `displayid` =  16708 WHERE `entry` = 3959;
+UPDATE `item_template` SET `displayid` =  16708 WHERE `entry` = 3959;
+UPDATE `item_template` SET `displayid` =  16715 WHERE `entry` = 3958;
+UPDATE `item_template` SET `displayid` =  16709 WHERE `entry` = 3957;
+UPDATE `item_template` SET `displayid` =  16711 WHERE `entry` = 3956;
+UPDATE `item_template` SET `displayid` = 7430, `inventorytype` = 13, `sheath` = 7 WHERE `entry` = 3494;
+UPDATE `item_template` SET `stat_type10` = 0 WHERE `entry` = 2586; -- 45
+UPDATE `item_template` SET `displayid` = 10671, `inventorytype` = 26 WHERE `entry` = 2551; -- 15
+UPDATE `item_template` SET `displayid` = 1155, `sheath` = 0 WHERE `entry` = 1536;
+UPDATE `item_template` SET `displayid` = 1026, `sheath` = 1 WHERE `entry` = 1450;
+UPDATE `item_template` SET `displayid` = 8593, `sheath` = 1 WHERE `entry` = 1385;
+UPDATE `item_template` SET `displayid` = 6458, `sheath` = 3 WHERE `entry` = 1313;
+
