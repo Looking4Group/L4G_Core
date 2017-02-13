@@ -1204,8 +1204,7 @@ struct npc_amanishi_scoutAI : public ScriptedAI
     void Reset()
     {
         SummonTimer = 0;
-        me->GetMotionMaster()->Initialize();
-
+        m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
     }
 
     void AttackStart(Unit *pWho)
@@ -1242,7 +1241,7 @@ struct npc_amanishi_scoutAI : public ScriptedAI
         {
             if(SummonTimer <= diff)
             {
-                me->GetMotionMaster()->Clear();
+                m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
                 DoCast(me, SPELL_ALERT_DRUMS, false);
                 DoCast(me, SPELL_SUMMON_SENTRIES1, false);
                 DoCast(me, SPELL_SUMMON_SENTRIES2, false);
