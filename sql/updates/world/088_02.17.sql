@@ -5162,4 +5162,7 @@ UPDATE `creature_template` SET `mechanic_immune_mask`='617299967' WHERE `entry` 
 UPDATE `creature_template` SET `mechanic_immune_mask`='617297919' WHERE `entry` = 22952;
 UPDATE `creature_template` SET `mechanic_immune_mask`='617299967' WHERE `entry` = 22917;
 
+-- Shade of Akama 22841- boss_shade_of_akama
+UPDATE `creature` SET `modelid` = 0, `spawntimesecs` = 604800 WHERE `id` = 22841;
+UPDATE `creature_template` SET `speed`='1.00',`mindmg`='10000',`maxdmg`='10000',`unit_flags`='33554496',`mechanic_immune_mask`='650854271',`flags_extra`='1078001667' WHERE `entry` = 22841; -- 1.2 -- 9476 19367 -- 52,741 - 62,632
 
