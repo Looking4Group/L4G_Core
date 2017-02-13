@@ -3340,7 +3340,7 @@ UPDATE `creature_template` SET `minhealth`='5463000',`maxhealth`='5463000' WHERE
 -- ======================================================
 
 -- High Warlord Naj'entus 22887 - boss_najentus
-UPDATE `creature_template` SET `minhealth`='4552800',`maxhealth`='4552800' WHERE `entry` = '17968'; -- 3794000 -- 4552800
+UPDATE `creature_template` SET `minhealth`='4552800',`maxhealth`='4552800' WHERE `entry` = '22887'; -- 3794000 -- 4552800
 
 -- ===============
 
