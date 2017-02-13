@@ -5151,3 +5151,15 @@ UPDATE `creature_template` SET `modelid_A`=18265,`modelid_H`=18265,`modelid_A2`=
 UPDATE `creature_template` SET `npcflag`='0' WHERE `entry` = 24857;
 UPDATE `creature_template` SET `heroic_entry`='0' WHERE `entry` = 25354;
 
+-- Update Disarm Immunities thx@Quinz
+UPDATE `creature_template` SET `mechanic_immune_mask`='650854263' WHERE `entry` = 17842;
+UPDATE `creature_template` SET `mechanic_immune_mask`='650854391' WHERE `entry` = 17888;
+UPDATE `creature_template` SET `mechanic_immune_mask`='650854395' WHERE `entry` = 22871;
+UPDATE `creature_template` SET `mechanic_immune_mask`='650854399' WHERE `entry` = 22947;
+UPDATE `creature_template` SET `mechanic_immune_mask`='617299967' WHERE `entry` = 22949;
+UPDATE `creature_template` SET `mechanic_immune_mask`='617299967' WHERE `entry` = 22950;
+UPDATE `creature_template` SET `mechanic_immune_mask`='617299967' WHERE `entry` = 22951;
+UPDATE `creature_template` SET `mechanic_immune_mask`='617297919' WHERE `entry` = 22952;
+UPDATE `creature_template` SET `mechanic_immune_mask`='617299967' WHERE `entry` = 22917;
+
+
