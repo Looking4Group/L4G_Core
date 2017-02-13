@@ -321,6 +321,9 @@ struct boss_shade_of_akamaAI : public ScriptedAI
 		Init();
 		SpawnChannelers();
 
+        me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+        me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PACIFIED);
+
 		if (Creature *akama = me->GetCreature(*me, AkamaGUID))
 		{
 			if (akama->isDead())
