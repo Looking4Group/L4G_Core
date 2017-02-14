@@ -5462,3 +5462,33 @@ INSERT INTO `npc_vendor` (entry, item, maxcount, incrtime, ExtendedCost) VALUES
 (17657, 35477, 0, 0, 0),
 (17657, 35478, 0, 0, 0);
 
+-- Outland Herb Spawn Pools
+
+-- MASTER Herbs Hellfire Peninsula zone 3483
+UPDATE `pool_template` SET `max_limit`='100' WHERE `entry` = 972; -- 60
+
+-- MASTER Herbs Nagrand zone 3518
+UPDATE `pool_template` SET `max_limit`='75' WHERE `entry` = 973; -- 40
+
+-- MASTER Herbs Netherstorm zone 3523
+UPDATE `pool_template` SET `max_limit`='75' WHERE `entry` = 974; -- 40
+
+-- MASTER Herbs Zangarmarsh zone 3521
+UPDATE `pool_template` SET `max_limit`='200' WHERE `entry` = 975; -- 95
+
+-- MASTER Herbs Shadowmoon Valley zone 3520
+UPDATE `pool_template` SET `max_limit`='75' WHERE `entry` = 976; -- 45
+
+-- MASTER Herbs Terokkar Forest zone 3519
+UPDATE `pool_template` SET `max_limit`='100' WHERE `entry` = 977; -- 65 
+
+-- MASTER Herbs Blade's Edge Mountains zone 3522
+UPDATE `pool_template` SET `max_limit`='75' WHERE `entry` = 978; -- 35
+
+-- MASTER Cloud Pools
+UPDATE `pool_template` SET `max_limit`='15' WHERE `entry` IN (30043,30044,30045,30046); -- 10
+UPDATE `creature` SET `spawntimesecs` = 900 WHERE `id` IN (24222,17407); -- 17378,17408 not pooled yet
+
+UPDATE `gameobject` SET `position_x` = '-3406.8500', `position_y` = '4461.8100', `position_z` = '-9.3434' WHERE `guid` = 3492882;
+-- increasing terokkar herb pool due to Ghost Mushroom being in that pool
+
