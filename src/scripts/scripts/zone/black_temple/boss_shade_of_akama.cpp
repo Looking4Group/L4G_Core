@@ -604,8 +604,8 @@ struct boss_shade_of_akamaAI : public ScriptedAI
 
 	void AttackAkama(const uint32 diff)
     {
-		DoMeleeAttackIfReady();
-	}
+        DoMeleeAttackIfReady();
+    }
 
     void UpdateAI(const uint32 diff)
     {
