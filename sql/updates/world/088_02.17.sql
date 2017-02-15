@@ -5492,3 +5492,6 @@ UPDATE `creature` SET `spawntimesecs` = 900 WHERE `id` IN (24222,17407); -- 1737
 UPDATE `gameobject` SET `position_x` = '-3406.8500', `position_y` = '4461.8100', `position_z` = '-9.3434' WHERE `guid` = 3492882;
 -- increasing terokkar herb pool due to Ghost Mushroom being in that pool
 
+DELETE FROM `creature_questrelation` WHERE `quest` = 10866;
+INSERT INTO `creature_questrelation` (`id`, `quest`) VALUES (22112, 10866);
+
