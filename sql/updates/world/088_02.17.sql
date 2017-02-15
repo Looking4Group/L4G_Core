@@ -5175,7 +5175,7 @@ UPDATE `creature` SET `id` = 1000003 WHERE `id` = 1000001;
 UPDATE `creature_template` SET `name` = 'Instant 70 NPC',`subname` = 'Hellfire', `modelid_A` = 10992, `modelid_H` = 10992, `scale`  = 4, `equipment_id` = 1566 WHERE `entry` = 1000003;
 UPDATE `creature_template` SET `name` = 'Instant 60 NPC',`subname` = 'Hellfire' WHERE `entry` = 1000001;
 
-UPDATE `item_template` SET `SellPrice` = 0 WHERE `entry` IN (
+UPDATE `item_template` SET `SellPrice` = 0, `RequiredDisenchantSkill` = 400  WHERE `entry` IN (
 28225, 27551, 27771, 0, 28403, 27985, 30538, 28318, 27712, 27497, 27925, 28323, 28034, 28288, 27892, 27872, 27872, 
 28350, 27871, 27803, 0, 28262, 27672, 27527, 29239, 27459, 27475, 27822, 28407, 27529, 27891, 27804, 29362, 27887, 28258,
 27790, 28419, 27775, 0, 27897, 27548, 27458, 28221, 28194, 28304, 28259, 27780, 24390, 28190, 27946, 28257, 31292, 28296,
