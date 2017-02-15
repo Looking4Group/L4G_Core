@@ -321,6 +321,9 @@ struct boss_shade_of_akamaAI : public ScriptedAI
 		Init();
 		SpawnChannelers();
 
+        me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+        me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PACIFIED);
+
 		if (Creature *akama = me->GetCreature(*me, AkamaGUID))
 		{
 			if (akama->isDead())
@@ -427,6 +430,9 @@ struct boss_shade_of_akamaAI : public ScriptedAI
     {
         if (aura->GetSpellProto()->Id == SPELL_AKAMA_SOUL_CHANNEL)
             event_phase = START_EVENT;
+
+        if (aura->GetSpellProto()->Id == SPELL_SHADE_SOUL_CHANNEL_ACTUAL_AURA_SPELL)
+            dead_adds--;
     }
     void OnAuraRemove(Aura *aura, bool stackRemove)
     {
@@ -597,31 +603,9 @@ struct boss_shade_of_akamaAI : public ScriptedAI
 	}
 
 	void AttackAkama(const uint32 diff)
-	{
-		if (m_damageTimer < diff)
-		{
-			if (!AkamaGUID)
-				return;
-
-			if (Creature *akama = me->GetCreature(*me, AkamaGUID))
-			{
-				if (akama->isAlive())
-				{
-					int damage = akama->GetMaxHealth() / 24;
-					me->DealDamage(akama, damage, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
-					m_damageTimer = 2850;
-				}
-				else
-					event_phase = AKAMA_DEATHS;
-			}
-		}
-		else
-		{
-			m_damageTimer -= diff;
-		}
-
-		DoMeleeAttackIfReady();
-	}
+    {
+        DoMeleeAttackIfReady();
+    }
 
     void UpdateAI(const uint32 diff)
     {
@@ -676,6 +660,18 @@ struct boss_shade_of_akamaAI : public ScriptedAI
 				if (me->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE))
 					ProcessSpawning(diff);
 
+                if (me->HasAura(SPELL_SHADE_SOUL_CHANNEL_ACTUAL_AURA_SPELL))
+                {
+                    me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                    me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                    ProcessSpawning(diff);
+                }
+                else
+                {
+                    me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                    me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                }
+
 				if (reachedAkama)
 				{
 					AttackAkama(diff);
@@ -692,6 +688,17 @@ struct boss_shade_of_akamaAI : public ScriptedAI
 			{
 				me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
 				me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                if (me->HasAura(SPELL_SHADE_SOUL_CHANNEL_ACTUAL_AURA_SPELL))
+                {
+                    me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                    me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                    ProcessSpawning(diff);
+                }
+                else
+                {
+                    me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                    me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                }
 
 				AttackAkama(diff);
 
@@ -846,6 +853,12 @@ struct npc_akamaAI : public Scripted_NoMovementAI
         }
     }
 
+    void DamageTaken(Unit* who, uint32& damage)
+    {
+            ClearCastQueue();
+            isCasting = false;
+    }
+
     void JustDied(Unit* killer)
     {
         DoScriptText(SAY_DEATH, me);
@@ -969,7 +982,7 @@ struct npc_akamaAI : public Scripted_NoMovementAI
 
         if (m_lightningBoltTimer < diff)
         {
-            AddSpellToCast(me->getVictim(), SPELL_CHAIN_LIGHTNING);
+            AddSpellToCast(me->getVictim(), SPELL_CHAIN_LIGHTNING, true, true);
             m_lightningBoltTimer = urand(6000, 8000);
         }
         else
