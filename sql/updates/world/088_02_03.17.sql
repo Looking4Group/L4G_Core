@@ -62,3 +62,74 @@ INSERT INTO `pool_gameobject` VALUES
 (14050560, 974, 0, '181279'),
 (14050561, 974, 0, '181279');
 
+-- Outland Pools
+
+-- MASTER Herbs Hellfire Peninsula zone 3483
+UPDATE `pool_template` SET `max_limit`='140' WHERE `entry` = 972; -- 60
+
+-- MASTER Herbs Nagrand zone 3518
+UPDATE `pool_template` SET `max_limit`='72' WHERE `entry` = 973; -- 40
+
+-- MASTER Herbs Netherstorm zone 3523
+UPDATE `pool_template` SET `max_limit`='80' WHERE `entry` = 974; -- 40
+
+-- MASTER Herbs Zangarmarsh zone 3521
+UPDATE `pool_template` SET `max_limit`='188' WHERE `entry` = 975; -- 95
+
+-- MASTER Herbs Shadowmoon Valley zone 3520
+UPDATE `pool_template` SET `max_limit`='66' WHERE `entry` = 976; -- 45
+
+-- MASTER Herbs Terokkar Forest zone 3519
+UPDATE `pool_template` SET `max_limit`='135' WHERE `entry` = 977; -- 65 
+
+-- MASTER Herbs Blade's Edge Mountains zone 3522
+UPDATE `pool_template` SET `max_limit`='68' WHERE `entry` = 978; -- 35
+
+-- MASTER Herbs Isle of Quel\'Danas
+UPDATE `pool_template` SET `max_limit`='3' WHERE `entry` = 979; -- 2
+
+-- Mineral Pool - Hellfire Peninsula
+UPDATE `pool_template` SET `max_limit`='104' WHERE `entry` = 2062; -- 25
+
+-- Mineral Pool - Zangarmarsh
+UPDATE `pool_template` SET `max_limit`='54' WHERE `entry` = 2063; -- 25
+
+-- Mineral Pool - Nagrand
+UPDATE `pool_template` SET `max_limit`='102' WHERE `entry` = 2064; -- 25
+
+-- Mineral Pool - Terokkar Forest
+UPDATE `pool_template` SET `max_limit`='71' WHERE `entry` = 2065; -- 25
+
+-- Mineral Pool - Netherstorm
+UPDATE `pool_template` SET `max_limit`='39' WHERE `entry` = 2066; -- 25
+
+-- Mineral Pool - Blades Edge Mountains
+UPDATE `pool_template` SET `max_limit`='53' WHERE `entry` = 2067; -- 25
+
+-- Mineral Pool - Shadowmoon Valley
+UPDATE `pool_template` SET `max_limit`='64' WHERE `entry` = 2068; -- 25
+
+-- Master Mineral Pool - Isle of Quel'Danas 
+UPDATE `pool_template` SET `max_limit`='3' WHERE `entry` = 2017; -- 2
+
+-- MASTER Cloud Pools
+UPDATE `pool_template` SET `max_limit`='15' WHERE `entry` IN (30043,30044,30045,30046); -- 10
+UPDATE `creature` SET `spawntimesecs` = 600 WHERE `id` IN (24222,17407); -- 17378,17408 not pooled yet
+
+-- tbc
+-- Ragveil 183043, 181275
+-- Felweed 183044, 181270
+-- Dreaming Glory 183045, 181271, 181272
+-- Blindweed 183046 (tbc version)
+-- Flame Cap 181276
+-- Terocone 181277
+-- Ancient Lichen 181278 (only dungeons)
+-- Netherbloom 181279(netherstorm)181282(dungeons)
+-- Nightmare Vine 181280, 181285
+-- Mana Thistle 181281, 181284(flightmount)
+-- Nethercite Deposit 185877
+-- Netherdust Bush 185881
+-- Netherwing Egg 185915 + Netherwing Egg Trap 185600
+-- SELECT * FROM `gameobject` WHERE `id` IN (183043,183044,183045,183046,181270,181271,181272,181275,181276,181277,181278,181279,181280,181281,181282,181284,181285,185877,185881) AND `map`=530;
+UPDATE `gameobject` SET `spawntimesecs`= 60,`animprogress`= 255 WHERE `id` IN (183043,183044,183045,183046,181270,181271,181272,181275,181276,181277,181279,181280,181281,181284,181285,185877,185881) AND `map`= 530; -- 2700
+
