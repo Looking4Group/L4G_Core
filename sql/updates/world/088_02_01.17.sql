@@ -3200,7 +3200,7 @@ INSERT INTO `waypoint_data` VALUES (190506, 22, -3846.51, -11539.5, -139.024, 0,
 INSERT INTO `waypoint_data` VALUES (190506, 23, -3865.31, -11561.5, -133.02, 0, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (190506, 24, -3883.13, -11597.2, -135.418, 0, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (190506, 25, -3895.45, -11620.5, -137.825, 0, 0, 0, 100, 0);
-INSERT INTO `waypoint_data` VALUES (190506, 26, -3929.28, -11612.4, -138.556, 0, 0, 0, 100, 0)
+INSERT INTO `waypoint_data` VALUES (190506, 26, -3929.28, -11612.4, -138.556, 0, 0, 0, 100, 0);
 SET @GUID := 190508;
 DELETE FROM `creature_addon` WHERE `guid` = @GUID;
 INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,NULL);;
