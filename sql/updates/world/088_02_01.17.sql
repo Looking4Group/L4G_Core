@@ -1191,10 +1191,10 @@ INSERT INTO `creature` VALUES (@GUID := @GUID + 1, 22310, 530, 1, 0, 0, -707.569
 INSERT INTO `creature` VALUES (@GUID := @GUID + 1, 22311, 530, 1, 0, 0, -786.216, 6540.73, 173.12, 2.0817, 300, 5, 0, 9082, 4000, 0, 1);
 
 
-DELETE FROM `creature_questrelation` WHERE `quest` =11012;
+DELETE FROM `creature_questrelation` WHERE `quest` =11013;
 INSERT INTO `creature_questrelation` (`id`,`quest`) VALUES
 (22113,11013);
-DELETE FROM `creature_questrelation` WHERE `quest` =11013;
+DELETE FROM `creature_questrelation` WHERE `quest` =11012;
 INSERT INTO `creature_questrelation` (`id`,`quest`) VALUES
 (22113,11012);
 
@@ -3203,7 +3203,7 @@ INSERT INTO `waypoint_data` VALUES (190506, 25, -3895.45, -11620.5, -137.825, 0,
 INSERT INTO `waypoint_data` VALUES (190506, 26, -3929.28, -11612.4, -138.556, 0, 0, 0, 100, 0);
 SET @GUID := 190508;
 DELETE FROM `creature_addon` WHERE `guid` = @GUID;
-INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,NULL);;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,NULL);
 INSERT INTO `waypoint_data` VALUES (190508, 1, -3964.45, -11640.5, -138.885, 0, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (190508, 2, -3977.58, -11670.5, -139.101, 0, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (190508, 3, -4004.9, -11674.4, -136.258, 0, 0, 0, 100, 0);
@@ -3332,10 +3332,10 @@ INSERT INTO `waypoint_data` VALUES (190514, 30, -4890.83, -1113.34, 501.96, 0, 0
 INSERT INTO `waypoint_data` VALUES (190514, 31, -4911.88, -1119.41, 501.699, 0, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (190514, 32, -4937.18, -1180.6, 501.701, 0, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (190514, 33, -4958.12, -1185.43, 501.66, 0, 0, 0, 100, 0);
-INSERT INTO `waypoint_data` VALUES (190514, 34, -5005.38, -1176.96, 501.659, 0, 0, 0, 100, 0)
+INSERT INTO `waypoint_data` VALUES (190514, 34, -5005.38, -1176.96, 501.659, 0, 0, 0, 100, 0);
 SET @GUID := 190516;
 DELETE FROM `creature_addon` WHERE `guid` = @GUID;
-INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,NULL);;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,NULL);
 INSERT INTO `waypoint_data` VALUES (190516, 1, -5007.03, -1177.84, 501.66, 0, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (190516, 2, -5001.6, -1153.96, 501.66, 0, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (190516, 3, -4997.44, -1127.35, 501.696, 0, 0, 0, 100, 0);
@@ -3369,10 +3369,10 @@ INSERT INTO `waypoint_data` VALUES (190516, 30, -4890.83, -1113.34, 501.96, 0, 0
 INSERT INTO `waypoint_data` VALUES (190516, 31, -4911.88, -1119.41, 501.699, 0, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (190516, 32, -4937.18, -1180.6, 501.701, 0, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (190516, 33, -4958.12, -1185.43, 501.66, 0, 0, 0, 100, 0);
-INSERT INTO `waypoint_data` VALUES (190516, 34, -5005.38, -1176.96, 501.659, 0, 0, 0, 100, 0)
+INSERT INTO `waypoint_data` VALUES (190516, 34, -5005.38, -1176.96, 501.659, 0, 0, 0, 100, 0);
 SET @GUID := 190518;
 DELETE FROM `creature_addon` WHERE `guid` = @GUID;
-INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,NULL);;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,NULL);
 INSERT INTO `waypoint_data` VALUES (190518, 1, -5007.03, -1177.84, 501.66, 0, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (190518, 2, -5001.6, -1153.96, 501.66, 0, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (190518, 3, -4997.44, -1127.35, 501.696, 0, 0, 0, 100, 0);
@@ -5145,7 +5145,7 @@ UPDATE `creature_template` SET `modelid_A`=18252,`modelid_H`=18252,`modelid_A2`=
 UPDATE `creature_template` SET `modelid_A`=18265,`modelid_H`=18265,`modelid_A2`=18267,`modelid_H2`=18267,`heroic_entry` = 23185,`armor`=6200,`speed` = '1.48',`baseattacktime`=2000,`equipment_id`=8020 WHERE `entry` = 23179;
 UPDATE `creature_template` SET `modelid_A`=18265,`modelid_H`=18265,`modelid_A2`=18267,`modelid_H2`=18267,`minlevel`='71',`maxlevel`='72',`minmana`='15399',`maxmana`='16545',`minhealth`='23110',`maxhealth`='23456',`armor`='7100',`mindmg`='1172',`maxdmg`='1911',`baseattacktime` = '2000', `faction_A`='1748',`faction_H`='1748',`speed` = '1.48',`unit_flags`='1',`equipment_id` = '8020' WHERE `entry` = 23185;
 -- Tarren Mill Protector 23180,23186
-UPDATE `creature_template` SET `modelid_A`=18265,`modelid_H`=18265,`modelid_A2`=18267,`modelid_H2`=18267,`heroic_entry` = 23186,`armor`=6200,`speed` = '1.48'`baseattacktime`=2000 WHERE `entry` = 23180;
+UPDATE `creature_template` SET `modelid_A`=18265,`modelid_H`=18265,`modelid_A2`=18267,`modelid_H2`=18267,`heroic_entry` = 23186,`armor`=6200,`speed` = '1.48',`baseattacktime`=2000 WHERE `entry` = 23180;
 UPDATE `creature_template` SET `modelid_A`=18265,`modelid_H`=18265,`modelid_A2`=18267,`modelid_H2`=18267,`minlevel`='71',`maxlevel`='72',`minmana`='15399',`maxmana`='16545',`minhealth`='23110',`maxhealth`='23456',`armor`='7100',`mindmg`='1172',`maxdmg`='1911',`baseattacktime` = '2000', `faction_A`='1748',`faction_H`='1748',`speed` = '1.48', `unit_flags`='1',`equipment_id` = '8020' WHERE `entry` = 23186;
 
 UPDATE `creature_template` SET `npcflag`='0' WHERE `entry` = 24857;
@@ -5492,9 +5492,13 @@ UPDATE `creature` SET `spawntimesecs` = 900 WHERE `id` IN (24222,17407); -- 1737
 UPDATE `gameobject` SET `position_x` = '-3406.8500', `position_y` = '4461.8100', `position_z` = '-9.3434' WHERE `guid` = 3492882;
 -- increasing terokkar herb pool due to Ghost Mushroom being in that pool
 
-DELETE FROM `creature_questrelation` WHERE `quest` = 10866;
-INSERT INTO `creature_questrelation` (`id`, `quest`) VALUES (22112, 10866);
+DELETE FROM `creature_questrelation` WHERE `id` = 22112;
+INSERT INTO `creature_questrelation` VALUES (22112, 10866);
+INSERT INTO `creature_questrelation` VALUES (22112, 10870);
 
-DELETE FROM `creature_questrelation` WHERE `quest` = 11013;
-INSERT INTO `creature_questrelation` (`id`, `quest`) VALUES (22113, 11013);
+DELETE FROM `creature_questrelation` WHERE `id` = 22113;
+INSERT INTO `creature_questrelation` VALUES (22113, 10804);
+INSERT INTO `creature_questrelation` VALUES (22113, 10811);
+INSERT INTO `creature_questrelation` VALUES (22113, 11012);
+INSERT INTO `creature_questrelation` VALUES (22113, 11013);
 
