@@ -733,3 +733,10 @@ UPDATE `gameobject_template` SET `flags`='32' WHERE `entry` IN ('183817','184662
 -- Emissary Attackable
 UPDATE `creature_template` SET `unit_flags` = 37184 WHERE `entry` IN (15103,15102,14991,22013);
 
+-- Forgot Regrowth and Nature's Grasp for Druid's
+UPDATE `spell_affect` SET `SpellFamilyMask`='12965527034267474' WHERE (`entry`='17118') AND effectId = 1;
+UPDATE `spell_affect` SET `SpellFamilyMask`='12965527034267474' WHERE (`entry`='17119') AND effectId = 1;
+UPDATE `spell_affect` SET `SpellFamilyMask`='12965527034267474' WHERE (`entry`='17120') AND effectId = 1;
+UPDATE `spell_affect` SET `SpellFamilyMask`='12965527034267474' WHERE (`entry`='17121') AND effectId = 1;
+UPDATE `spell_affect` SET `SpellFamilyMask`='12965527034267474' WHERE (`entry`='17122') AND effectId = 1;
+
