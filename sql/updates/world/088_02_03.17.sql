@@ -730,4 +730,6 @@ UPDATE `gameobject` SET `position_x`='99.07292', `position_y`='249.7036', `posit
 
 UPDATE `gameobject_template` SET `flags`='32' WHERE `entry` IN ('183817','184662');
 
+-- Emissary Attackable
+UPDATE `creature_template` SET `unit_flags` = 37184 WHERE `entry` IN (15103,15102,14991,22013);
 
