@@ -65,49 +65,49 @@ INSERT INTO `pool_gameobject` VALUES
 -- Outland Pools
 
 -- MASTER Herbs Hellfire Peninsula zone 3483
-UPDATE `pool_template` SET `max_limit`='140' WHERE `entry` = 972; -- 60
+UPDATE `pool_template` SET `max_limit`='93' WHERE `entry` = 972; -- 60
 
 -- MASTER Herbs Nagrand zone 3518
-UPDATE `pool_template` SET `max_limit`='72' WHERE `entry` = 973; -- 40
+UPDATE `pool_template` SET `max_limit`='48' WHERE `entry` = 973; -- 40
 
 -- MASTER Herbs Netherstorm zone 3523
-UPDATE `pool_template` SET `max_limit`='80' WHERE `entry` = 974; -- 40
+UPDATE `pool_template` SET `max_limit`='53' WHERE `entry` = 974; -- 40
 
 -- MASTER Herbs Zangarmarsh zone 3521
-UPDATE `pool_template` SET `max_limit`='188' WHERE `entry` = 975; -- 95
+UPDATE `pool_template` SET `max_limit`='125' WHERE `entry` = 975; -- 95
 
 -- MASTER Herbs Shadowmoon Valley zone 3520
-UPDATE `pool_template` SET `max_limit`='66' WHERE `entry` = 976; -- 45
+UPDATE `pool_template` SET `max_limit`='44' WHERE `entry` = 976; -- 45
 
 -- MASTER Herbs Terokkar Forest zone 3519
-UPDATE `pool_template` SET `max_limit`='135' WHERE `entry` = 977; -- 65 
+UPDATE `pool_template` SET `max_limit`='90' WHERE `entry` = 977; -- 65 
 
 -- MASTER Herbs Blade's Edge Mountains zone 3522
-UPDATE `pool_template` SET `max_limit`='68' WHERE `entry` = 978; -- 35
+UPDATE `pool_template` SET `max_limit`='45' WHERE `entry` = 978; -- 35
 
 -- MASTER Herbs Isle of Quel\'Danas
 UPDATE `pool_template` SET `max_limit`='3' WHERE `entry` = 979; -- 2
 
 -- Mineral Pool - Hellfire Peninsula
-UPDATE `pool_template` SET `max_limit`='104' WHERE `entry` = 2062; -- 25
+UPDATE `pool_template` SET `max_limit`='69' WHERE `entry` = 2062; -- 25
 
 -- Mineral Pool - Zangarmarsh
-UPDATE `pool_template` SET `max_limit`='54' WHERE `entry` = 2063; -- 25
+UPDATE `pool_template` SET `max_limit`='36' WHERE `entry` = 2063; -- 25
 
 -- Mineral Pool - Nagrand
-UPDATE `pool_template` SET `max_limit`='102' WHERE `entry` = 2064; -- 25
+UPDATE `pool_template` SET `max_limit`='68' WHERE `entry` = 2064; -- 25
 
 -- Mineral Pool - Terokkar Forest
-UPDATE `pool_template` SET `max_limit`='71' WHERE `entry` = 2065; -- 25
+UPDATE `pool_template` SET `max_limit`='47' WHERE `entry` = 2065; -- 25
 
 -- Mineral Pool - Netherstorm
-UPDATE `pool_template` SET `max_limit`='39' WHERE `entry` = 2066; -- 25
+UPDATE `pool_template` SET `max_limit`='26' WHERE `entry` = 2066; -- 25
 
 -- Mineral Pool - Blades Edge Mountains
-UPDATE `pool_template` SET `max_limit`='53' WHERE `entry` = 2067; -- 25
+UPDATE `pool_template` SET `max_limit`='35' WHERE `entry` = 2067; -- 25
 
 -- Mineral Pool - Shadowmoon Valley
-UPDATE `pool_template` SET `max_limit`='64' WHERE `entry` = 2068; -- 25
+UPDATE `pool_template` SET `max_limit`='42' WHERE `entry` = 2068; -- 25
 
 -- Master Mineral Pool - Isle of Quel'Danas 
 UPDATE `pool_template` SET `max_limit`='3' WHERE `entry` = 2017; -- 2
