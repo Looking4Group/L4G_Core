@@ -136,6 +136,6 @@ UPDATE `gameobject` SET `spawntimesecs`= 60,`animprogress`= 255 WHERE `id` IN (1
 UPDATE `creature` SET `position_x` = 2195.8024, `position_y` = 5475.7568, `position_z` = 163.7464, `orientation` = 0.2682,`spawndist`='0',`movementtype`='0' WHERE `guid` = 78947;
 
 DELETE FROM `creature` WHERE `guid` IN (78793,78794,170436);
-INSERT INTO `creature` VALUES (78793, 22443, 530, 1, 0, 0, 2227.46, 5484.32, 153.773, 1.15192, 300, 0, 0, 7850, 0, 0, 0);
-INSERT INTO `creature` VALUES (78794, 22443, 530, 1, 0, 0, 1931.44, 5330.76, 154.176, 2.86234, 300, 0, 0, 7850, 0, 0, 0);
+INSERT INTO `creature` VALUES (78793, 22443, 530, 1, 0, 0, 2227.46, 5484.32, 153.773, 1.15192, 300, 0, 0, 8170, 0, 0, 0);
+INSERT INTO `creature` VALUES (78794, 22443, 530, 1, 0, 0, 1931.44, 5330.76, 154.176, 2.86234, 300, 0, 0, 8170, 0, 0, 0);
 
