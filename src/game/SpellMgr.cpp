@@ -3825,6 +3825,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 40080: //Booming Voice
                 spellInfo->EffectRealPointsPerLevel[0] = 0;
+		break;
             default:
                 break;
         }
