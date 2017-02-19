@@ -764,3 +764,6 @@ INSERT INTO `creature` VALUES (@GUID:= @GUID + 1, 1000003, 0, 1, 0, 0, -8946.46,
 
 UPDATE `access_requirement` SET `quest_done` = 0 WHERE `id` = 27; -- 9837
 
+-- Reactivate Verdant Sphere
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 100 WHERE `item` = 32405;
+
