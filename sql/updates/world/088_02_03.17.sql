@@ -761,3 +761,5 @@ INSERT INTO `creature` VALUES (@GUID:= @GUID + 1, 1000003, 1, 1, 0, 0, 10324.411
 INSERT INTO `creature` VALUES (@GUID:= @GUID + 1, 1000001, 0, 1, 0, 0, -8946.3330, -140.3869, 83.5640, 3.1573, 25, 0, 0, 100000, 0, 0, 0);
 INSERT INTO `creature` VALUES (@GUID:= @GUID + 1, 1000003, 0, 1, 0, 0, -8946.46, -132.317, 83.6775, 3.19178, 25, 0, 0, 100000, 0, 0, 0);
 
+UPDATE `access_requirement` SET `quest_done` = 0 WHERE `id` = 27; -- 9837
+
