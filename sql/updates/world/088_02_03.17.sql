@@ -767,3 +767,6 @@ UPDATE `access_requirement` SET `quest_done` = 0 WHERE `id` = 27; -- 9837
 -- Reactivate Verdant Sphere
 UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 100 WHERE `item` = 32405;
 
+DELETE FROM `creature_formations` WHERE `memberguid` = 13236;
+INSERT INTO `creature_formations` VALUES (13268,13236,100,360,2);
+
