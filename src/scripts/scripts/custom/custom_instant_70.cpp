@@ -73,7 +73,6 @@ void GiveGearAndLevels(Player* Player, uint16 gearList[])
     Player->PushSeventy();
     Player->EquipForPushSeventy(gearList);
     Player->FinishPush();
-    Player->FinishTransferQuests();
     Player->PushFaction(1011, 9001);
     Player->PushFaction(942, 9001);
     Player->PushFaction(935, 9001);
@@ -86,6 +85,7 @@ void GiveGearAndLevels(Player* Player, uint16 gearList[])
     Player->AddItem(30637, 1);
     Player->AddItem(30635, 1);
     Player->AddItem(30633, 1);
+    Player->AddItem(24490, 1);
 }
 
 void TryToBoost(Player * Player)
