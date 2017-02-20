@@ -26,54 +26,55 @@ EndScriptData */
 #include "GridNotifiers.h"
 
 //Trash Waves
-float NalorakkWay[8][3] =
+float NalorakkWay[12][3] =
 {
     { 18.569, 1414.512, 11.42},// waypoint 1
     {-17.264, 1419.551, 12.62},
-    {-52.642, 1419.357, 27.31},// waypoint 2
+    {-52.642, 1419.357, 27.31},
+    {-51.469, 1419.369, 27.31},// waypoint 2
     {-69.908, 1419.721, 27.31},
     {-79.929, 1395.958, 27.31},
-    {-80.072, 1374.555, 40.87},// waypoint 3
+    {-80.072, 1374.555, 40.87},
+    {-80.138, 1376.048, 40.87},// waypoint 3
     {-80.072, 1314.398, 40.87},
-    {-80.072, 1295.775, 48.60} // waypoint 4
+    {-80.192, 1302.566, 48.61},
+    {-80.072, 1295.775, 48.60},
+    {-80.315, 1301.225, 48.80} // waypoint 4
 };
 
-#define YELL_NALORAKK_WAVE1     -1800472
-#define YELL_NALORAKK_WAVE2     -1800473
-#define YELL_NALORAKK_WAVE3     -1800474
-#define YELL_NALORAKK_WAVE4     -1800475
+enum Nalorakk
+{
+    YELL_NALORAKK_WAVE1     = -1800472,
+    YELL_NALORAKK_WAVE2     = -1800473,
+    YELL_NALORAKK_WAVE3     = -1800474,
+    YELL_NALORAKK_WAVE4     = -1800475,
 
-//Unimplemented SoundIDs
-/*
-#define SOUND_NALORAKK_EVENT1   12078
-#define SOUND_NALORAKK_EVENT2   12079
-*/
+    YELL_AGGRO              = -1800476,
+    YELL_KILL_ONE           = -1800477,
+    YELL_KILL_TWO           = -1800478,
+    YELL_DEATH              = -1800479,
+    YELL_BERSERK            = -1800480,
+    YELL_SURGE              = -1800481,
+    YELL_SHIFTEDTOTROLL     = -1800482,
+    YELL_SHIFTEDTOBEAR      = -1800483,
 
-//General defines
-#define YELL_AGGRO              -1800476
-#define YELL_KILL_ONE           -1800477
-#define YELL_KILL_TWO           -1800478
-#define YELL_DEATH              -1800479
-#define YELL_BERSERK            -1800480
-#define YELL_SURGE              -1800481
-#define YELL_SHIFTEDTOTROLL     -1800482
-#define YELL_SHIFTEDTOBEAR      -1800483
-#define EMOTE_SHIFTEDTOBEAR     -1811005
+    EMOTE_SHIFTEDTOBEAR     = -1811005,
 
-#define SPELL_BERSERK           45078
+    //SOUND_NALORAKK_EVENT1 =    12078,
+    //SOUND_NALORAKK_EVENT2 =    12079,
 
-//Defines for Troll form
-#define SPELL_BRUTALSWIPE       42384
-#define SPELL_MANGLE            42389
-#define SPELL_MANGLEEFFECT      44955
-#define SPELL_SURGE             42402
-#define SPELL_BEARFORM          42377
+    SPELL_BERSERK           =    45078,
 
-//Defines for Bear form
-#define SPELL_LACERATINGSLASH   42395
-#define SPELL_RENDFLESH         42397
-#define SPELL_DEAFENINGROAR     42398
+    SPELL_BRUTALSWIPE       =    42384,
+    SPELL_MANGLE            =    42389,
+    SPELL_MANGLEEFFECT      =    44955,
+    SPELL_SURGE             =    42402,
+    SPELL_BEARFORM          =    42377,
 
+    SPELL_LACERATINGSLASH   =    42395,
+    SPELL_RENDFLESH         =    42397,
+    SPELL_DEAFENINGROAR     =    42398
+};
 
 struct boss_nalorakkAI : public ScriptedAI
 {
@@ -88,10 +89,9 @@ struct boss_nalorakkAI : public ScriptedAI
         {
             TempSpell->EffectImplicitTargetA[1] = TARGET_UNIT_TARGET_ENEMY;
         }
-        wLoc.coord_x = NalorakkWay[7][0];
-        wLoc.coord_y = NalorakkWay[7][1];
-        wLoc.coord_z = NalorakkWay[7][2];
-        wLoc.orientation = 0;
+        wLoc.coord_x = NalorakkWay[11][0];
+        wLoc.coord_y = NalorakkWay[11][1];
+        wLoc.coord_z = NalorakkWay[11][2];
         wLoc.mapid = m_creature->GetMapId();
         m_creature->setActive(true);
     }
@@ -126,11 +126,10 @@ struct boss_nalorakkAI : public ScriptedAI
             m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
             inMove = false;
             waitTimer = 0;
-            m_creature->SetSpeed(MOVE_RUN,2);
             m_creature->SetWalk(false);
         }else
         {
-            (*m_creature).GetMotionMaster()->MovePoint(0,NalorakkWay[7][0],NalorakkWay[7][1],NalorakkWay[7][2]);
+            (*m_creature).GetMotionMaster()->MovePoint(0,NalorakkWay[11][0],NalorakkWay[11][1],NalorakkWay[11][2]);
         }
 
         if(pInstance && pInstance->GetData(DATA_NALORAKKEVENT) != DONE)
@@ -234,24 +233,12 @@ struct boss_nalorakkAI : public ScriptedAI
                                 SendAttacker(who);
                             }
                             break;
-                        case 2:
+                        case 3:
                             if(m_creature->IsWithinDistInMap(who, 40))
                             {
                                 DoScriptText(YELL_NALORAKK_WAVE2, m_creature);
 
-                                (*m_creature).GetMotionMaster()->MovePoint(3,NalorakkWay[3][0],NalorakkWay[3][1],NalorakkWay[3][2]);
-                                MovePhase ++;
-                                inMove = true;
-
-                                SendAttacker(who);
-                            }
-                            break;
-                        case 5:
-                            if(m_creature->IsWithinDistInMap(who, 40))
-                            {
-                                DoScriptText(YELL_NALORAKK_WAVE3, m_creature);
-
-                                (*m_creature).GetMotionMaster()->MovePoint(6,NalorakkWay[6][0],NalorakkWay[6][1],NalorakkWay[6][2]);
+                                (*m_creature).GetMotionMaster()->MovePoint(4,NalorakkWay[4][0],NalorakkWay[4][1],NalorakkWay[4][2]);
                                 MovePhase ++;
                                 inMove = true;
 
@@ -259,6 +246,18 @@ struct boss_nalorakkAI : public ScriptedAI
                             }
                             break;
                         case 7:
+                            if(m_creature->IsWithinDistInMap(who, 40))
+                            {
+                                DoScriptText(YELL_NALORAKK_WAVE3, m_creature);
+
+                                (*m_creature).GetMotionMaster()->MovePoint(8,NalorakkWay[8][0],NalorakkWay[8][1],NalorakkWay[8][2]);
+                                MovePhase ++;
+                                inMove = true;
+
+                                SendAttacker(who);
+                            }
+                            break;
+                        case 11:
                             if(m_creature->IsWithinDistInMap(who, 50))
                             {
                                 SendAttacker(who);
@@ -314,29 +313,29 @@ struct boss_nalorakkAI : public ScriptedAI
 
             switch(MovePhase)
             {
-                case 2:
-                    m_creature->SetOrientation(3.1415*2);
-                    inMove = false;
-                    return;
                 case 1:
-                case 3:
+                case 2:
                 case 4:
+                case 5:
                 case 6:
+                case 8:
+                case 9:
+                case 10:
                     MovePhase ++;
                     waitTimer = 1;
                     inMove = true;
                     return;
-                case 5:
-                    m_creature->SetOrientation(3.1415*0.5);
+                case 3:
                     inMove = false;
                     return;
                 case 7:
-                    m_creature->SetOrientation(3.1415*0.5);
-                    m_creature->SetHomePosition(NalorakkWay[7][0], NalorakkWay[7][1], NalorakkWay[7][2], m_creature->GetOrientation());
+                    inMove = false;
+                    return;
+                case 11:
+                    m_creature->SetHomePosition(NalorakkWay[11][0], NalorakkWay[11][1], NalorakkWay[11][2], m_creature->GetOrientation());
                     inMove = false;
                     return;
             }
-
         }
     }
 
@@ -363,7 +362,6 @@ struct boss_nalorakkAI : public ScriptedAI
                 EnterEvadeMode();
             else
                 DoZoneInCombat();
-            m_creature->SetSpeed(MOVE_RUN,2);
             checkTimer = 3000;
         }
         else
