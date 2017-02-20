@@ -21529,6 +21529,9 @@ void Player::EquipForPushSeventy(uint16 items[])
                     learnSpell(15590);
                     learnSpell(674);
                     learnSpell(198);
+                    learnSpell(199);
+                    learnSpell(200);
+                    learnSpell(202);
                     break;
                 case CLASS_PALADIN:
                     learnSpell(7328);
