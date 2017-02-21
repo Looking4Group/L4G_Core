@@ -21372,22 +21372,23 @@ void Player::EquipForPushSeventy(uint16 items[])
                     learnSpell(201);
                     learnSpell(2567);
                     learnSpell(266);
-                    learnSpell(15590);
                     learnSpell(264);
+                    learnSpell(15590);
                     learnSpell(674);
                     learnSpell(198);
                     break;
                 case CLASS_PALADIN:
-                    learnSpell(750);
                     learnSpell(7328);
+                    learnSpell(750);
                     learnSpell(198);
                     learnSpell(199);
                     learnSpell(201);
                     learnSpell(200);
+                    learnSpell(202);
                     if (!HasItemCount(21177, 100, true))
                         AddItem(21177, 100);
                     if (!HasItemCount(17033, 5, true))
-                    AddItem(17033, 5);
+                        AddItem(17033, 5);
                     break;
                 case CLASS_HUNTER:
                 {
@@ -21518,6 +21519,7 @@ void Player::EquipForPushSeventy(uint16 items[])
                     learnSpell(7386);
                     learnSpell(2458);
                     learnSpell(20252);
+                    learnSpell(200);
                     learnSpell(750);
                     learnSpell(197);
                     learnSpell(196);
@@ -21525,7 +21527,6 @@ void Player::EquipForPushSeventy(uint16 items[])
                     learnSpell(2567);
                     learnSpell(266);
                     learnSpell(264);
-                    learnSpell(15590);
                     learnSpell(15590);
                     learnSpell(674);
                     learnSpell(198);
@@ -21560,11 +21561,11 @@ void Player::EquipForPushSeventy(uint16 items[])
                     learnSpell(1180);
                     learnSpell(674);
                     learnSpell(5011);
-                    if (!HasItemCount(28056, 1000, true))
+                    if (!HasItemCount(28056, 1000, true)) //arrows
                         AddItem(28056, 1000);
                     learnSpell(8737);
                     if (getRace() == RACE_TAUREN)
-                        if (!HasItemCount(2101, 1, true))
+                        if (!HasItemCount(2101, 1, true)) //quiver
                             AddItem(2101, 1);
                 }
                     break;
@@ -21613,6 +21614,7 @@ void Player::EquipForPushSeventy(uint16 items[])
                         AddItem(17032, 5);
                     if (!HasItemCount(17031, 5, true))
                         AddItem(17031, 5);
+                    learnSpell(201);
                     break;
                 case CLASS_DRUID:
                     learnSpell(18960);
@@ -21635,6 +21637,7 @@ void Player::EquipForPushSeventy(uint16 items[])
                     if (!HasItemCount(6265, 5, true))
                         AddItem(6265, 5);
                     learnSpell(227);
+                    learnSpell(201);
                     break;
             }
             break;
@@ -21723,16 +21726,17 @@ void Player::EquipForPush(uint16 items[])
                     learnSpell(198);
                     break;
                 case CLASS_PALADIN:
-                    learnSpell(750);
                     learnSpell(7328);
+                    learnSpell(750);
                     learnSpell(198);
                     learnSpell(199);
                     learnSpell(201);
                     learnSpell(200);
+                    learnSpell(202);
                     if (!HasItemCount(21177, 100, true))
                         AddItem(21177, 100);
                     if (!HasItemCount(17033, 5, true))
-                    AddItem(17033, 5);
+                        AddItem(17033, 5);
                     break;
                 case CLASS_HUNTER:
                 {
@@ -21869,9 +21873,8 @@ void Player::EquipForPush(uint16 items[])
                     learnSpell(201);
                     learnSpell(2567);
                     learnSpell(266);
+                    learnSpell(15590);
                     learnSpell(264);
-                    learnSpell(15590);
-                    learnSpell(15590);
                     learnSpell(674);
                     learnSpell(198);
                     break;
@@ -21902,11 +21905,11 @@ void Player::EquipForPush(uint16 items[])
                     learnSpell(1180);
                     learnSpell(674);
                     learnSpell(5011);
-                    if (!HasItemCount(28056, 1000, true))
+                    if (!HasItemCount(28056, 1000, true)) //arrows
                         AddItem(28056, 1000);
                     learnSpell(8737);
                     if (getRace() == RACE_TAUREN)
-                        if (!HasItemCount(2101, 1, true))
+                        if (!HasItemCount(2101, 1, true)) //quiver
                             AddItem(2101, 1);
                 }
                     break;
@@ -21955,6 +21958,7 @@ void Player::EquipForPush(uint16 items[])
                         AddItem(17032, 5);
                     if (!HasItemCount(17031, 5, true))
                         AddItem(17031, 5);
+                    learnSpell(201);
                     break;
                 case CLASS_DRUID:
                     learnSpell(18960);
@@ -21977,6 +21981,7 @@ void Player::EquipForPush(uint16 items[])
                     if (!HasItemCount(6265, 5, true))
                         AddItem(6265, 5);
                     learnSpell(227);
+                    learnSpell(201);
                     break;
             }
             break;
@@ -22064,22 +22069,23 @@ void Player::EquipForPushSixty(uint16 items[])
                     learnSpell(201);
                     learnSpell(2567);
                     learnSpell(266);
-                    learnSpell(15590);
                     learnSpell(264);
+                    learnSpell(15590);
                     learnSpell(674);
                     learnSpell(198);
                     break;
                 case CLASS_PALADIN:
-                    learnSpell(750);
                     learnSpell(7328);
+                    learnSpell(750);
                     learnSpell(198);
                     learnSpell(199);
                     learnSpell(201);
                     learnSpell(200);
+                    learnSpell(202);
                     if (!HasItemCount(21177, 100, true))
                         AddItem(21177, 100);
                     if (!HasItemCount(17033, 5, true))
-                    AddItem(17033, 5);
+                        AddItem(17033, 5);
                     break;
                 case CLASS_HUNTER:
                 {
@@ -22104,9 +22110,9 @@ void Player::EquipForPushSixty(uint16 items[])
                     break;
                 case CLASS_ROGUE:
                     learnSpell(1804);
-                    SetSkill(633, 350, 350);
+                    SetSkill(633, 350, 300);
                     learnSpell(2842);
-                    SetSkill(40, 350, 350);
+                    SetSkill(40, 350, 300);
                     learnSpell(201);
                     learnSpell(674);
                     learnSpell(2567);
@@ -22213,7 +22219,6 @@ void Player::EquipForPushSixty(uint16 items[])
                     learnSpell(266);
                     learnSpell(264);
                     learnSpell(15590);
-                    learnSpell(15590);
                     learnSpell(674);
                     learnSpell(198);
                     break;
@@ -22224,6 +22229,7 @@ void Player::EquipForPushSixty(uint16 items[])
                     learnSpell(199);
                     learnSpell(201);
                     learnSpell(200);
+                    learnSpell(202);
                     if (!HasItemCount(21177, 100, true))
                         AddItem(21177, 100);
                     if (!HasItemCount(17033, 5, true))
@@ -22291,6 +22297,7 @@ void Player::EquipForPushSixty(uint16 items[])
                     learnSpell(227);
                     if (!HasItemCount(17020, 20, true))
                         AddItem(17020, 20);
+                    learnSpell(201);
                     break;
                 case CLASS_DRUID:
                     learnSpell(18960);
@@ -22313,6 +22320,7 @@ void Player::EquipForPushSixty(uint16 items[])
                     if (!HasItemCount(6265, 5, true))
                         AddItem(6265, 5);
                     learnSpell(227);
+                    learnSpell(201);
                     break;
             }
             break;
