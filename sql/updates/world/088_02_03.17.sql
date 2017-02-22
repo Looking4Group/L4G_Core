@@ -774,3 +774,6 @@ UPDATE `gameobject_template` SET `flags` = 32 WHERE `entry` IN (183295,183296,18
 
 UPDATE `npc_text` SET `text0_0`='Welcome to the Hellfire Progressive Burning Crusade Realm!\n\nNote: You should not close this window during the level up process. If you do you will need to delete and recreate your character.' WHERE `ID`=30000;
 
+-- just in case
+UPDATE `creature_template` SET `flags_extra` = 0 WHERE `entry` = 23216;
+
