@@ -772,3 +772,5 @@ INSERT INTO `creature_formations` VALUES (13268,13236,100,360,2);
 
 UPDATE `gameobject_template` SET `flags` = 32 WHERE `entry` IN (183295,183296,183932,184069,184275,184276,184277,184278,184279,184281,184322,184324,184449,184632,185478,185479,185480,185481,185482,185483,185882,185892,186152,186153); -- 36
 
+UPDATE `npc_text` SET `text0_0`='Welcome to the Hellfire Progressive Burning Crusade Realm!\n\nNote: You should not close this window during the level up process. If you do you will need to delete and recreate your character.' WHERE `ID`=30000;
+
