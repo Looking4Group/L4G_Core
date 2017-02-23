@@ -48,31 +48,44 @@ enum Instant_70_Conversations
     ALREADY_USED       = GOSSIP_ACTION_INFO_DEF + 31,
 };
 
-uint16 DPS_WARRIOR_ITEMS[]      = {29969,25784,30005,0,29789,29807,29980,29786,30402,29812,30339,25926,29776,31617,25780,0,0,30227};
-uint16 TANK_WARRIOR_ITEMS[]     = {32871,29794,30291,0,30270,30380,25979,32866,30225,30264,30006,31528,28042,31617,29777,30278,25624,25971};
-uint16 DPS_PALADIN_ITEMS[]      = {29969,25784,30005,0,29789,29807,29980,29786,30402,29812,30339,25926,29776,31617,25780,30394,0,27949};
-uint16 TANK_PALADIN_ITEMS[]     = {32871,28027,30381,0,30296,30330,29774,30334,30400,29959,27734,31528,25619,28042,29777,31448,25624,27949};
-uint16 HEAL_PALADIN_ITEMS[]     = {25530,30276,31115,0,31765,25948,25929,30968,25592,25566,25542,31730,30293,25634,30338,25492,31732,23201};
-uint16 DPS_HUNTER_ITEMS[]       = {30329,30981,30333,0,30255,30001,29968,30273,29785,30336,25779,31527,29776,31617,29792,31701,0,30397};
-uint16 DPS_ROGUE_ITEMS[]        = {30362,30981,29810,0,30328,29772,30272,30401,30384,30003,25779,30339,29776,25628,29792,30277,31703,30227};
-uint16 DPS_PRIEST_ITEMS[]       = {30271,31818,29954,0,30928,30516,30268,30284,30382,30521,29793,31523,30340,31615,30971,30522,0,30252};
-uint16 HEAL_PRIEST_ITEMS[]      = {30294,30276,25925,0,29978,30923,31485,27728,30382,30521,31526,31730,31615,25634,30338,31700,0,29779};
-uint16 ENHANCE_SHAMAN_ITEMS[]   = {30329,30981,30333,0,30255,30001,29968,30273,30399,30336,25779,30339,29776,31617,29792,30277,0,22395};
-uint16 ELEMENTAL_SHAMAN_ITEMS[] = {29773,29775,31314,0,30363,30342,25568,30004,25592,31515,29793,31523,30340,31615,30971,30522,0,23199};
-uint16 HEAL_SHAMAN_ITEMS[]      = {25575,30276,31533,0,25556,31114,25568,25479,25592,31515,25542,31730,30293,25634,30338,31475,31732,23200};
-uint16 DPS_MAGE_ITEMS[]         = {30271,31818,29954,0,30928,30516,30268,30284,30382,30521,29793,31523,30340,31615,30971,30522,0,30252};
-uint16 DPS_WARLOCK_ITEMS[]      = {31509,29775,30514,0,30518,30383,30517,31312,30520,30930,29793,31523,30340,31615,30971,30522,0,30252};
-uint16 FERAL_DRUID_ITEMS[]      = {30362,30981,29810,0,30328,29772,30272,30401,30384,30003,25779,30339,29776,25628,29792,25622,0,28064};
-uint16 BALANCE_DRUID_ITEMS[]    = {30946,29775,30262,0,29967,25583,30290,30335,30520,31430,29793,31523,30340,31615,30971,30522,0,23197};
-uint16 HEAL_DRUID_ITEMS[]       = {30515,30276,31538,0,30945,31513,30290,27727,29955,25591,31526,31730,31615,25634,30338,31700,0,22398};
-uint16 TANK_DRUID_ITEMS[]       = {30269,29794,29999,0,32869,30285,30941,30266,30332,30341,30006,31528,28042,31617,29777,25622,0,28064};
-
+//_____________________________________Head,  Neck,Should, 0, Chest, Waist,  Legs,  Feet, Wrist, Hands,    F1,    F2,    T1,    T2,  Back,    MH,    OH, Range
+uint16 DPS_WARRIOR_ITEMS[] =        { 28225, 27551, 27771, 0, 28403, 27985, 30538, 28318, 27712, 27497, 27925, 28323, 28034, 28288, 27892, 27872, 27872, 28258 };
+uint16 TANK_WARRIOR_ITEMS[] =       { 28350, 27871, 27803, 0, 28262, 27672, 27527, 29239, 27459, 27475, 27822, 28407, 27529, 27891, 27804, 29362, 27887, 28258 };
+uint16 HEAL_PALADIN_ITEMS[] =       { 27790, 28419, 27775, 0, 27897, 27548, 27458, 28221, 28194, 28304, 28259, 27780, 24390, 28190, 27946, 28257, 31292, 28296 };
+uint16 TANK_PALADIN_ITEMS[] =       { 28285, 27792, 27739, 0, 28203, 27672, 27839, 29239, 27459, 27535, 27822, 28407, 27891, 27529, 27804, 27905, 28316, 27917 };
+uint16 DPS_PALADIN_ITEMS[] =        { 28225, 27551, 27771, 0, 28403, 27985, 30538, 28318, 27712, 27497, 27925, 28323, 28034, 28288, 27892, 28253,     0, 23203 };
+uint16 DPS_HUNTER_ITEMS[] =         { 28192, 27779, 27713, 0, 28401, 31293, 27936, 27915, 27712, 27528, 25962, 27925, 28034, 28288, 27892, 27903,     0, 31303 };
+uint16 DPS_ROGUE_ITEMS[] =          { 28224, 27779, 27797, 0, 28204, 28124, 30538, 27867, 27712, 27509, 27925, 25962, 28034, 28288, 27892, 28189, 28267, 28258 };
+uint16 HEAL_PRIEST_ITEMS[] =        { 27866, 28419, 27775, 0, 28230, 28652, 27875, 27525, 28511, 28304, 27491, 27780, 28190, 24390, 27946, 28257, 27714, 27885 };
+uint16 DPS_PRIEST_ITEMS[] =         { 28193, 28134, 27796, 0, 27799, 28565, 27907, 29242, 29240, 27465, 28394, 27784, 28223, 28418, 28570, 28341,     0, 28386 };
+uint16 ELEMENTAL_SHAMAN_ITEMS[] =   { 28349, 28134, 27802, 0, 27799, 27783, 27909, 29242, 29240, 27510, 28394, 27784, 28223, 28418, 28570, 27741, 27910, 28248 };
+uint16 ENHANCE_SHAMAN_ITEMS[] =     { 28192, 29349, 27713, 0, 28401, 31293, 30538, 27867, 27712, 27528, 27925, 25962, 28034, 28288, 27892, 27872, 27872, 22395 };
+uint16 HEAL_SHAMAN_ITEMS[] =        { 27759, 28419, 27775, 0, 27912, 27835, 27458, 27549, 28194, 28304, 28259, 27780, 28190, 24390, 27946, 28257, 31292, 27544 };
+uint16 DPS_MAGE_ITEMS[] =           { 28193, 28134, 27796, 0, 27799, 27742, 27907, 29242, 29240, 27465, 28394, 27784, 28418, 28223, 28570, 28341,     0, 28386 };
+uint16 DPS_WARLOCK_ITEMS[] =        { 28193, 28134, 27796, 0, 27799, 27742, 27907, 29242, 29240, 27465, 28394, 27784, 28418, 28223, 28570, 28341,     0, 28386 };
+uint16 BALANCE_DRUID_ITEMS[] =      { 28193, 28134, 27796, 0, 27799, 27783, 27907, 29242, 29240, 27465, 28394, 27784, 28223, 28418, 28570, 28341,     0, 27518 };
+uint16 TANK_DRUID_ITEMS[] =         { 28414, 27871, 27776, 0, 25689, 28124, 25690, 25691, 28514, 27509, 27436, 27822, 27891, 32658, 28256, 27757,     0, 23198 };
+uint16 FERAL_DRUID_ITEMS[] =        { 28414, 27779, 27995, 0, 27461, 28124, 30538, 27867, 27712, 27509, 25962, 27925, 28288, 28034, 27892, 28325,     0, 28372 };
+uint16 HEAL_DRUID_ITEMS[] =         { 27866, 28419, 27775, 0, 28230, 28652, 27875, 28251, 28511, 28304, 27780, 27491, 28190, 24390, 27946, 28257, 27714, 27886 };
 
 void GiveGearAndLevels(Player* Player, uint16 gearList[])
 {
     Player->PushSeventy();
     Player->EquipForPushSeventy(gearList);
     Player->FinishPush();
+    Player->PushFaction(1011, 9001);
+    Player->PushFaction(942, 9001);
+    Player->PushFaction(935, 9001);
+    Player->PushFaction(989, 9001);
+    Player->learnSpell(27028);
+    Player->SetSkill(129, 300, 375);
+    Player->AddItem(30634, 1);
+    Player->AddItem(30623, 1);
+    Player->AddItem(30622, 1);
+    Player->AddItem(30637, 1);
+    Player->AddItem(30635, 1);
+    Player->AddItem(30633, 1);
+    Player->AddItem(24490, 1);
 }
 
 void TryToBoost(Player * Player)
@@ -115,47 +128,9 @@ bool GossipHello_custom_instant_70_uncommon(Player *Player, Creature *Creature)
 }
 
 bool GossipSelect_custom_instant_70_uncommon(Player* Player, Creature* Creature, uint32 /*sender*/, uint32 action)
-{
-    //Prevent anyone spamming the database:
-    if (action == ALREADY_USED)
-        return true;
-
-    if (!Player->isGameMaster())
-    {
-        if (action > (GOSSIP_ACTION_INFO_DEF + 12)) //HAS SELECTED A CLASS/SPEC - WILL BE TELEPORTED
-        {
-            uint32 account_id = Player->GetSession()->GetAccountId();
-            const char * ip_address = Player->GetSession()->GetRemoteAddress().c_str();
-
-            QueryResultAutoPtr result = AccountsDatabase.PQuery("SELECT 1 FROM account_70_promo WHERE account_id = '%u' OR registration_ip = '%s'", account_id, ip_address);
-
-            //Does this account ID -- OR IP ADDRESS -- exist in the table?
-            if (!result)
-            {
-                if (!AccountsDatabase.PExecute("INSERT INTO account_70_promo(account_id, registration_ip, already_used) VALUES ('%u', '%s', '%s')", account_id, ip_address, "YES"))
-                {
-                    //Failure
-                    action = ALREADY_USED;
-                }
-            }
-            else
-            {
-                //Already exists
-                action = ALREADY_USED;
-            }
-        }
-    }
-
-
-    
+{    
     switch (action) 
-    {
-        case ALREADY_USED:
-        {
-            // Player->ADD_GOSSIP_ITEM(0, "Sorry, but you have already used this feature.", GOSSIP_SENDER_MAIN, ALREADY_USED);
-            Player->PlayerTalkClass->SendGossipMenu(30024, Creature->GetGUID());
-            return true;
-        }
+    {  
         case START_CONVERSATION:
         {
             switch (Player->getClass()) 
@@ -180,7 +155,7 @@ bool GossipSelect_custom_instant_70_uncommon(Player* Player, Creature* Creature,
                     Player->ADD_GOSSIP_ITEM(0, "Healer", GOSSIP_SENDER_MAIN, HEAL_PRIEST);
                     break;
                 case CLASS_SHAMAN:
-                    Player->ADD_GOSSIP_ITEM(0, "DPS - Enhance", GOSSIP_SENDER_MAIN, ENHANCE_SHAMAN);
+                    Player->ADD_GOSSIP_ITEM(0, "DPS - Enhancement", GOSSIP_SENDER_MAIN, ENHANCE_SHAMAN);
                     Player->ADD_GOSSIP_ITEM(0, "DPS - Elemental", GOSSIP_SENDER_MAIN, ELEMENTAL_SHAMAN);
                     Player->ADD_GOSSIP_ITEM(0, "Healer", GOSSIP_SENDER_MAIN, HEAL_SHAMAN);
                     break;
@@ -203,100 +178,216 @@ bool GossipSelect_custom_instant_70_uncommon(Player* Player, Creature* Creature,
         }
         case DPS_WARRIOR:
         {
-            Player->AddItem(28056, 200);
-            Player->AddItem(30364, 1);
-            Player->AddItem(31423, 1);
-            Player->AddItem(31701, 1);
-
+            Player->AddItem(28253, 1);
+            Player->AddItem(35411, 1);
+            Player->AddItem(35407, 1);
+            Player->AddItem(35410, 1);
+            Player->AddItem(35408, 1);    
+            
+            Player->AddItem(18834, 1);
             GiveGearAndLevels(Player, DPS_WARRIOR_ITEMS);
             break;
         }
         case TANK_WARRIOR:
         {
-            Player->AddItem(28056, 200);
+            Player->AddItem(28288, 1);
+            Player->AddItem(28034, 1);
+            Player->AddItem(28253, 1);
+            Player->AddItem(35411, 1);
+            Player->AddItem(35407, 1);
+            Player->AddItem(35410, 1);
+            Player->AddItem(35408, 1);
+
+            Player->AddItem(18834, 1);
             GiveGearAndLevels(Player, TANK_WARRIOR_ITEMS);
             break;
         }
         case DPS_PALADIN:
         {
+            Player->AddItem(35414, 1);
+            Player->AddItem(35416, 1);
+            Player->AddItem(35412, 1);
+            Player->AddItem(35415, 1);
+
+            Player->AddItem(18864, 1);
             GiveGearAndLevels(Player, DPS_PALADIN_ITEMS);
             break;
         }
         case TANK_PALADIN:
         {
+            Player->AddItem(28253, 1);
+            Player->AddItem(23203, 1);
+            Player->AddItem(28288, 1);
+            Player->AddItem(28034, 1);
+            Player->AddItem(35414, 1);
+            Player->AddItem(35416, 1);
+            Player->AddItem(35412, 1);
+            Player->AddItem(35415, 1);
+
+            Player->AddItem(18864, 1);
             GiveGearAndLevels(Player, TANK_PALADIN_ITEMS);
             break;
         }
         case HEAL_PALADIN:
         {
+            Player->AddItem(35402, 1);
+            Player->AddItem(35403, 1);
+            Player->AddItem(35404, 1);
+            Player->AddItem(35405, 1);
+
+            Player->AddItem(18864, 1);
             GiveGearAndLevels(Player, HEAL_PALADIN_ITEMS);
             break;
         }
         case DPS_HUNTER:
         {
+            Player->AddItem(35376, 1);
+            Player->AddItem(35378, 1);
+            Player->AddItem(35379, 1);
+            Player->AddItem(35380, 1);
+
+            Player->AddItem(18846, 1);
             GiveGearAndLevels(Player, DPS_HUNTER_ITEMS);
             break;
         }
         case DPS_ROGUE:
         {
+            Player->AddItem(35367, 1);
+            Player->AddItem(35368, 1);
+            Player->AddItem(35369, 1);
+            Player->AddItem(35370, 1);
+
+            Player->AddItem(18849, 1);
             GiveGearAndLevels(Player, DPS_ROGUE_ITEMS);
             break;
         }
         case DPS_PRIEST:
         {
+            Player->AddItem(35338, 1);
+            Player->AddItem(35340, 1);
+            Player->AddItem(35341, 1);
+            Player->AddItem(35342, 1);
+
+            Player->AddItem(18851, 1);
             GiveGearAndLevels(Player, DPS_PRIEST_ITEMS);
             break;
         }
         case HEAL_PRIEST:
         {
+            Player->AddItem(35333, 1);
+            Player->AddItem(35334, 1);
+            Player->AddItem(35335, 1);
+            Player->AddItem(35336, 1);
+
+            Player->AddItem(18851, 1);
             GiveGearAndLevels(Player, HEAL_PRIEST_ITEMS);
             break;
         }
         case ENHANCE_SHAMAN:
         {
-            // SHAMAN - ENHANCEMENT
-            Player->AddItem(14487, 1);
+            Player->AddItem(35381, 1);
+            Player->AddItem(35382, 1);
+            Player->AddItem(35384, 1);
+            Player->AddItem(35385, 1);
+
+            Player->AddItem(18845, 1);
             GiveGearAndLevels(Player, ENHANCE_SHAMAN_ITEMS);
 
             break;
         }
         case ELEMENTAL_SHAMAN:
         {
+            Player->AddItem(35387, 1);
+            Player->AddItem(35388, 1);
+            Player->AddItem(35389, 1);
+            Player->AddItem(35390, 1);
+
+            Player->AddItem(18845, 1);
             GiveGearAndLevels(Player, ELEMENTAL_SHAMAN_ITEMS);
             break;
         }
         case HEAL_SHAMAN:
         {
+            Player->AddItem(35391, 1);
+            Player->AddItem(35393, 1);
+            Player->AddItem(35394, 1);
+            Player->AddItem(35395, 1);
+
+            Player->AddItem(18845, 1);
             GiveGearAndLevels(Player, HEAL_SHAMAN_ITEMS);
             break;
         }
         case DPS_MAGE:
         {
+            Player->AddItem(35344, 1);
+            Player->AddItem(35345, 1);
+            Player->AddItem(35346, 1);
+            Player->AddItem(35347, 1);
+
+            Player->AddItem(18850, 1);
             GiveGearAndLevels(Player, DPS_MAGE_ITEMS);
             break;
         }
         case DPS_WARLOCK:
         {
+            Player->AddItem(35328, 1);
+            Player->AddItem(35329, 1);
+            Player->AddItem(35330, 1);
+            Player->AddItem(35331, 1);
+
+            Player->AddItem(18852, 1);    
             GiveGearAndLevels(Player, DPS_WARLOCK_ITEMS);
             break;
         }
         case CAT_DRUID:
         {
+            Player->AddItem(35356, 1);
+            Player->AddItem(35357, 1);
+            Player->AddItem(35358, 1);
+            Player->AddItem(35359, 1);
+
+            Player->AddItem(18853, 1);
             GiveGearAndLevels(Player, FERAL_DRUID_ITEMS);
             break;
         }
         case BALANCE_DRUID:
         {
+            Player->AddItem(35372, 1);
+            Player->AddItem(35373, 1);
+            Player->AddItem(35374, 1);
+            Player->AddItem(35375, 1);
+
+            Player->AddItem(18853, 1);
             GiveGearAndLevels(Player, BALANCE_DRUID_ITEMS);
             break;
         }
         case HEAL_DRUID:
         {
+            Player->AddItem(35361, 1);
+            Player->AddItem(35362, 1);
+            Player->AddItem(35363, 1);
+            Player->AddItem(35365, 1);
+
+            Player->AddItem(18853, 1);
             GiveGearAndLevels(Player, HEAL_DRUID_ITEMS);
             break;
         }
         case TANK_DRUID:
         {
+            Player->AddItem(28325, 1);
+            Player->AddItem(28372, 1);
+            Player->AddItem(28288, 1);
+            Player->AddItem(28034, 1);
+            Player->AddItem(28339, 1);
+            Player->AddItem(30538, 1);
+            Player->AddItem(31285, 1);
+
+            Player->AddItem(35356, 1);
+            Player->AddItem(35357, 1);
+            Player->AddItem(35358, 1);
+            Player->AddItem(35359, 1);
+
+            Player->AddItem(18853, 1);
             GiveGearAndLevels(Player, TANK_DRUID_ITEMS);
             break;
         }

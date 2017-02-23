@@ -2948,8 +2948,9 @@ SpellMissInfo Unit::MeleeSpellHitResult(Unit *pVictim, SpellEntry const *spell, 
         canBlock = false;
 
     //We use SPELL_ATTR_UNAFFECTED_BY_INVULNERABILITY until right Attribute was found
-        bool canMiss = !(spell->Attributes & SPELL_ATTR_UNAFFECTED_BY_INVULNERABILITY) && cMiss ||
-            spell->AttributesEx3 & SPELL_ATTR_EX3_CANT_MISS || spell->AttributesEx3 & SPELL_ATTR_EX3_UNK15;
+    bool canMiss = (!(spell->Attributes & SPELL_ATTR_UNAFFECTED_BY_INVULNERABILITY) && cMiss) ||
+                   !(spell->AttributesEx3 & SPELL_ATTR_EX3_CANT_MISS) ||
+                   (spell->AttributesEx3 & SPELL_ATTR_EX3_UNK15);
 
     if (canMiss)
     {

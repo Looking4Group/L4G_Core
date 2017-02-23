@@ -3349,7 +3349,7 @@ UPDATE `creature_template` SET `minhealth`='4552800',`maxhealth`='4552800' WHERE
 -- ===============
 
 -- Shade of Akama 22841- boss_shade_of_akama
-UPDATE `creature_template` SET `minhealth`='1152848',`maxhealth`='13271184' WHERE `entry` = '22841'; -- 960707-1105932 -- 1152848-13271184
+UPDATE `creature_template` SET `minhealth`='1152848',`maxhealth`='1327118' WHERE `entry` = '22841'; -- 960707-1105932 -- 1152848-13271184
 
 -- Ashtongue Channeler 23421- mob_ashtongue_channeler
 UPDATE `creature_template` SET `minhealth`='150810',`maxhealth`='150810' WHERE `entry` = 23421; -- 125675 -- 150810
