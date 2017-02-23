@@ -338,7 +338,7 @@ struct mob_shadowmoon_channelerAI : public ScriptedAI
 
     void JustDied(Unit* Killer)
     {
-       if(Creature *Kelidan = (Creature *)FindCreature(ENTRY_KELIDAN, 125, m_creature))
+       if(Creature *Kelidan = (Creature *)FindCreature(ENTRY_KELIDAN, 140, m_creature))
            ((boss_kelidan_the_breakerAI*)Kelidan->AI())->ChannelerDied(Killer);
     }
 
