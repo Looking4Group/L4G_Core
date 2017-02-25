@@ -897,9 +897,9 @@ CreatureAI* GetAI_npc_zulaman_door_trigger(Creature *_Creature)
 enum AkilzonGauntletEvent
 {
     AKILZON_GAUNTLET_NOT_STARTED        = 0,
-    AKILZON_GAUNTLET_IN_PROGRESS        = 1,
-    AKILZON_GAUNTLET_TEMPEST_ENGAGED    = 2,
-    AKILZON_GAUNTLET_TEMPEST_DEAD       = 3,
+    AKILZON_GAUNTLET_IN_PROGRESS        = 10,
+    AKILZON_GAUNTLET_TEMPEST_ENGAGED    = 11,
+    AKILZON_GAUNTLET_TEMPEST_DEAD       = 12,
 
     NPC_AMANISHI_WARRIOR            = 24225,
     NPC_AMANISHI_EAGLE              = 24159,
