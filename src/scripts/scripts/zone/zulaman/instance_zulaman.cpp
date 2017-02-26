@@ -342,7 +342,7 @@ struct instance_zulaman : public ScriptedInstance
             if (data == SPECIAL)
             {
                 HandleGameObject(MassiveGateGUID, true);
-                QuestMinute = 20;
+                QuestMinute = 21;
                 UpdateWorldState(WORLD_STATE_COUNTER, QuestMinute);
                 UpdateWorldState(WORLD_STATE_ID,1);
                 Encounters[0] = data;
