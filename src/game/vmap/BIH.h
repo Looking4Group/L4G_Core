@@ -133,7 +133,7 @@ class BIH
         uint32 primCount() { return objects.size(); }
 
         template<typename RayCallback>
-        void intersectRay(const Ray &r, RayCallback& intersectCallback, float &maxDist, bool stopAtFirst=false, uint32 mapID = 0) const
+        void intersectRay(const Ray &r, RayCallback& intersectCallback, float &maxDist, bool stopAtFirst=false, uint32 mapID = 0, bool checkLOS = false) const
         {
             float intervalMin = -1.0f;
             float intervalMax = -1.0f;
@@ -260,7 +260,7 @@ class BIH
                             int n = tree[node + 1];
                             while (n > 0)
                             {
-                                bool hit = intersectCallback(r, objects[offset], maxDist, stopAtFirst, mapID);
+                                bool hit = intersectCallback(r, objects[offset], maxDist, stopAtFirst, mapID, checkLOS);
                                 if(stopAtFirst && hit)
                                     return;
                                 --n;
