@@ -2959,9 +2959,9 @@ INSERT INTO `game_event_creature` VALUES (@GUID := @GUID + 1, 20);
 INSERT INTO `game_event_creature` VALUES (@GUID := @GUID + 1, 21);
 INSERT INTO `game_event_creature` VALUES (@GUID := @GUID + 1, 21);
 
-REPLACE INTO `quest_template` VALUES (9837, 114000);
-REPLACE INTO `quest_template` VALUES (10210, 33000);
-REPLACE INTO `quest_template` VALUES (10211, 33000);
+REPLACE INTO `quest_template` (`entry`, `RewMoneyMaxLevel`) VALUES (9837, 114000);
+REPLACE INTO `quest_template` (`entry`, `RewMoneyMaxLevel`) VALUES (10210, 33000);
+REPLACE INTO `quest_template` (`entry`, `RewMoneyMaxLevel`) VALUES (10211, 33000);
 
 REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (22395, 1, 200);
 REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (23198, 1, 225);
