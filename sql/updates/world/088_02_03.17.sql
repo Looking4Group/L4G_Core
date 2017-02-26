@@ -2959,3 +2959,233 @@ INSERT INTO `game_event_creature` VALUES (@GUID := @GUID + 1, 20);
 INSERT INTO `game_event_creature` VALUES (@GUID := @GUID + 1, 21);
 INSERT INTO `game_event_creature` VALUES (@GUID := @GUID + 1, 21);
 
+REPLACE INTO `quest_template` VALUES (9837, 114000);
+REPLACE INTO `quest_template` VALUES (10210, 33000);
+REPLACE INTO `quest_template` VALUES (10211, 33000);
+
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (22395, 1, 200);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (23198, 1, 225);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (23203, 16043, 225);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (24390, 20737, 225);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (25689, 45010, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (25690, 44808, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (25691, 33726, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (25962, 83797, 225);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27436, 4308, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27458, 54649, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27459, 32175, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27461, 46024, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27465, 16907, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27475, 31713, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27491, 30866, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27497, 31936, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27509, 22033, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27510, 26538, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27518, 24770, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27525, 25432, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27527, 61238, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27528, 26340, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27529, 66290, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27535, 29422, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27544, 25949, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27548, 30902, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27549, 40882, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27551, 10283, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27672, 29874, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27712, 21793, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27713, 39550, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27714, 34450, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27739, 46860, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27741, 90078, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27742, 16784, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27757, 110959, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27759, 41287, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27771, 45495, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27775, 27134, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27776, 34036, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27779, 50287, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27780, 83797, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27783, 20557, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27784, 41903, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27790, 45438, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27792, 8788, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27796, 27226, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27797, 34155, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27799, 36689, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27802, 37916, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27803, 44126, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27804, 25360, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27822, 55035, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27835, 27123, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27839, 59661, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27866, 26242, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27867, 32925, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27871, 8788, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27872, 91750, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27875, 33564, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27885, 63806, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27886, 25617, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27887, 56311, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27891, 66290, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27892, 26870, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27897, 57778, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27903, 111025, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27905, 89462, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27907, 36045, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27909, 54453, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27910, 58292, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27912, 55034, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27915, 37017, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27917, 24759, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27925, 7102, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27936, 51920, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27946, 26928, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27985, 32296, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (27995, 31548, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28034, 10000, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28121, 10000, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28124, 21217, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28134, 22464, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28189, 88785, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28190, 10000, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28192, 41438, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28193, 25081, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28194, 25176, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28203, 60782, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28204, 43578, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28221, 45154, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28223, 10000, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28224, 33551, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28225, 47053, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28230, 36566, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28248, 27226, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28251, 34396, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28253, 115468, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28256, 26060, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28257, 87193, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28258, 43988, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28259, 30866, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28262, 62162, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28267, 90421, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28285, 47035, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28288, 10000, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28296, 26052, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28304, 17885, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28316, 55572, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28318, 45836, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28323, 7102, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28325, 115094, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28339, 33796, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28341, 113456, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28349, 38045, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28350, 44472, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28372, 26350, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28386, 64411, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28394, 41903, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28401, 50552, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28403, 59434, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28407, 55035, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28414, 33172, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28418, 10000, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28419, 39470, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28511, 23936, 300);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28514, 28084, 300);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28565, 24032, 300);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28570, 36696, 300);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (28652, 22897, 300);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (29239, 59610, 300);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (29240, 22835, 300);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (29242, 34499, 300);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (29349, 88355, 300);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (29362, 113045, 300);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (30538, 56029, 300);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (31285, 41068, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (31292, 52430, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (31293, 24576, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (31303, 64180, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (32658, 10000, 275);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35328, 17391, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35329, 26181, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35330, 35039, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35331, 26377, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35333, 26569, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35334, 35556, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35335, 17843, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35336, 26862, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35338, 18036, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35340, 36334, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35341, 27345, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35342, 36591, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35344, 25693, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35345, 17194, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35346, 34518, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35347, 34648, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35356, 22381, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35357, 33693, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35358, 45087, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35359, 33937, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35361, 21167, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35362, 31872, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35363, 42655, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35365, 55952, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35367, 32476, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35368, 43464, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35369, 32720, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35370, 43790, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35372, 33083, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35373, 44273, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35374, 33327, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35375, 55952, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35376, 53709, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35378, 37657, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35379, 50405, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35380, 38118, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35381, 50795, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35382, 25492, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35384, 51376, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35385, 38850, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35387, 25978, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35388, 47383, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35389, 52347, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35390, 39578, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35391, 52732, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35393, 40887, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35394, 54712, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35395, 41363, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35402, 59477, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35403, 30023, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35404, 44864, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35405, 60154, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35407, 60610, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35408, 30589, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35410, 62919, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35411, 47270, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35412, 63369, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35414, 47777, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35415, 64052, -1);
+REPLACE INTO `item_template` (`entry`, `SellPrice`, `RequiredDisenchantSkill`) VALUES (35416, 48114, -1);
+
+UPDATE `item_template` SET `SellPrice` = 0 WHERE `entry` IN (
+28225, 27551, 27771, 0, 28403, 27985, 30538, 28318, 27712, 27497, 27925, 28323, 28034, 28288, 27892, 27872, 27872, 
+28350, 27871, 27803, 0, 28262, 27672, 27527, 29239, 27459, 27475, 27822, 28407, 27529, 27891, 27804, 29362, 27887, 28258,
+27790, 28419, 27775, 0, 27897, 27548, 27458, 28221, 28194, 28304, 28259, 27780, 24390, 28190, 27946, 28257, 31292, 28296,
+28285, 27792, 27739, 0, 28203, 27672, 27839, 29239, 27459, 27535, 27822, 28407, 27891, 27529, 27804, 27905, 28316, 27917,
+28225, 27551, 27771, 0, 28403, 27985, 30538, 28318, 27712, 27497, 27925, 28323, 28034, 28288, 27892, 28253, 0, 23203,
+28192, 27779, 27713, 0, 28401, 31293, 27936, 27915, 27712, 27528, 25962, 27925, 28034, 28288, 27892, 27903, 0, 31303,
+28224, 27779, 27797, 0, 28204, 28124, 30538, 27867, 27712, 27509, 27925, 25962, 28034, 28288, 27892, 28189, 28267,
+27866, 28419, 27775, 0, 28230, 28652, 27875, 27525, 28511, 28304, 27491, 27780, 28190, 24390, 27946, 28257, 27714, 27885,
+28193, 28134, 27796, 0, 27799, 28565, 27907, 29242, 29240, 27465, 28394, 27784, 28223, 28418, 28570, 28341, 0, 28386,
+28349, 28134, 27802, 0, 27799, 27783, 27909, 29242, 29240, 27510, 28394, 27784, 28223, 28418, 28570, 27741, 27910, 28248,
+28192, 29349, 27713, 0, 28401, 31293, 30538, 27867, 27712, 27528, 27925, 25962, 28034, 28288, 27892, 27872, 27872, 22395,
+27759, 28419, 27775, 0, 27912, 27835, 27458, 27549, 28194, 28304, 28259, 27780, 28190, 24390, 27946, 28257, 31292, 27544,
+28193, 28134, 27796, 0, 27799, 27742, 27907, 29242, 29240, 27465, 28394, 27784, 28418, 28223, 28570, 28341, 0, 28386,
+28193, 28134, 27796, 0, 27799, 27742, 27907, 29242, 29240, 27465, 28394, 27784, 28418, 28223, 28570, 28341, 0, 28386,
+28193, 28134, 27796, 0, 27799, 27783, 27907, 29242, 29240, 27465, 28394, 27784, 28223, 28418, 28570, 28341, 0, 27518,
+28414, 27871, 27776, 0, 31285, 28124, 30538, 28339, 28514, 27509, 27436, 28121, 27891, 32658, 28256, 27757, 0, 23198,
+28414, 27779, 27995, 0, 27461, 28124, 30538, 27867, 27712, 27509, 25962, 27925, 28288, 28034, 27892, 28325, 0, 28372,
+27866, 28419, 27775, 0, 28230, 28652, 27875, 28251, 28511, 28304, 27780, 27491, 28190, 24390, 27946, 28257, 27714, 27886, 25691, 25690, 25689,
+35356,35357,35358,35359,35361,35362,35363,35365,35372,35373,35374,35375,35328
+,35329,35330,35331,35344,35345,35346,35347,35391,35393,35394,35395,35387,35388,35389,35390,35381,35382
+,35384,35385,35333,35334,35335,35336,35338,35340,35341,35342,35367,35368,35369,35370,35376,35378
+,35379,35380,35402,35403,35404,35405,35414,35416,35412,35415,35411,35407,35410,35408);
+
