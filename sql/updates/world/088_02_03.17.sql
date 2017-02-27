@@ -3195,3 +3195,32 @@ UPDATE `creature_template` SET `ScriptName` = NULL WHERE `entry` = 23254; -- mob
 
 UPDATE `creature` SET `modelid` = 0, `spawntimesecs` = 7200, `spawndist` = 0, `MovementType` = 0 WHERE `id` = 22965;
 
+-- Boss Loot Changes
+
+-- Mother Shahraz Token
+UPDATE `creature_loot_template` SET `maxcount` = 2 WHERE `entry` = 22947 AND `item` = 34076;
+
+-- Council
+DELETE FROM `creature_loot_template` WHERE `entry` IN (22949,22950,22952);
+INSERT INTO `creature_loot_template` VALUES (22949, 31098, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22949, 31099, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22949, 31100, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22950, 29434, 0, 0, 2, 2, 0, 0, 0);
+-- INSERT INTO `creature_loot_template` VALUES (22950, 31098, 0, 2, 1, 1, 0, 0, 0);
+-- INSERT INTO `creature_loot_template` VALUES (22950, 31099, 0, 2, 1, 1, 0, 0, 0);
+-- INSERT INTO `creature_loot_template` VALUES (22950, 31100, 0, 2, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22950, 32331, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22950, 32373, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22950, 32376, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22950, 32505, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22950, 32518, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22950, 32519, 0, 1, 1, 1, 0, 0, 0);
+-- 22951 Epic GEM
+INSERT INTO `creature_loot_template` VALUES (22952, 31098, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22952, 31099, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (22952, 31100, 0, 1, 1, 1, 0, 0, 0);
+
+-- Illidan Stormrage <The Betrayer> Token
+UPDATE `creature_loot_template` SET `maxcount` = 2 WHERE `entry` = 22917 AND `item` = 34077;
+DELETE FROM `creature_loot_template` WHERE `entry` = 22917 AND `item` IN (90077,90078);
+
