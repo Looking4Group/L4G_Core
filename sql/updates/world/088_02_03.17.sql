@@ -731,7 +731,7 @@ UPDATE `gameobject` SET `position_x`='99.07292', `position_y`='249.7036', `posit
 UPDATE `gameobject_template` SET `flags`='32' WHERE `entry` IN ('183817','184662');
 
 -- Emissary Attackable
-UPDATE `creature_template` SET `unit_flags` = 37184 WHERE `entry` IN (15103,15102,14991,22013);
+UPDATE `creature_template` SET `unit_flags` = 4354 WHERE `entry` IN (15106,15103,15102,15105,14991,14990,22013,22015);
 
 -- Forgot Regrowth and Nature's Grasp for Druid's
 UPDATE `spell_affect` SET `SpellFamilyMask`='12965527034267474' WHERE (`entry`='17118') AND effectId = 1;
@@ -1657,7 +1657,8 @@ INSERT INTO `creature` VALUES (@GUID := @GUID + 1, 14990, 530, 1, 0, 0, -1908.43
 INSERT INTO `creature` VALUES (@GUID := @GUID + 1, 22015, 530, 1, 0, 0, -1908.43, 5437.61, -12.3449, 4.93928, 300, 0, 0, 6700, 0, 0, 0);
 INSERT INTO `creature` VALUES (@GUID := @GUID + 1, 22015, 530, 1, 0, 0, -1908.2, 5433.96, -12.3449, 1.74533, 300, 0, 0, 6700, 0, 0, 0);
 
-INSERT INTO `creature` VALUES (@GUID := @GUID + 1, 15106, 530, 1, 0, 0, 9649.15, -7415.19, 13.692, 5.98648, 120, 0, 0, 1, 0, 0, 0);
+INSERT INTO `creature` VALUES (@GUID := @GUID + 1, 
+                               , 530, 1, 0, 0, 9649.15, -7415.19, 13.692, 5.98648, 120, 0, 0, 1, 0, 0, 0);
 INSERT INTO `creature` VALUES (@GUID := @GUID + 1, 15106, 530, 1, 0, 0, 9652.97, -7416.21, 13.6933, 2.79253, 120, 0, 0, 1, 0, 0, 0);
 INSERT INTO `creature` VALUES (@GUID := @GUID + 1, 15105, 530, 1, 0, 0, 9649.15, -7415.19, 13.692, 5.98648, 300, 0, 0, 1605, 852, 0, 0);
 INSERT INTO `creature` VALUES (@GUID := @GUID + 1, 15105, 530, 1, 0, 0, 9652.97, -7416.21, 13.6933, 2.79253, 300, 0, 0, 1605, 852, 0, 0);
@@ -3188,4 +3189,7 @@ UPDATE `item_template` SET `SellPrice` = 0 WHERE `entry` IN (
 ,35329,35330,35331,35344,35345,35346,35347,35391,35393,35394,35395,35387,35388,35389,35390,35381,35382
 ,35384,35385,35333,35334,35335,35336,35338,35340,35341,35342,35367,35368,35369,35370,35376,35378
 ,35379,35380,35402,35403,35404,35405,35414,35416,35412,35415,35411,35407,35410,35408);
+
+-- Fel Geyser 23254
+UPDATE `creature_template` SET `ScriptName` = NULL WHERE `entry` = 23254; -- mob_ashtongue_spiritbinder
 
