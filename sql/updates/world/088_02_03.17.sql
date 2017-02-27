@@ -3193,3 +3193,5 @@ UPDATE `item_template` SET `SellPrice` = 0 WHERE `entry` IN (
 -- Fel Geyser 23254
 UPDATE `creature_template` SET `ScriptName` = NULL WHERE `entry` = 23254; -- mob_ashtongue_spiritbinder
 
+UPDATE `creature` SET `modelid` = 0, `spawntimesecs` = 7200, `spawndist` = 0, `MovementType` = 0 WHERE `id` = 22965;
+
