@@ -115,23 +115,35 @@ CreatureAI* GetAI_npc_forest_frog(Creature *_Creature)
 #define GOSSIP_TANZAR_1 "You're welcome... Now tell us what's going on here!"
 #define GOSSIP_TANZAR_2 "What can you tell us about Budd?"
 
+enum Gameobjects
+{
+    GO_LOOT_BOX                     = 186622,
+    GO_EXPLOSION_CHARGE             = 183410, // probably wrong go, but looks ok
+    GO_ASHLI_VASE                   = 186671,
+    GO_GOLD_COINS1                  = 186633,
+    GO_GOLD_COINS2                  = 186634,
+};
 
-#define GO_LOOT_BOX             186622
-#define GO_EXPLOSION_CHARGE     183410  // probably wrong go, but looks ok
-#define GO_ASHLI_VASE           186671
+enum TimeEventSpells
+{
+    SPELL_SMASH                     = 18944, // most probably wrong spell, but has cool visual
+    SPELL_EXPLOSION                 = 43418, // also not sure about this
+    SPELL_ASHLI_FIREBALL_COSMETIC   = 43515,
+    SPELL_ASHLI_FIREBALL1           = 43520,
+    SPELL_ASHLI_FIREBALL2           = 43525
+};
 
-#define SPELL_SMASH             18944   // most probably wrong spell, but has cool visual
-#define SPELL_EXPLOSION         43418   // also not sure about this
-#define SPELL_ASHLI_FIREBALL    43525
-
-#define YELL_ASHLI_KILL         -1800518
-#define YELL_ASHLI_FREED        -1800519
-#define YELL_ASHLI_FREE_ME1     -1800520
-#define YELL_ASHLI_FREE_ME2     -1800521
-#define YELL_ASHLI_FREE_ME3     -1800522
-#define YELL_ASHLI_VASE1        -1800523
-#define YELL_ASHLI_VASE2        -1800524
-#define YELL_ASHLI_VASE3        -1800525
+enum TimeEventText
+{
+    YELL_ASHLI_KILL             = -1800518,
+    YELL_ASHLI_FREED            = -1800519,
+    YELL_ASHLI_FREE_ME1         = -1800520,
+    YELL_ASHLI_FREE_ME2         = -1800521,
+    YELL_ASHLI_FREE_ME3         = -1800522,
+    YELL_ASHLI_VASE1            = -1800523,
+    YELL_ASHLI_VASE2            = -1800524,
+    YELL_ASHLI_VASE3            = -1800525
+};
 
 struct npc_hostageAI : public ScriptedAI
 {
@@ -203,7 +215,7 @@ struct npc_tanzarAI : public npc_hostageAI
 {
     npc_tanzarAI(Creature *c) : npc_hostageAI(c)
     {
-        dist = 0.9;
+        dist = 1.5;
         angle = 3.1415;
     }
 
@@ -320,10 +332,10 @@ CreatureAI* GetAI_npc_kraz(Creature *_Creature)
 float AshliWP[][3] = {
     {409, 1146, 5},
     {360, 1090, 7},
-    {334, 1089, 6},
-    {332, 1145, 6},
+    {346, 1088, 7},
+    {343, 1129, 6},
     {385, 1089, 6},
-    {403, 1089, 6},
+    {405, 1087, 7}, 
     {374, 1087, 7}
 };
 
@@ -332,9 +344,6 @@ struct npc_ashliAI : public ScriptedAI
     npc_ashliAI(Creature *c) : ScriptedAI(c)
     {
         pInstance = (ScriptedInstance*)c->GetInstanceData();
-        //SpellEntry *TempSpell = (SpellEntry*)GetSpellStore()->LookupEntry(SPELL_ASHLI_FIREBALL);
-        //if(TempSpell)
-        //    TempSpell->EffectImplicitTargetA[0] = TARGET_GAMEOBJECT;
     }
 
     ScriptedInstance *pInstance;
@@ -376,7 +385,7 @@ struct npc_ashliAI : public ScriptedAI
 
         Fire = true;
         targets.clear();
-        std::list<Creature*> t = FindAllCreaturesWithEntry(23746, 20);
+        std::list<Creature*> t = FindAllCreaturesWithEntry(23746, 25);
         for(std::list<Creature*>::iterator i = t.begin(); i != t.end(); ++i)
             targets.push_back((*i)->GetGUID());
 
@@ -384,7 +393,7 @@ struct npc_ashliAI : public ScriptedAI
 
     void SpellHitTarget(Unit *target, const SpellEntry *entry)
     {
-        GameObject *go = FindGameObject(GO_ASHLI_VASE, 5, target);
+        GameObject *go = FindGameObject(GO_ASHLI_VASE, 25, target);
         if(!YellAshliVaseDone[1] && MovePoint == 3)
         {
             DoScriptText(YELL_ASHLI_VASE2, me);
@@ -442,7 +451,7 @@ struct npc_ashliAI : public ScriptedAI
             }
             if(target)
             {
-                me->CastSpell(target, SPELL_ASHLI_FIREBALL, false);
+                me->CastSpell(target, SPELL_ASHLI_FIREBALL1, false);
                 if(!YellAshliVaseDone[0] && MovePoint == 1)
                 {
                     DoScriptText(YELL_ASHLI_VASE1, me);
@@ -636,15 +645,15 @@ bool GossipSelect_npc_ashli(Player* player, Creature* _Creature, uint32 sender, 
 
 enum
 {
-SAY_START = -1568079,
-SAY_AT_GONG = -1568080,
-SAY_OPENING_ENTRANCE = -1568081,
-SAY_OPEN_GATE = -1568082,
+    SAY_START               = -1568079,
+    SAY_AT_GONG             = -1568080,
+    SAY_OPENING_ENTRANCE    = -1568081,
+    SAY_OPEN_GATE           = -1568082,
 
-SPELL_BANGING_THE_GONG = 45222,
+    SPELL_BANGING_THE_GONG  = 45222,
 
-SOUND_GONG = 12204,
-SOUND_CELEBRATE = 12135
+    SOUND_GONG              = 12204,
+    SOUND_CELEBRATE         = 12135
 };
 
 #define GOSSIP_ITEM_BEGIN "Thanks for the concern, but we intend to explore Zul'Aman."
@@ -1057,7 +1066,6 @@ struct npc_amanishi_lookoutAI : public ScriptedAI
 
         else if(pInstance && pInstance->GetData(DATA_AKILZONGAUNTLET) == AKILZON_GAUNTLET_TEMPEST_DEAD)
         {
-            Reset();
             me->Kill(me, false);
             me->ForcedDespawn(0);
         }
@@ -1204,7 +1212,7 @@ struct npc_amanishi_scoutAI : public ScriptedAI
     void Reset()
     {
         SummonTimer = 0;
-        m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
+        me->GetMotionMaster()->Initialize();
     }
 
     void AttackStart(Unit *pWho)
@@ -1241,7 +1249,7 @@ struct npc_amanishi_scoutAI : public ScriptedAI
         {
             if(SummonTimer <= diff)
             {
-                m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
+                m_creature->GetMotionMaster()->Clear();
                 DoCast(me, SPELL_ALERT_DRUMS, false);
                 DoCast(me, SPELL_SUMMON_SENTRIES1, false);
                 DoCast(me, SPELL_SUMMON_SENTRIES2, false);
