@@ -446,3 +446,32 @@ DELETE FROM `npc_vendor` WHERE `entry` IN (77779,77710) AND `item` IN (35326,353
 -- INSERT INTO `npc_vendor` VALUES (77710, 35327, 0, 0, 2289);
 -- INSERT INTO `npc_vendor` VALUES (77779, 35327, 0, 0, 2289);
 
+DELETE FROM `pool_template` WHERE `entry` IN (13029, 13100);
+INSERT INTO `pool_template` VALUES (13029, 21, 'Master Herb Pool - Desolace');
+INSERT INTO `pool_template` VALUES (13100, 9, 'Master Herb Pool - Maraudon');
+
+DELETE FROM `pool_gameobject` WHERE `guid` IN (3480888,3490639,3490647,3490650,3494618,3494625,3494628,3494629,3494631,3494632,3494633,3494753,3497319,3497320,3497321,3497322,3497323,3497324,3497325);
+INSERT INTO `pool_gameobject` VALUES 
+(3490639, 13029, 0, 'Ghost Mushroom - Desolace'),
+(3490647, 13029, 0, 'Ghost Mushroom - Desolace'),
+(3490650, 13029, 0, 'Ghost Mushroom - Desolace'),
+(3494618, 13029, 0, 'Ghost Mushroom - Desolace'),
+(3497325, 13029, 0, 'Ghost Mushroom - Desolace'),
+
+(3480888, 13100, 0, 'Ghost Mushroom - Maraudon'),
+(3494625, 13100, 0, 'Ghost Mushroom - Maraudon'),
+(3494628, 13100, 0, 'Ghost Mushroom - Maraudon'),
+(3494629, 13100, 0, 'Ghost Mushroom - Maraudon'),
+(3494631, 13100, 0, 'Ghost Mushroom - Maraudon'),
+(3494632, 13100, 0, 'Ghost Mushroom - Maraudon'),
+(3494633, 13100, 0, 'Ghost Mushroom - Maraudon'),
+(3494753, 13100, 0, 'Ghost Mushroom - Maraudon'),
+(3497319, 13100, 0, 'Ghost Mushroom - Maraudon'),
+(3497320, 13100, 0, 'Ghost Mushroom - Maraudon'),
+(3497321, 13100, 0, 'Ghost Mushroom - Maraudon'),
+(3497322, 13100, 0, 'Ghost Mushroom - Maraudon'),
+(3497323, 13100, 0, 'Ghost Mushroom - Maraudon'),
+(3497324, 13100, 0, 'Ghost Mushroom - Maraudon');
+
+UPDATE `gameobject` SET `spawntimesecs` = 60 WHERE `id` = 142144;
+
