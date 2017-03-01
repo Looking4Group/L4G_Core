@@ -1657,8 +1657,7 @@ INSERT INTO `creature` VALUES (@GUID := @GUID + 1, 14990, 530, 1, 0, 0, -1908.43
 INSERT INTO `creature` VALUES (@GUID := @GUID + 1, 22015, 530, 1, 0, 0, -1908.43, 5437.61, -12.3449, 4.93928, 300, 0, 0, 6700, 0, 0, 0);
 INSERT INTO `creature` VALUES (@GUID := @GUID + 1, 22015, 530, 1, 0, 0, -1908.2, 5433.96, -12.3449, 1.74533, 300, 0, 0, 6700, 0, 0, 0);
 
-INSERT INTO `creature` VALUES (@GUID := @GUID + 1, 
-                               , 530, 1, 0, 0, 9649.15, -7415.19, 13.692, 5.98648, 120, 0, 0, 1, 0, 0, 0);
+INSERT INTO `creature` VALUES (@GUID := @GUID + 1, 15106, 530, 1, 0, 0, 9649.15, -7415.19, 13.692, 5.98648, 120, 0, 0, 1, 0, 0, 0);
 INSERT INTO `creature` VALUES (@GUID := @GUID + 1, 15106, 530, 1, 0, 0, 9652.97, -7416.21, 13.6933, 2.79253, 120, 0, 0, 1, 0, 0, 0);
 INSERT INTO `creature` VALUES (@GUID := @GUID + 1, 15105, 530, 1, 0, 0, 9649.15, -7415.19, 13.692, 5.98648, 300, 0, 0, 1605, 852, 0, 0);
 INSERT INTO `creature` VALUES (@GUID := @GUID + 1, 15105, 530, 1, 0, 0, 9652.97, -7416.21, 13.6933, 2.79253, 300, 0, 0, 1605, 852, 0, 0);
