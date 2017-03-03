@@ -475,3 +475,9 @@ INSERT INTO `pool_gameobject` VALUES
 
 UPDATE `gameobject` SET `spawntimesecs` = 60 WHERE `id` = 142144;
 
+UPDATE `creature_template` SET `AIName` = 'EventAI' WHERE `entry` = 23254;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 23254;
+INSERT INTO `creature_ai_scripts` VALUES (2325401, 23254, 4, 0, 100, 2, 0, 0, 0, 0, 11, 40593, 0, 7, 37, 0, 0, 0, 0, 0, 0, 0, 'Fel Geyser - Cast Fel Geyser and Die on Aggro');
+
+UPDATE `creature_template` SET `speed` = '1.20' WHERE `entry` = 22948;
+
