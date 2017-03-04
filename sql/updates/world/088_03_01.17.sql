@@ -508,3 +508,21 @@ INSERT INTO `creature_ai_scripts` VALUES (2201302, 22013, 1, 0, 100, 1, 5000, 25
 INSERT INTO `creature_ai_scripts` VALUES (2201501, 22015, 1, 0, 100, 1, 10000, 90000, 20000, 70000, 10, 11, 18, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Eye of the Storm Envoy - Random Laugh or Cry Emote');
 INSERT INTO `creature_ai_scripts` VALUES (2201502, 22015, 1, 0, 100, 1, 5000, 25000, 5000, 15000, 5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Eye of the Storm Envoy - Talk Emote OOC');
 
+-- 2.2 Eye Vendor
+DELETE FROM `npc_vendor` WHERE `entry` = 18255 AND `item` IN (33124,33205,33209);
+INSERT INTO `npc_vendor` VALUES (18255, 33124, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (18255, 33205, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (18255, 33209, 0, 0, 0);
+
+-- 2.2 Jewelcrafter Gems
+DELETE FROM `npc_vendor` WHERE `entry` IN (20242, 23007, 21643, 21655, 21432) AND `item` IN (33305,33156,33158,33157,33160,33159,33155);
+INSERT INTO `npc_vendor` VALUES (20242, 33305, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (23007, 33305, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (20242, 33156, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (23007, 33156, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (21643, 33158, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (21655, 33157, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (21643, 33160, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (21432, 33159, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (21432, 33155, 0, 0, 0);
+
