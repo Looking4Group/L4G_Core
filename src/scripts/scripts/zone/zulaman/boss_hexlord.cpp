@@ -17,82 +17,113 @@
 /* ScriptData
 SDName: Boss_Hex_Lord_Malacrass
 SD%Complete:
-SDComment:
 SDCategory: Zul'Aman
 EndScriptData */
 
 #include "precompiled.h"
 #include "def_zulaman.h"
 
-#define YELL_SPIRIT_BOLTS       -1800493
-#define YELL_DRAIN_POWER        -1800494
-#define YELL_KILL_ONE           -1800495
-#define YELL_KILL_TWO           -1800496
-#define YELL_DEATH              -1800497
+enum Malacrass
+{
+    AGGRO_RANGE             =       30,
 
-#define YELL_AGGRO              -1800512
-#define YELL_ENRAGE             -1800513            // enrage?
-#define YELL_SIPHON_SOUL        -1800514
-#define YELL_ADD_DEAD1          -1800515
-#define YELL_ADD_DEAD2          -1800516
-#define YELL_ADD_DEAD3          -1800517
+    YELL_SPIRIT_BOLTS       = -1800494,
+    YELL_DRAIN_POWER        = -1800495,
+    YELL_KILL_ONE           = -1800496,
+    YELL_KILL_TWO           = -1800497,
+    YELL_DEATH              = -1800498,
 
-#define SPELL_SPIRIT_BOLTS      43383
-#define SPELL_DRAIN_POWER       44131
-#define SPELL_SIPHON_SOUL       43501
+    YELL_AGGRO              = -1800512,
+    YELL_ENRAGE             = -1800513, // maybe lower hp threshold 
+    YELL_SIPHON_SOUL        = -1800514,
+    YELL_ADD_DEAD1          = -1800515,
+    YELL_ADD_DEAD2          = -1800516,
+    YELL_ADD_DEAD3          = -1800517,
 
-#define MOB_TEMP_TRIGGER        23920
+    SPELL_SPIRIT_BOLTS      =    43383,
+    SPELL_DRAIN_POWER       =    44131,
+    SPELL_SIPHON_SOUL       =    43501,
 
-//Defines for various powers he uses after using soul drain
+    MOB_TEMP_TRIGGER        =    23920,
 
-//Druid
-#define SPELL_DR_LIFEBLOOM      43421
-#define SPELL_DR_THORNS         43420
-#define SPELL_DR_MOONFIRE       43545
+    //Druid
+    SPELL_DR_LIFEBLOOM      =    43421,
+    SPELL_DR_THORNS         =    43420,
+    SPELL_DR_MOONFIRE       =    43545,
 
-//Hunter
-#define SPELL_HU_EXPLOSIVE_TRAP 43444
-#define SPELL_HU_FREEZING_TRAP  43447
-#define SPELL_HU_SNAKE_TRAP     43449
+    //Hunter
+    SPELL_HU_EXPLOSIVE_TRAP =    43444,
+    SPELL_HU_FREEZING_TRAP  =    43447,
+    SPELL_HU_SNAKE_TRAP     =    43449,
 
-//Mage
-#define SPELL_MG_FIREBALL       41383 // fireball is probably obsolete
-#define SPELL_MG_FROSTBOLT      43428
-#define SPELL_MG_FROST_NOVA     43426
-#define SPELL_MG_ICE_LANCE      43427
+    //Mage
+    SPELL_MG_FIREBALL       =    41383, // fireball is probably obsolete
+    SPELL_MG_FROSTBOLT      =    43428,
+    SPELL_MG_FROST_NOVA     =    43426,
+    SPELL_MG_ICE_LANCE      =    43427,
 
-//Paladin
-#define SPELL_PA_CONSECRATION   43429
-#define SPELL_PA_HOLY_LIGHT     43451
-#define SPELL_PA_AVENGING_WRATH 43430
+    //Paladin
+    SPELL_PA_CONSECRATION   =    43429,
+    SPELL_PA_HOLY_LIGHT     =    43451,
+    SPELL_PA_AVENGING_WRATH =    43430,
 
-//Priest
-#define SPELL_PR_HEAL           41372
-#define SPELL_PR_MIND_CONTROL   43550
-#define SPELL_PR_MIND_BLAST     41374
-#define SPELL_PR_SW_DEATH       41375
-#define SPELL_PR_PSYCHIC_SCREAM 43432
-#define SPELL_PR_PAIN_SUPP      33206   // not sure, it's priest's pain suppression
+    //Priest
+    SPELL_PR_HEAL           =    41372,
+    SPELL_PR_MIND_CONTROL   =    43550,
+    SPELL_PR_MIND_BLAST     =    41374,
+    SPELL_PR_SW_DEATH       =    41375,
+    SPELL_PR_PSYCHIC_SCREAM =    43432,
+    SPELL_PR_PAIN_SUPP      =    33206, // 44416, but not tested
 
-//Rogue
-#define SPELL_RO_BLIND          43433
-#define SPELL_RO_SLICE_DICE     43547
-#define SPELL_RO_WOUND_POISON   39665
+    //Rogue
+    SPELL_RO_BLIND          =    43433,
+    SPELL_RO_SLICE_DICE     =    43547,
+    SPELL_RO_WOUND_POISON   =    39665,
 
-//Shaman
-#define SPELL_SH_FIRE_NOVA      43436
-#define SPELL_SH_HEALING_WAVE   43548
-#define SPELL_SH_CHAIN_LIGHT    43435
+    //Shaman
+    SPELL_SH_FIRE_NOVA      =    43436,
+    SPELL_SH_HEALING_WAVE   =    43548,
+    SPELL_SH_CHAIN_LIGHT    =    43435,
 
-//Warlock
-#define SPELL_WL_CURSE_OF_DOOM  43439
-#define SPELL_WL_RAIN_OF_FIRE   43440
-#define SPELL_WL_UNSTABLE_AFFL  35183
+    //Warlock
+    SPELL_WL_CURSE_OF_DOOM  =    43439,
+    SPELL_WL_RAIN_OF_FIRE   =    43440,
+    SPELL_WL_UNSTABLE_AFFL  =    35183,
 
-//Warrior
-#define SPELL_WR_SPELL_REFLECT  43443
-#define SPELL_WR_WHIRLWIND      43442
-#define SPELL_WR_MORTAL_STRIKE  43441
+    //Warrior
+    SPELL_WR_SPELL_REFLECT  =    43443,
+    SPELL_WR_WHIRLWIND      =    43442,
+    SPELL_WR_MORTAL_STRIKE  =    43441,
+
+    //Thurg
+    SPELL_BLOODLUST         =    43578,
+    SPELL_CLEAVE            =    15496,
+
+    //Alyson Antille
+    SPELL_FLASH_HEAL        =    43575,
+    SPELL_DISPEL_MAGIC      =    43577,
+    SPELL_ARCANE_TORRENT    =    33390,
+
+    //Gazakroth
+    SPELL_FIREBOLT          =    43584,
+
+    //Lord Raadan
+    SPELL_FLAME_BREATH      =    43582,
+    SPELL_THUNDERCLAP       =    43583,
+
+    //Darkheart
+    SPELL_PSYCHIC_WAIL      =    43590,
+
+    //Slither
+    SPELL_VENOM_SPIT        =    43579,
+
+    //Fenstalker
+    SPELL_VOLATILE_INFECTION=    43586,
+
+    //Koragg
+    SPELL_COLD_STARE        =    43593,
+    SPELL_MIGHTY_BLOW       =    43592
+};
 
 #define ORIENT                  1.5696
 #define POS_Y                   921.2795
@@ -181,6 +212,7 @@ struct boss_hexlord_addAI : public ScriptedAI
     boss_hexlord_addAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = (c->GetInstanceData());
+        m_creature->SetAggroRange(AGGRO_RANGE);
         SpellEntry *TempSpell = (SpellEntry*)GetSpellStore()->LookupEntry(SPELL_PR_MIND_CONTROL);
         if(TempSpell)
             TempSpell->MaxAffectedTargets = 1;      // not sure about it. better then whole party under mc effect
@@ -213,6 +245,7 @@ struct boss_hex_lord_malacrassAI : public ScriptedAI
 {
     boss_hex_lord_malacrassAI(Creature *c) : ScriptedAI(c)
     {
+        m_creature->SetAggroRange(AGGRO_RANGE);
         pInstance = (c->GetInstanceData());
         SelectAddEntry();
         for(uint8 i = 0; i < 4; ++i)
@@ -511,7 +544,8 @@ struct boss_hex_lord_malacrassAI : public ScriptedAI
             else
             {
                 ClearCastQueue();
-                AddSpellToCastWithScriptText(m_creature, SPELL_SPIRIT_BOLTS, YELL_SPIRIT_BOLTS);
+                DoScriptText(RAND(YELL_ENRAGE, YELL_SPIRIT_BOLTS), m_creature);
+                AddSpellToCast(m_creature, SPELL_SPIRIT_BOLTS);
                 SpiritBolts_Timer = 40000;
                 SiphonSoul_Timer = 10000;  // ready to drain
                 for(uint8 i = 0; i <3; i++)
@@ -617,9 +651,6 @@ struct boss_hex_lord_malacrassAI : public ScriptedAI
     }
 };
 
-#define SPELL_BLOODLUST       43578
-#define SPELL_CLEAVE          15496
-
 struct boss_thurgAI : public boss_hexlord_addAI
 {
 
@@ -630,8 +661,8 @@ struct boss_thurgAI : public boss_hexlord_addAI
 
     void Reset()
     {
-        bloodlust_timer = 15000;
-        cleave_timer = 10000;
+        bloodlust_timer = urand(5000, 10000);
+        cleave_timer = urand(10000, 12000);
 
         boss_hexlord_addAI::Reset();
     }
@@ -649,95 +680,72 @@ struct boss_thurgAI : public boss_hexlord_addAI
                 if(Unit* target = *(templist.begin()))
                     m_creature->CastSpell(target, SPELL_BLOODLUST, false);
             }
-            bloodlust_timer = 12000;
+            bloodlust_timer = urand(12000, 15000);
         }else bloodlust_timer -= diff;
 
         if(cleave_timer < diff)
         {
             m_creature->CastSpell(m_creature->getVictim(),SPELL_CLEAVE, false);
-            cleave_timer = 12000; //3 sec cast
+            cleave_timer = urand(10000, 12000);
         }else cleave_timer -= diff;
 
         boss_hexlord_addAI::UpdateAI(diff);
     }
 };
 
-#define SPELL_FLASH_HEAL     43575
-#define SPELL_DISPEL_MAGIC   43577
-
 struct boss_alyson_antilleAI : public boss_hexlord_addAI
 {
-    //Holy Priest
     boss_alyson_antilleAI(Creature *c) : boss_hexlord_addAI(c) {}
 
-    uint32 flashheal_timer;
-    uint32 dispelmagic_timer;
+    uint32 healdispelmagic_timer;
+    uint32 arcanetorrent_timer;
 
     void Reset()
     {
-        flashheal_timer = 2500;
-        dispelmagic_timer = 10000;
-
-        //AcquireGUID();
+        healdispelmagic_timer = 1000;
+        arcanetorrent_timer = 10000;
 
         boss_hexlord_addAI::Reset();
     }
-/*  Ponizszy kod powoduj ze Alyson ucieka pod tekstury, bardzo niefajne
-    void AttackStart(Unit* who)
-    {
-        if (!who)
-            return;
 
-        if (who->isTargetableForAttack())
-        {
-            if(m_creature->Attack(who, false))
-            {
-                m_creature->GetMotionMaster()->MoveChase(who, 20);
-                m_creature->AddThreat(who, 0.0f);
-            }
-
-            if (!m_creature->isInCombat())
-                EnterCombat(who);
-        }
-    }
-*/
     void UpdateAI(const uint32 diff)
     {
         if(!UpdateVictim() )
             return;
 
-        if(flashheal_timer < diff)
+        if(healdispelmagic_timer < diff)
         {
             Unit* target = SelectLowestHpFriendly(99, 30000);
-            if(target)
+            if (target)
             {
-                if(target->IsWithinDistInMap(m_creature, 50))
-                    m_creature->CastSpell(target,SPELL_FLASH_HEAL, false);
-                else
+                if (urand(1, 4) > 1)
                 {
-                    // bugged
-                    //m_creature->GetMotionMaster()->Clear();
-                    //m_creature->GetMotionMaster()->MoveChase(target, 20);
+                    if (target->IsWithinDistInMap(m_creature, 50))
+                        m_creature->CastSpell(target, SPELL_FLASH_HEAL, false);
                 }
             }
-            else
-            {
-                if(rand()%2)
-                {
-                    if(Unit* target = SelectLowestHpFriendly(50, 0))
-                        m_creature->CastSpell(target, SPELL_DISPEL_MAGIC, false);
-                }
-                else if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_DISPEL_MAGIC), true))
+            else if (Unit* target = SelectLowestHpFriendly(50, 0))
                     m_creature->CastSpell(target, SPELL_DISPEL_MAGIC, false);
-            }
-            flashheal_timer = 2500;
-        }else flashheal_timer -= diff;
+
+            else if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_DISPEL_MAGIC), true))
+                    m_creature->CastSpell(target, SPELL_DISPEL_MAGIC, false);
+
+            healdispelmagic_timer = urand(2000, 3000);
+        }
+        else 
+            healdispelmagic_timer -= diff;
+
+        if (arcanetorrent_timer < diff)
+        {
+            m_creature->CastSpell(m_creature->getVictim(), SPELL_ARCANE_TORRENT, false);
+            arcanetorrent_timer = 60000;
+        }
+        else
+            arcanetorrent_timer -= diff;
 
         boss_hexlord_addAI::UpdateAI(diff);
     }
 };
-
-#define SPELL_FIREBOLT        43584
 
 struct boss_gazakrothAI : public boss_hexlord_addAI
 {
@@ -747,25 +755,10 @@ struct boss_gazakrothAI : public boss_hexlord_addAI
 
     void Reset()
     {
-        firebolt_timer = 2000;
+        firebolt_timer = urand(500, 1500);
         boss_hexlord_addAI::Reset();
     }
-/*  Ponizszy kod spowoduje ze imp bedzie wchodzil pod tekstury :(
-    void AttackStart(Unit* who)
-    {
-        if (!who)
-            return;
 
-        if (who->isTargetableForAttack())
-        {
-            if(m_creature->Attack(who, false))
-            {
-                m_creature->GetMotionMaster()->MoveChase(who, 20);
-                m_creature->AddThreat(who, 0.0f);
-            }
-        }
-    }
-*/
     void UpdateAI(const uint32 diff)
     {
         if(!UpdateVictim() )
@@ -776,16 +769,13 @@ struct boss_gazakrothAI : public boss_hexlord_addAI
             if(Unit *target = SelectUnit(SELECT_TARGET_RANDOM, 0))
             {
                 m_creature->CastSpell(target,SPELL_FIREBOLT, false);
-                firebolt_timer = 700;
+                firebolt_timer = urand(500, 1500);
             }
         }else firebolt_timer -= diff;
 
         boss_hexlord_addAI::UpdateAI(diff);
     }
 };
-
-#define SPELL_FLAME_BREATH    43582
-#define SPELL_THUNDERCLAP     43583
 
 struct boss_lord_raadanAI : public boss_hexlord_addAI
 {
@@ -796,12 +786,12 @@ struct boss_lord_raadanAI : public boss_hexlord_addAI
 
     void Reset()
     {
-        flamebreath_timer = 8000;
-        thunderclap_timer = 13000;
+        flamebreath_timer = urand(8000, 12000);
+        thunderclap_timer = urand(4000, 8000);
 
         boss_hexlord_addAI::Reset();
-
     }
+
     void UpdateAI(const uint32 diff)
     {
         if(!UpdateVictim() )
@@ -810,20 +800,18 @@ struct boss_lord_raadanAI : public boss_hexlord_addAI
         if (thunderclap_timer < diff)
         {
             m_creature->CastSpell(m_creature->getVictim(),SPELL_THUNDERCLAP, false);
-            thunderclap_timer = 12000;
+            thunderclap_timer = urand(12000, 13000);
         }else thunderclap_timer -= diff;
 
         if (flamebreath_timer < diff)
         {
             m_creature->CastSpell(m_creature->getVictim(),SPELL_FLAME_BREATH, false);
-            flamebreath_timer = 12000;
+            flamebreath_timer = urand(8000, 12000);
         }else flamebreath_timer -= diff;
 
         boss_hexlord_addAI::UpdateAI(diff);
     }
 };
-
-#define SPELL_PSYCHIC_WAIL   43590
 
 struct boss_darkheartAI : public boss_hexlord_addAI
 {
@@ -833,11 +821,11 @@ struct boss_darkheartAI : public boss_hexlord_addAI
 
     void Reset()
     {
-        psychicwail_timer = 8000;
+        psychicwail_timer = urand(4000, 8000);
 
         boss_hexlord_addAI::Reset();
-
     }
+
     void UpdateAI(const uint32 diff)
     {
         if(!UpdateVictim() )
@@ -846,14 +834,12 @@ struct boss_darkheartAI : public boss_hexlord_addAI
         if (psychicwail_timer < diff)
         {
             m_creature->CastSpell(m_creature->getVictim(),SPELL_PSYCHIC_WAIL, false);
-            psychicwail_timer = 12000;
+            psychicwail_timer = urand(8000, 12000);
         }else psychicwail_timer -= diff;
 
         boss_hexlord_addAI::UpdateAI(diff);
     }
 };
-
-#define SPELL_VENOM_SPIT    43579
 
 struct boss_slitherAI : public boss_hexlord_addAI
 {
@@ -864,25 +850,10 @@ struct boss_slitherAI : public boss_hexlord_addAI
 
     void Reset()
     {
-        venomspit_timer = 5000;
+        venomspit_timer = urand(2000, 4000);
         boss_hexlord_addAI::Reset();
     }
-/*
-    void AttackStart(Unit* who)
-    {
-        if (!who)
-            return;
 
-        if (who->isTargetableForAttack())
-        {
-            if(m_creature->Attack(who, false))
-            {
-                m_creature->GetMotionMaster()->MoveChase(who, 20);
-                m_creature->AddThreat(who, 0.0f);
-            }
-        }
-    }
-*/
     void UpdateAI(const uint32 diff)
     {
         if(!UpdateVictim() )
@@ -892,15 +863,12 @@ struct boss_slitherAI : public boss_hexlord_addAI
         {
             if(Unit* victim = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_VENOM_SPIT), true))
                 m_creature->CastSpell(victim,SPELL_VENOM_SPIT, false);
-            venomspit_timer = 2500;
+            venomspit_timer = urand(2000, 4000);
         }else venomspit_timer -= diff;
 
         boss_hexlord_addAI::UpdateAI(diff);
     }
 };
-
-//Fenstalker
-#define SPELL_VOLATILE_INFECTION 43586
 
 struct boss_fenstalkerAI : public boss_hexlord_addAI
 {
@@ -911,10 +879,10 @@ struct boss_fenstalkerAI : public boss_hexlord_addAI
 
     void Reset()
     {
-        volatileinf_timer = 15000;
+        volatileinf_timer = urand(12000, 15000);
         boss_hexlord_addAI::Reset();
-
     }
+
     void UpdateAI(const uint32 diff)
     {
         if(!UpdateVictim() )
@@ -922,19 +890,14 @@ struct boss_fenstalkerAI : public boss_hexlord_addAI
 
         if (volatileinf_timer < diff)
         {
-            // core bug
-            m_creature->getVictim()->CastSpell(m_creature->getVictim(),SPELL_VOLATILE_INFECTION, false);
-            volatileinf_timer = 12000;
+            if (Unit* victim = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_VOLATILE_INFECTION), true))
+                m_creature->CastSpell(victim, SPELL_VOLATILE_INFECTION, false);
+            volatileinf_timer = urand(12000, 15000);
         }else volatileinf_timer -= diff;
 
         boss_hexlord_addAI::UpdateAI(diff);
     }
 };
-
-//Koragg
-#define SPELL_COLD_STARE      43593
-#define SPELL_MIGHTY_BLOW     43592
-
 
 struct boss_koraggAI : public boss_hexlord_addAI
 {
@@ -946,11 +909,11 @@ struct boss_koraggAI : public boss_hexlord_addAI
 
     void Reset()
     {
-        coldstare_timer = 15000;
-        mightyblow_timer = 10000;
+        coldstare_timer = urand(12000, 15000);
+        mightyblow_timer = urand(10000, 12000);
         boss_hexlord_addAI::Reset();
-
     }
+
     void UpdateAI(const uint32 diff)
     {
         if(!UpdateVictim() )
@@ -959,13 +922,13 @@ struct boss_koraggAI : public boss_hexlord_addAI
         if (mightyblow_timer < diff)
         {
             m_creature->CastSpell(m_creature->getVictim(),SPELL_MIGHTY_BLOW, false);
-            mightyblow_timer = 12000;
+            mightyblow_timer = urand(10000, 12000);
         }
         if (coldstare_timer < diff)
         {
             if(Unit* victim = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_COLD_STARE), true))
                 m_creature->CastSpell(victim,SPELL_COLD_STARE, false);
-            coldstare_timer = 12000;
+            coldstare_timer = urand(12000, 15000);
         }
 
         boss_hexlord_addAI::UpdateAI(diff);
