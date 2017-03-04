@@ -526,3 +526,5 @@ INSERT INTO `npc_vendor` VALUES (21643, 33160, 0, 0, 0);
 INSERT INTO `npc_vendor` VALUES (21432, 33159, 0, 0, 0);
 INSERT INTO `npc_vendor` VALUES (21432, 33155, 0, 0, 0);
 
+UPDATE `gameobject_template` SET `flags` = 36 WHERE `entry` = 183932;
+
