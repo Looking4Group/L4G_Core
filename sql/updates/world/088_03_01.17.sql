@@ -528,3 +528,58 @@ INSERT INTO `npc_vendor` VALUES (21432, 33155, 0, 0, 0);
 
 UPDATE `gameobject_template` SET `flags` = 36 WHERE `entry` = 183932;
 
+-- Midnight 16151
+UPDATE `creature_template` SET `mindmg`='4688',`maxdmg`='5567' WHERE `entry` = 16151; -- 9,375 - 11,134
+
+-- Attumen the Huntsman 15550 
+UPDATE `creature_template` SET `mindmg`='5413',`maxdmg`='6840' WHERE `entry` = 15550; -- 10,826 - 13,619
+
+-- Moroes 15687
+-- UPDATE `creature_template` SET ` WHERE `entry` = 15687;
+UPDATE `creature_template` SET `mindmg`='5275',`maxdmg`='6264',`baseattacktime`='2000',`speed`='2.00' WHERE `entry` = 15687; -- 8439 10022 -- 10,549 - 12,527
+
+-- Maiden of Virtue - Tugendhafte Maid 
+UPDATE `creature_template` SET `mindmg`='6792',`maxdmg`='8062',`baseattacktime`='2000',`speed`='2.00' WHERE `entry` = 16457; -- 9500 10500 -- 13,584 - 16,123
+
+-- Roar Fear
+UPDATE `creature_template` SET `mindmg`='2769',`maxdmg`='3289',`baseattacktime`='1200',`speed`='1.71',`mechanic_immune_mask`='779042799',`flags_extra`='4259841' WHERE `entry` = 17546;  -- 4430 5262 --  5,538 - 6,578
+
+-- Strawman Slow und Blind
+UPDATE `creature_template` SET `mindmg`='4616',`maxdmg`='5482',`baseattacktime`='2000',`speed`='1.71',`mechanic_immune_mask`='720321533',`flags_extra`='4259841' WHERE `entry` = 17543; -- 7385 8771 -- 9,231 - 10,964
+
+-- Tinhead Slow
+UPDATE `creature_template` SET `mindmg`='4616',`maxdmg`='5482',`baseattacktime`='2000',`speed`='1.71',`mechanic_immune_mask`='787430395',`flags_extra`='4259841' WHERE `entry` = 17547; -- 7385 8771 -- 9,231 - 10,964 
+
+-- The Crone
+UPDATE `creature_template` SET `mindmg`='5433',`maxdmg`='6449',`baseattacktime`='2000',`speed`='2.00',`mechanic_immune_mask`='787431423',`flags_extra`='4259841' WHERE `entry` = 18168; -- 8693 10318 -- 10,866 - 12,898
+
+-- Tito
+UPDATE `creature_template` SET `mindmg`='928',`maxdmg`='1102',`baseattacktime`='1500',`speed`='1.71',`mechanic_immune_mask`='787431423',`flags_extra`='4259841' WHERE `entry` = 17548; -- 1485 1763 -- 1,856 - 2,204
+
+-- Julianne
+UPDATE `creature_template` SET `mindmg`='3260',`maxdmg`='3870',`baseattacktime`='1400',`speed`='1.71',`flags_extra`='65537' WHERE `entry` = 17534; -- 4216 5191 -- 6,520 - 7,739
+
+-- Romulo
+UPDATE `creature_template` SET `mindmg`='4395',`maxdmg`='5220',`baseattacktime`='2000',`speed`='1.71',`flags_extra`='65537' WHERE `entry` = 17533; -- 7032 8351 -- 8,790 - 10,439
+
+-- The Big Bad Wolf
+UPDATE `creature_template` SET `mindmg`='4571',`maxdmg`='5428',`baseattacktime`='1449',`speed`='1.30',`flags_extra`='65537' WHERE `entry` = 17521; -- 7312 8685 -- 9,141 - 10,856
+
+-- The Curator - Der Kurator
+UPDATE `creature_template` SET `mindmg`='6031',`maxdmg`='7159',`baseattacktime`='2000',`speed`='1.48' WHERE `entry` = 15691; -- 9000 10000 -- 12,062 - 14,317
+
+-- Terestian Illhoof 15688
+UPDATE `creature_template` SET `mindmg`='5573',`maxdmg`='6618',`baseattacktime`='2000',`speed`='2.00' WHERE `entry` = 15688; -- 7900 8400 -- 11,145 - 13,235
+
+-- Shade of Aran
+UPDATE `creature_template` SET `mindmg`='2295',`maxdmg`='2760',`baseattacktime`='2000',`speed`='2.00' WHERE `entry` = 16524; -- 3060 3679 -- 4,590 - 5,519
+
+-- Prince Malchezaar 15690
+UPDATE `creature_template` SET `mindmg`='5310',`maxdmg`='7509',`baseattacktime`='2400',`mechanic_immune_mask`='650854239' WHERE `entry` = 15690; -- 6000 - 7500 -- 6,638 - 9,386
+
+-- Netherspite 15689
+UPDATE `creature_template` SET `mindmg`='5122',`maxdmg`='5346',`baseattacktime`='2000',`speed`='2.00',`faction_A`='14',`faction_H`='14' WHERE `entry` = '15689'; -- 6146 6415 -- 15,366 - 16,037
+
+-- Nightbane 17225
+UPDATE `creature_template` SET `mindmg`='9960',`maxdmg`='11824',`baseattacktime`='2000',`speed`='2.00',`mechanic_immune_mask`='1072644095' WHERE `entry` = 17225; -- 15936 18918 -- 19,920 - 23,648
+
