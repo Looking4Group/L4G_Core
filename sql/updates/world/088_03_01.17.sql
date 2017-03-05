@@ -526,7 +526,7 @@ INSERT INTO `npc_vendor` VALUES (21643, 33160, 0, 0, 0);
 INSERT INTO `npc_vendor` VALUES (21432, 33159, 0, 0, 0);
 INSERT INTO `npc_vendor` VALUES (21432, 33155, 0, 0, 0);
 
-UPDATE `gameobject_template` SET `flags` = 36 WHERE `entry` = 183932;
+UPDATE `gameobject_template` SET `flags` = 36 WHERE `entry` IN (183295, 183296, 184275, 184276, 184277, 184278, 184281, 184279, 183932, 184632, 184322, 184449);
 
 -- Midnight 16151
 UPDATE `creature_template` SET `mindmg`='4688',`maxdmg`='5567' WHERE `entry` = 16151; -- 9,375 - 11,134
