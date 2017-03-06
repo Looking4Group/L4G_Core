@@ -602,3 +602,9 @@ DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 16492;
 INSERT INTO `creature_ai_scripts` VALUES 
 ('1649201','16492','9','0','100','3','0','15','9000','13000','11','29881','4','0','0','0','0','0','0','0','0','0','Syphoner - Cast Drain Mana');
 
+-- Illidan Stormrage 22917- boss_illidan_stormrage
+UPDATE `creature_template` SET `minhealth`='7284480',`maxhealth`='7284480' WHERE `entry` = 22917; -- 6070400 -- 7284480
+
+-- Flame of Azzinoth 22997- boss_illidan_flameofazzinoth
+UPDATE `creature_template` SET `minhealth`='1365840',`maxhealth`='1365840' WHERE `entry` = 22997; -- 1138200 -- 1365840
+
