@@ -585,7 +585,7 @@ UPDATE `creature_template` SET `mindmg`='9960',`maxdmg`='11824',`baseattacktime`
 
 -- Arcane Anomaly 16488
 -- some sources say immune to all magic
-UPDATE `creature` SET `spawntimesecs` = 3600;
+UPDATE `creature` SET `spawntimesecs` = 3600 WHERE `id` = 16488;
 UPDATE `creature_template` SET `mindmg`='3396',`maxdmg`='4342',`resistance1` = '0', `resistance2` = '0', `resistance3` = '0', `resistance4` = '0', `resistance5` = '0', `resistance6` = '70' WHERE `entry` = 16488; -- 1308 2660 -- 7,258 - 8,610
 DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 16488;
 INSERT INTO `creature_ai_scripts` VALUES
@@ -597,6 +597,7 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('1648806','16488','6','0','100','2','0','0','0','0','11','29882','0','7','0','0','0','0','0','0','0','0','Arcane Anomaly - Cast Loose Mana on Death');
 
 -- Syphoner 16492
+UPDATE `creature` SET `spawntimesecs` = 3600 WHERE `id` = 16492;
 UPDATE `creature_template` SET `mindmg`='1450',`maxdmg`='1856' WHERE `entry` = 16492; -- 558 1138 -- 3,102 - 3,682
 DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 16492;
 INSERT INTO `creature_ai_scripts` VALUES 
