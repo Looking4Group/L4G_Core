@@ -609,3 +609,30 @@ UPDATE `creature_template` SET `minhealth`='7284480',`maxhealth`='7284480' WHERE
 -- Flame of Azzinoth 22997- boss_illidan_flameofazzinoth
 UPDATE `creature_template` SET `minhealth`='1365840',`maxhealth`='1365840' WHERE `entry` = 22997; -- 1138200 -- 1365840
 
+-- Magtheridon 17257
+UPDATE `creature_template` SET `speed`='3.00',`mindmg`='15471',`maxdmg`='18373',`baseattacktime`='2000' WHERE `entry` = 17257; -- 1 16000 20000 1500 33554752 -- 16000 20000 -- 23207 27559
+
+-- Lair Brute 19389
+UPDATE `creature_template` SET `minhealth`='298298',`maxhealth`='298298',`armor`='7400',`speed`='1.48',`mindmg`='9193',`maxdmg`='9643',`baseattacktime`='1400',`mechanic_immune_mask`=617299827 WHERE `entry` = 19389; -- 298298 ba 1400 -- 4259 5159 -- 11000 12850 -- 18,386 - 19,286
+
+-- Gronn-Priest 21350
+UPDATE `creature_template` SET `minhealth`='250000',`maxhealth`='260000',`speed`='1.48',`mindmg`='6955',`maxdmg`='8256',`flags_extra`='4194304',`baseattacktime`='1400',mechanic_immune_mask=617299827 WHERE `entry` = 21350; -- 236120 1,15 2501 5104 ba 1400 -- 9273 11008 -- 13,909 - 16,512
+
+-- Krosh Firehand 18832
+UPDATE `creature_template` SET `mindmg`='6032',`maxdmg`='7159',`baseattacktime`='1449',`speed`='1.71' WHERE `entry` = 18832; -- 7238 8591 -- 9,048 - 10,739
+
+-- Olm the Summoner 18834
+UPDATE `creature_template` SET `mindmg`='6032',`maxdmg`='7159',`baseattacktime`='1449',`speed`='1.71' WHERE `entry` = 18834; -- 7238 8591 -- 9,048 - 10,739
+
+-- Kiggler the Crazed 18835
+UPDATE `creature_template` SET `mindmg`='10051',`maxdmg`='11931',`baseattacktime`='1449',`speed`='1.71' WHERE `entry` = 18835; -- 12061 14317 -- 15,077 - 17,896
+
+-- Blindeye the Seer 18836
+UPDATE `creature_template` SET `mindmg`='6032',`maxdmg`='7159',`baseattacktime`='1449',`speed`='1.71' WHERE `entry` = 18836; -- 7238 8591 -- 2,449 - 2,908
+
+-- Wild Fel Stalker 18847
+UPDATE `creature_template` SET `mindmg`='2169',`maxdmg`='2575',`baseattacktime`='1400',`speed`='1.71',`spell1`='33091' WHERE `entry` = 18847; -- 2602 3090 -- 3,253 - 3,863
+
+-- Gruul the Dragonkiller 19044
+UPDATE `creature_template` SET `mindmg`='7369',`maxdmg`='8797',`baseattacktime`='1449',`speed`='3.00',`mechanic_immune_mask`='787431423',`flags_extra`='4259841' WHERE `entry` = 19044; -- T6+ 7369 8797 -- T4+5 9825 11729 -- 14,737 - 17,594
+
