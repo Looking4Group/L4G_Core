@@ -191,6 +191,8 @@ struct boss_akilzonAI : public ScriptedAI
             Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_STATIC_DISRUPTION), true, m_creature->getVictimGUID());
             if(!target)
                 target = m_creature->getVictim();
+            m_creature->SetSelection(target->GetGUID());
+            m_creature->SetInFront(target);
             AddSpellToCast(target, SPELL_STATIC_DISRUPTION, false, true);
             StaticDisruption_Timer = urand(7000, 14000);
         }
@@ -204,6 +206,8 @@ struct boss_akilzonAI : public ScriptedAI
             else
             if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_GUST_OF_WIND), true, m_creature->getVictimGUID()))
             {
+                m_creature->SetSelection(target->GetGUID());
+                m_creature->SetInFront(target);
                 AddSpellToCast(target, SPELL_GUST_OF_WIND);
                 GustOfWind_Timer = urand(8000, 14000);
             }
@@ -244,6 +248,8 @@ struct boss_akilzonAI : public ScriptedAI
                 EnterEvadeMode();
                 return;
             }
+            m_creature->SetSelection(target->GetGUID());
+            m_creature->SetInFront(target);
             // throw player to air and cast electrical storm on (should be handled by proper script effect targeting?)
             DoScriptText(EMOTE_STORM, m_creature, 0, true);
             // temporary test, normally used in spell_linked_spell, should be casted before players flying
