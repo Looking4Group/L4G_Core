@@ -3229,9 +3229,12 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 34121: // Al'ar Flame Buffet
                 spellInfo->InterruptFlags &= ~SPELL_INTERRUPT_FLAG_MOVEMENT;
-            case 26029: // dark glare
-            case 43140: case 43215: // flame breath
-                spellInfo->AttributesCu |= SPELL_ATTR_CU_CONE_LINE;
+            case 26029: // Dark Glare
+            case 43213: // Flame Whirl
+            case 43648: // Electrical Storm
+            case 43140: 
+            case 43215: // Flame Breath
+                spellInfo->ChannelInterruptFlags |= CHANNEL_INTERRUPT_FLAG_MOVEMENT;
                 break;
             case 24340: case 26558: case 28884:     // Meteor
             case 36837: case 38903: case 41276:     // Meteor
@@ -3838,7 +3841,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 40080: //Booming Voice
                 spellInfo->EffectRealPointsPerLevel[0] = 0;
-		break;
+		        break;
             default:
                 break;
         }

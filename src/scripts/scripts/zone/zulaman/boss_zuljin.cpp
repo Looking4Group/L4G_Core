@@ -540,11 +540,9 @@ struct boss_zuljinAI : public ScriptedAI
 
             if(Flame_Breath_Timer < diff)
             {
-                if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0))
-                    m_creature->SetInFront(target);
-                DoCast(m_creature, SPELL_FLAME_BREATH);
+                DoCast(m_creature->getVictim(), SPELL_FLAME_BREATH);
                 DoScriptText(YELL_FIRE_BREATH, m_creature);
-                Flame_Breath_Timer = 10000;
+                Flame_Breath_Timer = 7000;
             }else Flame_Breath_Timer -= diff;
             break;
 
