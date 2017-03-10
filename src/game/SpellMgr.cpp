@@ -3232,6 +3232,7 @@ void SpellMgr::LoadSpellCustomAttr()
             case 26029: // Dark Glare
             case 43213: // Flame Whirl
             case 43648: // Electrical Storm
+            case 43622: // Static Disruption
             case 43140: 
             case 43215: // Flame Breath
                 spellInfo->ChannelInterruptFlags |= CHANNEL_INTERRUPT_FLAG_MOVEMENT;
