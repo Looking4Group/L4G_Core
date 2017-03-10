@@ -468,11 +468,9 @@ struct boss_janalaiAI : public ScriptedAI
         {
             if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0, GetSpellMaxRange(SPELL_FLAME_BREATH), true))
             {
-                m_creature->AttackStop();
-                m_creature->GetMotionMaster()->Clear();
-                m_creature->GetMotionMaster()->MoveDistract(3000);
+                me->SetSelection(target->GetGUID());
+                me->SetInFront(target);
                 m_creature->CastSpell(target, SPELL_FLAME_BREATH, false);
-                m_creature->StopMoving();
                 isFlameBreathing = true;
             }
             FireBreathTimer = 8000;
