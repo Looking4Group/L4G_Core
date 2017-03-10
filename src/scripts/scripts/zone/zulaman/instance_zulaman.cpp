@@ -442,10 +442,14 @@ struct instance_zulaman : public ScriptedInstance
                 CheckInstanceStatus();
             break;
         case DATA_ZULJINEVENT:
+            Encounters[6] = data;
             if (Encounters[6] != DONE)
-                Encounters[6] = data;
-
-            HandleGameObject(ZulJinDoorGUID, data != IN_PROGRESS);
+            {
+                if (data == IN_PROGRESS)
+                    HandleGameObject(ZulJinDoorGUID, false);
+                else if (data == NOT_STARTED)
+                    HandleGameObject(ZulJinDoorGUID, true);
+            }
             break;
         case DATA_CHESTLOOTED:
             ChestLooted++;
