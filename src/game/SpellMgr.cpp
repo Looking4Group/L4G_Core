@@ -1131,6 +1131,7 @@ bool SpellMgr::IsPartialyResistable(SpellEntry const* spellInfo)
     {
         case 30115:     // Terestian - Sacrifice
         case 33051:     // Krosh Firehand - Greater Fireball
+        case 37433:     // Lurker Spout
         case 36805:     // Kael'thas - Fireball
         case 36819:     // Kael'thas - Pyroblast
         case 31944:     // Archimond - Doomfire
@@ -1151,6 +1152,7 @@ bool SpellMgr::IsPartialyResistable(SpellEntry const* spellInfo)
         case 47002:     // Felmyst: Noxious Fumes
         case 45866:     // Felmyst: Corrosion
         case 45855:     // Felmyst: Gas Nova
+        case 46771:     // Eredar Twins: Flame Sear
             return false;
     }
 
@@ -3307,8 +3309,11 @@ void SpellMgr::LoadSpellCustomAttr()
             case 37676: // Insidious Whisper
             case 46008: // Negative Energy
             case 45641: // Fire Bloom
+                spellInfo->MaxAffectedTargets = 5;
+                break;
             case 46771: // Flame Sear
                 spellInfo->MaxAffectedTargets = 5;
+                spellInfo->AttributesEx3 |= SPELL_ATTR_EX4_IGNORE_RESISTANCES;
                 break;
             case 40827: // Sinful Beam
             case 40859: // Sinister Beam
@@ -3728,9 +3733,17 @@ void SpellMgr::LoadSpellCustomAttr()
             case 30564: // Worgen's Spite has a duration of 1.1 seconds (Will fade once Transform fades)
                 spellInfo->DurationIndex = 555;
                 break;
-            case 38316: //Lady Vashj entangle is not supposed to break on damage
-                spellInfo->Attributes = 0;
+            case 38316: // Lady Vashj Entangle
+            case 38280: // Lady Vashj Static Charge
+            case 43363: // Electrified Net Damage
+            case 43364: // Tranquilizing Poison
+                spellInfo->AttributesEx4 |= SPELL_ATTR_EX4_DAMAGE_DOESNT_BREAK_AURAS;
                 break;
+            case 43362: // Electrified Net
+                spellInfo->CastingTimeIndex = 0;
+                break;
+            case 8064:
+                spellInfo->Mechanic = MECHANIC_SLEEP;
             case 38015: //Hydross beam visual
                 spellInfo->Attributes |= SPELL_ATTR_EX_NO_THREAT;
                 spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
@@ -3746,7 +3759,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->EffectDieSides[0] = 1501;
                 spellInfo->Targets = 64;
                 spellInfo->EffectImplicitTargetA[0] = 16;
-                break;            
+                break;
             case 30834: //Prince infernals targeting
                 spellInfo->Targets = TARGET_UNIT_TARGET_ANY;
                 spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ANY;
