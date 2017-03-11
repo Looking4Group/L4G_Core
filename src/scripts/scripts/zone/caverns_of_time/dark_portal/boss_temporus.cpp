@@ -17,25 +17,29 @@
 /* ScriptData
 SDName: Boss_Temporus
 SD%Complete: 95
-SDComment: Some timers may need to be adjusted
+SDComment: 
 SDCategory: Caverns of Time, The Dark Portal
 EndScriptData */
 
 #include "precompiled.h"
 #include "def_dark_portal.h"
 
-#define SAY_ENTER               -1269000
-#define SAY_AGGRO               -1269001
-#define SAY_BANISH              -1269002
-#define SAY_SLAY1               -1269003
-#define SAY_SLAY2               -1269004
-#define SAY_DEATH               -1269005
+enum Temporus
+{
+    SAY_ENTER           = -1269000,
+    SAY_AGGRO           = -1269001,
+    SAY_BANISH          = -1269002,
+    SAY_SLAY1           = -1269003,
+    SAY_SLAY2           = -1269004,
+    SAY_DEATH           = -1269005,
 
-#define SPELL_HASTE             31458
-#define SPELL_MORTAL_WOUND      31464
-#define SPELL_WING_BUFFET       31475
-#define H_SPELL_WING_BUFFET     38593
-#define SPELL_REFLECT           38592
+    SPELL_HASTE         = 31458,
+    SPELL_MORTAL_WOUND  = 31464,
+    SPELL_WING_BUFFET   = 31475,
+    H_SPELL_WING_BUFFET = 38593,
+    SPELL_REFLECT       = 38592
+};
+
 
 struct boss_temporusAI : public ScriptedAI
 {
@@ -110,7 +114,6 @@ struct boss_temporusAI : public ScriptedAI
         if (!UpdateVictim())
             return;
 
-        //Attack Haste
         if (Haste_Timer < diff)
         {
             AddSpellToCast(SPELL_HASTE, CAST_SELF);
@@ -119,7 +122,6 @@ struct boss_temporusAI : public ScriptedAI
         else
             Haste_Timer -= diff;
 
-        //Wing Buffet
         if (WingBuffet_Timer < diff)
         {
             AddSpellToCast(m_creature, HeroicMode ? H_SPELL_WING_BUFFET : SPELL_WING_BUFFET);
@@ -128,19 +130,17 @@ struct boss_temporusAI : public ScriptedAI
         else
             WingBuffet_Timer -= diff;
 
-        //Mortal Wound
         if (MortalWound_Timer < diff)
         {
-            AddSpellToCast(m_creature, SPELL_MORTAL_WOUND);
+            AddSpellToCast(m_creature->getVictim(), SPELL_MORTAL_WOUND);
                 if (m_creature->HasAura(SPELL_HASTE, 0))
-                    MortalWound_Timer = urand(2000, 3000);
+                    MortalWound_Timer = urand(3333, 6666);
                 else
-                    MortalWound_Timer = urand(6000, 9000);
+                    MortalWound_Timer = urand(10000, 20000);
         }
         else
             MortalWound_Timer -= diff;
 
-        //Spell Reflection
         if (HeroicMode && SpellReflection_Timer < diff)
         {
             AddSpellToCast(m_creature, SPELL_REFLECT);
