@@ -26,6 +26,7 @@ EndScriptData */
 
 enum Akilzon
 {
+    AGGRO_RANGE                 =       25,
     SAY_EVENT1                  = -1568024,
     SAY_EVENT2                  = -1568025,
     SAY_AGGRO                   = -1568026,
@@ -37,10 +38,13 @@ enum Akilzon
     SAY_DEATH                   = -1568032,
     EMOTE_STORM                 = -1568033,
 
-    SPELL_STATIC_DISRUPTION     = 44008,
+    SPELL_STATIC_DISRUPTION     = 43622,
+    SPELL_STATIC_DISRUPTION_DEB = 44008, // debuff with implemented chain
+    SPELL_STATIC_DISRUPTION_VIS = 45265, // cosmetic chain effect
     SPELL_CALL_LIGHTNING        = 43661,
     SPELL_GUST_OF_WIND          = 43621,
     SPELL_ELECTRICAL_STORM      = 43648,
+    SPELL_STORMCLOUD_VISUAL     = 45213, // linked
     SPELL_BERSERK               = 45078,
     SPELL_EAGLE_SWOOP           = 44732,
 
@@ -53,6 +57,7 @@ struct boss_akilzonAI : public ScriptedAI
 {
     boss_akilzonAI(Creature *c) : ScriptedAI(c)
     {
+        m_creature->SetAggroRange(AGGRO_RANGE);
         pInstance = (c->GetInstanceData());
         m_creature->GetPosition(wLoc);
     }
@@ -82,8 +87,8 @@ struct boss_akilzonAI : public ScriptedAI
         StaticDisruption_Timer = urand(5000, 10000);
         GustOfWind_Timer = urand(8000, 15000);
         CallLighting_Timer = urand(8000, 12000);
-        ElectricalStorm_Timer = 60000;
-        Enrage_Timer = 480000; //8 minutes to enrage
+        ElectricalStorm_Timer = 50000;
+        Enrage_Timer = 600000;
         SummonEagles_Timer = 99999;
 
         BirdsList.clear();
@@ -180,12 +185,14 @@ struct boss_akilzonAI : public ScriptedAI
 
         if (StaticDisruption_Timer < diff)
         {
-            if(ElectricalStorm_Timer < 3000)
-                StaticDisruption_Timer += 6000;
+            if(ElectricalStorm_Timer < 8000)
+                StaticDisruption_Timer += 18000;
 
             Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_STATIC_DISRUPTION), true, m_creature->getVictimGUID());
             if(!target)
                 target = m_creature->getVictim();
+            m_creature->SetSelection(target->GetGUID());
+            m_creature->SetInFront(target);
             AddSpellToCast(target, SPELL_STATIC_DISRUPTION, false, true);
             StaticDisruption_Timer = urand(7000, 14000);
         }
@@ -194,13 +201,14 @@ struct boss_akilzonAI : public ScriptedAI
 
         if (GustOfWind_Timer < diff)
         {
-            //we dont want to start a storm with player in the air
-            if(ElectricalStorm_Timer < 8000)
+            if (ElectricalStorm_Timer < 8000)
                 GustOfWind_Timer += 18000;
             else
+            if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_GUST_OF_WIND), true, m_creature->getVictimGUID()))
             {
-                if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_GUST_OF_WIND), true, m_creature->getVictimGUID()))
-                    AddSpellToCast(target, SPELL_GUST_OF_WIND);
+                m_creature->SetSelection(target->GetGUID());
+                m_creature->SetInFront(target);
+                AddSpellToCast(target, SPELL_GUST_OF_WIND);
                 GustOfWind_Timer = urand(8000, 14000);
             }
         }
@@ -209,13 +217,16 @@ struct boss_akilzonAI : public ScriptedAI
 
         if (CallLighting_Timer < diff)
         {
+            if (ElectricalStorm_Timer < 4000)
+                CallLighting_Timer += 12000;
+
             AddSpellToCast(m_creature->getVictim(), SPELL_CALL_LIGHTNING);
-            CallLighting_Timer = RAND(urand(10000, 15000), urand(30000, 45000));
+            CallLighting_Timer = urand(15000, 25000);
         }
         else
             CallLighting_Timer -= diff;
 
-        if (!isRaining && ElectricalStorm_Timer < urand(8000, 12000))
+        if (!isRaining && ElectricalStorm_Timer < urand(8000, 16000))
         {
             SetWeather(WEATHER_STATE_HEAVY_RAIN, 0.9999f);
             isRaining = true;
@@ -224,7 +235,7 @@ struct boss_akilzonAI : public ScriptedAI
         if (isRaining && ElectricalStorm_Timer > 50000)
         {
             SetWeather(WEATHER_STATE_FINE, 0.0f);
-            SummonEagles_Timer = 13000;
+            SummonEagles_Timer = 10000;
             isRaining = false;
         }
 
@@ -237,14 +248,18 @@ struct boss_akilzonAI : public ScriptedAI
                 EnterEvadeMode();
                 return;
             }
+            m_creature->SetSelection(target->GetGUID());
+            m_creature->SetInFront(target);
             // throw player to air and cast electrical storm on (should be handled by proper script effect targeting?)
             DoScriptText(EMOTE_STORM, m_creature, 0, true);
             // temporary test, normally used in spell_linked_spell, should be casted before players flying
             target->CastSpell(target, 44007, true);
             m_creature->CastSpell(target, SPELL_ELECTRICAL_STORM, false);
 
-            ElectricalStorm_Timer = 60000;
-            StaticDisruption_Timer += 10000;
+            ElectricalStorm_Timer = urand(55000, 60000);
+            StaticDisruption_Timer  += 10000;
+            GustOfWind_Timer        += 10000;
+            CallLighting_Timer      += 10000;
         }
         else
             ElectricalStorm_Timer -= diff;
@@ -346,14 +361,13 @@ struct mob_soaring_eagleAI : public ScriptedAI
                 canMoveRandom = true;
                 canCast = false;
             }
-            EagleSwoop_Timer = urand(4000, 6000);
+            EagleSwoop_Timer = urand(2000, 6000);
         }
         else
             EagleSwoop_Timer -= diff;
     }
 };
 
-//Soaring Eagle
 CreatureAI* GetAI_mob_soaring_eagle(Creature *_Creature)
 {
     return new mob_soaring_eagleAI(_Creature);

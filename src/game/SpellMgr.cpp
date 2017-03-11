@@ -3827,7 +3827,6 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->Targets = TARGET_FLAG_GAMEOBJECT;
                 break;
             case 26983: //Tranquility targets
-            case 44208: 
                 spellInfo->Targets = TARGET_FLAG_DEST_LOCATION;
                 break;
             case 18396: //Dismounting blast
@@ -3842,7 +3841,12 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 40080: //Booming Voice
                 spellInfo->EffectRealPointsPerLevel[0] = 0;
-		        break;
+		            break;
+            case 44008: //Static Disruption
+                spellInfo->Targets = TARGET_FLAG_DEST_LOCATION;
+                spellInfo->EffectRadiusIndex[0] = 18;
+                spellInfo->EffectRadiusIndex[1] = 18;
+                break;   
             default:
                 break;
         }

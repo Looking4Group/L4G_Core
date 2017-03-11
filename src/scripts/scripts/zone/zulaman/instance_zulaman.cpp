@@ -387,20 +387,25 @@ struct instance_zulaman : public ScriptedInstance
             }
             break;
         case DATA_AKILZONEVENT:
-            HandleGameObject(AkilzonDoorGUID, data != IN_PROGRESS);
+            Encounters[2] = data;
             if (Encounters[2] != DONE)
             {
-                Encounters[2] = data;
-                if(data == DONE)
+                if (data == IN_PROGRESS)
+                    HandleGameObject(AkilzonDoorGUID, false);
+                else if (data == NOT_STARTED)
+                    HandleGameObject(AkilzonDoorGUID, true);
+            }
+            else if (Encounters[2] == DONE)
+            if (data == DONE)
+            {
+                if (QuestMinute)
                 {
-                    if(QuestMinute)
-                    {
-                        QuestMinute += 10;
-                        UpdateWorldState(3106, QuestMinute);
-                    }
-                    BossJustKilled(1);
-                    HandleGameObject(AkilzonFlameGUID, true);
+                    QuestMinute += 10;
+                    UpdateWorldState(3106, QuestMinute);
                 }
+                HandleGameObject(AkilzonDoorGUID, true);
+                HandleGameObject(AkilzonFlameGUID, true);
+                BossJustKilled(1);
             }
             break;
         case DATA_JANALAIEVENT:
