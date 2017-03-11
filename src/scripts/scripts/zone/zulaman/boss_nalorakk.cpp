@@ -69,6 +69,7 @@ enum Nalorakk
     SPELL_MANGLE            =    42389,
     SPELL_MANGLEEFFECT      =    44955,
     SPELL_SURGE             =    42402,
+    SPELL_CHARGE_VISUAL     =    40602,
     SPELL_BEARFORM          =    42377,
 
     SPELL_LACERATINGSLASH   =    42395,
@@ -138,7 +139,7 @@ struct boss_nalorakkAI : public ScriptedAI
         Surge_Timer = 15000 + rand()%5000;
         BrutalSwipe_Timer = 7000 + rand()%5000;
         Mangle_Timer = 10000 + rand()%5000;
-        ShapeShift_Timer = 45000 + rand()%5000;
+        ShapeShift_Timer = 45000;
         Berserk_Timer = 600000;
 
         checkTimer = 3000;
@@ -201,7 +202,7 @@ struct boss_nalorakkAI : public ScriptedAI
             Surge_Timer = 15000 + rand()%5000;
             BrutalSwipe_Timer = 7000 + rand()%5000;
             Mangle_Timer = 10000 + rand()%5000;
-            ShapeShift_Timer = 45000 + rand()%5000;
+            ShapeShift_Timer = 45000;
             inBearForm = false;
             ClearCastQueue();
         }
@@ -397,9 +398,12 @@ struct boss_nalorakkAI : public ScriptedAI
 
             if(Surge_Timer < diff)
             {
-                if(Unit *target = SelectUnit(SELECT_TARGET_RANDOM, 1, GetSpellMaxRange(SPELL_SURGE), true, m_creature->getVictimGUID()))
-                    AddSpellToCastWithScriptText(target, SPELL_SURGE, YELL_SURGE);
-                Surge_Timer = 15000 + rand()%5000;
+                if (Unit *target = SelectUnit(SELECT_TARGET_RANDOM, 1, GetSpellMaxRange(SPELL_SURGE), true))
+                {
+                    AddSpellToCastWithScriptText(target, SPELL_SURGE, YELL_SURGE, true);
+                    DoCast(target, SPELL_CHARGE_VISUAL, true);
+                    Surge_Timer = urand(15000, 20000);
+                }
             }else 
                 Surge_Timer -= diff;
 
