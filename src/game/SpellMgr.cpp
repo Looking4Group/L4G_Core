@@ -3231,8 +3231,6 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->InterruptFlags &= ~SPELL_INTERRUPT_FLAG_MOVEMENT;
             case 26029: // Dark Glare
             case 43213: // Flame Whirl
-            case 43648: // Electrical Storm
-            case 43622: // Static Disruption
             case 43140: 
             case 43215: // Flame Breath
                 spellInfo->ChannelInterruptFlags |= CHANNEL_INTERRUPT_FLAG_MOVEMENT;
@@ -3846,7 +3844,15 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->Targets = TARGET_FLAG_DEST_LOCATION;
                 spellInfo->EffectRadiusIndex[0] = 18;
                 spellInfo->EffectRadiusIndex[1] = 18;
-                break;   
+                break;
+            case 43648: // Electrical Storm
+                spellInfo->ChannelInterruptFlags |= CHANNEL_INTERRUPT_FLAG_MOVEMENT;
+                spellInfo->Attributes |= SPELL_ATTR_EX4_DAMAGE_DOESNT_BREAK_AURAS;
+                spellInfo->InterruptFlags = 0x23;
+                break;
+            case 43622: // Static Disruption
+                spellInfo->InterruptFlags |= SPELL_INTERRUPT_FLAG_MOVEMENT;
+                break;
             default:
                 break;
         }

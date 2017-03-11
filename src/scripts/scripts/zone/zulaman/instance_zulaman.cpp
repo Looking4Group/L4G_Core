@@ -455,6 +455,9 @@ struct instance_zulaman : public ScriptedInstance
                 else if (data == NOT_STARTED)
                     HandleGameObject(ZulJinDoorGUID, true);
             }
+            else if (Encounters[6] == DONE)
+                if (data == DONE)
+                    HandleGameObject(ZulJinDoorGUID, true);
             break;
         case DATA_CHESTLOOTED:
             ChestLooted++;
