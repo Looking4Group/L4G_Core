@@ -3852,6 +3852,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 43622: // Static Disruption
                 spellInfo->InterruptFlags |= SPELL_INTERRUPT_FLAG_MOVEMENT;
+                break;
             default:
                 break;
         }
