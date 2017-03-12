@@ -1408,3 +1408,6 @@ DELETE FROM `creature_equip_template` WHERE `entry` = 8021;
 INSERT INTO `creature_equip_template` VALUES
 (8021,36960,2161,0,218171138,234948100,0,3,1038,0);
 
+-- Broggok 17380,18601
+UPDATE `creature_template` SET `speed`='1.48',`unit_flags`='64',`mechanic_immune_mask`='787431423',`armor`='7400',`mindmg`='3977',`maxdmg`='4238' WHERE `entry` = 18601; -- 7,953 - 8,476
+
