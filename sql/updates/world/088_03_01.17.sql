@@ -636,3 +636,775 @@ UPDATE `creature_template` SET `mindmg`='2169',`maxdmg`='2575',`baseattacktime`=
 -- Gruul the Dragonkiller 19044
 UPDATE `creature_template` SET `mindmg`='7369',`maxdmg`='8797',`baseattacktime`='1449',`speed`='3.00',`mechanic_immune_mask`='787431423',`flags_extra`='4259841' WHERE `entry` = 19044; -- T6+ 7369 8797 -- T4+5 9825 11729 -- 14,737 - 17,594
 
+-- https://github.com/Looking4Group/L4G_Core/issues/639
+-- =========
+-- Old Hillsbrad Foothills
+-- =========
+
+-- ======================================================
+-- Texts & Scripts
+-- ======================================================
+
+-- Scripts & Texts
+
+DELETE FROM `creature_ai_texts` WHERE `entry` IN ('-1272','-1273','-1274','-1275','-1276','-1277','-1278','-1279','-1280','-1281','-1282','-1283','-1284','-1285','-1286','-1287','-1288','-1289','-1290','-1291');
+DELETE FROM `creature_ai_texts` WHERE `entry` BETWEEN -9859 AND -9857;
+INSERT INTO `creature_ai_texts` VALUES
+(-1272,'I\'m thinking of a vacation. I hear Hearthglen is nice.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Old Hillsbrad Foothills'),
+(-1273,'Quitting time can\'t come too soon.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Old Hillsbrad Foothills'),
+(-1274,'I hear that Blackmoore has been acting strange.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Old Hillsbrad Foothills'),
+(-1275,'This area is restricted!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Old Hillsbrad Foothills'),
+(-1276,'Halt!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Old Hillsbrad Foothills'),
+(-1277,'Surrender immediately!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Old Hillsbrad Foothills'),
+(-1278,'Stop them!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Old Hillsbrad Foothills 17820'),
+(-1279,'Why...?',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Old Hillsbrad Foothills'),
+(-1280,'Blackmoore will have... your head!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Old Hillsbrad Foothills'),
+(-1281,'I was just... following orders.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Old Hillsbrad Foothills'),
+(-1282,'Cursed scum!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Old Hillsbrad Foothills'),
+(-1283,'He\'s here, stop him!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Old Hillsbrad Foothills'),
+(-1284,'Give up or die!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Old Hillsbrad Foothills'),
+(-1285,'You won\'t get far....',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Old Hillsbrad Foothills'),
+(-1286,'You think you\'ve won?',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Old Hillsbrad Foothills'),
+(-1287,'I\'ll...',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Old Hillsbrad Foothills'),
+(-1288,'You don\'t stand a chance!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Old Hillsbrad Foothills'),
+(-1289,'We have all the time in the world....',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Old Hillsbrad Foothills'),
+(-1290,'All that you know... will be undone.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Old Hillsbrad Foothills'),
+(-1291,'You cannot escape us!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Old Hillsbrad Foothills'),
+
+(-9859,'Die like a dog!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'Don Carlos on PK'),
+(-9858,'HAH! How do you like THAT?!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'Don Carlos on PK'),
+(-9857,'Im... possible...',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'Don Carlos on Death');
+-- (-9856,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'HDZ1COMMENT'),
+
+-- ======================================================
+-- Spawns & Pooling
+-- ======================================================
+
+-- freie guids ab 83900 :  84007 - 84010 84012 84095 - 84100 weiter  84101
+-- freie guids ab 83455: 83497 - 83501 83506 - 83510 83520 - 83525 83877 bis 83900
+
+DELETE FROM `creature` WHERE `guid` IN (83939,83989,48021,84001);
+INSERT INTO `creature` VALUES 
+(83939,17819,560,3,0,0,2089.9956,44.8650,52.4412,4.4137,7200,0,0,17926,0,0,0),
+(83989,17819,560,3,0,0,2055.1633,83.7097,52.4906,3.5859,7200,0,0,17926,0,0,0),
+(48021, 17814, 560, 3, 17959, 0, 2013.41, 302.687, 66.0954, 1.14394, 6600, 0, 0, 0, 0, 0, 0);
+-- (84001,17814,560,3,17959,0,2014.4409,302.3657,66.0960,1,7200,0,0,0,0,0,0);
+
+-- ==========
+-- ReGUID
+-- ==========
+
+
+
+-- ======================================================
+-- NPC Research
+-- ======================================================
+
+-- Durnholde Rifleman / Durnholde Lookout 1h axe and rifle
+UPDATE `creature_template` SET `equipment_id`='8008' WHERE `entry` IN ('17820','20526','22128','22129');
+DELETE FROM `creature_equip_template` WHERE `entry` = 8008;
+INSERT INTO `creature_equip_template` (`entry`, `equipmodel1`, `equipmodel2`, `equipmodel3`, `equipinfo1`, `equipinfo2`, `equipinfo3`, `equipslot1`, `equipslot2`, `equipslot3`) VALUES
+(8008,22105,0,6606,218169346,0,50266626,3,0,26);
+
+-- Durnholde Rifleman Axt und Gewehr 17820,20526
+UPDATE `creature` SET `id`='17820' WHERE `guid` = 83972;
+UPDATE `creature_template` SET `armor`='4900',`modelid_A2`='17982',`modelid_H2`='17982' WHERE `entry` = 17820;
+UPDATE `creature_template` SET `speed`='1.48',`lootid`='17820',`pickpocketloot`='17820',`rangeattacktime`='0',`modelid_A2`='17982',`modelid_H2`='17982' WHERE `entry` = 20526;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN ('17820');
+INSERT INTO `creature_ai_scripts` VALUES
+('1782001','17820','0','0','100','7','4000','4000','4000','4000','21','1','0','0','22','0','0','0','40','2','0','0','Durnholde Rifleman - Start Combat Movement and Start Melee'),
+('1782002','17820','1','0','5','7','30000','180000','180000','360000','1','-1272','-1273','-1274','0','0','0','0','0','0','0','0','Durnholde Rifleman - Random Say OOC'),
+('1782003','17820','4','0','10','38','0','0','0','0','1','-1275','-1276','-1277','22','1','0','0','21','0','0','0','Durnholde Rifleman - Random Say and Set Phase 1 on Aggro'),
+('1782004','17820','9','1','100','3','5','30','1500','1500','11','16100','1','0','40','2','0','0','21','0','0','0','Durnholde Rifleman (Normal) - Cast Shoot and Set Ranged Weapon Model (Phase 1)'),
+('1782005','17820','9','1','100','5','5','30','1500','1500','11','22907','1','0','40','2','0','0','21','0','0','0','Durnholde Rifleman (Heroic) - Cast Shoot and Set Ranged Weapon Model (Phase 1)'),
+('1782006','17820','0','1','100','3','9000','15000','9000','15000','11','31942','4','1','40','2','0','0','21','0','0','0','Durnholde Rifleman (Normal) - Cast Multi-Shot and Set Ranged Weapon Model (Phase 1)'),
+('1782007','17820','0','1','100','5','9000','15000','9000','15000','11','38383','4','1','40','2','0','0','21','0','0','0','Durnholde Rifleman (Heroic) - Cast Multi-Shot and Set Ranged Weapon Model (Phase 1)'),
+('1782008','17820','0','0','100','7','10900','26500','22900','36200','11','23601','4','1','40','2','0','0','0','0','0','0','Durnholde Rifleman - Cast Scatter Shot and Set Ranged Weapon Model'),
+('1782009','17820','2','0','100','6','15','0','0','0','22','2','0','0','0','0','0','0','0','0','0','0','Durnholde Rifleman - Set Phase 2 at 15% HP'),
+('1782010','17820','2','0','100','6','15','0','0','0','21','1','0','0','25','0','0','0','1','-47','0','0','Durnholde Rifleman - Start Combat Movement and Flee at 15% HP (Phase 2)'),
+('1782011','17820','9','1','100','6','0','5','0','0','21','1','0','0','40','1','0','0','20','1','0','0','Durnholde Rifleman - Start Combat Movement and Set Melee Weapon Model and Start Melee Below 5 Yards (Phase 1)'),
+('1782012','17820','7','0','100','6','0','0','0','0','22','1','0','0','40','1','0','0','21','1','0','0','Durnholde Rifleman - Set Phase 1 and Set Melee Weapon Model on Evade'),
+('1782013','17820','6','0','10','38','0','0','0','0','1','-1279','-1280','-1281','1','-1280','-1281','-1282','1','-1279','-1280','-1282','Durnholde Rifleman - Random Say on Death');
+
+-- Durnholde Lookout 22128,22129
+UPDATE `creature` SET `id`='22128' WHERE `guid` IN (83910,83907,83930,83932,83940,83950,83962);
+UPDATE `creature_template` SET `minlevel`='66',`maxlevel`='67',`armor`='4900',`faction_A`='1748',`faction_H`='1748',`modelid_A2`='17982',`modelid_H2`='17982',`unit_flags`='0',`baseattacktime`='1400',`speed`='1.48',`lootid`='17820',`pickpocketloot`='17820',`mechanic_immune_mask`='0',`AIName`='EventAI' WHERE `entry` = 22128;
+UPDATE `creature_template` SET `armor`='7400',`faction_A`='1748',`faction_H`='1748',`modelid_A2`='17982',`modelid_H2`='17982',`speed`='1.48',`lootid`='17820',`pickpocketloot`='22128',`mechanic_immune_mask`='787431423' WHERE `entry` = 22129;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 22128;
+INSERT INTO `creature_ai_scripts` VALUES
+('2212801','22128','0','0','100','7','4000','4000','4000','4000','21','1','0','0','22','1','0','0','40','2','0','0','Durnholde Lookout - Start Combat Movement and Start Melee'),
+('2212802','22128','1','0','5','7','30000','180000','180000','360000','1','-1272','-1273','-1274','0','0','0','0','0','0','0','0','Durnholde Lookout - Random Say OOC'),
+('2212803','22128','4','0','100','6','0','0','0','0','1','-1275','-1276','-1277','12','22398','1','300','12','22398','1','300','Durnholde Lookout - Random Say and Summon 2 Durnholde Reinforcement on Aggro'),
+('2212804','22128','9','1','100','3','5','30','1500','1500','11','16100','1','0','40','2','0','0','21','0','0','0','Durnholde Lookout (Normal) - Cast Shoot and Set Ranged Weapon Model (Phase 1)'),
+('2212805','22128','9','1','100','5','5','30','1500','1500','11','22907','1','0','40','2','0','0','21','0','0','0','Durnholde Lookout (Heroic) - Cast Shoot and Set Ranged Weapon Model (Phase 1)'),
+('2212806','22128','0','1','100','3','9000','15000','9000','15000','11','31942','4','1','40','2','0','0','21','0','0','0','Durnholde Lookout (Normal) - Cast Multi-Shot and Set Ranged Weapon Model (Phase 1)'),
+('2212807','22128','0','1','100','5','9000','15000','9000','15000','11','38383','4','1','40','2','0','0','21','0','0','0','Durnholde Lookout (Heroic) - Cast Multi-Shot and Set Ranged Weapon Model (Phase 1)'),
+('2212808','22128','0','0','100','7','10900','26500','22900','36200','11','23601','4','1','40','2','0','0','0','0','0','0','Durnholde Lookout - Cast Scatter Shot and Set Ranged Weapon Model'),
+('2212809','22128','2','0','100','6','15','0','0','0','22','2','0','0','0','0','0','0','0','0','0','0','Durnholde Lookout - Set Phase 2 at 15% HP'),
+('2212810','22128','2','0','100','6','15','0','0','0','21','1','0','0','25','0','0','0','1','-47','0','0','Durnholde Lookout - Start Combat Movement and Flee at 15% HP (Phase 2)'),
+('2212811','22128','9','1','100','6','0','5','0','0','21','1','0','0','40','1','0','0','20','1','0','0','Durnholde Lookout - Start Combat Movement and Set Melee Weapon Model and Start Melee Below 5 Yards (Phase 1)'),
+('2212812','22128','7','0','100','6','0','0','0','0','22','0','0','0','40','1','0','0','21','1','0','0','Durnholde Lookout - Set Phase 0 and Set Melee Weapon Model and Start Movement on Evade'),
+('2212813','22128','6','0','10','6','0','0','0','0','1','-1279','-1280','-1281','1','-1280','-1281','-1282','1','-1279','-1280','-1282','Durnholde Lookout - Random Say on Death');
+
+-- Durnholde Sentry / Durnholde Reinforcement eigentlich 56902
+UPDATE `creature_template` SET `equipment_id`='8006' WHERE `entry` IN ('17819','20527','22398','22399');
+DELETE FROM `creature_equip_template` WHERE `entry` = 8006;
+INSERT INTO `creature_equip_template` (`entry`, `equipmodel1`, `equipmodel2`, `equipmodel3`, `equipinfo1`, `equipinfo2`, `equipinfo3`, `equipslot1`, `equipslot2`, `equipslot3`) VALUES
+(8006,20084,0,0,218171394,0,0,256,0,0);
+
+-- Durnholde Sentry 2H Sword 17819,20527
+UPDATE `creature` SET `id`='17819' WHERE `guid` IN (83912,83971,83966);
+UPDATE `creature_template` SET `maxlevel`='67',`armor`='4900',`modelid_A2`='18001',`modelid_H2`='18001',`mindmg`='750',`maxdmg`='1250',`baseattacktime`='1800' WHERE `entry` = 17819;
+UPDATE `creature_template` SET `armor`='7100',`modelid_A2`='18001',`modelid_H2`='18001',`speed`='1.48',`mindmg`='2555',`maxdmg`='3239',`lootid`='17819',`pickpocketloot`='17819' WHERE `entry` = 20527; -- 5,109 - 6,478 2000 4000
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN ('17819');
+INSERT INTO `creature_ai_scripts` VALUES
+('1781901','17819','1','0','5','7','30000','180000','180000','360000','1','-1272','-1273','-1274','0','0','0','0','0','0','0','0','Durnholde Sentry - Random Say OOC'),
+('1781902','17819','9','0','100','7','0','5','10100','15000','11','9080','1','1','0','0','0','0','0','0','0','0','Durnholde Sentry - Cast Hamstring'),
+('1781903','17819','0','0','100','7','4000','9000','8000','11000','11','15496','1','1','0','0','0','0','0','0','0','0','Durnholde Sentry - Cast Cleave'),
+('1781904','17819','0','0','100','7','6200','9700','9000','13000','11','14895','1','1','0','0','0','0','0','0','0','0','Durnholde Sentry - Cast Overpower'),
+('1781905','17819','2','0','100','6','15','0','0','0','25','0','0','0','1','-47','0','0','0','0','0','0','Durnholde Sentry - Flee at 15% HP'),
+('1781906','17819','6','0','10','38','0','0','0','0','1','-1279','-1280','-1281','0','0','0','0','0','0','0','0','Durnholde Sentry - Random Say on Death'),
+('1781907','17819','4','0','10','6','0','0','0','0','1','-1278','0','0','0','0','0','0','0','0','0','0','Durnholde Sentry - Random Say on Aggro');
+
+-- Durnholde Reinforcement 22398,22399
+UPDATE `creature_template` SET `minlevel`='68',`maxlevel`='68',`armor`='5200',`minhealth`='24926',`maxhealth`='25338',`modelid_A2`='18001',`modelid_H2`='18001',`speed`='1.48',`unit_flags`='0',`lootid`='17819',`pickpocketloot`='17819',`mindmg`='1000',`maxdmg`='1500',`baseattacktime`='1800',`mechanic_immune_mask`='0',`AIName`='EventAI' WHERE `entry` = 22398;
+UPDATE `creature_template` SET `minlevel`='72',`maxlevel`='72',`armor`='7400',`minhealth`='49852',`maxhealth`='55676',`modelid_A2`='18001',`modelid_H2`='18001',`speed`='1.48',`mindmg`='3140',`maxdmg`='3689',`lootid`='17819',`pickpocketloot`='17819',`mechanic_immune_mask`='787421183' WHERE `entry` = 22399; -- 4,279 - 5,377 2500  4500
+DELETE FROM `creature_onkill_reputation` WHERE `creature_id` = 22399;
+INSERT INTO `creature_onkill_reputation` VALUES
+(22399,989,0,7,0,15,0,0,0,0);
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 22398;
+INSERT INTO `creature_ai_scripts` VALUES
+('2239801','22398','1','0','5','7','30000','180000','180000','360000','1','-1272','-1273','-1274','0','0','0','0','0','0','0','0','Durnholde Reinforcement - Random Say OOC'),
+('2239802','22398','9','0','100','7','0','5','5000','10000','11','9080','4','1','0','0','0','0','0','0','0','0','Durnholde Reinforcement - Cast Hamstring'),
+('2239803','22398','0','0','100','7','4000','9000','8000','11000','11','15496','1','1','0','0','0','0','0','0','0','0','Durnholde Reinforcement - Cast Cleave'),
+('2239804','22398','0','0','100','7','6200','9700','9000','13000','11','14895','1','1','0','0','0','0','0','0','0','0','Durnholde Reinforcement - Cast Overpower'),
+('2239805','22398','2','0','100','6','15','0','0','0','25','0','0','0','1','-47','0','0','0','0','0','0','Durnholde Reinforcement - Flee at 15% HP'),
+('2239806','22398','6','0','10','6','0','0','0','0','1','-1279','-1280','-1281','0','0','0','0','0','0','0','0','Durnholde Reinforcement - Random Say on Death'),
+('2239807','22398','4','0','10','6','0','0','0','0','1','-1278','0','0','0','0','0','0','0','0','0','0','Durnholde Reinforcement - Random Say on Aggro'),
+('2239808','22398','7','0','10','6','0','0','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Durnholde Reinforcement - Despawn on Evade');
+
+-- Durnholde Tracking Hound 17840,20528
+UPDATE `creature_template` SET `maxlevel`='66',`minhealth`='10000',`maxhealth`='10645',`armor`='4600',`mindmg`='800',`maxdmg`='1200',`baseattacktime`='1000',`speed`='1.71' WHERE `entry` = 17840;
+UPDATE `creature_template` SET `armor`='6500',`speed`='1.71',`mindmg`='1500',`maxdmg`='2000',`lootid`='17840',`skinloot`='70065' WHERE `entry` = 20528;
+DELETE FROM `creature_template_addon` WHERE `entry` IN (17840,20528);
+INSERT INTO `creature_template_addon` VALUES
+(17840,0,0,0,0,0,0,0,'18950 0 18950 1'),
+(20528,0,0,0,0,0,0,0,'18950 0 18950 1');
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17840;
+INSERT INTO `creature_ai_scripts` VALUES
+('1784001','17840','2','0','100','6','50','0','0','0','11','8269','0','0','1','-106','0','0','0','0','0','0','Durnholde Tracking Hound - Cast Frenzy at 50% HP');
+UPDATE `creature_onkill_reputation` SET `MaxStanding1`='6' WHERE `creature_id` = 17840;
+
+-- Durnholde Warden 17833,20530
+-- Slabby ZH Zul Aman AI DESPELL vlt sogar anderen spell 23859 benutzen statt 17201
+UPDATE `creature` SET `spawntimesecs`='7200' WHERE `id` = 17833;
+UPDATE `creature` SET `id`='17833' WHERE `guid` = 83968;
+UPDATE `creature_template` SET `equipment_id`='8009' WHERE `entry` IN (17833,20530);
+DELETE FROM `creature_equip_template` WHERE `entry` = 8009;
+INSERT INTO `creature_equip_template` (`entry`, `equipmodel1`, `equipmodel2`, `equipmodel3`, `equipinfo1`, `equipinfo2`, `equipinfo3`, `equipslot1`, `equipslot2`, `equipslot3`) VALUES
+(8009,18368,0,0,50268674,0,0,529,0,0);
+UPDATE `creature_template` SET `maxlevel`='68',`armor`='3950',`mindmg`='800',`maxdmg`='1200' WHERE `entry` = 17833;
+UPDATE `creature_template` SET `minlevel`='70',`armor`='5700',`speed`='1.48',`mindmg`='1500',`maxdmg`='2000',`lootid`='17833',`pickpocketloot`='17833' WHERE `entry` = 20530;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN ('17833');
+INSERT INTO `creature_ai_scripts` VALUES
+('1783301','17833','1','0','5','7','30000','180000','180000','360000','1','-1272','-1273','-1274','0','0','0','0','0','0','0','0','Durnholde Warden - Random Say OOC'),
+('1783302','17833','4','0','10','38','0','0','0','0','1','-1276','-1277','-1278','0','0','0','0','0','0','0','0','Durnholde Warden - Random Say on Aggro'),
+('1783303','17833','9','0','100','3','0','30','10000','15000','11','15654','4','32','0','0','0','0','0','0','0','0','Durnholde Warden (Normal) - Cast Shadow Word: Pain'),
+('1783304','17833','9','0','100','5','0','30','8000','12000','11','34941','4','32','0','0','0','0','0','0','0','0','Durnholde Warden (Heroic) - Cast Shadow Word: Pain'),
+('1783305','17833','0','0','100','7','16000','24000','20000','35000','11','22884','0','1','0','0','0','0','0','0','0','0','Durnholde Warden - Cast Psychic Scream'),
+('1783306','17833','0','0','100','7','7000','12000','10000','16000','11','17201','0','1','0','0','0','0','0','0','0','0','Durnholde Warden - Cast Dispel Magic'),
+('1783307','17833','14','0','100','3','7500','15','10000','15000','11','15586','6','0','0','0','0','0','0','0','0','0','Durnholde Warden (Normal) - Cast Heal on Friendlies'),
+('1783308','17833','14','0','100','5','11200','15','8000','12000','11','22883','6','0','0','0','0','0','0','0','0','0','Durnholde Warden (Heroic) - Cast Heal on Friendlies'),
+('1783309','17833','2','0','100','6','15','0','0','0','25','0','0','0','1','-47','0','0','0','0','0','0','Durnholde Warden - Flee at 15% HP'),
+('1783310','17833','6','0','10','38','0','0','0','0','1','-1280','-1281','-1282','0','0','0','0','0','0','0','0','Durnholde Warden - Random Say on Death'),
+('1783311','17833','15','0','100','7','0','30','10000','15000','11','17201','7','7','0','0','0','0','0','0','0','0','Durnholde Warden - Cast Dispel Magic on Friendlies'),
+('1783313','17833','2','0','100','3','75','0','15000','20000','11','15586','0','1','0','0','0','0','0','0','0','0','Durnholde Warden (Heroic) - Cast Heal at 75%'),
+('1783314','17833','2','0','100','5','75','0','15000','20000','11','22883','0','1','0','0','0','0','0','0','0','0','Durnholde Warden (Heroic) - Cast Heal at 75%');
+
+-- Durnholde Veteran 17860,20529
+UPDATE `creature` SET `id`='17860' WHERE `guid` IN (83975,83967);
+UPDATE `creature_template` SET `equipment_id`='8010' WHERE `entry` IN (17860,20529);
+DELETE FROM `creature_equip_template` WHERE `entry` = 8010;
+INSERT INTO `creature_equip_template` (`entry`, `equipmodel1`, `equipmodel2`, `equipmodel3`, `equipinfo1`, `equipinfo2`, `equipinfo3`, `equipslot1`, `equipslot2`, `equipslot3`) VALUES
+(8010,22078,6434,0,218171138,218173186,0,3,3,0); 
+UPDATE `creature_template` SET `modelid_A2`='18006',`modelid_H2`='18006',`maxlevel`='68',`minhealth`='18345',`maxhealth`='18508',`armor`='5200',`mindmg`='400',`maxdmg`='600' WHERE `entry` = 17860;
+UPDATE `creature_template` SET `modelid_A2`='18006',`modelid_H2`='18006',`minhealth`='28114',`armor`='7100',`speed`='1.48',`mindmg`='1200',`maxdmg`='1500',`lootid`='17860',`pickpocketloot`='17860',`mechanic_immune_mask`='787431423' WHERE `entry` = 20529;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17860;
+INSERT INTO `creature_ai_scripts` VALUES
+('1786001','17860','4','0','10','6','0','0','0','0','1','-1275','-1278','-1277','0','0','0','0','0','0','0','0','Durnholde Veteran - Random Say on Aggro'),
+('1786002','17860','0','0','100','7','4000','7000','3600','10000','11','15581','1','0','0','0','0','0','0','0','0','0','Durnholde Veteran - Cast Sinister Strike'),
+('1786003','17860','9','0','100','7','0','5','5000','7000','11','15582','1','0','0','0','0','0','0','0','0','0','Durnholde Veteran - Cast Backstab'),
+('1786004','17860','2','0','100','6','15','0','0','0','25','0','0','0','1','-47','0','0','0','0','0','0','Durnholde Veteran - Flee at 15% HP'),
+('1786005','17860','6','0','10','6','0','0','0','0','1','-1282','-1280','-1281','0','0','0','0','0','0','0','0','Durnholde Veteran - Random Say on Death'),
+('1786006','17860','0','0','100','7','4000','8000','10000','12000','11','41389','1','1','0','0','0','0','0','0','0','0','Durnholde Veteran - Cast Kidney Shot'),
+('1786007','17860','4','0','100','6','0','0','0','0','11','29651','0','0','0','0','0','0','0','0','0','0','Durnholde Veteran - Casts Dual Wield on Aggro');
+
+-- Lordaeron Sentry 17815,20537
+UPDATE `creature_template` SET `maxlevel`='66',`minhealth`='17151',`maxhealth`='17469',`minmana`='0',`maxmana`='0',`armor`='5600',`equipment_id`='1802',`lootid`='17820',`pickpocketloot`='17820' WHERE `entry` = 17815; -- 575 803
+UPDATE `creature_template` SET `speed`='1.48',`lootid`='17820',`pickpocketloot`='17820',`equipment_id`='1802',`mindmg`='1844',`maxdmg`='2083',`spell1`='0' WHERE `entry` = 20537; -- 784 1652 s1 16100
+DELETE FROM `creature_template_addon` WHERE `entry` IN (17815,20537);
+INSERT INTO `creature_template_addon` VALUES
+(17815,0,0,512,0,4097,0,0,''),
+(20537,0,0,512,0,4097,0,0,'');
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17815;
+INSERT INTO `creature_ai_scripts` VALUES
+('1781501','17815','0','0','100','7','1000','1000','4000','4000','21','1','0','0','40','2','0','0','0','0','0','0','Lordaeron Sentry - Start Combat Movement and Set Melee Weapon Model'),
+('1781502','17815','1','0','5','7','30000','180000','180000','360000','1','-1272','-1273','-1274','0','0','0','0','0','0','0','0','Lordaeron Sentry - Random Say OOC'),
+('1781503','17815','4','0','10','38','0','0','0','0','1','-1275','-1276','-1277','22','1','0','0','21','0','0','0','Lordaeron Sentry - Random Say and Set Phase 1 and Stop Movement on Aggro'),
+('1781504','17815','9','1','100','3','5','30','2000','2000','11','16100','1','0','40','2','0','0','21','0','0','0','Lordaeron Sentry (Normal) - Cast Shoot and Set Ranged Weapon Model (Phase 1)'),
+('1781505','17815','9','1','100','5','5','30','2000','2000','11','22907','1','0','40','2','0','0','21','0','0','0','Lordaeron Sentry (Heroic) - Cast Shoot and Set Ranged Weapon Model (Phase 1)'),
+('1781506','17815','2','0','100','6','15','0','0','0','21','1','0','0','25','0','0','0','1','-47','0','0','Lordaeron Sentry - Start Movement and Flee at 15% HP'),
+('1781507','17815','9','1','100','6','0','5','0','0','21','1','0','0','40','1','0','0','22','0','0','0','Lordaeron Sentry - Start Movement and Set Melee Weapon Model and Set Phase 0 (Phase 1)'),
+('1781508','17815','7','0','100','6','0','0','0','0','22','1','0','0','40','1','0','0','21','1','0','0','Lordaeron Sentry - Set Phase 1 and Set Melee Weapon Model on Evade'),
+('1781509','17815','6','0','10','38','0','0','0','0','1','-1279','-1280','-1281','1','-1280','-1281','-1282','1','-1279','-1280','-1282','Lordaeron Sentry - Random Say on Death'),
+('1781510','17815','9','0','100','7','5','15','0','0','21','0','0','0','40','2','0','0','22','1','0','0','Lordaeron Sentry - Stop Combat Movement and Set Ranged Weapon Model and Set Phase 1 Above 5 Yards (Phase 0)');
+
+-- update 1801 equipinfo!
+-- Lordaeron Watchman 17814,20538
+UPDATE `creature` SET `spawntimesecs`='7200' WHERE `id` IN (17814,17815);
+UPDATE `creature_template` SET `maxlevel`='66',`minhealth`='17151',`maxhealth`='17469',`minmana`='0',`maxmana`='0',`armor`='5600',`equipment_id`='1801',`lootid`='17819',`pickpocketloot`='17819' WHERE `entry` = 17814; -- 575 803
+UPDATE `creature_template` SET `speed`='1.48',`lootid`='17819',`pickpocketloot`='17819',`equipment_id`='1801',`mindmg`='2219',`maxdmg`='2652',`spell1`='0',`spell2`='0' WHERE `entry` = 20538; -- 784 1652 s1 12169 s2 11976
+DELETE FROM `creature_template_addon` WHERE `entry` IN (17814,20538);
+INSERT INTO `creature_template_addon` VALUES
+(17814,0,0,512,0,4097,0,0,''),
+(20538,0,0,512,0,4097,0,0,'');
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17814;
+INSERT INTO `creature_ai_scripts` VALUES
+('1781401','17814','9','0','100','7','0','5','6200','14100','11','11976','1','0','0','0','0','0','0','0','0','0','Lordaeron Watchman - Cast Strike'),
+('1781402','17814','0','0','100','7','7000','11000','11000','18000','11','12169','0','1','0','0','0','0','0','0','0','0','Lordaeron Watchman - Cast Shield Block'),
+('1781403','17814','2','0','100','6','15','0','0','0','25','0','0','0','1','-47','0','0','0','0','0','0','Lordaeron Watchman - Flee at 15% HP'),
+('1781404','17814','6','0','10','6','0','0','0','0','1','-1285','-1287','0','0','0','0','0','0','0','0','0','Lordaeron Watchman - Random Say on Death');
+
+-- epoch_hunter Transformation NPCs should not have `equipment_id` !
+-- Tarren Mill Guardsman 18092,20545
+UPDATE `creature_template` SET `modelid_A2`=18249,`modelid_H2`=18249,`minhealth`='18345',`armor`='6200',`lootid`='17819',`pickpocketloot`='17819',`mindmg`='575',`maxdmg`='803',`equipment_id`='0',`AIName` = 'EventAI' WHERE `entry` = 18092; -- 196 201
+UPDATE `creature_template` SET `modelid_A2`=18249,`modelid_H2`=18249,`speed` = '1.48',`lootid`='17819',`pickpocketloot`='17819',`mindmg`='2389',`maxdmg`='3005',`equipment_id`='0' WHERE `entry` = 20545; -- 733 1964 s1 16856 s2 15749 s3 33133
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 18092;
+INSERT INTO `creature_ai_scripts` VALUES
+('1809201','18092','4','0','10','6','0','0','0','0','1','-1283','-1284','0','0','0','0','0','0','0','0','0','Tarren Mill Guardsman - Random Say on Aggro'),
+('1809202','18092','9','0','100','6','8','25','10000','15000','11','15749','1','0','0','0','0','0','0','0','0','0','Tarren Mill Guardsman - Cast Shield Charge'),
+('1809203','18092','9','0','100','7','0','5','9000','13000','11','16856','1','0','0','0','0','0','0','0','0','0','Tarren Mill Guardsman - Cast Mortal Strike'),
+('1809204','18092','6','0','10','6','0','0','0','0','1','-1285','-1286','-1287','0','0','0','0','0','0','0','0','Tarren Mill Guardsman - Random Say on Death');
+
+-- Tarren Mill Protector 18093,20547
+-- equipment 8020?
+UPDATE `creature_template` SET `modelid_A`=18265,`modelid_H`=18265,`modelid_A2`=18267,`modelid_H2`=18267,`equipment_id`=0,`minhealth`='15176',`armor`='6200',`lootid`='17833',`pickpocketloot`='17833' WHERE `entry` = 18093; -- 196 201
+UPDATE `creature_template` SET `modelid_A`=18265,`modelid_H`=18265,`modelid_A2`=18267,`modelid_H2`=18267,`baseattacktime`=1400,`equipment_id`=0,`minlevel`='71',`armor`='7100',`speed`='1.48',`lootid`='17833',`pickpocketloot`='17833',`spell1`='0',`spell2`='0',`spell3`='0',`spell4`='0' WHERE `entry` = 20547; -- 1172 1911 s1 29380 s2 15496 s3 32588 s4 17843
+DELETE FROM `creature_template_addon` WHERE `entry` IN (18093,20547);
+INSERT INTO `creature_template_addon` VALUES
+(18093,0,0,512,0,4097,0,0,''),
+(20547,0,0,512,0,4097,0,0,'');
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 18093;
+INSERT INTO `creature_ai_scripts` VALUES
+('1809301','18093','0','0','100','7','3200','9100','12100','18100','11','32588','1','32','0','0','0','0','0','0','0','0','Tarren Mill Protector - Cast Concussion Blow'),
+('1809302','18093','14','0','100','7','5600','40','9600','12700','11','17843','6','1','0','0','0','0','0','0','0','0','Tarren Mill Protector (Normal) - Cast Flash Heal on Friendlies'),
+('1809303','18093','14','0','100','7','7600','40','7600','9600','11','17138','6','1','0','0','0','0','0','0','0','0','Tarren Mill Protector (Heroic) - Cast Flash Heal on Friendlies'),
+('1809304','18093','0','0','100','7','5000','7000','9000','13000','11','15496','1','0','0','0','0','0','0','0','0','0','Tarren Mill Protector - Cast Cleave'),
+('1809305','18093','0','0','100','7','11000','20000','17000','22000','11','17234','1','0','0','0','0','0','0','0','0','0','Tarren Mill Protector - Cast Shadow Shock'),
+('1809306','18093','0','0','100','7','3000','9000','15000','20000','11','29380','0','1','0','0','0','0','0','0','0','0','Tarren Mill Protector - Cast Cleanse'),
+('1809307','18093','2','0','100','7','50','0','15000','20000','11','31976','0','33','0','0','0','0','0','0','0','0','Tarren Mill Protector - Cast Shadow Shield at 50% HP'),
+('1809308','18093','14','0','100','7','3000','30','10000','15000','11','29380','6','1','0','0','0','0','0','0','0','0','Tarren Mill Protector - Cast Cleanse on Friendlies');
+
+-- Tarren Mill Lookout 18094,20546
+UPDATE `creature_template` SET `modelid_A`=18252,`modelid_H`=18252,`modelid_A2`=18263,`modelid_H2`=18263,`armor`=4800,`equipment_id`=0 WHERE `entry` = 18094;
+UPDATE `creature_template` SET `modelid_A`=18252,`modelid_H`=18252,`modelid_A2`=18263,`modelid_H2`=18263,`minlevel`=71,`speed` = '1.48',`baseattacktime`=1400,`lootid`=18094,`pickpocketloot`=18094,`equipment_id` = '0',`equipment_id`=0 WHERE `entry` = 20546;
+
+-- Tarren Mill Guardsman 23175,23181
+UPDATE `creature_template` SET `heroic_entry` = 23181,`modelid_A2`=18249,`modelid_H2`=18249,`armor`=6200,`speed` = '1.48',`equipment_id` = '1801' WHERE `entry` = 23175;
+UPDATE `creature_template` SET `modelid_H`=18247,`modelid_A2`=18249,`modelid_H2`=18249,`minlevel`='71',`maxlevel`='72',`minmana`='0',`maxmana`='0',`minhealth`='28712',`maxhealth`='28893',`armor`='7068',`mindmg`='2389',`maxdmg`='3005',`baseattacktime` = '1400', `faction_A`='1748',`faction_H`='1748',`speed` = '1.48',`unit_flags`='1',`equipment_id` = '1801' WHERE `entry` = 23181;
+
+-- Tarren Mill Guardsman 23176,23182
+UPDATE `creature_template` SET `heroic_entry` = 23182,`modelid_A2`=18249,`modelid_H2`=18249,`armor`=6200,`speed` = '1.48',`equipment_id` = '1801' WHERE `entry` = 23176;
+UPDATE `creature_template` SET `modelid_H`=18247,`modelid_A2`=18249,`modelid_H2`=18249,`minlevel`='71',`maxlevel`='72',`minmana`='0',`maxmana`='0',`minhealth`='28712',`maxhealth`='28893',`armor`='7068',`mindmg`='2389',`maxdmg`='3005',`baseattacktime` = '1400', `faction_A`='1748',`faction_H`='1748',`speed` = '1.48',`unit_flags`='1',`equipment_id` = '1801' WHERE `entry` = 23182;
+
+-- Tarren Mill Lookout 23177,23183
+UPDATE `creature_template` SET `modelid_A`=18252,`modelid_H`=18252,`modelid_A2`=18263,`modelid_H2`=18263,`heroic_entry` = 23183,`minmana`='3309',`maxmana`='3309',`armor`=4800,`speed` = '1.48',`equipment_id` = '8008' WHERE `entry` = 23177;
+UPDATE `creature_template` SET `modelid_A`=18252,`modelid_H`=18252,`modelid_A2`=18263,`modelid_H2`=18263,`minlevel`='71',`maxlevel`='72',`minmana`='3309',`maxmana`='3309',`minhealth`='22892',`maxhealth`='23110',`armor`='5289',`mindmg`='1038',`maxdmg`='2129',`baseattacktime` = '1400', `faction_A`='1748',`faction_H`='1748',`speed` = '1.48',`unit_flags`='1',`equipment_id` = '8008' WHERE `entry` = 23183;
+
+-- Tarren Mill Lookout 23178,23184
+UPDATE `creature_template` SET `modelid_A`=18252,`modelid_H`=18252,`modelid_A2`=18263,`modelid_H2`=18263,`heroic_entry` = 23184,`minmana`='3309',`maxmana`='3309',`armor`=4800,`speed` = '1.48',`equipment_id` = '8008' WHERE `entry` = 23178;
+UPDATE `creature_template` SET `modelid_A`=18252,`modelid_H`=18252,`modelid_A2`=18263,`modelid_H2`=18263,`minlevel`='71',`maxlevel`='72',`minmana`='3309',`maxmana`='3309',`minhealth`='22892',`maxhealth`='23110',`armor`='5289',`mindmg`='1038',`maxdmg`='2129',`baseattacktime` = '1400', `faction_A`='1748',`faction_H`='1748',`speed` = '1.48',`unit_flags`='1',`equipment_id` = '8008' WHERE `entry` = 23184;
+
+-- Tarren Mill Protector 23179,23185
+UPDATE `creature_template` SET `modelid_A`=18265,`modelid_H`=18265,`modelid_A2`=18267,`modelid_H2`=18267,`heroic_entry` = 23185,`armor`=6200,`speed` = '1.48',`baseattacktime`=2000,`equipment_id`=8020 WHERE `entry` = 23179;
+UPDATE `creature_template` SET `modelid_A`=18265,`modelid_H`=18265,`modelid_A2`=18267,`modelid_H2`=18267,`minlevel`='71',`maxlevel`='72',`minmana`='15399',`maxmana`='16545',`minhealth`='23110',`maxhealth`='23456',`armor`='7100',`mindmg`='1172',`maxdmg`='1911',`baseattacktime` = '2000', `faction_A`='1748',`faction_H`='1748',`speed` = '1.48',`unit_flags`='1',`equipment_id` = '8020' WHERE `entry` = 23185;
+
+-- Tarren Mill Protector 23180,23186
+UPDATE `creature_template` SET `modelid_A`=18265,`modelid_H`=18265,`modelid_A2`=18267,`modelid_H2`=18267,`heroic_entry` = 23186,`armor`=6200,`speed` = '1.48',`baseattacktime`=2000 WHERE `entry` = 23180;
+UPDATE `creature_template` SET `modelid_A`=18265,`modelid_H`=18265,`modelid_A2`=18267,`modelid_H2`=18267,`minlevel`='71',`maxlevel`='72',`minmana`='15399',`maxmana`='16545',`minhealth`='23110',`maxhealth`='23456',`armor`='7100',`mindmg`='1172',`maxdmg`='1911',`baseattacktime` = '2000', `faction_A`='1748',`faction_H`='1748',`speed` = '1.48', `unit_flags`='1',`equipment_id` = '8020' WHERE `entry` = 23186;
+
+-- 18170
+
+-- 18171
+
+-- 18172
+
+-- ====================
+-- Bosses
+-- ====================
+
+-- Lieutenant Drake 17848,20535
+UPDATE `creature_template` SET `armor`='6200',`mindmg`='1200',`maxdmg`='1500',`mechanic_immune_mask`='787431423' WHERE `entry` = 17848;
+UPDATE `creature_template` SET `armor`='7400',`speed`='1.48',`mindmg`='4319',`maxdmg`='4991',`pickpocketloot`='17848',`mechanic_immune_mask`='787431423',`rank`='1' WHERE `entry` = 20535; -- 6500 8500
+UPDATE `creature_template` SET `equipment_id`='8007' WHERE `entry` IN (17848,20535);
+DELETE FROM `creature_equip_template` WHERE `entry` = 8007;
+INSERT INTO `creature_equip_template` (`entry`, `equipmodel1`, `equipmodel2`, `equipmodel3`, `equipinfo1`, `equipinfo2`, `equipinfo3`, `equipslot1`, `equipslot2`, `equipslot3`) VALUES
+(8007,20195,0,0,218171394,0,0,256,0,0);
+
+-- Captain Skarloc 17862,20521
+UPDATE `creature_template` SET `armor`='6200',`mindmg`='900',`maxdmg`='1200',`equipment_id`='1450' WHERE `entry` = 17862;
+UPDATE `creature_template` SET `armor`='7400',`speed`='1.48',`mindmg`='5412 ',`maxdmg`='5849',`pickpocketloot`='17862',`mechanic_immune_mask`='787431423',`equipment_id`='1450',`rank`='1' WHERE `entry` = 20521;
+
+-- Epoch Hunter 18096,20531
+UPDATE `creature_template` SET `mindmg`='1600',`maxdmg`='1900' WHERE `entry` = 18096;
+UPDATE `creature_template` SET `armor`='7400',`speed`='1.48',`mindmg`='5585',`maxdmg`='6317',`rank`='1' WHERE `entry` = 20531;
+
+-- Erozion & Brazen
+
+--  Don Carlos 28126,28132,91598 hier liegt glaub ich ein fehler vor.
+DELETE FROM `creature` WHERE `guid` = 16800080;
+UPDATE `creature` SET `spawnmask`='3',`curhealth`='0' WHERE `guid` = 16800079;
+UPDATE `creature_template` SET `armor`='6200',`mindmg`='915',`maxdmg`='2286',`baseattacktime`='1200',`mechanic_immune_mask`='787169275',`unit_flags`='134252608' WHERE `entry` = 91598;
+UPDATE `creature_template` SET `armor`='7400',`mindmg`='2286',`maxdmg`='6858',`baseattacktime`='0',`mechanic_immune_mask`='787169275',`unit_flags`='134252608' WHERE `entry` = 28132;
+UPDATE `creature_addon` SET `mount`='2402' WHERE `guid` = 16800079;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 91598;
+INSERT INTO `creature_ai_scripts` VALUES
+('9159800','91598','0','0','100','7','4000','4000','4000','4000','21','1','0','0','0','0','0','0','0','0','0','0','Don Carlos - Start Combat Movement and Start Melee'),
+('9159801','91598','4','0','100','6','0','0','0','0','22','1','0','0','17','154','0','0','19','134217728','0','0','Don Carlos - Set Phase 1 and Dismount on Aggro'),
+('9159802','91598','4','0','100','6','0','0','0','0','12','28163','1','300','39','10','0','0','0','0','0','0','Don Carlos - Summon Guerrero on Aggro'),
+('9159803','91598','9','1','100','3','5','30','1500','1500','11','16100','1','7','40','2','0','0','21','0','0','0','Don Carlos (Normal) - Cast Shoot and Stop Movement and Set Ranged Weapon Model (Phase 1)'),
+('9159804','91598','9','1','100','5','5','30','1500','1500','11','16496','1','7','40','2','0','0','21','0','0','0','Don Carlos (Heroic) - Cast Shoot and Stop Movement and Set Ranged Weapon Model (Phase 1)'),
+('9159805','91598','9','1','100','7','0','5','0','0','21','1','0','0','40','1','0','0','22','0','0','0','Don Carlos - Start Combat Movement and Set Melee Weapon Model and Start Melee and Set Phase 0 Below 5 Yards (Phase 1)'),
+('9159806','91598','0','0','100','3','9000','14000','10000','15000','11','12024','4','1','0','0','0','0','0','0','0','0','Don Carlos (Normal) - Cast Net'),
+('9159807','91598','0','0','100','5','9000','14000','10000','15000','11','50762','4','1','0','0','0','0','0','0','0','0','Don Carlos (Heroic) - Cast Net'),
+('9159808','91598','7','0','100','6','0','0','0','0','21','1','0','0','43','2402','0','0','0','0','0','0','Don Carlos - Start Movement and Mount on Evade'),
+('9159809','91598','5','0','100','7','0','0','0','0','1','-9859','-9858','0','0','0','0','0','0','0','0','0','Don Carlos - Yell on Kill'),
+('9159810','91598','6','0','100','6','0','0','0','0','1','-9857','0','0','0','0','0','0','0','0','0','0','Don Carlos - Yell on Death');
+
+-- Guerrero needs heroic template 
+DELETE FROM `creature_ai_scripts` WHERE `id` = 2816303;
+INSERT INTO `creature_ai_scripts` VALUES
+('2816303','28163','7','0','100','6','0','0','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Guerrero - Despawn on Evade');
+
+-- ======================================================
+-- Visuals & Positioning & Movement
+-- ======================================================
+
+UPDATE `creature` SET `spawntimesecs` = 7200 WHERE `id` IN (17840,22128); -- 1500 patrols nerfed spawntime
+
+UPDATE `creature` SET `position_x`='2230.2180', `position_y`='95.7559', `position_z`='91.7011', `orientation`='1.0774',`spawndist`='0',`movementtype`='0' WHERE `guid` = 83457;
+UPDATE `creature` SET `position_x`='2222.5979', `position_y`='88.7325', `position_z`='91.5879', `orientation`='2.6207',`spawndist`='0',`movementtype`='0' WHERE `guid` = 83977;
+
+-- fucking animals
+UPDATE `creature` SET `position_x`='2263.5405', `position_y`='681.1868', `position_z`='52.5143' WHERE `guid` = 83850;
+UPDATE `creature` SET `position_x`='2295.9206', `position_y`='649.4188', `position_z`='58.5106' WHERE `guid` = 83849;
+UPDATE `creature` SET `position_x`='2313.4550', `position_y`='584.9873', `position_z`='51.4871' WHERE `guid` = 83848;
+UPDATE `creature` SET `position_x`='2278.7788', `position_y`='493.2092', `position_z`='40.2923' WHERE `guid` = 83847;
+
+-- Behind Houses, need last house+housed pats
+UPDATE `creature` SET `position_x`='2064.3532', `position_y`='138.0448', `position_z`='53.3321', `orientation`='2.6708',`spawndist`='0',`movementtype`='0' WHERE `guid` = 83924;
+UPDATE `creature` SET `position_x`='2066.3603', `position_y`='143.7087', `position_z`='53.4870', `orientation`='2.6708',`spawndist`='0',`movementtype`='0' WHERE `guid` = 83958;
+
+UPDATE `creature` SET `position_x`='2166.2172', `position_y`='265.5596', `position_z`='52.9383', `orientation`='2.2585',`spawndist`='0',`movementtype`='0' WHERE `guid` = 83934;
+UPDATE `creature` SET `position_x`='2170.6582', `position_y`='269.2080', `position_z`='53.0677', `orientation`='2.2585',`spawndist`='0',`movementtype`='0' WHERE `guid` = 83959;
+
+-- under bridge
+UPDATE `creature` SET `position_x`='2131.8378', `position_y`='179.7291', `position_z`='54.0583', `orientation`='2.4902',`spawndist`='0',`movementtype`='0' WHERE `guid` = 83944;
+UPDATE `creature` SET `position_x`='2129.9321', `position_y`='177.2296', `position_z`='54.2305', `orientation`='2.4902',`spawndist`='0',`movementtype`='0' WHERE `guid` = 83945;
+UPDATE `creature` SET `orientation`='5.6357' WHERE `guid` = 83943;
+
+-- peon
+UPDATE `creature` SET `position_x`='2062.6606', `position_y`='112.4434', `position_z`='55.4020',`orientation`='2.0400' WHERE `guid` = 83919;
+UPDATE `creature` SET `position_x`='2058.4582', `position_y`='117.3054', `position_z`='55.4039',`orientation`='5.6096' WHERE `guid` = 83920;
+DELETE FROM `creature_addon` WHERE `guid` IN (11420,11417,11404,11390,11501,11502,11499,11488,11424,11416,11415,11414,83457,83977,83914,83915,83456,83919,83920,83970);
+INSERT INTO `creature_addon` VALUES
+-- sleep
+(83457,0,0,0,3,4097,0,0,NULL),
+(83977,0,0,0,3,4097,0,0,NULL),
+(83919,0,0,0,3,4097,0,0,NULL),
+(83920,0,0,0,3,4097,0,0,NULL),
+-- chop
+(83970,0,0,0,0,4097,69,0,NULL),
+-- work
+(11416,0,0,0,0,4097,234,0,NULL),
+(11415,0,0,0,0,4097,234,0,NULL),
+(11414,0,0,0,0,4097,234,0,NULL),
+(11424,0,0,0,0,4097,234,0,NULL),
+
+(11488,0,0,0,0,4097,234,0,NULL),
+(11499,0,0,0,0,4097,234,0,NULL),
+(11501,0,0,0,0,4097,234,0,NULL),
+(11502,0,0,0,0,4097,234,0,NULL),
+(11390,0,0,0,0,4097,234,0,NULL),
+(11404,0,0,0,0,4097,234,0,NULL), 
+(11417,0,0,0,0,4097,234,0,NULL),
+(11420,0,0,0,0,4097,234,0,NULL),
+
+-- sit
+(83914,0,0,0,1,4097,0,0,NULL),
+(83915,0,0,0,1,4097,0,0,NULL),
+(83456,0,0,0,1,4097,0,0,NULL);
+
+-- 31931
+
+-- 38497
+
+-- 38051
+
+SET @GUID := 40161;
+SET @POINT := 0;
+UPDATE `creature` SET `MovementType`= 2, `spawndist` = 0 WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,NULL);
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@GUID,@POINT := @POINT + 1, XXX, YYY, ZZZ,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 2023.5502, 1040.2321, 26.2825,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 2041.4444, 1033.0207, 28.0258,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 2060.5043, 1024.9743, 31.0522,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 2082.5676, 1025.4198, 32.6669,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 2115.0964, 1037.1940, 35.3105,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 2147.2958, 1040.2392, 40.2173,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 2231.1408, 1014.8381, 53.5992,15000,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 2147.2958, 1040.2392, 40.2173,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 2115.0964, 1037.1940, 35.3105,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 2082.5676, 1025.4198, 32.6669,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 2060.5043, 1024.9743, 31.0522,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 2041.4444, 1033.0207, 28.0258,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 2023.5502, 1040.2321, 26.2825,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 1999.4035, 1039.0671, 25.2571,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 1980.4165, 1030.7443, 25.0123,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 1962.0742, 1034.9116, 23.3120,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 1939.3199, 1052.0250, 20.2088,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 1916.9570, 1053.2131, 18.9520,15000,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 1939.3199, 1052.0250, 20.2088,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 1962.0742, 1034.9116, 23.3120,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 1980.4165, 1030.7443, 25.0123,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 1999.4035, 1039.0671, 25.2571,0,0,0,100,0);
+
+UPDATE `creature` SET `movementtype`='2' WHERE `guid` = 31799;
+SET @NPC := 31799;
+SET @PATH := @NPC;  
+DELETE FROM `creature_addon` WHERE `guid`=@NPC;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@NPC,@PATH,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id`=@PATH;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@PATH,1,'XXX','YYY','ZZZ',0,0,0,100,0),
+(@PATH,1,'1989.1328','269.9029','67.0582',0,0,0,100,0),
+(@PATH,2,'1950.7413','220.4822','68.1479',0,0,0,100,0),
+(@PATH,3,'1926.4708','187.9020','67.7167',0,0,0,100,0),
+(@PATH,4,'1950.7413','220.4822','68.1479',0,0,0,100,0),
+(@PATH,5,'1989.1328','269.9029','67.0582',0,0,0,100,0),
+(@PATH,6,'2002.2683','283.5443','66.1293',0,0,0,100,0);
+
+UPDATE `creature` SET `movementtype`='0',`spawndist` = 0 WHERE `guid` = 83930;
+UPDATE `creature` SET `movementtype`='2',`spawndist` = 0 WHERE `guid` = 83931;
+SET @NPC := 83931;
+SET @PATH := @NPC;  
+DELETE FROM `creature_addon` WHERE `guid`=@NPC;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@NPC,@PATH,0,0,0,4097,0,0,'18950 0 18950 1');
+DELETE FROM `waypoint_data` WHERE `id`=@PATH;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@PATH,1,'XXX','YYY','ZZZ',0,0,0,100,0),
+(@PATH,1,'2098.4592','75.6454','53.1011',0,0,0,100,0),
+(@PATH,2,'2084.6132','97.3700','53.0240',0,0,0,100,0),
+(@PATH,3,'2091.3298','112.6363','52.4410',0,0,0,100,0),
+(@PATH,4,'2104.4335','115.7826','53.3999',0,0,0,100,0),
+(@PATH,5,'2113.2922','98.6639','52.5478',0,0,0,100,0),
+(@PATH,6,'2110.5908','82.4466','53.3391',0,0,0,100,0),
+(@PATH,7,'2106.3842','72.6309','52.7401',0,0,0,100,0);
+
+UPDATE `creature` SET `movementtype`='0',`spawndist` = 0 WHERE `guid` = 83932;
+UPDATE `creature` SET `movementtype`='2',`spawndist` = 0 WHERE `guid` = 83933;
+SET @NPC := 83933;
+SET @PATH := @NPC;  
+DELETE FROM `creature_addon` WHERE `guid`=@NPC;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@NPC,@PATH,0,0,0,4097,0,0,'18950 0 18950 1');
+DELETE FROM `waypoint_data` WHERE `id`=@PATH;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@PATH,1,'XXX','YYY','ZZZ',0,0,0,100,0),
+(@PATH,1,'2142.1411','42.8234','52.6519',0,0,0,100,0),
+(@PATH,2,'2161.2336','33.6550','52.4506',10000,0,0,100,0),
+(@PATH,3,'2142.1411','42.8234','52.6519',0,0,0,100,0),
+(@PATH,4,'2122.4543','61.7468','52.5050',0,0,0,100,0),
+(@PATH,5,'2114.0104','113.1287','52.4415',0,0,0,100,0),
+(@PATH,6,'2108.9946','153.7105','52.4411',0,0,0,100,0),
+(@PATH,7,'2121.8815','167.0272','52.6761',0,0,0,100,0),
+(@PATH,8,'2123.3269','174.1710','52.8848',10000,0,0,100,0),
+(@PATH,9,'2121.8815','167.0272','52.6761',0,0,0,100,0),
+(@PATH,10,'2108.9946','153.7105','52.4411',0,0,0,100,0),
+(@PATH,11,'2114.0104','113.1287','52.4415',0,0,0,100,0),
+(@PATH,12,'2122.4543','61.7468','52.5050',0,0,0,100,0);
+
+UPDATE `creature` SET `movementtype`='0',`spawndist` = 0 WHERE `guid` = 83950;
+UPDATE `creature` SET `movementtype`='2',`spawndist` = 0 WHERE `guid` = 83951; 
+SET @NPC := 83951;
+SET @PATH := @NPC;  
+DELETE FROM `creature_addon` WHERE `guid`=@NPC;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@NPC,@PATH,0,0,0,4097,0,0,'18950 0 18950 1');
+DELETE FROM `waypoint_data` WHERE `id`=@PATH;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@PATH,1,'XXX','YYY','ZZZ',0,0,0,100,0),
+(@PATH,1,'2185.2966','219.3567','52.4614',0,0,0,100,0),
+(@PATH,2,'2206.0375','223.4078','52.4410',0,0,0,100,0),
+(@PATH,3,'2212.5874','238.4148','52.6749',0,0,0,100,0),
+(@PATH,4,'2186.2216','251.7567','52.6279',0,0,0,100,0),
+(@PATH,5,'2169.1970','237.9315','52.4469',0,0,0,100,0),
+(@PATH,6,'2157.1564','213.0630','52.8079',0,0,0,100,0),
+(@PATH,7,'2138.6787','196.7278','52.4413',0,0,0,100,0),
+(@PATH,8,'2130.2419','185.6176','52.8783',10000,0,0,100,0),
+(@PATH,9,'2138.6787','196.7278','52.4413',0,0,0,100,0),
+(@PATH,10,'2157.1564','213.0630','52.8079',0,0,0,100,0);
+
+UPDATE `creature` SET `position_x`='2218.7082', `position_y`='45.4916', `position_z`='65.0238', `orientation`='2.6865',`spawndist`='0',`movementtype`='2' WHERE `guid` = 83963;
+UPDATE `creature` SET `position_x`='2216.1157', `position_y`='43.5302', `position_z`='64.9912', `orientation`='2.6865',`spawndist`='0',`movementtype`='0' WHERE `guid` = 83962;
+SET @NPC := 83963;
+SET @PATH := @NPC;  
+DELETE FROM `creature_addon` WHERE `guid`=@NPC;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@NPC,@PATH,0,0,0,4097,0,0,'18950 0 18950 1');
+DELETE FROM `waypoint_data` WHERE `id`=@PATH;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@PATH,1,'XXX','YYY','ZZZ',0,0,0,100,0),
+(@PATH,1,'2195.5468','53.1180','65.0885',0,0,0,100,0),
+(@PATH,2,'2172.4086','64.4389','65.2330',0,0,0,100,0),
+(@PATH,3,'2163.8271','77.3777','65.7777',0,0,0,100,0),
+(@PATH,4,'2151.3286','90.8969','70.0680',0,0,0,100,0),
+(@PATH,5,'2146.9484','118.3120','76.0335',15000,0,0,100,0),
+(@PATH,6,'2151.3286','90.8969','70.0680',0,0,0,100,0),
+(@PATH,7,'2163.8271','77.3777','65.7777',0,0,0,100,0),
+(@PATH,8,'2172.4086','64.4389','65.2330',0,0,0,100,0),
+(@PATH,9,'2195.5468','53.1180','65.0885',0,0,0,100,0), 
+(@PATH,10,'2220.7866','46.8486','65.0684',0,0,0,100,0),
+(@PATH,11,'2217.0515','46.3174','65.0676',15000,0,0,100,0);
+
+UPDATE `creature` SET `movementtype`='0',`spawndist` = 0 WHERE `guid` = 83940;
+UPDATE `creature` SET `movementtype`='2',`spawndist` = 0 WHERE `guid` = 83941;
+SET @NPC := 83941;
+SET @PATH := @NPC;  
+DELETE FROM `creature_addon` WHERE `guid`=@NPC;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@NPC,@PATH,0,0,0,4097,0,0,'18950 0 18950 1');
+DELETE FROM `waypoint_data` WHERE `id`=@PATH;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@PATH,1,'XXX','YYY','ZZZ',0,0,0,100,0),
+(@PATH,1,'2205.8188','105.1063','89.4554',0,0,0,100,0),
+(@PATH,2,'2199.7976','108.4979','89.4554',0,0,0,100,0),
+(@PATH,3,'2201.2526','115.7598','89.4554',0,0,0,100,0),
+(@PATH,4,'2208.6616','128.9851','87.9560',0,0,0,100,0),
+(@PATH,5,'2179.3981','145.3745','88.2165',10000,0,0,100,0),
+(@PATH,6,'2208.6616','128.9851','87.9560',0,0,0,100,0),
+(@PATH,7,'2217.8764','145.6893','89.4548',0,0,0,100,0),
+(@PATH,8,'2221.4472','147.8570','89.4548',0,0,0,100,0),
+(@PATH,9,'2227.6362','144.4029','89.4548',0,0,0,100,0),
+(@PATH,10,'2228.0495','138.8155','89.4548',0,0,0,100,0),
+(@PATH,11,'2220.1213','124.4039','89.4549',0,0,0,100,0),
+(@PATH,12,'2209.5603','105.8696','89.4548',0,0,0,100,0);
+
+UPDATE `creature` SET `movementtype`='0',`spawndist` = 0 WHERE `guid` = 83910;
+UPDATE `creature` SET `movementtype`='2',`spawndist` = 0 WHERE `guid` = 83911;
+SET @NPC := 83911;
+SET @PATH := @NPC;
+DELETE FROM `creature_addon` WHERE `guid`=@NPC;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@NPC,@PATH,0,0,0,4097,0,0,'18950 0 18950 1');
+DELETE FROM `waypoint_data` WHERE `id`=@PATH;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@PATH,1,'XXX','YYY','ZZZ',0,0,0,100,0),
+(@PATH,1,'2109.0908','220.3088','65.3646',0,0,0,100,0), 
+(@PATH,2,'2108.8244','218.3886','65.2718',0,0,0,100,0),
+(@PATH,3,'2073.0605','176.8052','65.4811',0,0,0,100,0),
+(@PATH,4, 2075.4682, 170.9876, 65.2548,10000,0,0,100,0),
+(@PATH,5,'2073.0605','176.8052','65.4811',0,0,0,100,0),
+(@PATH,6,'2108.8244','218.3886','65.2718',0,0,0,100,0),
+(@PATH,7,'2109.0908','220.3088','65.3646',0,0,0,100,0),
+(@PATH,8, 2116.3686, 222.6754, 64.9093,10000,0,0,100,0);
+
+UPDATE `creature` SET `movementtype`='0',`spawndist` = 0 WHERE `guid` = 83907;
+UPDATE `creature` SET `movementtype`='2',`spawndist` = 0 WHERE `guid` = 83906;
+SET @NPC := 83906;
+SET @PATH := @NPC;  
+DELETE FROM `creature_addon` WHERE `guid`=@NPC;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@NPC,@PATH,0,0,0,4097,0,0,'18950 0 18950 1');
+DELETE FROM `waypoint_data` WHERE `id`=@PATH;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@PATH,1,'XXX','YYY','ZZZ',0,0,0,100,0),
+(@PATH,1,'2132.9138','176.3118','68.7873',0,0,0,100,0),
+(@PATH,2,'2145.1372','167.1323','64.8979',0,0,0,100,0),
+(@PATH,3,'2139.4523','155.3669','67.0943',0,0,0,100,0),
+(@PATH,4,'2139.2253','134.9036','73.2475',0,0,0,100,0),
+(@PATH,5,'2144.3818','123.6578','76.0074',0,0,0,100,0),
+(@PATH,6,'2159.6130','132.5165','82.3744',0,0,0,100,0),
+(@PATH,7,'2173.2021','148.8258','87.9175',0,0,0,100,0),
+(@PATH,8,'2184.4614','167.5238','88.3149',0,0,0,100,0),
+(@PATH,9,'2201.1945','175.1245','90.3368',0,0,0,100,0), 
+(@PATH,10,'2218.7570','179.4011','96.8204',10000,0,0,100,0),
+(@PATH,11,'2201.1945','175.1245','90.3368',0,0,0,100,0), 
+(@PATH,12,'2184.4614','167.5238','88.3149',0,0,0,100,0),
+(@PATH,13,'2173.2021','148.8258','87.9175',0,0,0,100,0),
+(@PATH,14,'2159.6130','132.5165','82.3744',0,0,0,100,0),
+(@PATH,15,'2144.3818','123.6578','76.0074',0,0,0,100,0),
+(@PATH,16,'2139.2253','134.9036','73.2475',0,0,0,100,0),
+(@PATH,17,'2139.4523','155.3669','67.0943',0,0,0,100,0),
+(@PATH,18,'2145.1372','167.1323','64.8979',0,0,0,100,0),
+(@PATH,19,'2132.9138','176.3118','68.7873',0,0,0,100,0),
+(@PATH,20,'2118.0200','187.5052','68.8050',10000,0,0,100,0);
+
+-- ======================================================
+-- Group Linking
+-- ======================================================
+
+DELETE FROM `creature_formations` WHERE `leaderguid` IN (48021,84001,48022,31799,83934,83959,83924,83958,31931,47895,47896,38497,48008,48009,38051,48007,48006,44653,44656,40161,48010,48011,83987,83989,83939,83986,83966,83967,83968,83969,83962,83963,83955,83956,83950,83951,83948,83949,83942,83943,83944,83945,83932,83933,83930,83931,83929,83928,83926,83927,83923,83922,83912,83913,83901,83902,83905,83908,83903,83904,83973,83974,83975,83976,83971,83972,83997,83996,83940,83941,83935,83936,83937,83938,83907,83906,83910,83911);
+DELETE FROM `creature_formations` WHERE `memberguid` IN (48021,84001,48022,31799,83934,83959,83924,83958,31931,47895,47896,38497,48008,48009,38051,48007,48006,44653,44656,40161,48010,48011,83987,83989,83939,83986,83966,83967,83968,83969,83962,83963,83955,83956,83950,83951,83948,83949,83942,83943,83944,83945,83932,83933,83930,83931,83929,83928,83926,83927,83923,83922,83912,83913,83901,83902,83905,83908,83903,83904,83973,83974,83975,83976,83971,83972,83997,83996,83940,83941,83935,83936,83937,83938,83907,83906,83910,83911);
+INSERT INTO `creature_formations` VALUES
+
+(31799,31799,100,360,2),
+(31799,48021,2,1,2),
+(31799,48022,2,5,2),
+
+(83934,83934,100,360,2),
+(83934,83959,100,360,2),
+
+(83924,83924,100,360,2),
+(83924,83958,100,360,2),
+
+(31931,31931,100,360,2),
+(31931,47895,2,1,2),
+(31931,47896,2,5,2),
+
+(38497,38497,100,360,2),
+(38497,48008,2,1,2),
+(38497,48009,2,5,2),
+
+(38051,38051,100,360,2),
+(38051,48007,2,1,2),
+(38051,48006,2,5,2),
+
+(44653,44653,100,360,2),
+(44653,44656,100,360,2),
+
+(40161,40161,100,360,2),
+(40161,48010,2,0.78,2),
+(40161,48011,2,5.50,2),
+
+(83987,83987,100,360,2),
+(83987,83989,100,360,2),
+
+(83939,83939,100,360,2),
+(83939,83986,100,360,2),
+
+(83966,83966,100,360,2),
+(83966,83967,100,360,2),
+(83966,83968,100,360,2),
+(83966,83969,100,360,2), 
+
+(83963,83963,100,360,2),
+(83963,83962,2,1.57,2),
+
+(83955,83955,100,360,2),
+(83955,83956,100,360,2),
+
+(83951,83951,100,360,2),
+(83951,83950,2,1.57,2),
+
+(83948,83948,100,360,2),
+(83948,83949,100,360,2),
+
+(83942,83942,100,360,2),
+(83942,83943,100,360,2),
+(83942,83944,100,360,2),
+(83942,83945,100,360,2), 
+
+(83933,83933,100,360,2),
+(83933,83932,2,1.57,2),
+
+(83931,83931,100,360,2),
+(83931,83930,2,1.57,2),
+
+(83928,83928,100,360,2),
+(83928,83929,100,360,2),
+
+(83926,83926,100,360,2),
+(83926,83927,100,360,2),
+
+(83922,83922,100,360,2),
+(83922,83923,100,360,2),
+
+(83912,83912,100,360,2),
+(83912,83913,100,360,2),
+
+(83901,83901,100,360,2),
+(83901,83902,100,360,2),
+
+(83905,83905,100,360,2),
+(83905,83908,100,360,2),
+
+(83903,83903,100,360,2),
+(83903,83904,100,360,2),
+
+(83973,83973,100,360,2),
+(83973,83974,100,360,2),
+(83973,83975,100,360,2),
+(83973,83976,100,360,2), 
+
+(83971,83971,100,360,2),
+(83971,83972,100,360,2),
+(83971,83997,100,360,2),
+(83971,83996,100,360,2), 
+
+(83941,83941,100,360,2),
+(83941,83940,2,1.57,2),
+
+(83935,83935,100,360,2),
+(83935,83936,100,360,2),
+(83935,83937,100,360,2),
+(83935,83938,100,360,2), 
+
+(83906,83906,100,360,2),
+(83906,83907,2,1.57,2),
+
+(83911,83911,100,360,2),
+(83911,83910,2,1.57,2);
+
+-- ======================================================
+-- Respawn Linking
+-- ======================================================
+
+DELETE FROM `creature_linked_respawn` WHERE `guid` IN (83996,83910,83911,83950,83951,83930,83931,83962,83963,83906,83907,83940,83941,83932,83933);
+INSERT INTO `creature_linked_respawn` VALUES
+
+(83910,83950),
+(83911,83950),
+
+(83950,83950),
+(83951,83950),
+
+(83930,83950),
+(83931,83950),
+
+(83962,83950),
+(83963,83950),
+
+(83906,83950),
+(83907,83950),
+
+(83940,83950),
+(83941,83950),
+
+(83932,83950),
+(83933,83950);
+
+-- =====================
+-- Gameobjects
+-- =====================
+
+-- Barrels
+UPDATE `gameobject` SET `spawntimesecs`='7200' WHERE `id` = 182589;
+UPDATE `gameobject_template` SET `data5`='1',`data6`='7200' WHERE `entry` = 182589;
+
+-- =====================
+-- Miscellaneous
+-- =====================
+
+-- für iwas verwenden
+DELETE FROM `creature_equip_template` WHERE `entry` = 8021;
+INSERT INTO `creature_equip_template` VALUES
+(8021,36960,2161,0,218171138,234948100,0,3,1038,0);
+
