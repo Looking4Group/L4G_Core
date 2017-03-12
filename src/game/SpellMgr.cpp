@@ -3861,7 +3861,7 @@ void SpellMgr::LoadSpellCustomAttr()
             case 17852:
             case 27272:
                 spellInfo->ChannelInterruptFlags |= CHANNEL_INTERRUPT_FLAG_MOVEMENT;
-				break;
+                break;
             default:
                 break;
         }
