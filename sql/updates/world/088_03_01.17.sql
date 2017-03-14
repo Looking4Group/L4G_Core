@@ -1411,5 +1411,29 @@ INSERT INTO `creature_equip_template` VALUES
 -- Broggok 17380,18601
 UPDATE `creature_template` SET `speed`='1.48',`unit_flags`='64',`mechanic_immune_mask`='787431423',`armor`='7400',`mindmg`='3977',`maxdmg`='4238' WHERE `entry` = 18601; -- 7,953 - 8,476
 
-UPDATE `creature_template` SET `unit_flags`='33554432',`flags_extra`='130' WHERE `entry` = 17161;
+-- Shade of Aran 16524
+UPDATE `creature_template` SET `mindmg`='2295',`maxdmg`='2760',`baseattacktime`='2000',`speed`='2.00',`flags_extra` = `flags_extra`|2 WHERE `entry` = 16524; -- 3060 3679 -- 4,590 - 5,519
+UPDATE `creature_model_info` SET `bounding_radius` = 0, `combat_reach` = 0 WHERE `modelid` = 16621; -- 0,5508 2,7
+UPDATE `spell_target_position` SET `target_position_x` = -11164.900391, `target_position_y` = -1912.199951, `target_position_z` = 232.009003, `target_orientation` = 2.222600 WHERE `id`  = 39567; -- 39567	532	-11164,5	-1909,56	232,009	2,23979
+
+-- Position Aran in the middle of the room because he doesnt port self at the moment to the middle where the trigger is positioned. Should be moving while OOC and IC.
+UPDATE `creature` SET `position_x`='-11164.9257',`position_y`='-1912.1971',`position_z`='232.0090',`orientation`='2.2226' WHERE `guid` = 57440;
+
+-- if teleport is fixed implement this from sniff data:
+SET @GUID := 57440;
+UPDATE `creature` SET `MovementType`='2' WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES (57440, 1, -11172.5, -1900.33, 232.009, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (57440, 2, -11180.2, -1905.71, 232.009, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (57440, 3, -11178.1, -1920.48, 232.009, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (57440, 4, -11162.5, -1925.34, 232.009, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (57440, 5, -11148.3, -1910.55, 232.009, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (57440, 6, -11168.7, -1896.08, 232.009, 0, 0, 0, 0, 0);
+
+-- Blizzard (Shade of Aran) 17161
+UPDATE `creature_template` SET `speed` = 1, `unit_flags`='33554432',`flags_extra`='130' WHERE `entry` = 17161; -- 1,125 33554432 128
+
+DELETE FROM `creature_addon` WHERE `guid` = 49805;
 
