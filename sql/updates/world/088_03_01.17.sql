@@ -1411,3 +1411,5 @@ INSERT INTO `creature_equip_template` VALUES
 -- Broggok 17380,18601
 UPDATE `creature_template` SET `speed`='1.48',`unit_flags`='64',`mechanic_immune_mask`='787431423',`armor`='7400',`mindmg`='3977',`maxdmg`='4238' WHERE `entry` = 18601; -- 7,953 - 8,476
 
+UPDATE `creature_template` SET `unit_flags`='33554432',`flags_extra`='130' WHERE `entry` = 17161;
+
