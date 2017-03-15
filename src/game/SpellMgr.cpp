@@ -3853,6 +3853,12 @@ void SpellMgr::LoadSpellCustomAttr()
             case 43622: // Static Disruption
                 spellInfo->InterruptFlags |= SPELL_INTERRUPT_FLAG_MOVEMENT;
                 break;
+            case 30844: // Proximity Bomb Nonheroic
+                spellInfo->EffectBasePoints[0] = 899;
+                break;
+            case 32786: // Proximity Bomb Heroic
+                spellInfo->EffectBasePoints[0] = 1749;
+                break;
             default:
                 break;
         }
