@@ -3853,6 +3853,15 @@ void SpellMgr::LoadSpellCustomAttr()
             case 43622: // Static Disruption
                 spellInfo->InterruptFlags |= SPELL_INTERRUPT_FLAG_MOVEMENT;
                 break;
+            case 17854: //Voidwalker: Consume Shadows 1-7
+            case 17767:
+            case 17850:
+            case 17851:
+            case 17853:
+            case 17852:
+            case 27272:
+                spellInfo->ChannelInterruptFlags |= CHANNEL_INTERRUPT_FLAG_MOVEMENT;
+                break;
             default:
                 break;
         }
