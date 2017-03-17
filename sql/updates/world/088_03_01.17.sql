@@ -1437,3 +1437,6 @@ UPDATE `creature_template` SET `speed` = 1, `unit_flags`='33554432',`flags_extra
 
 DELETE FROM `creature_addon` WHERE `guid` = 49805;
 
+-- cleanup possible cheat pets
+UPDATE `creature_template` SET  `flags_extra` = 0 WHERE `entry` IN (18464,18467,18470,18476,18477,21723);
+
