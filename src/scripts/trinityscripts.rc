@@ -24,7 +24,8 @@
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
-#include "windows.h" //"afxres.h"
+#include "windows.h" 
+
 
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
@@ -53,8 +54,6 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_SYS_DEFAULT
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION FILEVER
- PRODUCTVERSION PRODUCTVER
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -70,12 +69,12 @@ BEGIN
         BLOCK "080004b0"
         BEGIN
             VALUE "FileDescription", "TrinityScripts"
-            VALUE "FileVersion", STRFILEVER
+            VALUE "FileVersion", REVISION_ID
             VALUE "InternalName", "TrinityScripts"
             VALUE "LegalCopyright", "Copyright (C) 2008-2009"
             VALUE "OriginalFilename", "TrinityScripts.dll"
             VALUE "ProductName", "TrinityScripts"
-            VALUE "ProductVersion", STRPRODUCTVER
+            VALUE "ProductVersion", REVISION_ID
         END
     END
     BLOCK "VarFileInfo"

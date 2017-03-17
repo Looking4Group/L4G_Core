@@ -12,7 +12,7 @@
 
 #include "../game/ScriptMgr.h"
 
-#define _FULLVERSION "TrinityScript"
+#define VERSION "TrinityScript"
 
 #ifndef _LOOKING4GROUP_SCRIPT_CONFIG
 # define _LOOKING4GROUP_SCRIPT_CONFIG  "Looking4GroupCore.conf"
@@ -61,7 +61,7 @@ void InitScriptLibrary()
     outstring_log("  | || |  | | | | | | |_| |_| |___) | (__| |  | | |_) | |_ ");
     outstring_log("  |_||_|  |_|_| |_|_|\\__|\\__, |____/ \\___|_|  |_| .__/ \\__|");
     outstring_log("                         |___/                  |_|        ");
-    outstring_log("Trinity Script initializing %s", _FULLVERSION);
+    outstring_log("Trinity Script initializing %s", VERSION);
     outstring_log("");
 
     //Load database (must be called after TScriptConfig.SetSource). In case it failed, no need to even try load.
