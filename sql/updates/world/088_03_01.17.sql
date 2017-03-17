@@ -1437,6 +1437,7 @@ UPDATE `creature_template` SET `speed` = 1, `unit_flags`='33554432',`flags_extra
 
 DELETE FROM `creature_addon` WHERE `guid` = 49805;
 
--- cleanup possible cheat pets
-UPDATE `creature_template` SET  `flags_extra` = 0 WHERE `entry` IN (18464,18467,18470,18476,18477,21723);
+-- Arena Organizer in Shattrath
+UPDATE `creature_template` SET `npcflag` = 262145, `subname` = 'Arena Organizer' WHERE `entry` = 25991; -- 1048577 Arena Battlemaster
+
 
