@@ -23,7 +23,6 @@
 /// \file
 
 #include "SystemConfig.h"
-#include "revision.h"
 
 #include "Common.h"
 #include "Database/DatabaseEnv.h"
