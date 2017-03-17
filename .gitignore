@@ -1743,5 +1743,4 @@
 /dep/lib/Win32_Debug/Detour.lib
 /dep/lib/Win32_Release/Detour.lib
 dep/recastnavigation/Detour/win/VC100/Detour.vcxproj
-*.rc
 /win/.vs/
