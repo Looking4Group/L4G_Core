@@ -355,8 +355,8 @@ void PetAI::UpdateAI(const uint32 diff)
         else if (m_creature->GetCharmInfo()->HasCommandState(COMMAND_FOLLOW))
         {
             //Do not move while channeling or if beeing stunned/freezed
-            if (m_creature->hasUnitState(UNIT_STAT_CASTING)
-                && m_creature->GetCurrentSpellProto(CURRENT_CHANNELED_SPELL)->ChannelInterruptFlags & ~CHANNEL_INTERRUPT_FLAG_INTERRUPT)
+            if (!(m_creature->GetCurrentSpellProto(CURRENT_CHANNELED_SPELL) 
+                && (m_creature->GetCurrentSpellProto(CURRENT_CHANNELED_SPELL)->ChannelInterruptFlags & CHANNEL_INTERRUPT_FLAG_INTERRUPT)))
                 if (!m_creature->hasUnitState(UNIT_STAT_FOLLOW)
                     && !m_creature->hasUnitState(UNIT_STAT_CAN_NOT_REACT) && !m_creature->hasUnitState(UNIT_STAT_NOT_MOVE))
                 {
