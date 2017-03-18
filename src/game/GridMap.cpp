@@ -1128,7 +1128,7 @@ bool TerrainInfo::IsPathFindingEnabled(const Unit* unit) const
         if (IsPathfindingForceEnabled(unit))
             return true;
 
-        // always use mmaps for pets of players (can still be disabled by extra-flag for pet creature)
+        // always use mmaps for pets of players
         if (unit->GetTypeId() == TYPEID_UNIT && ((Creature*)unit)->isPet() && unit->GetOwner() &&
             unit->GetOwner()->GetTypeId() == TYPEID_PLAYER)
             return true;
@@ -1177,6 +1177,11 @@ bool TerrainInfo::IsPathfindingForceEnabled(const Unit* unit) const
 
 bool TerrainInfo::IsPathfindingForceDisabled(const Unit* unit) const
     {
+        // always use mmaps for pets of players
+        if (unit->GetTypeId() == TYPEID_UNIT && ((Creature*)unit)->isPet() && unit->GetOwner() &&
+            unit->GetOwner()->GetTypeId() == TYPEID_PLAYER)
+            return false;
+
         if (const Creature* pCreature = dynamic_cast<const Creature*>(unit))
         {
             if (const CreatureInfo* pInfo = pCreature->GetCreatureInfo())
