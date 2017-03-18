@@ -30,13 +30,7 @@ m_polyLength(0), m_type(PATHFIND_BLANK),
     m_useStraightPath(false), m_forceDestination(false), m_pointPathLimit(MAX_POINT_PATH_LENGTH),
     m_sourceUnit(owner), m_navMesh(NULL), m_navMeshQuery(NULL)
 {
-    //DEBUG_FILTER_LOG(LOG_FILTER_PATHFINDING, "++ PathFinder::PathInfo for %u \n", m_sourceUnit->GetGUIDLow());
-
-    if (m_sourceUnit->GetTypeId() == TYPEID_UNIT && m_sourceUnit->ToCreature()->isPet() && (!m_sourceUnit->getVictim() && m_sourceUnit->isInCombat()))
-    {
-        createFilter();
-        return;
-    }    
+    //DEBUG_FILTER_LOG(LOG_FILTER_PATHFINDING, "++ PathFinder::PathInfo for %u \n", m_sourceUnit->GetGUIDLow());  
 
     if (m_sourceUnit->GetTerrain() && m_sourceUnit->GetTerrain()->IsPathFindingEnabled(owner))
     {
