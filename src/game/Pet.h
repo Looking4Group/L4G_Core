@@ -242,7 +242,8 @@ class Pet : public Creature
 
         DeclinedName const* GetDeclinedNames() const { return m_declinedname; }
 
-        bool    m_loading;
+        bool InLoading() { return m_loading; }
+        void SetLoading(bool loading) { m_loading = loading; }
         bool    m_removed;                                  // prevent overwrite pet state in DB at next Pet::Update if pet already removed(saved)
 
     protected:
@@ -254,6 +255,7 @@ class Pet : public Creature
         int32   m_bonusdamage;
         uint64  m_auraUpdateMask;
 
+        bool    m_loading;
         DeclinedName *m_declinedname;
 
     private:
