@@ -16,8 +16,8 @@
  */
 
 /* ScriptData
-SDName: Boss_Omar_The_Unscarred
-SD%Complete: 98
+SDName: Boss_Omor_The_Unscarred
+SD%Complete: 99
 SDComment:
 SDCategory: Hellfire Citadel, Hellfire Ramparts
 EndScriptData */
@@ -25,27 +25,35 @@ EndScriptData */
 #include "precompiled.h"
 #include "hellfire_ramparts.h"
 
-#define SAY_AGGRO_1                 -1543009
-#define SAY_AGGRO_2                 -1543010
-#define SAY_AGGRO_3                 -1543011
-#define SAY_SUMMON                  -1543012
-#define SAY_CURSE                   -1543013
-#define SAY_KILL_1                  -1543014
-#define SAY_DIE                     -1543015
-#define SAY_WIPE                    -1543016
+enum Omor
+{
+    AGGRO_RANGE                     = 30,
+    SAY_AGGRO_1                     = -1543009,
+    SAY_AGGRO_2                     = -1543010,
+    SAY_AGGRO_3                     = -1543011,
+    SAY_SUMMON                      = -1543012,
+    SAY_CURSE                       = -1543013,
+    SAY_KILL_1                      = -1543014,
+    SAY_DIE                         = -1543015,
+    SAY_WIPE                        = -1543016,
 
-#define SPELL_ORBITAL_STRIKE        30637
-#define SPELL_SHADOW_WHIP           30638
-#define SPELL_BANE_OF_AURA_TREACHERY (HeroicMode ? 37566 : 30695)
-#define SPELL_DEMONIC_SHIELD        31901
-#define SPELL_SHADOW_BOLT           (HeroicMode ? 39297 : 30686)
-#define SPELL_SUMMON_FIENDISH_HOUND 30707
+    SPELL_ORBITAL_STRIKE            = 30637,
+    SPELL_SHADOW_WHIP               = 30638,
+    SPELL_DEMONIC_SHIELD            = 31901,
+    SPELL_SUMMON_FIENDISH_HOUND     = 30707,
+    SPELL_BANE_OF_AURA_TREACHERY    = 30695,
+    SPELL_BANE_OF_AURA_TREACHERY_H  = 37566,
+    SPELL_SHADOW_BOLT               = 30686,
+    SPELL_SHADOW_BOLT_H             = 39297
+};
 
 struct boss_omor_the_unscarredAI : public ScriptedAI
 {
     boss_omor_the_unscarredAI(Creature *c) : ScriptedAI(c)
     {
         pInstance = (c->GetInstanceData());
+        HeroicMode = me->GetMap()->IsHeroic();
+        me->SetAggroRange(AGGRO_RANGE);
     }
 
     ScriptedInstance* pInstance;
@@ -58,12 +66,13 @@ struct boss_omor_the_unscarredAI : public ScriptedAI
     uint32 Summon_Timer;
     uint64 playerGUID;
     bool CanPullBack;
+    bool HeroicMode;
 
     void Reset()
     {
         DoScriptText(SAY_WIPE, me);
 
-        OrbitalStrike_Timer = 22000;
+        OrbitalStrike_Timer = 24100;
         ShadowWhip_Timer = 2000;
         Aura_Timer = urand(12300, 23300);
         DemonicShield_Timer = 1000;
@@ -96,7 +105,7 @@ struct boss_omor_the_unscarredAI : public ScriptedAI
     {
         DoScriptText(SAY_SUMMON, me);
 
-        if (Unit* random = SelectUnit(SELECT_TARGET_RANDOM,0))
+        if (Unit* random = SelectUnit(SELECT_TARGET_RANDOM, 0))
             summoned->AI()->AttackStart(random);
     }
 
@@ -115,6 +124,8 @@ struct boss_omor_the_unscarredAI : public ScriptedAI
 
         if (Summon_Timer < diff)
         {
+            OrbitalStrike_Timer += 1000;
+            Shadowbolt_Timer += 1000;
             AddSpellToCast(me, SPELL_SUMMON_FIENDISH_HOUND);
             Summon_Timer = 18000;
         }
@@ -129,8 +140,7 @@ struct boss_omor_the_unscarredAI : public ScriptedAI
                 {
                     if (temp->HasUnitMovementFlag(MOVEFLAG_FALLINGFAR))
                     {
-                        me->InterruptNonMeleeSpells(false);
-                        DoCast(temp, SPELL_SHADOW_WHIP);
+                        DoCast(temp, SPELL_SHADOW_WHIP, true);
                     }
                     else 
                     {
@@ -141,7 +151,7 @@ struct boss_omor_the_unscarredAI : public ScriptedAI
                         }
                     }
                 }
-                ShadowWhip_Timer = 2200;
+                ShadowWhip_Timer = 2500;
             }
             else
                 ShadowWhip_Timer -= diff;
@@ -149,18 +159,18 @@ struct boss_omor_the_unscarredAI : public ScriptedAI
         else if (OrbitalStrike_Timer < diff)
         {
             Unit *temp = SelectUnit(SELECT_TARGET_NEAREST, 0, 100, true);
-
             if (temp && temp->GetTypeId() == TYPEID_PLAYER && me->IsWithinMeleeRange(temp))
             {
                 me->InterruptNonMeleeSpells(false);
+                me->SetSelection(temp->GetGUID());
                 DoCast(temp, SPELL_ORBITAL_STRIKE);
-                OrbitalStrike_Timer = 22000;
+                OrbitalStrike_Timer = urand(14000, 16000);
                 playerGUID = temp->GetGUID();
 
                 if (playerGUID)
                 {
                     CanPullBack = true;
-                    ShadowWhip_Timer = 3000;
+                    ShadowWhip_Timer = 3500;
                 }
             }
         }
@@ -181,10 +191,12 @@ struct boss_omor_the_unscarredAI : public ScriptedAI
         if (Aura_Timer < diff)
         {
             DoScriptText(SAY_CURSE, me);
+            OrbitalStrike_Timer += 1000;
+            Shadowbolt_Timer += 1000;
 
-            if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0))
+            if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_BANE_OF_AURA_TREACHERY), true))
             {
-                AddSpellToCast(target, SPELL_BANE_OF_AURA_TREACHERY);
+                AddSpellToCast(target, HeroicMode ? SPELL_BANE_OF_AURA_TREACHERY_H : SPELL_BANE_OF_AURA_TREACHERY, true); //prenerf instant
                 Aura_Timer = urand(8000, 16000);
             }
         }
@@ -193,12 +205,12 @@ struct boss_omor_the_unscarredAI : public ScriptedAI
 
         if (Shadowbolt_Timer < diff)
         {
-            if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0))
+            if (Unit* target = SelectUnit(SELECT_TARGET_TOPAGGRO, 0))
             {
-                if(!me->IsWithinMeleeRange(target))
+                if (!me->IsWithinMeleeRange(target))
                 {
-                    AddSpellToCast(target, SPELL_SHADOW_BOLT);
-                    Shadowbolt_Timer = 3000;
+                    AddSpellToCast(target, HeroicMode ? SPELL_SHADOW_BOLT_H : SPELL_SHADOW_BOLT, false, true);
+                    Shadowbolt_Timer = urand(3000, 4000);
                 }
             }
         }
