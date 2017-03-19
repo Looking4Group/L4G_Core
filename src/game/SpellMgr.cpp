@@ -3525,6 +3525,12 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->EffectImplicitTargetA[1] = TARGET_UNIT_CASTER;
                 spellInfo->EffectImplicitTargetA[2] = TARGET_UNIT_TARGET_ENEMY;
                 break;
+            case 29978: // Aran Pyroblast
+                spellInfo->Attributes &= ~SPELL_ATTR_LEVEL_DAMAGE_CALCULATION;
+                break;
+            case 29946: // Aran Flame Wreath
+                spellInfo->EffectRadiusIndex[0] = EFFECT_RADIUS_2_YARDS;
+                break;
             case 32785: // Infernal Rain                
                 spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ENEMY;
                 spellInfo->EffectImplicitTargetB[0] = 0;
