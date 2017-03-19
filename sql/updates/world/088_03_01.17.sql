@@ -1448,3 +1448,31 @@ UPDATE `gameobject` SET `spawntimesecs` = 60 WHERE `guid` IN (3491328,
 3497632,3497633,3497634,3497677,3497678,3497679,3497680,3497681,3498285,3498286,3498287,3498288,3498289,3498295,3504426,3504437,
 3504438,3504763,3504764,3504956,3504958,3505111);
 
+-- Watchkeeper Gargolmar 17306,18436
+-- heroic - hits tank for 2K.
+UPDATE `creature_template` SET `mindmg`='750',`maxdmg`='1000' WHERE `entry` = 17306;
+UPDATE `creature_template` SET `armor`='7400',`mindmg`='3622',`maxdmg`='4272',`pickpocketloot`='17306' WHERE `entry` = 18436; -- 4000 5145 -- 7,243 - 8,544
+
+-- Hellfire Watcher <Watchkeeper's Subordinate> 17309,18058
+UPDATE `creature_template` SET `mindmg`='370',`maxdmg`='486' WHERE `entry` = 17309; --  113 229 -- 370 - 486
+UPDATE `creature_template` SET `equipment_id` ='1024',`mindmg`='932',`maxdmg`='1145', `baseattacktime` = 0, `pickpocketloot` = 17309 WHERE `entry` = 18058; -- 306 732 2000 -- 1,863 - 2,289
+UPDATE `creature_ai_scripts` SET `event_param3`='12000',`event_param4`='15000' WHERE `id` = 1730904;
+UPDATE `creature_ai_scripts` SET `event_param4`='15000' WHERE `id` IN (1730902,1730903);
+DELETE FROM `creature_ai_scripts` WHERE `id` = 1730905;
+INSERT INTO `creature_ai_scripts` VALUES
+('1730905','17309','14','0','100','7','1000','40','12000','15000','11','8362','6','0','0','0','0','0','0','0','0','0','Hellfire Watcher - Casts Renew on Friendlies');
+
+-- Omor the Unscarred 17308,18433
+UPDATE `creature` SET `position_x` = -1122.34, `position_y` = 1718.41, `position_z` = 89.4315, `orientation` = 3.75246 WHERE `guid` = 62087;
+UPDATE `creature_template` SET `mindmg`='1250',`maxdmg`='1500',`baseattacktime`='1400', `unit_flags` = 68 WHERE `entry` = 17308;
+UPDATE `creature_template` SET `minhealth` = 132642, `maxhealth` = 132642, `armor`='5954',`resistance5`='200',`mindmg`='4572',`maxdmg`='5715', `unit_flags` = 68 WHERE `entry` = 18433; -- 82642 2852 3387
+
+-- Fiendish Hound 17540,18056
+UPDATE `creature_template` SET `minlevel`='62',`maxlevel`='62',`armor`='3450',`speed`='1.20',`mindmg`='710',`maxdmg`='1060',`baseattacktime`='1289',`AIName` = 'EventAI' WHERE `entry` = 17540;
+UPDATE `creature_template` SET `armor`='5474',`mindmg`='2293',`maxdmg`='2973',`baseattacktime`='0' WHERE `entry` = 18056; -- 
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17540;
+INSERT INTO `creature_ai_scripts` VALUES
+('1754001','17540','9','0','100','5','0','30','6000','12000','11','15785','4','0','0','0','0','0','0','0','0','0','Fiendish Hound (Heroic) - Cast Mana Burn'),
+('1754002','17540','2','0','100','3','75','0','7000','10000','11','35748','4','0','0','0','0','0','0','0','0','0','Fiendish Hound - Cast Drain Life at 75% HP'), -- 30%
+('1754003','17540','7','0','100','5','0','0','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Fiendish Hound - Die on Evade');
+
