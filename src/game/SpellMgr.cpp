@@ -3179,6 +3179,9 @@ void SpellMgr::LoadSpellCustomAttr()
             case 24311: // Powerful Healing Ward
                 spellInfo->CastingTimeIndex = 14;
                 break;
+            case 39297: // Omor the Unscarred Shadowbolt Prenerf?
+                spellInfo->CastingTimeIndex = 5;
+                break;
             case 24178: // Will of Hakkar
                 spellInfo->AttributesEx |= SPELL_ATTR_EX_CHANNELED_1;
                 break;
@@ -3546,6 +3549,10 @@ void SpellMgr::LoadSpellCustomAttr()
             case 30207: // Magtheridon's creatures Shadow Grasp
                 spellInfo->StackAmount = 5;
                 break;
+            case 30641: // Watchkeeper Gargolmar Mortal Wound Prenerf
+            case 36814:
+                spellInfo->StackAmount = 10;
+                break;
             case 20814: // Collect Dire Water
                 spellInfo->InterruptFlags = SPELL_INTERRUPT_FLAG_MOVEMENT | SPELL_INTERRUPT_FLAG_DAMAGE | SPELL_INTERRUPT_FLAG_AUTOATTACK | SPELL_INTERRUPT_FLAG_PUSH_BACK | SPELL_INTERRUPT_FLAG_INTERRUPT;
                 break;
@@ -3742,7 +3749,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->AttributesEx4 |= SPELL_ATTR_EX4_DAMAGE_DOESNT_BREAK_AURAS;
                 break;
             case 43362: // Electrified Net
-                spellInfo->CastingTimeIndex = 0;
+                spellInfo->CastingTimeIndex = 1;
                 break;
             case 8064:
                 spellInfo->Mechanic = MECHANIC_SLEEP;
@@ -3839,7 +3846,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 40080: //Booming Voice
                 spellInfo->EffectRealPointsPerLevel[0] = 0;
-		            break;
+                break;
             case 44008: //Static Disruption
                 spellInfo->Targets = TARGET_FLAG_DEST_LOCATION;
                 spellInfo->EffectRadiusIndex[0] = 18;

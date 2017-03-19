@@ -372,9 +372,9 @@ void ScriptedAI::CastNextSpellIfAnyAndReady(uint32 diff)
             if (tempU && tempU->IsInWorld() && tempU->isAlive() && tempU->IsInMap(m_creature))
                 if (temp.spellId)
                 {					
-					Unit* target = m_creature->GetUnit(temp.targetGUID);
-					m_creature->SetInFront(target);
-                    //if(temp.setAsTarget && !m_creature->hasIgnoreVictimSelection())
+					//Unit* target = m_creature->GetUnit(temp.targetGUID);
+					//m_creature->SetInFront(target);
+                    if(temp.setAsTarget && !m_creature->hasIgnoreVictimSelection())
                         m_creature->SetSelection(temp.targetGUID);
                     if(temp.hasCustomValues)
                         m_creature->CastCustomSpell(tempU, temp.spellId, &temp.damage[0], &temp.damage[1], &temp.damage[2], temp.triggered);
