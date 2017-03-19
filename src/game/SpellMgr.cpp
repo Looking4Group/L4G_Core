@@ -3845,7 +3845,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 40080: //Booming Voice
                 spellInfo->EffectRealPointsPerLevel[0] = 0;
-		            break;
+                break;
             case 44008: //Static Disruption
                 spellInfo->Targets = TARGET_FLAG_DEST_LOCATION;
                 spellInfo->EffectRadiusIndex[0] = 18;
@@ -3858,6 +3858,12 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 43622: // Static Disruption
                 spellInfo->InterruptFlags |= SPELL_INTERRUPT_FLAG_MOVEMENT;
+                break;
+            case 30844: // Proximity Bomb Nonheroic
+                spellInfo->EffectBasePoints[0] = 899;
+                break;
+            case 32786: // Proximity Bomb Heroic
+                spellInfo->EffectBasePoints[0] = 1749;
                 break;
             case 17854: //Voidwalker: Consume Shadows 1-7
             case 17767:
