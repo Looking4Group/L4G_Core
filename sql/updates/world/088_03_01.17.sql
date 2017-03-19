@@ -1476,3 +1476,12 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('1754002','17540','2','0','100','3','75','0','7000','10000','11','35748','4','0','0','0','0','0','0','0','0','0','Fiendish Hound - Cast Drain Life at 75% HP'), -- 30%
 ('1754003','17540','7','0','100','5','0','0','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Fiendish Hound - Die on Evade');
 
+-- Most Texts are readable for players
+UPDATE `creature_ai_texts` SET `language` = 0 WHERE `entry` IN (-101,-102,-105,-181,-672,-925,-926,-1110); -- 1
+UPDATE `creature_ai_texts` SET `language` = 0 WHERE `entry` IN (-104,-329,-330,-331,-332); -- 6
+UPDATE `creature_ai_texts` SET `language` = 0 WHERE `entry` = -1349; -- 12
+UPDATE `creature_ai_texts` SET `language` = 0 WHERE `entry` IN (-549,-924,-1109); -- 7
+UPDATE `creature_ai_texts` SET `language` = 0 WHERE `entry` IN (-113,-114,-947); -- 10
+UPDATE `creature_ai_texts` SET `language` = 0 WHERE `entry` = -927; -- 33
+UPDATE `creature_ai_texts` SET `language` = 0 WHERE `entry` IN (-817,-818); -- 14
+
