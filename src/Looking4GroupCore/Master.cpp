@@ -113,7 +113,7 @@ Master::~Master()
 /// Main function
 int Master::Run()
 {
-    sLog.outString("%s (core-daemon)", _FULLVERSION);
+    sLog.outString("%s (core-daemon)", VERSION_STR);
     sLog.outString("<Ctrl-C> to stop.\n");
     /*
     sLog.outTitle(" ______                       __");
@@ -418,7 +418,7 @@ bool Master::_StartDB()
     clearOnlineAccounts();
 
     ///- Insert version info into DB
-    GameDataDatabase.PExecute("UPDATE `version` SET `core_version` = '%s', `core_revision` = '%s'", _FULLVERSION, _REVISION);
+    GameDataDatabase.PExecute("UPDATE `version` SET `core_version` = '%s', `core_revision` = '%s'", VERSION_STR, REVISION_ID);
 
     sWorld.LoadDBVersion();
 

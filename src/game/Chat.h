@@ -441,7 +441,6 @@ class ChatHandler
         bool HandleAddVIPAccountCommand(const char* args);
         bool HandleDelVIPAccountCommand(const char* args);
 
-        bool HandleCharacterImportCommand(const char* args);
         bool HandleChangeAccountCommand(const char* args);
 
         bool HandleSetTitleCommand(const char* args);

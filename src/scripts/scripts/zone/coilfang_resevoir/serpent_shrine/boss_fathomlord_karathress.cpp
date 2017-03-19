@@ -529,9 +529,9 @@ struct boss_fathomguard_tidalvessAI : public ScriptedAI
     void Reset()
     {
         FrostShock_Timer = 25000;
-        Spitfire_Timer = 60000;
-        PoisonCleansing_Timer = 30000;
-        Earthbind_Timer = 45000;
+        Spitfire_Timer = urand(8000,12000);
+        PoisonCleansing_Timer = urand(18000, 24000);
+        Earthbind_Timer = urand(12000, 18000);
     }
 
     void JustDied(Unit *victim)
@@ -585,7 +585,6 @@ struct boss_fathomguard_tidalvessAI : public ScriptedAI
         else
             FrostShock_Timer -= diff;
 
-        //Spitfire_Timer
         if(Spitfire_Timer < diff)
         {
             DoCast(m_creature, SPELL_SPITFIRE_TOTEM);
@@ -593,25 +592,23 @@ struct boss_fathomguard_tidalvessAI : public ScriptedAI
             if( SpitfireTotem )
                 ((Creature*)SpitfireTotem)->AI()->AttackStart( m_creature->getVictim() );
 
-            Spitfire_Timer = 60000;
+            Spitfire_Timer = urand(10000, 15000);
         }
         else
             Spitfire_Timer -= diff;
 
-        //PoisonCleansing_Timer
         if(PoisonCleansing_Timer < diff)
         {
             DoCast(m_creature, SPELL_POISON_CLEANSING_TOTEM);
-            PoisonCleansing_Timer = 30000;
+            PoisonCleansing_Timer = urand(10000, 15000);
         }
         else
             PoisonCleansing_Timer -= diff;
 
-        //Earthbind_Timer
         if(Earthbind_Timer < diff)
         {
             DoCast(m_creature, SPELL_EARTHBIND_TOTEM);
-            Earthbind_Timer = 45000;
+            Earthbind_Timer = urand(10000, 15000);
         }
         else
             Earthbind_Timer -= diff;

@@ -555,7 +555,7 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder * holder)
 
         // send server info
         if (sWorld.getConfig(CONFIG_ENABLE_SINFO_LOGIN) == 1)
-            chH.PSendSysMessage(_FULLVERSION);
+            chH.PSendSysMessage(VERSION_STR);
 
         DEBUG_LOG("WORLD: Sent server info");
     }

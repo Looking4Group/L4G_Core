@@ -23,7 +23,6 @@
 /// \file
 
 #include "SystemConfig.h"
-#include "revision.h"
 
 #include "Common.h"
 #include "Database/DatabaseEnv.h"
@@ -100,7 +99,7 @@ extern int main(int argc, char **argv)
                 cfg_file = cmd_opts.opt_arg();
                 break;
             case 'v':
-                printf("%s\n", _FULLVERSION);
+                printf("%s\n", VERSION_STR);
                 return 0;
             case 's':
             {

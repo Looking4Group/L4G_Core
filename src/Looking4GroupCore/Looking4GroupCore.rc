@@ -70,12 +70,12 @@ BEGIN
         BLOCK "080004b0"
         BEGIN
             VALUE "FileDescription", "Looking4GroupCore"
-            VALUE "FileVersion", STRFILEVER
+            VALUE "FileVersion", REVISION_ID
             VALUE "InternalName", "Looking4GroupCore"
             VALUE "LegalCopyright", "Copyright (C) 2011-2015"
             VALUE "OriginalFilename", "Looking4GroupCore.exe"
             VALUE "ProductName", "Looking4GroupCore"
-            VALUE "ProductVersion", STRPRODUCTVER
+            VALUE "ProductVersion", REVISION_ID
         END
     END
     BLOCK "VarFileInfo"

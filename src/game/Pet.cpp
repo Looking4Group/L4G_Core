@@ -124,7 +124,7 @@ void Pet::RemoveFromWorld()
 
 bool Pet::LoadPetFromDB(Unit* owner, uint32 petentry, uint32 petnumber, bool current, float x, float y, float z, float ang)
 {
-    m_loading = true;
+    SetLoading(true);
 
     uint32 ownerid = owner->GetGUIDLow();
 
@@ -146,14 +146,20 @@ bool Pet::LoadPetFromDB(Unit* owner, uint32 petentry, uint32 petnumber, bool cur
         result = RealmDataDatabase.PQuery("SELECT id, entry, owner, modelid, level, exp, Reactstate, loyaltypoints, loyalty, trainpoint, slot, name, renamed, curhealth, curmana, curhappiness, abdata, TeachSpelldata, savetime, resettalents_cost, resettalents_time, CreatedBySpell, PetType FROM character_pet WHERE owner = '%u' AND (slot = '0' OR slot = '3') ",ownerid);
 
     if (!result)
+    {
+        SetLoading(false);
         return false;
+    }
 
     Field *fields = result->Fetch();
 
     // update for case of current pet "slot = 0"
     petentry = fields[1].GetUInt32();
     if (!petentry)
+    {
+        SetLoading(false);
         return false;
+    }
 
     uint32 summon_spell_id = fields[21].GetUInt32();
     SpellEntry const* spellInfo = sSpellStore.LookupEntry(summon_spell_id);
@@ -162,13 +168,19 @@ bool Pet::LoadPetFromDB(Unit* owner, uint32 petentry, uint32 petnumber, bool cur
 
     // check temporary summoned pets like mage water elemental
     if (current && is_temporary_summoned)
+    {
+        SetLoading(false);
         return false;
+    }
 
     Map *map = owner->GetMap();
     uint32 guid = sObjectMgr.GenerateLowGuid(HIGHGUID_PET);
     uint32 pet_number = fields[0].GetUInt32();
     if (!Create(guid, map, petentry, pet_number))
+    {
+        SetLoading(false);
         return false;
+    }
 
     if (!x || !y)
     {
@@ -182,6 +194,7 @@ bool Pet::LoadPetFromDB(Unit* owner, uint32 petentry, uint32 petnumber, bool cur
     {
         sLog.outLog(LOG_DEFAULT, "ERROR: Pet (guidlow %d, entry %d) not loaded. Suggested coordinates isn't valid (X: %f Y: %f)",
             GetGUIDLow(), GetEntry(), GetPositionX(), GetPositionY());
+        SetLoading(false);
         return false;
     }
 
@@ -193,6 +206,7 @@ bool Pet::LoadPetFromDB(Unit* owner, uint32 petentry, uint32 petnumber, bool cur
     if (cinfo->type == CREATURE_TYPE_CRITTER)
     {
         map->Add((Creature*)this);
+        SetLoading(false);
         return true;
     }
 
@@ -264,7 +278,10 @@ bool Pet::LoadPetFromDB(Unit* owner, uint32 petentry, uint32 petnumber, bool cur
         Tokens tokens = StrSplit(fields[16].GetString(), " ");
 
         if (tokens.size() != 20)
+        {
+            SetLoading(false);
             return false;
+        }
 
         int index;
         Tokens::iterator iter;
@@ -368,7 +385,7 @@ bool Pet::LoadPetFromDB(Unit* owner, uint32 petentry, uint32 petnumber, bool cur
     if (owner->GetTypeId() == TYPEID_PLAYER && isControlled() && !isTemporarySummoned() && (getPetType() == SUMMON_PET || getPetType() == HUNTER_PET))
         owner->ToPlayer()->SetLastPetNumber(pet_number);
 
-    m_loading = false;
+    SetLoading(false);
     return true;
 }
 
@@ -532,7 +549,7 @@ void Pet::setDeathState(DeathState s)                       // overwrite virtual
 
 void Pet::Update(uint32 update_diff, uint32 p_diff)
 {
-    if (m_removed || m_loading)                                           // pet already removed, just wait in remove queue, no updates
+    if (m_removed || InLoading())                                           // pet already removed, just wait in remove queue, no updates
         return;
 
     switch (m_deathState)

@@ -3525,6 +3525,12 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->EffectImplicitTargetA[1] = TARGET_UNIT_CASTER;
                 spellInfo->EffectImplicitTargetA[2] = TARGET_UNIT_TARGET_ENEMY;
                 break;
+            case 29978: // Aran Pyroblast
+                spellInfo->Attributes &= ~SPELL_ATTR_LEVEL_DAMAGE_CALCULATION;
+                break;
+            case 29946: // Aran Flame Wreath
+                spellInfo->EffectRadiusIndex[0] = EFFECT_RADIUS_2_YARDS;
+                break;
             case 32785: // Infernal Rain                
                 spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ENEMY;
                 spellInfo->EffectImplicitTargetB[0] = 0;
@@ -3839,7 +3845,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 40080: //Booming Voice
                 spellInfo->EffectRealPointsPerLevel[0] = 0;
-		            break;
+                break;
             case 44008: //Static Disruption
                 spellInfo->Targets = TARGET_FLAG_DEST_LOCATION;
                 spellInfo->EffectRadiusIndex[0] = 18;
@@ -3858,6 +3864,15 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 32786: // Proximity Bomb Heroic
                 spellInfo->EffectBasePoints[0] = 1749;
+                break;
+            case 17854: //Voidwalker: Consume Shadows 1-7
+            case 17767:
+            case 17850:
+            case 17851:
+            case 17853:
+            case 17852:
+            case 27272:
+                spellInfo->ChannelInterruptFlags |= CHANNEL_INTERRUPT_FLAG_MOVEMENT;
                 break;
             default:
                 break;
