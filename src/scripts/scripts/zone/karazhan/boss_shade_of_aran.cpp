@@ -17,7 +17,7 @@
 /* ScriptData
 SDName: Boss_Shade_of_Aran
 SD%Complete: 95
-SDComment: Flame wreath missing cast animation, mods won't triggere.
+SDComment: Sit Animation
 SDCategory: Karazhan
 EndScriptData */
 
@@ -26,57 +26,58 @@ EndScriptData */
 #include "def_karazhan.h"
 #include "GameObject.h"
 
-#define SAY_AGGRO1                  -1532073
-#define SAY_AGGRO2                  -1532074
-#define SAY_AGGRO3                  -1532075
-#define SAY_FLAMEWREATH1            -1532076
-#define SAY_FLAMEWREATH2            -1532077
-#define SAY_BLIZZARD1               -1532078
-#define SAY_BLIZZARD2               -1532079
-#define SAY_EXPLOSION1              -1532080
-#define SAY_EXPLOSION2              -1532081
-#define SAY_DRINK                   -1532082                //Low Mana / AoE Pyroblast
-#define SAY_ELEMENTALS              -1532083
-#define SAY_KILL1                   -1532084
-#define SAY_KILL2                   -1532085
-#define SAY_TIMEOVER                -1532086
-#define SAY_DEATH                   -1532087
-#define SAY_ATIESH                  -1532088                //Atiesh is equipped by a raid member
+enum Aran
+{
+    SAY_AGGRO1              = -1532073,
+    SAY_AGGRO2              = -1532074,
+    SAY_AGGRO3              = -1532075,
+    SAY_FLAMEWREATH1        = -1532076,
+    SAY_FLAMEWREATH2        = -1532077,
+    SAY_BLIZZARD1           = -1532078,
+    SAY_BLIZZARD2           = -1532079,
+    SAY_EXPLOSION1          = -1532080,
+    SAY_EXPLOSION2          = -1532081,
+    SAY_DRINK               = -1532082, //Low Mana / AoE Pyroblast
+    SAY_ELEMENTALS          = -1532083,
+    SAY_KILL1               = -1532084,
+    SAY_KILL2               = -1532085,
+    SAY_TIMEOVER            = -1532086,
+    SAY_DEATH               = -1532087,
+    SAY_ATIESH              = -1532088, //Atiesh is equipped by a raid member
 
-//Spells
-#define SPELL_FROSTBOLT         29954
-#define SPELL_FIREBALL          29953
-#define SPELL_ARCMISSLE         29955
-#define SPELL_CHAINSOFICE       29991
-#define SPELL_DRAGONSBREATH     29964
-#define SPELL_MASSSLOW          30035
-#define SPELL_FLAME_WREATH      30004
-#define SPELL_AOE_CS            29961
-#define SPELL_AEXPLOSION        29973
-#define SPELL_MASS_POLY         29963
-#define SPELL_BLINK_CENTER      29967
-#define SPELL_ELEMENTAL1        29962
-#define SPELL_ELEMENTAL2        37053
-#define SPELL_ELEMENTAL3        37051
-#define SPELL_ELEMENTAL4        37052
-#define SPELL_CONJURE           29975
-#define SPELL_DRINK             30024
-#define SPELL_POTION            32453
-#define SPELL_AOE_PYROBLAST     29978
-#define SPELL_SUMMON_BLIZZARD   29969
-#define SPELL_MAGNETIC_PULL     29979
-#define SPELL_TELEPORT_MIDDLE   39567           // used also by npc_berthold not sure if valid here
+    SPELL_FROSTBOLT         = 29954,
+    SPELL_FIREBALL          = 29953,
+    SPELL_ARCMISSLE         = 29955,
+    SPELL_CHAINSOFICE       = 29991,
+    SPELL_DRAGONSBREATH     = 29964,
+    SPELL_MASSSLOW          = 30035,
+    SPELL_FLAME_WREATH      = 30004,
+    SPELL_AOE_CS            = 29961,
+    SPELL_AEXPLOSION        = 29973,
+    SPELL_MASS_POLY         = 29963,
+    SPELL_BLINK_CENTER      = 29967,
+    SPELL_ELEMENTAL1        = 29962,
+    SPELL_ELEMENTAL2        = 37053,
+    SPELL_ELEMENTAL3        = 37051,
+    SPELL_ELEMENTAL4        = 37052,
+    SPELL_CONJURE           = 29975,
+    SPELL_ARAN_DRINK        = 30024,
+    SPELL_POTION            = 32453,
+    SPELL_AOE_PYROBLAST     = 29978,
+    SPELL_SUMMON_BLIZZARD   = 29969,
+    SPELL_MAGNETIC_PULL     = 29979,
+    SPELL_TELEPORT_MIDDLE   = 39567, // used also by npc_berthold not sure if valid here
 
-//Creature Spells
-#define SPELL_CIRCULAR_BLIZZARD     29952
-#define SPELL_WATERBOLT             37054
-#define SPELL_SHADOW_PYRO           29978
-#define SPELL_FROSTBOLT_VOLLEY      38837
-#define SPELL_AMISSILE_VOLLEY       29960
+    SPELL_CIRCULAR_BLIZZARD = 29952,
+    SPELL_WATERBOLT         = 37054,
+    SPELL_SHADOW_PYRO       = 29978,
+    SPELL_FROSTBOLT_VOLLEY  = 38837,
+    SPELL_AMISSILE_VOLLEY   = 29960,
 
-//Creatures
-#define CREATURE_WATER_ELEMENTAL         17167
-#define CREATURE_SHADOW_OF_ARAN          18254
+    CREATURE_WATER_ELEMENTAL= 17167,
+    CREATURE_SHADOW_OF_ARAN = 18254,
+    CREATURE_BLIZZARD       = 17161
+};
 
 enum SuperSpell
 {
@@ -105,7 +106,7 @@ float shadowOfAranSpawnPoints[2][8] = {
 
 struct boss_aranAI : public ScriptedAI
 {
-    boss_aranAI(Creature *c) : ScriptedAI(c)
+    boss_aranAI(Creature *c) : ScriptedAI(c), summons(c)
     {
         pInstance = (c->GetInstanceData());
         m_creature->GetPosition(wLoc);
@@ -129,6 +130,7 @@ struct boss_aranAI : public ScriptedAI
     uint32 FrostCooldown;
     uint32 CheckTimer;
     uint32 PyroblastTimer;
+    uint32 DragonsBreathTimer;
 
     uint64 shadeOfAranTeleportCreatures[8];
     WorldLocation wLoc;
@@ -136,15 +138,15 @@ struct boss_aranAI : public ScriptedAI
     uint32 DrinkInturruptTimer;
 
     bool ElementalsSpawned;
+    SummonList summons;
+
     DrinkingState Drinking;
     uint32 DrinkingDelay;
-
-
 
     void Reset()
     {
         ClearCastQueue();
-
+        m_creature->GetMotionMaster()->Initialize();
         SecondarySpellTimer = 5000;
         NormalCastTimer     = 0;
         SuperCastTimer      = 30000;
@@ -152,7 +154,8 @@ struct boss_aranAI : public ScriptedAI
         CheckTimer          = 3000;
         PyroblastTimer      = 0;
         DrinkingDelay       = 0;
-
+        DragonsBreathTimer  = urand(15000, 30000);
+        summons.DespawnAll();
 
         LastSuperSpell = rand()%3;
 
@@ -180,9 +183,11 @@ struct boss_aranAI : public ScriptedAI
         if(pInstance)
             pInstance->SetData(DATA_SHADEOFARAN_EVENT, DONE);
         
-        Unit *Blizzard = FindCreature(17161, 40, me);
+        Unit *Blizzard = FindCreature(CREATURE_BLIZZARD, 100, me);
         if (Blizzard)
-            Blizzard->ToCreature()->DisappearAndDie();
+            Blizzard->ToCreature()->DisappearAndDie();    
+            
+        summons.DespawnAll();
     }
 
     bool PlayerHaveAtiesh()
@@ -266,10 +271,11 @@ struct boss_aranAI : public ScriptedAI
         if (!DrinkingDelay && Drinking == DRINKING_NO_DRINKING && (m_creature->GetPower(POWER_MANA)*100 / m_creature->GetMaxPower(POWER_MANA)) < 20)
         {
             ClearCastQueue();
+            DragonsBreathTimer += 20000;
             Drinking = DRINKING_PREPARING;
             AddSpellToCast(SPELL_MASS_POLY, CAST_SELF);
             AddSpellToCastWithScriptText(SPELL_CONJURE, CAST_SELF, SAY_DRINK);
-            AddSpellToCast(SPELL_DRINK, CAST_SELF); 
+            AddSpellToCast(SPELL_ARAN_DRINK, CAST_SELF);
         }
 
         if (Drinking == DRINKING_DONE_DRINKING)
@@ -286,6 +292,7 @@ struct boss_aranAI : public ScriptedAI
                 AddSpellToCast(SPELL_AOE_PYROBLAST, CAST_SELF);
                 Drinking = DRINKING_NO_DRINKING;
                 PyroblastTimer = 0;
+                m_creature->GetMotionMaster()->Initialize();
             }
             else
                 PyroblastTimer -= diff;
@@ -312,9 +319,15 @@ struct boss_aranAI : public ScriptedAI
 
                     //If no available spells wait 1 second and try again
                     if (AvailableSpells)
-                        AddSpellToCast(Spells[rand() % AvailableSpells], CAST_RANDOM, false, true);
+                        // exclude pets & totems needs to be done in general ai
+                        if (Unit *target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(Spells[rand() % AvailableSpells]), true))
+                        {
+                            m_creature->SetSelection(target->GetGUID());
+                            DoCast(target, Spells[rand() % AvailableSpells], false);
+                        }
+
                 }
-                NormalCastTimer = 1000;
+                NormalCastTimer = urand(1000, 2000);
             }
             else
                 NormalCastTimer -= diff;
@@ -331,6 +344,8 @@ struct boss_aranAI : public ScriptedAI
             {
                 uint8 Available[2];
                 ClearCastQueue();
+                NormalCastTimer += 5000;
+                DragonsBreathTimer += 30000;
 
                 switch (LastSuperSpell)
                 {
@@ -353,9 +368,9 @@ struct boss_aranAI : public ScriptedAI
                 switch (LastSuperSpell)
                 {
                     case SUPER_AE:
-                        AddSpellToCast(SPELL_TELEPORT_MIDDLE, CAST_SELF);
-                        AddSpellToCast(SPELL_MAGNETIC_PULL, CAST_SELF);  
-                        AddSpellToCast(SPELL_MASSSLOW, CAST_SELF);
+                        AddSpellToCast(SPELL_TELEPORT_MIDDLE, CAST_SELF, true);
+                        AddSpellToCast(SPELL_MAGNETIC_PULL, CAST_SELF, true);  
+                        AddSpellToCast(SPELL_MASSSLOW, CAST_SELF, true);
                         AddSpellToCastWithScriptText(SPELL_AEXPLOSION, CAST_SELF, RAND(SAY_EXPLOSION1, SAY_EXPLOSION2));
                         DrinkingDelay = 15000;
                         break;
@@ -379,10 +394,11 @@ struct boss_aranAI : public ScriptedAI
             if (!ElementalsSpawned && ((m_creature->GetHealth()*100)/ m_creature->GetMaxHealth()) <= 40)
             {
                 ElementalsSpawned = true;
-                AddSpellToCastWithScriptText(SPELL_ELEMENTAL1, CAST_SELF, SAY_ELEMENTALS);
-                AddSpellToCast(SPELL_ELEMENTAL2, CAST_SELF);
-                AddSpellToCast(SPELL_ELEMENTAL3, CAST_SELF);
-                AddSpellToCast(SPELL_ELEMENTAL4, CAST_SELF);
+                DoScriptText(SAY_ELEMENTALS, m_creature);
+                ForceSpellCast(SPELL_ELEMENTAL1, CAST_SELF);
+                ForceSpellCast(SPELL_ELEMENTAL2, CAST_SELF);
+                ForceSpellCast(SPELL_ELEMENTAL3, CAST_SELF);
+                ForceSpellCast(SPELL_ELEMENTAL4, CAST_SELF);
             }
         }
 
@@ -403,6 +419,16 @@ struct boss_aranAI : public ScriptedAI
         }
         else
             BerserkTimer -= diff;
+
+        if (DragonsBreathTimer <= diff)
+        {
+            if (SuperCastTimer < 8000)
+                SuperCastTimer += 8000;
+
+            AddSpellToCast(SPELL_DRAGONSBREATH, CAST_TANK, false, true);
+            DragonsBreathTimer = urand(15000, 30000);
+        }
+            DragonsBreathTimer -= diff;
 
         CastNextSpellIfAnyAndReady();
         if(Drinking == DRINKING_NO_DRINKING)
@@ -425,28 +451,32 @@ struct boss_aranAI : public ScriptedAI
 
     void JustSummoned(Creature *c)
     {
-        if (c->GetEntry() == 17167)
+        if (c->GetEntry() == CREATURE_WATER_ELEMENTAL)
         {
             c->AI()->AttackStart(m_creature->getVictim());
             c->setFaction(m_creature->getFaction());
+
+            summons.Summon(c);
         }
     }
 
     void OnAuraRemove(Aura *aura, bool)
     {
-        if(aura->GetId() == SPELL_DRINK)
+        if(aura->GetId() == SPELL_ARAN_DRINK)
         {
-            m_creature->SetUInt32Value(UNIT_FIELD_BYTES_1, 0); // stand up
+            //m_creature->SetStandState(UNIT_STAND_STATE_STAND);
+            //m_creature->SetUInt32Value(UNIT_FIELD_BYTES_1, 0); // stand up
             Drinking = DRINKING_DONE_DRINKING;
         }
     }
 
     void OnAuraApply(Aura *aura, Unit *caster, bool)
     {
-        if(aura->GetId() == SPELL_DRINK)
+        if(aura->GetId() == SPELL_ARAN_DRINK)
         {
             m_creature->GetMotionMaster()->MoveIdle();
-            m_creature->SetUInt32Value(UNIT_FIELD_BYTES_1, 1); // sit down
+            //m_creature->SetStandState(UNIT_STAND_STATE_SIT);
+            //m_creature->SetUInt32Value(UNIT_FIELD_BYTES_1, 1); // sit down
         }
 
     }
@@ -506,9 +536,8 @@ struct water_elementalAI : public ScriptedAI
 
         if (CastTimer < diff)
         {
-            //AddSpellToCast(m_creature->getVictim(), SPELL_WATERBOLT);
             DoCast(m_creature->getVictim(), SPELL_WATERBOLT);
-            CastTimer = 2000 + (rand()%3000);
+            CastTimer = urand(2000, 5000);
         }
         else
             CastTimer -= diff;

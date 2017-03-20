@@ -3179,6 +3179,9 @@ void SpellMgr::LoadSpellCustomAttr()
             case 24311: // Powerful Healing Ward
                 spellInfo->CastingTimeIndex = 14;
                 break;
+            case 39297: // Omor the Unscarred Shadowbolt Prenerf?
+                spellInfo->CastingTimeIndex = 5;
+                break;
             case 24178: // Will of Hakkar
                 spellInfo->AttributesEx |= SPELL_ATTR_EX_CHANNELED_1;
                 break;
@@ -3525,6 +3528,12 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->EffectImplicitTargetA[1] = TARGET_UNIT_CASTER;
                 spellInfo->EffectImplicitTargetA[2] = TARGET_UNIT_TARGET_ENEMY;
                 break;
+            case 29978: // Aran Pyroblast
+                spellInfo->Attributes &= ~SPELL_ATTR_LEVEL_DAMAGE_CALCULATION;
+                break;
+            case 29946: // Aran Flame Wreath
+                spellInfo->EffectRadiusIndex[0] = EFFECT_RADIUS_2_YARDS;
+                break;
             case 32785: // Infernal Rain                
                 spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ENEMY;
                 spellInfo->EffectImplicitTargetB[0] = 0;
@@ -3545,6 +3554,10 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 30207: // Magtheridon's creatures Shadow Grasp
                 spellInfo->StackAmount = 5;
+                break;
+            case 30641: // Watchkeeper Gargolmar Mortal Wound Prenerf
+            case 36814:
+                spellInfo->StackAmount = 10;
                 break;
             case 20814: // Collect Dire Water
                 spellInfo->InterruptFlags = SPELL_INTERRUPT_FLAG_MOVEMENT | SPELL_INTERRUPT_FLAG_DAMAGE | SPELL_INTERRUPT_FLAG_AUTOATTACK | SPELL_INTERRUPT_FLAG_PUSH_BACK | SPELL_INTERRUPT_FLAG_INTERRUPT;
@@ -3742,7 +3755,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->AttributesEx4 |= SPELL_ATTR_EX4_DAMAGE_DOESNT_BREAK_AURAS;
                 break;
             case 43362: // Electrified Net
-                spellInfo->CastingTimeIndex = 0;
+                spellInfo->CastingTimeIndex = 1;
                 break;
             case 8064:
                 spellInfo->Mechanic = MECHANIC_SLEEP;
@@ -3839,7 +3852,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 40080: //Booming Voice
                 spellInfo->EffectRealPointsPerLevel[0] = 0;
-		            break;
+                break;
             case 44008: //Static Disruption
                 spellInfo->Targets = TARGET_FLAG_DEST_LOCATION;
                 spellInfo->EffectRadiusIndex[0] = 18;
@@ -3852,6 +3865,12 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 43622: // Static Disruption
                 spellInfo->InterruptFlags |= SPELL_INTERRUPT_FLAG_MOVEMENT;
+                break;
+            case 30844: // Proximity Bomb Nonheroic
+                spellInfo->EffectBasePoints[0] = 899;
+                break;
+            case 32786: // Proximity Bomb Heroic
+                spellInfo->EffectBasePoints[0] = 1749;
                 break;
             case 17854: //Voidwalker: Consume Shadows 1-7
             case 17767:
