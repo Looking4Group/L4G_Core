@@ -53,21 +53,20 @@ void HomeMovementGenerator<Creature>::_setTargetLocation(Creature & owner)
     PathFinder* _path = new PathFinder(&owner);
 
     bool result = _path->calculate(x, y, z, true);
-    if (_path->getPathType() & PATHFIND_NOPATH)
+
+    init.SetFacing(o);
+
+    if (!result || _path->getPathType() & PATHFIND_NOPATH)
     {
-        if (owner.GetObjectGuid().IsCreature())
-        {
-            _path->BuildShortcut();
-            owner.addUnitState(UNIT_STAT_IGNORE_PATHFINDING);
-            _path = new PathFinder(&owner);
-        }
-    }
-    else if (owner.GetObjectGuid().IsCreature())
-        owner.clearUnitState(UNIT_STAT_IGNORE_PATHFINDING);
+        init.MoveTo(x, y, z);
+        init.SetWalk(false);
+        init.Launch();
 
-    if (!result)
+        arrived = false;
+        owner.clearUnitState(UNIT_STAT_ALL_STATE);
         return;
-
+    }
+    
     init.MovebyPath(_path->getPath());
     init.SetWalk(false);
     init.Launch();
