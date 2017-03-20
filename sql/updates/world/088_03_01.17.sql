@@ -1485,3 +1485,5 @@ UPDATE `creature_ai_texts` SET `language` = 0 WHERE `entry` IN (-113,-114,-947);
 UPDATE `creature_ai_texts` SET `language` = 0 WHERE `entry` = -927; -- 33
 UPDATE `creature_ai_texts` SET `language` = 0 WHERE `entry` IN (-817,-818); -- 14
 
+DELETE FROM `creature` WHERE `guid` IN (16202, 12850);
+
