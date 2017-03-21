@@ -1513,3 +1513,8 @@ INSERT INTO `creature_template_addon` VALUES
 (17990,0,0,0,0,0,0,0,'34168 0 34168 1'),
 (20189,0,0,0,0,0,0,0,'34168 0 34168 1');
 
+-- Magtheridons Head 2.1 cond 6, value 67 / 469
+DELETE FROM `creature_loot_template` WHERE `item` IN (32385,32386);
+INSERT INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES (17257, 32386, 100, 0, 1, 1, 6, 67, 0); -- 100
+INSERT INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES (17257, 32385, 100, 0, 1, 1, 6, 469, 0);
+
