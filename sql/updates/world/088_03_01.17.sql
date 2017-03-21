@@ -1487,3 +1487,29 @@ UPDATE `creature_ai_texts` SET `language` = 0 WHERE `entry` IN (-817,-818); -- 1
 
 DELETE FROM `creature` WHERE `guid` IN (16202, 12850);
 
+-- Serpentshrine Lurker 21863
+UPDATE `creature_template` SET `speed`='1.48',`mindmg`='8358',`maxdmg`='9926',`baseattacktime`='1400',`resistance3`= 0,`mechanic_immune_mask`='1073692671' WHERE `entry` = 21863; -- 3003 6139 2000 1 -- 16,716 - 19,852
+-- pre 2.1 1073692671 post patch 2.1 `mechanic_immune_mask`='1073561599'
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 21863;
+INSERT INTO `creature_ai_scripts` VALUES
+('2186301','21863','9','0','100','3','0','100','4000','8000','11','38655','1','0','0','0','0','0','0','0','0','0','Serpentshrine Lurker - Cast Poison Bolt Volley'),
+-- ('2186302','21863','9','0','100','3','0','5','18900','18900','11','38650','0','1','0','0','0','0','0','0','0','0','Serpentshrine Lurker - Cast Rancid Mushroom Primer'),
+('2186303','21863','9','0','100','3','0','5','5000','10000','12','22250','1','20000','0','0','0','0','0','0','0','0','Serpentshrine Lurker - Spawn Rancid Mushroom'); -- 17990
+
+-- Rancid Mushroom 22250
+UPDATE `creature_template` SET `modelid_A`='11686',`modelid_H`='11686',`faction_A`='14',`faction_H`='14',`armor`='6800',`flags_extra`='0',`unit_flags`= 393220,`speed`='0.0001',`mindmg`='0',`maxdmg`='0',`attackpower`='0',`resistance3`= 0 WHERE `entry` = 22250; -- 7999 7999 35 35 0 128 4
+DELETE FROM `creature_template_addon` WHERE `entry` = 22250; 
+INSERT INTO `creature_template_addon` VALUES (22250,0,0,0,0,0,0,0,'38652 0 38652 1 31690 0');
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 22250;
+INSERT INTO `creature_ai_scripts` VALUES
+('2225001','22250','0','0','100','3','1000','1000','3000','3000','11','31698','0','7','0','0','0','0','0','0','0','0','Rancid Mushroom - Cast Grow'),
+('2225002','22250','6','0','100','2','0','0','0','0','11','38652','0','7','0','0','0','0','0','0','0','0','Rancid Mushroom - Cast Spore Cloud on Death'),
+('2225003','22250','0','0','100','2','20000','20000','0','0','11','38652','0','7','37','0','0','0','0','0','0','0','Rancid Mushroom - Cast Spore Cloud and Die');
+
+-- Underbog Mushroom 17990,20189
+UPDATE `creature_template` SET `unit_flags`= 393220,`resistance3`= 0 WHERE `entry` IN (17990,20189); -- 0
+DELETE FROM `creature_template_addon` WHERE `entry` IN (17990,20189); 
+INSERT INTO `creature_template_addon` VALUES
+(17990,0,0,0,0,0,0,0,'34168 0 34168 1'),
+(20189,0,0,0,0,0,0,0,'34168 0 34168 1');
+
