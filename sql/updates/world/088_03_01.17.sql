@@ -1518,3 +1518,6 @@ DELETE FROM `creature_loot_template` WHERE `item` IN (32385,32386);
 INSERT INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES (17257, 32386, 100, 0, 1, 1, 6, 67, 0); -- 100
 INSERT INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES (17257, 32385, 100, 0, 1, 1, 6, 469, 0);
 
+-- Magtheridons Black Sack of Gems and Pit Lord's Satchel 2.4
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 0 WHERE `entry` = 17257 AND `item` IN (34846,34845);
+
