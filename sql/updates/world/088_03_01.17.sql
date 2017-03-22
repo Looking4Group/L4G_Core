@@ -1561,4 +1561,17 @@ UPDATE `creature_template` SET `mindmg`='4171',`maxdmg`='4950' WHERE `entry` = 2
 -- Auchenai Monk 20299
 UPDATE `creature_template` SET `speed`='1.48' WHERE `entry` = 20299;
 
+-- --------------------
+-- Vanilla quests
+-- ---------------------
+
+-- [QUEST] A Dip in the Moonwell (9433)
+DELETE FROM `spell_linked_spell` WHERE `spell_trigger`=30009 AND `spell_effect`=29989 AND `type`=0;
+INSERT INTO `spell_linked_spell` (`spell_trigger`, `spell_effect`, `type`, `comment`) VALUES 
+(30009, 29989, 0, 'Control Robotron 3000');
+
+-- [QUEST] Proving Allegiance (409)
+DELETE FROM `quest_end_scripts` WHERE `id`=410;
+INSERT INTO `quest_end_scripts` (`id`, `command`, `datalong`, `datalong2`, `x`, `y`, `z`, `o`) VALUES 
+('410', '10', '1946', '180000', '2483.71', '22.11', '26.98', '3.151972');
 
