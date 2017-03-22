@@ -1524,3 +1524,6 @@ UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 0 WHERE `entry` = 17
 -- Captain Fairmount
 UPDATE `creature` SET `modelid` = 1855 WHERE `id` = 3393;
 
+DELETE FROM `creature` WHERE `guid` = 6584423;
+DELETE FROM `creature` WHERE `guid` BETWEEN 16777256 AND 16777268;
+
