@@ -1558,4 +1558,7 @@ UPDATE `creature_template` SET `mindmg`='4012',`maxdmg`='4764' WHERE `entry` = 2
 UPDATE `creature_template` SET `mindmg`='6686',`maxdmg`='7941' WHERE `entry` = 20164;
 -- Swamplord Musel'ek 20183
 UPDATE `creature_template` SET `mindmg`='4171',`maxdmg`='4950' WHERE `entry` = 20183;
+-- Auchenai Monk 20299
+UPDATE `creature_template` SET `speed`='1.48' WHERE `entry` = 20299;
+
 
