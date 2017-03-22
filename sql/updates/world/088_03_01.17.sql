@@ -1521,3 +1521,6 @@ INSERT INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `g
 -- Magtheridons Black Sack of Gems and Pit Lord's Satchel 2.4
 UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 0 WHERE `entry` = 17257 AND `item` IN (34846,34845);
 
+-- Captain Fairmount
+UPDATE `creature` SET `modelid` = 1855 WHERE `id` = 3393;
+
