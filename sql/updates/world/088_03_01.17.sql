@@ -1531,3 +1531,24 @@ UPDATE `creature` SET `spawndist` = 0, `MovementType` = 0 WHERE `guid` IN (58272
 -- 300secs way to go
 UPDATE `creature` SET `spawntimesecs` = 300 WHERE `id` IN (18260,18262,20798,22144,22143,22148,20561,19764,16964);
 
+SET @GUID := 80849;
+UPDATE `creature` SET `MovementType`= 2, `spawndist` = 0 WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,NULL);
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+REPLACE INTO `waypoint_data` VALUES (80849, 1, -9785.24, -880.61, 39.6131, 0, 0, 0, 0, 0);
+REPLACE INTO `waypoint_data` VALUES (80849, 2, -9792.77, -872.876, 39.5751, 0, 0, 0, 0, 0);
+REPLACE INTO `waypoint_data` VALUES (80849, 3, -9793.2, -867.623, 39.4678, 0, 0, 0, 0, 0);
+REPLACE INTO `waypoint_data` VALUES (80849, 4, -9774.36, -847.313, 39.7919, 0, 0, 0, 0, 0);
+REPLACE INTO `waypoint_data` VALUES (80849, 5, -9767.83, -847.814, 39.6107, 0, 0, 0, 0, 0);
+REPLACE INTO `waypoint_data` VALUES (80849, 6, -9752.2, -863.369, 39.4772, 0, 0, 0, 0, 0);
+REPLACE INTO `waypoint_data` VALUES (80849, 7, -9753.51, -871.917, 39.5511, 0, 0, 0, 0, 0);
+REPLACE INTO `waypoint_data` VALUES (80849, 8, -9769.58, -886.229, 39.4867, 0, 0, 0, 0, 0);
+REPLACE INTO `waypoint_data` VALUES (80849, 9, -9776.63, -887.336, 39.5384, 0, 0, 0, 0, 0);
+
+DELETE FROM `creature_formations` WHERE `leaderguid` = 80849;
+INSERT INTO `creature_formations` VALUES
+(80849, 80849, 100, 360, 2),
+(80849, 80848, 2, 0.78, 2),
+(80849, 80850, 2, 5.50, 2);
+
