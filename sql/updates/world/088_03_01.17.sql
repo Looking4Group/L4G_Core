@@ -1527,3 +1527,7 @@ UPDATE `creature` SET `modelid` = 1855 WHERE `id` = 3393;
 DELETE FROM `creature` WHERE `guid` = 6584423;
 DELETE FROM `creature` WHERE `guid` BETWEEN 16777256 AND 16777268;
 
+UPDATE `creature` SET `spawndist` = 0, `MovementType` = 0 WHERE `guid` IN (58272);
+-- 300secs way to go
+UPDATE `creature` SET `spawntimesecs` = 300 WHERE `id` IN (18260,18262,20798,22144,22143,22148,20561,19764,16964);
+
