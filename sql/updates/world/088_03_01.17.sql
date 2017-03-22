@@ -1552,3 +1552,10 @@ INSERT INTO `creature_formations` VALUES
 (80849, 80848, 2, 0.78, 2),
 (80849, 80850, 2, 5.50, 2);
 
+-- Underbog Lurker 20188
+UPDATE `creature_template` SET `mindmg`='4012',`maxdmg`='4764' WHERE `entry` = 20188;
+-- Bog Giant 20164
+UPDATE `creature_template` SET `mindmg`='6686',`maxdmg`='7941' WHERE `entry` = 20164;
+-- Swamplord Musel'ek 20183
+UPDATE `creature_template` SET `mindmg`='4171',`maxdmg`='4950' WHERE `entry` = 20183;
+
