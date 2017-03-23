@@ -1603,3 +1603,30 @@ UPDATE `creature_template` SET `mindmg`='6550',`maxdmg`='7820',`speed`='2.40' WH
 UPDATE `creature_model_info` SET `bounding_radius` = 7, `combat_reach` = 7 WHERE `modelid` = 18698; -- 4 10 growth
 UPDATE `script_texts` SET `type` = 2, `content_loc3` = 'brüllt!' WHERE `entry` = -1565020;
 
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17395;
+INSERT INTO `creature_ai_scripts` VALUES (1739501, 17395, 0, 0, 100, 7, 5000, 5000, 1000, 1000, 39, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Shadowmoon Summoner - Constant Call for Help');
+INSERT INTO `creature_ai_scripts` VALUES (1739502, 17395, 0, 0, 100, 7, 3000, 6000, 15000, 20000, 11, 30853, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Shadowmoon Summoner - Summon Seductress');
+INSERT INTO `creature_ai_scripts` VALUES (1739503, 17395, 0, 0, 100, 7, 6000, 9000, 15000, 20000, 11, 30851, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Shadowmoon Summoner - Summon Felhound Manastalker');
+INSERT INTO `creature_ai_scripts` VALUES (1739504, 17395, 4, 0, 100, 2, 0, 0, 0, 0, 11, 15242, 1, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Shadowmoon Summoner (Normal) - Cast Fireball and Set Phase 1 on Aggro');
+INSERT INTO `creature_ai_scripts` VALUES (1739505, 17395, 9, 5, 80, 3, 0, 40, 3000, 3800, 11, 15242, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Shadowmoon Summoner (Normal) - Cast Fireball (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (1739506, 17395, 4, 0, 100, 4, 0, 0, 0, 0, 11, 17290, 1, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Shadowmoon Summoner (Heroic) - Cast Fireball and Set Phase 1 on Aggro');
+INSERT INTO `creature_ai_scripts` VALUES (1739507, 17395, 9, 5, 80, 5, 0, 40, 3000, 3800, 11, 17290, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Shadowmoon Summoner (Heroic) - Cast Fireball (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (1739508, 17395, 3, 5, 100, 6, 15, 0, 0, 0, 21, 1, 0, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Shadowmoon Summoner - Start Combat Movement and Set Phase 2 when Mana is at 15% (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (1739509, 17395, 9, 5, 100, 6, 35, 80, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Shadowmoon Summoner - Start Combat Movement at 35 Yards (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (1739510, 17395, 9, 5, 100, 6, 5, 15, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Shadowmoon Summoner - Prevent Combat Movement at 15 Yards (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (1739511, 17395, 9, 5, 100, 6, 0, 5, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Shadowmoon Summoner - Start Combat Movement Below 5 Yards');
+INSERT INTO `creature_ai_scripts` VALUES (1739512, 17395, 3, 3, 100, 7, 100, 30, 100, 100, 23, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Shadowmoon Summoner - Set Phase 1 when Mana is above 30% (Phase 2)');
+INSERT INTO `creature_ai_scripts` VALUES (1739513, 17395, 0, 0, 100, 3, 12000, 14000, 6000, 9000, 11, 18399, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Shadowmoon Summoner (Normal) - Cast Flamestrike');
+INSERT INTO `creature_ai_scripts` VALUES (1739514, 17395, 0, 0, 100, 5, 12000, 14000, 6000, 9000, 11, 16102, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Shadowmoon Summoner (Heroic) - Cast Flamestrike');
+INSERT INTO `creature_ai_scripts` VALUES (1739515, 17395, 7, 0, 100, 6, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Shadowmoon Summoner - Set Phase to 0 on Evade');
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17399;
+INSERT INTO `creature_ai_scripts` VALUES (1739901, 17399, 0, 0, 100, 7, 1000, 3000, 12800, 12800, 11, 32202, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Seductress - Cast Lash of Pain');
+INSERT INTO `creature_ai_scripts` VALUES (1739902, 17399, 0, 0, 100, 7, 3200, 5700, 13700, 13700, 11, 31865, 5, 32, 0, 0, 0, 0, 0, 0, 0, 0, 'Seductress - Cast Seduction');
+INSERT INTO `creature_ai_scripts` VALUES (1739903, 17399, 7, 0, 100, 6, 0, 0, 0, 0, 41, 0, 0, 0, 18, 33554432, 0, 0, 0, 0, 0, 0, 'Seductress - Despawn on Evade');
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17401;
+INSERT INTO `creature_ai_scripts` VALUES (1740101, 17401, 0, 0, 100, 7, 1000, 2500, 11100, 11300, 11, 13321, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Felhound Manastalker - Cast Mana Burn');
+INSERT INTO `creature_ai_scripts` VALUES (1740102, 17401, 0, 0, 100, 7, 3300, 8700, 12900, 12900, 11, 30849, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Felhound Manastalker - Cast Spell Lock');
+INSERT INTO `creature_ai_scripts` VALUES (1740103, 17401, 7, 0, 100, 6, 0, 0, 0, 0, 41, 0, 0, 0, 18, 33554432, 0, 0, 0, 0, 0, 0, 'Felhound Manastalker - Despawn on Evade');
+
