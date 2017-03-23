@@ -4579,6 +4579,7 @@ DiminishingGroup SpellMgr::GetDiminishingReturnsGroupForSpell(SpellEntry const* 
     {
         case SPELLFAMILY_GENERIC:
  		{
+            if (spellproto->Id == 37029) // Remote Toy, basically all CC spells cast by creatures which end up cast by the player on itself should be here
                 return DIMINISHING_NONE;
             // some generic arena related spells have by some strange reason MECHANIC_TURN
             else if (spellproto->Mechanic == MECHANIC_TURN)
