@@ -141,6 +141,7 @@ struct boss_midnightAI : public ScriptedAI
         {
             case 1:
             {
+                if ((m_creature->GetHealthPct() <= 95))
                 {
                     Phase = 2;
                     Creature *pAttumen = m_creature->SummonCreature(SUMMON_ATTUMEN, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), 0, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 30000); //DoSpawnCreature(SUMMON_ATTUMEN, 0, 0, 0, 0, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 30000);
@@ -157,6 +158,7 @@ struct boss_midnightAI : public ScriptedAI
             }
             case 2:
             {
+                if ((m_creature->GetHealthPct() <= 25))
                     if (Unit *pAttumen = Unit::GetUnit(*m_creature, Attumen))
                         Mount(pAttumen);
                 break;
@@ -363,6 +365,7 @@ struct boss_attumenAI : public ScriptedAI
         }
         else
         {
+            if ((m_creature->GetHealthPct() <= 25))
             {
                 Creature *pMidnight = Unit::GetCreature(*m_creature, Midnight);
                 if (pMidnight && pMidnight->GetTypeId() == TYPEID_UNIT)
