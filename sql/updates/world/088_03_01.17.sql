@@ -1577,3 +1577,23 @@ INSERT INTO `quest_end_scripts` (`id`, `command`, `datalong`, `datalong2`, `x`, 
 
 UPDATE `gameobject` SET `spawntimesecs` = 7200, `spawnmask` = 0 WHERE `id` IN (153451,153453);
 
+SET @NPC := 56752;
+SET @PATH := 56752; -- 1359
+UPDATE `creature_addon` SET `path_id`= 56752 WHERE `guid` = 56752;
+UPDATE `creature` SET `spawndist`=0,`MovementType`=2,`position_x`=-11137.99,`position_y`=-1945.277,`position_z`=49.89039 WHERE `guid`=@NPC;
+DELETE FROM `waypoint_data` WHERE `id`=@PATH;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@PATH,1,-11137.99, -1945.277, 49.89039,0,0,0,100,0),
+(@PATH,2,-11129.64, -1948.63, 50.14034,0,0,0,100,0), 
+(@PATH,3,-11125.21, -1949.558, 50.13778,0,0,0,100,0), 
+(@PATH,4,-11110.95, -1946.991, 50.13663,0,0,0,100,0),
+(@PATH,5,-11102.87, -1942.1, 50.13157,0,0,0,100,0), 
+(@PATH,6,-11099.54, -1937.292, 50.13352,0,0,0,100,0), 
+(@PATH,7,-11097.69, -1933.512, 50.13876,0,0,0,100,0), 
+(@PATH,8,-11097.51, -1933.438, 50.13683,0,0,0,100,0),
+(@PATH,9,-11099.44, -1937.166, 50.13335,0,0,0,100,0), 
+(@PATH,10,-11102.06, -1941.6, 50.13267,0,0,0,100,0), 
+(@PATH,11,-11110.1, -1946.833, 50.13472,0,0,0,100,0), 
+(@PATH,12,-11124.7, -1949.601, 50.13889,0,0,0,100,0),
+(@PATH,13,-11135.64, -1946.267, 50.13834,0,0,0,100,0);
+
