@@ -1599,3 +1599,7 @@ INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`
 
 UPDATE `creature_formations` SET `groupAI` = 2 WHERE `leaderguid` = 85083;
 
+UPDATE `creature_template` SET `mindmg`='6550',`maxdmg`='7820',`speed`='2.40' WHERE `entry` = 19044; -- 7369 8797 -- 14,737 - 17,594
+UPDATE `creature_model_info` SET `bounding_radius` = 7, `combat_reach` = 7 WHERE `modelid` = 18698; -- 4 10 growth
+UPDATE `script_texts` SET `type` = 2, `content_loc3` = 'brüllt!' WHERE `entry` = -1565020;
+
