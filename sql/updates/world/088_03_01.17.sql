@@ -1630,3 +1630,53 @@ INSERT INTO `creature_ai_scripts` VALUES (1740101, 17401, 0, 0, 100, 7, 1000, 25
 INSERT INTO `creature_ai_scripts` VALUES (1740102, 17401, 0, 0, 100, 7, 3300, 8700, 12900, 12900, 11, 30849, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Felhound Manastalker - Cast Spell Lock');
 INSERT INTO `creature_ai_scripts` VALUES (1740103, 17401, 7, 0, 100, 6, 0, 0, 0, 0, 41, 0, 0, 0, 18, 33554432, 0, 0, 0, 0, 0, 0, 'Felhound Manastalker - Despawn on Evade');
 
+SET @GUID := 62013;
+UPDATE `creature` SET `MovementType`= 2, `spawndist` = 0 WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,16777472,0,4097,0,0,'18950 0 18950 1');
+DELETE FROM `waypoint_data` WHERE `id` IN (1411,@GUID);
+INSERT INTO `waypoint_data` VALUES (62013, 1, -1294.61, 1671.99, 67.6775, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (62013, 2, -1306.92, 1669.19, 65.5432, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (62013, 3, -1316.17, 1666.43, 66.9309, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (62013, 4, -1325.66, 1663.59, 68.6933, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (62013, 5, -1333.06, 1660.84, 68.7694, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (62013, 6, -1341.02, 1656.47, 68.7922, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (62013, 7, -1333.15, 1660.58, 68.7765, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (62013, 8, -1322.8172, 1665.2110, 68.28718, 0, 0, 0, 100, 0);  -- -1321.47, 1664.95, 68.1255
+INSERT INTO `waypoint_data` VALUES (62013, 9, -1309.64, 1668.51, 65.7793, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (62013, 10, -1299.97, 1671.23, 66.5435, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (62013, 11, -1287.35, 1673.12, 68.7382, 0, 0, 0, 100, 0);
+
+SET @GUID := 62012;
+UPDATE `creature` SET `MovementType`= 2, `spawndist` = 0 WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'18950 0 18950 1');
+DELETE FROM `waypoint_data` WHERE `id` IN (1410,@GUID);
+INSERT INTO `waypoint_data` VALUES (62012, 1, -1257.71, 1651, 67.9137, 5000, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (62012, 2, -1277.2553, 1670.4768, 68.7051, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (62012, 3, -1257.71, 1651, 67.9137, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (62012, 4, -1249, 1629.44, 68.5386, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (62012, 5, -1248.3504, 1603.1793, 68.5528, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (62012, 6, -1249, 1629.44, 68.5386, 0, 0, 0, 100, 0);
+
+UPDATE `creature_addon` SET `auras` = '18950 0 18950 1' WHERE `guid` IN (200931,200932,200949,200952);
+
+UPDATE `creature` SET `id` = 17269, `equipment_id` = 0 WHERE `guid` = 200911;
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17281;
+INSERT INTO `creature_ai_scripts` VALUES 
+(1728101, 17281, 2, 0, 100, 6, 30, 0, 0, 0, 11, 18501, 0, 0, 1, -46, 0, 0, 0, 0, 0, 0, 'Bonechewer Ripper - Casts Enrage at 30% HP'),
+(1728102, 17281, 4, 0, 100, 6, 0, 0, 0, 0, 11, 29651, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Bonechewer Ripper - Casts Dual Wield on Aggro'),
+(1728103, 17281, 1, 0, 100, 7, 2000, 2000, 15000, 15000, 17, 159, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Bonechewer Ripper - Set Stand State OOC'),
+(1728104, 17281, 1, 0, 100, 7, 4000, 4000, 15000, 15000, 17, 169, 71, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Bonechewer Ripper - Emote Cheer OOC'),
+(1728105, 17281, 1, 0, 100, 7, 5700, 5700, 15000, 15000, 17, 159, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Bonechewer Ripper - Set Kneel State OOC'),
+(1728106, 17281, 0, 0, 100, 7, 10000, 10000, 10000, 10000, 11, 30659, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 'Bonechewer Ripper - Workaround slowly enrage, should be casted by 17478 when they die');
+
+UPDATE `creature_template` SET `mindmg`='3343',`maxdmg`='3971' WHERE `entry` = 18052;
+UPDATE `creature_template` SET `mindmg`='300',`maxdmg`='900' WHERE `entry` = 17540;
+UPDATE `creature_template` SET `mindmg`='1720',`maxdmg`='2230' WHERE `entry` = 18056;
+UPDATE `creature_template` SET `mindmg`='800',`maxdmg`='1600' WHERE `entry` = 17308;
+UPDATE `creature_template` SET `mindmg`='2853',`maxdmg`='3387' WHERE `entry` = 18433;
+
+
+
