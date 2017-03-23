@@ -1575,3 +1575,5 @@ DELETE FROM `quest_end_scripts` WHERE `id`=410;
 INSERT INTO `quest_end_scripts` (`id`, `command`, `datalong`, `datalong2`, `x`, `y`, `z`, `o`) VALUES 
 ('410', '10', '1946', '180000', '2483.71', '22.11', '26.98', '3.151972');
 
+UPDATE `gameobject` SET `spawntimesecs` = 7200, `spawnmask` = 0 WHERE `id` IN (153451,153453);
+
