@@ -276,25 +276,39 @@ void World::AddSession_ (WorldSession* s)
         }
     }
 
-    m_sessions[s->GetAccountId()] = s;
+    uint32 accountId = s->GetAccountId();
 
-    uint32 Sessions = GetActiveAndQueuedSessionCount ();
-    uint32 pLimit = GetPlayerAmountLimit ();
-    uint32 QueueSize = GetQueueSize (); //number of players in the queue
+    m_sessions[accountId] = s;
 
+    uint32 sessions = GetActiveAndQueuedSessionCount();
+    uint32 pLimit = GetPlayerAmountLimit();
+    uint32 QueueSize = GetQueueSize(); //number of players in the queue
+
+    uint32 accountTeamId = s->GetAccountTeamId();
+    
     //so we don't count the user trying to
     //login as a session and queue the socket that we are using
     if (decrease_session)
-        --Sessions;
+        --sessions;
 
-    if (pLimit > 0 && Sessions >= pLimit && !s->HasPermissions(PERM_GMT))
+    // If population limit is not 0 (i.e. uncapped) and they are not a GM then check if we need to add them to the queue
+    if ((pLimit > 0) && (!s->HasPermissions(PERM_GMT)))
     {
-        if (!sObjectMgr.IsUnqueuedAccount(s->GetAccountId()) && !HasRecentlyDisconnected(s))
+        // If alliance account AND the number of online alliance players equals or exceeds the population limit(/2) then add them to the queue OR
+        // If horde account AND the number of online horde players equals or exceeds the population limit(/2) then add them to the queue
+        // If neutral account (i.e. no characters) AND the total number of online players equals or exceeds the population limit then add them to the queue
+        // Population limit divided by two to ensure equal split of Horde/Alliance.
+        if (((accountTeamId == TEAM_ALLIANCE) && (GetLoggedInCharsCount(TEAM_ALLIANCE) >= (pLimit / 2))) ||
+            ((accountTeamId == TEAM_HORDE) && (GetLoggedInCharsCount(TEAM_HORDE) >= (pLimit / 2))) ||
+            ((accountTeamId == TEAM_NEUTRAL) && (sessions >= pLimit)))
         {
-            AddQueuedPlayer (s);
-            UpdateMaxSessionCounters ();
-            sLog.outDetail ("PlayerQueue: Account id %u is in Queue Position (%u).", s->GetAccountId (), ++QueueSize);
-            return;
+            if (!sObjectMgr.IsUnqueuedAccount(s->GetAccountId()) && !HasRecentlyDisconnected(s))
+            {
+                AddQueuedPlayer(s);
+                UpdateMaxSessionCounters();
+                sLog.outDetail ("PlayerQueue: Account id %u is in Queue Position (%u).", s->GetAccountId (), ++QueueSize);
+                return;
+            }
         }
     }
 
@@ -366,7 +380,7 @@ void World::AddQueuedPlayer(WorldSession* sess)
     packet << uint8 (0);
     packet << uint32 (0);
     packet << uint8 (sess->Expansion () ? 1 : 0); // 0 - normal, 1 - TBC, must be set in database manually for each account
-    packet << uint32(GetQueuePos (sess));
+    packet << uint32(GetQueuePos(sess));
     sess->SendPacket (&packet);
 
     //sess->SendAuthWaitQue (GetQueuePos (sess));
@@ -401,23 +415,31 @@ bool World::RemoveQueuedPlayer(WorldSession* sess)
     if (!found && sessions)
         --sessions;
 
-    // accept first in queue
-    if ((!m_playerLimit || (sessions < m_playerLimit)) && !m_QueuedPlayer.empty())
-    {
-        WorldSession* pop_sess = m_QueuedPlayer.front();
-        pop_sess->SetInQueue(false);
-        pop_sess->SendAuthWaitQue(0);
-        m_QueuedPlayer.pop_front();
+    uint32 pLimit = GetPlayerAmountLimit();
 
-        // update iter to point first queued socket or end() if queue is empty now
+    if ((pLimit > 0) && (sessions < pLimit) && (!m_QueuedPlayer.empty()))
+    {   
         iter = m_QueuedPlayer.begin();
-        position = 1;
+        for (; iter != m_QueuedPlayer.end(); ++iter)
+        {
+            WorldSession* session = (*iter);
+            uint32 accountTeamId = session->GetAccountTeamId();
+            if (((accountTeamId == TEAM_ALLIANCE) && (GetLoggedInCharsCount(TEAM_ALLIANCE) < (pLimit / 2))) ||
+                ((accountTeamId == TEAM_HORDE) && (GetLoggedInCharsCount(TEAM_HORDE) < (pLimit / 2))) ||
+                ((accountTeamId == TEAM_NEUTRAL)))
+            {
+                session->SetInQueue(false);
+                session->SendAuthWaitQue(0);
+                iter = m_QueuedPlayer.erase(iter);
+            }
+        }
     }
 
-    // update position from iter to end()
-    // iter point to first not updated socket, position store new position
+    iter = m_QueuedPlayer.begin();
     for (; iter != m_QueuedPlayer.end(); ++iter, ++position)
+    {
         (*iter)->SendAuthWaitQue(position);
+    }
     
     return found;
 }
