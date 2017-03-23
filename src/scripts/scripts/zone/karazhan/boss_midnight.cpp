@@ -141,7 +141,6 @@ struct boss_midnightAI : public ScriptedAI
         {
             case 1:
             {
-                if ((m_creature->GetHealth()*100)/m_creature->GetMaxHealth() < 95)
                 {
                     Phase = 2;
                     Creature *pAttumen = m_creature->SummonCreature(SUMMON_ATTUMEN, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), 0, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 30000); //DoSpawnCreature(SUMMON_ATTUMEN, 0, 0, 0, 0, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 30000);
@@ -158,7 +157,6 @@ struct boss_midnightAI : public ScriptedAI
             }
             case 2:
             {
-                if ((m_creature->GetHealth() * 100) / m_creature->GetMaxHealth() < 25)
                     if (Unit *pAttumen = Unit::GetUnit(*m_creature, Attumen))
                         Mount(pAttumen);
                 break;
@@ -237,7 +235,7 @@ struct boss_attumenAI : public ScriptedAI
         ResetTimer = 0;
         KnockdownUppercut_Timer = urand(6000, 9000);
 
-        TreathResetted = false;
+        ThreatResetted = false;
     }
 
     ScriptedInstance *pInstance;
@@ -251,7 +249,7 @@ struct boss_attumenAI : public ScriptedAI
     uint32 ResetTimer;
     uint32 KnockdownUppercut_Timer;
 
-    bool TreathResetted;
+    bool ThreatResetted;
 
     void Reset()
     {
@@ -343,11 +341,11 @@ struct boss_attumenAI : public ScriptedAI
 
         if (m_creature->GetUInt32Value(UNIT_FIELD_DISPLAYID) == MOUNTED_DISPLAYID)
         {
-            if (!TreathResetted)
+            if (!ThreatResetted)
             {
                 DoResetThreat();
                 m_creature->SetHealth(m_creature->GetMaxHealth());
-                TreathResetted = true;
+                ThreatResetted = true;
             }
 
             if (ChargeTimer < diff)
@@ -365,7 +363,6 @@ struct boss_attumenAI : public ScriptedAI
         }
         else
         {
-            if ((m_creature->GetHealth()*100)/m_creature->GetMaxHealth() < 25)
             {
                 Creature *pMidnight = Unit::GetCreature(*m_creature, Midnight);
                 if (pMidnight && pMidnight->GetTypeId() == TYPEID_UNIT)
