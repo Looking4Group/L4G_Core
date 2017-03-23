@@ -1597,3 +1597,5 @@ INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`
 (@PATH,12,-11124.7, -1949.601, 50.13889,0,0,0,100,0),
 (@PATH,13,-11135.64, -1946.267, 50.13834,0,0,0,100,0);
 
+UPDATE `creature_formations` SET `groupAI` = 2 WHERE `leaderguid` = 85083;
+
