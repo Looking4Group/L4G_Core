@@ -20976,8 +20976,8 @@ bool ItemPosCount::isContainedIn(ItemPosCountVec const& vec) const
 
 void Player::HandleFallDamage(MovementInfo& movementInfo)
 {
-    /*if (movementInfo.GetFallTime() < 200)
-        return;                                 not needed anymore*/
+    if (movementInfo.GetFallTime() < 50) // certain teleport spells need falldamage buffer, otherwise players die from falldamage
+        return; 
 
     // calculate total z distance of the fall
     float z_diff = m_lastFallZ - movementInfo.GetPos()->z;
