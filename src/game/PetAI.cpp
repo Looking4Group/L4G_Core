@@ -290,8 +290,7 @@ void PetAI::UpdateAI(const uint32 diff)
     if (m_creature->getVictim())
     {
         if (_needToStop())
-        {
-            sLog.outLog(LOG_DEFAULT,  "PetAI (guid = %u) is stopping attack.", m_creature->GetGUIDLow());
+        {            
             _stopAttack();
             return;
         }
