@@ -3022,9 +3022,8 @@ void SpellMgr::LoadSpellCustomAttr()
             case 40471:
             // Enduring Judgement - T6 proc
             case 40472:
-            // Judgement of Blood
+            // Seal of Blood
             case 32221:
-            case 32220:
             // Flame Cap, Fiery Blaze
             case 28715:
             case 6297:
@@ -3048,6 +3047,11 @@ void SpellMgr::LoadSpellCustomAttr()
             // Arcane Torrent
             case 28733:
                 spellInfo->AttributesCu |= SPELL_ATTR_CU_NO_SPELL_DMG_COEFF;
+                break;
+            // Judgement of Blood
+            case 32220:
+                spellInfo->AttributesCu |= SPELL_ATTR_CU_NO_SPELL_DMG_COEFF;
+                spellInfo->AttributesCu |= SPELL_ATTR_CU_FAKE_DELAY; // add const fake delay
                 break;
             /* WELL FEED */
             case 18191:
@@ -3119,6 +3123,16 @@ void SpellMgr::LoadSpellCustomAttr()
             case 1543:                      // Flare no longer produces combat
                 spellInfo->speed = 0;
                 spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
+                break;
+            /* PALADIN CUSTOM ATTRIBUTES */
+            case 31893:                     // Seal of Blood Proc
+            case 20066:                     // Repentance
+            case 20424:                     // Seal of Command Proc Attack
+            case 853:                       // Hammer of Justice (Rank 1)
+            case 5588:                      // Hammer of Justice (Rank 2)
+            case 5589:                      // Hammer of Justice (Rank 3)
+            case 10308:                     // Hammer of Justice (Rank 4)    
+                spellInfo->AttributesCu |= SPELL_ATTR_CU_FAKE_DELAY; // add const fake delay
                 break;
             // Spells that should not put you in combat credits by robinsch
             case 33619: // Reflective Shield
