@@ -1707,3 +1707,7 @@ INSERT INTO `creature_loot_template` VALUES
 (24683, 24092, 0.5, 1, -24092, 1, 0, 0, 0),
 (24685, 24092, 0.5, 1, -24092, 1, 0, 0, 0);
 
+-- Respawn with correct GUID
+DELETE FROM `creature` WHERE `guid` = 93838;
+INSERT INTO `creature` VALUES (93838, 21217, 548, 1, 0, 0, 36.956867, -415.168793, -22.3911, 3.03312, 604800, 0, 0, 6905080, 0, 0, 0);-- -21.5911
+
