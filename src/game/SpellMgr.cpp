@@ -4585,28 +4585,30 @@ DiminishingGroup SpellMgr::GetDiminishingReturnsGroupForSpell(SpellEntry const* 
     {
         case SPELLFAMILY_GENERIC:
  		{
+            if (spellproto->Id == 37029) // Remote Toy, basically all CC spells cast by creatures which end up cast by the player on itself should be here
+                return DIMINISHING_NONE;
             // some generic arena related spells have by some strange reason MECHANIC_TURN
-             if (spellproto->Mechanic == MECHANIC_TURN)
-                 return DIMINISHING_NONE;
+            else if (spellproto->Mechanic == MECHANIC_TURN)
+                return DIMINISHING_NONE;
  			// Hunter Pet Intimidation
-             else if (spellproto->Id == 24394)
-                 return DIMINISHING_CONTROL_STUN;
+            else if (spellproto->Id == 24394)
+                return DIMINISHING_CONTROL_STUN;
  			// Warlock Pet Intercept (Felguard)
-             else if (spellproto->Id == 30198)
-                 return DIMINISHING_CONTROL_STUN;
+            else if (spellproto->Id == 30198)
+                return DIMINISHING_CONTROL_STUN;
             // Warlock Pet Inferno (Infernal)
-             else if (spellproto->Id == 1122)
-                 return DIMINISHING_CONTROL_STUN;
+            else if (spellproto->Id == 1122)
+                return DIMINISHING_CONTROL_STUN;
  			// Shaman Stoneclaw Stun (Totem) Trigger
-             else if (spellproto->Id == 39796)
-                 return DIMINISHING_TRIGGER_STUN;
+            else if (spellproto->Id == 39796)
+                return DIMINISHING_TRIGGER_STUN;
  			// Frostbite
-             else if (spellproto->Id == 12494) 
-                 return DIMINISHING_TRIGGER_ROOT;
-             // Stun (Stormherald/Deep Thunder) Needs Trigger Flag
+            else if (spellproto->Id == 12494) 
+                return DIMINISHING_TRIGGER_ROOT;
+            // Stun (Stormherald/Deep Thunder) Needs Trigger Flag
             else if (spellproto->Id == 34510)
                 return DIMINISHING_TRIGGER_STUN;
-             // Mace Specialization 0 -> Id
+            // Mace Specialization 0 -> Id
             if (spellproto->Id == 5530)
                 return DIMINISHING_TRIGGER_STUN;
  			break;
