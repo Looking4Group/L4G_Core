@@ -1711,3 +1711,15 @@ INSERT INTO `creature_loot_template` VALUES
 DELETE FROM `creature` WHERE `guid` = 93838;
 INSERT INTO `creature` VALUES (93838, 21217, 548, 1, 0, 0, 36.956867, -415.168793, -22.3911, 3.03312, 604800, 0, 0, 6905080, 0, 0, 0);-- -21.5911
 
+DELETE FROM `creature_ai_scripts` WHERE `id` = 1653405;
+INSERT INTO `creature_ai_scripts` VALUES (1653405, 16534, 1, 0, 100, 0, 10000, 10000, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Inoculated Nestlewood Owlkin - Despawn OOC');
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 16488;
+INSERT INTO `creature_ai_scripts` VALUES
+('1648801','16488','11','0','100','2','0','0','0','0','42','1','1','0','0','0','0','0','0','0','0','0','Arcane Anomaly - Set Invincible at 1% HP on Spawn'),
+('1648802','16488','2','0','100','2','1','0','0','0','11','29880','0','1','0','0','0','0','0','0','0','0','Arcane Anomaly - Cast Mana Shield at 1% HP'),
+('1648803','16488','9','0','100','3','0','40','6000','10000','11','29885','4','0','0','0','0','0','0','0','0','0','Arcane Anomaly - Cast Arcane Volley'),
+('1648804','16488','0','0','100','3','18000','30000','30000','45000','11','29883','4','1','0','0','0','0','0','0','0','0','Arcane Anomaly - Cast Blink'), -- 4
+('1648805','16488','3','0','100','2','5','0','0','0','42','0','1','0','0','0','0','0','0','0','0','0','Arcane Anomaly - Remove Invincible at 5% Mana'),
+('1648806','16488','6','0','100','2','0','0','0','0','11','29882','0','7','0','0','0','0','0','0','0','0','Arcane Anomaly - Cast Loose Mana on Death');
+
