@@ -1728,3 +1728,93 @@ UPDATE creature_template set spell1 = 33571 where entry = 19225;
 
 UPDATE `item_template` SET `flags`=`flags`|2048 WHERE `entry` = 24099;
 
+-- [Quest] The Blackwood Corrupted (4763)
+DELETE FROM `event_scripts` WHERE `id`=3938;
+INSERT INTO `event_scripts` (`id`, `command`, `datalong`, `datalong2`, `x`, `y`, `z`, `o`) VALUES 
+('3938', '10', '10373', '3000000', '6881.64', '-506.63', '40.14', '2.02');
+
+-- Since the chest for some reason seem to inherit the summoner's faction the player is unable to loot it. 
+-- Let the item drop from Xabraxxis for now
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance`='-100' WHERE  `entry`=10373 AND `item`=12355;
+
+
+-- NPC lying down or kneeling, should not move randomly
+UPDATE `creature` SET `spawndist`=0, `MovementType`=0 WHERE `guid` IN(63308,63303,63288,63301);
+
+-- Delete random Strength of Earth Totems on Bloodmyst Isle. How did these get here? :O
+DELETE FROM `creature` WHERE `id`=5874;
+
+-- Matis the Cruel
+-- His old script broke the already existing core script which also handles quest completion and despawning. Delete old scripts and only do mount and aggro text in DB
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID`=17664;
+INSERT INTO `creature_ai_scripts` (`id`, `entryOrGUID`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES 
+(1766401, 17664, 4, 0, 100, 0, 0, 0, 0, 0, 1, -17664, 0, 0, 17, 154, 0, 0, 19, 134217728, 0, 0, 'Matis The Cruel - Say and Dismount on Aggro'),
+(1766402, 17664, 7, 0, 100, 0, 0, 0, 0, 0, 43, 17408, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Matis The Cruel - Mount on Evade');
+
+-- Movement data from cmangos: https://github.com/cmangos/tbc-db/blob/2a0a0af0cbd277651603011e062bb5b72e7cfcbe/Updates/803_UDB-459_Zone.sql#L63
+UPDATE creature SET spawndist = 0, MovementType = 2 WHERE guid = 63387;
+UPDATE `creature_template_addon` SET `path_id`=63387 WHERE `entry`=17664;
+DELETE FROM waypoint_data WHERE id = 63387;
+INSERT INTO waypoint_data (id, point, position_x, position_y, position_z, delay) VALUES
+(63387,1,-1917.35,-10929.6,61.541, 0),
+(63387,2,-1929.25,-10907.2,62.6743, 0),
+(63387,3,-1935.67,-10877.1,64.8566, 0),
+(63387,4,-1940.59,-10853.8,69.1685, 0),
+(63387,5,-1939.15,-10845.1,71.933, 0),
+(63387,6,-1934.67,-10837.7,74.4851, 0),
+(63387,7,-1935.73,-10823.3,79.3717, 0),
+(63387,8,-1940.26,-10802.2,86.4451, 10000),
+(63387,9,-1933.92,-10828.4,77.5937, 0),
+(63387,10,-1933.61,-10836.2,74.9683, 0),
+(63387,11,-1939.6,-10845.9,71.7024, 0),
+(63387,12,-1939.63,-10858.2,68.3036, 0),
+(63387,13,-1934.66,-10885.1,64.065, 0),
+(63387,14,-1912.98,-10885.2,62.5901, 0),
+(63387,15,-1901.3,-10885.7,65.7651, 0),
+(63387,16,-1885.29,-10885.9,66.7829, 10000),
+(63387,17,-1898.06,-10906.9,64.1897, 0),
+(63387,18,-1912.31,-10925.5,61.4623, 0),
+(63387,19,-1908.58,-10941.8,61.4612, 0),
+(63387,20,-1893.36,-10962.5,61.2537, 0),
+(63387,21,-1884.23,-10980.4,60.8326, 0),
+(63387,22,-1881.02,-10998,60.5245, 0),
+(63387,23,-1883.8,-11019.1,60.0129, 0),
+(63387,24,-1886.71,-11046.6,59.313, 0),
+(63387,25,-1884.24,-11058.2,59.516, 0),
+(63387,26,-1862.52,-11079.7,61.1166, 0),
+(63387,27,-1834.24,-11091.9,63.3128, 0),
+(63387,28,-1816.24,-11111.9,64.3889, 0),
+(63387,29,-1805.47,-11133.9,64.3039, 5000),
+(63387,30,-1790.49,-11162.9,64.2675, 0),
+(63387,31,-1777.86,-11180.9,64.3316, 0),
+(63387,32,-1775.9,-11199.7,63.6491, 0),
+(63387,33,-1778.98,-11226.4,61.9235, 0),
+(63387,34,-1784.71,-11254.4,59.7856, 0),
+(63387,35,-1783.82,-11277.3,58.3305, 0),
+(63387,36,-1775.11,-11301.9,57.2286, 0),
+(63387,37,-1761.89,-11330.5,56.1889, 0),
+(63387,38,-1752.58,-11347.4,55.3093, 0),
+(63387,39,-1741.77,-11372,53.8783, 0),
+(63387,40,-1734.44,-11407.4,48.6277, 10000),
+(63387,41,-1738.91,-11382.6,52.1298, 0),
+(63387,42,-1744.32,-11366.7,54.3216, 0),
+(63387,43,-1757.38,-11338,55.8696, 0),
+(63387,44,-1769.41,-11312.8,56.8602, 0),
+(63387,45,-1779.43,-11292.9,57.6417, 0),
+(63387,46,-1784.36,-11268.4,58.8302, 0),
+(63387,47,-1783.6,-11246.4,60.2839, 0),
+(63387,48,-1777,-11213.4,62.9699, 0),
+(63387,49,-1775.89,-11192.7,63.7768, 0),
+(63387,50,-1783.15,-11174.8,64.1119, 0),
+(63387,51,-1797.14,-11150.5,64.4089, 0),
+(63387,52,-1810.11,-11123.5,64.1998, 0),
+(63387,53,-1820.63,-11106.1,64.2334, 0),
+(63387,54,-1836.08,-11091.7,63.1688, 0),
+(63387,55,-1863.87,-11078.6,60.9968, 0),
+(63387,56,-1884.23,-11058,59.517, 5000),
+(63387,57,-1886.05,-11036,59.4273, 0),
+(63387,58,-1882.62,-11011.1,60.1273, 0),
+(63387,59,-1882.03,-10987.1,60.7278, 0),
+(63387,60,-1887.39,-10973.1,60.9613, 0),
+(63387,61,-1898.37,-10955.3,61.3482, 0);
+
