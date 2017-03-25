@@ -16,40 +16,46 @@
 
 /* ScriptData
 SDName: Boss_Midnight
-SD%Complete: 90
-SDComment:
+SD%Complete: 95
+SDComment: Should pull the whole room on aggro, Charge Spell & Targeting
 SDCategory: Karazhan
 EndScriptData */
 
 #include "precompiled.h"
 #include "def_karazhan.h"
 
-#define SAY_MIDNIGHT_KILL           -1532000
-#define SAY_APPEAR1                 -1532001
-#define SAY_APPEAR2                 -1532002
-#define SAY_APPEAR3                 -1532003
-#define SAY_MOUNT                   -1532004
-#define SAY_KILL1                   -1532005
-#define SAY_KILL2                   -1532006
-#define SAY_DISARMED                -1532007
-#define SAY_DEATH                   -1532008
-#define SAY_RANDOM1                 -1532009
-#define SAY_RANDOM2                 -1532010
+enum MidnightAttumen
+{
+    SAY_MIDNIGHT_KILL           = -1532000,
+    SAY_APPEAR1                 = -1532001,
+    SAY_APPEAR2                 = -1532002,
+    SAY_APPEAR3                 = -1532003,
+    SAY_MOUNT                   = -1532004,
+    SAY_KILL1                   = -1532005,
+    SAY_KILL2                   = -1532006,
+    SAY_DISARMED                = -1532007,
+    SAY_DEATH                   = -1532008,
+    SAY_RANDOM1                 = -1532009,
+    SAY_RANDOM2                 = -1532010,
 
-#define SPELL_SHADOWCLEAVE          29832
-#define SPELL_INTANGIBLE_PRESENCE   29833
-#define SPELL_BERSERKER_CHARGE      26561                   //Only when mounted
-#define SPELL_UPPERCUT              29850
-#define SPELL_KNOCKDOWN             29711
+    SPELL_SHADOWCLEAVE          = 29832,
+    SPELL_INTANGIBLE_PRESENCE   = 29833,
+    SPELL_BERSERKER_CHARGE      = 26561, //Only when mounted
+    SPELL_UPPERCUT              = 29850,
+    SPELL_KNOCKDOWN             = 29711,
 
-#define MOUNTED_DISPLAYID           16040
+    MOUNTED_DISPLAYID           = 16040,
 
-//Attumen (TODO: Use the summoning spell instead of creature id. It works , but is not convenient for us)
-#define SUMMON_ATTUMEN 15550
+    SPELL_CHARGE_VISUAL         = 40602,
+
+    //Attumen (TODO: Use the summoning spell instead of creature id. It works , but is not convenient for us)
+    SUMMON_ATTUMEN              = 15550
+};
+
 
 struct boss_midnightAI : public ScriptedAI
 {
-    boss_midnightAI(Creature *c) : ScriptedAI(c)
+    boss_midnightAI(Creature *c) : ScriptedAI(c), summons(c)
     {
         pInstance = (c->GetInstanceData());
         m_creature->GetPosition(wLoc);
@@ -60,6 +66,8 @@ struct boss_midnightAI : public ScriptedAI
     uint32 Mount_Timer;
     uint32 CheckTimer;
     uint32 Knockdown_Timer;
+
+    SummonList summons;
 
     ScriptedInstance *pInstance;
     WorldLocation wLoc;
@@ -72,10 +80,12 @@ struct boss_midnightAI : public ScriptedAI
         CheckTimer = 3000;
         Knockdown_Timer = urand(6000, 9000);
 
+        m_creature->SetHealth(m_creature->GetMaxHealth()); // Instantsummon
         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
         m_creature->SetVisibility(VISIBILITY_ON);
+        summons.DespawnAll();
 
-        if(pInstance->GetData(DATA_ATTUMEN_EVENT) != DONE)
+        if (pInstance->GetData(DATA_ATTUMEN_EVENT) != DONE)
             pInstance->SetData(DATA_ATTUMEN_EVENT, NOT_STARTED);
         else
         {
@@ -84,9 +94,15 @@ struct boss_midnightAI : public ScriptedAI
         }
     }
 
+    void JustSummoned(Creature *c)
+    {
+        summons.Summon(c);
+    }
+
     void EnterCombat(Unit* who)
     {
         pInstance->SetData(DATA_ATTUMEN_EVENT, IN_PROGRESS);
+        DoZoneInCombat();
     }
 
     void KilledUnit(Unit *victim)
@@ -125,7 +141,7 @@ struct boss_midnightAI : public ScriptedAI
         {
             case 1:
             {
-                if ((m_creature->GetHealth()*100)/m_creature->GetMaxHealth() < 95)
+                if ((m_creature->GetHealthPct() <= 95))
                 {
                     Phase = 2;
                     Creature *pAttumen = m_creature->SummonCreature(SUMMON_ATTUMEN, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), 0, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 30000); //DoSpawnCreature(SUMMON_ATTUMEN, 0, 0, 0, 0, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 30000);
@@ -142,7 +158,7 @@ struct boss_midnightAI : public ScriptedAI
             }
             case 2:
             {
-                if ((m_creature->GetHealth()*100)/m_creature->GetMaxHealth() < 25)
+                if ((m_creature->GetHealthPct() <= 25))
                     if (Unit *pAttumen = Unit::GetUnit(*m_creature, Attumen))
                         Mount(pAttumen);
                 break;
@@ -189,8 +205,6 @@ struct boss_midnightAI : public ScriptedAI
         float newX = m_creature->GetPositionX() + cos(angle)*(distance/2) ;
         float newY = m_creature->GetPositionY() + sin(angle)*(distance/2) ;
         float newZ = 50;
-        //m_creature->Relocate(newX,newY,newZ,angle);
-        //m_creature->SendMonsterMove(newX, newY, newZ, 0, true, 1000);
         m_creature->GetMotionMaster()->Clear();
         m_creature->GetMotionMaster()->MovePoint(0, newX, newY, newZ);
         distance += 10;
@@ -198,8 +212,6 @@ struct boss_midnightAI : public ScriptedAI
         newY = m_creature->GetPositionY() + sin(angle)*(distance/2) ;
         pAttumen->GetMotionMaster()->Clear();
         pAttumen->GetMotionMaster()->MovePoint(0, newX, newY, newZ);
-        //pAttumen->Relocate(newX,newY,newZ,-angle);
-        //pAttumen->SendMonsterMove(newX, newY, newZ, 0, true, 1000);
         Mount_Timer = 1000;
     }
 
@@ -220,10 +232,12 @@ struct boss_attumenAI : public ScriptedAI
 
         CleaveTimer = urand(10000, 16000);
         CurseTimer = 30000;
-        RandomYellTimer = urand(30000, 61000);         //Occasionally yell
-        ChargeTimer = 20000;
+        RandomYellTimer = urand(30000, 60000);         //Occasionally yell
+        ChargeTimer = urand(10000, 20000);
         ResetTimer = 0;
         KnockdownUppercut_Timer = urand(6000, 9000);
+
+        ThreatResetted = false;
     }
 
     ScriptedInstance *pInstance;
@@ -236,6 +250,8 @@ struct boss_attumenAI : public ScriptedAI
     uint32 ChargeTimer;                                     //only when mounted
     uint32 ResetTimer;
     uint32 KnockdownUppercut_Timer;
+
+    bool ThreatResetted;
 
     void Reset()
     {
@@ -304,7 +320,7 @@ struct boss_attumenAI : public ScriptedAI
         {
             DoScriptText(RAND(SAY_RANDOM1, SAY_RANDOM2), m_creature);
 
-            RandomYellTimer = urand(30000, 61000);
+            RandomYellTimer = urand(30000, 60000);
         }
         else
             RandomYellTimer -= diff;
@@ -327,28 +343,34 @@ struct boss_attumenAI : public ScriptedAI
 
         if (m_creature->GetUInt32Value(UNIT_FIELD_DISPLAYID) == MOUNTED_DISPLAYID)
         {
+            if (!ThreatResetted)
+            {
+                DoResetThreat();
+                m_creature->SetHealth(m_creature->GetMaxHealth());
+                ThreatResetted = true;
+            }
+
             if (ChargeTimer < diff)
             {
-                if (Unit * target = SelectUnit(SELECT_TARGET_FARTHEST, 0, 100.0f, true, 0, 5.0f))
+                if (Unit * target = SelectUnit(SELECT_TARGET_FARTHEST, 0, 40.0f, true, 0, 1.0f))
+                {
                     AddSpellToCast(target, SPELL_BERSERKER_CHARGE);
+                    DoCast(target, SPELL_CHARGE_VISUAL, true);
 
-                ChargeTimer = 20000;
+                    ChargeTimer = 20000;
+                }
             }
             else
                 ChargeTimer -= diff;
         }
         else
         {
-            if ((m_creature->GetHealth()*100)/m_creature->GetMaxHealth() < 25)
+            if ((m_creature->GetHealthPct() <= 25))
             {
                 Creature *pMidnight = Unit::GetCreature(*m_creature, Midnight);
                 if (pMidnight && pMidnight->GetTypeId() == TYPEID_UNIT)
-                {
                     ((boss_midnightAI*)(pMidnight->AI()))->Mount(m_creature);
-                    m_creature->SetHealth(pMidnight->GetHealth());
-                    DoResetThreat();
-                }
-            }
+            }     
         }
 
         CastNextSpellIfAnyAndReady();
