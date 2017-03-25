@@ -917,13 +917,14 @@ struct npc_trackerAI : public ScriptedAI
         {
             if (Creature* Matis = GetClosestCreatureWithEntry(me, NPC_MATIS, 35.0f))
             {
-                if ((Matis->GetHealth())*100 / Matis->GetMaxHealth() < 10)
+                if ((Matis->GetHealth())*100 / Matis->GetMaxHealth() < 25)
                 {
                     me->AI()->EnterEvadeMode();
                     Matis->setFaction(35);
                     Matis->CombatStop();
                     Matis->DeleteThreatList();
                     Matis->SetHealth(Matis->GetMaxHealth());
+                    Matis->SetStandState(UNIT_STAND_STATE_KNEEL);
                     DoScriptText(SAY_2, me);
                     Credit();
                     Matis->ForcedDespawn(30000);
