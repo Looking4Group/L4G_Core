@@ -888,7 +888,7 @@ struct mob_toxic_sporebatAI : public ScriptedAI
         me->setFaction(14);
         movement_timer = 0;
         ToxicSpore_Timer = 5000;
-        bolt_timer = 5500;
+        bolt_timer = urand(1000, 3000);
         Check_Timer = 1000;
     }
 
@@ -937,7 +937,7 @@ struct mob_toxic_sporebatAI : public ScriptedAI
                     }
 
             }
-            bolt_timer = 10000+rand()%5000;
+            bolt_timer = urand(4000, 12000);
         }
         else bolt_timer -= diff;
 
