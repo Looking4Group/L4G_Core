@@ -87,6 +87,7 @@ bool SqlConnection::ExecuteStmt(int nIndex, const SqlStmtParameters& id )
 
     //get prepared statement object
     SqlPreparedStatement * pStmt = GetStmt(nIndex);
+    ASSERT(pStmt); //it will be better for server to crash than to keep working with database problems
     //bind parameters
     pStmt->bind(id);
     //execute statement

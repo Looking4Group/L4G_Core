@@ -1033,6 +1033,7 @@ GridMap* TerrainInfo::LoadMapAndVMap(const uint32 x, const uint32 y)
             }
 
             delete [] tmp;
+            m_GridMaps[x][y] = map;
 
             //load VMAPs for current map/grid...
             const MapEntry * i_mapEntry = sMapStore.LookupEntry(m_mapId);
@@ -1052,8 +1053,6 @@ GridMap* TerrainInfo::LoadMapAndVMap(const uint32 x, const uint32 y)
             }
 
             MMAP::MMapFactory::createOrGetMMapManager()->loadMap(m_mapId, x, y);
-
-            m_GridMaps[x][y] = map;
         }
     }
 
