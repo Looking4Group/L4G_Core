@@ -3881,6 +3881,12 @@ void SpellMgr::LoadSpellCustomAttr()
             case 27272:
                 spellInfo->ChannelInterruptFlags |= CHANNEL_INTERRUPT_FLAG_MOVEMENT;
                 break;
+            case 38652:
+            case 38653:
+            case 34168:
+            case 31689:
+                spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_PLAYERS_ONLY;
+                break;
             default:
                 break;
         }
