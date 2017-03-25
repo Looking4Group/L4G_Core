@@ -1723,3 +1723,7 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('1648805','16488','3','0','100','2','5','0','0','0','42','0','1','0','0','0','0','0','0','0','0','0','Arcane Anomaly - Remove Invincible at 5% Mana'),
 ('1648806','16488','6','0','100','2','0','0','0','0','11','29882','0','7','0','0','0','0','0','0','0','0','Arcane Anomaly - Cast Loose Mana on Death');
 
+UPDATE creature_template set spell1 = 33561 where entry = 19222;
+UPDATE creature_template set spell1 = 33571 where entry = 19225;
+UPDATE `creature_template` SET `AIName`='' WHERE `entry`= 17282;
+
