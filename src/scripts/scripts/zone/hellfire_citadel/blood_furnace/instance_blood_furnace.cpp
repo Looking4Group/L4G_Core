@@ -103,7 +103,13 @@ struct instance_blood_furnace : public ScriptedInstance
             case 181822: BroggokDoor1GUID = go->GetGUID(); break;
             case 181819: BroggokDoor2GUID = go->GetGUID(); break;
             case 181823: Sewer1GUID = go->GetGUID(); break;
-            case 181766: Sewer2GUID = go->GetGUID(); break;
+            case 181766:
+            {
+                Sewer2GUID = go->GetGUID();
+                if (Encounter[2] == DONE)
+                    HandleGameObject(Sewer2GUID, 0);
+            }
+            break;
         }
     }
 
