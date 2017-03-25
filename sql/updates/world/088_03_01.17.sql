@@ -1726,3 +1726,5 @@ INSERT INTO `creature_ai_scripts` VALUES
 UPDATE creature_template set spell1 = 33561 where entry = 19222;
 UPDATE creature_template set spell1 = 33571 where entry = 19225;
 
+UPDATE `item_template` SET `flags`=`flags`|2048 WHERE `entry` = 24099;
+
