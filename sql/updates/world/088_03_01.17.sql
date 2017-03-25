@@ -1818,3 +1818,5 @@ INSERT INTO waypoint_data (id, point, position_x, position_y, position_z, delay)
 (63387,60,-1887.39,-10973.1,60.9613, 0),
 (63387,61,-1898.37,-10955.3,61.3482, 0);
 
+UPDATE `gameobject` SET `animprogress` = 100 WHERE `guid` = 313331;
+
