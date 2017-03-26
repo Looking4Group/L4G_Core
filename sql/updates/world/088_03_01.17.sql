@@ -1822,3 +1822,125 @@ UPDATE `gameobject` SET `animprogress` = 100 WHERE `guid` IN (28507,2156689,3133
 
 UPDATE `creature_template` SET `flags_extra` = 536870912 WHERE `entry` = 21854;
 
+-- https://github.com/Looking4Group/L4G_Core/issues/3132
+DELETE FROM creature_loot_template WHERE item = 12236;
+
+-- https://github.com/Looking4Group/L4G_Core/issues/2359
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance`=-100 WHERE `entry`=12579 AND `item`=16190; -- Old: -65
+
+-- Webbed Creature
+UPDATE `creature` SET `spawndist`=0, `MovementType`=0 WHERE `id`=17680;
+UPDATE `creature_template` SET `flags_extra`=66, `unit_flags`=393220 WHERE `entry`=17680; -- Old: 2, 0
+
+-- Disable rotate for Netherweb Victim
+UPDATE `creature_template` SET `unit_flags`=393220 WHERE `entry`=22355; -- Old: 131076
+
+-- Delete more random totem spawns on Bloodmyst Isle
+DELETE FROM `creature` WHERE `id`=18795;
+
+-- Despawn adds after 20 sec to prevent insane amounts of adds to be spawned on aggro each time
+UPDATE `creature_ai_scripts` SET `event_param1`='0', `event_param2`='0' WHERE  `id`=684602; -- event_type is 4, so there should be no event_params
+DELETE FROM `creature_ai_scripts` WHERE  `id`=686604;
+INSERT INTO `creature_ai_scripts` (`id`, `entryOrGUID`, `event_type`, `event_param1`, `event_param2`, `action1_type`, `comment`) VALUES 
+('686604', '6866', '1', '20000', '20000', '41', 'Defias Bodyguard - Despawn after 20 sec OOC');
+
+-- Group completion for Evil Draws Near
+UPDATE `creature_ai_scripts` SET `action1_type`='26',`action1_param1`='10923' WHERE  `id`=2244103;
+
+-- Blood Elf Flight Masters
+-- Source: https://github.com/cmangos/tbc-db/blob/18dd605950d0ace090ac7215c276d5ca7226d35f/Updates/442_Fix_Blood_Elf_Flight_Masters.sql
+DELETE FROM `creature_template` WHERE `entry`=27946;
+INSERT INTO `creature_template` (`entry`, `heroic_entry`, `modelid_A`, `modelid_A2`, `modelid_H`, `modelid_H2`, `name`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `baseattacktime`, `rangeattacktime`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `class`, `race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `RacialLeader`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`) VALUES 
+('27946', '0', '17547', '0', '17547', '0', 'Silvermoon Dragonhawk', '65', '65', '17742', '17742', '0', '0', '5291', '1603', '1603', '0', '1.48', '1', '1', '601', '843', '0', '278', '2000', '2000', '0', '0', '30', '0', '0', '0', '0', '497', '738', '35', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '12993', '0', '0', 'EventAI', '0', '3', '0', '1', '0', '0', '0');
+
+UPDATE creature_template SET SubName='Dragonhawk Master' WHERE entry IN (16192,16189,26560);
+
+-- Skymaster Sunwing Silvermoon Dragonhawks and Aggro Linking (81728)
+DELETE FROM `creature` WHERE `guid` IN (140807,140808);
+insert into `creature` (`guid`, `id`, `map`, `spawnMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) values('140807','27946','530','1','0','0','7592.39','-6776.33','86.834','4.83017','300','0','0','17742','0','0','0');
+insert into `creature` (`guid`, `id`, `map`, `spawnMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) values('140808','27946','530','1','0','0','7599.98','-6778.44','86.4116','4.19394','300','0','0','17742','0','0','0');
+
+DELETE FROM `creature_formations` WHERE `leaderGUID`=81728;
+INSERT INTO `creature_formations` (`leaderGUID`, `memberGUID`, `dist`, `angle`, `groupAI`) VALUES 
+(81728, 81728, 0, 0, 2),
+(81728, 140807, 0, 0, 2),
+(81728, 140808, 0, 0, 2);
+
+-- Skymistress Gloaming Silvermoon Dragonhawks and Aggro Linking (56866)
+DELETE FROM `creature` WHERE `guid` IN (140809,140810);
+insert into `creature` (`guid`, `id`, `map`, `spawnMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) values('140809','27946','530','1','0','0','9378.85','-7162.24','8.88681','3.16111','300','0','0','17742','0','0','0');
+insert into `creature` (`guid`, `id`, `map`, `spawnMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) values('140810','27946','530','1','0','0','9379.6','-7169.83','9.07374','3.03163','300','0','0','17742','0','0','0');
+
+DELETE FROM `creature_formations` WHERE `leaderGUID`=56866;
+INSERT INTO `creature_formations` (`leaderGUID`, `memberGUID`, `dist`, `angle`, `groupAI`) VALUES 
+(56866, 56866, 0, 0, 2),
+(56866, 140809, 0, 0, 2),
+(56866, 140810, 0, 0, 2);
+
+
+-- ------------
+-- Stop using the ugly core script for quest completion. It made it impossible to script the creature's normal spells
+-- ------------
+
+-- Arcane Wraith
+UPDATE `creature_template` SET `AIName`='EventAI', `ScriptName`='' WHERE `entry`=15273;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 15273;
+INSERT INTO `creature_ai_scripts` VALUES
+('1527301','15273','8','0','100','0','28734','-1','0','0','16','15468','28734','6','0','0','0','0','0','0','0','0','Arcane Wraith - Quest Credit on Mana Tap Spellhit (Quest: 8346)'),
+('1527302','15273','0','0','100','1','10100','16500','12700','24800','11','37361','1','0','0','0','0','0','0','0','0','0','Arcane Wraith - Cast Arcane Bolt');
+
+-- Mana Wyrm
+UPDATE `creature_template` SET `AIName`='EventAI', `ScriptName`='' WHERE `entry`=15274;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 15274;
+INSERT INTO `creature_ai_scripts` VALUES
+('1527401','15274','8','0','100','0','28734','-1','0','0','16','15468','28734','6','0','0','0','0','0','0','0','0','Mana Wyrm - Quest Credit on Mana Tap Spellhit (Quest: 8346)'),
+('1527402','15274','0','0','75','1','12000','14000','56000','64000','11','25602','1','0','0','0','0','0','0','0','0','0','Mana Wyrm - Cast Faerie Fire');
+
+-- Feral Tender
+UPDATE `creature_template` SET `AIName`='EventAI', `ScriptName`='' WHERE `entry`=15294;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 15294;
+INSERT INTO `creature_ai_scripts` VALUES
+('1529401','15294','8','0','100','0','28734','-1','0','0','16','15468','28734','6','0','0','0','0','0','0','0','0','Feral Tender - Quest Credit on Mana Tap Spellhit (Quest: 8346)'),
+('1529402','15294','2','0','100','1','50','0','15300','22900','11','31325','0','0','0','0','0','0','0','0','0','0','Feral Tender - Cast Renew at 50% HP');
+
+-- Tainted Arcane Wraith
+UPDATE `creature_template` SET `AIName`='EventAI', `ScriptName`='' WHERE `entry`=15298;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 15298;
+INSERT INTO `creature_ai_scripts` VALUES
+('1529801','15298','8','0','100','0','28734','-1','0','0','16','15468','28734','6','0','0','0','0','0','0','0','0','Tainted Arcane Wraith - Quest Credit on Mana Tap Spellhit (Quest: 8346)'),
+('1529802','15298','0','0','100','1','9000','18800','21100','32200','11','25603','1','0','0','0','0','0','0','0','0','0','Tainted Arcane Wraith - Cast Slow');
+
+-- Felendren the Banished (3.0.3 Official Data)
+DELETE FROM `creature_ai_texts` WHERE `entry`=-110;
+INSERT INTO `creature_ai_texts` (`entry`,`content_default`,`sound`,`type`,`language`,`comment`,`emote`) VALUES
+('-110','Take heart! Your friends will not long mourn your passing!','8506','0','0','15638','0');
+
+UPDATE `creature_template` SET `AIName`='EventAI', `ScriptName`='' WHERE `entry`=15367;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 15367;
+INSERT INTO `creature_ai_scripts` VALUES
+('1536701','15367','4','0','100','0','0','0','0','0','1','-110','0','0','0','0','0','0','0','0','0','0','Felendren the Banished - Say on Aggro'),
+('1536702','15367','0','0','100','1','9100','10600','20500','28600','11','16568','1','0','0','0','0','0','0','0','0','0','Felendren the Banished - Cast Mind Flay');
+
+-- Nova
+DELETE FROM `creature_ai_texts` WHERE `entry` IN(-948,-949,-950,-1166,-1167,-1168,-1169);
+INSERT INTO `creature_ai_texts` (`entry`,`content_default`,`sound`,`type`,`language`,`comment`,`emote`) VALUES
+('-948','holds a sea shell up to her ear.','0','2','0','20244','0'),
+('-949','shakes the dirt loose from the shell.','0','2','0','20244','0'),
+('-950','picks up a sea shell.','0','2','0','20244','0'),
+('-1166','Jane will love this one!','0','0','10','20244','0'),
+('-1167','Oooh, a shiny one!','0','0','10','20244','0'),
+('-1168','I think I can see the Sunwell from here!','0','0','10','20244','0'),
+('-1169','Can you really hear the ocean from one of these shells?','0','0','10','20244','0');
+
+UPDATE `creature_template` SET `AIName`='EventAI', `ScriptName`='' WHERE `entry`=20244;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 20244;
+INSERT INTO `creature_ai_scripts` VALUES
+('2024401','20244','1','0','100','1','10000','10000','110000','110000','1','-948','-949','-950','1','-1166','-1167','-1168','0','0','0','0','Nova - Random say on OOC'),
+('2024402','20244','1','0','100','1','60000','60000','160000','160000','1','-949','-950','-948','1','-1166','-1169','-1167','0','0','0','0','Nova - Random say on OOC');
+
+-- Silvermoon Dragonhawk
+UPDATE `creature_template` SET `AIName`='EventAI', `ScriptName`='' WHERE `entry`=27946;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 27946;
+INSERT INTO `creature_ai_scripts` VALUES
+('2794601','27946','0','0','100','1','4000','7000','6000','9000','11','37985','0','0','0','0','0','0','0','0','0','0','Silvermoon Dragonhawk - Cast Fire Breath');
+
