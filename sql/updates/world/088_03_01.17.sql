@@ -1820,3 +1820,5 @@ INSERT INTO waypoint_data (id, point, position_x, position_y, position_z, delay)
 
 UPDATE `gameobject` SET `animprogress` = 100 WHERE `guid` = 313331;
 
+UPDATE `creature_template` SET `flags_extra` = 536870912 WHERE `entry` = 21854;
+
