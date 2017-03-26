@@ -179,6 +179,9 @@ AuthSocket::AuthSocket()
 {
     N.SetHexStr("894B645E89E1535BBDAD5B8B290650530801B18EBFBF5E8FAB3C82872A3E9BB7");
     g.SetDword(7);
+    accountPermissionMask_ = PERM_PLAYER;
+    _build = 0;
+    patch_ = ACE_INVALID_HANDLE;
     _status = STATUS_CHALLENGE;
 }
 
