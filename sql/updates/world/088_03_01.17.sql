@@ -2830,3 +2830,6 @@ INSERT INTO `creature_ai_scripts` VALUES ('686604','6866','1','0','100','0','100
 
 UPDATE `creature_template` SET `mindmg`='5473',`maxdmg`='5970' WHERE `entry` = 20652;
 
+UPDATE `creature_template` SET `mindmg`='300',`maxdmg`='600' WHERE `entry` = 17306;
+UPDATE `creature_template` SET `mindmg`='2897',`maxdmg`='3418' WHERE `entry` = 18436;
+
