@@ -923,8 +923,8 @@ class LOOKING4GROUP_IMPORT_EXPORT Unit : public WorldObject
         void CombatStop(bool cast = false);
         void CombatStopWithPets(bool cast = false);
         Unit* SelectNearbyTarget(float dist = NOMINAL_MELEE_RANGE, Unit* target = NULL, bool los = true) const;
-        void SendMeleeAttackStop(Unit* victim);
-        void SendMeleeAttackStart(Unit* pVictim);
+        void SendMeleeAttackStop(uint64 victimGUID);
+        void SendMeleeAttackStart(uint64 victimGUID);
 
         //Get a single creature of given entry
         Unit* FindCreature2(uint32 entry, float range, Unit* Finder);

@@ -109,14 +109,14 @@ struct boss_onyxiaAI : public ScriptedAI
     {
         if (m_creature->IsLevitating())
         {
-            m_creature->SendMeleeAttackStart(m_creature->getVictim());
+            m_creature->SendMeleeAttackStart(m_creature->getVictimGUID());
             m_creature->HandleEmoteCommand(EMOTE_ONESHOT_LAND);
             m_creature->SetLevitate(false);
             DoStartMovement(m_creature->getVictim());
         }
         else
         {
-            m_creature->SendMeleeAttackStop(m_creature->getVictim());
+            m_creature->SendMeleeAttackStop(m_creature->getVictimGUID());
             m_creature->HandleEmoteCommand(EMOTE_ONESHOT_LIFTOFF);
             m_creature->SetLevitate(true);
         }
@@ -132,7 +132,7 @@ struct boss_onyxiaAI : public ScriptedAI
             if (!m_nextWay || m_nextWay == 6)
                 return;
 
-            m_creature->SendMeleeAttackStop(m_creature->getVictim());
+            m_creature->SendMeleeAttackStop(m_creature->getVictimGUID());
             DoCast(m_creature->getVictim(), SPELL_FIREBALL);
             m_creature->getThreatManager().modifyThreatPercent(m_creature->getVictim(), 100);
         }
@@ -270,7 +270,7 @@ struct boss_onyxiaAI : public ScriptedAI
                 m_nextWay = i + 1;
                 m_nextMoveTimer = 2500;
                 //DoTextEmote("Onyxia takes in a deep breath...", NULL, true);//DoScriptText(EMOTE_BREATH, m_creature);
-                m_creature->SendMeleeAttackStop(m_creature->getVictim());
+                m_creature->SendMeleeAttackStop(m_creature->getVictimGUID());
                 DoCast(m_creature, SPELL_DEEPBREATH);
                 m_creature->SetSpeed(MOVE_RUN, 2.5f);
                 break;

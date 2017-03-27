@@ -2754,27 +2754,24 @@ float Unit::CalculateLevelPenalty(SpellEntry const* spellProto) const
     return (100.0f - lvlPenalty) * lvlFactor / 100.0f;
 }
 
-void Unit::SendMeleeAttackStart(Unit* pVictim)
+void Unit::SendMeleeAttackStart(uint64 victimGUID)
 {
     WorldPacket data(SMSG_ATTACKSTART, 8+8);
     data << uint64(GetGUID());
-    data << uint64(pVictim->GetGUID());
+    data << uint64(victimGUID);
 
     BroadcastPacket(&data, true);
     DEBUG_LOG("WORLD: Sent SMSG_ATTACKSTART");
 }
 
-void Unit::SendMeleeAttackStop(Unit* victim)
+void Unit::SendMeleeAttackStop(uint64 victimGUID)
 {
-    if (!victim)
-        return;
-
     WorldPacket data(SMSG_ATTACKSTOP, (4+16));            // we guess size
     data << GetPackGUID();
-    data << victim->GetPackGUID();                          // can be 0x00...
+    data << victimGUID;                          // can be 0x00...
     data << uint32(0);                                      // can be 0x1
     BroadcastPacket(&data, true);
-    sLog.outDetail("%s %u stopped attacking %s %u", (GetTypeId()==TYPEID_PLAYER ? "player" : "creature"), GetGUIDLow(), (victim->GetTypeId()==TYPEID_PLAYER ? "player" : "creature"),victim->GetGUIDLow());
+    sLog.outDetail("%s %u stopped attacking %s %u", (GetTypeId()==TYPEID_PLAYER ? "player" : "creature"), GetGUIDLow(), (IS_PLAYER_GUID(victimGUID) ? "player" : "creature"),victimGUID);
 }
 
 int32 Unit::GetCurrentSpellCastTime(uint32 spell_id) const
@@ -7832,7 +7829,7 @@ bool Unit::Attack(Unit *victim, bool meleeAttack)
             if (meleeAttack && !hasUnitState(UNIT_STAT_MELEE_ATTACKING))
             {
                 addUnitState(UNIT_STAT_MELEE_ATTACKING);
-                SendMeleeAttackStart(victim);
+                SendMeleeAttackStart(victim->GetGUID());
                 return true;
             }
             return false;
@@ -7887,7 +7884,7 @@ bool Unit::Attack(Unit *victim, bool meleeAttack)
         resetAttackTimer(OFF_ATTACK);
 
     if (meleeAttack)
-        SendMeleeAttackStart(victim);
+        SendMeleeAttackStart(victim->GetGUID());
 
     return true;
 }
@@ -7897,10 +7894,7 @@ bool Unit::AttackStop()
     if (!m_attacking)
         return false;
 
-    Unit* victim = m_attacking;
-
     m_attacking->_removeAttacker(this);
-    m_attacking = NULL;
 
     //Clear our target
     SetUInt64Value(UNIT_FIELD_TARGET, 0);
@@ -7916,7 +7910,9 @@ bool Unit::AttackStop()
         ((Creature*)this)->SetNoSearchAssistance(false);
     }
 
-    SendMeleeAttackStop(victim);
+    SendMeleeAttackStop(m_attacking->GetGUID());
+
+    m_attacking = NULL;
 
     return true;
 }
