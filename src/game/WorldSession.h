@@ -184,6 +184,7 @@ class LOOKING4GROUP_IMPORT_EXPORT WorldSession
         uint32 GetAccountId() const { return _accountId; }
         Player* GetPlayer() const { return _player; }
         char const* GetPlayerName() const;
+        uint32 GetAccountTeamId() const;
         void SetSecurity(uint64 permissions) { m_permissions = permissions; }
         std::string const& GetRemoteAddress() { return m_Address; }
         void SetPlayer(Player *plr) { _player = plr; }

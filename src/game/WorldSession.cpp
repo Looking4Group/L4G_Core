@@ -159,6 +159,36 @@ char const* WorldSession::GetPlayerName() const
     return GetPlayer() ? GetPlayer()->GetName() : "<none>";
 }
 
+uint32 WorldSession::GetAccountTeamId() const
+{
+    QueryResultAutoPtr resultRace = RealmDataDatabase.PQuery("SELECT race FROM characters WHERE account ='%u' LIMIT 1", GetAccountId());
+
+    if (!resultRace)
+    {
+        return TEAM_NEUTRAL;
+    }
+    else
+    {
+        Field *fields = resultRace->Fetch();
+        
+        switch (fields[0].GetUInt8())
+        {
+            case RACE_HUMAN:
+            case RACE_DWARF:
+            case RACE_NIGHTELF:
+            case RACE_GNOME:
+            case RACE_DRAENEI:
+                return TEAM_ALLIANCE;
+            case RACE_ORC:
+            case RACE_UNDEAD_PLAYER:
+            case RACE_TAUREN:
+            case RACE_TROLL:
+            case RACE_BLOODELF:
+                return TEAM_HORDE;
+        }
+    }
+}
+
 void WorldSession::SaveOpcodesDisableFlags()
 {
     static SqlStatementID saveOpcodesDisabled;
