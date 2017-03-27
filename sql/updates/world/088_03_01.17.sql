@@ -2821,3 +2821,6 @@ INSERT INTO `gameobject_template` (`entry`, `type`, `displayId`, `name`, `castBa
 DELETE FROM `spell_script_target` WHERE `entry` = 36652;
 INSERT INTO `spell_script_target` VALUES (36652, 1, 21195);
 
+UPDATE `creature_template` SET `mindmg`='2136',`maxdmg`='2816' WHERE `entry` = 21694;
+UPDATE `creature_template` SET `mindmg`='5519',`maxdmg`='6036' WHERE `entry` = 21914;
+
