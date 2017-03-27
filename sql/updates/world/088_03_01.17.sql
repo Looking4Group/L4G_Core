@@ -2828,3 +2828,5 @@ UPDATE `creature_ai_scripts` SET `action2_type` = 0, `action2_param1` = 0, `acti
 DELETE FROM `creature_ai_scripts` WHERE `id`  = 686604;
 INSERT INTO `creature_ai_scripts` VALUES ('686604','6866','1','0','100','0','10000','10000','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Defias Bodyguard - Despawn OOC');
 
+UPDATE `creature_template` SET `mindmg`='5473',`maxdmg`='5970' WHERE `entry` = 20652;
+
