@@ -2824,3 +2824,7 @@ INSERT INTO `spell_script_target` VALUES (36652, 1, 21195);
 UPDATE `creature_template` SET `mindmg`='2136',`maxdmg`='2816' WHERE `entry` = 21694;
 UPDATE `creature_template` SET `mindmg`='5519',`maxdmg`='6036' WHERE `entry` = 21914;
 
+UPDATE `creature_ai_scripts` SET `action2_type` = 0, `action2_param1` = 0, `action2_param2` = 0, `action2_param3` = 0, `action3_type` = 0, `action3_param1` = 0, `action3_param2` = 0, `action3_param3` = 0, `comment` = 'Defias Dockmaster - Summon Defias Bodyguard on Aggro' WHERE `id` = 684602;
+DELETE FROM `creature_ai_scripts` WHERE `id`  = 686604;
+INSERT INTO `creature_ai_scripts` VALUES ('686604','6866','1','0','100','0','10000','10000','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Defias Bodyguard - Despawn OOC');
+
