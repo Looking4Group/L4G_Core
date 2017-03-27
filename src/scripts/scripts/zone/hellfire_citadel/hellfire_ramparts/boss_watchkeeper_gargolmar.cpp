@@ -16,28 +16,34 @@
 
 /* ScriptData
 SDName: Boss_Watchkeeper_Gargolmar
-SD%Complete: 80
-SDComment: Missing adds to heal him. Surge should be used on target furthest away, not random.
+SD%Complete: 90
+SDComment: Fix Charge Spell
 SDCategory: Hellfire Citadel, Hellfire Ramparts
 EndScriptData */
 
 #include "precompiled.h"
 #include "hellfire_ramparts.h"
 
-#define SAY_TAUNT               -1543000
-#define SAY_HEAL                -1543001
-#define SAY_SURGE               -1543002
-#define SAY_AGGRO_1             -1543003
-#define SAY_AGGRO_2             -1543004
-#define SAY_AGGRO_3             -1543005
-#define SAY_KILL_1              -1543006
-#define SAY_KILL_2              -1543007
-#define SAY_DIE                 -1543008
+enum WatchkeeperGargolmar
+{
+    SAY_TAUNT               = -1543000,
+    SAY_HEAL                = -1543001,
+    SAY_SURGE               = -1543002,
+    SAY_AGGRO_1             = -1543003,
+    SAY_AGGRO_2             = -1543004,
+    SAY_AGGRO_3             = -1543005,
+    SAY_KILL_1              = -1543006,
+    SAY_KILL_2              = -1543007,
+    SAY_DIE                 = -1543008,
 
-#define SPELL_MORTAL_WOUND      30641
-#define H_SPELL_MORTAL_WOUND    36814
-#define SPELL_SURGE             34645
-#define SPELL_RETALIATION       22857
+    SPELL_MORTAL_WOUND      = 30641,
+    H_SPELL_MORTAL_WOUND    = 36814,
+    SPELL_SURGE             = 34645,
+    SPELL_RETALIATION       = 22857,
+    SPELL_OVERPOWER         = 32154,
+
+    SPELL_CHARGE_VISUAL     = 40602
+};
 
 struct boss_watchkeeper_gargolmarAI : public ScriptedAI
 {
@@ -54,6 +60,7 @@ struct boss_watchkeeper_gargolmarAI : public ScriptedAI
     uint32 Surge_Timer;
     uint32 MortalWound_Timer;
     uint32 Retaliation_Timer;
+    uint32 Overpower_Timer;
 
     bool HasTaunted;
     bool YelledForHeal;
@@ -63,6 +70,7 @@ struct boss_watchkeeper_gargolmarAI : public ScriptedAI
         Surge_Timer = 5000;
         MortalWound_Timer = 4000;
         Retaliation_Timer = 0;
+        Overpower_Timer = 0;
 
         HasTaunted = false;
         YelledForHeal = false;
@@ -109,13 +117,30 @@ struct boss_watchkeeper_gargolmarAI : public ScriptedAI
     {
         DoScriptText(SAY_DIE, me);
 
-        std::list<Creature*> helpers = FindAllCreaturesWithEntry(17309, 100);
-        for(std::list<Creature *>::iterator i = helpers.begin(); i != helpers.end(); i++)
-        {
-            (*i)->ForcedDespawn(500);
-        }
         if (pInstance)
             pInstance->SetData(DATA_GARGOLMAR, DONE);
+    }
+
+    void DoMeleeAttackIfReady()
+    {
+        if (!m_creature->IsNonMeleeSpellCasted(false))
+        {
+            if (m_creature->isAttackReady() && m_creature->IsWithinMeleeRange(m_creature->getVictim()))
+            {
+                if (!Overpower_Timer)
+                {
+                    uint32 health = m_creature->getVictim()->GetHealth();
+                    m_creature->AttackerStateUpdate(m_creature->getVictim());
+                    if (m_creature->getVictim() && health == m_creature->getVictim()->GetHealth())
+                    {
+                        DoCast(m_creature->getVictim(), SPELL_OVERPOWER, false);
+                        Overpower_Timer = 5000;
+                    }
+                }
+                else m_creature->AttackerStateUpdate(m_creature->getVictim());
+                m_creature->resetAttackTimer();
+            }
+        }
     }
 
     void UpdateAI(const uint32 diff)
@@ -126,20 +151,29 @@ struct boss_watchkeeper_gargolmarAI : public ScriptedAI
         if (MortalWound_Timer < diff)
         {
             DoCast(me->getVictim(),HeroicMode ? H_SPELL_MORTAL_WOUND : SPELL_MORTAL_WOUND);
-            MortalWound_Timer = 5000+rand()%8000;
+            MortalWound_Timer = urand(5000, 13000);
         }else MortalWound_Timer -= diff;
 
         if (Surge_Timer < diff)
         {
             DoScriptText(SAY_SURGE, me);
 
-            if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0,GetSpellMaxRange(SPELL_SURGE), true))
-                DoCast(target,SPELL_SURGE);
-
-            Surge_Timer = 5000+rand()%8000;
+            if (Unit * target = SelectUnit(SELECT_TARGET_FARTHEST, 0, 40.0f, true, 0, 1.0f))
+            {
+                DoCast(target, SPELL_CHARGE_VISUAL,true);
+                DoCast(target, SPELL_SURGE, true);    
+            }
+            Surge_Timer = urand(5000, 13000);
         }else Surge_Timer -= diff;
 
-        if ((me->GetHealth()*100) / me->GetMaxHealth() < 20)
+        if (Overpower_Timer < diff)
+        {
+            // implemented in DoMeleeAttackIfReady()
+            Overpower_Timer = 0;
+        }
+        else Overpower_Timer -= diff;
+
+        if ((me->GetHealthPct() <= 20))
         {
             if (Retaliation_Timer < diff)
             {
@@ -150,7 +184,7 @@ struct boss_watchkeeper_gargolmarAI : public ScriptedAI
 
         if (!YelledForHeal)
         {
-            if ((me->GetHealth()*100) / me->GetMaxHealth() < 40)
+            if ((me->GetHealthPct() <= 40))
             {
                 DoScriptText(SAY_HEAL, me);
                 YelledForHeal = true;
