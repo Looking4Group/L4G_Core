@@ -2835,3 +2835,5 @@ UPDATE `creature_template` SET `mindmg`='2897',`maxdmg`='3418' WHERE `entry` = 1
 
 UPDATE `creature_template` SET `minhealth` = 82642, `maxhealth` = 82642 WHERE `entry` = 18433;
 
+UPDATE `creature_template` SET `mindmg`='4326',`maxdmg`='5138' WHERE `entry` = 20268;
+
