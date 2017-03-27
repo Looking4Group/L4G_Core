@@ -292,7 +292,7 @@ void World::AddSession_ (WorldSession* s)
         --sessions;
 
     // If population limit is not 0 (i.e. uncapped) and they are not a GM then check if we need to add them to the queue
-    if ((pLimit > 0) && (!s->HasPermissions(PERM_GMT)))
+    if ((pLimit > 0) && (!s->HasPermissions(PERM_GMT)) && (sessions >= pLimit))
     {
         // If alliance account AND the number of online alliance players equals or exceeds the population limit(/2) then add them to the queue OR
         // If horde account AND the number of online horde players equals or exceeds the population limit(/2) then add them to the queue
@@ -300,7 +300,7 @@ void World::AddSession_ (WorldSession* s)
         // Population limit divided by two to ensure equal split of Horde/Alliance.
         if (((accountTeamId == TEAM_ALLIANCE) && (GetLoggedInCharsCount(TEAM_ALLIANCE) >= (pLimit / 2))) ||
             ((accountTeamId == TEAM_HORDE) && (GetLoggedInCharsCount(TEAM_HORDE) >= (pLimit / 2))) ||
-            ((accountTeamId == TEAM_NEUTRAL) && (sessions >= pLimit)))
+            ((accountTeamId == TEAM_NEUTRAL)))
         {
             if (!sObjectMgr.IsUnqueuedAccount(s->GetAccountId()) && !HasRecentlyDisconnected(s))
             {
