@@ -2758,3 +2758,66 @@ INSERT INTO waypoint_data (id, point, position_x, position_y, position_z, delay)
 (77280,39,-2042.03,-10799.7,76.6537,0),
 (77280,40,-2024.38,-10786.2,81.8813,0);
 
+DELETE FROM `creature` WHERE `guid` IN (1688799,1717948,1717953,1717977);
+
+DELETE FROM `spell_script_target` WHERE `entry` = 39211;
+INSERT INTO `spell_script_target` VALUES (39211,1,22001);
+
+DELETE FROM creature_addon WHERE guid NOT IN (SELECT guid FROM creature);
+
+UPDATE `creature` SET `modelid` = 0 WHERE `id` = 24222;
+
+-- Magus Filinthus
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 16821;
+INSERT INTO `creature_ai_scripts` VALUES
+('1682101','16821','1','0','100','1','60000','60000','120000','120000','1','-11000','-11001','-11002','5','5','0','0','0','0','0','0','Magus Filinthus - Random say1 while OOC'),
+('1682102','16821','1','0','100','1','120000','120000','120000','120000','1','-11003','-11004','-11005','0','0','0','0','0','0','0','0','Magus Filinthus - Random say2 while OOC'),
+('1682603','16821','8','0','100','1','7791','-1','0','0','0','0','0','0','23','1','0','0','0','0','0','0','Magus Filinthus - Set phase 2 after teleport spell'),
+('1682604','16821','1','1','100','1','1000','1000','1000','1000','100','0','0','0','0','0','0','0','0','0','0','0','Magus Filinthus - Despawn after 1 sec and set phase 1'),
+('1682605','16821','1','1','100','1','1500','1500','1500','1500','12','1000015','0','1000','23','1','0','0','0','0','0','0','Magus Filinthus - Summon killer after 1 sec and set phase 1');
+
+UPDATE `creature_template` SET `lootid` = 21127 WHERE `entry` = 21843;
+
+UPDATE `creature_template` SET `AIName` = '' WHERE `entry` = 12999;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 12999;
+
+UPDATE `creature_template` SET `lootid` = 0 WHERE `entry` = 4535;
+
+DELETE FROM `creature_ai_scripts` WHERE `id` IN (2497910,2497911,2497912,2497913,1689601,1689602,1689603,1689604,1814701,1814702,1814703,1814704,2493801,65696,65697,65699,65700);
+INSERT INTO `creature_ai_scripts` VALUES (1689601,	16896, 10, 0, 75, 1, 1, 20, 8000, 16000, 11, 29120, 0, 7, 24, 0, 0, 0, 0, 0, 0, 0, 'Honor Hold Archer - Cast Shoot on Dummy & Reset OOC');
+INSERT INTO `creature_ai_scripts` VALUES (1814701,	18147, 10, 0, 75, 1, 1, 20, 8000, 16000, 11, 29120, 0, 7, 24, 0, 0, 0, 0, 0, 0, 0, 'Silvermoon Ranger - Cast Shoot on Dummy & Reset OOC');
+INSERT INTO `creature_ai_scripts` VALUES (2493801,	24938, 10, 0, 75, 1, 1, 40, 8000, 16000, 11, 45233, 0, 7, 24, 0, 0, 0, 0, 0, 0, 0, 'Shattered Sun Marksman - Cast Shoot on Dummy & Reset OOC');
+INSERT INTO `creature_ai_scripts` VALUES (2497913,	24979, 1, 0, 75, 1, 5000, 10000, 8000, 16000, 11, 29120, 0, 7, 24, 0, 0, 0, 0, 0, 0, 0, 'Dawnblade Marksman - Cast Shoot on Dummy & Reset OOC');
+
+DELETE FROM `spell_script_target` WHERE `entry` = 45233;
+INSERT INTO `spell_script_target` VALUES (45233, 1, 25192);
+
+UPDATE `creature_template` SET `npcflag` = 3 WHERE `entry` = 14338; -- 83
+
+DELETE FROM `spell_script_target` WHERE `entry` = 29866;
+INSERT INTO `spell_script_target` VALUES (29866, 0, 181616);
+
+UPDATE `creature_template` SET `npcflag` = 65539 WHERE `entry` = 21088; -- 66179
+
+UPDATE `creature_template` SET `lootid`='18501' WHERE `entry` = 20323;
+
+UPDATE `creature_ai_scripts` SET `action1_type`='41', `action2_type` = 0 WHERE `id` = 1849915;
+
+DELETE FROM `gameobject_template` WHERE `entry` = 184839;
+INSERT INTO `gameobject_template` (`entry`, `type`, `displayId`, `name`, `castBarCaption`, `faction`, `flags`, `size`, `Data0`, `Data1`, `Data2`, `Data3`, `Data4`, `Data5`, `Data6`, `Data7`, `Data8`, `Data9`, `Data10`, `Data11`, `Data12`, `Data13`, `Data14`, `Data15`, `Data16`, `Data17`, `Data18`, `Data19`, `Data20`, `Data21`, `Data22`, `Data23`, `ScriptName`) VALUES (184839, 6, 477, 'Wyrmcult Egg Spawner', '', 1827, 0, 1, 0, 0, 5, 36903, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
+
+DELETE FROM `spell_script_target` WHERE `entry` = 17618;
+INSERT INTO `spell_script_target` VALUES (17618, 1, 11582);
+
+DELETE FROM `spell_script_target` WHERE `entry` = 37285;
+INSERT INTO `spell_script_target` VALUES (37285, 1, 21211);
+
+DELETE FROM `spell_script_target` WHERE `entry` = 40902;
+INSERT INTO `spell_script_target` VALUES (40902, 2, 22841);
+
+DELETE FROM `gameobject_template` WHERE `entry` = 183929;
+INSERT INTO `gameobject_template` (`entry`, `type`, `displayId`, `name`, `castBarCaption`, `faction`, `flags`, `size`, `Data0`, `Data1`, `Data2`, `Data3`, `Data4`, `Data5`, `Data6`, `Data7`, `Data8`, `Data9`, `Data10`, `Data11`, `Data12`, `Data13`, `Data14`, `Data15`, `Data16`, `Data17`, `Data18`, `Data19`, `Data20`, `Data21`, `Data22`, `Data23`, `ScriptName`) VALUES (183929, 6, 0, '', '', 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
+
+DELETE FROM `spell_script_target` WHERE `entry` = 36652;
+INSERT INTO `spell_script_target` VALUES (36652, 1, 21195);
+
