@@ -153,6 +153,8 @@ World::World()
     m_honorRanks[11] = 60000;
     m_honorRanks[12] = 70000;
     m_honorRanks[13] = 100000;
+
+    m_configForceLoadMapIds = NULL;
 }
 
 /// World destructor
@@ -183,6 +185,9 @@ World::~World()
 
     VMAP::VMapFactory::clear();
     MMAP::MMapFactory::clear();
+
+    if (m_configForceLoadMapIds)
+        delete m_configForceLoadMapIds;
 
     //TODO free addSessQueue
 }
@@ -639,6 +644,18 @@ void World::LoadConfigSettings(bool reload)
     }
     m_configs[CONFIG_ADDON_CHANNEL] = sConfig.GetBoolDefault("AddonChannel", true);
     m_configs[CONFIG_GRID_UNLOAD] = sConfig.GetBoolDefault("GridUnload", true);
+
+    std::string forceLoadGridOnMaps = sConfig.GetStringDefault("LoadAllGridsOnMaps", "");
+    if (!forceLoadGridOnMaps.empty())
+    {
+        m_configForceLoadMapIds = new std::set<uint32>;
+        unsigned int pos = 0;
+        unsigned int id;
+        VMAP::VMapFactory::chompAndTrim(forceLoadGridOnMaps);
+        while (VMAP::VMapFactory::getNextId(forceLoadGridOnMaps, pos, id))
+            m_configForceLoadMapIds->insert(id);
+    }
+
     m_configs[CONFIG_INTERVAL_SAVE] = sConfig.GetIntDefault("PlayerSaveInterval", 900000);
     m_configs[CONFIG_INTERVAL_DISCONNECT_TOLERANCE] = sConfig.GetIntDefault("DisconnectToleranceInterval", 0);
 
@@ -1616,6 +1633,10 @@ void World::SetInitialWorldSettings()
 
     if (getConfig(CONFIG_COREBALANCER_ENABLED))
         _coreBalancer.Initialize();
+
+    sLog.outString("Loading grids for active creatures or transports...");
+    sObjectMgr.LoadActiveEntities(NULL);
+    sLog.outString();
 
     sLog.outString("WORLD: World initialized");
 }
