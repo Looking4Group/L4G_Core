@@ -3825,3 +3825,9 @@ INSERT INTO `waypoint_data` VALUES (99248, 40, -993.082, 2623.02, 6.20042, 0, 0,
 INSERT INTO `waypoint_data` VALUES (99248, 41, -981.882, 2553.38, 3.31046, 0, 0, 0, 0, 0);
 INSERT INTO `waypoint_data` VALUES (99248, 42, -957.331, 2491, 5.38956, 0, 0, 0, 0, 0);
 
+DELETE FROM `gameobject_template` WHERE `entry` = 3239;
+INSERT INTO `gameobject_template` (`entry`, `type`, `displayId`, `name`, `castBarCaption`, `faction`, `flags`, `size`, `Data0`, `Data1`, `Data2`, `Data3`, `Data4`, `Data5`, `Data6`, `Data7`, `Data8`, `Data9`, `Data10`, `Data11`, `Data12`, `Data13`, `Data14`, `Data15`, `Data16`, `Data17`, `Data18`, `Data19`, `Data20`, `Data21`, `Data22`, `Data23`, `ScriptName`) VALUES (3239, 3, 41, 'Benedict\'s Chest', '', 0, 0, 1, 68, 2483, 0, 0, 0, 0, 498, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
+
+DELETE FROM `gameobject_loot_template` WHERE `entry` = 2483;
+INSERT INTO `gameobject_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES (2483, 4881, 100, 0, 1, 1, 0, 0, 0);
+
