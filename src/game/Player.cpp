@@ -21223,9 +21223,9 @@ float Player::GetXPRate(Rates rate)
 {
     if (sWorld.getConfig(CONFIG_ENABLE_CUSTOM_XP_RATES) && GetSession()->IsAccountFlagged(ACC_CUSTOM_XP_RATE_1))
         return 1.0f;
-    else if (sWorld.getConfig(CONFIG_GET_CUSTOM_XP_RATE_LEVEL))
+    else if (sWorld.getConfig(CONFIG_GET_CUSTOM_XP_RATE_LEVEL) > 0)
         if (getLevel() <= sWorld.getConfig(CONFIG_GET_CUSTOM_XP_RATE_LEVEL))
-            return sWorld.getRate(Rates(rate)) + sWorld.getConfig(RATE_CUSTOM_XP_VALUE);
+            return (sWorld.getRate(Rates(rate)) + sWorld.getRate(RATE_CUSTOM_XP_VALUE));
 
     return sWorld.getRate(Rates(rate));
 }
