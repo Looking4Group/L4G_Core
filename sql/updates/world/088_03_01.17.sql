@@ -3831,3 +3831,7 @@ INSERT INTO `gameobject_template` (`entry`, `type`, `displayId`, `name`, `castBa
 DELETE FROM `gameobject_loot_template` WHERE `entry` = 2483;
 INSERT INTO `gameobject_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES (2483, 4881, 100, 0, 1, 1, 0, 0, 0);
 
+UPDATE `gameobject_template` SET `faction` = 0 WHERE `entry` IN (3240,3685);
+DELETE FROM `gameobject_loot_template` WHERE `entry` = 2620 AND `item` IN (15277,15290,18793,18794,18795);
+UPDATE `gameobject_loot_template` SET `maxcount` = 3 WHERE `entry` = 2620;
+
