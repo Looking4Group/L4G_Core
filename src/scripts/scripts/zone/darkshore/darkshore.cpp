@@ -180,7 +180,7 @@ bool QuestAccept_npc_kerlonian(Player* pPlayer, Creature* pCreature, const Quest
             pCreature->RemoveAurasDueToSpell(SPELL_BEAR_FORM);
             pCreature->SetStandState(UNIT_STAND_STATE_STAND);
             DoScriptText(SAY_KER_START, pCreature, pPlayer);
-            pKerlonianAI->StartFollow(pPlayer, FACTION_ESCORT_N_FRIEND_ACTIVE, pQuest);
+            pKerlonianAI->StartFollow(pPlayer, FACTION_ESCORT_N_FRIEND_PASSIVE, pQuest);
         }
     }
 
