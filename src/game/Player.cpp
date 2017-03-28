@@ -7655,6 +7655,11 @@ void Player::SendLoot(uint64 guid, LootType loot_type)
 
         loot = &go->loot;
 
+        // loot was generated and respawntime has passed since then, allow to recreate loot
+        // to avoid bugs, this rule covers spawned gameobjects only
+        if (go->isSpawnedByDefault() && go->getLootState() == GO_ACTIVATED && !go->loot.isLooted() && go->GetLootGenerationTime() + go->GetRespawnDelay() < time(nullptr))
+            go->SetLootState(GO_READY);
+
         if (go->getLootState() == GO_READY)
         {
             uint32 lootid =  go->GetLootId();
@@ -7674,6 +7679,7 @@ void Player::SendLoot(uint64 guid, LootType loot_type)
                 sLog.outDebug("       if (lootid)");
                 loot->clear();
                 loot->FillLoot(lootid, LootTemplates_Gameobject, this, false);
+                go->SetLootGenerationTime();
 
                 //if chest apply 2.1.x rules
                 if ((go->GetGoType() == GAMEOBJECT_TYPE_CHEST)&&(go->GetGOInfo()->chest.groupLootRules))
