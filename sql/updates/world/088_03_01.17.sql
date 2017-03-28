@@ -3835,3 +3835,29 @@ UPDATE `gameobject_template` SET `faction` = 0 WHERE `entry` IN (3240,3685);
 DELETE FROM `gameobject_loot_template` WHERE `entry` = 2620 AND `item` IN (15277,15290,18793,18794,18795);
 UPDATE `gameobject_loot_template` SET `maxcount` = 3 WHERE `entry` = 2620;
 
+UPDATE `creature_template` SET `ScriptName`='npc_kerlonian' WHERE `entry`=11218;
+
+DELETE FROM `script_texts` WHERE `entry`=-1000434;
+INSERT INTO `script_texts` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES (-1000434, 'Liladris has been waiting for me at Maestra\'s Post, so we should make haste, $N.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 'kerlonian SAY_KER_START');
+DELETE FROM `script_texts` WHERE `entry`=-1000435;
+INSERT INTO `script_texts` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES (-1000435, 'looks very sleepy...', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 2, 0, 0, 'kerlonian EMOTE_KER_SLEEP_1');
+DELETE FROM `script_texts` WHERE `entry`=-1000436;
+INSERT INTO `script_texts` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES (-1000436, 'suddenly falls asleep', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 2, 0, 0, 'kerlonian EMOTE_KER_SLEEP_2');
+DELETE FROM `script_texts` WHERE `entry`=-1000437;
+INSERT INTO `script_texts` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES (-1000437, 'begins to drift off...', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 2, 0, 0, 'kerlonian EMOTE_KER_SLEEP_3');
+DELETE FROM `script_texts` WHERE `entry`=-1000438;
+INSERT INTO `script_texts` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES (-1000438, 'This looks like the perfect place for a nap...', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 'kerlonian SAY_KER_SLEEP_1');
+DELETE FROM `script_texts` WHERE `entry`=-1000439;
+INSERT INTO `script_texts` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES (-1000439, 'Yaaaaawwwwwnnnn...', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 'kerlonian SAY_KER_SLEEP_2');
+DELETE FROM `script_texts` WHERE `entry`=-1000440;
+INSERT INTO `script_texts` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES (-1000440, 'Oh, I am so tired...', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 'kerlonian SAY_KER_SLEEP_3');
+DELETE FROM `script_texts` WHERE `entry`=-1000441;
+INSERT INTO `script_texts` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES (-1000441, 'You don\'t mind if I stop here for a moment, do you?', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 'kerlonian SAY_KER_SLEEP_4');
+DELETE FROM `script_texts` WHERE `entry`=-1000442;
+INSERT INTO `script_texts` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES (-1000442, 'Be on the alert! The Blackwood furbolgs are numerous in the area...', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 'kerlonian SAY_KER_ALERT_1');
+DELETE FROM `script_texts` WHERE `entry`=-1000443;
+INSERT INTO `script_texts` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES (-1000443, 'It\'s quiet... Too quiet...', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 'kerlonian SAY_KER_ALERT_2');
+DELETE FROM `script_texts` WHERE `entry`=-1000444;
+INSERT INTO `script_texts` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES (-1000444, 'Oh, I can see Liladris from here... Tell her I\'m here, won\'t you?', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 'kerlonian SAY_KER_END');
+
+
