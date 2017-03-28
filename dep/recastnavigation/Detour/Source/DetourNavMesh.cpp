@@ -64,6 +64,15 @@ inline bool overlapSlabs(const float* amin, const float* amax,
     return false;
 }
 
+static float getSlabCoord(const float* va, const int side)
+{
+    if (side == 0 || side == 4)
+        return va[0];
+    else if (side == 2 || side == 6)
+        return va[2];
+    return 0;
+}
+
 static void calcSlabEndPoints(const float* va, const float* vb, float* bmin, float* bmax, const int side)
 {
     if (side == 0 || side == 4)
@@ -250,6 +259,7 @@ int dtNavMesh::findConnectingPolys(const float* va, const float* vb,
 
     float amin[2], amax[2];
     calcSlabEndPoints(va,vb, amin,amax, side);
+    const float apos = getSlabCoord(va, side);
 
     // Remove links pointing to 'side' and compact the links array. 
     float bmin[2], bmax[2];
@@ -258,17 +268,31 @@ int dtNavMesh::findConnectingPolys(const float* va, const float* vb,
 
     dtPolyRef base = getPolyRefBase(tile);
 
+    if (tile->header->polyCount <= 0)
+        return 0;
+
     for (int i = 0; i < tile->header->polyCount; ++i)
     {
         dtPoly* poly = &tile->polys[i];
         const int nv = poly->vertCount;
+
+        if (nv < 0)
+            return 0;
+
         for (int j = 0; j < nv; ++j)
         {
             // Skip edges which do not point to the right side.
             if (poly->neis[j] != m) continue;
-            // Check if the segments touch.
+
             const float* vc = &tile->verts[poly->verts[j]*3];
             const float* vd = &tile->verts[poly->verts[(j+1) % nv]*3];
+            const float bpos = getSlabCoord(vc, side);
+
+            // Segments are not close enough.
+            if (dtAbs(apos - bpos) > 0.01f)
+                continue;
+
+            // Check if the segments touch.
             calcSlabEndPoints(vc,vd, bmin,bmax, side);
 
             if (!overlapSlabs(amin,amax, bmin,bmax, 0.01f, tile->header->walkableClimb)) continue;
@@ -345,7 +369,7 @@ void dtNavMesh::connectExtLinks(dtMeshTile* tile, dtMeshTile* target, int side)
             const float* vb = &tile->verts[poly->verts[(j+1) % nv]*3];
             dtPolyRef nei[4];
             float neia[4*2];
-            int nnei = findConnectingPolys(va,vb, target, dtOppositeTile(side), nei,neia,4);
+            int nnei = findConnectingPolys(va,vb, target, dtOppositeTile(dir), nei,neia,4);
             for (int k = 0; k < nnei; ++k)
             {
                 unsigned int idx = allocLink(tile);
@@ -354,13 +378,13 @@ void dtNavMesh::connectExtLinks(dtMeshTile* tile, dtMeshTile* target, int side)
                     dtLink* link = &tile->links[idx];
                     link->ref = nei[k];
                     link->edge = (unsigned char)j;
-                    link->side = (unsigned char)side;
+                    link->side = (unsigned char)dir;
 
                     link->next = poly->firstLink;
                     poly->firstLink = idx;
 
                     // Compress portal limits to a byte value.
-                    if (side == 0 || side == 4)
+                    if (dir == 0 || dir == 4)
                     {
                         float tmin = (neia[k*2+0]-va[2]) / (vb[2]-va[2]);
                         float tmax = (neia[k*2+1]-va[2]) / (vb[2]-va[2]);
@@ -369,7 +393,7 @@ void dtNavMesh::connectExtLinks(dtMeshTile* tile, dtMeshTile* target, int side)
                         link->bmin = (unsigned char)(dtClamp(tmin, 0.0f, 1.0f)*255.0f);
                         link->bmax = (unsigned char)(dtClamp(tmax, 0.0f, 1.0f)*255.0f);
                     }
-                    else if (side == 2 || side == 6)
+                    else if (dir == 2 || dir == 6)
                     {
                         float tmin = (neia[k*2+0]-va[0]) / (vb[0]-va[0]);
                         float tmax = (neia[k*2+1]-va[0]) / (vb[0]-va[0]);
