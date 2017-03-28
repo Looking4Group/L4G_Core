@@ -1996,6 +1996,13 @@ void Unit::CalcAbsorbResist(Unit *pVictim, SpellSchoolMask schoolMask, DamageEff
             int32 leveldiff = int32(pCre->getLevelForTarget(this)) - int32(getLevelForTarget(pCre));
             if (leveldiff > 0)
                 victimResistance += leveldiff * 5;
+
+            if (Player* player = ToPlayer())
+                if (player->getLevel() < 20)
+                    if (leveldiff >= 2)
+                        victimResistance -= 10;
+                    else if (leveldiff == 1)
+                        victimResistance -= 5;
         }
 
         victimResistance *= (float)(0.15f / getLevel());
