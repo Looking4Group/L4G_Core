@@ -63,6 +63,8 @@ GameObject::GameObject() : WorldObject()
     m_goInfo = NULL;
     m_goData = NULL;
 
+    m_lootGenerationTime = 0;
+
     m_DBTableGuid = 0;
 }
 
