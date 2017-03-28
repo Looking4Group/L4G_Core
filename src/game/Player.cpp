@@ -21215,6 +21215,12 @@ void Player::SendTimeSync()
 
 float Player::GetXPRate(Rates rate)
 {
+    if (sWorld.getConfig(CONFIG_ENABLE_CUSTOM_XP_RATES) && GetSession()->IsAccountFlagged(ACC_CUSTOM_XP_RATE_1))
+        return 1.0f;
+    else if (sWorld.getConfig(CONFIG_GET_CUSTOM_XP_RATE_LEVEL))
+        if (getLevel() <= sWorld.getConfig(CONFIG_GET_CUSTOM_XP_RATE_LEVEL))
+            return sWorld.getRate(Rates(rate)) + sWorld.getConfig(CONFIG_GET_CUSTOM_XP_RATE_VALUE);
+
     return sWorld.getRate(Rates(rate));
 }
 
