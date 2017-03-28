@@ -961,6 +961,10 @@ class LOOKING4GROUP_IMPORT_EXPORT Unit : public WorldObject
         uint32 GetMaxHealth() const { return GetUInt32Value(UNIT_FIELD_MAXHEALTH); }
         float GetHealthPct()  const { return (GetHealth()*100)/GetMaxHealth(); }
 
+
+        bool ShouldRevealHealthTo(Player* player) const;
+        void SendHealthUpdateDueToCharm(Player* charmer);
+
         bool HealthBelowPct(uint32 pct) const { return GetHealth() *100 < GetMaxHealth() *pct; }
 
         void SetHealth(uint32 val, bool ignoreAliveCheck = false);
