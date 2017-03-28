@@ -197,6 +197,11 @@ void Creature::AddToWorld()
         SearchFormation();
         AIM_Initialize();
 
+        // Make active if required
+        std::set<uint32> const* mapList = sWorld.getConfigForceLoadMapIds();
+        if ((mapList && mapList->find(GetMapId()) != mapList->end()) || (GetCreatureInfo()->flags_extra & CREATURE_FLAG_EXTRA_ACTIVE))
+            setActive(true);
+
         if (m_zoneScript)
             m_zoneScript->OnCreatureCreate(this, true);
     }

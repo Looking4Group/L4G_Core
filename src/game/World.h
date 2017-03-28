@@ -304,7 +304,6 @@ enum WorldConfigs
 
     CONFIG_ENABLE_CUSTOM_XP_RATES,
     CONFIG_GET_CUSTOM_XP_RATE_LEVEL,
-    CONFIG_GET_CUSTOM_XP_RATE_VALUE,
     CONFIG_XP_RATE_MODIFY_ITEM_ENTRY,
     CONFIG_XP_RATE_MODIFY_ITEM_PCT,
 
@@ -375,6 +374,7 @@ enum Rates
     RATE_XP_QUEST,
     RATE_XP_EXPLORE,
     RATE_XP_PAST_70,
+    RATE_CUSTOM_XP_VALUE,
     RATE_REPUTATION_GAIN,
     RATE_REPUTATION_LOWLEVEL_KILL,
     RATE_REPUTATION_LOWLEVEL_QUEST,
@@ -760,6 +760,9 @@ class LOOKING4GROUP_EXPORT World
                 return 0;
         }
 
+        /// Get configuration about force-loaded maps
+        std::set<uint32>* getConfigForceLoadMapIds() const { return m_configForceLoadMapIds; }
+
         /// Are we on a "Player versus Player" server?
         bool IsPvPRealm() { return (getConfig(CONFIG_GAME_TYPE) == REALM_TYPE_PVP || getConfig(CONFIG_GAME_TYPE) == REALM_TYPE_RPPVP || getConfig(CONFIG_GAME_TYPE) == REALM_TYPE_FFA_PVP); }
         bool IsFFAPvPRealm() { return getConfig(CONFIG_GAME_TYPE) == REALM_TYPE_FFA_PVP; }
@@ -941,6 +944,9 @@ class LOOKING4GROUP_EXPORT World
         //used versions
         std::string m_DBVersion;
         std::string m_ScriptsVersion;
+
+        // List of Maps that should be force-loaded on startup
+        std::set<uint32>* m_configForceLoadMapIds;
 };
 
 extern uint32 realmID;
