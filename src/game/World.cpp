@@ -1176,7 +1176,7 @@ void World::LoadConfigSettings(bool reload)
 
     m_configs[CONFIG_ENABLE_CUSTOM_XP_RATES] = sConfig.GetBoolDefault("EnableCustomXPRates", true);
     m_configs[CONFIG_GET_CUSTOM_XP_RATE_LEVEL] = sConfig.GetIntDefault("CustomXPRateMaxLevel", 0);
-    m_configs[CONFIG_GET_CUSTOM_XP_RATE_VALUE] = sConfig.GetFloatDefault("CustomXPRateValue", 0);
+    rate_values[RATE_CUSTOM_XP_VALUE] = sConfig.GetFloatDefault("CustomXPRateValue", 0);
     m_configs[CONFIG_XP_RATE_MODIFY_ITEM_ENTRY] = sConfig.GetIntDefault("XPRateModifyItem.Entry",0);
     m_configs[CONFIG_XP_RATE_MODIFY_ITEM_PCT] = sConfig.GetIntDefault("XPRateModifyItem.Pct",5);
 
