@@ -573,6 +573,8 @@ class LOOKING4GROUP_IMPORT_EXPORT GameObject : public WorldObject
 
         void SetLootState(LootState s) { m_lootState = s; }
         LootState getLootState() const { return m_lootState; }
+        void SetLootGenerationTime() { m_lootGenerationTime = time(nullptr); }
+        uint32 GetLootGenerationTime() const { return m_lootGenerationTime; }
 
         void AddToSkillupList(uint32 PlayerGuidLow) { m_SkillupList.push_back(PlayerGuidLow); }
         bool IsInSkillupList(uint32 PlayerGuidLow) const
@@ -661,6 +663,8 @@ class LOOKING4GROUP_IMPORT_EXPORT GameObject : public WorldObject
 
         GameObjectInfo const* m_goInfo;
         GameObjectData const* m_goData;
+
+        uint32 m_lootGenerationTime;
 
         void HandleNonDbcSpell(uint32 spellId, Player* pUser);
     private:

@@ -124,6 +124,12 @@ EAIErrorLevel = 2
 #        Socket select time (in milliseconds)
 #        Default: 10000
 #
+#    LoadAllGridsOnMaps
+#        Load grids of maps at server startup (if you have lot memory you can try it to have a living world always loaded)
+#        This also allow ALL creatures on the given maps to update their grid without any player around.
+#        Default: "" (don't load all grids at startup)
+#                 "mapId1[,mapId2[..]]" (DO load all grids on the given maps- Experimental and very resource consumming)
+#
 #    GridCleanUpDelay
 #        Grid clean up delay (in milliseconds)
 #        Default: 300000 (5 min)
@@ -254,6 +260,7 @@ PlayerLimit = 100
 SaveRespawnTimeImmediately = 1
 MaxOverspeedPings = 2
 GridUnload = 1
+LoadAllGridsOnMaps = ""
 SocketSelectTime = 10000
 GridCleanUpDelay = 300000
 MapUpdateInterval = 100
@@ -1769,6 +1776,21 @@ Network.KickOnBadPacket = 1
 #       to a newly created character.
 #       Default: "" - send no text
 #
+#   EnableCustomXPRates
+#		Enables Setting XP Rate to x1 instead of default rates
+#		Default: 0 - disabled
+#       1 = Enable
+#
+#	CustomXPRateMaxLevel
+#		Enables a special XP boost until that level of a value definded in CustomXPRateValue
+#		Default: 0 - disabled
+#       59 = Special XP Boost until Level 59
+#
+#	CustomXPRateValue
+#		If CustomXPRateMaxLevel > 0 boost default XP of player by an amount of CustomXPRateValue
+#		Default: 0 - no boost even if CustomXPRateMaxLevel > 0
+#		2 = Boost Default XP Rates with that amount (if rate x2 and CustomXPRateValue x3 effective rate will be x5)
+#
 #   XPRateModifyItem.Entry
 #       The Entry ID of Item which Player must have in inventory to Modify XP Rate
 #		Default: 0 - disabled
@@ -1795,6 +1817,9 @@ RecordUpdateTimeDiffInterval = 60000
 MinRecordUpdateTimeDiff = 10
 MinRecordUpdateTimeSessionDiff = 25
 PlayerStart.String = ""
+EnableCustomXPRates = 0
+CustomXPRateMaxLevel = 0
+CustomXPRateValue = 0
 XPRateModifyItem.Entry = 0
 XPRateModifyItem.Pct = 5 
 

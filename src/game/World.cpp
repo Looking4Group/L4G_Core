@@ -153,6 +153,8 @@ World::World()
     m_honorRanks[11] = 60000;
     m_honorRanks[12] = 70000;
     m_honorRanks[13] = 100000;
+
+    m_configForceLoadMapIds = NULL;
 }
 
 /// World destructor
@@ -183,6 +185,9 @@ World::~World()
 
     VMAP::VMapFactory::clear();
     MMAP::MMapFactory::clear();
+
+    if (m_configForceLoadMapIds)
+        delete m_configForceLoadMapIds;
 
     //TODO free addSessQueue
 }
@@ -292,7 +297,7 @@ void World::AddSession_ (WorldSession* s)
         --sessions;
 
     // If population limit is not 0 (i.e. uncapped) and they are not a GM then check if we need to add them to the queue
-    if ((pLimit > 0) && (!s->HasPermissions(PERM_GMT)) && (sessions >= pLimit))
+    if ((pLimit > 0) && (!s->HasPermissions(PERM_GMT)))
     {
         // If alliance account AND the number of online alliance players equals or exceeds the population limit(/2) then add them to the queue OR
         // If horde account AND the number of online horde players equals or exceeds the population limit(/2) then add them to the queue
@@ -300,7 +305,7 @@ void World::AddSession_ (WorldSession* s)
         // Population limit divided by two to ensure equal split of Horde/Alliance.
         if (((accountTeamId == TEAM_ALLIANCE) && (GetLoggedInCharsCount(TEAM_ALLIANCE) >= (pLimit / 2))) ||
             ((accountTeamId == TEAM_HORDE) && (GetLoggedInCharsCount(TEAM_HORDE) >= (pLimit / 2))) ||
-            ((accountTeamId == TEAM_NEUTRAL)))
+            ((accountTeamId == TEAM_NEUTRAL) && (sessions >= pLimit)))
         {
             if (!sObjectMgr.IsUnqueuedAccount(s->GetAccountId()) && !HasRecentlyDisconnected(s))
             {
@@ -639,6 +644,18 @@ void World::LoadConfigSettings(bool reload)
     }
     m_configs[CONFIG_ADDON_CHANNEL] = sConfig.GetBoolDefault("AddonChannel", true);
     m_configs[CONFIG_GRID_UNLOAD] = sConfig.GetBoolDefault("GridUnload", true);
+
+    std::string forceLoadGridOnMaps = sConfig.GetStringDefault("LoadAllGridsOnMaps", "");
+    if (!forceLoadGridOnMaps.empty())
+    {
+        m_configForceLoadMapIds = new std::set<uint32>;
+        unsigned int pos = 0;
+        unsigned int id;
+        VMAP::VMapFactory::chompAndTrim(forceLoadGridOnMaps);
+        while (VMAP::VMapFactory::getNextId(forceLoadGridOnMaps, pos, id))
+            m_configForceLoadMapIds->insert(id);
+    }
+
     m_configs[CONFIG_INTERVAL_SAVE] = sConfig.GetIntDefault("PlayerSaveInterval", 900000);
     m_configs[CONFIG_INTERVAL_DISCONNECT_TOLERANCE] = sConfig.GetIntDefault("DisconnectToleranceInterval", 0);
 
@@ -1158,6 +1175,8 @@ void World::LoadConfigSettings(bool reload)
     m_configs[CONFIG_VMSS_FREEZEDETECTTIME] = sConfig.GetIntDefault("VMSS.MapFreezeDetectTime", 1000);
 
     m_configs[CONFIG_ENABLE_CUSTOM_XP_RATES] = sConfig.GetBoolDefault("EnableCustomXPRates", true);
+    m_configs[CONFIG_GET_CUSTOM_XP_RATE_LEVEL] = sConfig.GetIntDefault("CustomXPRateMaxLevel", 0);
+    rate_values[RATE_CUSTOM_XP_VALUE] = sConfig.GetFloatDefault("CustomXPRateValue", 0);
     m_configs[CONFIG_XP_RATE_MODIFY_ITEM_ENTRY] = sConfig.GetIntDefault("XPRateModifyItem.Entry",0);
     m_configs[CONFIG_XP_RATE_MODIFY_ITEM_PCT] = sConfig.GetIntDefault("XPRateModifyItem.Pct",5);
 
@@ -1614,6 +1633,10 @@ void World::SetInitialWorldSettings()
 
     if (getConfig(CONFIG_COREBALANCER_ENABLED))
         _coreBalancer.Initialize();
+
+    sLog.outString("Loading grids for active creatures or transports...");
+    sObjectMgr.LoadActiveEntities(NULL);
+    sLog.outString();
 
     sLog.outString("WORLD: World initialized");
 }

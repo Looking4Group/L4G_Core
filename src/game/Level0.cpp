@@ -42,7 +42,7 @@ bool ChatHandler::HandleAccountXPToggleCommand(const char* args)
 {
     if (!*args)
     {
-        PSendSysMessage("For Blizzlike Rates type \'1\', for x3 rates type \'3\', for server rates type \'server\'");
+        PSendSysMessage("For Blizzlike Rates type \'1\', for default server rates type \'server\'");
         SetSentErrorMessage(true);
         return true;
     }
@@ -54,27 +54,18 @@ bool ChatHandler::HandleAccountXPToggleCommand(const char* args)
         {
             if (argstr == "1")
             {
-                session->AddAccountFlag(ACC_BLIZZLIKE_RATES);
-                session->RemoveAccountFlag(ACC_CUSTOM_XP_RATE_3);
+                session->AddAccountFlag(ACC_CUSTOM_XP_RATE_1);
                 PSendSysMessage("Now your rates are blizzlike: x1.");
-            }
-            else if (argstr == "3")
-            {
-                session->AddAccountFlag(ACC_CUSTOM_XP_RATE_3);
-                session->RemoveAccountFlag(ACC_BLIZZLIKE_RATES);
-                PSendSysMessage("Now your rates are serverlike: x3.");
             }
             else if (argstr == "server")
             {
-                session->RemoveAccountFlag(ACC_CUSTOM_XP_RATE_3);
-                session->RemoveAccountFlag(ACC_BLIZZLIKE_RATES);
-                PSendSysMessage("Now your rates are serverlike: x3. If your Level is < 58 you will get a serverside bonus.");
+                session->RemoveAccountFlag(ACC_CUSTOM_XP_RATE_1);
+                PSendSysMessage("Now your rates are serverlike.");
             }
             else
             {
-                session->RemoveAccountFlag(ACC_CUSTOM_XP_RATE_3);
-                session->RemoveAccountFlag(ACC_BLIZZLIKE_RATES);
-                PSendSysMessage("Now your rates are serverlike: x3. And if your Level is <58 you will get a serverside bonus. Beware.");
+                session->RemoveAccountFlag(ACC_CUSTOM_XP_RATE_1);
+                PSendSysMessage("Now your rates are serverlike");
             }
 
         }
