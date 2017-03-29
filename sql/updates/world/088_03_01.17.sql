@@ -3860,4 +3860,9 @@ INSERT INTO `script_texts` (`entry`, `content_default`, `content_loc1`, `content
 DELETE FROM `script_texts` WHERE `entry`=-1000444;
 INSERT INTO `script_texts` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES (-1000444, 'Oh, I can see Liladris from here... Tell her I\'m here, won\'t you?', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 'kerlonian SAY_KER_END');
 
+UPDATE `creature_template` SET `mindmg`='486',`maxdmg`='733' WHERE `entry` = 22398;
+UPDATE `creature_template` SET `mindmg`='2140',`maxdmg`='2689' WHERE `entry` = 22399;
+
+UPDATE `creature_template` SET `mindmg`='377',`maxdmg`='646' WHERE `entry` = 17817;
+UPDATE `creature_template` SET `mindmg`='4235',`maxdmg`='5029' WHERE `entry` = 19892;
 
