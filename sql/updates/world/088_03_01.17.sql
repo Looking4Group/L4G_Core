@@ -3871,3 +3871,27 @@ UPDATE `creature_template` SET `mindmg`='5434',`maxdmg`='6449' WHERE `entry` = 1
 UPDATE `creature_template` SET `mindmg`='505',`maxdmg`='714' WHERE `entry` = 17454;
 UPDATE `creature_template` SET `mindmg`='13261',`maxdmg`='15748' WHERE `entry` = 17257;
 
+UPDATE `creature_template` SET `AIName` = 'EventAI' WHERE `entry` = 5336;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 5336;
+INSERT INTO `creature_ai_scripts` VALUES
+(533601,5336,0,0,100,0,0,0,0,0,21,1,0,0,0,0,0,0,0,0,0,0,'Hatecrest Sorceress- Start Movement on Aggro'),
+(533602,5336,4,0,100,0,0,0,0,0,11,20822,1,0,22,1,0,0,0,0,0,0,'Hatecrest Sorceress- Cast Frostbolt and Set Phase 1 on Aggro'),
+(533603,5336,9,13,100,1,0,40,3000,4000,11,20822,1,0,0,0,0,0,0,0,0,0,'Hatecrest Sorceress - Cast Frostbolt (Phase 1)'),
+(533604,5336,3,13,100,0,15,0,0,0,21,1,0,0,22,2,0,0,0,0,0,0,'Hatecrest Sorceress - Start Movement and Set Phase 2 when Mana is at 15%'),
+(533605,5336,9,13,100,1,25,80,0,0,21,1,0,0,0,0,0,0,0,0,0,0,'Hatecrest Sorceress - Start Movement Beyond 25 Yards'),
+(533606,5336,3,11,100,1,100,30,100,100,22,1,0,0,0,0,0,0,0,0,0,0,'Hatecrest Sorceress - Set Phase 1 when Mana is above 30% (Phase 2)'),
+(533607,5336,2,0,100,0,15,0,0,0,22,3,0,0,0,0,0,0,0,0,0,0,'Hatecrest Sorceress - Set Phase 3 at 15% HP'),
+(533608,5336,2,7,100,0,15,0,0,0,21,1,0,0,25,0,0,0,1,-47,0,0,'Hatecrest Sorceress- Start Movement and Flee at 15% HP (Phase 3)'),
+(533609,5336,7,0,100,0,0,0,0,0,22,0,0,0,0,0,0,0,0,0,0,0,'Hatecrest Sorceress - On Evade set Phase to 0');
+
+UPDATE `creature_template` SET `AIName` = 'EventAI' WHERE `entry` = 5333;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 5333;
+INSERT INTO `creature_ai_scripts` VALUES
+(533301,5333,9,0,100,1,0,25,10000,13000,11,8058,4,32,0,0,0,0,0,0,0,0,'Hatecrest Serpent Guard - Cast Frost Shock'),
+(533302,5333,2,0,100,0,15,0,0,0,25,0,0,0,1,-47,0,0,0,0,0,0,'Hatecrest Serpent Guard - Flee at 15% HP');
+
+UPDATE `creature_template` SET `AIName` = 'EventAI' WHERE `entry` = 8136;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 8136;
+INSERT INTO `creature_ai_scripts` VALUES
+(813601,8136,9,0,100,1,0,25,16000,21000,11,8058,4,0,0,0,0,0,0,0,0,0,'Lord Shalzaru - Cast Frost Shock');
+
