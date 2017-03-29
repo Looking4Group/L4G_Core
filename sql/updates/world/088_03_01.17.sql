@@ -3895,3 +3895,16 @@ DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 8136;
 INSERT INTO `creature_ai_scripts` VALUES
 (813601,8136,9,0,100,1,0,25,16000,21000,11,8058,4,0,0,0,0,0,0,0,0,0,'Lord Shalzaru - Cast Frost Shock');
 
+UPDATE `creature_template` SET `mindmg`='3347',`maxdmg`='3549' WHERE `entry` = 18615;
+UPDATE `creature_template` SET `mindmg`='377',`maxdmg`='546' WHERE `entry` = 17816;
+UPDATE `creature_template` SET `mindmg`='738',`maxdmg`='1007' WHERE `entry` = 16699;
+UPDATE `creature_template` SET `mindmg`='3550',`maxdmg`='3825' WHERE `entry` = 20621;
+UPDATE `creature_template` SET `mindmg`='3738',`maxdmg`='3932' WHERE `entry` = 20626;
+UPDATE `creature_template` SET `mindmg`='5015',`maxdmg`='5956' WHERE `entry` = 21591;
+UPDATE `creature_template` SET `mindmg`='5015',`maxdmg`='5956' WHERE `entry` = 21593;
+UPDATE `creature_template` SET `mindmg`='6521',`maxdmg`='7778' WHERE `entry` = 21614;
+UPDATE `creature_template` SET `mindmg`='7755',`maxdmg`='9207' WHERE `entry` = 21594;
+UPDATE `creature_template` SET `mindmg`='6721',`maxdmg`='7978' WHERE `entry` = 21595;
+UPDATE `creature_template` SET `mindmg`='4215',`maxdmg`='5156' WHERE `entry` = 21610;
+UPDATE `creature_template` SET `mindmg`='4215',`maxdmg`='5156' WHERE `entry` = 21611;
+
