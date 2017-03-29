@@ -3908,3 +3908,8 @@ UPDATE `creature_template` SET `mindmg`='6721',`maxdmg`='7978' WHERE `entry` = 2
 UPDATE `creature_template` SET `mindmg`='4215',`maxdmg`='5156' WHERE `entry` = 21610;
 UPDATE `creature_template` SET `mindmg`='4215',`maxdmg`='5156' WHERE `entry` = 21611;
 
+DELETE FROM `creature_ai_scripts` WHERE `id` IN (535902,536002);
+INSERT INTO `creature_ai_scripts` VALUES
+(535902,5359,9,0,100,1,0,5,11000,15000,11,10987,0,1,0,0,0,0,0,0,0,0,'Shore Strider - Cast Geyser'),
+(536002,5360,9,0,100,1,0,5,11000,15000,11,10987,0,1,0,0,0,0,0,0,0,0,'Deep Strider - Cast Geyser');
+
