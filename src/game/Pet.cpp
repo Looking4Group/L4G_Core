@@ -1505,6 +1505,8 @@ void Pet::_SaveAuras()
                             spellInfo->Effect[i] == SPELL_EFFECT_APPLY_AREA_AURA_OWNER ||
                             spellInfo->Effect[i] == SPELL_EFFECT_APPLY_AREA_AURA_PET)
                             break;
+                        if (spellInfo->Id == 19574)
+                            break;
 
                     if (i == 3)
                     {
