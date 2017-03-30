@@ -3892,6 +3892,9 @@ void SpellMgr::LoadSpellCustomAttr()
             case 31689:
                 spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_PLAYERS_ONLY;
                 break;
+            case 3237: // Curse of Thule (Used by some gnolls in Tirisfall)
+            case 33493: // Mark of Malice (This attribute breaks EventAI, remove it for now until we find a solution)
+                spellInfo->Attributes &= ~SPELL_ATTR_ON_NEXT_SWING_2;
             default:
                 break;
         }
