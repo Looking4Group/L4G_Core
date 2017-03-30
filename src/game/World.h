@@ -647,6 +647,8 @@ class LOOKING4GROUP_EXPORT World
         /// Get the maximum number of parallel sessions on the server since last reboot
         uint32 GetMaxQueuedSessionCount() const { return m_maxQueuedSessionCount; }
         uint32 GetMaxActiveSessionCount() const { return m_maxActiveSessionCount; }
+        uint32 GetMaxAllianceSessionCount() const { return m_maxAllianceSessionCount; }
+        uint32 GetMaxHordeSessionCount() const { return m_maxHordeSessionCount; }
         Player* FindPlayerInZone(uint32 zone);
 
         Weather* FindWeather(uint32 id) const;
@@ -896,6 +898,8 @@ class LOOKING4GROUP_EXPORT World
         DisconnectMap m_disconnects;
         uint32 m_maxActiveSessionCount;
         uint32 m_maxQueuedSessionCount;
+        uint32 m_maxAllianceSessionCount;
+        uint32 m_maxHordeSessionCount;
 
         std::string m_newCharString;
 
