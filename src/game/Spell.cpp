@@ -2316,10 +2316,10 @@ void Spell::prepare(SpellCastTargets * targets, Aura* triggeredByAura)
             return;
         }
         
-        //Hack for Hexlord Spirit bolts - don't interrupt with death coil, Maim, Intercept
+        //Hexlord Spirit bolts, Underbog Colossus Acid Geyser Spore Quake  - don't interrupt with death coil, Maim, Intercept
         if (m_targets.getUnitTarget())               //Deathcoil                                //Maim                       //Intercept
             if ((GetSpellInfo()->Effect[0] == SPELL_EFFECT_HEALTH_LEECH || GetSpellInfo()->Id == 22570 || GetSpellInfo()->Id == 25275)
-                && m_targets.getUnitTarget()->HasAura(43383))
+                && (m_targets.getUnitTarget()->HasAura(43383) || m_targets.getUnitTarget()->HasAura(38971) || m_targets.getUnitTarget()->HasAura(38976)))
             {
                 SendCastResult(SPELL_FAILED_NOT_READY);
                 finish(false);
