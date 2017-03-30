@@ -12072,8 +12072,8 @@ void Unit::UpdateAuraForGroup(uint8 slot)
 
 float Unit::GetAPMultiplier(WeaponAttackType attType, bool normalized)
 {
-    if (!normalized || GetTypeId() != TYPEID_PLAYER)
-        return float(GetAttackTime(attType))/1000.0f;
+    if (!normalized || GetTypeId() != TYPEID_PLAYER || (IsInFeralForm() && !normalized))
+        return float(GetAttackTime(attType)) / 1000.0f;
 
     Item *Weapon = ((Player*)this)->GetWeaponForAttack(attType);
     if (!Weapon)
