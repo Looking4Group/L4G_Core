@@ -63,3 +63,5 @@ UPDATE `creature_template` SET `AIName` = 'EventAI' WHERE `entry` = 8277;
 DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 8277;
 INSERT INTO `creature_ai_scripts` VALUES (827701,8277,1,0,100,1,0,0,0,0,11,10022,0,33,0,0,0,0,0,0,0,0,'Rekk\'tilac - Cast Deadly Poison');
 
+UPDATE `command` SET `permission_mask`=256 WHERE `name` IN('lockaccount','freeze','unfreeze');
+
