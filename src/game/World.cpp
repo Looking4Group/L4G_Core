@@ -443,7 +443,7 @@ bool World::RemoveQueuedPlayer(WorldSession* sess)
 
     iter = m_QueuedPlayer.begin();
     position = 1;
-    for (; iter != m_QueuedPlayer.end(); ++iter, ++position)
+    for (; iter != m_QueuedPlayer.end(); ++iter, position++)
     {
         (*iter)->SendAuthWaitQue(position);
     }
