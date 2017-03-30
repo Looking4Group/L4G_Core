@@ -1,0 +1,2 @@
+-- entry: 13000 // Alliance players: %u (max: %u) Horde players: %u (max: %u)
+INSERT INTO `looking4group_string` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`)VALUES (13000, 'Alliance players: %u (max: %u) Horde players: %u (max: %u)', NULL, NULL, 'Alliance players: %u (max: %u) Horde players: %u (max: %u)', NULL, NULL, NULL, NULL, NULL);

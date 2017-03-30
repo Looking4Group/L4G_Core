@@ -287,16 +287,28 @@ bool ChatHandler::HandleActivateLevelCharacterCommand(const char* /*args*/)
 
 bool ChatHandler::HandleServerInfoCommand(const char* /*args*/)
 {
+    // Performance issues? Should .server info be rate limited?
+    // Without updating max session counters here then the max session counter will be inaccurate
+    // Players that login are counted towards the online player count but the faction max counts are not updated
+    // as UpdateMaxSessionCounters() is called too quickly after login
+    // This is a result of players in the loading screen counting towards active sessions but not count GetLoggedInChars()
+    sWorld.UpdateMaxSessionCounters();
+
     uint32 activeClientsNum = sWorld.GetActiveSessionCount();
     uint32 queuedClientsNum = sWorld.GetQueuedSessionCount();
     uint32 maxActiveClientsNum = sWorld.GetMaxActiveSessionCount();
     uint32 maxQueuedClientsNum = sWorld.GetMaxQueuedSessionCount();
+    uint32 allianceClientsNum = sWorld.GetLoggedInCharsCount(TEAM_ALLIANCE);
+    uint32 hordeClientsNum = sWorld.GetLoggedInCharsCount(TEAM_HORDE);
+    uint32 maxAllianceClientsNum = sWorld.GetMaxAllianceSessionCount();
+    uint32 maxHordeClientsNum = sWorld.GetMaxHordeSessionCount();
     std::string str = secsToTimeString(sWorld.GetUptime());
     uint32 updateTime = sWorld.GetUpdateTime();
     std::string str2 = TimeToTimestampStr(sWorld.GetGameTime());
 
     PSendSysMessage("Looking4Group - rev: %s", REVISION_ID);
     PSendSysMessage(LANG_CONNECTED_USERS, activeClientsNum, maxActiveClientsNum, queuedClientsNum, maxQueuedClientsNum);
+    PSendSysMessage(LANG_CONNECTED_FACTIONS, allianceClientsNum, maxAllianceClientsNum, hordeClientsNum, maxHordeClientsNum);
     PSendSysMessage(LANG_UPTIME, str.c_str());
     PSendSysMessage("Current time: %s", str2.c_str());
     PSendSysMessage("Update time diff: %u.", updateTime);

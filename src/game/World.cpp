@@ -123,6 +123,8 @@ World::World()
     m_startTime=m_gameTime;
     m_maxActiveSessionCount = 0;
     m_maxQueuedSessionCount = 0;
+    m_maxAllianceSessionCount = 0;
+    m_maxHordeSessionCount = 0;
     m_NextDailyQuestReset = 0;
     m_scheduledScripts = 0;
 
@@ -3011,8 +3013,10 @@ void World::SetPlayerLimit(int32 limit, bool needUpdate)
 
 void World::UpdateMaxSessionCounters()
 {
-    m_maxActiveSessionCount = std::max(m_maxActiveSessionCount,uint32(m_sessions.size()-m_QueuedPlayer.size()));
-    m_maxQueuedSessionCount = std::max(m_maxQueuedSessionCount,uint32(m_QueuedPlayer.size()));
+    m_maxActiveSessionCount = std::max(m_maxActiveSessionCount, uint32(m_sessions.size()-m_QueuedPlayer.size()));
+    m_maxQueuedSessionCount = std::max(m_maxQueuedSessionCount, uint32(m_QueuedPlayer.size()));
+    m_maxAllianceSessionCount = std::max(m_maxAllianceSessionCount, uint32(GetLoggedInCharsCount(TEAM_ALLIANCE)));
+    m_maxHordeSessionCount = std::max(m_maxHordeSessionCount, uint32(GetLoggedInCharsCount(TEAM_HORDE)));
 }
 
 void World::LoadDBVersion()
