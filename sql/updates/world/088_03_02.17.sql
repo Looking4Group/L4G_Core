@@ -44,3 +44,22 @@ INSERT INTO `waypoint_data` VALUES (6218, 16, -7199.08, -1721.11, 244.429, 0, 0,
 INSERT INTO `waypoint_data` VALUES (6218, 17, -7200.48, -1716.67, 242.274, 0, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (6218, 18, -7197.34, -1702.22, 241.667, 0, 0, 0, 100, 0);
 
+DELETE FROM `creature` WHERE `guid` IN (6218,98866,98867,98868,98869);
+INSERT INTO `creature` VALUES (6218, 8277, 0, 1, 4458, 0, -7189.3, -1704.58, 242.323, 1.25664, 75600, 0, 0, 2578, 0, 0, 2);
+INSERT INTO `creature` VALUES (98866, 8277, 0, 1, 4458, 0, -6536.05, -1656.03, 288.403, 3.02536, 86400, 20, 0, 2578, 0, 0, 1);
+INSERT INTO `creature` VALUES (98867, 8277, 0, 1, 4458, 0, -7154.71, -1505.94, 240.626, 0.566275, 97200, 20, 0, 2578, 0, 0, 1);
+INSERT INTO `creature` VALUES (98868, 8277, 0, 1, 4458, 0, -7185.76, -999.545, 244.448, 6.09784, 108000, 20, 0, 2578, 0, 0, 1);
+INSERT INTO `creature` VALUES (98869, 8277, 0, 1, 4458, 0, -6515.87, -1104.83, 313.092, 5.45302, 115200, 20, 0, 2578, 0, 0, 1);
+
+DELETE FROM `pool_creature` WHERE `pool_entry`  = 1099;
+INSERT INTO `pool_creature` VALUES
+(6218,1099,0,'Rekk\'tilac (8277)'),
+(98866,1099,0,'Rekk\'tilac (8277)'),
+(98867,1099,0,'Rekk\'tilac (8277)'),
+(98868,1099,0,'Rekk\'tilac (8277)'),
+(98869,1099,0,'Rekk\'tilac (8277)');
+
+UPDATE `creature_template` SET `AIName` = 'EventAI' WHERE `entry` = 8277;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 8277;
+INSERT INTO `creature_ai_scripts` VALUES (827701,8277,1,0,100,1,0,0,0,0,11,10022,0,33,0,0,0,0,0,0,0,0,'Rekk\'tilac - Cast Deadly Poison');
+
