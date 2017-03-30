@@ -7469,6 +7469,32 @@ bool Unit::HandleOverrideClassScriptAuraProc(Unit *pVictim, Aura *triggeredByAur
     return true;
 }
 
+bool Unit::ShouldRevealHealthTo(Player* player) const
+{
+    if (!sWorld.getConfig(CONFIG_HEALTH_IN_PERCENTS))
+        return true;
+
+    if (player == this || player->isGameMaster())
+        return true;
+
+    if (player->IsInRaidWith(this))
+        return true;
+
+    return false;
+}
+
+void Unit::SendHealthUpdateDueToCharm(Player* charmer)
+{
+    ForceValuesUpdateAtIndex(UNIT_FIELD_HEALTH);
+    ForceValuesUpdateAtIndex(UNIT_FIELD_MAXHEALTH);
+
+    if (Group* group = charmer->GetGroup())
+    {
+        charmer->SetGroupUpdateFlag(GROUP_UPDATE_PET);
+        group->UpdatePlayerOutOfRange(charmer);
+    }
+}
+
 void Unit::setPowerType(Powers new_powertype)
 {
     SetByteValue(UNIT_FIELD_BYTES_0, 3, new_powertype);

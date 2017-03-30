@@ -17586,6 +17586,8 @@ void Player::Uncharm()
         charm->RemoveSpellsCausingAura(SPELL_AURA_MOD_POSSESS);
     }
 
+    charm->SendHealthUpdateDueToCharm(this);
+
     if (GetCharmGUID())
     {
         sLog.outLog(LOG_DEFAULT, "ERROR: CRASH ALARM! Player %s is not able to uncharm unit (Entry: %u, Type: %u)", GetName(), charm->GetEntry(), charm->GetTypeId());
@@ -17742,6 +17744,8 @@ void Player::PetSpellInitialize()
         data << uint32(0x8e8b) << uint64(0);                // if count = 3
 
         SendPacketToSelf(&data);
+
+        pet->SendHealthUpdateDueToCharm(this);
     }
 }
 
@@ -17780,6 +17784,7 @@ void Player::PossessSpellInitialize()
     data << uint32(0x8e8b) << uint64(0);                    // if count = 3
 
     SendPacketToSelf(&data);
+    charm->SendHealthUpdateDueToCharm(this);
 }
 
 void Player::CharmSpellInitialize()
@@ -17850,6 +17855,7 @@ void Player::CharmSpellInitialize()
     data << uint32(0x8e8b) << uint64(0);                    // if count = 3
 
     SendPacketToSelf(&data);
+    charm->SendHealthUpdateDueToCharm(this);
 }
 
 int32 Player::GetTotalFlatMods(uint32 spellId, SpellModOp op)

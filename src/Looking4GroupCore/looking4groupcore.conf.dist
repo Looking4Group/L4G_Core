@@ -1799,6 +1799,11 @@ Network.KickOnBadPacket = 1
 #       Modify the earned XP if XPRateModifyItem.Entry is not 0 and Player have this item in inventory
 #		Default: 5
 #
+#    HealthInPercents
+#        Whether to send client health in percents or exact values
+#        Values: 1 - percents, 0 - values
+#        Default: 1 (blizzlike)
+#
 ###################################################################################################################
 
 PlayerStart.AllReputation = 0
@@ -1822,6 +1827,7 @@ CustomXPRateMaxLevel = 0
 CustomXPRateValue = 0
 XPRateModifyItem.Entry = 0
 XPRateModifyItem.Pct = 5 
+HealthInPercents = 1
 
 ###################################################################################################################
 # Virtual map serving system (VMSS) configuration

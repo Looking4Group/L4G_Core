@@ -1191,6 +1191,8 @@ void World::LoadConfigSettings(bool reload)
 
     m_configs[CONFIG_PRIVATE_CHANNEL_LIMIT] = sConfig.GetIntDefault("Channel.PrivateLimitCount", 20);
 
+    m_configs[CONFIG_HEALTH_IN_PERCENTS] = sConfig.GetBoolDefault("HealthInPercents", true);
+
     m_configs[CONFIG_MMAP_ENABLED] = sConfig.GetIntDefault("mmap.enabled", true);
     sLog.outString("WORLD: mmap pathfinding %sabled", getConfig(CONFIG_MMAP_ENABLED) ? "en" : "dis");
 
