@@ -1493,6 +1493,10 @@ void Pet::_SaveAuras()
             // save previous spellEffectPair to db
             itr2--;
             SpellEntry const *spellInfo = itr2->second->GetSpellProto();
+            // Dont Save Bestial Wrath
+            if (spellInfo->Id == 19574)
+                break;
+
             /// do not save single target auras (unless they were cast by the player)
             if (!(itr2->second->GetCasterGUID() != GetGUID() && SpellMgr::IsSingleTargetSpell(spellInfo)))
             {
