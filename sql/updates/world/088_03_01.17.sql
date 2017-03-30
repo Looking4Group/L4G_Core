@@ -4385,3 +4385,53 @@ REPLACE INTO `item_template` VALUES (30394, 2, 8, -1, 'Sunfury Blade', 20167, 2,
 REPLACE INTO `item_template` VALUES (30402, 4, 4, -1, 'Field Agent\'s Bracers', 24511, 2, 0, 1, 119907, 23981, 9, -1, -1, 108, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 7, 16, 3, 8, 4, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 436, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1, 1, 'The inner surface is inscribed with the name of B.O.O.M.', 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 275, 0, '', 14, 0, 0, 0, 0);
 REPLACE INTO `item_template` VALUES (31617, 4, 0, -1, 'Ancient Draenei War Talisman', 30696, 2, 524288, 1, 32891, 8222, 12, -1, -1, 102, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 32, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 33667, 0, 0, 0, 90000, 1141, 15000, 0, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1, 1, '', 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 275, 0, '', 14, 0, 0, 0, 0);
 
+UPDATE `command` SET `permission_mask`=0;
+UPDATE `command` SET `permission_mask`=1 WHERE `name` IN('account gann','charactivatelevel','charstoplevel','commands','debug threatlist','distance','guild ann','guild info','password','quest showlowlevel',
+'server info','start','help');
+UPDATE `command` SET `permission_mask`=256 WHERE `name` IN('account','bank','bindfollow','bindsight','demorph','dismount','event','event activelist','gm','gm announce','gm chat','gm fly','gm nameannounce',
+'gm notify','go creature','go graveyard','go grid','go object','go ticket','go trigger','go xy','go xyz','go zonexy','gobject grid','gobject near','gobject target','goname','gps','guid',
+'hover','instance listbinds','instance selfunbind','instance stats','list auras','list creature','lookup area','lookup creature','lookup event','lookup faction','lookup item','lookup itemset',
+'lookup object','lookup quest','lookup skill','lookup spell','lookup tele','modify morph','modify mount','modify scale','neargrave','npc info','save','tele','ticket assign','ticket close',
+'ticket closedlist','ticket comment','ticket list','ticket onlinelist','ticket response','ticket unassign','ticket viewid','ticket viewname','unbindfollow','unbindsight','unpossess','whispers');
+UPDATE `command` SET `permission_mask`=2048 WHERE `name` IN('ban account','ban character','ban email','ban ip','baninfo account','baninfo character','baninfo email','baninfo ip','banlist account',
+'banlist character','banlist email','banlist ip','channel kick','channel list','channel pass','combatstop','gm list','gm visible','gobject reset','groupgo','kick','listfreeze','lookup player account',
+'lookup player email','lookup player ip','lookup player listip','modify aspeed','modify bwalk','modify drunk','modify fly','modify speed','modify swim','mute','muteinfo','namego','pinfo','quest',
+'quest add','quest complete','quest remove','recall','rename','respawn','revive','revivegroup','send mail','send message','tele add','tele group','tele name','unban account','unban character',
+'unban email','unban ip','unfreeze','unmute','waterwalk','weather','freeze');
+UPDATE `command` SET `permission_mask`=4096 WHERE `name` IN('additem','additemset','announce','aura','cast','cast back','cast dist','cast null','cast self','cast target','cd','channel masskick',
+'cometome','cooldown','damage','die','gobject activate','gobject addtemp','guild create','guild disable announce','guild enable announce','guild invite','guild rank','guild uninvite',
+'honor','honor add','honor addkill','honor update','instance unbind','learn','levelup','lockaccount','maxskill','modify arena','modify energy','modify gender','modify honor','modify hp',
+'modify mana','modify rage','modify rep','modify titles','modify tp','notify','npc addtemp','npc enterevademode','npc follow','npc playemote','npc resetai','npc say','npc textemote','npc unfollow',
+'npc whisper','npc yell','pet','pet create','pet learn','pet tp','pet unlearn','playall','possess','repairitems','reset talents','send items','setskill','settitle','showarea','taxicheat','tele del',
+'unaura','unlearn','nameannounce');
+UPDATE `command` SET `permission_mask`=8192 WHERE `name` IN('account create','account delete','account delmultiacc','account log','account set','account set addon','account set multiacc',
+'account set password','account set permissions','account whisp','changeacc','chardelete','debug','debug anim','debug arena','debug getinstdata','debug bg','debug getitemstate','debug getvalue',
+'debug lootrecipient','debug Mod32Value','debug play cinematic','debug play sound','debug poolstats','debug send buyerror','debug send channelnotify','debug send chatmessage','debug send equiperror',
+'debug send opcode','debug send qinvalidmsg','debug send qpartymsg','debug send sellerror','debug send spellfail','debug setinstdata','debug setinstdata64','debug setitemflag','debug setvalue',
+'debug showcombatstats','debug update','debug uws','event start','event stop','explorecheat','flusharenapoints','gobject add','gobject delete','gobject move','gobject turn','guild delete',
+'guild info','guild setlevel','hidearea','instance savedata','itemmove','learn all','learn all_crafts','learn all_default','learn all_gm','learn all_lang','learn all_myclass','learn all_myspells',
+'learn all_mytalents','learn all_recipes','linkgrave','list object','loadscripts','mmap','modify bit','modify faction','modify Mod32Value','modify money','modify spell','modify standstate',
+'movegens','npc add','npc addformation','npc additem','npc addmove','npc changeentry','npc changelevel','npc delete','npc deleteformation','npc delitem','npc doaction','npc factionid',
+'npc fieldflags','npc flag','npc move','npc name','npc setlink','npc setmodel','npc setmovetype','npc spawndist','npc spawntime','npc subname','path','path add','path event','path load',
+'path modify','path reloadpath','path show','path tofile','path unload','plimit','reload','reload access_requirement','reload all','reload all_area','reload all_item','reload all_locales',
+'reload all_loot','reload all_npc','reload all_quest','reload all_scripts','reload all_spell','reload areatrigger_involvedrelation','reload areatrigger_tavern','reload areatrigger_teleport',
+'reload auctions','reload autobroadcast','reload command','reload config','reload creature_ai_scripts','reload creature_involvedrelation','reload creature_linked_respawn','reload creature_loot_template',
+'reload creature_questrelation','reload disenchant_loot_template','reload eventai','reload event_scripts','reload fishing_loot_template','reload gameobject_involvedrelation','reload gameobject_loot_template',
+'reload gameobject_questrelation','reload gameobject_scripts','reload game_graveyard_zone','reload game_tele','reload gm_tickets','reload item_enchantment_template','reload item_loot_template',
+'reload locales_creature','reload locales_gameobject','reload locales_item','reload locales_npc_text','reload locales_page_text','reload locales_quest','reload npc_gossip','reload npc_option',
+'reload npc_trainer','reload npc_vendor','reload page_text','reload pickpocketing_loot_template','reload prospecting_loot_template','reload quest_end_scripts','reload quest_mail_loot_template',
+'reload quest_start_scripts','reload quest_template','reload reference_loot_template','reload reputation_reward_rate','reload reputation_spillover_template','reload reserved_name','reload skill_discovery_template',
+'reload skill_extra_item_template','reload skill_fishing_base_level','reload skinning_loot_template','reload spell_affect','reload spell_disabled','reload spell_elixir','reload spell_enchant_proc_data',
+'reload spell_pet_auras','reload spell_proc_event','reload spell_required','reload spell_scripts','reload spell_script_target','reload spell_target_position','reload spell_threats',
+'reload trinity_string','reload unqueue_account','reload waypoint_scripts','reset all','reset honor','reset level','reset spells','reset stats','send money','server corpses','server exit',
+'server idlerestart','server idlerestart cancel','server idleshutdown','server idleshutdown cancel','server motd','server restart','server restart cancel','server rollshutdown','server set difftime',
+'server set loglevel','server set motd','server shutdown','server shutdown cancel','showhonor','ticket delete','vipadd','vipdel','wchange','wp','wp add','wp event','wp load','wp modify','wp reloadpath',
+'wp show','wp tofile','wp unload','guild givexp');
+UPDATE `command` SET `permission_mask`=16384 WHERE `name` IN('account change','account onlinelist','allowmove','crash','crash map','crash server','list item');
+
+DELETE FROM `command` WHERE `name` IN('mentoring','mentorlist','changeaccount');
+INSERT INTO `command` (`name`, `permission_mask`) VALUES 
+('mentoring', '256'),
+('mentorlist', '256'),
+('changeaccount', '8192');
+
