@@ -3175,12 +3175,15 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;            
             case 40447: // BT: Akama - Soul Channel
                 spellInfo->Effect[0] = 0;
-                break;            
-            case 24311: // Powerful Healing Ward
-                spellInfo->CastingTimeIndex = 14;
+                break;
+            case 43362: // Electrified Net
+                spellInfo->CastingTimeIndex = 1;
                 break;
             case 39297: // Omor the Unscarred Shadowbolt Prenerf?
                 spellInfo->CastingTimeIndex = 5;
+                break;
+            case 24311: // Powerful Healing Ward
+                spellInfo->CastingTimeIndex = 14;
                 break;
             case 24178: // Will of Hakkar
                 spellInfo->AttributesEx |= SPELL_ATTR_EX_CHANNELED_1;
@@ -3754,19 +3757,12 @@ void SpellMgr::LoadSpellCustomAttr()
             case 43364: // Tranquilizing Poison
                 spellInfo->AttributesEx4 |= SPELL_ATTR_EX4_DAMAGE_DOESNT_BREAK_AURAS;
                 break;
-            case 43362: // Electrified Net
-                spellInfo->CastingTimeIndex = 1;
-                break;
-            case 8064:
-                spellInfo->Mechanic = MECHANIC_SLEEP;
             case 38015: //Hydross beam visual
                 spellInfo->Attributes |= SPELL_ATTR_EX_NO_THREAT;
                 spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
                 break;
             case 37433: //Lurker spout knockback should not be resistable
                 spellInfo->AttributesEx4 |= SPELL_ATTR_EX4_IGNORE_RESISTANCES;
-            case 38258: //Strider fear should not be breakable by anti fear spells
-                spellInfo->Mechanic = MECHANIC_HORROR;
                 break;
             case 35181: //Al'ar prenerf divebomb
                 spellInfo->AttributesCu |= SPELL_ATTR_CU_SHARE_DAMAGE;
@@ -3819,7 +3815,16 @@ void SpellMgr::LoadSpellCustomAttr()
             case 51926:
             case 24732:
             case 24733:
-                spellInfo->Mechanic = 0;
+                spellInfo->Mechanic = MECHANIC_NONE;
+                break;
+            case 38258: //Strider fear should not be breakable by anti fear spells
+                spellInfo->Mechanic = MECHANIC_HORROR;
+                break;
+            case 8064: // Sleepy
+                spellInfo->Mechanic = MECHANIC_SLEEP;
+                break;
+            case 29425: // Moroes Gouge
+                spellInfo->Mechanic = MECHANIC_KNOCKOUT;
                 break;
             case 39280: //triggering unknown spells; no information available            
             case 37390:

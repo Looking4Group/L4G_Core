@@ -1040,9 +1040,9 @@ struct boss_julianneAI : public boss_operaAI
         RomuloGUID = 0;
         Phase = PHASE_JULIANNE;
 
-        BlindingPassionTimer = 30000;
-        DevotionTimer = 15000;
-        EternalAffectionTimer = 25000;
+        BlindingPassionTimer = urand(10000, 30000);
+        DevotionTimer = urand(20000, 30000);
+        EternalAffectionTimer = urand(10000, 20000);
         PowerfulAttractionTimer = 5000;
         SummonRomuloTimer = 10000;
         ResurrectTimer = 10000;
@@ -1119,7 +1119,7 @@ struct boss_romuloAI : public boss_operaAI
 
         BackwardLungeTimer = 15000;
         DaringTimer = 20000;
-        DeadlySwatheTimer = 25000;
+        DeadlySwatheTimer = urand(8000, 16000);
         PoisonThrustTimer = 10000;
         ResurrectTimer = 10000;
 
@@ -1388,7 +1388,7 @@ void boss_julianneAI::UpdateAI(const uint32 diff)
     if (BlindingPassionTimer < diff)
     {
         AddSpellToCast(SelectUnit(SELECT_TARGET_RANDOM, 0), SPELL_BLINDING_PASSION);
-        BlindingPassionTimer = 30000 + rand()%15000;
+        BlindingPassionTimer = urand(10000, 30000);
     }
     else
         BlindingPassionTimer -= diff;
@@ -1396,7 +1396,7 @@ void boss_julianneAI::UpdateAI(const uint32 diff)
     if (DevotionTimer < diff)
     {
         AddSpellToCast(m_creature, SPELL_DEVOTION);
-        DevotionTimer = 15000 + rand()%30000;
+        DevotionTimer = urand(20000, 30000);
     }
     else
         DevotionTimer -= diff;
@@ -1404,7 +1404,7 @@ void boss_julianneAI::UpdateAI(const uint32 diff)
     if (PowerfulAttractionTimer < diff)
     {
         AddSpellToCast(SelectUnit(SELECT_TARGET_RANDOM, 0), SPELL_POWERFUL_ATTRACTION);
-        PowerfulAttractionTimer = 5000 + rand()%25000;
+        PowerfulAttractionTimer = urand(20000, 25000);
     }
     else
         PowerfulAttractionTimer -= diff;
@@ -1421,7 +1421,7 @@ void boss_julianneAI::UpdateAI(const uint32 diff)
         else
             AddSpellToCast(m_creature, SPELL_ETERNAL_AFFECTION);
 
-        EternalAffectionTimer = 45000 + rand()%15000;
+        EternalAffectionTimer = urand(10000, 20000);
     }
     else
         EternalAffectionTimer -= diff;
