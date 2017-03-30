@@ -24,21 +24,56 @@ EndScriptData */
 #include "precompiled.h"
 #include "def_karazhan.h"
 
-#define SAY_AGGRO           -1532011
-#define SAY_SPECIAL_1       -1532012
-#define SAY_SPECIAL_2       -1532013
-#define SAY_KILL_1          -1532014
-#define SAY_KILL_2          -1532015
-#define SAY_KILL_3          -1532016
-#define SAY_DEATH           -1532017
+enum Moroes
+{
+    AGGRO_RANGE     = 25,
+    SAY_AGGRO       = -1532011,
+    SAY_SPECIAL_1   = -1532012,
+    SAY_SPECIAL_2   = -1532013,
+    SAY_KILL_1      = -1532014,
+    SAY_KILL_2      = -1532015,
+    SAY_KILL_3      = -1532016,
+    SAY_DEATH       = -1532017,
 
-#define SPELL_VANISH        29448
-#define SPELL_GARROTE       37066
-#define SPELL_BLIND         34694
-#define SPELL_GOUGE         29425
-#define SPELL_FRENZY        37023
+    SPELL_VANISH    = 29448,
+    SPELL_GARROTE   = 37066,
+    SPELL_BLIND     = 34694,
+    SPELL_GOUGE     = 29425,
+    SPELL_FRENZY    = 37023    
+};
 
 #define POS_Z               81.73
+
+enum Adds
+{
+    SPELL_MANABURN              = 29405,
+    SPELL_MINDFLY               = 29570,
+    SPELL_SWPAIN                = 34441,
+    SPELL_SHADOWFORM            = 29406,
+
+    SPELL_HAMMEROFJUSTICE       = 13005,
+    SPELL_JUDGEMENTOFCOMMAND    = 29386,
+    SPELL_SEALOFCOMMAND         = 29385,
+
+    SPELL_DISPELMAGIC           = 15090, //Self or other guest+Moroes
+    SPELL_GREATERHEAL           = 29564, //Self or other guest+Moroes
+    SPELL_HOLYFIRE              = 29563,
+    SPELL_PWSHIELD              = 29408,
+
+    SPELL_CLEANSE               = 29380, //Self or other guest+Moroes
+    SPELL_GREATERBLESSOFMIGHT   = 29381, //Self or other guest+Moroes
+    SPELL_HOLYLIGHT             = 29562, //Self or other guest+Moroes
+    SPELL_DIVINESHIELD          = 41367,
+
+    SPELL_HAMSTRING             = 9080,
+    SPELL_MORTALSTRIKE          = 29572,
+    SPELL_WHIRLWIND             = 29573,
+
+    SPELL_DISARM                = 8379,
+    SPELL_HEROICSTRIKE          = 29567,
+    SPELL_SHIELDBASH            = 11972,
+    SPELL_SHIELDWALL            = 29390
+};
 
 float Locations[4][3]=
 {
@@ -67,6 +102,7 @@ struct boss_moroesAI : public ScriptedAI
             AddId[i] = 0;
         }
         pInstance = (c->GetInstanceData());
+        m_creature->SetAggroRange(AGGRO_RANGE);
     }
 
     ScriptedInstance *pInstance;
@@ -88,8 +124,8 @@ struct boss_moroesAI : public ScriptedAI
     void Reset()
     {
         Vanish_Timer = 30000;
-        Blind_Timer = 35000;
-        Gouge_Timer = 23000;
+        Blind_Timer = urand(25000, 35000);
+        Gouge_Timer = urand(20000, 30000);
         Wait_Timer = 0;
         CheckAdds_Timer = 5000;
         Enrage = false;
@@ -327,11 +363,13 @@ struct boss_moroesAI : public ScriptedAI
             //Cast Vanish, then Garrote random victim
             if (Vanish_Timer < diff)
             {
+                Gouge_Timer += 12000;
+                Blind_Timer += 12000;
                 DoCast(m_creature, SPELL_VANISH);
                 m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                 InVanish = true;
                 Vanish_Timer = 30000;
-                Wait_Timer = 5000;
+                Wait_Timer = 11500; //Seems vanish spell lasts shorter prenerf ~8sec
             }
             else
                 Vanish_Timer -= diff;
@@ -339,7 +377,7 @@ struct boss_moroesAI : public ScriptedAI
             if(Gouge_Timer < diff)
             {
                 DoCast(m_creature->getVictim(), SPELL_GOUGE);
-                Gouge_Timer = 40000;
+                Gouge_Timer = urand(25000, 30000);
             }
             else
                 Gouge_Timer -= diff;
@@ -349,7 +387,7 @@ struct boss_moroesAI : public ScriptedAI
                 if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_BLIND), true))
                     DoCast(target, SPELL_BLIND);
 
-                Blind_Timer = 40000;
+                Blind_Timer = urand(30000, 35000);
             }
             else
                 Blind_Timer -= diff;
@@ -432,11 +470,6 @@ struct boss_moroes_guestAI : public ScriptedAI
     }
 };
 
-#define SPELL_MANABURN       29405
-#define SPELL_MINDFLY        29570
-#define SPELL_SWPAIN         34441
-#define SPELL_SHADOWFORM     29406
-
 struct boss_baroness_dorothea_millstipeAI : public boss_moroes_guestAI
 {
     //Shadow Priest
@@ -490,10 +523,6 @@ struct boss_baroness_dorothea_millstipeAI : public boss_moroes_guestAI
     }
 };
 
-#define SPELL_HAMMEROFJUSTICE       13005
-#define SPELL_JUDGEMENTOFCOMMAND    29386
-#define SPELL_SEALOFCOMMAND         29385
-
 struct boss_baron_rafe_dreugerAI : public boss_moroes_guestAI
 {
     //Retr Pally
@@ -539,11 +568,6 @@ struct boss_baron_rafe_dreugerAI : public boss_moroes_guestAI
         }else HammerOfJustice_Timer -= diff;
     }
 };
-
-#define SPELL_DISPELMAGIC           15090                   //Self or other guest+Moroes
-#define SPELL_GREATERHEAL           29564                   //Self or other guest+Moroes
-#define SPELL_HOLYFIRE              29563
-#define SPELL_PWSHIELD              29408
 
 struct boss_lady_catriona_von_indiAI : public boss_moroes_guestAI
 {
@@ -610,11 +634,6 @@ struct boss_lady_catriona_von_indiAI : public boss_moroes_guestAI
     }
 };
 
-#define SPELL_CLEANSE               29380                   //Self or other guest+Moroes
-#define SPELL_GREATERBLESSOFMIGHT   29381                   //Self or other guest+Moroes
-#define SPELL_HOLYLIGHT             29562                   //Self or other guest+Moroes
-#define SPELL_DIVINESHIELD          41367
-
 struct boss_lady_keira_berrybuckAI : public boss_moroes_guestAI
 {
     //Holy Pally
@@ -678,10 +697,6 @@ struct boss_lady_keira_berrybuckAI : public boss_moroes_guestAI
     }
 };
 
-#define SPELL_HAMSTRING         9080
-#define SPELL_MORTALSTRIKE      29572
-#define SPELL_WHIRLWIND         29573
-
 struct boss_lord_robin_darisAI : public boss_moroes_guestAI
 {
     //Arms Warr
@@ -726,11 +741,6 @@ struct boss_lord_robin_darisAI : public boss_moroes_guestAI
         }else WhirlWind_Timer -= diff;
     }
 };
-
-#define SPELL_DISARM            8379
-#define SPELL_HEROICSTRIKE      29567
-#define SPELL_SHIELDBASH        11972
-#define SPELL_SHIELDWALL        29390
 
 struct boss_lord_crispin_ferenceAI : public boss_moroes_guestAI
 {
