@@ -4435,3 +4435,7 @@ INSERT INTO `command` (`name`, `permission_mask`) VALUES
 ('mentorlist', '256'),
 ('changeaccount', '8192');
 
+-- Delete useless path for Inspector Tarem. He was just spamming the kneel emote for no reason
+DELETE FROM `waypoint_data` WHERE `id`=372;
+UPDATE `creature_addon` SET `path_id`=0 WHERE guid=18594;
+
