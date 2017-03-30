@@ -435,12 +435,14 @@ bool World::RemoveQueuedPlayer(WorldSession* sess)
             {
                 session->SetInQueue(false);
                 session->SendAuthWaitQue(0);
-                iter = m_QueuedPlayer.erase(iter);
+                m_QueuedPlayer.erase(iter);
+                break;
             }
         }
     }
 
     iter = m_QueuedPlayer.begin();
+    position = 1;
     for (; iter != m_QueuedPlayer.end(); ++iter, ++position)
     {
         (*iter)->SendAuthWaitQue(position);

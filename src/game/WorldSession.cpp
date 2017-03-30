@@ -161,11 +161,12 @@ char const* WorldSession::GetPlayerName() const
 
 uint32 WorldSession::GetAccountTeamId() const
 {
+    uint32 team;
     QueryResultAutoPtr resultRace = RealmDataDatabase.PQuery("SELECT race FROM characters WHERE account ='%u' LIMIT 1", GetAccountId());
 
     if (!resultRace)
     {
-        return TEAM_NEUTRAL;
+        team = TEAM_NEUTRAL;
     }
     else
     {
@@ -178,15 +179,21 @@ uint32 WorldSession::GetAccountTeamId() const
             case RACE_NIGHTELF:
             case RACE_GNOME:
             case RACE_DRAENEI:
-                return TEAM_ALLIANCE;
+                team = TEAM_ALLIANCE;
+                break;
             case RACE_ORC:
             case RACE_UNDEAD_PLAYER:
             case RACE_TAUREN:
             case RACE_TROLL:
             case RACE_BLOODELF:
-                return TEAM_HORDE;
+                team = TEAM_HORDE;
+                break;
+            default:
+                team = TEAM_NEUTRAL;
         }
     }
+
+    return team;
 }
 
 void WorldSession::SaveOpcodesDisableFlags()
