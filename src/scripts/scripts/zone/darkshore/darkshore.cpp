@@ -16,7 +16,7 @@
 
 /* ScriptData
 SDName: Darkshore
-SD%Complete: 0
+SD%Complete: 20
 SDComment: Placeholder Quest support 731, 945
 SDCategory: Darkshore
 EndScriptData */
@@ -24,10 +24,168 @@ EndScriptData */
 /* ContentData
 npc_prospector_remtravel
 npc_therylune
+npc_kerlonian
 EndContentData */
 
 #include "precompiled.h"
 #include "escort_ai.h"
+#include "follower_ai.h"
+
+/*####
+# npc_kerlonian
+####*/
+
+enum
+{
+    SAY_KER_START = -1000434,
+
+    EMOTE_KER_SLEEP_1 = -1000435,
+    EMOTE_KER_SLEEP_2 = -1000436,
+    EMOTE_KER_SLEEP_3 = -1000437,
+
+    SAY_KER_SLEEP_1 = -1000438,
+    SAY_KER_SLEEP_2 = -1000439,
+    SAY_KER_SLEEP_3 = -1000440,
+    SAY_KER_SLEEP_4 = -1000441,
+
+    EMOTE_KER_AWAKEN = -1000445,
+
+    SAY_KER_ALERT_1 = -1000442,
+    SAY_KER_ALERT_2 = -1000443,
+
+    SAY_KER_END = -1000444,
+
+    SPELL_BEAR_FORM = 18309,
+    SPELL_SLEEP_VISUAL = 25148,
+    SPELL_AWAKEN = 17536,
+
+    QUEST_SLEEPER_AWAKENED = 5321,
+
+    NPC_LILADRIS = 11219                     // attackers entries unknown
+};
+
+// TODO: make concept similar as "ringo" -escort. Find a way to run the scripted attacks, _if_ player are choosing road.
+struct npc_kerlonianAI : public FollowerAI
+{
+    npc_kerlonianAI(Creature* pCreature) : FollowerAI(pCreature) { Reset(); }
+
+    uint32 m_uiFallAsleepTimer;
+
+    void Reset() override
+    {
+        m_uiFallAsleepTimer = urand(10000, 45000);
+
+        if (!HasFollowState(STATE_FOLLOW_INPROGRESS))
+            DoCast(m_creature, SPELL_BEAR_FORM);
+    }
+
+    void MoveInLineOfSight(Unit* pWho) override
+    {
+        FollowerAI::MoveInLineOfSight(pWho);
+
+        if (!m_creature->getVictim() && !HasFollowState(STATE_FOLLOW_COMPLETE) && pWho->GetEntry() == NPC_LILADRIS)
+        {
+            if (m_creature->IsWithinDistInMap(pWho, INTERACTION_DISTANCE * 5))
+            {
+                if (Player* pPlayer = GetLeaderForFollower())
+                {
+                    if (pPlayer->GetQuestStatus(QUEST_SLEEPER_AWAKENED) == QUEST_STATUS_INCOMPLETE)
+                        pPlayer->GroupEventHappens(QUEST_SLEEPER_AWAKENED, m_creature);
+
+                    DoScriptText(SAY_KER_END, m_creature);
+                }
+
+                SetFollowComplete();
+            }
+        }
+    }
+
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    {
+        if (HasFollowState(STATE_FOLLOW_INPROGRESS | STATE_FOLLOW_PAUSED) && pSpell->Id == SPELL_AWAKEN)
+            ClearSleeping();
+    }
+
+    // Function to set npc to sleep mode
+    void SetSleeping()
+    {
+        SetFollowPaused(true);
+
+        switch (urand(0, 2))
+        {
+        case 0: DoScriptText(EMOTE_KER_SLEEP_1, m_creature); break;
+        case 1: DoScriptText(EMOTE_KER_SLEEP_2, m_creature); break;
+        case 2: DoScriptText(EMOTE_KER_SLEEP_3, m_creature); break;
+        }
+
+        switch (urand(0, 3))
+        {
+        case 0: DoScriptText(SAY_KER_SLEEP_1, m_creature); break;
+        case 1: DoScriptText(SAY_KER_SLEEP_2, m_creature); break;
+        case 2: DoScriptText(SAY_KER_SLEEP_3, m_creature); break;
+        case 3: DoScriptText(SAY_KER_SLEEP_4, m_creature); break;
+        }
+
+        DoCast(m_creature, SPELL_SLEEP_VISUAL);
+        m_creature->SetStandState(UNIT_STAND_STATE_SLEEP);
+    }
+
+    // Function to clear sleep mode
+    void ClearSleeping()
+    {
+        m_creature->RemoveAurasDueToSpell(SPELL_SLEEP_VISUAL);
+        m_creature->SetStandState(UNIT_STAND_STATE_STAND);
+
+        DoScriptText(EMOTE_KER_AWAKEN, m_creature);
+
+        SetFollowPaused(false);
+    }
+
+    void UpdateFollowerAI(const uint32 uiDiff) override
+    {
+        if (!UpdateVictim())
+        {
+            if (!HasFollowState(STATE_FOLLOW_INPROGRESS))
+                return;
+
+            if (!HasFollowState(STATE_FOLLOW_PAUSED))
+            {
+                if (m_uiFallAsleepTimer < uiDiff)
+                {
+                    SetSleeping();
+                    m_uiFallAsleepTimer = urand(25000, 90000);
+                }
+                else
+                    m_uiFallAsleepTimer -= uiDiff;
+            }
+
+            return;
+        }
+
+        DoMeleeAttackIfReady();
+    }
+};
+
+CreatureAI* GetAI_npc_kerlonian(Creature* pCreature)
+{
+    return new npc_kerlonianAI(pCreature);
+}
+
+bool QuestAccept_npc_kerlonian(Player* pPlayer, Creature* pCreature, const Quest* pQuest)
+{
+    if (pQuest->GetQuestId() == QUEST_SLEEPER_AWAKENED)
+    {
+        if (npc_kerlonianAI* pKerlonianAI = dynamic_cast<npc_kerlonianAI*>(pCreature->AI()))
+        {
+            pCreature->RemoveAurasDueToSpell(SPELL_BEAR_FORM);
+            pCreature->SetStandState(UNIT_STAND_STATE_STAND);
+            DoScriptText(SAY_KER_START, pCreature, pPlayer);
+            pKerlonianAI->StartFollow(pPlayer, FACTION_ESCORT_N_FRIEND_PASSIVE, pQuest);
+        }
+    }
+
+    return true;
+}
 
 /*######
 ## npc_prospector_remtravel
@@ -267,6 +425,12 @@ CreatureAI* GetAI_npc_therylune(Creature *_Creature)
 void AddSC_darkshore()
 {
     Script *newscript;
+
+    newscript = new Script;
+    newscript->Name = "npc_kerlonian";
+    newscript->GetAI = &GetAI_npc_kerlonian;
+    newscript->pQuestAcceptNPC = &QuestAccept_npc_kerlonian;
+    newscript->RegisterSelf();
 
     newscript = new Script;
     newscript->Name="npc_prospector_remtravel";
