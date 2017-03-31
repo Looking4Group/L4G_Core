@@ -411,3 +411,9 @@ INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`
 ('26908','63','-1729.44','-528.724','-13.8673','1'),
 ('26908','64','-1731.65','-542.165','-13.1692','1');
 
+SET @ENTRY := 3068; 
+UPDATE `creature_template` SET `AIName`='EventAI' WHERE `entry`=@ENTRY;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID`=@ENTRY;
+INSERT INTO `creature_ai_scripts` VALUES (@ENTRY*100+1,@ENTRY,4,0,100,0,0,0,0,0,11,6268,0,0,0,0,0,0,0,0,0,0,'Mazzranache - Cast Rushing Charge on Aggro');
+INSERT INTO `creature_ai_scripts` VALUES (@ENTRY*100+2,@ENTRY,9,0,100,1,0,5,10000,20000,11,24331,1,32,0,0,0,0,0,0,0,0,'Mazzranache - Cast Rake');
+INSERT INTO `creature_ai_scripts` VALUES (@ENTRY*100+2,@ENTRY,0,0,100,1,10000,20000,10000,20000,11,7272,1,0,0,0,0,0,0,0,0,0,'Mazzranache - Cast Dust Cloud');
