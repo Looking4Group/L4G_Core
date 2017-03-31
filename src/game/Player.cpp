@@ -2570,6 +2570,45 @@ void Player::GiveLevel(uint32 level)
     if (level == getLevel())
         return;
 
+    // Server first level 70 checks
+    if ((level == 70) && (!isGameMaster()))
+    {
+        QueryResultAutoPtr result = RealmDataDatabase.PQuery("SELECT entry FROM server_first WHERE entry = %u OR entry = %u", TEAM_ALLIANCE, TEAM_HORDE);
+        if (!result || (result->GetRowCount() == 1))
+        {
+            // Construct message
+            std::string msg = "Congratulations to ";
+            msg.append(GetName());
+            std::string guildName = sGuildMgr.GetGuildNameById(GetGuildId());
+            if (guildName != "")
+            {
+                msg.append(" from ");
+                msg.append(guildName);
+            }
+            msg.append(" for achieving level 70!");
+
+            if (result)
+            {
+                // Faction first
+                Field *fields = result->Fetch();
+                uint32 teamId = fields[0].GetUInt32();
+                if (GetTeamId() != teamId)
+                {
+                    sWorld.SendWorldText(GetTeamId() == TEAM_ALLIANCE ? LANG_ALLIANCE_FIRST : LANG_HORDE_FIRST, 0, msg.c_str());
+                }
+            }
+            else
+            {
+                // Server first
+                sWorld.SendWorldText(LANG_SERVER_FIRST, 0, msg.c_str());
+                sWorld.SendWorldText(GetTeamId() == TEAM_ALLIANCE ? LANG_ALLIANCE_FIRST : LANG_HORDE_FIRST, 0, msg.c_str());
+            }
+
+            // Update database
+            RealmDataDatabase.PExecute("INSERT INTO server_first (entry, character_id, guild_id) VALUES (%i, %i, %i)", GetTeamId(), GetGUIDLow(), GetGuildId());
+        }
+    }
+
     PlayerLevelInfo info;
     sObjectMgr.GetPlayerLevelInfo(getRace(),getClass(),level,&info);
 
