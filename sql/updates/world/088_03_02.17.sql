@@ -417,3 +417,13 @@ DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID`=@ENTRY;
 INSERT INTO `creature_ai_scripts` VALUES (@ENTRY*100+1,@ENTRY,4,0,100,0,0,0,0,0,11,6268,0,0,0,0,0,0,0,0,0,0,'Mazzranache - Cast Rushing Charge on Aggro');
 INSERT INTO `creature_ai_scripts` VALUES (@ENTRY*100+2,@ENTRY,9,0,100,1,0,5,10000,20000,11,24331,1,32,0,0,0,0,0,0,0,0,'Mazzranache - Cast Rake');
 INSERT INTO `creature_ai_scripts` VALUES (@ENTRY*100+2,@ENTRY,0,0,100,1,10000,20000,10000,20000,11,7272,1,0,0,0,0,0,0,0,0,0,'Mazzranache - Cast Dust Cloud');
+
+UPDATE `creature_template` SET `AIName`='EventAI' WHERE `entry` IN(15958,15656);
+DELETE FROM `creature_ai_scripts` WHERE  `id`=1595801;
+INSERT INTO `creature_ai_scripts` (`id`, `entryOrGUID`, `event_type`, `event_param1`, `event_param2`, `action1_type`, `comment`) VALUES 
+('1595801', '15958', '1', '20000', '20000', '41', 'Gharsul the Remorseless - Despawn after 20 sec OOC');
+
+DELETE FROM `creature_ai_scripts` WHERE  `id`=1565602;
+INSERT INTO `creature_ai_scripts` (`id`, `entryOrGUID`, `event_type`, `event_param1`, `event_param2`, `action1_type`, `comment`) VALUES 
+('1565602', '15656', '1', '20000', '20000', '41', 'Angershade - Despawn after 20 sec OOC');
+
