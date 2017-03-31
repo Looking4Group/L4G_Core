@@ -3111,6 +3111,13 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->EffectImplicitTargetA[0] = spellInfo->EffectImplicitTargetA[1] = TARGET_UNIT_CASTER;
                 spellInfo->EffectImplicitTargetB[0] = spellInfo->EffectImplicitTargetB[1] = 0;
                 break;
+            case 16191: // Mana Tide
+            case 25566: // Healing Stream R6
+            case 25569: // Mana Spring R5
+            case 25580: // Windfury Totem Effect R5
+            case 30708: // Totem of Wrath
+                spellInfo->AttributesEx |= SPELL_ATTR_EX_NO_THREAT;
+                break;
             /* WARLOCK CUSTOM ATTRIBUTES */
             case 27285:                     // Seed of Corruption - final boom damage
                 spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_CANT_TRIGGER_PROC;
@@ -3557,6 +3564,9 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 30207: // Magtheridon's creatures Shadow Grasp
                 spellInfo->StackAmount = 5;
+                break;
+            case 34645: // Watchkeeper Gargolmar Surge
+                spellInfo->EffectImplicitTargetB[1] = spellInfo->EffectImplicitTargetB[2] = TARGET_UNIT_NEARBY_ENEMY;
                 break;
             case 30641: // Watchkeeper Gargolmar Mortal Wound Prenerf
             case 36814:
