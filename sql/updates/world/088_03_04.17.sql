@@ -1123,4 +1123,94 @@ INSERT INTO `creature_formations` VALUES (79361, 79260, 2, 1.57, 2);
 
 UPDATE `gameobject_template` SET `data2` = 20 WHERE `entry` = 85563;
 
+DELETE FROM `npc_vendor` WHERE `item` = 765;
+INSERT INTO `npc_vendor` VALUES (1313, 765, 3, 9000, 0);
+INSERT INTO `npc_vendor` VALUES (3490, 765, 2, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (3548, 765, 2, 3600, 0);
+INSERT INTO `npc_vendor` VALUES (16224, 765, 3, 43200, 0);
+INSERT INTO `npc_vendor` VALUES (16641, 765, 3, 43200, 0);
+INSERT INTO `npc_vendor` VALUES (16705, 765, 3, 9000, 0);
+
+DELETE FROM `npc_vendor` WHERE `item` = 785;
+INSERT INTO `npc_vendor` VALUES (844, 785, 2, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (1302, 785, 1, 9000, 0);
+INSERT INTO `npc_vendor` VALUES (1313, 785, 2, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (3490, 785, 2, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (3548, 785, 1, 3600, 0);
+INSERT INTO `npc_vendor` VALUES (4083, 785, 2, 9000, 0);
+INSERT INTO `npc_vendor` VALUES (4878, 785, 1, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (8305, 785, 2, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (14846, 785, 4, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (16224, 785, 3, 43200, 0);
+INSERT INTO `npc_vendor` VALUES (16641, 785, 2, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (16705, 785, 2, 7200, 0);
+
+DELETE FROM `npc_vendor` WHERE `item` = 2447;
+INSERT INTO `npc_vendor` VALUES (1313, 2447, 2, 9000, 0);
+INSERT INTO `npc_vendor` VALUES (3490, 2447, 3, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (3548, 2447, 3, 3600, 0);
+INSERT INTO `npc_vendor` VALUES (16224, 2447, 3, 43200, 0);
+INSERT INTO `npc_vendor` VALUES (16641, 2447, 1, 9000, 0);
+INSERT INTO `npc_vendor` VALUES (16705, 2447, 2, 9000, 0);
+
+DELETE FROM `npc_vendor` WHERE `item` = 2449;
+INSERT INTO `npc_vendor` VALUES (844, 2449, 3, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (1302, 2449, 3, 9000, 0);
+INSERT INTO `npc_vendor` VALUES (1313, 2449, 3, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (3548, 2449, 1, 9000, 0);
+INSERT INTO `npc_vendor` VALUES (3490, 2449, 3, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (4083, 2449, 1, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (4878, 2449, 2, 9000, 0);
+INSERT INTO `npc_vendor` VALUES (8305, 2449, 3, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (14846, 2449, 4, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (16224, 2449, 3, 43200, 0);
+INSERT INTO `npc_vendor` VALUES (16641, 2449, 3, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (16705, 2449, 3, 7200, 0);
+
+DELETE FROM `npc_vendor` WHERE `item` = 2453;
+INSERT INTO `npc_vendor` VALUES (844, 2453, 2, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (1302, 2453, 2, 9000, 0);
+INSERT INTO `npc_vendor` VALUES (1313, 2453, 2, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (3490, 2453, 2, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (3548, 2453, 1, 9000, 0);
+INSERT INTO `npc_vendor` VALUES (4083, 2453, 2, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (4878, 2453, 1, 9000, 0);
+INSERT INTO `npc_vendor` VALUES (8305, 2453, 2, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (14846, 2453, 4, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (16224, 2453, 3, 43200, 0);
+INSERT INTO `npc_vendor` VALUES (16641, 2453, 2, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (16705, 2453, 2, 7200, 0);
+
+DELETE FROM `npc_vendor` WHERE `item` = 3355;
+INSERT INTO `npc_vendor` VALUES (844, 3355, 1, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (1302, 3355, 1, 9000, 0);
+INSERT INTO `npc_vendor` VALUES (1313, 3355, 1, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (4083, 3355, 1, 9000, 0);
+INSERT INTO `npc_vendor` VALUES (4878, 3355, 1, 9000, 0);
+INSERT INTO `npc_vendor` VALUES (8305, 3355, 1, 14400, 0);
+INSERT INTO `npc_vendor` VALUES (14846, 3355, 4, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (16641, 3355, 1, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (16705, 3355, 1, 7200, 0);
+
+DELETE FROM `npc_vendor` WHERE `item` = 3356;
+INSERT INTO `npc_vendor` VALUES (844, 3356, 1, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (1302, 3356, 1, 9000, 0);
+INSERT INTO `npc_vendor` VALUES (1313, 3356, 1, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (4083, 3356, 1, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (4878, 3356, 1, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (8305, 3356, 1, 14400, 0);
+INSERT INTO `npc_vendor` VALUES (14846, 3356, 4, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (16641, 3356, 1, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (16705, 3356, 1, 7200, 0);
+
+DELETE FROM `npc_vendor` WHERE `item` = 3357;
+INSERT INTO `npc_vendor` VALUES (844, 3357, 1, 86400, 0);
+INSERT INTO `npc_vendor` VALUES (1302, 3357, 1, 9000, 0);
+INSERT INTO `npc_vendor` VALUES (1313, 3357, 1, 9000, 0);
+INSERT INTO `npc_vendor` VALUES (4083, 3357, 1, 9000, 0);
+INSERT INTO `npc_vendor` VALUES (4878, 3357, 1, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (8305, 3357, 1, 9000, 0);
+INSERT INTO `npc_vendor` VALUES (14846, 3357, 4, 7200, 0);
+INSERT INTO `npc_vendor` VALUES (16641, 3357, 1, 43200, 0);
+INSERT INTO `npc_vendor` VALUES (16705, 3357, 1, 9000, 0);
 
