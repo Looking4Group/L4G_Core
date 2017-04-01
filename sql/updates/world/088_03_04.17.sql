@@ -785,3 +785,7 @@ DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 3752;
 INSERT INTO `creature_ai_scripts` VALUES (375201, 3752, 9, 0, 100, 1, 0, 5, 10000, 13000, 11, 6595, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Xavian Rogue - Cast Exploit Weakness');
 INSERT INTO `creature_ai_scripts` VALUES (375202, 3752, 2, 0, 100, 0, 15, 0, 0, 0, 11, 6925, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Xavian Rogue - Cast Gift of the Xavian at 15% HP');
 
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 3755;
+INSERT INTO `creature_ai_scripts` VALUES (375502, 3755, 9, 0, 100, 1, 0, 30, 2300, 6100, 11, 6223, 1, 32, 0, 0, 0, 0, 0, 0, 0, 0, 'Xavian Felsworn - Cast Corruption');
+INSERT INTO `creature_ai_scripts` VALUES (375503, 3755, 2, 0, 100, 0, 15, 0, 0, 0, 11, 6925, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Xavian Felsworn - Cast Gift of the Xavian at 15% HP');
+
