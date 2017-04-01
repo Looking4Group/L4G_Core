@@ -98,10 +98,7 @@ void TargetedMovementGeneratorMedium<T,D>::_setTargetLocation(T &owner)
 
     else if (owner.GetObjectGuid().IsPet())
          owner.clearUnitState(UNIT_STAT_IGNORE_PATHFINDING);
-
-    arrived = false;
-    owner.clearUnitState(UNIT_STAT_ALL_STATE);
-
+        
     _targetReached = false;
     static_cast<MovementGenerator*>(this)->_recalculateTravel = false;
 
