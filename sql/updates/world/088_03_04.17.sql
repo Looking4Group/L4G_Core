@@ -772,3 +772,5 @@ UPDATE `areatrigger_teleport` SET `target_position_x` = -327.5286, `target_posit
 -- STOP DAT dachshunds
 UPDATE `creature_template` SET `unit_flags` = `unit_flags`&~32768 WHERE `unit_flags`|32768;
 
+UPDATE `creature_template` SET `InhabitType` = 3 WHERE `entry` = 2231; -- 1
+
