@@ -105,8 +105,6 @@ void TargetedMovementGeneratorMedium<T,D>::_setTargetLocation(T &owner)
     arrived = false;
     owner.clearUnitState(UNIT_STAT_ALL_STATE);
 
-
-
     _targetReached = false;
     static_cast<MovementGenerator*>(this)->_recalculateTravel = false;
 
