@@ -159,41 +159,41 @@ char const* WorldSession::GetPlayerName() const
     return GetPlayer() ? GetPlayer()->GetName() : "<none>";
 }
 
-uint32 WorldSession::GetAccountTeamId() const
+uint32 WorldSession::GetAccountTeamId()
 {
-    uint32 team;
-    QueryResultAutoPtr resultRace = RealmDataDatabase.PQuery("SELECT race FROM characters WHERE account ='%u' LIMIT 1", GetAccountId());
-
-    if (!resultRace)
+    if (!m_accountTeamId)
     {
-        team = TEAM_NEUTRAL;
-    }
-    else
-    {
-        Field *fields = resultRace->Fetch();
-        
-        switch (fields[0].GetUInt8())
+        QueryResultAutoPtr resultRace = RealmDataDatabase.PQuery("SELECT race FROM characters WHERE account ='%u' LIMIT 1", GetAccountId());
+        if (!resultRace)
         {
-            case RACE_HUMAN:
-            case RACE_DWARF:
-            case RACE_NIGHTELF:
-            case RACE_GNOME:
-            case RACE_DRAENEI:
-                team = TEAM_ALLIANCE;
-                break;
-            case RACE_ORC:
-            case RACE_UNDEAD_PLAYER:
-            case RACE_TAUREN:
-            case RACE_TROLL:
-            case RACE_BLOODELF:
-                team = TEAM_HORDE;
-                break;
-            default:
-                team = TEAM_NEUTRAL;
+            m_accountTeamId = TEAM_NEUTRAL;
+        }
+        else
+        {
+            Field *fields = resultRace->Fetch();
+        
+            switch (fields[0].GetUInt8())
+            {
+                case RACE_HUMAN:
+                case RACE_DWARF:
+                case RACE_NIGHTELF:
+                case RACE_GNOME:
+                case RACE_DRAENEI:
+                    m_accountTeamId = TEAM_ALLIANCE;
+                    break;
+                case RACE_ORC:
+                case RACE_UNDEAD_PLAYER:
+                case RACE_TAUREN:
+                case RACE_TROLL:
+                case RACE_BLOODELF:
+                    m_accountTeamId = TEAM_HORDE;
+                    break;
+                default:
+                    m_accountTeamId = TEAM_NEUTRAL;
+            }
         }
     }
-
-    return team;
+    return m_accountTeamId;
 }
 
 void WorldSession::SaveOpcodesDisableFlags()
