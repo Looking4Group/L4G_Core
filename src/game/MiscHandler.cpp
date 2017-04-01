@@ -53,6 +53,8 @@
 #include "Guild.h"
 #include "TicketMgr.h"
 
+#define SPAMREPORT_COOLDOWN 6
+
 void WorldSession::HandleRepopRequestOpcode(WorldPacket & /*recv_data*/)
 {
     sLog.outDebug("WORLD: Recvd CMSG_REPOP_REQUEST Message");
@@ -1381,6 +1383,12 @@ void WorldSession::HandleReportSpamOpcode(WorldPacket & recv_data)
     sLog.outDebug("WORLD: CMSG_REPORT_SPAM");
     recv_data.hexlike();
 
+    Player *player = GetPlayer();
+    if (!player || player->HasSpellCooldown(SPAMREPORT_COOLDOWN))
+        return;
+
+    player->AddSpellCooldown(SPAMREPORT_COOLDOWN, 0, time(NULL) + 3);
+
     uint8 spam_type;                                        // 0 - mail, 1 - chat
     uint64 spammer_guid;
 
@@ -1471,7 +1479,7 @@ void WorldSession::HandleReportSpamOpcode(WorldPacket & recv_data)
         break;
     }
     }
-
+    
     uint32 mail_id = 0;
     std::string mail_subject;
     std::string mail_message;
