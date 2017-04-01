@@ -781,3 +781,7 @@ UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 3 WHERE `mincountOrR
 UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 0.20 WHERE `mincountOrRef` IN (-24004,-24006,-24008,-24010,-24012,-24014,-24017,-24019,-24021,-24026,-24028,-24030,-24032,-24034,-24038,-24040,-24042,-24044,-24046,-24049,-24051,-24053,-24055,-24057,-24061,-24063,-24067,-24069); -- rare 0.5
 UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 0.05 WHERE `mincountOrRef` IN (-24015,-24079,-24080,-24081,-24082,-24083,-24084,-24085,-24086,-24087,-24088,-24089,-24090,-24091); -- epic 0,1
 
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 3752;
+INSERT INTO `creature_ai_scripts` VALUES (375201, 3752, 9, 0, 100, 1, 0, 5, 10000, 13000, 11, 6595, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Xavian Rogue - Cast Exploit Weakness');
+INSERT INTO `creature_ai_scripts` VALUES (375202, 3752, 2, 0, 100, 0, 15, 0, 0, 0, 11, 6925, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Xavian Rogue - Cast Gift of the Xavian at 15% HP');
+
