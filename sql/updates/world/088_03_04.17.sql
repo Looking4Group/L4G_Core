@@ -1121,3 +1121,6 @@ INSERT INTO `creature_formations` VALUES (79168, 79165, 100, 360, 2);
 INSERT INTO `creature_formations` VALUES (79361, 79361, 100, 360, 2);
 INSERT INTO `creature_formations` VALUES (79361, 79260, 2, 1.57, 2);
 
+UPDATE `gameobject_template` SET `data2` = 20 WHERE `entry` = 85563;
+
+
