@@ -774,3 +774,6 @@ UPDATE `creature_template` SET `unit_flags` = `unit_flags`&~32768 WHERE `unit_fl
 
 UPDATE `creature_template` SET `InhabitType` = 3 WHERE `entry` = 2231; -- 1
 
+-- Fix Chest Spawn
+UPDATE `gameobject` SET `spawntimesecs` = 7200 WHERE `id` IN (1765,3715,4149,74448,75293,75298,75300,106318,106319,111095,131978);
+
