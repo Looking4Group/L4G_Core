@@ -113,6 +113,10 @@ bool WaypointMovementGenerator<Creature>::tryToMove(Creature &creature)
 
     const WaypointData *node = _path->at(_currentNode);
 
+    PathFinder *pFinder = new PathFinder(&creature);
+    bool result = pFinder->calculate(node->x, node->y, node->z);
+    _pathFinding = (result && !(pFinder->getPathType() & PATHFIND_NOPATH));
+
     Movement::MoveSplineInit init(creature);
     init.MoveTo(node->x, node->y, node->z, _pathFinding && node->moveType != M_FLY);
 
