@@ -777,3 +777,7 @@ UPDATE `creature_template` SET `InhabitType` = 3 WHERE `entry` = 2231; -- 1
 -- Fix Chest Spawn
 UPDATE `gameobject` SET `spawntimesecs` = 7200 WHERE `id` IN (1765,3715,4149,74448,75293,75298,75300,106318,106319,111095,131978);
 
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 3 WHERE `mincountOrRef` IN (-24000,-24001,-24002,-24024,-24036,-24047,-24058,-24070,-24071,-24072,-24073); -- trash 3
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 0.20 WHERE `mincountOrRef` IN (-24004,-24006,-24008,-24010,-24012,-24014,-24017,-24019,-24021,-24026,-24028,-24030,-24032,-24034,-24038,-24040,-24042,-24044,-24046,-24049,-24051,-24053,-24055,-24057,-24061,-24063,-24067,-24069); -- rare 0.5
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 0.05 WHERE `mincountOrRef` IN (-24015,-24079,-24080,-24081,-24082,-24083,-24084,-24085,-24086,-24087,-24088,-24089,-24090,-24091); -- epic 0,1
+
