@@ -986,6 +986,9 @@ void World::LoadConfigSettings(bool reload)
     m_configs[CONFIG_CHATFLOOD_CHATTYPE] = sConfig.GetIntDefault("ChatFlood.ChatType", 159);
     m_configs[CONFIG_CHATFLOOD_EMOTE_COUNT] = sConfig.GetIntDefault("ChatFlood.EmoteCount", 5);
     m_configs[CONFIG_CHATFLOOD_EMOTE_DELAY] = sConfig.GetIntDefault("ChatFlood.EmoteDelay", 5);
+    m_configs[CONFIG_SPAMREPORT_TICKETS] = sConfig.GetIntDefault("SpamReportTickets", 1);
+    m_configs[CONFIG_SPAMREPORT_TICKET_THRESHOLD_MAIL] = sConfig.GetIntDefault("SpamReportTicketThresholdMail", 3);
+    m_configs[CONFIG_SPAMREPORT_TICKET_THRESHOLD_CHAT] = sConfig.GetIntDefault("SpamReportTicketThresholdChat", 5);
 
     m_configs[CONFIG_EVENT_ANNOUNCE] = sConfig.GetIntDefault("Event.Announce",0);
 
@@ -1256,6 +1259,9 @@ void World::SetInitialWorldSettings()
 
     ///- Remove the bones after a restart
     RealmDataDatabase.PExecute("DELETE FROM corpse WHERE corpse_type = '0'");
+
+    ///- Remove all spam reports on startup
+    RealmDataDatabase.PExecute("TRUNCATE TABLE character_reports");
 
     ///- Load the DBC files
     sLog.outString("Initialize data stores...");
