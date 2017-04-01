@@ -83,25 +83,24 @@ void TargetedMovementGeneratorMedium<T,D>::_setTargetLocation(T &owner)
     // allow pets following their master to cheat while generating paths
     bool forceDest = (owner.GetObjectGuid().IsPet() && owner.hasUnitState(UNIT_STAT_FOLLOW));
     bool result = _path->calculate(x, y, z, forceDest);
-    if (_path->getPathType() & PATHFIND_NOPATH)
+    Movement::MoveSplineInit init(owner);
+
+    if (!result || _path->getPathType() & PATHFIND_NOPATH)
     {
-        if (owner.GetObjectGuid().IsPet())
-        {
-            _path->BuildShortcut();
-            owner.addUnitState(UNIT_STAT_IGNORE_PATHFINDING);
-            _path = new PathFinder(&owner);
-        }
+        init.MoveTo(x, y, z);
+        init.SetWalk(false);
+        init.Launch();
+
+        _targetReached = false;
+        owner.clearUnitState(UNIT_STAT_ALL_STATE);
+        return;
     }
+
     else if (owner.GetObjectGuid().IsPet())
          owner.clearUnitState(UNIT_STAT_IGNORE_PATHFINDING);
-
-    if (!result)
-        return;
-
-    _targetReached = false;
+    
     static_cast<MovementGenerator*>(this)->_recalculateTravel = false;
 
-    Movement::MoveSplineInit init(owner);
     init.MovebyPath(_path->getPath());
     init.SetWalk(((D*)this)->EnableWalking(owner));
     init.Launch();
