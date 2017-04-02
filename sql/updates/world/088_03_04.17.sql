@@ -163,9 +163,6 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('306601','3066','2','0','100','0','15','0','0','0','25','0','0','0','1','-47','0','0','0','0','0','0','Narm Skychaser - Flee at 15% HP'),
 -- Pyall Silentstride      
 ('306701','3067','2','0','100','0','15','0','0','0','25','0','0','0','1','-47','0','0','0','0','0','0','Pyall Silentstride - Flee at 15% HP'),
--- Mazzranache      
-('306801','3068','11','0','100','0','0','0','0','0','11','10022','0','1','0','0','0','0','0','0','0','0','Mazzranache - Cast Deadly Poison on Spawn'),
-('306802','3068','9','0','100','0','5','20','0','0','11','6268','0','0','0','0','0','0','0','0','0','0','Mazzranache - Cast Rushing Charge'),
 -- Chaw Stronghide      
 ('306901','3069','2','0','100','0','15','0','0','0','25','0','0','0','1','-47','0','0','0','0','0','0','Chaw Stronghide - Flee at 15% HP'),
 -- Kawnie Softbreeze      
@@ -416,7 +413,7 @@ UPDATE `creature_template` SET `AIName`='EventAI' WHERE `entry`=@ENTRY;
 DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID`=@ENTRY;
 INSERT INTO `creature_ai_scripts` VALUES (@ENTRY*100+1,@ENTRY,4,0,100,0,0,0,0,0,11,6268,0,0,0,0,0,0,0,0,0,0,'Mazzranache - Cast Rushing Charge on Aggro');
 INSERT INTO `creature_ai_scripts` VALUES (@ENTRY*100+2,@ENTRY,9,0,100,1,0,5,10000,20000,11,24331,1,32,0,0,0,0,0,0,0,0,'Mazzranache - Cast Rake');
-INSERT INTO `creature_ai_scripts` VALUES (@ENTRY*100+2,@ENTRY,0,0,100,1,10000,20000,10000,20000,11,7272,1,0,0,0,0,0,0,0,0,0,'Mazzranache - Cast Dust Cloud');
+INSERT INTO `creature_ai_scripts` VALUES (@ENTRY*100+3,@ENTRY,0,0,100,1,10000,20000,10000,20000,11,7272,1,0,0,0,0,0,0,0,0,0,'Mazzranache - Cast Dust Cloud');
 
 UPDATE `creature_template` SET `AIName`='EventAI' WHERE `entry` IN(15958,15656);
 DELETE FROM `creature_ai_scripts` WHERE  `id`=1595801;
