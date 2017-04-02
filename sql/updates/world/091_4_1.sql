@@ -392,3 +392,87 @@ DELETE FROM `creature` WHERE `guid` IN (140698,140699,140700,4538452);
 DELETE FROM `waypoint_data` WHERE `id` = 8989;
 UPDATE `creature_template_addon` SET `path_id` = 0 WHERE `entry` = 18733;
 
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 1940;
+INSERT INTO `creature_ai_scripts` VALUES (194001, 1940, 0, 0, 75, 1, 5000, 5000, 20000, 40000, 11, 3256, 4, 32, 0, 0, 0, 0, 0, 0, 0, 0, 'Rot Hide Plague Weaver - Cast Plague Cloud');
+INSERT INTO `creature_ai_scripts` VALUES (194002, 1940, 0, 0, 40, 0, 0, 0, 2500, 2500, 11, 3237, 1, 32, 0, 0, 0, 0, 0, 0, 0, 0, 'Rot Hide Plague Weaver - Cast Curse of Thule');
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 1868;
+INSERT INTO `creature_ai_scripts` VALUES (186801, 1868, 2, 0, 85, 1, 65, 0, 22000, 22000, 11, 7290, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Ravenclaw Servant - Cast Soul Siphon');
+INSERT INTO `creature_ai_scripts` VALUES (186802, 1868, 0, 0, 85, 1, 4000, 4000, 24000, 28000, 11, 980, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Ravenclaw Servant - Cast Curse of Agony');
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 1947;
+INSERT INTO `creature_ai_scripts` VALUES (194701, 1947, 0, 0, 85, 1, 5000, 5000, 20000, 30000, 11, 7655, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Thule Ravenclaw - Cast Hex of Ravenclaw');
+INSERT INTO `creature_ai_scripts` VALUES (194702, 1947, 0, 0, 85, 1, 1000, 1000, 7000, 12000, 11, 20800, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Thule Ravenclaw - Cast Immolate');
+INSERT INTO `creature_ai_scripts` VALUES (194703, 1947, 1, 0, 100, 0, 0, 0, 1000, 1000, 11, 11939, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Thule Ravenclaw - Reset Summon Imp');
+INSERT INTO `creature_ai_scripts` VALUES (194704, 1947, 1, 0, 100, 1, 1000, 1000, 1800000, 1800000, 11, 13787, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Thule Ravenclaw - Cast Demon Armor on Spawn');
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 2255;
+INSERT INTO `creature_ai_scripts` VALUES (225501, 2255, 1, 0, 100, 0, 0, 0, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Crushridge Mage - Prevent Combat Movement on Spawn');
+INSERT INTO `creature_ai_scripts` VALUES (225502, 2255, 4, 0, 10, 0, 0, 0, 0, 0, 1, -359, -360, -361, 0, 0, 0, 0, 0, 0, 0, 0, 'Crushridge Mage - Random Say on Aggro');
+INSERT INTO `creature_ai_scripts` VALUES (225503, 2255, 4, 0, 100, 0, 0, 0, 0, 0, 11, 9672, 1, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Crushridge Mage - Cast Frostbolt and Set Phase 1 on Aggro');
+INSERT INTO `creature_ai_scripts` VALUES (225504, 2255, 9, 5, 100, 1, 0, 40, 3500, 4800, 11, 9672, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Crushridge Mage - Cast Frostbolt (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (225505, 2255, 3, 5, 100, 0, 15, 0, 0, 0, 21, 1, 0, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Crushridge Mage - Start Combat Movement and Set Phase 2 when Mana is at 15% (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (225506, 2255, 9, 5, 100, 0, 35, 80, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Crushridge Mage - Start Combat Movement at 35 Yards (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (225507, 2255, 9, 5, 100, 0, 5, 15, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Crushridge Mage - Prevent Combat Movement at 15 Yards (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (225508, 2255, 9, 5, 100, 0, 0, 5, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Crushridge Mage - Start Combat Movement Below 5 Yards');
+INSERT INTO `creature_ai_scripts` VALUES (225509, 2255, 3, 3, 100, 1, 100, 30, 100, 100, 23, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Crushridge Mage - Set Phase 1 when Mana is above 30% (Phase 2)');
+INSERT INTO `creature_ai_scripts` VALUES (225510, 2255, 0, 0, 100, 1, 5300, 7400, 11300, 21200, 11, 6742, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Crushridge Mage - Cast Bloodlust');
+INSERT INTO `creature_ai_scripts` VALUES (225511, 2255, 7, 0, 100, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Crushridge Mage - Set Phase to 0 on Evade');
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 2283;
+INSERT INTO `creature_ai_scripts` VALUES (228301, 2283, 0, 0, 85, 1, 3000, 3000, 9000, 12000, 11, 970, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Ravenclaw Regent - Cast Shadow Word: Pain 3');
+INSERT INTO `creature_ai_scripts` VALUES (228302, 2283, 0, 0, 85, 1, 6000, 6000, 12000, 18000, 11, 7645, 5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Ravenclaw Regent - Cast Dominate Mind');
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 2319;
+INSERT INTO `creature_ai_scripts` VALUES (231901, 2319, 1, 0, 100, 0, 0, 0, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Syndicate Wizard - Prevent Combat Movement on Spawn');
+INSERT INTO `creature_ai_scripts` VALUES (231902, 2319, 1, 0, 100, 1, 1000, 1000, 1800000, 1800000, 11, 12544, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Syndicate Wizard - Cast Frost Armor on Spawn');
+INSERT INTO `creature_ai_scripts` VALUES (231903, 2319, 4, 0, 100, 0, 0, 0, 0, 0, 11, 20815, 1, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Syndicate Wizard - Cast Fireball and Set Phase 1 on Aggro');
+INSERT INTO `creature_ai_scripts` VALUES (231904, 2319, 9, 5, 100, 1, 0, 40, 3500, 5400, 11, 20815, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Syndicate Wizard - Cast Fireball (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (231905, 2319, 3, 5, 100, 0, 15, 0, 0, 0, 21, 1, 0, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Syndicate Wizard - Start Combat Movement and Set Phase 2 when Mana is at 15% (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (231906, 2319, 9, 5, 100, 0, 35, 80, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Syndicate Wizard - Start Combat Movement at 35 Yards (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (231907, 2319, 9, 5, 100, 0, 5, 15, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Syndicate Wizard - Prevent Combat Movement at 15 Yards (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (231908, 2319, 9, 5, 100, 0, 0, 5, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Syndicate Wizard - Start Combat Movement Below 5 Yards');
+INSERT INTO `creature_ai_scripts` VALUES (231909, 2319, 3, 3, 100, 1, 100, 30, 100, 100, 23, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Syndicate Wizard - Set Phase 1 when Mana is above 30% (Phase 2)');
+INSERT INTO `creature_ai_scripts` VALUES (231910, 2319, 0, 0, 100, 1, 5000, 9000, 25000, 35000, 11, 12824, 5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Syndicate Wizard - Cast Polymorph');
+INSERT INTO `creature_ai_scripts` VALUES (231911, 2319, 7, 0, 100, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Syndicate Wizard - Set Phase to 0 on Evade');
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 16905;
+INSERT INTO `creature_ai_scripts` VALUES (1690501, 16905, 1, 0, 100, 0, 0, 0, 0, 0, 21, 1, 0, 0, 22, 1, 0, 0, 0, 0, 0, 0, 'Unyielding Sorcerer - Prevent Combat Movement and Set Phase 1 on OOC');
+INSERT INTO `creature_ai_scripts` VALUES (1690502, 16905, 4, 0, 100, 0, 0, 0, 0, 0, 11, 9053, 1, 0, 22, 1, 0, 0, 0, 0, 0, 0, 'Unyielding Sorcerer - Cast Fireball and Set Phase 1 on Aggro');
+INSERT INTO `creature_ai_scripts` VALUES (1690503, 16905, 9, 13, 100, 1, 0, 40, 3000, 3800, 11, 9053, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Unyielding Sorcerer - Cast Fireball (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (1690504, 16905, 3, 13, 100, 0, 15, 0, 0, 0, 21, 1, 0, 0, 22, 2, 0, 0, 0, 0, 0, 0, 'Unyielding Sorcerer - Start Combat Movement and Set Phase 2 when Mana is at 15% (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (1690505, 16905, 9, 13, 100, 1, 35, 80, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Unyielding Sorcerer - Start Combat Movement at 35 Yards (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (1690506, 16905, 9, 13, 100, 1, 5, 15, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Unyielding Sorcerer - Prevent Combat Movement at 15 Yards (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (1690507, 16905, 9, 13, 100, 1, 0, 5, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Unyielding Sorcerer - Start Combat Movement Below 5 Yards');
+INSERT INTO `creature_ai_scripts` VALUES (1690508, 16905, 0, 13, 100, 1, 5000, 9000, 12000, 15000, 11, 11829, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Unyielding Sorcerer - Cast Flamestrike (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (1690509, 16905, 3, 11, 100, 1, 100, 30, 1000, 1000, 23, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Unyielding Sorcerer - Set Phase 1 when Mana is above 30% (Phase 2)');
+INSERT INTO `creature_ai_scripts` VALUES (1690510, 16905, 2, 0, 100, 0, 15, 0, 0, 0, 11, 11831, 0, 1, 22, 3, 0, 0, 0, 0, 0, 0, 'Unyielding Sorcerer - Cast Frost Nova and Set Phase 3 at 15% HP');
+INSERT INTO `creature_ai_scripts` VALUES (1690511, 16905, 2, 7, 100, 0, 15, 0, 0, 0, 21, 1, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 'Unyielding Sorcerer - Start Combat Movement and Flee at 15% HP (Phase 3)');
+INSERT INTO `creature_ai_scripts` VALUES (1690512, 16905, 7, 0, 100, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Unyielding Sorcerer - Set Phase to 0 on Evade');
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 19705;
+INSERT INTO `creature_ai_scripts` VALUES (1970501, 19705, 1, 0, 100, 0, 0, 0, 0, 0, 21, 1, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 'Master Daellis Dawnstrike - Prevent Combat Movement and Prevent Melee on Spawn');
+INSERT INTO `creature_ai_scripts` VALUES (1970502, 19705, 4, 0, 100, 0, 0, 0, 0, 0, 11, 6660, 1, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Master Daellis Dawnstrike - Cast Shoot and Set Phase 1 on Aggro');
+INSERT INTO `creature_ai_scripts` VALUES (1970503, 19705, 9, 5, 100, 1, 5, 30, 2300, 3900, 11, 6660, 1, 0, 40, 2, 0, 0, 0, 0, 0, 0, 'Master Daellis Dawnstrike - Cast Shoot and Set Ranged Weapon Model (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (1970504, 19705, 9, 5, 100, 1, 0, 50, 9000, 12000, 11, 35964, 1, 1, 40, 2, 0, 0, 0, 0, 0, 0, 'Master Daellis Dawnstrike - Cast Frost Arrow and Set Ranged Weapon Model (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (1970505, 19705, 9, 5, 100, 1, 25, 80, 0, 0, 21, 1, 1, 0, 20, 1, 0, 0, 0, 0, 0, 0, 'Master Daellis Dawnstrike - Start Combat Movement and Start Melee at 25 Yards (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (1970506, 19705, 9, 5, 100, 1, 0, 5, 0, 0, 21, 1, 0, 0, 40, 1, 0, 0, 20, 1, 0, 0, 'Master Daellis Dawnstrike - Start Combat Movement and Set Melee Weapon Model and Start Melee Below 5 Yards (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (1970507, 19705, 9, 5, 100, 1, 5, 15, 0, 0, 21, 1, 1, 0, 20, 0, 0, 0, 0, 0, 0, 0, 'Master Daellis Dawnstrike - Prevent Combat Movement and Prevent Melee at 15 Yards (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (1970508, 19705, 9, 0, 100, 1, 0, 5, 16000, 21000, 11, 35963, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Master Daellis Dawnstrike - Cast Improved Wing Clip');
+INSERT INTO `creature_ai_scripts` VALUES (1970509, 19705, 2, 0, 100, 0, 15, 0, 0, 0, 23, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Master Daellis Dawnstrike - Set Phase 2 at 15% HP');
+INSERT INTO `creature_ai_scripts` VALUES (1970510, 19705, 2, 3, 100, 0, 15, 0, 0, 0, 21, 1, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 'Master Daellis Dawnstrike - Start Combat Movement and Flee at 15% HP (Phase 2)');
+INSERT INTO `creature_ai_scripts` VALUES (1970511, 19705, 7, 0, 100, 0, 0, 0, 0, 0, 22, 0, 0, 0, 40, 1, 0, 0, 0, 0, 0, 0, 'Master Daellis Dawnstrike - Set Phase to 0 and Set Melee Weapon Model on Evade');
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 19707;
+INSERT INTO `creature_ai_scripts` VALUES (1970701, 19707, 1, 0, 100, 0, 0, 0, 0, 0, 21, 1, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0, 'Sunfury Archer - Prevent Combat Movement and Prevent Melee on Spawn');
+INSERT INTO `creature_ai_scripts` VALUES (1970702, 19707, 4, 0, 100, 0, 0, 0, 0, 0, 11, 6660, 1, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Sunfury Archer - Cast Shoot and Set Phase 1 on Aggro');
+INSERT INTO `creature_ai_scripts` VALUES (1970703, 19707, 9, 5, 100, 1, 5, 30, 2300, 3900, 11, 6660, 1, 0, 40, 2, 0, 0, 0, 0, 0, 0, 'Sunfury Archer - Cast Shoot and Set Ranged Weapon Model (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (1970704, 19707, 9, 5, 100, 1, 10, 40, 9000, 12000, 11, 37847, 1, 1, 40, 2, 0, 0, 0, 0, 0, 0, 'Sunfury Archer - Cast Immolation Arrow and Set Ranged Weapon Model (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (1970705, 19707, 9, 5, 100, 1, 25, 80, 0, 0, 21, 1, 1, 0, 20, 1, 0, 0, 0, 0, 0, 0, 'Sunfury Archer - Start Combat Movement and Start Melee at 25 Yards (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (1970706, 19707, 9, 5, 100, 1, 0, 5, 0, 0, 21, 1, 0, 0, 40, 1, 0, 0, 20, 1, 0, 0, 'Sunfury Archer - Start Combat Movement and Set Melee Weapon Model and Start Melee Below 5 Yards (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (1970707, 19707, 9, 5, 100, 1, 5, 15, 0, 0, 21, 1, 1, 0, 20, 0, 0, 0, 0, 0, 0, 0, 'Sunfury Archer - Prevent Combat Movement and Prevent Melee at 15 Yards (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (1970708, 19707, 9, 0, 100, 1, 0, 20, 12000, 15000, 11, 12024, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Sunfury Archer - Cast Net');
+INSERT INTO `creature_ai_scripts` VALUES (1970709, 19707, 2, 0, 100, 0, 15, 0, 0, 0, 23, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Sunfury Archer - Set Phase 2 at 15% HP');
+INSERT INTO `creature_ai_scripts` VALUES (1970710, 19707, 2, 3, 100, 0, 15, 0, 0, 0, 21, 1, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 'Sunfury Archer - Start Combat Movement and Flee at 15% HP (Phase 2)');
+INSERT INTO `creature_ai_scripts` VALUES (1970711, 19707, 7, 0, 100, 0, 0, 0, 0, 0, 22, 0, 0, 0, 40, 1, 0, 0, 0, 0, 0, 0, 'Sunfury Archer - Set Phase to 0 and Set Melee Weapon Model on Evade');
+
