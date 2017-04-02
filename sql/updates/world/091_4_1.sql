@@ -513,3 +513,20 @@ UPDATE `creature` SET `spawndist`=3 WHERE `guid`=44499;
 -- Increase Spider Speed from too low values
 UPDATE `creature_template` SET `speed` = 0.90 WHERE `entry` IN (30,43,1986);
 
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 5617;
+INSERT INTO `creature_ai_scripts` VALUES
+('561701','5617','1','0','100','0','1000','1000','0','0','11','12746','0','0','0','0','0','0','0','0','0','0','Wastewander Shadow Mage - Summon Voidwalker on Spawn'),
+('561702','5617','4','0','100','0','0','0','0','0','22','0','0','0','0','0','0','0','0','0','0','0','Wastewander Shadow Mage - Set Phase 1 on Aggro'),
+('561703','5617','9','13','100','1','8','40','3000','4000','11','20825','1','0','0','0','0','0','0','0','0','0','Wastewander Shadow Mage - Cast Shadow Bolt (Phase 1)'),
+('561706','5617','3','13','100','0','7','0','0','0','22','2','0','0','0','0','0','0','0','0','0','0','Wastewander Shadow Mage - Set Phase 2 when Mana is at 7% (Phase 1)'),
+('561707','5617','3','11','100','1','100','15','1000','1000','22','1','0','0','0','0','0','0','0','0','0','0','Wastewander Shadow Mage - Set Phase 1 when Mana is above 15% (Phase 2)'),
+('561708','5617','0','0','100','1','7600','12800','14600','30200','11','20826','4','0','0','0','0','0','0','0','0','0','Wastewander Shadow Mage - Cast Immolate'),
+('561709','5617','2','0','100','0','15','0','0','0','22','3','0','0','0','0','0','0','0','0','0','0','Wastewander Shadow Mage - Set Phase 3 at 15% HP'),
+('561710','5617','2','7','100','0','15','0','0','0','25','0','0','0','1','-47','0','0','0','0','0','0','Wastewander Shadow Mage - Flee at 15% HP (Phase 3)'),
+('561711','5617','7','0','100','0','0','0','0','0','22','0','0','0','0','0','0','0','0','0','0','0','Wastewander Shadow Mage - Set Phase to 0 on Evade');
+
+UPDATE `creature_template` SET `AIName` = 'EventAI' WHERE `entry` = 8996;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 8996;
+INSERT INTO `creature_ai_scripts` VALUES
+('899601','8996','7','0','100','6','0','0','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Voidwalker Minion - Despawn on Evade');
+
