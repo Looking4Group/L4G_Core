@@ -510,3 +510,6 @@ INSERT INTO `game_event_creature` VALUES
 
 UPDATE `creature` SET `spawndist`=3 WHERE `guid`=44499;
 
+-- Increase Spider Speed from too low values
+UPDATE `creature_template` SET `speed` = 0.90 WHERE `entry` IN (30,43,1986);
+
