@@ -490,3 +490,23 @@ DELETE FROM `waypoint_data` WHERE `id` IN (79360, 79361);
 
 UPDATE `creature_template` SET `npcflag` = 3 WHERE `entry` = 239; -- 2
 
+-- https://github.com/Looking4Group/L4G_Core/issues/2069
+-- http://www.wowhead.com/npc=20763/captured-protectorate-vanguard
+INSERT IGNORE INTO `creature_questrelation` VALUES (20763,10425);
+UPDATE `creature_template` SET `MovementType`=0 WHERE `entry`=20763;
+
+-- Bugs below ground on each pull otherwise. This branch seems to be completely broken on the map. Move him to solid ground for now. Force disabling his mmap movement did not help.
+UPDATE `creature` SET `position_x`=11005.211914, `position_y`=1903.362793, `position_z`=1333.655151 WHERE  `guid`=2672350; -- 11053/1921.37/1332.75
+
+-- https://github.com/Looking4Group/L4G_Core/issues/3295
+UPDATE `creature_template` SET `InhabitType`='3' WHERE  `entry`=3107;
+
+-- https://github.com/Looking4Group/L4G_Core/issues/3291
+DELETE FROM `game_event_creature` WHERE `guid` IN(152120,7370,12369);
+INSERT INTO `game_event_creature` VALUES
+(152120,26),
+(7370,-26),
+(12369,-26);
+
+UPDATE `creature` SET `spawndist`=3 WHERE `guid`=44499;
+
