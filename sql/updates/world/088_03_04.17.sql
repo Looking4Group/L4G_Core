@@ -1095,8 +1095,8 @@ INSERT INTO `waypoint_data` VALUES (79230, 12, -283.382, -600.72, 49.8817, 0, 0,
 INSERT INTO `waypoint_data` VALUES (79230, 13, -279.163, -589.875, 50.833, 0, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (79230, 14, -271.047, -581.964, 49.9021, 0, 0, 0, 100, 0);
 
-DELETE FROM `creature_formations` WHERE `memberGUID` IN (79273,79244,79373,79374,79376,79230,79168,79361);
-DELETE FROM `creature_formations` WHERE `leaderGUID` IN (79273,79244,79373,79374,79376,79230,79168,79361);
+DELETE FROM `creature_formations` WHERE `memberGUID` IN (79273,79244,79373,79374,79376,79230,79168,79361,79206);
+DELETE FROM `creature_formations` WHERE `leaderGUID` IN (79273,79244,79373,79374,79376,79230,79168,79361,79206);
 INSERT INTO `creature_formations` VALUES (79273, 79273, 100, 360, 2);
 INSERT INTO `creature_formations` VALUES (79273, 79171, 2, 1.57, 2);
 INSERT INTO `creature_formations` VALUES (79273, 79170, 2, 4.71, 2);
@@ -1112,7 +1112,7 @@ INSERT INTO `creature_formations` VALUES (79376, 79233, 2, 1.57, 2);
 INSERT INTO `creature_formations` VALUES (79376, 79229, 2, 4.71, 2);
 
 INSERT INTO `creature_formations` VALUES (79230, 79230, 100, 360, 2);
-INSERT INTO `creature_formations` VALUES (79230, 79206, 2, 1.57, 2);
+INSERT INTO `creature_formations` VALUES (79230, 79377, 2, 1.57, 2);
 
 INSERT INTO `creature_formations` VALUES (79168, 79168, 100, 360, 2);
 INSERT INTO `creature_formations` VALUES (79168, 79167, 100, 360, 2);
