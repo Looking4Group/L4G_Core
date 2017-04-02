@@ -476,3 +476,17 @@ INSERT INTO `creature_ai_scripts` VALUES (1970709, 19707, 2, 0, 100, 0, 15, 0, 0
 INSERT INTO `creature_ai_scripts` VALUES (1970710, 19707, 2, 3, 100, 0, 15, 0, 0, 0, 21, 1, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 'Sunfury Archer - Start Combat Movement and Flee at 15% HP (Phase 2)');
 INSERT INTO `creature_ai_scripts` VALUES (1970711, 19707, 7, 0, 100, 0, 0, 0, 0, 0, 22, 0, 0, 0, 40, 1, 0, 0, 0, 0, 0, 0, 'Sunfury Archer - Set Phase to 0 and Set Melee Weapon Model on Evade');
 
+-- Fix Cannons Moveable by CC Spells
+UPDATE `creature_template` SET `unit_flags` = `unit_flags`|4, `dynamicflags` = `dynamicflags`|8 WHERE `entry` IN (19067, 19210, 19399, 21233, 22443, 22451, 22461, 23076);
+UPDATE `creature_template` SET `AIName` = '' WHERE `entry` IN (21233, 22451);
+UPDATE `creature_template` SET `mechanic_immune_mask` = '12665366' WHERE `entry` IN (19067, 19210, 19399, 21233, 22443, 22451, 22461, 23076);
+
+DELETE FROM `game_event_creature` WHERE `guid` = 152120;
+INSERT INTO `game_event_creature` VALUES (152120, 26);
+
+UPDATE `creature` SET `MovementType` = 0 WHERE `guid` IN (79360, 79361);
+DELETE FROM `creature_addon` WHERE `guid` IN (79360, 79361);
+DELETE FROM `waypoint_data` WHERE `id` IN (79360, 79361);
+
+
+
