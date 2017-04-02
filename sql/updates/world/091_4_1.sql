@@ -488,5 +488,5 @@ UPDATE `creature` SET `MovementType` = 0 WHERE `guid` IN (79360, 79361);
 DELETE FROM `creature_addon` WHERE `guid` IN (79360, 79361);
 DELETE FROM `waypoint_data` WHERE `id` IN (79360, 79361);
 
-
+UPDATE `creature_template` SET `npcflag` = 3 WHERE `entry` = 239; -- 2
 
