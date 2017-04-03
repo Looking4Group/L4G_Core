@@ -3032,6 +3032,8 @@ void SpellMgr::LoadSpellCustomAttr()
             case 46579:
             // Mana Tap
             case 28734:
+                spellInfo->Effect[0] = SPELL_EFFECT_POWER_BURN;
+                break;
             // SW: Death
             case 32409:
             // Six Demon Bag spells
