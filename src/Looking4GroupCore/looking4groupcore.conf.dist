@@ -189,18 +189,6 @@ EAIErrorLevel = 2
 #        Disable mmap pathfinding on the listed maps.
 #        List of map ids with delimiter ','
 #
-#    DetectPosCollision
-#        Check final move position, summon position, etc for visible collision with other objects or
-#        wall (wall only if vmaps are enabled)
-#        Default: 1 (enable, required more CPU power usage)
-#                 0 (disable, less nice position selection but will less CPU power usage)
-#
-#    TargetPosRecalculateRange
-#        Max distance from movement target point (+moving unit size) and targeted object (+size)
-#        after that new target movmeent point calculated. Max: melee attack range (5), min: contact range (0.5)
-#        More distance let have better performence, less distance let have more sensitive reaction at target move.
-#        Default: 1.5
-#
 #    UpdateUptimeInterval
 #        Update realm uptime period in minutes (for save data in 'uptime' table). Must be > 0
 #        Default: 10 (minutes)
