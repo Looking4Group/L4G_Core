@@ -530,3 +530,8 @@ DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 8996;
 INSERT INTO `creature_ai_scripts` VALUES
 ('899601','8996','7','0','100','6','0','0','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Voidwalker Minion - Despawn on Evade');
 
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 3715;
+INSERT INTO `creature_ai_scripts` VALUES (371501, 3715, 9, 0, 100, 1, 0, 30, 3200, 5000, 11, 8598, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Wrathtail Sea Witch - Cast Lightning Blast');
+INSERT INTO `creature_ai_scripts` VALUES (371502, 3715, 9, 0, 100, 1, 0, 10, 20900, 33500, 11, 2691, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Wrathtail Sea Witch - Cast Mana Burn');
+INSERT INTO `creature_ai_scripts` VALUES (371503, 3715, 2, 0, 100, 0, 15, 0, 0, 0, 25, 0, 0, 0,1, -47, 0, 0, 0, 0, 0, 0, 'Wrathtail Sea Witch - Flee at 15% HP');
+
