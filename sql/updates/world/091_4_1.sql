@@ -559,3 +559,21 @@ INSERT INTO `creature_ai_scripts` VALUES (31412, 314, 9, 0, 100, 1, 0, 8, 12500,
 INSERT INTO `creature_ai_scripts` VALUES (31413, 314, 7, 0, 100, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Eliza - Set Phase to 0 on Evade');
 INSERT INTO `creature_ai_scripts` VALUES ('31414','314','1','0','100','0','15000','15000','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Eliza - Despawn OOC');
 
+UPDATE `gameobject` SET `animprogress` = 255 WHERE `id` = 181555;
+UPDATE `gameobject` SET `spawntimesecs` = 300 WHERE `id` = 181555 AND `map` IN (0, 1, 530);
+
+UPDATE `gameobject` SET `animprogress` = 255 WHERE `id` = 181569;
+UPDATE `gameobject` SET `spawntimesecs` = 300 WHERE `id` = 181569 AND `map` IN (0, 1, 530);
+
+UPDATE `gameobject` SET `animprogress` = 255 WHERE `id` = 181570;
+UPDATE `gameobject` SET `spawntimesecs` = 300 WHERE `id` = 181570 AND `map` IN (0, 1, 530);
+
+UPDATE `gameobject` SET `animprogress` = 255 WHERE `id` = 181556;
+UPDATE `gameobject` SET `spawntimesecs` = 300 WHERE `id` = 181556 AND `map` IN (0, 1, 530);
+
+UPDATE `gameobject` SET `animprogress` = 255 WHERE `id` = 181557;
+UPDATE `gameobject` SET `spawntimesecs` = 300 WHERE `id` = 181557 AND `map` IN (0, 1, 530);
+
+-- Outland Dungeon Ores
+UPDATE `gameobject` SET `spawntimesecs` = 86400 WHERE `guid` IN (3497242, 3497243, 3497128, 3497127, 3489213, 3486610, 3496020, 3486611, 3494261, 3497219, 3497218, 3489285, 3497216, 3497215, 3497208, 3497207, 3497206, 3497211, 3497212, 3496019, 3497213, 3497214, 3497217, 3497209, 3493144, 3493145, 3497210, 3497966, 3497334, 3497333, 3497331, 3497330, 3497332);
+
