@@ -3976,6 +3976,10 @@ void SpellMgr::LoadCustomSpellCooldowns(SpellEntry* spellInfo)
         case 35413: // Summon Goliathon
             spellInfo->RecoveryTime = 300000;
             break;
+        // 20 min cooldown
+        case 13166: // Battle Chicken
+            spellInfo->RecoveryTime = 1200000;
+            break;
         // 30 min cooldown
         case 44520:
             spellInfo->RecoveryTime = 1800000;
