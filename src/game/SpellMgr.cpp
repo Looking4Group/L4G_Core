@@ -3533,6 +3533,9 @@ void SpellMgr::LoadSpellCustomAttr()
             case 36952: // (temporary) Ogre Building Bunny Curse Visual Large - penalty curse for SWP
             case 40214: // Dragonmaw illusion
             case 46273: // Multiphase Goggles (Item: Multiphase Spectrographic Goggles)
+            case 32049: // Hellfire Superiority Horde
+            case 32071: // Hellfire Superiority Alliance
+            case 33779: // Twin Spire Blessing
                 spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_DEATH_PERSISTENT;
                 break;
             case 29955: // Arcane Missiles (Shade of Aran)
@@ -4196,6 +4199,33 @@ bool SpellMgr::IsSpellAllowedInLocation(SpellEntry const *spellInfo,uint32 map_i
     // special cases zone check (maps checked by multimap common id)
     switch (spellInfo->Id)
     {
+        case 32049:
+        case 32071:
+        {
+            //Hellfire Peninsula                        Mags                Ramps           BF              SSH             
+            if (map_id == 530 && zone_id == 3483 || map_id == 544 || map_id == 543 || map_id == 542 || map_id == 540)
+                return true;
+        }
+        case 33779:
+        {
+            //Zangarmarsh                           SSC             SP                  OB              SV
+            if (map_id == 530 && zone_id == 3521 || map_id == 534 || map_id == 547 || map_id == 546 || map_id == 545)
+                return true;
+        }
+        case 33377:
+        {
+            //Terokkar                                  Auchi           MT                  SH              SL
+            if (map_id == 530 && zone_id == 3519 || map_id == 558 || map_id == 557 || map_id == 556 || map_id == 555)
+                return true;
+        }
+        case 33004:
+        case 33005:
+        case 33795:
+        {
+            //Nagrand
+            if (map_id == 530 && zone_id == 3518)
+                return true;
+        }
         case 45403:
         case 45401:
         {
