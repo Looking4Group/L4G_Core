@@ -538,3 +538,24 @@ INSERT INTO `creature_ai_scripts` VALUES (371503, 3715, 2, 0, 100, 0, 15, 0, 0, 
 DELETE FROM `gameobject` WHERE `id` IN (181248,181249);
 UPDATE `gameobject` SET `spawntimesecs` = 300 WHERE `id` IN (103711,3764,1732,2054,176643,150082,324,1733,105569,175404,123848,73940,177388,73941,1667,1610,181109,150080,1734,103713,3763,2055,1731,123309,123310,73939,176645,150079,2040,2653,1735,165658,181108,150081,2047) AND `map` IN (0,1,530);
 
+-- Eliza's Guard 1871
+UPDATE `creature_template` SET `AIName` = 'EventAI' WHERE `entry` = 1871;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 1871;
+INSERT INTO `creature_ai_scripts` VALUES ('187101','1871','1','0','100','0','10000','10000','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Eliza\'s Guard - Despawn OOC');
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 314;
+INSERT INTO `creature_ai_scripts` VALUES (31401, 314, 1, 0, 100, 0, 0, 0, 0, 0, 11, 26047, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Eliza - Cast Birth on Spawn');
+INSERT INTO `creature_ai_scripts` VALUES (31402, 314, 1, 0, 100, 0, 500, 500, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Eliza - Prevent Combat Movement on Spawn');
+INSERT INTO `creature_ai_scripts` VALUES (31403, 314, 0, 0, 100, 0, 1000, 1000, 0, 0, 1, -460, -461, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Eliza - Say on Aggro');
+INSERT INTO `creature_ai_scripts` VALUES (31404, 314, 4, 0, 100, 0, 0, 0, 0, 0, 11, 20819, 1, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Eliza - Cast Frostbolt and Set Phase 1 on Aggro');
+INSERT INTO `creature_ai_scripts` VALUES (31405, 314, 9, 5, 100, 1, 0, 40, 3400, 5000, 11, 20819, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Eliza - Cast Frostbolt (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (31406, 314, 3, 5, 100, 0, 7, 0, 0, 0, 21, 1, 0, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Eliza - Start Combat Movement and Set Phase 2 when Mana is at 7% (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (31407, 314, 9, 5, 100, 0, 35, 80, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Eliza - Start Combat Movement at 35 Yards (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (31408, 314, 9, 5, 100, 0, 5, 15, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Eliza - Prevent Combat Movement at 15 Yards (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (31409, 314, 9, 5, 100, 0, 0, 5, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Eliza - Start Combat Movement Below 5 Yards');
+INSERT INTO `creature_ai_scripts` VALUES (31410, 314, 3, 3, 100, 1, 100, 15, 100, 100, 23, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Eliza - Set Phase 1 when Mana is above 15% (Phase 2)');
+INSERT INTO `creature_ai_scripts` VALUES (31411, 314, 0, 0, 100, 1, 4100, 6400, 72300, 72300, 11, 3107, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Eliza - Summon Eliza\'s Guard');
+INSERT INTO `creature_ai_scripts` VALUES (31412, 314, 9, 0, 100, 1, 0, 8, 12500, 36300, 11, 11831, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Eliza - Cast Frost Nova');
+INSERT INTO `creature_ai_scripts` VALUES (31413, 314, 7, 0, 100, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Eliza - Set Phase to 0 on Evade');
+INSERT INTO `creature_ai_scripts` VALUES ('31414','314','1','0','100','0','15000','15000','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Eliza - Despawn OOC');
+
