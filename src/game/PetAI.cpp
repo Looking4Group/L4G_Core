@@ -224,7 +224,7 @@ void PetAI::AutocastPreparedSpells()
 
         SpellCastTargets targets;
 
-        if (target)
+        if (target && target->isAlive() && me->IsWithinLOSInMap(target))
             targets.setUnitTarget(target);
 
         if (!me->HasInArc(M_PI, target))
