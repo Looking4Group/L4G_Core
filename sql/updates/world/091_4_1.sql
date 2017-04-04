@@ -579,3 +579,5 @@ UPDATE `gameobject` SET `spawntimesecs` = 86400 WHERE `guid` IN (3497242, 349724
 
 UPDATE `gameobject` SET `spawntimesecs`= 300,`animprogress`= 255 WHERE `id` IN (183043,183044,183045,183046,181270,181271,181272,181275,181276,181277,181279,181280,181281,181284,181285,185877,185881) AND `map`= 530; -- 2700
 
+UPDATE `creature` SET `position_x` = '1056.6199', `position_y` = '-2828.1201', `position_z` = '42.0509' WHERE `guid` = 11352;
+
