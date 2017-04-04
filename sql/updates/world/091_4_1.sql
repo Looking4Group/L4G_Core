@@ -603,3 +603,6 @@ INSERT INTO `creature_ai_scripts` VALUES (2197905, 21979, 2, 0, 100, 0, 15, 0, 0
 INSERT INTO `creature_ai_scripts` VALUES (2197906, 21979, 2, 7, 100, 0, 15, 0, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 0, 0, 0, 0, 'Val\'zareq the Conqueror - Flee at 15% HP (Phase 3)');
 INSERT INTO `creature_ai_scripts` VALUES (2197907, 21979, 7, 0, 100, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Val\'zareq the Conqueror - Set Phase 0 on Evade');
 
+UPDATE `creature_template` SET `baseattacktime` = 2000 WHERE `entry` = 17770;
+UPDATE `creature_template` SET `baseattacktime` = 2000 WHERE `entry` = 20169;
+
