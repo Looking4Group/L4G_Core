@@ -581,3 +581,12 @@ UPDATE `gameobject` SET `spawntimesecs`= 300,`animprogress`= 255 WHERE `id` IN (
 
 UPDATE `creature` SET `position_x` = '1056.6199', `position_y` = '-2828.1201', `position_z` = '42.0509' WHERE `guid` = 11352;
 
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17414;
+INSERT INTO `creature_ai_scripts` VALUES
+('1741401','17414','9','0','100','3','0','5','7000','14900','11','30846','0','0','1','-155','0','0','0','0','0','0','Shadowmoon Technician (Normal) - Throw Proximity Bomb'),
+('1741402','17414','9','0','100','5','0','5','7000','14900','11','32784','0','0','1','-155','0','0','0','0','0','0','Shadowmoon Technician (Heroic) - Throw Proximity Bomb'),
+('1741403','17414','9','0','100','3','0','25','3600','6200','11','40062','4','0','0','0','0','0','0','0','0','0','Shadowmoon Technician (Normal) - Cast Throw Dynamite'),
+('1741404','17414','9','0','100','5','0','25','3600','6200','11','40064','4','0','0','0','0','0','0','0','0','0','Shadowmoon Technician (Heroic) - Cast Throw Dynamite'),
+('1741405','17414','0','0','100','7','6000','6000','12000','18000','11','6726','4','32','0','0','0','0','0','0','0','0','Shadowmoon Technician - Cast Silence'),
+('1741406','17414','4','0','100','6','0','0','0','0','11','29651','0','0','0','0','0','0','0','0','0','0','Shadowmoon Technician - Casts Dual Wield on Aggro');
+
