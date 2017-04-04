@@ -625,3 +625,6 @@ UPDATE `creature_template` SET `mindmg`='3077',`maxdmg`='3654', `baseattacktime`
 
 UPDATE `creature` SET `spawntimesecs` = 300 WHERE `id` = 731;
 
+UPDATE `gameobject` SET `spawntimesecs` = 120 WHERE `guid` = 10830;
+DELETE FROM `gameobject` WHERE `guid` IN (14054928,14054931,14054933,14054935,14054937,14054939,14054941,14054946);
+
