@@ -3983,7 +3983,21 @@ void SpellMgr::LoadCustomSpellCooldowns(SpellEntry* spellInfo)
             spellInfo->RecoveryTime = 300000;
             break;
         // 20 min cooldown
+        case 3605: // Remote-Controlled Golem
+        case 4052: // Explosive Sheep
+        case 4073: // Mechanical Dragonling
+        case 4074: // Explosive Sheep
+        case 12243: // Mechanical Chicken 
+        case 12736: // Mithril Dragonling
+        case 12749: // Mithril Mechanical Dragonling
         case 13166: // Battle Chicken
+        case 13258: // Goblin Bomb
+        case 19363: // Mechanical Yeti
+        case 19772: // Lifelike Toad
+        case 19804: // Arcanite Dragonling
+        case 23004: // Alarm-o-Bot
+        case 26067: // Mechanical Greench
+        case 27602: // Arcanite Dragonling
             spellInfo->RecoveryTime = 1200000;
             break;
         // 30 min cooldown
