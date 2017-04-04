@@ -590,3 +590,5 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('1741405','17414','0','0','100','7','6000','6000','12000','18000','11','6726','4','32','0','0','0','0','0','0','0','0','Shadowmoon Technician - Cast Silence'),
 ('1741406','17414','4','0','100','6','0','0','0','0','11','29651','0','0','0','0','0','0','0','0','0','0','Shadowmoon Technician - Casts Dual Wield on Aggro');
 
+UPDATE `creature_template` SET `mindmg`='815',`maxdmg`='1061' WHERE `entry` = 17381;
+
