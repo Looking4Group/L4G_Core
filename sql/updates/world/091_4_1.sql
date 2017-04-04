@@ -620,3 +620,6 @@ UPDATE `creature_template` SET `minlevel` = 69, `maxlevel` = 70, `armor`= 6800 W
 
 UPDATE `creature_template` SET `minlevel` = 70, `maxlevel` = 70, `armor` = 6800 WHERE `entry` = 17671;
 
+UPDATE `creature_template` SET `mindmg`='417',`maxdmg`='546', `baseattacktime` = 2000 WHERE `entry` = 18105;
+UPDATE `creature_template` SET `mindmg`='3077',`maxdmg`='3654', `baseattacktime` = 2000 WHERE `entry` = 20168;
+
