@@ -633,3 +633,6 @@ UPDATE `creature_template` SET `baseattacktime` = 2000 WHERE `entry` = 18432;
 
 UPDATE `creature_template` SET `mindmg`='437',`maxdmg`='862',`baseattacktime` = 2000 WHERE `entry` = 17537;
 
+-- temp disable chests in azeroth
+UPDATE `gameobject` SET `spawnmask` = 0 WHERE `id` IN (2855, 2857, 4149, 153454);
+
