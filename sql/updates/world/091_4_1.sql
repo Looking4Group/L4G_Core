@@ -612,3 +612,7 @@ INSERT INTO `creature_questrelation` VALUES (20448, 10339);
 -- Arcane Wraith 15273
 UPDATE `creature_template` SET `mindmg` = 2, `maxdmg` = 4 WHERE `entry` = 15273; -- 1 3
 
+-- extreme lowlevel npcs
+UPDATE `creature_template` SET `mindmg` = 1, `maxdmg` = 2 WHERE `mindmg` <= 1 and `maxdmg` <= 2;
+UPDATE `creature_template` SET `mindmg` = 1, `maxdmg` = 2 WHERE `entry` IN (1984,26207,3098,26020,22145,26238,2809,5002,15935,19031,21034);
+
