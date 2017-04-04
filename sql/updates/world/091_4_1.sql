@@ -594,3 +594,12 @@ UPDATE `creature_template` SET `mindmg`='815',`maxdmg`='1061' WHERE `entry` = 17
 
 UPDATE `creature_template` SET `mindmg`='525',`maxdmg`='600' WHERE `entry` = 17377;
 
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 21979;
+INSERT INTO `creature_ai_scripts` VALUES (2197901, 21979, 4, 0, 100, 0, 0, 0, 0, 0, 11, 38094, 1, 0, 22, 1, 0, 0, 40, 2, 0, 0, 'Val\'zareq the Conqueror - Cast Shoot and Set Phase 1 and Set Ranged Weapon Model on Aggro');
+INSERT INTO `creature_ai_scripts` VALUES (2197902, 21979, 9, 13, 100, 1, 0, 40, 2200, 4700, 11, 38094, 1, 0, 40, 2, 0, 0, 0, 0, 0, 0, 'Val\'zareq the Conqueror - Cast Shoot and Set Ranged Weapon Model (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (2197903, 21979, 9, 13, 100, 1, 0, 35, 4400, 9400, 11, 36623, 1, 0, 40, 2, 0, 0, 0, 0, 0, 0, 'Val\'zareq the Conqueror - Cast Arcane Shot and Set Ranged Weapon Model (Phase 1)');
+INSERT INTO `creature_ai_scripts` VALUES (2197904, 21979, 9, 0, 100, 7, 0, 5, 0, 0, 40, 1, 0, 0, 22, 2, 0, 0, 0, 0, 0, 0, 'Val\'zareq the Conqueror - Set Melee Weapon Model in Melee Range');
+INSERT INTO `creature_ai_scripts` VALUES (2197905, 21979, 2, 0, 100, 0, 15, 0, 0, 0, 22, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Val\'zareq the Conqueror - Set Phase 3 at 15% HP');
+INSERT INTO `creature_ai_scripts` VALUES (2197906, 21979, 2, 7, 100, 0, 15, 0, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 0, 0, 0, 0, 'Val\'zareq the Conqueror - Flee at 15% HP (Phase 3)');
+INSERT INTO `creature_ai_scripts` VALUES (2197907, 21979, 7, 0, 100, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Val\'zareq the Conqueror - Set Phase 0 on Evade');
+
