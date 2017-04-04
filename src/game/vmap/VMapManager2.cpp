@@ -119,8 +119,11 @@ namespace VMAP
         {
             std::string mapFileName = getMapFileName(pMapId);
             StaticMapTree *newTree = new StaticMapTree(pMapId, basePath);
-            if (!newTree->InitMap(mapFileName, this))
+            if (!newTree->InitMap(mapFileName, this)) {
+                delete newTree;
                 return false;
+            }
+
             instanceTree = iInstanceMapTrees.insert(InstanceTreeMap::value_type(pMapId, newTree)).first;
         }
         return instanceTree->second->LoadMapTile(tileX, tileY, this);
