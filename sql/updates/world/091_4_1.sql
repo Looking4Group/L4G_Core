@@ -606,3 +606,6 @@ INSERT INTO `creature_ai_scripts` VALUES (2197907, 21979, 7, 0, 100, 0, 0, 0, 0,
 UPDATE `creature_template` SET `baseattacktime` = 2000 WHERE `entry` = 17770;
 UPDATE `creature_template` SET `baseattacktime` = 2000 WHERE `entry` = 20169;
 
+DELETE FROM `creature_questrelation` WHERE `quest` IN (10339,10969);
+INSERT INTO `creature_questrelation` VALUES (20448, 10339);
+
