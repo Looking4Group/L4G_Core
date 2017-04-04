@@ -43,7 +43,7 @@ int ACRequest::call()
     if (DetectWaterWalkHack(pPlayer))
     {
         sLog.outLog(LOG_CHEAT, "Player %s (GUID: %u / ACCOUNT_ID: %u) - possible water walk Cheat. MapId: %u, coords: %f %f %f. MOVEMENTFLAGS: %u LATENCY: %u. BG/Arena: %s",
-        pPlayer->GetName(), pPlayer->GetGUIDLow(), pPlayer->GetSession()->GetAccountId(), pPlayer->GetMapId(), GetNewMovementInfo().pos.x, GetNewMovementInfo().pos.y, GetNewMovementInfo().pos.z, GetNewMovementInfo().GetMovementFlags(), latency, pPlayer->GetMap() ? (pPlayer->GetMap()->IsBattleGroundOrArena() ? "Yes" : "No") : "No");
+            pPlayer->GetName(), pPlayer->GetGUIDLow(), pPlayer->GetSession()->GetAccountId(), pPlayer->GetMapId(), GetNewMovementInfo().pos.x, GetNewMovementInfo().pos.y, GetNewMovementInfo().pos.z, GetNewMovementInfo().GetMovementFlags(), latency, pPlayer->GetMap() ? (pPlayer->GetMap()->IsBattleGroundOrArena() ? "Yes" : "No") : "No");
 
         //sWorld.SendGMText(LANG_ANTICHEAT_WATERWALK, pPlayer->GetName(), pPlayer->GetName());
         return -1;
@@ -58,17 +58,6 @@ int ACRequest::call()
         pPlayer->GetSession()->KickPlayer();
         
         return -1;
-    }
-
-    if (DetectSpeedHack(pPlayer))
-    {
-        if (!pPlayer->HasUnitMovementFlag(MOVEFLAG_FALLING | MOVEFLAG_FALLINGFAR | MOVEFLAG_SPLINE_ELEVATION | MOVEFLAG_SAFE_FALL | MOVEFLAG_SPLINE_ENABLED | MOVEFLAG_ONTRANSPORT | MOVEFLAG_LEVITATING | MOVEFLAG_HOVER | MOVEFLAG_CAN_FLY))
-        {
-            sWorld.SendGMText(LANG_ANTICHEAT, pPlayer->GetName(), pPlayer->GetName());
-            // pPlayer->GetSession()->KickPlayer(); deactivated for further testing on live
-
-            return -1;
-        }
     }
 
     return 0;
@@ -153,24 +142,24 @@ bool ACRequest::DetectSpeedHack(Player *pPlayer)
 
     uint32 exact2dDist = sqrt(n.x*n.x + n.y*n.y);
 
+    // how many yards the player can do in one sec.
+    uint32 speedRate = uint32(pPlayer->GetSpeed(UnitMoveType(moveType)) + GetNewMovementInfo().j_xyspeed);
+
     // how long the player took to move to here.
     uint32 timeDiff = WorldTimer::getMSTimeDiff(GetLastMovementInfo().time, GetNewMovementInfo().time);
     if (!timeDiff)
         timeDiff = 1;
 
-    // how many yards the player can do in one sec.
-    uint32 speedRate = pPlayer->GetSpeed(UnitMoveType(moveType)) + GetNewMovementInfo().j_xyspeed;
-
     // this is the distance doable by the player in 1 sec, using the time done to move to this point.
     uint32 clientSpeedRate = exact2dDist * 1000 / timeDiff;
 
-    // did the 1.1 factor to accept a margin of tolerance
-    if (clientSpeedRate > (speedRate * 1.1))
+    // we did the (uint32) cast to accept a margin of tolerance
+    if (clientSpeedRate > speedRate)
         return true;
 
     pPlayer->m_AC_timer = IN_MILISECONDS;   // 1 sek
 
-    //sWorld.SendGMText(LANG_ANTICHEAT, pPlayer->GetName(), pPlayer->GetName(), 0, speedRate, clientSpeedRate);
+    sWorld.SendGMText(LANG_ANTICHEAT, pPlayer->GetName(), pPlayer->GetName(), 0, speedRate, clientSpeedRate);
     sLog.outLog(LOG_CHEAT, "Player %s (GUID: %u / ACCOUNT_ID: %u) moved for distance %f with server speed : %f (client speed: %f). MapID: %u, player's coord before X:%f Y:%f Z:%f. Player's coord now X:%f Y:%f Z:%f. MOVEMENTFLAGS: %u LATENCY: %u. BG/Arena: %s", pPlayer->GetName(), pPlayer->GetGUIDLow(), pPlayer->GetSession()->GetAccountId(), exact2dDist, speedRate, clientSpeedRate, pPlayer->GetMapId(), GetLastMovementInfo().pos.x, GetLastMovementInfo().pos.y, GetLastMovementInfo().pos.z, GetNewMovementInfo().pos.x, GetNewMovementInfo().pos.y, GetNewMovementInfo().pos.z, GetNewMovementInfo().GetMovementFlags(), pPlayer->GetSession()->GetLatency(), pPlayer->GetMap() ? (pPlayer->GetMap()->IsBattleGroundOrArena() ? "Yes" : "No") : "No");
     return false;
 }
