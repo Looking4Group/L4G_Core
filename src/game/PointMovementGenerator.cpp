@@ -46,10 +46,6 @@ void PointMovementGenerator<UNIT>::Initialize(UNIT &unit)
             init.SetWalk(true);
     }
 
-    PathFinder *pFinder = new PathFinder(&unit);
-    bool result = pFinder->calculate(_x, _y, _z);
-    _generatePath = (result && !(pFinder->getPathType() & PATHFIND_NOPATH));
-
     init.MoveTo(_x, _y, _z, _generatePath);
     init.Launch();
 
