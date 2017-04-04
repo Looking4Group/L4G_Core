@@ -1,0 +1,1 @@
+UPDATE `looking4group_string` SET `content_default` = '|cff00ff00Anticheat report:|r |cffff00ff[|Hplayer:%s|h%s|h]|r|cff00ff00 alerts: possible Speedhack detected', `content_loc3` = '|cff00ff00Anticheat report:|r |cffff00ff[|Hplayer:%s|h%s|h]|r|cff00ff00 alerts: possible Speedhack detected' WHERE `entry` = 11001;
