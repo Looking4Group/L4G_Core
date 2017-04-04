@@ -609,3 +609,6 @@ UPDATE `creature_template` SET `baseattacktime` = 2000 WHERE `entry` = 20169;
 DELETE FROM `creature_questrelation` WHERE `quest` IN (10339,10969);
 INSERT INTO `creature_questrelation` VALUES (20448, 10339);
 
+-- Arcane Wraith 15273
+UPDATE `creature_template` SET `mindmg` = 2, `maxdmg` = 4 WHERE `entry` = 15273; -- 1 3
+
