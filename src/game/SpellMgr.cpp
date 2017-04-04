@@ -3049,6 +3049,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             // Mana Tap
             case 28734:
+                spellInfo->AttributesCu |= SPELL_ATTR_CU_NO_SPELL_DMG_COEFF;
                 spellInfo->Effect[0] = SPELL_EFFECT_POWER_BURN;
                 break;
             // WELL FEED
