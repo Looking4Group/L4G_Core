@@ -592,3 +592,5 @@ INSERT INTO `creature_ai_scripts` VALUES
 
 UPDATE `creature_template` SET `mindmg`='815',`maxdmg`='1061' WHERE `entry` = 17381;
 
+UPDATE `creature_template` SET `mindmg`='525',`maxdmg`='600' WHERE `entry` = 17377;
+
