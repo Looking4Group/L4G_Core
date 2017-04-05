@@ -23,3 +23,6 @@ INSERT INTO `creature_formations` VALUES
 UPDATE `creature_template` SET `resistance3`='0',`resistance6` = '-1'  WHERE `entry` = 22310;
 UPDATE `creature_template` SET `resistance2` = '-1' WHERE `entry` = 22311;
 
+-- Death's Door North Warp-Gate, Death's Door South Warp-Gate 22471,22472
+UPDATE `creature_template` SET `dynamicflags` = 8 WHERE `entry` IN (22471,22472);
+
