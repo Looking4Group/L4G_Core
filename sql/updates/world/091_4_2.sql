@@ -26,3 +26,6 @@ UPDATE `creature_template` SET `resistance2` = '-1' WHERE `entry` = 22311;
 -- Death's Door North Warp-Gate, Death's Door South Warp-Gate 22471,22472
 UPDATE `creature_template` SET `dynamicflags` = 8 WHERE `entry` IN (22471,22472);
 
+DELETE FROM `areatrigger_tavern` WHERE `id` = 4265;
+INSERT INTO `areatrigger_tavern` VALUES (4265, 'Fairbreeze Village Inn');
+
