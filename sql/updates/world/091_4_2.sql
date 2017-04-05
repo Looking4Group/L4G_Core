@@ -12,3 +12,11 @@ UPDATE `creature_ai_scripts` SET `action1_param1` = 1 WHERE `action1_type` = 21 
 
 DELETE FROM `creature` WHERE `guid` = 203341;
 
+DELETE FROM `creature_formations` WHERE `leaderguid` IN (12880,12881,12872,12873);
+DELETE FROM `creature_formations` WHERE `memberguid` IN (12880,12881,12872,12873);
+INSERT INTO `creature_formations` VALUES
+(12880,12880,100,360,2),
+(12880,12881,100,360,2),
+(12880,12872,100,360,2),
+(12880,12873,100,360,2);
+
