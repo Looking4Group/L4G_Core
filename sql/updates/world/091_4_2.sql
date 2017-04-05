@@ -29,3 +29,6 @@ UPDATE `creature_template` SET `dynamicflags` = 8 WHERE `entry` IN (22471,22472)
 DELETE FROM `areatrigger_tavern` WHERE `id` = 4265;
 INSERT INTO `areatrigger_tavern` VALUES (4265, 'Fairbreeze Village Inn');
 
+DELETE FROM `creature_ai_scripts` WHERE `id` = 1198012;
+INSERT INTO `creature_ai_scripts` VALUES ('1198012','11980','1','0','100','0','60000','60000','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Zuluhed the Whacked - Despawn OOC');
+
