@@ -88,7 +88,7 @@ class LOOKING4GROUP_IMPORT_EXPORT ViewPoint
 
     void Attach(Camera* c) { _cameras.push_back(c); }
     void Detach(Camera* c) { 
-        if(!_cameras.empty())
+        if(c && !_cameras.empty())
             _cameras.remove(c); 
     }
 
