@@ -20,3 +20,6 @@ INSERT INTO `creature_formations` VALUES
 (12880,12872,100,360,2),
 (12880,12873,100,360,2);
 
+UPDATE `creature_template` SET `resistance3`='0',`resistance6` = '-1'  WHERE `entry` = 22310;
+UPDATE `creature_template` SET `resistance2` = '-1' WHERE `entry` = 22311;
+
