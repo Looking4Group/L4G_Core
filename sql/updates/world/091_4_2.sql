@@ -87,3 +87,6 @@ UPDATE `pool_template` SET `max_limit`='3' WHERE `entry` = 2017; -- 2 -- 3
 UPDATE `creature_template` SET `mindmg`='947',`maxdmg`='1248' WHERE `entry` = 20870;
 UPDATE `creature_template` SET `mindmg`='3210',`maxdmg`='3811' WHERE `entry` = 21626;
 
+-- Warder Corpse and Defender Corpse
+UPDATE `creature` SET `spawntimesecs` = 86400 WHERE `id` IN (21303,21304);
+
