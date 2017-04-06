@@ -84,3 +84,6 @@ UPDATE `pool_template` SET `max_limit`='54' WHERE `entry` = 2068; -- 25 -- 64
 -- Master Mineral Pool - Isle of Quel'Danas 
 UPDATE `pool_template` SET `max_limit`='3' WHERE `entry` = 2017; -- 2 -- 3
 
+UPDATE `creature_template` SET `mindmg`='947',`maxdmg`='1248' WHERE `entry` = 20870;
+UPDATE `creature_template` SET `mindmg`='3210',`maxdmg`='3811' WHERE `entry` = 21626;
+
