@@ -133,3 +133,5 @@ UPDATE `creature_template` SET `mindmg`='6204',`maxdmg`='7365' WHERE `entry` = 2
 UPDATE `creature_template` SET `mindmg`='4302',`maxdmg`='4806' WHERE `entry` = 21605;
 UPDATE `creature_template` SET `mindmg`='4347',`maxdmg`='5185' WHERE `entry` = 21615;
 
+UPDATE `creature` SET `spawntimesecs`=181 WHERE `GUID`=70700; -- Give Moh the same respawn time as Jakk and Manni
+
