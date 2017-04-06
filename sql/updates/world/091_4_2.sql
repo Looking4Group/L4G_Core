@@ -142,3 +142,15 @@ UPDATE `creature_template` SET `mindmg`='504',`maxdmg`='659' WHERE `entry` = 178
 UPDATE `creature_template` SET `mindmg`='500',`maxdmg`='700' WHERE `entry` = 17833;
 UPDATE `creature_template` SET `mindmg`='1000',`maxdmg`='1400' WHERE `entry` = 18096;
 
+UPDATE `creature_template` SET `mindmg`='1263',`maxdmg`='1663' WHERE `entry` = 17879;
+UPDATE `creature_template` SET `mindmg`='3877',`maxdmg`='4054' WHERE `entry` = 20738;
+UPDATE `creature_template` SET `mindmg`='3877',`maxdmg`='4054' WHERE `entry` = 21697;
+UPDATE `creature_template` SET `mindmg`='1191',`maxdmg`='1570' WHERE `entry` = 17880;
+UPDATE `creature_template` SET `mindmg`='4323',`maxdmg`='4663' WHERE `entry` = 20745;
+UPDATE `creature_template` SET `mindmg`='4963',`maxdmg`='5312' WHERE `entry` = 20737;
+UPDATE `creature_template` SET `mindmg`='800',`maxdmg`='1600' WHERE `entry` = 20742;
+UPDATE `creature_template` SET `mindmg`='1532',`maxdmg`='2019' WHERE `entry` = 17881;
+UPDATE `creature_template` SET `mindmg`='800',`maxdmg`='1500' WHERE `entry` = 20740;
+UPDATE `creature_template` SET `mindmg`='600',`maxdmg`='1200' WHERE `entry` = 20741;
+UPDATE `creature_template` SET `mindmg`='600',`maxdmg`='1200' WHERE `entry` = 20743;
+
