@@ -87,7 +87,10 @@ class LOOKING4GROUP_IMPORT_EXPORT ViewPoint
     GridType * _grid;
 
     void Attach(Camera* c) { _cameras.push_back(c); }
-    void Detach(Camera* c) { _cameras.remove(c); }
+    void Detach(Camera* c) { 
+        if(c && !_cameras.empty())
+            _cameras.remove(c); 
+    }
 
     void CameraCall(void (Camera::*handler)())
     {

@@ -3030,8 +3030,6 @@ void SpellMgr::LoadSpellCustomAttr()
             case 6297:
             // Deathfrost
             case 46579:
-            // Mana Tap
-            case 28734:
             // SW: Death
             case 32409:
             // Six Demon Bag spells
@@ -3049,10 +3047,15 @@ void SpellMgr::LoadSpellCustomAttr()
             case 28733:
                 spellInfo->AttributesCu |= SPELL_ATTR_CU_NO_SPELL_DMG_COEFF;
                 break;
-            /* WELL FEED */
+            // Mana Tap
+            case 28734:
+                spellInfo->AttributesCu |= SPELL_ATTR_CU_NO_SPELL_DMG_COEFF;
+                spellInfo->Effect[0] = SPELL_EFFECT_POWER_BURN;
+                break;
+            // WELL FEED
             case 18191:
             case 46687:
-            /* RUMS */
+            // RUMS
             case 5257:
             case 5021:
             case 5020:
@@ -3062,7 +3065,7 @@ void SpellMgr::LoadSpellCustomAttr()
             case 25722:
             case 25037:
             case 20875:
-            /* DIFF FOOD */
+            // DIFF FOOD
             case 18193:
             case 18125:
             case 18192:
@@ -3073,7 +3076,7 @@ void SpellMgr::LoadSpellCustomAttr()
             case 22730:
                 spellInfo->AttributesCu |= SPELL_ATTR_CU_TREAT_AS_WELL_FEED;
                 break;
-            /* Scrolls - no stack */
+            // Scrolls - no stack
             case 8112:  // Spirit I
             case 8113:  // Spirit II
             case 8114:  // Spirit III
@@ -3094,11 +3097,11 @@ void SpellMgr::LoadSpellCustomAttr()
             case 8095:  // Protection III
             case 12175: // Protection IV
             case 33079: // Protection V
-            /* Other to not stack with scrolls */
+            // Other to not stack with scrolls
             case 35078: // Band of the Eternal Defender
                 spellInfo->AttributesCu |= SPELL_ATTR_CU_NO_SCROLL_STACK;
                 break;
-            /* ROGUE CUSTOM ATTRIBUTES */
+            // ROGUE CUSTOM ATTRIBUTES
             case 2094:                     // Blind
                 spellInfo->AttributesCu |= SPELL_ATTR_CU_FAKE_DELAY; // add const fake delay
                 break;
@@ -3106,7 +3109,7 @@ void SpellMgr::LoadSpellCustomAttr()
             case 6774:                     // Slice'n'Dice
                 spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
                 break;
-            /* SHAMAN CUSTOM ATTRIBUTES */
+            // SHAMAN CUSTOM ATTRIBUTES
             case 2895:                      // Wrath of Air Totem - disallow weird stacking
                 spellInfo->EffectImplicitTargetA[0] = spellInfo->EffectImplicitTargetA[1] = TARGET_UNIT_CASTER;
                 spellInfo->EffectImplicitTargetB[0] = spellInfo->EffectImplicitTargetB[1] = 0;
@@ -3118,11 +3121,11 @@ void SpellMgr::LoadSpellCustomAttr()
             case 30708: // Totem of Wrath
                 spellInfo->AttributesEx |= SPELL_ATTR_EX_NO_THREAT;
                 break;
-            /* WARLOCK CUSTOM ATTRIBUTES */
+            // WARLOCK CUSTOM ATTRIBUTES
             case 27285:                     // Seed of Corruption - final boom damage
                 spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_CANT_TRIGGER_PROC;
                 break;
-            /* HUNTER CUSTOM ATTRIBUTES */
+            // HUNTER CUSTOM ATTRIBUTES
             case 1543:                      // Flare no longer produces combat
                 spellInfo->speed = 0;
                 spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
@@ -3146,13 +3149,13 @@ void SpellMgr::LoadSpellCustomAttr()
             case 17800:
                 spellInfo->AttributesCu |= SPELL_ATTR_CU_FAKE_DELAY;
                 break;
-            /* UNSORTED */
+            // UNSORTED
             case 26635: // Troll Racial Berserker
                 spellInfo->Effect[0] = 0;
                 spellInfo->EffectApplyAuraName[1] = SPELL_AURA_MOD_HASTE;
                 spellInfo->EffectBasePoints[1] = 5;
                 break;
-            /* Damage Corrections */
+            // Damage Corrections
             case 33627: // Rain of Fire (Pit Commander)
                 spellInfo->EffectBasePoints[0] = urand(48000, 58000); // Sure not correct WoWhead comments saying about 45 - 58k damage per tick
                 break;
@@ -3531,6 +3534,9 @@ void SpellMgr::LoadSpellCustomAttr()
             case 36952: // (temporary) Ogre Building Bunny Curse Visual Large - penalty curse for SWP
             case 40214: // Dragonmaw illusion
             case 46273: // Multiphase Goggles (Item: Multiphase Spectrographic Goggles)
+            case 32049: // Hellfire Superiority Horde
+            case 32071: // Hellfire Superiority Alliance
+            case 33779: // Twin Spire Blessing
                 spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_DEATH_PERSISTENT;
                 break;
             case 29955: // Arcane Missiles (Shade of Aran)
@@ -3976,6 +3982,24 @@ void SpellMgr::LoadCustomSpellCooldowns(SpellEntry* spellInfo)
         case 35413: // Summon Goliathon
             spellInfo->RecoveryTime = 300000;
             break;
+        // 20 min cooldown
+        case 3605: // Remote-Controlled Golem
+        case 4052: // Explosive Sheep
+        case 4073: // Mechanical Dragonling
+        case 4074: // Explosive Sheep
+        case 12243: // Mechanical Chicken 
+        case 12736: // Mithril Dragonling
+        case 12749: // Mithril Mechanical Dragonling
+        case 13166: // Battle Chicken
+        case 13258: // Goblin Bomb
+        case 19363: // Mechanical Yeti
+        case 19772: // Lifelike Toad
+        case 19804: // Arcanite Dragonling
+        case 23004: // Alarm-o-Bot
+        case 26067: // Mechanical Greench
+        case 27602: // Arcanite Dragonling
+            spellInfo->RecoveryTime = 1200000;
+            break;
         // 30 min cooldown
         case 44520:
             spellInfo->RecoveryTime = 1800000;
@@ -4190,6 +4214,33 @@ bool SpellMgr::IsSpellAllowedInLocation(SpellEntry const *spellInfo,uint32 map_i
     // special cases zone check (maps checked by multimap common id)
     switch (spellInfo->Id)
     {
+        case 32049:
+        case 32071:
+        {
+            //Hellfire Peninsula                        Mags                Ramps           BF              SSH             
+            if (map_id == 530 && zone_id == 3483 || map_id == 544 || map_id == 543 || map_id == 542 || map_id == 540)
+                return true;
+        }
+        case 33779:
+        {
+            //Zangarmarsh                           SSC             SP                  OB              SV
+            if (map_id == 530 && zone_id == 3521 || map_id == 534 || map_id == 547 || map_id == 546 || map_id == 545)
+                return true;
+        }
+        case 33377:
+        {
+            //Terokkar                                  Auchi           MT                  SH              SL
+            if (map_id == 530 && zone_id == 3519 || map_id == 558 || map_id == 557 || map_id == 556 || map_id == 555)
+                return true;
+        }
+        case 33004:
+        case 33005:
+        case 33795:
+        {
+            //Nagrand
+            if (map_id == 530 && zone_id == 3518)
+                return true;
+        }
         case 45403:
         case 45401:
         {

@@ -184,7 +184,7 @@ class LOOKING4GROUP_IMPORT_EXPORT WorldSession
         uint32 GetAccountId() const { return _accountId; }
         Player* GetPlayer() const { return _player; }
         char const* GetPlayerName() const;
-        uint32 GetAccountTeamId() const;
+        uint32 GetAccountTeamId();
         void SetSecurity(uint64 permissions) { m_permissions = permissions; }
         std::string const& GetRemoteAddress() { return m_Address; }
         void SetPlayer(Player *plr) { _player = plr; }
@@ -323,7 +323,7 @@ class LOOKING4GROUP_IMPORT_EXPORT WorldSession
         uint32 getDialogStatus(Player *pPlayer, Object* questgiver, uint32 defstatus);
 
     public:                                                 // opcodes handlers
-
+        
         void Handle_NULL(WorldPacket& recvPacket);          // not used
         void Handle_EarlyProccess(WorldPacket& recvPacket);// just mark packets processed in WorldSocket::OnRead
         void Handle_ServerSide(WorldPacket& recvPacket);    // sever side only, can't be accepted from client
@@ -765,6 +765,8 @@ class LOOKING4GROUP_IMPORT_EXPORT WorldSession
         uint64 m_permissions;
         uint32 _accountId;
         uint8 m_expansion;
+
+        uint32 m_accountTeamId;
 
         // Warden
         WardenBase * m_Warden;

@@ -291,7 +291,7 @@ void World::AddSession_ (WorldSession* s)
     uint32 pLimit = GetPlayerAmountLimit();
     uint32 QueueSize = GetQueueSize(); //number of players in the queue
 
-    uint32 accountTeamId = s->GetAccountTeamId();
+    bool addToQueue;
     
     //so we don't count the user trying to
     //login as a session and queue the socket that we are using
@@ -305,9 +305,9 @@ void World::AddSession_ (WorldSession* s)
         // If horde account AND the number of online horde players equals or exceeds the population limit(/2) then add them to the queue
         // If neutral account (i.e. no characters) AND the total number of online players equals or exceeds the population limit then add them to the queue
         // Population limit divided by two to ensure equal split of Horde/Alliance.
-        if (((accountTeamId == TEAM_ALLIANCE) && (GetLoggedInCharsCount(TEAM_ALLIANCE) >= (pLimit / 2))) ||
-            ((accountTeamId == TEAM_HORDE) && (GetLoggedInCharsCount(TEAM_HORDE) >= (pLimit / 2))) ||
-            ((accountTeamId == TEAM_NEUTRAL) && (sessions >= pLimit)))
+        if ((sessions >= pLimit) ||
+            ((GetLoggedInCharsCount(TEAM_ALLIANCE) >= (pLimit / 2)) && (s->GetAccountTeamId() == TEAM_ALLIANCE)) ||
+            ((GetLoggedInCharsCount(TEAM_HORDE) >= (pLimit / 2)) && (s->GetAccountTeamId() == TEAM_HORDE)))
         {
             if (!sObjectMgr.IsUnqueuedAccount(s->GetAccountId()) && !HasRecentlyDisconnected(s))
             {
@@ -986,6 +986,9 @@ void World::LoadConfigSettings(bool reload)
     m_configs[CONFIG_CHATFLOOD_CHATTYPE] = sConfig.GetIntDefault("ChatFlood.ChatType", 159);
     m_configs[CONFIG_CHATFLOOD_EMOTE_COUNT] = sConfig.GetIntDefault("ChatFlood.EmoteCount", 5);
     m_configs[CONFIG_CHATFLOOD_EMOTE_DELAY] = sConfig.GetIntDefault("ChatFlood.EmoteDelay", 5);
+    m_configs[CONFIG_SPAMREPORT_TICKETS] = sConfig.GetIntDefault("SpamReportTickets", 1);
+    m_configs[CONFIG_SPAMREPORT_TICKET_THRESHOLD_MAIL] = sConfig.GetIntDefault("SpamReportTicketThresholdMail", 3);
+    m_configs[CONFIG_SPAMREPORT_TICKET_THRESHOLD_CHAT] = sConfig.GetIntDefault("SpamReportTicketThresholdChat", 5);
 
     m_configs[CONFIG_EVENT_ANNOUNCE] = sConfig.GetIntDefault("Event.Announce",0);
 
@@ -1256,6 +1259,9 @@ void World::SetInitialWorldSettings()
 
     ///- Remove the bones after a restart
     RealmDataDatabase.PExecute("DELETE FROM corpse WHERE corpse_type = '0'");
+
+    ///- Remove all spam reports on startup
+    RealmDataDatabase.PExecute("TRUNCATE TABLE character_reports");
 
     ///- Load the DBC files
     sLog.outString("Initialize data stores...");
