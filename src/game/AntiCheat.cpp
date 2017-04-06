@@ -62,7 +62,7 @@ int ACRequest::call()
 
     if (DetectSpeedHack(pPlayer))
     {
-        if (!pPlayer->HasUnitMovementFlag(MOVEFLAG_FALLING | MOVEFLAG_FALLINGFAR | MOVEFLAG_SPLINE_ELEVATION | MOVEFLAG_SAFE_FALL | MOVEFLAG_SPLINE_ENABLED | MOVEFLAG_ONTRANSPORT | MOVEFLAG_LEVITATING | MOVEFLAG_HOVER | MOVEFLAG_CAN_FLY))
+        if (!pPlayer->HasUnitMovementFlag(MOVEFLAG_FALLING | MOVEFLAG_FALLINGFAR | MOVEFLAG_SPLINE_ELEVATION | MOVEFLAG_SAFE_FALL | MOVEFLAG_SPLINE_ENABLED | MOVEFLAG_ONTRANSPORT | MOVEFLAG_LEVITATING | MOVEFLAG_HOVER | MOVEFLAG_CAN_FLY | MOVEFLAG_FLYING | SPLINEFLAG_FLYINGING))
         {
             sWorld.SendGMText(LANG_ANTICHEAT, pPlayer->GetName(), pPlayer->GetName());
             sLog.outLog(LOG_CHEAT, "Player %s (GUID: %u / ACCOUNT_ID: %u) possible Speed Hack.", 
@@ -170,7 +170,7 @@ bool ACRequest::DetectSpeedHack(Player *pPlayer)
     if (clientSpeedRate > (speedRate * 1.1))
         return true;
 
-    pPlayer->m_AC_timer = IN_MILISECONDS;   // 1 sek
+    pPlayer->m_AC_timer = 10000;   // 10 sek (reduce to 1 sek "IN_MILISECONDS" again if kick activated)
 
     //sWorld.SendGMText(LANG_ANTICHEAT, pPlayer->GetName(), pPlayer->GetName(), 0, speedRate, clientSpeedRate);
     return false;
