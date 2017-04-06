@@ -54,7 +54,7 @@ int ACRequest::call()
         //RealmDataDatabase.PExecute("INSERT INTO cheat_logging (timestamp, playername, account_id, latency, ipaddress, hackingtype) VALUES (NOW(), '%s', '%u', '%u', '%s', '%s')", pPlayer->GetName(), pPlayer->GetSession()->GetAccountId(), latency, pPlayer->GetSession()->GetRemoteAddress(), "Flyhack");
         sWorld.SendGMText(LANG_ANTICHEAT_FLY, pPlayer->GetName(), pPlayer->GetName());
         sLog.outLog(LOG_CHEAT, "Player %s (GUID: %u / ACCOUNT_ID: %u) - possible Fly Cheat. MapId: %u, coords: x: %f, y: %f, z: %f. MOVEMENTFLAGS: %u LATENCY: %u. BG/Arena: %s",
-        pPlayer->GetName(), pPlayer->GetGUIDLow(), pPlayer->GetSession()->GetAccountId(), pPlayer->GetMapId(), GetNewMovementInfo().pos.x, GetNewMovementInfo().pos.y, GetNewMovementInfo().pos.z, GetNewMovementInfo().GetMovementFlags(), latency, pPlayer->GetMap() ? (pPlayer->GetMap()->IsBattleGroundOrArena() ? "Yes" : "No") : "No");
+            pPlayer->GetName(), pPlayer->GetGUIDLow(), pPlayer->GetSession()->GetAccountId(), pPlayer->GetMapId(), GetNewMovementInfo().pos.x, GetNewMovementInfo().pos.y, GetNewMovementInfo().pos.z, GetNewMovementInfo().GetMovementFlags(), latency, pPlayer->GetMap() ? (pPlayer->GetMap()->IsBattleGroundOrArena() ? "Yes" : "No") : "No");
         pPlayer->GetSession()->KickPlayer();
         
         return -1;
@@ -65,6 +65,8 @@ int ACRequest::call()
         if (!pPlayer->HasUnitMovementFlag(MOVEFLAG_FALLING | MOVEFLAG_FALLINGFAR | MOVEFLAG_SPLINE_ELEVATION | MOVEFLAG_SAFE_FALL | MOVEFLAG_SPLINE_ENABLED | MOVEFLAG_ONTRANSPORT | MOVEFLAG_LEVITATING | MOVEFLAG_HOVER | MOVEFLAG_CAN_FLY))
         {
             sWorld.SendGMText(LANG_ANTICHEAT, pPlayer->GetName(), pPlayer->GetName());
+            sLog.outLog(LOG_CHEAT, "Player %s (GUID: %u / ACCOUNT_ID: %u) possible Speed Hack.", 
+                pPlayer->GetName(), pPlayer->GetGUIDLow(), pPlayer->GetSession()->GetAccountId();
             // pPlayer->GetSession()->KickPlayer(); deactivated for further testing on live
 
             return -1;
@@ -171,6 +173,5 @@ bool ACRequest::DetectSpeedHack(Player *pPlayer)
     pPlayer->m_AC_timer = IN_MILISECONDS;   // 1 sek
 
     //sWorld.SendGMText(LANG_ANTICHEAT, pPlayer->GetName(), pPlayer->GetName(), 0, speedRate, clientSpeedRate);
-    //sLog.outLog(LOG_CHEAT, "Player %s (GUID: %u / ACCOUNT_ID: %u) moved for distance %f with server speed : %f (client speed: %f). MapID: %u, player's coord before X:%f Y:%f Z:%f. Player's coord now X:%f Y:%f Z:%f. MOVEMENTFLAGS: %u LATENCY: %u. BG/Arena: %s", pPlayer->GetName(), pPlayer->GetGUIDLow(), pPlayer->GetSession()->GetAccountId(), exact2dDist, speedRate, clientSpeedRate, pPlayer->GetMapId(), GetLastMovementInfo().pos.x, GetLastMovementInfo().pos.y, GetLastMovementInfo().pos.z, GetNewMovementInfo().pos.x, GetNewMovementInfo().pos.y, GetNewMovementInfo().pos.z, GetNewMovementInfo().GetMovementFlags(), pPlayer->GetSession()->GetLatency(), pPlayer->GetMap() ? (pPlayer->GetMap()->IsBattleGroundOrArena() ? "Yes" : "No") : "No");
     return false;
 }
