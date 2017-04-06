@@ -135,3 +135,5 @@ UPDATE `creature_template` SET `mindmg`='4347',`maxdmg`='5185' WHERE `entry` = 2
 
 UPDATE `creature` SET `spawntimesecs`=181 WHERE `GUID`=70700; -- Give Moh the same respawn time as Jakk and Manni
 
+DELETE FROM `creature_template_addon` WHERE `entry` = 22310;
+
