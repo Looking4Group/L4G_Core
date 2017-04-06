@@ -90,3 +90,46 @@ UPDATE `creature_template` SET `mindmg`='3210',`maxdmg`='3811' WHERE `entry` = 2
 -- Warder Corpse and Defender Corpse
 UPDATE `creature` SET `spawntimesecs` = 86400 WHERE `id` IN (21303,21304);
 
+UPDATE `creature_template` SET `mindmg`='880',`maxdmg`='1159' WHERE `entry` = 20896;
+UPDATE `creature_template` SET `mindmg`='3343',`maxdmg`='3971' WHERE `entry` = 21596;
+UPDATE `creature_template` SET `mindmg`='1815',`maxdmg`='2392' WHERE `entry` = 20886;
+UPDATE `creature_template` SET `mindmg`='1220',`maxdmg`='1607' WHERE `entry` = 20905;
+UPDATE `creature_template` SET `mindmg`='4040',`maxdmg`='4356' WHERE `entry` = 21616;
+UPDATE `creature_template` SET `mindmg`='1026',`maxdmg`='1351' WHERE `entry` = 20908;
+UPDATE `creature_template` SET `mindmg`='4040',`maxdmg`='4356' WHERE `entry` = 21617;
+UPDATE `creature_template` SET `mindmg`='1361',`maxdmg`='1794' WHERE `entry` = 20911;
+UPDATE `creature_template` SET `mindmg`='5015',`maxdmg`='5956' WHERE `entry` = 21588;
+UPDATE `creature_template` SET `mindmg`='1361',`maxdmg`='1794' WHERE `entry` = 20910;
+UPDATE `creature_template` SET `mindmg`='5015',`maxdmg`='5956' WHERE `entry` = 21618;
+UPDATE `creature_template` SET `mindmg`='5015',`maxdmg`='5956' WHERE `entry` = 21619;
+UPDATE `creature_template` SET `mindmg`='1223',`maxdmg`='1625' WHERE `entry` = 20881;
+UPDATE `creature_template` SET `mindmg`='814',`maxdmg`='1356' WHERE `entry` = 20883;
+UPDATE `creature_template` SET `mindmg`='4347',`maxdmg`='5185' WHERE `entry` = 21613;
+UPDATE `creature_template` SET `mindmg`='1233',`maxdmg`='1625' WHERE `entry` = 20882;
+UPDATE `creature_template` SET `mindmg`='816',`maxdmg`='1075' WHERE `entry` = 21702;
+UPDATE `creature_template` SET `mindmg`='816',`maxdmg`='1075' WHERE `entry` = 20897;
+UPDATE `creature_template` SET `mindmg`='1030',`maxdmg`='1356' WHERE `entry` = 20902;
+UPDATE `creature_template` SET `mindmg`='1030',`maxdmg`='1356' WHERE `entry` = 20901;
+UPDATE `creature_template` SET `mindmg`='1838',`maxdmg`='2423' WHERE `entry` = 20898;
+UPDATE `creature_template` SET `mindmg`='5015',`maxdmg`='5956' WHERE `entry` = 21598;
+UPDATE `creature_template` SET `mindmg`='1671',`maxdmg`='2203' WHERE `entry` = 20900;
+UPDATE `creature_template` SET `mindmg`='3777',`maxdmg`='4487' WHERE `entry` = 21621;
+UPDATE `creature_template` SET `mindmg`='1542',`maxdmg`='2033' WHERE `entry` = 20885;
+UPDATE `creature_template` SET `mindmg`='2615',`maxdmg`='3106' WHERE `entry` = 21590;
+UPDATE `creature_template` SET `mindmg`='4214',`maxdmg`='5188' WHERE `entry` = 21624;
+UPDATE `creature_template` SET `mindmg`='2266',`maxdmg`='2692' WHERE `entry` = 21599;
+UPDATE `creature_template` SET `mindmg`='718',`maxdmg`='885' WHERE `entry` = 20864;
+UPDATE `creature_template` SET `mindmg`='1447',`maxdmg`='1887' WHERE `entry` = 21608;
+UPDATE `creature_template` SET `mindmg`='400',`maxdmg`='800' WHERE `entry` = 20865;
+UPDATE `creature_template` SET `mindmg`='500',`maxdmg`='1000' WHERE `entry` = 21607;
+UPDATE `creature_template` SET `mindmg`='1233',`maxdmg`='1625' WHERE `entry` = 20866;
+UPDATE `creature_template` SET `mindmg`='5216',`maxdmg`='6222' WHERE `entry` = 21614;
+UPDATE `creature_template` SET `mindmg`='1233',`maxdmg`='1625' WHERE `entry` = 20867;
+UPDATE `creature_template` SET `mindmg`='1233',`maxdmg`='1625' WHERE `entry` = 20868;
+UPDATE `creature_template` SET `mindmg`='1144',`maxdmg`='1507' WHERE `entry` = 20879;
+UPDATE `creature_template` SET `mindmg`='5376',`maxdmg`='6382' WHERE `entry` = 21595;
+UPDATE `creature_template` SET `mindmg`='1716',`maxdmg`='2260' WHERE `entry` = 20880;
+UPDATE `creature_template` SET `mindmg`='6204',`maxdmg`='7365' WHERE `entry` = 21594;
+UPDATE `creature_template` SET `mindmg`='4302',`maxdmg`='4806' WHERE `entry` = 21605;
+UPDATE `creature_template` SET `mindmg`='4347',`maxdmg`='5185' WHERE `entry` = 21615;
+
