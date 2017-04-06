@@ -137,3 +137,8 @@ UPDATE `creature` SET `spawntimesecs`=181 WHERE `GUID`=70700; -- Give Moh the sa
 
 DELETE FROM `creature_template_addon` WHERE `entry` = 22310;
 
+UPDATE `creature_template` SET `mindmg`='600',`maxdmg`='800' WHERE `entry` = 17819;
+UPDATE `creature_template` SET `mindmg`='504',`maxdmg`='659' WHERE `entry` = 17840;
+UPDATE `creature_template` SET `mindmg`='500',`maxdmg`='700' WHERE `entry` = 17833;
+UPDATE `creature_template` SET `mindmg`='1000',`maxdmg`='1400' WHERE `entry` = 18096;
+
