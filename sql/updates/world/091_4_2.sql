@@ -154,3 +154,6 @@ UPDATE `creature_template` SET `mindmg`='800',`maxdmg`='1500' WHERE `entry` = 20
 UPDATE `creature_template` SET `mindmg`='600',`maxdmg`='1200' WHERE `entry` = 20741;
 UPDATE `creature_template` SET `mindmg`='600',`maxdmg`='1200' WHERE `entry` = 20743;
 
+UPDATE `creature_template` SET `mindmg`='762',`maxdmg`='1010', `mechanic_immune_mask` = `mechanic_immune_mask`|1 WHERE `entry` = 17800;
+UPDATE `creature_template` SET `mechanic_immune_mask` = `mechanic_immune_mask`|1 WHERE `entry` = 20621;
+
