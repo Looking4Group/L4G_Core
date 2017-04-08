@@ -42,3 +42,5 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('1647303','16473','2','0','100','3','50','0','25000','35000','11','29683','0','1','0','0','0','0','0','0','0','0','Spectral Performer - Cast Spotlight at 50% HP'),
 ('1647304','16473','6','0','20','2','0','0','0','0','1','-138','0','0','0','0','0','0','0','0','0','0','Spectral Performer - Say on Death');
 
+UPDATE `creature_template` SET `mechanic_immune_mask`='1039089663' WHERE `entry` = 16473;
+
