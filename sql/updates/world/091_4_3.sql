@@ -35,3 +35,10 @@ UPDATE `creature` SET `position_x` = '-181.6646', `position_y` = '68.2096', `pos
 -- 3239,3240,3685 Benedict's Chest, Taillasher Eggs, Silithid Mound Lootable
 UPDATE `gameobject_template` SET `faction` = 0 WHERE `entry` IN (3239,3240,3685);
 
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 16473;
+INSERT INTO `creature_ai_scripts` VALUES
+('1647301','16473','0','0','70','3','5000','10000','11000','15000','11','29680','0','0','0','0','0','0','0','0','0','0','Spectral Performer - Cast Curtain Call'),
+('1647302','16473','0','0','100','3','11000','17000','15000','21000','11','29679','1','32','0','0','0','0','0','0','0','0','Spectral Performer - Cast Bad Poetry'),
+('1647303','16473','2','0','100','3','50','0','25000','35000','11','29683','0','1','0','0','0','0','0','0','0','0','Spectral Performer - Cast Spotlight at 50% HP'),
+('1647304','16473','6','0','20','2','0','0','0','0','1','-138','0','0','0','0','0','0','0','0','0','0','Spectral Performer - Say on Death');
+
