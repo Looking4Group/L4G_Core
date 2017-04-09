@@ -165,3 +165,5 @@ DELETE FROM `looking4group_string` WHERE `entry`=2026;
 INSERT INTO `looking4group_string` (`entry`, `content_default`) VALUES 
 ('2026', '|cff00ff00Character|r %s |cff00ff00was reported for spam. Ticket entry:|r|cffff00ff %d.|r');
 
+UPDATE `creature_template` SET `mechanic_immune_mask`='787431407' WHERE `entry` = 17546;
+
