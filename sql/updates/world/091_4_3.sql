@@ -100,3 +100,56 @@ UPDATE `creature_template` SET `speed`='1.48',`flags_extra`='1073741826' WHERE `
 
 UPDATE `creature_template` SET `maxhealth`='22958',`speed`='0.6',`mindmg`='557',`maxdmg`='662',`mechanic_immune_mask`='650853375',`flags_extra`='1086390272' WHERE `entry` = 23375; -- 20958 0.5 100 205 -- 557 - 662
 
+-- Aran Elemental Outsource
+
+DELETE FROM `creature` WHERE `guid` IN (135128,135129,135130,135131,135132,135133,135138,135154);
+DELETE FROM `creature_formations` WHERE `leaderguid` IN (57440,49978,50716,49805,50521,135172);
+DELETE FROM `creature_formations` WHERE `memberguid` IN (57440,49978,50716,49805,50521,135172);
+INSERT INTO `creature_formations` VALUES
+(135172, 135172, 100, 360, 2),
+(135172, 57440, 100, 360, 2),
+(135172, 49978, 100, 360, 2),
+(135172, 50716, 100, 360, 2),
+(135172, 49805, 100, 360, 2),
+(135172, 50521, 100, 360, 2);
+
+DELETE FROM `creature_linked_respawn` WHERE `guid` = 45682;
+INSERT INTO `creature_linked_respawn` VALUES (45682, 57440);
+
+-- Shade of Aran Teleport Center 17176- Used for Elemental Check
+UPDATE `creature_template` SET `faction_A` = 16, `faction_H` = 16, `AIName` = '' WHERE `entry` = 17176; -- `unit_flags` = 33554432 35 128
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17176;
+
+UPDATE `creature` SET `spawntimesecs` = 600 WHERE `id` IN (17171,17168,17170,17169,45682,135172);
+UPDATE `creature_template` SET `minlevel` = 70, `maxlevel` = 70, `minmana` = 0, `maxmana` = 0, `faction_A` = 16, `faction_H` = 16, `AIName` = 'EventAI' WHERE `entry` IN (17171,17168,17170,17169);
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN (17171,17168,17170,17169,17176);
+INSERT INTO `creature_ai_scripts` VALUES 
+(1716801, 17168, 4, 0, 100, 2, 0, 0, 0, 0, 21, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0,'Shade of Aran Teleport N - Stop Movement and Stop Melee on Aggro'),
+(1716802, 17168, 14, 0, 100, 2, 601630, 80, 0, 0, 11, 29962, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0,'Shade of Aran Teleport N - Cast Summon Water Elemental on 40% Shade of Aran HP'), -- 40% HP 
+(1716803, 17168, 14, 0, 100, 2, 606630, 80, 0, 0, 39, 5, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0,'Shade of Aran Teleport N - Call for Help and Despawn'),
+
+(1716901, 17169, 4, 0, 100, 2, 0, 0, 0, 0, 21, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0,'Shade of Aran Teleport S - Stop Movement and Stop Melee on Aggro'),
+(1716902, 17169, 14, 0, 100, 2, 601630, 80, 0, 0, 11, 37053, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0,'Shade of Aran Teleport S - Cast Summon Water Elemental on 40% Shade of Aran HP'),
+(1716903, 17169, 14, 0, 100, 2, 606630, 80, 0, 0, 39, 5, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0,'Shade of Aran Teleport S - Call for Help and Despawn'),
+
+(1717001, 17170, 4, 0, 100, 2, 0, 0, 0, 0, 21, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0,'Shade of Aran Teleport E - Stop Movement and Stop Melee on Aggro'),
+(1717002, 17170, 14, 0, 100, 2, 601630, 80, 0, 0, 11, 37051, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0,'Shade of Aran Teleport E - Cast Summon Water Elemental on 40% Shade of Aran HP'),
+(1717003, 17170, 14, 0, 100, 2, 606630, 80, 0, 0, 39, 5, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0,'Shade of Aran Teleport E - Call for Help and Despawn'),
+
+(1717101, 17171, 4, 0, 100, 2, 0, 0, 0, 0, 21, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0,'Shade of Aran Teleport W - Stop Movement and Stop Melee on Aggro'),
+(1717102, 17171, 14, 0, 100, 2, 601630, 80, 0, 0, 11, 37052, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0,'Shade of Aran Teleport W - Cast Summon Water Elemental on 40% Shade of Aran HP'),
+(1717103, 17171, 14, 0, 100, 2, 606630, 80, 0, 0, 39, 5, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0,'Shade of Aran Teleport W - Call for Help and Despawn');
+
+-- Conjured Elemental 17167- mob_aran_elemental
+UPDATE `creature_template` SET `faction_A` = 16, `faction_H` = 16, `mindmg` = 300, `maxdmg` = 600, `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = 17167;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17167;
+INSERT INTO `creature_ai_scripts` VALUES ('1716701','17167','9','0','100','3','0','40','1500','4000','11','31012','1','0','0','0','0','0','0','0','0','0','Conjured Elemental - Cast Water Bolt');
+INSERT INTO `creature_ai_scripts` VALUES ('1716702','17167','1','0','100','3','1000','1000','3000','3000','38','0','0','0','0','0','0','0','0','0','0','0','Conjured Elemental - DoZoneInCombat OOC');
+INSERT INTO `creature_ai_scripts` VALUES ('1716703','17167','1','0','100','2','10000','10000','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Conjured Elemental - Despawn OOC');
+
+-- Shade of Aran 16524
+UPDATE `creature_template` SET `mindmg`='2295',`maxdmg`='2760',`baseattacktime`='2000',`speed`='2.40',`flags_extra` = `flags_extra`|2|1048576 WHERE `entry` = 16524; -- 3060 3679 -- 4,590 - 5,519
+
+-- Blizzard (Shade of Aran) 17161
+UPDATE `creature_template` SET `speed` = 1.20, `unit_flags`='33554432',`flags_extra`='130' WHERE `entry` = 17161; -- 1,125 33554432 128
+
