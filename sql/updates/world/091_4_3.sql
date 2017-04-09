@@ -153,3 +153,15 @@ UPDATE `creature_template` SET `mindmg`='2295',`maxdmg`='2760',`baseattacktime`=
 -- Blizzard (Shade of Aran) 17161
 UPDATE `creature_template` SET `speed` = 1.20, `unit_flags`='33554432',`flags_extra`='130' WHERE `entry` = 17161; -- 1,125 33554432 128
 
+-- https://github.com/Looking4Group/L4G_Core/pull/3385
+UPDATE creature_template SET ScriptName = 'npc_bloodmaul_dire_wolf' WHERE entry = 20058;
+UPDATE `quest_template` SET `ReqCreatureOrGOId1`=21176, `ReqSpellCast1`=0 WHERE entry=10506;
+
+-- Droggam should only drop one of the quest items, not both.
+-- https://github.com/Looking4Group/L4G_Core/issues/3374
+DELETE FROM `creature_loot_template` WHERE  `entry`=20731 AND `item`=30415;
+
+DELETE FROM `looking4group_string` WHERE `entry`=2026;
+INSERT INTO `looking4group_string` (`entry`, `content_default`) VALUES 
+('2026', '|cff00ff00Character|r %s |cff00ff00was reported for spam. Ticket entry:|r|cffff00ff %d.|r');
+
