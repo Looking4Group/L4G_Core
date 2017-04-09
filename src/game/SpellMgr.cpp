@@ -3306,7 +3306,7 @@ void SpellMgr::LoadSpellCustomAttr()
             case 37790: // Spread Shot
             case 41303: // Soul Drain
             case 31298: // Anetheron: Sleep
-            case 30004: // Aran: Flame Wreath
+            case 30004: // Flame Wreath (Shade of Aran)
                 spellInfo->MaxAffectedTargets = 3;
                 break;
             case 38310: // Multi-Shot
@@ -3525,12 +3525,6 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->ChannelInterruptFlags |= CHANNEL_INTERRUPT_FLAG_MOVEMENT;
                 spellInfo->InterruptFlags &= ~SPELL_INTERRUPT_FLAG_INTERRUPT;
                 break;
-            case 29962: // Summon Elemental (Shade of Aran)
-            case 37053:
-            case 37051:
-            case 37052:
-                spellInfo->rangeIndex = 6;
-                break;
             case 36952: // (temporary) Ogre Building Bunny Curse Visual Large - penalty curse for SWP
             case 40214: // Dragonmaw illusion
             case 46273: // Multiphase Goggles (Item: Multiphase Spectrographic Goggles)
@@ -3544,10 +3538,12 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->EffectImplicitTargetA[1] = TARGET_UNIT_CASTER;
                 spellInfo->EffectImplicitTargetA[2] = TARGET_UNIT_TARGET_ENEMY;
                 break;
-            case 29978: // Aran Pyroblast
+            case 29956: // Arcane Missiles (Shade of Aran)
+            case 29978: // Pyroblast (Shade of Aran)
                 spellInfo->Attributes &= ~SPELL_ATTR_LEVEL_DAMAGE_CALCULATION;
+                spellInfo->AttributesEx4 |= SPELL_ATTR_EX4_DAMAGE_DOESNT_BREAK_AURAS;
                 break;
-            case 29946: // Aran Flame Wreath
+            case 29946: // Flame Wreath (Shade of Aran)
                 spellInfo->EffectRadiusIndex[0] = EFFECT_RADIUS_2_YARDS;
                 break;
             case 32785: // Infernal Rain                
@@ -3771,6 +3767,10 @@ void SpellMgr::LoadSpellCustomAttr()
             case 38280: // Lady Vashj Static Charge
             case 43363: // Electrified Net Damage
             case 43364: // Tranquilizing Poison
+            case 29954: // Frostbolt (Shade of Aran)
+            case 29953: // Firebolt (Shade of Aran)
+            case 29964: // Dragons Breath (Shade of Aran)
+            case 29951: // Blizzard (Shade of Aran)
                 spellInfo->AttributesEx4 |= SPELL_ATTR_EX4_DAMAGE_DOESNT_BREAK_AURAS;
                 break;
             case 38015: //Hydross beam visual
@@ -4649,15 +4649,21 @@ DiminishingGroup SpellMgr::GetDiminishingReturnsGroupForSpell(SpellEntry const* 
     if (!spellproto)
         return DIMINISHING_NONE;
 
+    // Explicit Spells
+    switch (spellproto->Id)
+    {
+        case 37029: // Remote Toy, basically all CC spells cast by creatures which end up cast by the player on itself should be here
+            return DIMINISHING_NONE;
+        default:
+            break;
+    }
     // Explicit Diminishing Groups
     switch (spellproto->SpellFamilyName)
     {
         case SPELLFAMILY_GENERIC:
- 		{
-            if (spellproto->Id == 37029) // Remote Toy, basically all CC spells cast by creatures which end up cast by the player on itself should be here
-                return DIMINISHING_NONE;
+ 		{  
             // some generic arena related spells have by some strange reason MECHANIC_TURN
-            else if (spellproto->Mechanic == MECHANIC_TURN)
+            if (spellproto->Mechanic == MECHANIC_TURN)
                 return DIMINISHING_NONE;
  			// Hunter Pet Intimidation
             else if (spellproto->Id == 24394)
