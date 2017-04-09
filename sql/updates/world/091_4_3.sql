@@ -58,3 +58,6 @@ UPDATE `gameobject` SET `id` = 187345, `position_x` = '16224.1142', `position_y`
 DELETE FROM `creature_ai_scripts` WHERE `id` = 1832501;
 INSERT INTO `creature_ai_scripts` VALUES ('1832501','18325','0','0','100','7','8700','12700','10000','15000','11','27641','4','0','0','0','0','0','0','0','0','0','Sethekk Prophet - Cast Fear');
 
+-- Tazan's Satchel
+UPDATE `item_template` SET `flags` = 0 WHERE `entry` = 7209; -- 4
+
