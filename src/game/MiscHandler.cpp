@@ -1508,7 +1508,7 @@ void WorldSession::HandleReportSpamOpcode(WorldPacket & recv_data)
 
     GM_Ticket *ticket = new GM_Ticket;
 
-    ticket->name = "Spam Report System";
+    ticket->name = spammer_name;
     ticket->guid = sTicketMgr.GenerateTicketID();
     ticket->playerGuid = 0;
     ticket->message = ss.str();
@@ -1522,7 +1522,7 @@ void WorldSession::HandleReportSpamOpcode(WorldPacket & recv_data)
     sTicketMgr.AddGMTicket(ticket, false);
 
     std::string NameLink = "|Hplayer:" + ticket->name + "|h[" + ticket->name + "]|h";
-    sWorld.SendGMText(LANG_COMMAND_TICKETNEW, NameLink.c_str(), ticket->guid);
+    sWorld.SendGMText(LANG_COMMAND_TICKET_SPAM_REPORT, NameLink.c_str(), ticket->guid);
 }
 
 void WorldSession::HandleRealmStateRequestOpcode(WorldPacket & recv_data)
