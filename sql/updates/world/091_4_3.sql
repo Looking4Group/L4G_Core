@@ -98,3 +98,5 @@ UPDATE `creature_template` SET `speed`='1.20' WHERE `entry` = 22075;
 -- Torloth the Magnificent 22076
 UPDATE `creature_template` SET `speed`='1.48',`flags_extra`='1073741826' WHERE `entry` = 22076;
 
+UPDATE `creature_template` SET `maxhealth`='22958',`speed`='0.6',`mindmg`='557',`maxdmg`='662',`mechanic_immune_mask`='650853375',`flags_extra`='1086390272' WHERE `entry` = 23375; -- 20958 0.5 100 205 -- 557 - 662
+
