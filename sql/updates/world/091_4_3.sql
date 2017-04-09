@@ -86,3 +86,15 @@ INSERT INTO `creature` VALUES (15487, 2349, 0, 1, 6808, 0, -554.877, -972.102, 4
 INSERT INTO `creature` VALUES (15480, 2350, 0, 1, 1989, 0, -705.869, 388.254, 70.2089, 2.22054, 300, 10, 0, 494, 0, 0, 1);
 INSERT INTO `creature` VALUES (15482, 2356, 0, 1, 3201, 0, -583.157, -950.196, 40.9115, 2.38018, 300, 10, 0, 944, 0, 0, 1);
 
+-- Illidari Highlord 19797
+UPDATE `creature_template` SET `speed`='1.20',`mechanic_immune_mask`='75569267',`flags_extra`='1073741824'  WHERE `entry` = 19797; -- 67110917
+
+-- Illidari Mind Breaker 22074
+UPDATE `creature_template` SET `speed`='1.20' WHERE `entry` = 22074;
+
+-- Illidari Soldier 22075
+UPDATE `creature_template` SET `speed`='1.20' WHERE `entry` = 22075;
+
+-- Torloth the Magnificent 22076
+UPDATE `creature_template` SET `speed`='1.48',`flags_extra`='1073741826' WHERE `entry` = 22076;
+
