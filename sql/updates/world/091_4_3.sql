@@ -120,7 +120,7 @@ INSERT INTO `creature_linked_respawn` VALUES (45682, 57440);
 UPDATE `creature_template` SET `faction_A` = 16, `faction_H` = 16, `AIName` = '' WHERE `entry` = 17176; -- `unit_flags` = 33554432 35 128
 DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17176;
 
-UPDATE `creature` SET `spawntimesecs` = 600 WHERE `id` IN (17171,17168,17170,17169,45682,135172);
+UPDATE `creature` SET `spawntimesecs` = 780 WHERE `id` IN (17171,17168,17170,17169,17161,17176);
 UPDATE `creature_template` SET `minlevel` = 70, `maxlevel` = 70, `minmana` = 0, `maxmana` = 0, `faction_A` = 16, `faction_H` = 16, `AIName` = 'EventAI' WHERE `entry` IN (17171,17168,17170,17169);
 DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN (17171,17168,17170,17169,17176);
 INSERT INTO `creature_ai_scripts` VALUES 
