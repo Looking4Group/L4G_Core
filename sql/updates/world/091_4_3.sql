@@ -167,3 +167,5 @@ INSERT INTO `looking4group_string` (`entry`, `content_default`) VALUES
 
 UPDATE `creature_template` SET `mechanic_immune_mask`='787431407' WHERE `entry` = 17546;
 
+UPDATE `creature_template` SET `mindmg`='3956',`maxdmg`='4698' WHERE `entry` = 16181;
+
