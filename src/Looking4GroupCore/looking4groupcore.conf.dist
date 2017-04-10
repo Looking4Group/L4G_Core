@@ -642,6 +642,11 @@ ExpLogFile = "exp.log"
 #        If you want to start with silver, use for example 100 (100 copper = 1 silver)
 #        Default: 0
 #
+#    MinPlayerExploreLevel
+#        The minimum level required in order to get exploration XP. 
+#        Players BELOW this number will not get any XP, but will still explore the area on the map.
+#        Default: 1
+#
 #    MaxHonorPoints
 #        Max honor points that player can have.
 #        Default: 75000
@@ -856,6 +861,7 @@ SkipCinematics = 0
 MaxPlayerLevel = 70
 StartPlayerLevel = 1
 StartPlayerMoney = 0
+MinPlayerExploreLevel = 1
 MaxHonorPoints = 75000
 StartHonorPoints = 0
 MaxArenaPoints = 5000
