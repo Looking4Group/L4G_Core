@@ -78,7 +78,7 @@ fi
 if [ "$USE_MMAPS_OFFMESH" == "1" ]
 then
   echo "Only extracting offmesh meshes"
-  MovemapGen.sh offmesh $LOG_FILE $DETAIL_LOG_FILE
+  ./mmaps/MoveMapGen.sh offmesh $LOG_FILE $DETAIL_LOG_FILE
   exit 0
 fi
 
@@ -134,7 +134,7 @@ echo | tee -a $DETAIL_LOG_FILE
 if [ "$USE_AD" == "1" ]
 then
  echo "`date`: Start extraction of DBCs and map files..." | tee -a $LOG_FILE
- ad | tee -a $DETAIL_LOG_FILE
+ ./maps/ad | tee -a $DETAIL_LOG_FILE
  echo "`date`: Extracting of DBCs and map files finished" | tee -a $LOG_FILE
  echo | tee -a $LOG_FILE
  echo | tee -a $DETAIL_LOG_FILE
@@ -144,11 +144,11 @@ fi
 if [ "$USE_VMAPS" == "1" ]
 then
   echo "`date`: Start extraction of vmaps..." | tee -a $LOG_FILE
-  vmapExtractor3 | tee -a $DETAIL_LOG_FILE
+  ./vmaps/vmapExtractor3 | tee -a $DETAIL_LOG_FILE
   echo "`date`: Extracting of vmaps finished" | tee -a $LOG_FILE
   mkdir vmaps
   echo "`date`: Start assembling of vmaps..." | tee -a $LOG_FILE
-  vmap_assembler.exe buildings vmaps | tee -a $DETAIL_LOG_FILE
+  ./vmaps/vmap_assembler.exe buildings vmaps | tee -a $DETAIL_LOG_FILE
   echo "`date`: Assembling of vmaps finished" | tee -a $LOG_FILE
 
   echo | tee -a $LOG_FILE
@@ -158,5 +158,5 @@ fi
 ## Extract mmaps
 if [ "$USE_MMAPS" == "1" ]
 then
-  MovemapGen.sh $NUM_CPU $LOG_FILE $DETAIL_LOG_FILE
+  ./mmaps/MoveMapGen.sh $NUM_CPU $LOG_FILE $DETAIL_LOG_FILE
 fi
