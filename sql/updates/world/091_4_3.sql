@@ -172,3 +172,5 @@ UPDATE `creature_template` SET `mindmg`='3956',`maxdmg`='4698' WHERE `entry` = 1
 -- Recipe: Transmute Primal Might Restocktime
 UPDATE `npc_vendor` SET `maxcount` = 1, `incrtime` = 9000 WHERE `item` = 23574; -- 43200
 
+UPDATE `creature` SET `spawntimesecs` = 7200 WHERE `id` IN (16595, 16596);
+
