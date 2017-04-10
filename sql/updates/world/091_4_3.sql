@@ -169,3 +169,6 @@ UPDATE `creature_template` SET `mechanic_immune_mask`='787431407' WHERE `entry` 
 
 UPDATE `creature_template` SET `mindmg`='3956',`maxdmg`='4698' WHERE `entry` = 16181;
 
+-- Recipe: Transmute Primal Might Restocktime
+UPDATE `npc_vendor` SET `maxcount` = 1, `incrtime` = 9000 WHERE `item` = 23574; -- 43200
+
