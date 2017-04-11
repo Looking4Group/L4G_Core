@@ -176,3 +176,5 @@ UPDATE `creature` SET `spawntimesecs` = 7200 WHERE `id` IN (16595, 16596);
 
 DELETE FROM `gameobject` WHERE `guid` IN (82599,82598,82597);
 
+UPDATE `creature_template` SET `npcflag` = `npcflag`|64  WHERE `entry` = 4773;
+
