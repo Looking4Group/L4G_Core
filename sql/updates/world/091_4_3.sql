@@ -174,3 +174,5 @@ UPDATE `npc_vendor` SET `maxcount` = 1, `incrtime` = 9000 WHERE `item` = 23574; 
 
 UPDATE `creature` SET `spawntimesecs` = 7200 WHERE `id` IN (16595, 16596);
 
+DELETE FROM `gameobject` WHERE `guid` IN (82599,82598,82597);
+
