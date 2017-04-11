@@ -184,3 +184,11 @@ UPDATE `quest_template` SET `ReqCreatureOrGOId1`=21176, `ReqSpellCast1`=0 WHERE 
 -- change trainer_type_mount cause since patch 1.12.1 the mount trainer system was reworked
 UPDATE `creature_template` SET `trainer_type` = 2 where `trainer_type` = 1;
 
+UPDATE `gameobject` SET `spawntimesecs` = 7200, `animprogress` = 100 WHERE `id` IN (176224, 181085);
+UPDATE `gameobject_template` SET `flags` = 0, `data1` = 13646 WHERE `entry` = 176224; -- 4 0
+DELETE FROM `gameobject_loot_template` WHERE `entry` IN (13646,17899);
+INSERT INTO `gameobject_loot_template` VALUES (13646, 13180, 100, 0, 1, 2, 0, 0, 0);
+INSERT INTO `gameobject_loot_template` VALUES (17899, 13180, 100, 0, 1, 4, 0, 0, 0);
+DELETE FROM `gameobject` WHERE `guid` = 194585;
+INSERT INTO `gameobject` VALUES (194585, 181085, 329, 1, 3504.23, -3371.19, 135.959, 4.18344, 0, 0, 0.86736, -0.497682, 7200, 100, 1);
+
