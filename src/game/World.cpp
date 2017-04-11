@@ -808,6 +808,8 @@ void World::LoadConfigSettings(bool reload)
         m_configs[CONFIG_START_PLAYER_MONEY] = MAX_MONEY_AMOUNT;
     }
 
+    m_configs[CONFIG_MIN_PLAYER_EXPLORE_LEVEL] = sConfig.GetIntDefault("MinPlayerExploreLevel", 1);
+
     m_configs[CONFIG_MAX_HONOR_POINTS] = sConfig.GetIntDefault("MaxHonorPoints", 75000);
     if (m_configs[CONFIG_MAX_HONOR_POINTS] < 0)
     {
