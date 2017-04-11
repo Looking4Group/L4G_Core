@@ -181,3 +181,6 @@ UPDATE `creature_template` SET `npcflag` = `npcflag`|64  WHERE `entry` IN (3690,
 UPDATE creature_template SET ScriptName = 'npc_bloodmaul_dire_wolf' WHERE entry = 20058;
 UPDATE `quest_template` SET `ReqCreatureOrGOId1`=21176, `ReqSpellCast1`=0 WHERE entry=10506;
 
+-- change trainer_type_mount cause since patch 1.12.1 the mount trainer system was reworked
+UPDATE `creature_template` SET `trainer_type` = 2 where `trainer_type` = 1;
+
