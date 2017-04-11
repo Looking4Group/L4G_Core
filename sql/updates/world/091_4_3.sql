@@ -176,5 +176,8 @@ UPDATE `creature` SET `spawntimesecs` = 7200 WHERE `id` IN (16595, 16596);
 
 DELETE FROM `gameobject` WHERE `guid` IN (82599,82598,82597);
 
-UPDATE `creature_template` SET `npcflag` = `npcflag`|64  WHERE `entry` = 4773;
+UPDATE `creature_template` SET `npcflag` = `npcflag`|64  WHERE `entry` IN (3690, 4773);
+
+UPDATE creature_template SET ScriptName = 'npc_bloodmaul_dire_wolf' WHERE entry = 20058;
+UPDATE `quest_template` SET `ReqCreatureOrGOId1`=21176, `ReqSpellCast1`=0 WHERE entry=10506;
 
