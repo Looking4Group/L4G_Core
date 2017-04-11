@@ -1990,11 +1990,11 @@ struct npc_cannon_targetAI : public ScriptedAI
             {
                 if (Player* player = me->GetPlayer(PlayerGUID))
                 {
-                    if (Creature* bunny = GetClosestCreatureWithEntry(me, NPC_SOUTH_GATE, 20.0f))
+                    if (Creature* bunny = GetClosestCreatureWithEntry(me, NPC_SOUTH_GATE, 200.0f))
                         player->KilledMonster(CREDIT_SOUTH, me->GetGUID());
                     else
                     {   
-                        if (Creature* bunny = GetClosestCreatureWithEntry(me, NPC_NORTH_GATE, 50.0f))
+                        if (Creature* bunny = GetClosestCreatureWithEntry(me, NPC_NORTH_GATE, 200.0f))
                             player->KilledMonster(CREDIT_NORTH, me->GetGUID());
                     }
                 }
