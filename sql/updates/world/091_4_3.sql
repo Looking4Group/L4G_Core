@@ -192,3 +192,6 @@ INSERT INTO `gameobject_loot_template` VALUES (17899, 13180, 100, 0, 1, 4, 0, 0,
 DELETE FROM `gameobject` WHERE `guid` = 194585;
 INSERT INTO `gameobject` VALUES (194585, 181085, 329, 1, 3504.23, -3371.19, 135.959, 4.18344, 0, 0, 0.86736, -0.497682, 7200, 100, 1);
 
+-- Pattern: Heavy Knothide Leather Decrease Restocktime
+UPDATE `npc_vendor` SET `incrtime` = 21600 WHERE `item` = 25720; -- 43200
+
