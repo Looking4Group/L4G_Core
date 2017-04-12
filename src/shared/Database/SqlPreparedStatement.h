@@ -42,6 +42,7 @@ union SqlStmtField
     int64 i64;
     float f;
     double d;
+    long l;
 };
 
 enum SqlStmtFieldType
@@ -58,6 +59,7 @@ enum SqlStmtFieldType
     FIELD_FLOAT,
     FIELD_DOUBLE,
     FIELD_STRING,
+    FIELD_LONG,
     FIELD_NONE
 };
 
@@ -88,6 +90,7 @@ class SqlStmtFieldData
         float toFloat() const { ASSERT(m_type == FIELD_FLOAT); return m_binaryData.f; }
         double toDouble() const { ASSERT(m_type == FIELD_DOUBLE); return m_binaryData.d; }
         const char * toStr() const { ASSERT(m_type == FIELD_STRING); return m_szStringData.c_str(); }
+        long toLong() const { ASSERT(m_type == FIELD_LONG); return m_binaryData.l; }
 
         //get type of data
         SqlStmtFieldType type() const { return m_type; }
@@ -112,6 +115,7 @@ class SqlStmtFieldData
                 case FIELD_FLOAT:   return sizeof(float);
                 case FIELD_DOUBLE:  return sizeof(double);
                 case FIELD_STRING:  return m_szStringData.length();
+                case FIELD_LONG:    return sizeof(long);
 
                 default:
                     throw std::runtime_error("unrecognized type of SqlStmtFieldType obtained");
@@ -137,6 +141,7 @@ template<> inline void SqlStmtFieldData::set(int64 val) { m_type = FIELD_I64; m_
 template<> inline void SqlStmtFieldData::set(float val) { m_type = FIELD_FLOAT; m_binaryData.f = val; }
 template<> inline void SqlStmtFieldData::set(double val) { m_type = FIELD_DOUBLE; m_binaryData.d = val; }
 template<> inline void SqlStmtFieldData::set(const char * val) { m_type = FIELD_STRING; m_szStringData = val; }
+template<> inline void SqlStmtFieldData::set(long val) { m_type = FIELD_LONG; m_binaryData.l = val; }
 
 class SqlStatement;
 //prepared statement executor
@@ -258,6 +263,7 @@ class SqlStatement
         void addString(const char * var) { arg(var); }
         void addString(const std::string& var) { arg(var.c_str()); }
         void addString(std::ostringstream& ss) { arg(ss.str().c_str()); ss.str(std::string()); }
+        void addLong(long var) { arg(var); }
 
     protected:
         //don't allow anyone except Database class to create static SqlStatement objects
