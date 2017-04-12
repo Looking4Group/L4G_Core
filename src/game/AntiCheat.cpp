@@ -62,7 +62,8 @@ int ACRequest::call()
 
     if (DetectSpeedHack(pPlayer))
     {
-        if (!pPlayer->HasUnitMovementFlag(MOVEFLAG_FALLING | MOVEFLAG_FALLINGFAR | MOVEFLAG_SPLINE_ELEVATION | MOVEFLAG_SAFE_FALL | MOVEFLAG_SPLINE_ENABLED | MOVEFLAG_ONTRANSPORT | MOVEFLAG_LEVITATING | MOVEFLAG_HOVER | MOVEFLAG_CAN_FLY | MOVEFLAG_FLYING | SPLINEFLAG_FLYINGING))
+        if (!pPlayer->HasUnitMovementFlag(MOVEFLAG_FALLING | MOVEFLAG_FALLINGFAR | MOVEFLAG_SPLINE_ELEVATION | MOVEFLAG_SAFE_FALL | MOVEFLAG_SPLINE_ENABLED | MOVEFLAG_ONTRANSPORT | MOVEFLAG_CAN_FLY | MOVEFLAG_FLYING | SPLINEFLAG_FLYINGING)
+            || !pPlayer->HasAuraType(SPELL_AURA_GHOST))
         {
             sWorld.SendGMText(LANG_ANTICHEAT, pPlayer->GetName(), pPlayer->GetName());
             sLog.outLog(LOG_CHEAT, "Player %s (GUID: %u / ACCOUNT_ID: %u) possible Speed Hack.", 
@@ -154,6 +155,7 @@ bool ACRequest::DetectSpeedHack(Player *pPlayer)
     n.y = n.y - o.y;
 
     uint32 exact2dDist = sqrt(n.x*n.x + n.y*n.y);
+    uint32 latency = pPlayer->GetSession()->GetLatency();
 
     // how long the player took to move to here.
     uint32 timeDiff = WorldTimer::getMSTimeDiff(GetLastMovementInfo().time, GetNewMovementInfo().time);
@@ -167,7 +169,7 @@ bool ACRequest::DetectSpeedHack(Player *pPlayer)
     uint32 clientSpeedRate = exact2dDist * 1000 / timeDiff;
 
     // did the 1.1 factor to accept a margin of tolerance
-    if (clientSpeedRate > (speedRate * 1.1))
+    if (clientSpeedRate > (speedRate * 1.1) || latency < 1000)
         return true;
 
     pPlayer->m_AC_timer = 10000;   // 10 sek (reduce to 1 sek "IN_MILISECONDS" again if kick activated)
