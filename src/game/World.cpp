@@ -291,8 +291,6 @@ void World::AddSession_ (WorldSession* s)
     uint32 pLimit = GetPlayerAmountLimit();
     uint32 QueueSize = GetQueueSize(); //number of players in the queue
 
-    bool addToQueue;
-    
     //so we don't count the user trying to
     //login as a session and queue the socket that we are using
     if (decrease_session)
