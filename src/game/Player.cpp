@@ -1640,6 +1640,47 @@ bool Player::BuildEnumData(QueryResultAutoPtr result, WorldPacket * p_data)
     return true;
 }
 
+void Player::CheckAndAnnounceServerFirst(Creature* creature)
+{
+    QueryResultAutoPtr result = RealmDataDatabase.PQuery("SELECT faction FROM server_first WHERE entry = %u", creature->GetEntry());
+    if (!result || (result->GetRowCount() == 1))
+    {
+        // Construct message
+        std::string msg = "Congratulations to ";
+        msg.append(GetName());
+        std::string guildName = sGuildMgr.GetGuildNameById(GetGuildId());
+        if (guildName != "")
+        {
+            msg.append(" from ");
+            msg.append(guildName);
+        }
+        msg.append(" for defeating ");
+        msg.append(creature->GetName());
+        msg.append("!");
+
+        if (result)
+        {
+            // Faction first
+            Field *fields = result->Fetch();
+            uint32 teamId = fields[0].GetUInt32();
+            if (GetTeamId() != teamId)
+            {
+                sWorld.SendWorldText(GetTeamId() == TEAM_ALLIANCE ? LANG_ALLIANCE_FIRST : LANG_HORDE_FIRST, 0, msg.c_str());
+                // Update database
+                RealmDataDatabase.PExecute("INSERT INTO server_first (entry, faction, character_id, guild_id) VALUES (%i, %i, %i, %i)", creature->GetEntry(), GetTeamId(), GetGUIDLow(), GetGuildId());
+            }
+        }
+        else
+        {
+            // Server first
+            sWorld.SendWorldText(LANG_SERVER_FIRST, 0, msg.c_str());
+            sWorld.SendWorldText(GetTeamId() == TEAM_ALLIANCE ? LANG_ALLIANCE_FIRST : LANG_HORDE_FIRST, 0, msg.c_str());
+            // Update database
+            RealmDataDatabase.PExecute("INSERT INTO server_first (entry, faction, character_id, guild_id) VALUES (%i, %i, %i, %i)", creature->GetEntry(), GetTeamId(), GetGUIDLow(), GetGuildId());
+        }
+    }
+}
+
 bool Player::ToggleAFK()
 {
     ToggleFlag(PLAYER_FLAGS, PLAYER_FLAGS_AFK);
