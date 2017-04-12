@@ -3546,6 +3546,9 @@ void SpellMgr::LoadSpellCustomAttr()
             case 29946: // Flame Wreath (Shade of Aran)
                 spellInfo->EffectRadiusIndex[0] = EFFECT_RADIUS_2_YARDS;
                 break;
+            case 29952: // Circular Blizzard (Shade of Aran)
+                spellInfo->DurationIndex = 9;
+                break;
             case 32785: // Infernal Rain                
                 spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ENEMY;
                 spellInfo->EffectImplicitTargetB[0] = 0;
