@@ -195,3 +195,34 @@ INSERT INTO `gameobject` VALUES (194585, 181085, 329, 1, 3504.23, -3371.19, 135.
 -- Pattern: Heavy Knothide Leather Decrease Restocktime
 UPDATE `npc_vendor` SET `incrtime` = 21600 WHERE `item` = 25720; -- 43200
 
+UPDATE `creature_addon` SET `path_id` = 317 WHERE `guid` = 317;
+DELETE FROM `waypoint_data` WHERE `id` = 317;
+INSERT INTO `waypoint_data` VALUES (317, 1, 13.542, -115.249, -22.0705, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (317, 2, -32.8072, -95.2656, -21.5533, 0, 0, 0, 100, 0);
+
+UPDATE `creature_addon` SET `path_id` = 16151 WHERE `guid` = 16151;
+DELETE FROM `waypoint_data` WHERE `id` = 16151;
+INSERT INTO `waypoint_data` VALUES (16151, 1, -569.682, -1401.96, 65.1979, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (16151, 2, -575.74, -1396.38, 64.9948, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (16151, 3, -584.413, -1389.3, 64.8748, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (16151, 4, -595.388, -1379.73, 64.8748, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (16151, 5, -588.171, -1386.76, 64.8748, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (16151, 6, -575.576, -1396.1, 64.9934, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (16151, 7, -568.931, -1402.08, 65.2048, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (16151, 8, -561.627, -1405.26, 65.1853, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (16151, 9, -558.839, -1407.12, 66.2219, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (16151, 10, -555.617, -1409.11, 66.222, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (16151, 11, -550.801, -1412.21, 67.9631, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (16151, 12, -543.596, -1416.84, 69.3283, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (16151, 13, -535.226, -1422.41, 68.9278, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (16151, 14, -530.073, -1425.87, 66.8384, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (16151, 15, -527.609, -1427.53, 66.222, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (16151, 16, -523.67, -1430.66, 66.2222, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (16151, 17, -528.096, -1427.69, 66.2221, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (16151, 18, -533.48, -1423.78, 68.4047, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (16151, 19, -539.745, -1419.4, 69.3461, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (16151, 20, -548.937, -1413, 68.8202, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (16151, 21, -555.197, -1408.62, 66.2221, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (16151, 22, -559.511, -1405.72, 66.222, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (16151, 23, -560.986, -1404.74, 65.1854, 0, 0, 0, 100, 0);
+
