@@ -226,3 +226,9 @@ INSERT INTO `waypoint_data` VALUES (16151, 21, -555.197, -1408.62, 66.2221, 0, 0
 INSERT INTO `waypoint_data` VALUES (16151, 22, -559.511, -1405.72, 66.222, 0, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (16151, 23, -560.986, -1404.74, 65.1854, 0, 0, 0, 100, 0);
 
+-- Mutanus the Devourer spawned via script
+DELETE FROM `creature` WHERE `id` = 3654;
+
+-- Ishamuhale spawned via http://db.hellfire-tbc.com/?item=10338
+DELETE FROM `creature` WHERE `id` = 3257;
+
