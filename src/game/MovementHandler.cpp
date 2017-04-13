@@ -78,7 +78,7 @@ void WorldSession::HandleMoveWorldportAckOpcode()
 
         if (!map)
         {
-            GetPlayer()->SetSemaphoreTeleport(false);
+            GetPlayer()->SetSemaphoreTeleportFar(false);
 
             // Teleport to previous place, if cannot be ported back TP to homebind place
             if (!GetPlayer()->TeleportTo(old_loc))
@@ -94,7 +94,7 @@ void WorldSession::HandleMoveWorldportAckOpcode()
     if (GetPlayer()->m_InstanceValid == false && !mInstance)
         GetPlayer()->m_InstanceValid = true;
 
-    GetPlayer()->SetSemaphoreTeleport(false);
+    GetPlayer()->SetSemaphoreTeleportFar(false);
 
     // relocate the player to the teleport destination
     if (!map)
@@ -218,7 +218,6 @@ void WorldSession::HandleMoveTeleportAck(WorldPacket& recv_data)
     if(!plMover || !plMover->IsBeingTeleportedNear())
         return;
 
-    GetPlayer()->SetDontMove(false);
     if(guid != plMover->GetGUID())
         return;
 
@@ -228,7 +227,7 @@ void WorldSession::HandleMoveTeleportAck(WorldPacket& recv_data)
 
     WorldLocation const& dest = plMover->GetTeleportDest();
 
-    plMover->SetPosition(dest.x, dest.y, dest.z, dest.o, true);
+    plMover->SetPosition(dest.coord_x, dest.coord_y, dest.coord_z, dest.orientation, true);
 
     uint32 newzone = plMover->GetZoneId();
 
@@ -251,11 +250,6 @@ void WorldSession::HandleMoveTeleportAck(WorldPacket& recv_data)
 
         GetPlayer()->m_temporaryUnsummonedPetNumber = 0;
     }
-}
-
-void WorldSession::HandleMoveTeleportAck(WorldPacket& recv_data)
-{
-    sLog.outDebug("MSG_MOVE_TELEPORT_ACK");
 }
 
 void WorldSession::HandleMovementOpcodes(WorldPacket & recv_data)

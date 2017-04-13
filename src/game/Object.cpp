@@ -925,7 +925,6 @@ WorldObject::WorldObject()
     , m_map(NULL), m_zoneScript(NULL)
     , m_activeBy(0), IsTempWorldObject(false)
 {
-    mSemaphoreTeleport  = false;
 }
 
 void WorldObject::SetWorldObject(bool on)

@@ -1787,7 +1787,7 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
         if (!GetSession()->PlayerLogout())
         {
             WorldPacket data;
-            BuildTeleportAckMsg(&data, x, y, z, orientation);
+            BuildTeleportAckMsg(data, x, y, z, orientation);
             GetSession()->SendPacket(&data);
         }
 
@@ -1820,7 +1820,7 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
             {
                 if (iMap->EncounterInProgress(this))
                 {
-                    SetSemaphoreTeleport(false);
+                    SetSemaphoreTeleportFar(false);
                     return false;
                 }
             }
