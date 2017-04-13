@@ -544,8 +544,10 @@ struct boss_kaelthasAI : public ScriptedAI
     }
 
     void SummonedCreatureDespawn(Creature *summon) {summons.Despawn(summon);}
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* killer)
     {
+        ServerFirst(killer);
+
         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
         m_creature->SetFloatValue(OBJECT_FIELD_SCALE_X,1.0f);
