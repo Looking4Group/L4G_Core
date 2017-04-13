@@ -1774,10 +1774,12 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
             SetPosition(x, y, z, orientation, true);
         }
         else
+        {
             // this will be used instead of the current location in SaveToDB
             m_teleport_dest = tmpWLoc;
-
-        SetFallInformation(0, z);
+            
+            SetFallInformation(0, z);
+        }
 
         if (!(options & TELE_TO_NOT_UNSUMMON_PET))
         {
