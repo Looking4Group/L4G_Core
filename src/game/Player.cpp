@@ -1757,6 +1757,11 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
 
     if ((GetMapId() == mapid) && (!m_transport))
     {
+        WorldLocation tmpWLoc(mapid, x, y, z, orientation);
+
+        if (!IsWithinDistInMap(&tmpWLoc, GetMap()->GetVisibilityDistance()))
+            DestroyForNearbyPlayers();
+
         if (!(options & TELE_TO_NOT_UNSUMMON_PET))
         {
             //same map, only remove pet if out of range
@@ -1938,6 +1943,8 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
             SetFallInformation(0, final_z);
             // if the player is saved before worldportack (at logout for example)
             // this will be used instead of the current location in SaveToDB
+
+            SetSemaphoreTeleportFar(true);
         }
         else
             return false;
