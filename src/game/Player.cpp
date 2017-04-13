@@ -20216,7 +20216,7 @@ bool Player::RewardPlayerAndGroupAtKill(Unit* pVictim)
 
                         pGroupGuy->GiveXP(itr_xp, pVictim);
                         if (Pet* pet = pGroupGuy->GetPet())
-                            pet->GivePetXP(itr_xp/2);
+                            pet->GivePetXP(itr_xp);
                     }
 
                     // quest objectives updated only for alive group member or dead but with not released body
