@@ -169,7 +169,7 @@ bool ACRequest::DetectSpeedHack(Player *pPlayer)
     uint32 clientSpeedRate = exact2dDist * 1000 / timeDiff;
 
     // did the 1.1 factor to accept a margin of tolerance
-    if (clientSpeedRate > (speedRate * 1.1) || latency < 1000)
+    if ((clientSpeedRate >(speedRate * 1.1)) && latency < 1000)
         return true;
 
     pPlayer->m_AC_timer = 10000;   // 10 sek (reduce to 1 sek "IN_MILISECONDS" again if kick activated)
