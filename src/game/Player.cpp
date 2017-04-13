@@ -13115,12 +13115,20 @@ void Player::RewardQuest(Quest const *pQuest, uint32 reward, Object* questGiver,
         {
             if (pQuest->RewItemId[i])
             {
+                uint32 noSpaceForCount = 0;
+                uint32 count = pQuest->RewItemCount[i];
+
                 ItemPosCountVec dest;
-                if (CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, pQuest->RewItemId[i], pQuest->RewItemCount[i]) == EQUIP_ERR_OK)
+                if (CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, pQuest->RewItemId[i], count, &noSpaceForCount) == EQUIP_ERR_OK)
                 {
                     Item* item = StoreNewItem(dest, pQuest->RewItemId[i], true);
                     SendNewItem(item, pQuest->RewItemCount[i], true, false);
                 }
+                else
+                    count = noSpaceForCount;
+
+                if (count == 0 || dest.empty()) // can't add any
+                    SendItemByMail(this, itemID, count);
             }
         }
     }
