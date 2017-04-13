@@ -825,9 +825,9 @@ void Unit::RemoveSpellbyDamageTaken(AuraType auraType, uint32 damage, DamageEffe
     {
         if (SpellEntry const* iterSpellProto = (*iter)->GetSpellProto())
         {
-            // We don't have this spell attribute atm. Commenting out for now
-            // if (sSpellMgr.GetSpellCustomAttr(iterSpellProto->Id) & SPELL_ATTR_CU_DONT_BREAK_ON_DAMAGE)
-            //	 return;
+            // Horror effects don't break on damage
+            if (sSpellMgr.GetDiminishingReturnsGroupForSpell(iterSpellProto, false) == DIMINISHING_DEATHCOIL)
+                return;
 
             // ... damage spell is removable spell
             if (spellId && (*iter)->GetSpellProto()->Id == spellId)
