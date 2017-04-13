@@ -113,8 +113,6 @@ struct boss_gruulAI : public ScriptedAI
 
     void JustDied(Unit* killer)
     {
-        ServerFirst(killer);
-
         DoScriptText(SAY_DEATH, me);
         pInstance->SetData(DATA_GRUULEVENT, DONE);
     }
