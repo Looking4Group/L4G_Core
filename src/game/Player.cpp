@@ -13128,7 +13128,7 @@ void Player::RewardQuest(Quest const *pQuest, uint32 reward, Object* questGiver,
                     count = noSpaceForCount;
 
                 if (count == 0 || dest.empty()) // can't add any
-                    SendItemByMail(this, itemID, count);
+                    SendItemByMail(this, pQuest->RewItemId[i], count);
             }
         }
     }
