@@ -3370,9 +3370,11 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_CASTER;
                 spellInfo->EffectImplicitTargetA[1] = TARGET_UNIT_CASTER;
                 spellInfo->Effect[2] = 0;
+                break;
             case 40106:
                 spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ENEMY;
                 spellInfo->EffectTriggerSpell[0] = 0;
+                break;
             case 41001: // Fatal Attraction Aura
                 spellInfo->EffectTriggerSpell[1] = 0;
                 break;
