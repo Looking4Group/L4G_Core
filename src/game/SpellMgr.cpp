@@ -1365,7 +1365,7 @@ bool SpellMgr::IsAffectedBySpell(SpellEntry const *spellInfo, uint32 spellId, ui
     if (spellId == 37706 && (spellInfo->Effect[0] == SPELL_EFFECT_HEAL || spellInfo->EffectApplyAuraName[0] == SPELL_AURA_PERIODIC_HEAL))
         return true;
 
-    if (spellId == 12536 && (spellInfo->Effect[0] == SPELL_EFFECT_ENERGIZE))
+    if (spellId == 12536 && (spellInfo->Effect[0] == SPELL_EFFECT_ENERGIZE || spellInfo->EffectApplyAuraName[0] == SPELL_AURA_PROC_TRIGGER_SPELL || (spellInfo->AttributesEx3 & SPELL_ATTR_EX3_REQ_WAND)))
         return false;
 
     // False if spellFamily not equal
