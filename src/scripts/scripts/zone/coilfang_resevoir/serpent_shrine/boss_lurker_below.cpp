@@ -279,8 +279,10 @@ struct boss_the_lurker_belowAI : public BossAI
         AttackStart(pWho);
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* killer)
     {
+        ServerFirst(killer);
+
         instance->SetData(DATA_LURKER_EVENT, DONE);
         me->RemoveAurasDueToSpell(SPELL_SUBMERGE);
     }
