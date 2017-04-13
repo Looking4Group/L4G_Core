@@ -111,8 +111,10 @@ struct boss_gruulAI : public ScriptedAI
         pInstance->SetData(DATA_GRUULEVENT, NOT_STARTED);
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* killer)
     {
+        ServerFirst(killer);
+
         DoScriptText(SAY_DEATH, me);
         pInstance->SetData(DATA_GRUULEVENT, DONE);
     }
