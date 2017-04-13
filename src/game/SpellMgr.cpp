@@ -3911,6 +3911,14 @@ void SpellMgr::LoadSpellCustomAttr()
             case 3237: // Curse of Thule (Used by some gnolls in Tirisfall)
             case 33493: // Mark of Malice (This attribute breaks EventAI, remove it for now until we find a solution)
                 spellInfo->Attributes &= ~SPELL_ATTR_ON_NEXT_SWING_2;
+            case 37468: //Spectrecles
+            case 37495:
+            case 39841:
+                spellInfo->Effect[0] = SPELL_EFFECT_APPLY_AREA_AURA_PARTY;
+                spellInfo->Effect[1] = SPELL_EFFECT_APPLY_AREA_AURA_PARTY;
+                spellInfo->EffectRadiusIndex[0] = 12;
+                spellInfo->EffectRadiusIndex[1] = 12;
+                break;
             default:
                 break;
         }
