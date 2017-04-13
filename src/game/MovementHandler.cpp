@@ -43,6 +43,10 @@ void WorldSession::HandleMoveWorldportAckOpcode(WorldPacket & /*recv_data*/)
 
 void WorldSession::HandleMoveWorldportAckOpcode()
 {
+    // ignore unexpected far teleports
+    if(!GetPlayer()->IsBeingTeleportedFar())
+        return;
+
     // get start teleport coordinates (will used later in fail case)
     WorldLocation old_loc;
     GetPlayer()->GetPosition(old_loc);
@@ -54,7 +58,7 @@ void WorldSession::HandleMoveWorldportAckOpcode()
     if (!MapManager::IsValidMapCoord(loc.mapid, loc.coord_x, loc.coord_y, loc.coord_z, loc.orientation))
     {
         // stop teleportation else we would try this again and again in LogoutPlayer...
-        GetPlayer()->SetSemaphoreTeleport(false);
+        GetPlayer()->SetSemaphoreTeleportFar(false);
         // player don't gets saved - so his coords will stay at the point where
         // he was last saved
         LogoutPlayer(false);
@@ -186,6 +190,57 @@ void WorldSession::HandleMoveWorldportAckOpcode()
     // honorless target
     if (GetPlayer()->pvpInfo.inHostileArea)
         GetPlayer()->CastSpell(GetPlayer(), 2479, true);
+
+    // resummon pet
+    if (GetPlayer()->m_temporaryUnsummonedPetNumber)
+    {
+        Pet* NewPet = new Pet;
+        if (!NewPet->LoadPetFromDB(GetPlayer(), 0, GetPlayer()->m_temporaryUnsummonedPetNumber, true))
+            delete NewPet;
+
+        GetPlayer()->m_temporaryUnsummonedPetNumber = 0;
+    }
+}
+ 
+void WorldSession::HandleMoveTeleportAck(WorldPacket& recv_data)
+{
+    CHECK_PACKET_SIZE(recv_data,8+4);
+
+    sLog.outDebug("MSG_MOVE_TELEPORT_ACK");
+    uint64 guid;
+    uint32 flags, time;
+
+    recv_data >> guid;
+    recv_data >> flags >> time;
+
+    Player* plMover = GetPlayer();
+
+    if(!plMover || !plMover->IsBeingTeleportedNear())
+        return;
+
+    GetPlayer()->SetDontMove(false);
+    if(guid != plMover->GetGUID())
+        return;
+
+    plMover->SetSemaphoreTeleportNear(false);
+
+    uint32 old_zone = plMover->GetZoneId();
+
+    WorldLocation const& dest = plMover->GetTeleportDest();
+
+    plMover->SetPosition(dest.x, dest.y, dest.z, dest.o, true);
+
+    uint32 newzone = plMover->GetZoneId();
+
+    plMover->UpdateZone(newzone);
+
+    // new zone
+    if(old_zone != newzone)
+    {
+        // honorless target
+        if(plMover->pvpInfo.inHostileArea)
+            plMover->CastSpell(plMover, 2479, true);
+    }
 
     // resummon pet
     if (GetPlayer()->m_temporaryUnsummonedPetNumber)

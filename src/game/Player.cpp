@@ -344,6 +344,9 @@ Player::Player (WorldSession *session): Unit(), m_reputationMgr(this), m_camera(
 
     m_atLoginFlags = AT_LOGIN_NONE;
 
+    mSemaphoreTeleport_Near = false;
+    mSemaphoreTeleport_Far = false;
+
     pTrader = 0;
 
     ClearTrade();
@@ -1735,9 +1738,7 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
         m_transport = NULL;
         m_movementInfo.ClearTransportData();
     }
-
-    SetSemaphoreTeleport(true);
-
+        
     m_AC_timer = 3000;
 
     // The player was ported to another map and looses the duel immediatly.
@@ -1756,31 +1757,6 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
 
     if ((GetMapId() == mapid) && (!m_transport))
     {
-        // prepare zone change detect
-        uint32 old_zone = GetZoneId();
-
-        WorldLocation tmpWLoc(mapid, x, y, z, orientation);
-
-        if (!IsWithinDistInMap(&tmpWLoc, GetMap()->GetVisibilityDistance()))
-            DestroyForNearbyPlayers();
-
-        // near teleport
-        if (!GetSession()->PlayerLogout())
-        {
-            // send transfer packet to display load screen
-            WorldPacket data;
-            BuildTeleportAckMsg(data, x, y, z, orientation);
-            SendPacketToSelf(&data);
-            SetPosition(x, y, z, orientation, true);
-        }
-        else
-        {
-            // this will be used instead of the current location in SaveToDB
-            m_teleport_dest = tmpWLoc;
-            
-            SetFallInformation(0, z);
-        }
-
         if (!(options & TELE_TO_NOT_UNSUMMON_PET))
         {
             //same map, only remove pet if out of range
@@ -1798,33 +1774,21 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
         if (!(options & TELE_TO_NOT_LEAVE_COMBAT))
             CombatStop();
 
-        if (!(options & TELE_TO_NOT_UNSUMMON_PET))
-        {
-            // resummon pet
-            if (pet && m_temporaryUnsummonedPetNumber)
-            {
-                Pet* NewPet = new Pet;
-                if (!NewPet->LoadPetFromDB(this, 0, m_temporaryUnsummonedPetNumber, true))
-                    delete NewPet;
+        // this will be used instead of the current location in SaveToDB
+        m_teleport_dest = WorldLocation(mapid, x, y, z, orientation);
+        SetFallInformation(0, z);
 
-                m_temporaryUnsummonedPetNumber = 0;
-            }
-        }
+        // code for finish transfer called in WorldSession::HandleMovementOpcodes() 
+        // at client packet MSG_MOVE_TELEPORT_ACK
+        SetSemaphoreTeleportNear(true);
+
 
         // near teleport, triggering send MSG_MOVE_TELEPORT_ACK from client at landing
         if (!GetSession()->PlayerLogout())
         {
-            // don't reset teleport semaphore while logging out, otherwise m_teleport_dest won't be used in Player::SaveToDB
-            SetSemaphoreTeleport(false);
-            UpdateZone(GetZoneId());
-        }
-
-        // new zone
-        if (old_zone != GetZoneId())
-        {
-            // honorless target
-            if (pvpInfo.inHostileArea)
-                CastSpell(this, 2479, true);
+            WorldPacket data;
+            BuildTeleportAckMsg(&data, x, y, z, orientation);
+            GetSession()->SendPacket(&data);
         }
 
         if (getFollowingGM())
@@ -1847,7 +1811,6 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
         // this check not dependent from map instance copy and same for all instance copies of selected map
         if (!sMapMgr.CanPlayerEnter(mapid, this))
         {
-            SetSemaphoreTeleport(false);
             return false;
         }
 

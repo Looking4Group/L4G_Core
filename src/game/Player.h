@@ -1805,6 +1805,13 @@ class LOOKING4GROUP_EXPORT Player : public Unit
         void learnSkillRewardedSpells(uint32 id);
         void learnSkillRewardedSpells();
 
+        WorldLocation& GetTeleportDest() { return m_teleport_dest; }
+        bool IsBeingTeleported() const { return mSemaphoreTeleport_Near || mSemaphoreTeleport_Far; }
+        bool IsBeingTeleportedNear() const { return mSemaphoreTeleport_Near; }
+        bool IsBeingTeleportedFar() const { return mSemaphoreTeleport_Far; }
+        void SetSemaphoreTeleportNear(bool semphsetting) { mSemaphoreTeleport_Near = semphsetting; }
+        void SetSemaphoreTeleportFar(bool semphsetting) { mSemaphoreTeleport_Far = semphsetting; }
+
         void CheckAreaExploreAndOutdoor(void);
 
         static uint32 TeamForRace(uint8 race);
@@ -2284,8 +2291,6 @@ class LOOKING4GROUP_EXPORT Player : public Unit
 
         bool isAllowedToLoot(Creature* creature);
 
-        WorldLocation& GetTeleportDest() { return m_teleport_dest; }
-
         DeclinedName const* GetDeclinedNames() const { return m_declinedname; }
         bool HasTitle(uint32 bitIndex);
         bool HasTitle(CharTitlesEntry const* title) { return HasTitle(title->bit_index); }
@@ -2576,9 +2581,11 @@ class LOOKING4GROUP_EXPORT Player : public Unit
         uint32 m_timeSyncTimer;
         uint32 m_timeSyncClient;
         uint32 m_timeSyncServer;
-
+        
         // Current teleport data
         WorldLocation m_teleport_dest;
+        bool mSemaphoreTeleport_Near;
+        bool mSemaphoreTeleport_Far;
 
         // Temporary removed pet cache
         uint32 m_temporaryUnsummonedPetNumber;
