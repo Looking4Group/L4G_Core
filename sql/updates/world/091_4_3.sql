@@ -308,3 +308,5 @@ UPDATE creature_questrelation SET quest=9923 WHERE id=18369;
 UPDATE creature_questrelation SET quest=9955 WHERE id=18445;
 UPDATE creature_involvedrelation SET id=18445 WHERE quest=9954;
 
+UPDATE `spell_affect` SET `spellfamilymask` = 0x20C01AF7 WHERE entry=12536;
+
