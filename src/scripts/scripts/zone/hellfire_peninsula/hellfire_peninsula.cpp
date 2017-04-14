@@ -43,7 +43,7 @@ npc_sedai_quest_credit_marker
 npc_vindicator_sedai
 npc_pathaleon_image
 npc_viera
-npc_deranged_helboar
+npc_fel_guard_hound
 EndContentData */
 
 #include "precompiled.h"
@@ -2101,67 +2101,6 @@ CreatureAI* GetAI_npc_viera(Creature* creature)
     return new npc_vieraAI(creature);
 }
 
-/*######
-## npc_deranged_helboar
-######*/
-
-enum
-{
-    SPELL_BURNING_SPOKES                           = 33908,
-    SPELL_ENRAGES                                  = 8599,
-    //SPELL_TELL_DOG_I_JUST_DEAD                     = 37689,
-    SPELL_SUMMON_POODAD                            = 37688,
-
-    NPC_FEL_GUARD_HOUND                            = 21847
-};
-
-struct npc_deranged_helboarAI : public ScriptedAI
-{
-    npc_deranged_helboarAI(Creature* creature) : ScriptedAI(creature) {}
-
-    Unit* Hound;
-
-    void Reset()
-    {
-        Hound = 0;
-    }
-
-    void EnterCombat(Unit* who)
-    {
-        DoCast(me, SPELL_BURNING_SPOKES);
-    } 
-
-    void DamageTaken(Unit* doneby, uint32 & damage)
-    {
-        if (me->HasAura(SPELL_ENRAGES))
-            return;
-
-        if (doneby->GetTypeId() == TYPEID_PLAYER && (me->GetHealth()*100 - damage) / me->GetMaxHealth() < 30)
-        {
-            DoCast(me, SPELL_ENRAGES);
-        }
-    }
-
-    void JustDied(Unit* slayer)
-    {
-        if(slayer->GetTypeId()==TYPEID_PLAYER && ((Player*)(slayer))->GetQuestStatus(10629)==QUEST_STATUS_INCOMPLETE)
-        {
-            Hound = FindCreature(NPC_FEL_GUARD_HOUND, 8, me);
-
-            if(Hound && Hound->GetOwner()==slayer)
-            {
-                Hound->GetMotionMaster()->MoveChase(me);
-                Hound->CastSpell(Hound, SPELL_SUMMON_POODAD, false);
-            }
-        }
-    }
-};
-
-CreatureAI* GetAI_npc_deranged_helboar(Creature* creature)
-{
-    return new npc_deranged_helboarAI(creature);
-}
-
 /*###
 # Quest 10792 "Zeth'Gor Must Burn!" (Horde) - Visual Effect
 ####*/
@@ -2553,6 +2492,108 @@ bool go_manni_cage(Player* player, GameObject* go)
     return true;
 }
 
+/*######
+## npc_fel_guard_hound
+######*/
+
+enum
+{
+    SPELL_CREATE_POODAD = 37688,
+    SPELL_FAKE_DOG_SPART = 37692,
+    SPELL_INFORM_DOG = 37689,
+
+    NPC_DERANGED_HELBOAR = 16863,
+};
+
+struct npc_fel_guard_houndAI : public ScriptedAI
+{
+    npc_fel_guard_houndAI(Creature* pCreature) : ScriptedAI(pCreature) {}
+
+    uint32 m_uiPoodadTimer;
+
+    bool m_bIsPooActive;
+
+    void Reset()
+    {
+        m_uiPoodadTimer = 0;
+        m_bIsPooActive = false;
+
+        if (Player* pOwner = m_creature->GetCharmerOrOwnerPlayerOrPlayerItself())
+        {
+            m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE); 
+            m_creature->GetMotionMaster()->MoveFollow(pOwner, PET_FOLLOW_DIST, PET_FOLLOW_ANGLE);
+        }
+    }
+
+    void MovementInform(uint32 uiMoveType, uint32 uiPointId)
+    {
+        if (uiMoveType != POINT_MOTION_TYPE || !uiPointId)
+            return;
+
+        DoCast(m_creature, SPELL_FAKE_DOG_SPART);
+        m_uiPoodadTimer = 2000;
+    }
+
+    // Function to allow the boar to move to target
+    void DoMoveToCorpse(Unit* pBoar)
+    {
+        if (!pBoar)
+            return;
+
+        m_bIsPooActive = true;
+        m_creature->GetMotionMaster()->MoveIdle();
+        m_creature->GetMotionMaster()->MovePoint(1, pBoar->GetPositionX(), pBoar->GetPositionY(), pBoar->GetPositionZ());
+    }
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        if (m_uiPoodadTimer)
+        {
+            if (m_uiPoodadTimer <= uiDiff)
+            {
+                DoCast(m_creature, SPELL_CREATE_POODAD);
+                m_uiPoodadTimer = 0;
+                m_bIsPooActive = false;
+
+                if (Player* pOwner = m_creature->GetCharmerOrOwnerPlayerOrPlayerItself())
+                    m_creature->GetMotionMaster()->MoveFollow(pOwner, PET_FOLLOW_DIST, PET_FOLLOW_ANGLE);
+                else // It's a static Fel Guard Hound spawn, so evade back instead of following player
+                    EnterEvadeMode();
+            }
+            else
+                m_uiPoodadTimer -= uiDiff;
+        }
+
+        if (!m_bIsPooActive)
+            ScriptedAI::UpdateAI(uiDiff);
+    }
+};
+
+CreatureAI* GetAI_npc_fel_guard_hound(Creature* pCreature)
+{
+    return new npc_fel_guard_houndAI(pCreature);
+}
+
+bool EffectDummyCreature_npc_fel_guard_hound(Unit* pCaster, uint32 uiSpellId, uint32 uiEffIndex, Creature* pCreatureTarget)
+{
+    // always check spellid and effectindex
+    if (uiSpellId == SPELL_INFORM_DOG && uiEffIndex == 0)
+    {
+        if (pCaster->GetEntry() == NPC_DERANGED_HELBOAR)
+        {
+            if (npc_fel_guard_houndAI* pHoundAI = dynamic_cast<npc_fel_guard_houndAI*>(pCreatureTarget->AI()))
+            {
+                pHoundAI->DoMoveToCorpse(pCaster);
+            }
+        }
+
+        // always return true when we are handling this spell and effect
+        return true;
+    }
+
+    return false;
+}
+
 void AddSC_hellfire_peninsula()
 {
     Script *newscript;
@@ -2683,11 +2724,6 @@ void AddSC_hellfire_peninsula()
     newscript->RegisterSelf();
 
     newscript = new Script;
-    newscript->Name = "npc_deranged_helboar";
-    newscript->GetAI = &GetAI_npc_deranged_helboar;
-    newscript->RegisterSelf();
-
-    newscript = new Script;
     newscript->Name = "npc_east_hovel";
     newscript->GetAI = &GetAI_npc_east_hovel;
     newscript->RegisterSelf();
@@ -2735,5 +2771,11 @@ void AddSC_hellfire_peninsula()
     newscript = new Script;
     newscript->Name = "npc_manni";
     newscript->GetAI = &GetAI_npc_manni;
+    newscript->RegisterSelf();
+
+    newscript = new Script;
+    newscript->Name = "npc_fel_guard_hound";
+    newscript->GetAI = &GetAI_npc_fel_guard_hound;
+    newscript->pEffectDummyNPC = &EffectDummyCreature_npc_fel_guard_hound;
     newscript->RegisterSelf();
 }
