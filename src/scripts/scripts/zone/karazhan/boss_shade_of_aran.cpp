@@ -411,14 +411,6 @@ struct boss_aranAI : public ScriptedAI
         }
             DragonsBreathTimer -= diff;
 
-        if (me->IsNonMeleeSpellCasted(false))
-        {
-            m_creature->GetMotionMaster()->MovementExpired();
-        }
-        else {
-            m_creature->GetMotionMaster()->MoveRandom();
-        }
-        
         CastNextSpellIfAnyAndReady();
 
         if(Drinking == DRINKING_NO_DRINKING)
@@ -452,8 +444,7 @@ struct boss_aranAI : public ScriptedAI
     void OnAuraApply(Aura *aura, Unit *caster, bool)
     {
         if(aura->GetId() == SPELL_ARAN_DRINK)
-        {
-            m_creature->GetMotionMaster()->MovementExpired();
+        {            
             //m_creature->SetStandState(UNIT_STAND_STATE_SIT);
             //m_creature->SetUInt32Value(UNIT_FIELD_BYTES_1, 1); // sit down
         }
