@@ -81,8 +81,10 @@ struct boss_void_reaverAI : public ScriptedAI
         DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2, SAY_SLAY3), m_creature);
     }
 
-    void JustDied(Unit *victim)
+    void JustDied(Unit *killer)
     {
+        ServerFirst(killer);
+
         DoScriptText(SAY_DEATH, m_creature);
 
         pInstance->SetData(DATA_VOIDREAVEREVENT, DONE);

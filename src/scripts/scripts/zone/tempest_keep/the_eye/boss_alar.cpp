@@ -156,8 +156,10 @@ struct boss_alarAI : public ScriptedAI
         DoZoneInCombat();
     }
 
-    void JustDied(Unit *victim)
+    void JustDied(Unit *killer)
     {
+        ServerFirst(killer);
+
         m_creature->SetDisplayId(m_creature->GetNativeDisplayId());
         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);

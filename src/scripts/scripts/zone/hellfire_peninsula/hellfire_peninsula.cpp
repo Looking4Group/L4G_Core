@@ -2594,6 +2594,98 @@ bool EffectDummyCreature_npc_fel_guard_hound(Unit* pCaster, uint32 uiSpellId, ui
     return false;
 }
 
+enum Maghar
+{
+    NPC_MAGHAR = 16846,
+    NPC_INJURED_MAGHAR = 16847,
+
+    SAY_THANKS1 = -1000709,
+    SAY_THANKS2 = -1000710,
+    SAY_THANKS3 = -1000711
+};
+struct npc_maghar_gruntAI : public ScriptedAI
+{
+    npc_maghar_gruntAI(Creature* pCreature) : ScriptedAI(pCreature) {}
+
+    void Reset()
+    {
+        spellHit = false;
+        lifeTimer = 120000;
+        tTimer = 3000;
+
+        me->SetStandState(UNIT_STAND_STATE_KNEEL);
+
+        if (me->GetEntry() == NPC_MAGHAR)
+            me->UpdateEntry(NPC_INJURED_MAGHAR);
+    }
+
+    bool spellHit;
+    uint32 lifeTimer;
+    uint32 tTimer;
+
+    void EnterCombat(Unit* /*who*/)
+    {
+    }
+
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    {
+        if (pSpell->Id == 29314 && !spellHit)
+        {
+            me->hasInvolvedQuest(9447);
+            me->SetStandState(UNIT_STAND_STATE_STAND);
+            switch (rand() % 3)
+            {
+            case 0:
+                DoScriptText(SAY_THANKS1, me, pCaster);
+                break;
+            case 1:
+                DoScriptText(SAY_THANKS2, me, pCaster);
+                break;
+            case 2:
+                DoScriptText(SAY_THANKS3, me, pCaster);
+                break;
+            }
+            spellHit = true;
+        }
+    }
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        if (!UpdateVictim())
+        {
+            if (me->GetEntry() == NPC_MAGHAR)
+            {
+                if (lifeTimer <= uiDiff)
+                {
+                    me->UpdateEntry(NPC_INJURED_MAGHAR);
+                    EnterEvadeMode();
+                    return;
+                }
+                else
+                    lifeTimer -= uiDiff;
+            }
+
+            if (spellHit == true)
+            {
+                if (tTimer <= uiDiff)
+                {
+                    me->UpdateEntry(NPC_MAGHAR);
+                    tTimer = 3000;
+                    spellHit = false;
+                }
+                else tTimer -= uiDiff;
+            }
+        }
+
+        DoMeleeAttackIfReady();
+    }
+};
+
+CreatureAI* GetAI_npc_maghar_grunt(Creature* pCreature)
+{
+    return new npc_maghar_gruntAI(pCreature);
+}
+
 void AddSC_hellfire_peninsula()
 {
     Script *newscript;
@@ -2777,5 +2869,10 @@ void AddSC_hellfire_peninsula()
     newscript->Name = "npc_fel_guard_hound";
     newscript->GetAI = &GetAI_npc_fel_guard_hound;
     newscript->pEffectDummyNPC = &EffectDummyCreature_npc_fel_guard_hound;
+    newscript->RegisterSelf();
+
+    newscript = new Script;
+    newscript->Name = "npc_maghar_grunt";
+    newscript->GetAI = &GetAI_npc_maghar_grunt;
     newscript->RegisterSelf();
 }

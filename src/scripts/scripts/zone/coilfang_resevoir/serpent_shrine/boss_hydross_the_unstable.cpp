@@ -196,8 +196,10 @@ struct boss_hydross_the_unstableAI : public ScriptedAI
         Summons.Despawn(summon);
     }
 
-    void JustDied(Unit *victim)
+    void JustDied(Unit *killer)
     {
+        ServerFirst(killer);
+
         if (CorruptedForm)
             DoScriptText(SAY_CORRUPT_DEATH, m_creature);
         else

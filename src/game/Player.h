@@ -1011,6 +1011,9 @@ class LOOKING4GROUP_EXPORT Player : public Unit
         void SendTransferAborted(uint32 mapid, uint16 reason);
         void SendInstanceResetWarning(uint32 mapid, uint32 time);
 
+        // Server First Announcement PvE
+        void CheckAndAnnounceServerFirst(Creature* creature);
+
         GameObject* GetGameObjectIfCanInteractWith(uint64 guid, GameobjectTypes type = GAMEOBJECT_TYPE_GUILD_BANK) const;
         Creature* GetNPCIfCanInteractWith(uint64 guid, uint32 npcflagmask);
         bool CanInteractWithNPCs(bool alive = true) const;

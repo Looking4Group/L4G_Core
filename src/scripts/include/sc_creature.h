@@ -381,6 +381,8 @@ struct ScriptedAI : public CreatureAI
 
     void DoSpecialThings(uint32 diff, SpecialThing, float range = 200.0f, float speedRate = 2.0f);
 
+    void ServerFirst(Unit *killer);
+
     uint32 m_specialThingTimer;
 
     //Spawns a creature relative to m_creature
