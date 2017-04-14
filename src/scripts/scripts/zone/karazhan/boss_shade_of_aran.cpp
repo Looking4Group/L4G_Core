@@ -309,7 +309,6 @@ struct boss_aranAI : public ScriptedAI
                         // exclude pets & totems needs to be done in general ai
                         if (Unit *target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(Spells[rand() % AvailableSpells]), true))
                         {
-                            m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
                             m_creature->SetSelection(target->GetGUID());
                             DoCast(target, Spells[rand() % AvailableSpells], false);
                         }
@@ -322,7 +321,6 @@ struct boss_aranAI : public ScriptedAI
             if (SecondarySpellTimer < diff)
             {
                 AddSpellToCast(SPELL_AOE_CS, CAST_SELF);
-                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_MOVE);
                 SecondarySpellTimer = urand(10000, 40000);
             }
             else
@@ -332,7 +330,7 @@ struct boss_aranAI : public ScriptedAI
             {
                 uint8 Available[2];
                 ClearCastQueue();
-                m_creature->GetMotionMaster()->MoveIdle();
+                m_creature->GetMotionMaster()->MovementExpired();
                 NormalCastTimer += 5000;
                 DragonsBreathTimer += 30000;
 
@@ -374,6 +372,7 @@ struct boss_aranAI : public ScriptedAI
                         DrinkingDelay = 30000;
                         break;
                 }
+                m_creature->GetMotionMaster()->Initialize();
 
                 SuperCastTimer = urand(35000, 40000);
             }
@@ -410,9 +409,9 @@ struct boss_aranAI : public ScriptedAI
             if (SuperCastTimer < 8000)
                 SuperCastTimer += 8000;
 
+            ClearCastQueue();
             AddSpellToCast(SPELL_DRAGONSBREATH, CAST_TANK, false, true);
             DragonsBreathTimer = urand(15000, 30000);
-            m_creature->GetMotionMaster()->Initialize();
         }
             DragonsBreathTimer -= diff;
 
@@ -450,7 +449,7 @@ struct boss_aranAI : public ScriptedAI
     {
         if(aura->GetId() == SPELL_ARAN_DRINK)
         {
-            m_creature->GetMotionMaster()->MoveIdle();
+            m_creature->GetMotionMaster()->MovementExpired();
             //m_creature->SetStandState(UNIT_STAND_STATE_SIT);
             //m_creature->SetUInt32Value(UNIT_FIELD_BYTES_1, 1); // sit down
         }
