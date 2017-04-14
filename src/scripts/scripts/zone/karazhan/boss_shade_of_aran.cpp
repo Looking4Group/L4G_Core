@@ -416,7 +416,7 @@ struct boss_aranAI : public ScriptedAI
             m_creature->GetMotionMaster()->MovementExpired();
         }
         else {
-            m_creature->GetMotionMaster()->Initialize();
+            m_creature->GetMotionMaster()->MoveRandom();
         }
         
         CastNextSpellIfAnyAndReady();
