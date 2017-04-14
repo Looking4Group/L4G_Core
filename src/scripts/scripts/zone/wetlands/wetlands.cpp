@@ -118,7 +118,8 @@ struct npc_tapoke_slim_jahnAI : public npc_escortAI
                 me->DeleteThreatList();
                 me->CombatStop(true);
 
-                SetRun(false);
+                me->setDeathState(JUST_DIED);
+                me->Respawn();
             }
         }
     }
