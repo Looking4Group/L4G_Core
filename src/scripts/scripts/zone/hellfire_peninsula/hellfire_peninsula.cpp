@@ -43,7 +43,8 @@ npc_sedai_quest_credit_marker
 npc_vindicator_sedai
 npc_pathaleon_image
 npc_viera
-npc_deranged_helboar
+npc_maghar_grunt
+npc_fel_guard_hound
 EndContentData */
 
 #include "precompiled.h"
@@ -2645,6 +2646,95 @@ CreatureAI* GetAI_npc_maghar_grunt(Creature* pCreature)
     return new npc_maghar_gruntAI(pCreature);
 }
 
+struct npc_fel_guard_houndAI : public ScriptedAI
+{
+    npc_fel_guard_houndAI(Creature* pCreature) : ScriptedAI(pCreature) {}
+
+    uint32 m_uiPoodadTimer;
+
+    bool m_bIsPooActive;
+
+    void Reset()
+    {
+        m_uiPoodadTimer = 0;
+        m_bIsPooActive = false;
+
+        if (Player* pOwner = m_creature->GetCharmerOrOwnerPlayerOrPlayerItself())
+        {
+            m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+            m_creature->GetMotionMaster()->MoveFollow(pOwner, PET_FOLLOW_DIST, PET_FOLLOW_ANGLE);
+        }
+    }
+
+    void MovementInform(uint32 uiMoveType, uint32 uiPointId)
+    {
+        if (uiMoveType != POINT_MOTION_TYPE || !uiPointId)
+            return;
+
+        DoCast(m_creature, SPELL_FAKE_DOG_SPART);
+        m_uiPoodadTimer = 2000;
+    }
+
+    // Function to allow the boar to move to target
+    void DoMoveToCorpse(Unit* pBoar)
+    {
+        if (!pBoar)
+            return;
+
+        m_bIsPooActive = true;
+        m_creature->GetMotionMaster()->MoveIdle();
+        m_creature->GetMotionMaster()->MovePoint(1, pBoar->GetPositionX(), pBoar->GetPositionY(), pBoar->GetPositionZ());
+    }
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        if (m_uiPoodadTimer)
+        {
+            if (m_uiPoodadTimer <= uiDiff)
+            {
+                DoCast(m_creature, SPELL_CREATE_POODAD);
+                m_uiPoodadTimer = 0;
+                m_bIsPooActive = false;
+
+                if (Player* pOwner = m_creature->GetCharmerOrOwnerPlayerOrPlayerItself())
+                    m_creature->GetMotionMaster()->MoveFollow(pOwner, PET_FOLLOW_DIST, PET_FOLLOW_ANGLE);
+                else // It's a static Fel Guard Hound spawn, so evade back instead of following player
+                    EnterEvadeMode();
+            }
+            else
+                m_uiPoodadTimer -= uiDiff;
+        }
+
+        if (!m_bIsPooActive)
+            ScriptedAI::UpdateAI(uiDiff);
+    }
+};
+
+CreatureAI* GetAI_npc_fel_guard_hound(Creature* pCreature)
+{
+    return new npc_fel_guard_houndAI(pCreature);
+}
+
+bool EffectDummyCreature_npc_fel_guard_hound(Unit* pCaster, uint32 uiSpellId, uint32 uiEffIndex, Creature* pCreatureTarget)
+{
+    // always check spellid and effectindex
+    if (uiSpellId == SPELL_INFORM_DOG && uiEffIndex == 0)
+    {
+        if (pCaster->GetEntry() == NPC_DERANGED_HELBOAR)
+        {
+            if (npc_fel_guard_houndAI* pHoundAI = dynamic_cast<npc_fel_guard_houndAI*>(pCreatureTarget->AI()))
+            {
+                pHoundAI->DoMoveToCorpse(pCaster);
+            }
+        }
+
+        // always return true when we are handling this spell and effect
+        return true;
+    }
+
+    return false;
+}
+
 void AddSC_hellfire_peninsula()
 {
     Script *newscript;
@@ -2832,5 +2922,11 @@ void AddSC_hellfire_peninsula()
     newscript = new Script;
     newscript->Name = "npc_maghar_grunt";
     newscript->GetAI = &GetAI_npc_maghar_grunt;
+    newscript->RegisterSelf();
+
+    newscript = new Script;
+    newscript->Name = "npc_fel_guard_hound";
+    newscript->GetAI = &GetAI_npc_fel_guard_hound;
+    newscript->pEffectDummyNPC = &EffectDummyCreature_npc_fel_guard_hound;
     newscript->RegisterSelf();
 }
