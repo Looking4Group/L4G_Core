@@ -322,6 +322,7 @@ struct boss_aranAI : public ScriptedAI
             {
                 AddSpellToCast(SPELL_AOE_CS, CAST_SELF);
                 SecondarySpellTimer = urand(10000, 40000);
+                m_creature->GetMotionMaster()->Initialize();
             }
             else
                 SecondarySpellTimer -= diff;
@@ -372,8 +373,6 @@ struct boss_aranAI : public ScriptedAI
                         DrinkingDelay = 30000;
                         break;
                 }
-                m_creature->GetMotionMaster()->Initialize();
-
                 SuperCastTimer = urand(35000, 40000);
             }
             else
@@ -438,7 +437,6 @@ struct boss_aranAI : public ScriptedAI
     {
         if(aura->GetId() == SPELL_ARAN_DRINK)
         {
-            m_creature->GetMotionMaster()->Initialize();
             //m_creature->SetStandState(UNIT_STAND_STATE_STAND);
             //m_creature->SetUInt32Value(UNIT_FIELD_BYTES_1, 0); // stand up
             Drinking = DRINKING_DONE_DRINKING;
@@ -561,14 +559,14 @@ struct circular_blizzardAI : public ScriptedAI
 
     void SetBlizzardWaypoints()
     {
-        blizzardWaypoints[0][0] = -11151.4;    blizzardWaypoints[1][0] = -1900.9;
-        blizzardWaypoints[0][1] = -11163.2;    blizzardWaypoints[1][1] = -1895.6;
-        blizzardWaypoints[0][2] = -11182.2;    blizzardWaypoints[1][2] = -1890.2;
-        blizzardWaypoints[0][3] = -11181.3;    blizzardWaypoints[1][3] = -1910.2;
-        blizzardWaypoints[0][4] = -11178.6;    blizzardWaypoints[1][4] = -1922.9;
-        blizzardWaypoints[0][5] = -11166.9;    blizzardWaypoints[1][5] = -1928.4;
-        blizzardWaypoints[0][6] = -11154.2;    blizzardWaypoints[1][6] = -1925.5;
-        blizzardWaypoints[0][7] = -11148.7;    blizzardWaypoints[1][7] = -1913.8;
+        blizzardWaypoints[0][0] = -11148.7;    blizzardWaypoints[1][7] = -1913.8;
+        blizzardWaypoints[0][1] = -11154.2;    blizzardWaypoints[1][6] = -1925.5;
+        blizzardWaypoints[0][2] = -11166.9;    blizzardWaypoints[1][5] = -1928.4;
+        blizzardWaypoints[0][3] = -11178.6;    blizzardWaypoints[1][4] = -1922.9;
+        blizzardWaypoints[0][4] = -11181.3;    blizzardWaypoints[1][3] = -1910.2;
+        blizzardWaypoints[0][5] = -11182.2;    blizzardWaypoints[1][2] = -1890.2;
+        blizzardWaypoints[0][6] = -11163.2;    blizzardWaypoints[1][1] = -1895.6;
+        blizzardWaypoints[0][7] = -11151.4;    blizzardWaypoints[1][0] = -1900.9;
     }
 
     void JustDied(Unit* killer){}
