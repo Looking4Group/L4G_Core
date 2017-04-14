@@ -3667,6 +3667,10 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->AttributesCu |= SPELL_ATTR_CU_NO_SPELL_DMG_COEFF;
             break;
             case 29838: //Second Wind (Rank 2)
+            case 20186: //Judgement of Wisdom (Rank 1) 
+            case 20354: //Judgement of Wisdom (Rank 2)
+            case 20355: //Judgement of Wisdom (Rank 3)
+            case 27164: //Judgement of Wisdom (Rank 4)
                 spellInfo->procFlags &= ~PROC_FLAG_ON_TAKE_PERIODIC;
                 break;
             case 38971: //acid geysir - spell of ssc underbog colossus
