@@ -3931,6 +3931,7 @@ void SpellMgr::LoadSpellCustomAttr()
                                                     12 Successful AoE damage spell hit
                                                     13 Taken spell hit
                                                     17 Taken spell damage */
+                break;
             default:
                 break;
         }
