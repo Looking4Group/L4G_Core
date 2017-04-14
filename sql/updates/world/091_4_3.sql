@@ -249,3 +249,18 @@ DELETE FROM `waypoint_data` WHERE `id` = 1193;
 -- -- INSERT INTO `waypoint_data` VALUES (48707, 12, -238.8606, 157.8310, -18.7639, 0, 0, 0, 100, 0);
 -- INSERT INTO `waypoint_data` VALUES (48707, 13, -240.889, 165.027, -18.5517, 0, 0, 0, 100, 0);
 
+UPDATE `creature_template` SET `faction_A` = 16, `faction_H` = 16 WHERE `entry` = 8996;
+
+UPDATE `creature_ai_scripts` SET `event_param1` = 5000, `event_param2` = 5000 WHERE `id` = 561701;
+UPDATE `creature_ai_scripts` SET `event_param1` = 0 WHERE `id` = 561703;
+UPDATE `creature_ai_scripts` SET `action1_param1` = 1 WHERE `id` = 561702;
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 5615;
+INSERT INTO `creature_ai_scripts` VALUES
+('561501','5615','1','0','100','0','1000','1000','0','0','11','22766','0','32','0','0','0','0','0','0','0','0','Wastewander Rogue - Cast Sneak OOC'),
+('561502','5615','9','0','100','1','0','5','6000','10000','11','8721','1','0','0','0','0','0','0','0','0','0','Wastewander Rogue - Cast Backstab'),
+('561503','5615','2','0','100','0','15','0','0','0','25','0','0','0','1','-47','0','0','0','0','0','0','Wastewander Rogue - Flee at 15% HP');
+UPDATE `creature_addon` SET `auras` = NULL WHERE `guid` IN (23464,23465,23466,23467,23470,23471,23475,23479,23480,23482,23483,23484,23485,23486,23487,23488,23489,23490,23491,23492,23493,92063,92413);
+
+UPDATE `creature`, `creature_template` SET `creature`.`curhealth` = `creature_template`.`MinHealth`, `creature`.`curmana` = `creature_template`.`MinMana` WHERE `creature`.`id` = `creature_template`.`entry` AND `creature_template`.`RegenHealth` & '1';
+
