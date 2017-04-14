@@ -141,14 +141,14 @@ INSERT INTO `creature_ai_scripts` VALUES
 (1717103, 17171, 14, 0, 100, 2, 606630, 80, 0, 0, 39, 5, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0,'Shade of Aran Teleport W - Call for Help and Despawn');
 
 -- Conjured Elemental 17167- mob_aran_elemental
-UPDATE `creature_template` SET `faction_A` = 16, `faction_H` = 16, `mindmg` = 300, `maxdmg` = 600, `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = 17167;
+UPDATE `creature_template` SET `faction_A` = 16, `faction_H` = 16, `mindmg` = 300, `maxdmg` = 600, `speed` = 1.00, `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = 17167;
 DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17167;
 INSERT INTO `creature_ai_scripts` VALUES ('1716701','17167','9','0','100','3','0','40','1500','4000','11','31012','1','0','0','0','0','0','0','0','0','0','Conjured Elemental - Cast Water Bolt');
-INSERT INTO `creature_ai_scripts` VALUES ('1716702','17167','1','0','100','3','1000','1000','3000','3000','38','0','0','0','0','0','0','0','0','0','0','0','Conjured Elemental - DoZoneInCombat OOC');
-INSERT INTO `creature_ai_scripts` VALUES ('1716703','17167','1','0','100','2','10000','10000','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Conjured Elemental - Despawn OOC');
+INSERT INTO `creature_ai_scripts` VALUES ('1716702','17167','1','0','100','2','10000','10000','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Conjured Elemental - Despawn OOC');
 
 -- Shade of Aran 16524
-UPDATE `creature_template` SET `mindmg`='2295',`maxdmg`='2760',`baseattacktime`='2000',`speed`='2.40',`flags_extra` = `flags_extra`|2|1048576 WHERE `entry` = 16524; -- 3060 3679 -- 4,590 - 5,519
+UPDATE `creature` SET `position_x`='-11164.9257',`position_y`='-1912.1971',`position_z`='232.0090',`orientation`='2.2226', `MovementType` = 0 WHERE `guid` = 57440;
+UPDATE `creature_template` SET `mindmg`='2295',`maxdmg`='2760',`baseattacktime`='2000',`speed`='1.71',`flags_extra` = `flags_extra`|2|1048576 WHERE `entry` = 16524; -- 3060 3679 -- 4,590 - 5,519
 
 -- Blizzard (Shade of Aran) 17161
 UPDATE `creature_template` SET `speed` = 1.20, `unit_flags`='33554432',`flags_extra`='130' WHERE `entry` = 17161; -- 1,125 33554432 128
