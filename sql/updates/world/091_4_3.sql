@@ -232,3 +232,20 @@ DELETE FROM `creature` WHERE `id` = 3654;
 -- Ishamuhale spawned via http://db.hellfire-tbc.com/?item=10338
 DELETE FROM `creature` WHERE `id` = 3257;
 
+UPDATE `creature` SET `MovementType` = 0 WHERE `guid` = 48707;
+DELETE FROM `creature_addon` WHERE `guid` = 48707;
+DELETE FROM `waypoint_data` WHERE `id` = 1193;
+-- INSERT INTO `waypoint_data` VALUES (48707, 1, -263.519, 150.466, -18.9955, 0, 0, 0, 100, 0);
+-- INSERT INTO `waypoint_data` VALUES (48707, 2, -275.879, 148.999, -22.2309, 0, 0, 0, 100, 0);
+-- INSERT INTO `waypoint_data` VALUES (48707, 3, -283.074, 148.146, -25.4312, 0, 0, 0, 100, 0);
+-- INSERT INTO `waypoint_data` VALUES (48707, 4, -275.879, 148.999, -22.2309, 0, 0, 0, 100, 0);
+-- INSERT INTO `waypoint_data` VALUES (48707, 5, -263.519, 150.466, -18.9955, 0, 0, 0, 100, 0);
+-- INSERT INTO `waypoint_data` VALUES (48707, 6, -247.886, 140.202, -18.5693, 0, 0, 0, 100, 0);
+-- INSERT INTO `waypoint_data` VALUES (48707, 7, -225.044, 153.121, -19.0445, 0, 0, 0, 100, 0);
+-- INSERT INTO `waypoint_data` VALUES (48707, 8, -212.734, 154.857, -21.4755, 0, 0, 0, 100, 0);
+-- INSERT INTO `waypoint_data` VALUES (48707, 9, -199.5, 155.408, -25.2446, 0, 0, 0, 100, 0);
+-- INSERT INTO `waypoint_data` VALUES (48707, 10, -212.734, 154.857, -21.4755, 0, 0, 0, 100, 0);
+-- INSERT INTO `waypoint_data` VALUES (48707, 11, -225.044, 153.121, -19.0445, 0, 0, 0, 100, 0);
+-- -- INSERT INTO `waypoint_data` VALUES (48707, 12, -238.8606, 157.8310, -18.7639, 0, 0, 0, 100, 0);
+-- INSERT INTO `waypoint_data` VALUES (48707, 13, -240.889, 165.027, -18.5517, 0, 0, 0, 100, 0);
+
