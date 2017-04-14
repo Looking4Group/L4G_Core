@@ -411,7 +411,11 @@ struct boss_aranAI : public ScriptedAI
         }
             DragonsBreathTimer -= diff;
 
-        m_creature->GetMotionMaster()->MovementExpired();
+        if (me->IsNonMeleeSpellCasted(false))
+        {
+            m_creature->GetMotionMaster()->MovementExpired();
+        }
+        
         CastNextSpellIfAnyAndReady();
 
         if(Drinking == DRINKING_NO_DRINKING)
