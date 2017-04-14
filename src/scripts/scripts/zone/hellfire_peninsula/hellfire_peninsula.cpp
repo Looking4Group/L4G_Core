@@ -2646,6 +2646,14 @@ CreatureAI* GetAI_npc_maghar_grunt(Creature* pCreature)
     return new npc_maghar_gruntAI(pCreature);
 }
 
+enum
+{
+    SPELL_CREATE_POODAD = 37688,
+    SPELL_FAKE_DOG_SPART = 37692,
+    SPELL_INFORM_DOG = 37689,
+
+    NPC_DERANGED_HELBOAR = 16863,
+};
 struct npc_fel_guard_houndAI : public ScriptedAI
 {
     npc_fel_guard_houndAI(Creature* pCreature) : ScriptedAI(pCreature) {}
