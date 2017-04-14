@@ -329,8 +329,7 @@ struct boss_aranAI : public ScriptedAI
             if (SuperCastTimer < diff)
             {
                 uint8 Available[2];
-                ClearCastQueue();
-                m_creature->GetMotionMaster()->MovementExpired();
+                ClearCastQueue();                
                 NormalCastTimer += 5000;
                 DragonsBreathTimer += 30000;
 
@@ -412,8 +411,9 @@ struct boss_aranAI : public ScriptedAI
         }
             DragonsBreathTimer -= diff;
 
+        m_creature->GetMotionMaster()->MovementExpired();
         CastNextSpellIfAnyAndReady();
-        m_creature->GetMotionMaster()->Initialize();
+
         if(Drinking == DRINKING_NO_DRINKING)
             DoMeleeAttackIfReady();
     }
