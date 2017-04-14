@@ -7378,7 +7378,6 @@ void Spell::EffectSkinning(uint32 /*i*/)
 
     ((Player*)m_caster)->SendLoot(creature->GetGUID(), LOOT_SKINNING);
     creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_SKINNABLE);
-    creature->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
 
     int32 reqValue = targetLevel < 10 ? 0 : targetLevel < 20 ? (targetLevel-10)*10 : targetLevel*5;
 
