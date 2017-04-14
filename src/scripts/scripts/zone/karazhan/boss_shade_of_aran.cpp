@@ -322,7 +322,6 @@ struct boss_aranAI : public ScriptedAI
             {
                 AddSpellToCast(SPELL_AOE_CS, CAST_SELF);
                 SecondarySpellTimer = urand(10000, 40000);
-                m_creature->GetMotionMaster()->Initialize();
             }
             else
                 SecondarySpellTimer -= diff;
@@ -408,13 +407,13 @@ struct boss_aranAI : public ScriptedAI
             if (SuperCastTimer < 8000)
                 SuperCastTimer += 8000;
 
-            ClearCastQueue();
             AddSpellToCast(SPELL_DRAGONSBREATH, CAST_TANK, false, true);
             DragonsBreathTimer = urand(15000, 30000);
         }
             DragonsBreathTimer -= diff;
 
         CastNextSpellIfAnyAndReady();
+        m_creature->GetMotionMaster()->Initialize();
         if(Drinking == DRINKING_NO_DRINKING)
             DoMeleeAttackIfReady();
     }
