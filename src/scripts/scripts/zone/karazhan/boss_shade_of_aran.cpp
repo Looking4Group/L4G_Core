@@ -413,7 +413,7 @@ struct boss_aranAI : public ScriptedAI
 
         if (me->IsNonMeleeSpellCasted(false))
         {
-            m_creature->GetMotionMaster()->MovementExpired();
+            //m_creature->GetMotionMaster()->MovementExpired();
         }
         
         CastNextSpellIfAnyAndReady();
