@@ -3921,6 +3921,19 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->EffectRadiusIndex[0] = 12;
                 spellInfo->EffectRadiusIndex[1] = 12;
                 break;
+            case 20186: //Judgement of Wisdom (Rank 1) 
+            case 20354: //Judgement of Wisdom (Rank 2)
+            case 20355: //Judgement of Wisdom (Rank 3)
+            case 27164: //Judgement of Wisdom (Rank 4)
+                spellInfo->procFlags = 144040;      /* Proc flag 0x000232A8
+                                                    03 Taken damage from melee strike hit
+                                                    05 Taken damage by Spell that use melee weapon
+                                                    07 Taken damage from ranged attack
+                                                    09 Taken damage by Spell that use ranged weapon
+                                                    12 Successful AoE damage spell hit
+                                                    13 Taken spell hit
+                                                    17 Taken spell damage */
+                break;
             default:
                 break;
         }
