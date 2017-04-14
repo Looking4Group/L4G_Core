@@ -140,7 +140,6 @@ struct boss_aranAI : public ScriptedAI
     void Reset()
     {
         ClearCastQueue();
-        m_creature->GetMotionMaster()->Initialize();
         SecondarySpellTimer = 5000;
         NormalCastTimer     = 0;
         SuperCastTimer      = 30000;
