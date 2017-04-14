@@ -296,3 +296,15 @@ DELETE FROM `gameobject_template` WHERE `entry`=184981;
 INSERT INTO `gameobject_template` (`entry`, `type`, `displayId`, `name`, `castBarCaption`, `faction`, `flags`, `size`, `data0`, `data1`, `data2`, `data3`, `data4`, `data5`, `data6`, `data7`, `data8`, `data9`, `data10`, `data11`, `data12`, `data13`, `data14`, `data15`, `data16`, `data17`, `data18`, `data19`, `data20`, `data21`, `data22`, `data23`, `ScriptName`) VALUES
 (184981, 6, 1287, 'TEMP Felhound Poo Trap', '', 0, 0, 1, 0, 0, 0, 37695, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
 
+-- Fix quest template for Corki quests. (values from tbc-db)
+UPDATE quest_template SET ReqCreatureOrGOId1=18369, ReqCreatureOrGOCount1=1, ReqSpellCast1=0 WHERE entry=9923;
+UPDATE quest_template SET ReqCreatureOrGOId1=20812, ReqCreatureOrGOCount1=1, ReqSpellCast1=0 WHERE entry=9924;
+UPDATE quest_template SET ReqCreatureOrGOId1=18444, ReqCreatureOrGOCount1=1, ReqSpellCast1=0 WHERE entry=9955;
+-- Our id's were totally mixed up. Update positions from tbc-db
+UPDATE creature SET position_x=-2563.89, position_y=6288.29, position_z=15.295, orientation=5.23599 WHERE guid=65786;
+UPDATE creature SET position_x=-918.143, position_y=8663.94, position_z=172.542, orientation=0.523599 WHERE guid=65849;
+-- Quest relations also wrong
+UPDATE creature_questrelation SET quest=9923 WHERE id=18369;
+UPDATE creature_questrelation SET quest=9955 WHERE id=18445;
+UPDATE creature_involvedrelation SET id=18445 WHERE quest=9954;
+
