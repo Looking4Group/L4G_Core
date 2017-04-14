@@ -3667,10 +3667,6 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->AttributesCu |= SPELL_ATTR_CU_NO_SPELL_DMG_COEFF;
             break;
             case 29838: //Second Wind (Rank 2)
-            case 20186: //Judgement of Wisdom (Rank 1) 
-            case 20354: //Judgement of Wisdom (Rank 2)
-            case 20355: //Judgement of Wisdom (Rank 3)
-            case 27164: //Judgement of Wisdom (Rank 4)
                 spellInfo->procFlags &= ~PROC_FLAG_ON_TAKE_PERIODIC;
                 break;
             case 38971: //acid geysir - spell of ssc underbog colossus
@@ -3923,6 +3919,18 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->EffectRadiusIndex[0] = 12;
                 spellInfo->EffectRadiusIndex[1] = 12;
                 break;
+            case 20186: //Judgement of Wisdom (Rank 1) 
+            case 20354: //Judgement of Wisdom (Rank 2)
+            case 20355: //Judgement of Wisdom (Rank 3)
+            case 27164: //Judgement of Wisdom (Rank 4)
+                spellInfo->procFlags = 664232;      /* Proc flag 0x000A22A8
+                                                    03 Taken damage from melee strike hit
+                                                    05 Taken damage by Spell that use melee weapon
+                                                    07 Taken damage from ranged attack
+                                                    09 Taken damage by Spell that use ranged weapon
+                                                    13 Taken spell hit
+                                                    17 Taken spell damage
+                                                    19 Taken periodic damage */
             default:
                 break;
         }
