@@ -283,3 +283,16 @@ INSERT INTO `npc_trainer` VALUES
 (1000044, 20243, 0, 0, 0, 1),
 (1000044, 12294, 0, 0, 0, 1);
 
+UPDATE `creature_template` SET `ScriptName`='npc_fel_guard_hound' WHERE `entry`=21847; 
+UPDATE `creature_template` SET `ScriptName`='', `AIName`='EventAI' WHERE `entry`=16863; 
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID`=16863;
+INSERT INTO `creature_ai_scripts` (`id`,`entryOrGUID`,`event_type`,`event_inverse_phase_mask`,`event_chance`,`event_flags`,`event_param1`,`event_param2`,`event_param3`,`event_param4`,`action1_type`,`action1_param1`,`action1_param2`,`action1_param3`,`action2_type`,`action2_param1`,`action2_param2`,`action2_param3`,`action3_type`,`action3_param1`,`action3_param2`,`action3_param3`,`comment`) VALUES
+-- Deranged Helboar 
+('1686301','16863','1','0','100','0','1000','1000','0','0','11','33908','0','0','0','0','0','0','0','0','0','0','Deranged Helboar - Cast Burning Spikes on Spawn'),
+('1686302','16863','2','0','100','0','30','0','0','0','11','8599','0','0','1','-106','0','0','0','0','0','0','Deranged Helboar - Cast Enrage at 30% HP'),
+('1686303','16863','6','0','100','0','0','0','0','0','11','37689','0','7','0','0','0','0','0','0','0','0','Deranged Helboar - Cast Tell Dog I Just Died! on Death');
+-- Missing gameobject template
+DELETE FROM `gameobject_template` WHERE `entry`=184981;
+INSERT INTO `gameobject_template` (`entry`, `type`, `displayId`, `name`, `castBarCaption`, `faction`, `flags`, `size`, `data0`, `data1`, `data2`, `data3`, `data4`, `data5`, `data6`, `data7`, `data8`, `data9`, `data10`, `data11`, `data12`, `data13`, `data14`, `data15`, `data16`, `data17`, `data18`, `data19`, `data20`, `data21`, `data22`, `data23`, `ScriptName`) VALUES
+(184981, 6, 1287, 'TEMP Felhound Poo Trap', '', 0, 0, 1, 0, 0, 0, 37695, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
+
