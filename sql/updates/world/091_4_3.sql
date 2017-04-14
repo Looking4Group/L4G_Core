@@ -273,3 +273,13 @@ DELETE FROM `script_texts` WHERE `entry`=-1000709;
 INSERT INTO `script_texts` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES (-1000709, 'My strength.... is... returning!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 'Maghar Grunt SAY_THANKS3');
 UPDATE creature_template SET ScriptName='npc_maghar_grunt' WHERE entry=16847;
 
+DELETE FROM `npc_trainer` WHERE `entry` = 1000044 AND `spell` IN (29801,23881,20252,7386,23922,20243,12294);
+INSERT INTO `npc_trainer` VALUES
+(1000044, 29801, 0, 0, 0, 1),
+(1000044, 23881, 0, 0, 0, 1),
+(1000044, 20252, 0, 0, 0, 1),
+(1000044, 7386, 0, 0, 0, 1),
+(1000044, 23922, 0, 0, 0, 1),
+(1000044, 20243, 0, 0, 0, 1),
+(1000044, 12294, 0, 0, 0, 1);
+
