@@ -310,3 +310,5 @@ UPDATE creature_involvedrelation SET id=18445 WHERE quest=9954;
 
 UPDATE `spell_affect` SET `spellfamilymask` = 0x20C01AF7 WHERE entry=12536;
 
+UPDATE creature_template SET faction_A=35,faction_H=35 WHERE entry=4962;
+
