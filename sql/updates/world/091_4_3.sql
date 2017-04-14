@@ -264,3 +264,12 @@ UPDATE `creature_addon` SET `auras` = NULL WHERE `guid` IN (23464,23465,23466,23
 
 UPDATE `creature`, `creature_template` SET `creature`.`curhealth` = `creature_template`.`MinHealth`, `creature`.`curmana` = `creature_template`.`MinMana` WHERE `creature`.`id` = `creature_template`.`entry` AND `creature_template`.`RegenHealth` & '1';
 
+-- https://github.com/Looking4Group/L4G_Core/issues/964
+DELETE FROM `script_texts` WHERE `entry`=-1000711;
+INSERT INTO `script_texts` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES (-1000711, 'You\'ve found a cure! We will crush our enemies!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 'Maghar Grunt SAY_THANKS1');
+DELETE FROM `script_texts` WHERE `entry`=-1000710;
+INSERT INTO `script_texts` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES (-1000710, 'You\'ve restored my health! I\'m in your debt, $N.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 'Maghar Grunt SAY_THANKS2');
+DELETE FROM `script_texts` WHERE `entry`=-1000709;
+INSERT INTO `script_texts` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES (-1000709, 'My strength.... is... returning!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 'Maghar Grunt SAY_THANKS3');
+UPDATE creature_template SET ScriptName='npc_maghar_grunt' WHERE entry=16847;
+
