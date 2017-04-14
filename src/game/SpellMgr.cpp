@@ -3921,6 +3921,10 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->EffectRadiusIndex[0] = 12;
                 spellInfo->EffectRadiusIndex[1] = 12;
                 break;
+            case 7355: // Unstuck (.start) changed duration to 30sec and usable while moving/falling
+                spellInfo->AuraInterruptFlags = AURA_INTERRUPT_FLAG_DAMAGE | AURA_INTERRUPT_FLAG_CC | AURA_INTERRUPT_FLAG_HITBYSPELL;
+                spellInfo->CastingTimeIndex = 9;
+                break;
             default:
                 break;
         }
