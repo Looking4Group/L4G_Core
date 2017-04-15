@@ -4657,16 +4657,10 @@ SpellCastResult Spell::CheckCast(bool strict)
                     {
                         // Create dispel mask by dispel type
                         bool hasOtherEffects = false;
-                        bool isTriggered = false;
                         uint32 dispelMask = 0;
 
                         for (uint8 i = 0; i < 3; ++i)
-                        {
-                            if (m_spellInfo->EffectApplyAuraName[i] == SPELL_AURA_PERIODIC_TRIGGER_SPELL_WITH_VALUE)
-                            {
-                                isTriggered = true;
-                            }
-
+                        {                            
                             if (m_spellInfo->Effect[i] == SPELL_EFFECT_DISPEL)
                             {
                                 // itr through all dispel types and add them to mask
@@ -4678,7 +4672,7 @@ SpellCastResult Spell::CheckCast(bool strict)
 
                         // check if dispel makes sense
                         std::vector <Aura *> dispel_list;
-                        target->GetDispellableAuraList(m_caster, dispelMask, dispel_list);                        
+                        target->GetDispellableAuraList(m_caster, dispelMask, dispel_list);
                         if (dispel_list.empty() && !hasOtherEffects && !IsTriggeredSpell())
                             return SPELL_FAILED_NOTHING_TO_DISPEL;
                     }
