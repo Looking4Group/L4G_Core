@@ -327,3 +327,5 @@ INSERT INTO `command` (name, permission_mask, help) VALUES
 ('npc extraflag', 8192, ''),
 ('npc fieldflag', 8192, '');
 
+UPDATE `npc_vendor` SET `incrtime` = 21600 WHERE `item` = 25848; -- 43200
+
