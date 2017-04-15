@@ -101,7 +101,7 @@ enum EffectRadiusIndex
     EFFECT_RADIUS_80_YARDS_2 = 65
 };
 
-enum SpellRange
+enum rangeIndex
 {
     SELF_ONLY                   = 1,
     COMBAT_RANGE                = 2,
