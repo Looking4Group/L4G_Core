@@ -313,6 +313,6 @@ UPDATE `spell_affect` SET `spellfamilymask` = 0x20C01AF7 WHERE entry=12536;
 UPDATE creature_template SET faction_A=35,faction_H=35 WHERE entry=4962;
 
 -- Carrion Swarmer 13160
- UPDATE `creature_template` SET `flags_extra` = 64 WHERE `entry` = 13160;
- 
- 
+UPDATE `creature_template` SET `flags_extra` = 64 WHERE `entry` = 13160;
+
+UPDATE `gameobject` SET `spawnMask` = 0 WHERE `id` = 2850;
