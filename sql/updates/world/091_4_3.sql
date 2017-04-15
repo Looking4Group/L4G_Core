@@ -329,3 +329,5 @@ INSERT INTO `command` (name, permission_mask, help) VALUES
 
 UPDATE `npc_vendor` SET `incrtime` = 21600 WHERE `item` = 25848; -- 43200
 
+UPDATE `creature_model_info` SET `bounding_radius` = 9, `combat_reach` = 9 WHERE `modelid` = 18698;
+
