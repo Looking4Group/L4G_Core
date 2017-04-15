@@ -4660,7 +4660,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                         uint32 dispelMask = 0;
 
                         for (uint8 i = 0; i < 3; ++i)
-                        {                  
+                        {
                             if (m_spellInfo->Effect[i] == SPELL_EFFECT_DISPEL)
                             {
                                 // itr through all dispel types and add them to mask
