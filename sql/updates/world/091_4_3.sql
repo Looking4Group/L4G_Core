@@ -316,3 +316,7 @@ UPDATE creature_template SET faction_A=35,faction_H=35 WHERE entry=4962;
 UPDATE `creature_template` SET `flags_extra` = 64 WHERE `entry` = 13160;
 
 UPDATE `gameobject` SET `spawnMask` = 0 WHERE `id` = 2850;
+
+-- The Underspore
+UPDATE `gameobject` SET `spawntimesecs` = 60 WHERE `id` = 182054; -- 360
+
