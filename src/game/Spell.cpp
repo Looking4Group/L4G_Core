@@ -4673,7 +4673,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                         // check if dispel makes sense
                         std::vector <Aura *> dispel_list;
                         target->GetDispellableAuraList(m_caster, dispelMask, dispel_list);
-                        if (dispel_list.empty() && !hasOtherEffects)
+                        if (dispel_list.empty() && !hasOtherEffects && !IsTriggeredSpell())
                             return SPELL_FAILED_NOTHING_TO_DISPEL;
                     }
                 }
