@@ -320,3 +320,10 @@ UPDATE `gameobject` SET `spawnMask` = 0 WHERE `id` = 2850;
 -- The Underspore
 UPDATE `gameobject` SET `spawntimesecs` = 60 WHERE `id` = 182054; -- 360
 
+DELETE FROM `command` WHERE `name` IN ('account set multiacc','adgreduce','npc extraflag','npc fieldflag');
+INSERT INTO `command` (name, permission_mask, help) VALUES
+('account set multiacc', 8192, ''),
+('adgreduce', 8192, ''),
+('npc extraflag', 8192, ''),
+('npc fieldflag', 8192, '');
+
