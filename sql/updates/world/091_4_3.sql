@@ -338,3 +338,14 @@ UPDATE `creature` SET `position_x` = '-8378.8388', `position_y` = '440.8860', `p
 
 UPDATE `creature_template` SET `flags_extra` = `flags_extra`|4194304 WHERE `entry` IN (18831, 18832, 18834, 18835);
 
+DELETE FROM `creature_linked_respawn` WHERE `guid` IN (50521,49805,50716,49978,135172,45682,85212,85213,85214);
+INSERT INTO `creature_linked_respawn` (`guid`, `linkedGuid`) VALUES ('85212', '10999101');
+INSERT INTO `creature_linked_respawn` (`guid`, `linkedGuid`) VALUES ('85213', '10999101');
+INSERT INTO `creature_linked_respawn` (`guid`, `linkedGuid`) VALUES ('85214', '10999101');
+INSERT INTO `creature_linked_respawn` (`guid`, `linkedGuid`) VALUES ('45682', '57440');
+INSERT INTO `creature_linked_respawn` (`guid`, `linkedGuid`) VALUES ('135172', '57440');
+INSERT INTO `creature_linked_respawn` (`guid`, `linkedGuid`) VALUES ('49978', '57440');
+INSERT INTO `creature_linked_respawn` (`guid`, `linkedGuid`) VALUES ('50716', '57440');
+INSERT INTO `creature_linked_respawn` (`guid`, `linkedGuid`) VALUES ('49805', '57440');
+INSERT INTO `creature_linked_respawn` (`guid`, `linkedGuid`) VALUES ('50521', '57440');
+
