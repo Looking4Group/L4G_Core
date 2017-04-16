@@ -270,7 +270,8 @@ uint32 SpellMgr::GetSpellCastTime(SpellEntry const* spellInfo, Spell const* spel
     if (!castTime)
         return 0;
 
-    if (spellInfo->SpellFamilyName == SPELLFAMILY_HUNTER && spellInfo->SpellFamilyFlags & 0x100020000LL) //steady shot and aimed shot
+    if ((spellInfo->SpellFamilyName == SPELLFAMILY_HUNTER && spellInfo->SpellFamilyFlags & 0x100020000LL) //steady shot and aimed shot
+        || spellInfo->Id == 2764) //throw
         castTime += 500;
 
     if (spell)
