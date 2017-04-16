@@ -333,3 +333,6 @@ UPDATE `creature_model_info` SET `bounding_radius` = 9, `combat_reach` = 9 WHERE
 
 UPDATE `creature_model_info` SET `bounding_radius`= 2,`combat_reach`= 8 WHERE `modelid` = 19097;
 
+UPDATE `creature` SET `position_x` = '-8383.9814', `position_y` = '436.8635', `position_z` = '122.2748', `orientation` = '0.6663' WHERE `guid` = 10523; -- -8394.000000 448.941986 123.760002
+UPDATE `creature` SET `position_x` = '-8378.8388', `position_y` = '440.8860', `position_z` = '122.5259', `orientation` = '3.7961' WHERE `guid` = 10524; -- -8389.000000 452.936005 123.760002
+
