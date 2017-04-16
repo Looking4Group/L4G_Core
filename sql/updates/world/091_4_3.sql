@@ -331,3 +331,5 @@ UPDATE `npc_vendor` SET `incrtime` = 21600 WHERE `item` = 25848; -- 43200
 
 UPDATE `creature_model_info` SET `bounding_radius` = 9, `combat_reach` = 9 WHERE `modelid` = 18698;
 
+UPDATE `creature_model_info` SET `bounding_radius`= 2,`combat_reach`= 8 WHERE `modelid` = 19097;
+
