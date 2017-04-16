@@ -354,3 +354,6 @@ INSERT INTO `creature_addon` VALUES (52386,0,0,0,0,4097,173,0,'');
 
 UPDATE `battleground_template` SET `MinPlayersPerTeam` = 8 WHERE `id` IN (2, 3, 7);
 
+-- Baelmon the Hound-Master
+UPDATE `creature_template` SET `mindmg`='1037',`maxdmg`='1229' WHERE `entry` = 19747;
+
