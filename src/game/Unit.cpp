@@ -3085,6 +3085,10 @@ SpellMissInfo Unit::MagicSpellHitResult(Unit *pVictim, SpellEntry const *spell)
     else
         modHitChance = 94 - (leveldif - 2) * lchance;
 
+    // base hit chance for holy spells should be 100
+    if (schoolMask & SPELL_SCHOOL_MASK_HOLY)
+        modHitChance = 100;
+
     // Spellmod from SPELLMOD_RESIST_MISS_CHANCE
     if (Player *modOwner = GetSpellModOwner())
         modOwner->ApplySpellMod(spell->Id, SPELLMOD_RESIST_MISS_CHANCE, modHitChance);
