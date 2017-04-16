@@ -8502,9 +8502,9 @@ uint32 Unit::SpellDamageBonus(Unit *pVictim, SpellEntry const *spellProto, uint3
                 DotFactor = damagetype == DOT ? 0.17f : 0.011f;
                 CastingTime = 3500;
             }
-            else if (spellProto->Id == 42463)
+            else if (spellProto->Id == 42463) // Seal of Vengeance fullstack additional dmg
             {
-                CastingTime = 160;
+                CastingTime = 77;
             }
             // Holy shield - 5% of Holy Damage
             else if ((spellProto->SpellFamilyFlags & 0x4000000000LL) && spellProto->SpellIconID == 453)

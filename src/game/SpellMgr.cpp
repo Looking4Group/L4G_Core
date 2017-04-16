@@ -3931,10 +3931,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->CastingTimeIndex = 9;
                 break;
             case 42463: //Seal of Vengeance additional fullstack DMG
-                spellInfo->Effect[0] = SPELL_EFFECT_NORMALIZED_WEAPON_DMG;
-                spellInfo->Effect[1] = SPELL_EFFECT_WEAPON_PERCENT_DAMAGE;
-                spellInfo->EffectBasePoints[1] = 9;
-                spellInfo->AttributesCu |= SPELL_ATTR_CU_NO_SPELL_DMG_COEFF;
+                spellInfo->EffectBasePoints[0] = 20;
                 break;
             default:
                 break;
