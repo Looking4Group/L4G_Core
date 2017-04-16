@@ -3930,6 +3930,12 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->AuraInterruptFlags = AURA_INTERRUPT_FLAG_DAMAGE | AURA_INTERRUPT_FLAG_CC | AURA_INTERRUPT_FLAG_HITBYSPELL;
                 spellInfo->CastingTimeIndex = 9;
                 break;
+            case 42463: //Seal of Vengeance additional fullstack DMG
+                spellInfo->Effect[0] = SPELL_EFFECT_NORMALIZED_WEAPON_DMG;
+                spellInfo->Effect[1] = SPELL_EFFECT_WEAPON_PERCENT_DAMAGE;
+                spellInfo->EffectBasePoints[1] = 9;
+                spellInfo->AttributesCu |= SPELL_ATTR_CU_NO_SPELL_DMG_COEFF;
+                break;
             default:
                 break;
         }
