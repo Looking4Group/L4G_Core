@@ -352,3 +352,5 @@ INSERT INTO `creature_linked_respawn` (`guid`, `linkedGuid`) VALUES ('50521', '5
 DELETE FROM `creature_addon` WHERE `guid` = 52386;
 INSERT INTO `creature_addon` VALUES (52386,0,0,0,0,4097,173,0,'');
 
+UPDATE `battleground_template` SET `MinPlayersPerTeam` = 8 WHERE `id` IN (2, 3, 7);
+
