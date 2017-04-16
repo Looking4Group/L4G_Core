@@ -349,3 +349,6 @@ INSERT INTO `creature_linked_respawn` (`guid`, `linkedGuid`) VALUES ('50716', '5
 INSERT INTO `creature_linked_respawn` (`guid`, `linkedGuid`) VALUES ('49805', '57440');
 INSERT INTO `creature_linked_respawn` (`guid`, `linkedGuid`) VALUES ('50521', '57440');
 
+DELETE FROM `creature_addon` WHERE `guid` = 52386;
+INSERT INTO `creature_addon` VALUES (52386,0,0,0,0,4097,173,0,'');
+
