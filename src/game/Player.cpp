@@ -908,6 +908,62 @@ void Player::UpdateFallInformationIfNeed(MovementInfo const& minfo,uint16 opcode
         SetFallInformation(minfo.GetFallTime(), minfo.GetPos()->z);
 }
 
+
+void Player::UnsummonPetTemporaryIfAny()
+{
+    Pet* pet = GetPet();
+    if (!pet)
+        return;
+
+    if (!m_temporaryUnsummonedPetNumber && pet->isControlled() && !pet->isTemporarySummoned())
+        m_temporaryUnsummonedPetNumber = pet->GetCharmInfo()->GetPetNumber();
+
+    RemovePet(pet, PET_SAVE_NOT_IN_SLOT);
+}
+
+void Player::UnsummonPetIfAny()
+{
+    Pet* pet = GetPet();
+    if (!pet)
+        return;
+
+    RemovePet(pet, PET_SAVE_NOT_IN_SLOT);
+}
+
+bool Player::IsPetNeedBeTemporaryUnsummoned() const
+{
+    if (!IsInWorld() || !isAlive())
+        return true;
+
+    if (HasAuraType(SPELL_AURA_FLY) || (IsMounted() && HasAuraType(SPELL_AURA_MOD_INCREASE_FLIGHT_SPEED))) // if not IsMounted and has aura, means we are removing flying mount
+        return true;
+
+    if (hasUnitState(UNIT_STAT_TAXI_FLIGHT))
+        return true;
+
+    return false;
+}
+
+void Player::ResummonPetTemporaryUnSummonedIfAny()
+{
+    if (!m_temporaryUnsummonedPetNumber)
+        return;
+
+    // not resummon in not appropriate state
+    if (IsPetNeedBeTemporaryUnsummoned())
+        return;
+
+    if (GetPetGUID())
+        return;
+
+    Pet* NewPet = new Pet;
+    if (!NewPet->LoadPetFromDB(this, 0, m_temporaryUnsummonedPetNumber, true))
+        delete NewPet;
+
+    m_temporaryUnsummonedPetNumber = 0;
+}
+
+
 void Player::EnvironmentalDamage(EnviromentalDamage type, uint32 damage)
 {
     if (!isAlive() || isGameMaster())
@@ -1766,13 +1822,8 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
         {
             //same map, only remove pet if out of range
             if (pet && !IsWithinDistInMap(pet, OWNER_MAX_DISTANCE))
-            {
-                if (pet->isControlled() && !pet->isTemporarySummoned())
-                    m_temporaryUnsummonedPetNumber = pet->GetCharmInfo()->GetPetNumber();
-                else
-                    m_temporaryUnsummonedPetNumber = 0;
-
-                RemovePet(pet, PET_SAVE_NOT_IN_SLOT);
+            {                
+                UnsummonPetTemporaryIfAny();
             }
         }
 
