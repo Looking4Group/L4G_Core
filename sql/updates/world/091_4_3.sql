@@ -372,3 +372,6 @@ UPDATE `battleground_template` SET `MinPlayersPerTeam` = 8 WHERE `id` IN (2, 3, 
 -- Baelmon the Hound-Master
 UPDATE `creature_template` SET `mindmg`='1037',`maxdmg`='1229' WHERE `entry` = 19747;
 
+-- Sharth Voldoun
+UPDATE `creature` SET `spawntimesecs` = 300 WHERE `id` = 18554; -- 1470
+
