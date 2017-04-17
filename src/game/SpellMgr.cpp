@@ -3322,7 +3322,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ENEMY;
                 spellInfo->EffectImplicitTargetB[0] = 0;
                 if (i == 42005)
-                    spellInfo->rangeIndex = 6;
+                    spellInfo->rangeIndex = VISION_RANGE; // 100yd instead of 0
                 break;
             case 41625: // Fel Rage 3
                 spellInfo->Stances = 0;
@@ -3406,7 +3406,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->EffectApplyAuraName[1] = SPELL_AURA_DUMMY;
                 break;
             case 36819: // Kael Pyroblast
-                spellInfo->rangeIndex = 6;  // from 40yd to 100yd to avoid running from dmg
+                spellInfo->rangeIndex = VISION_RANGE;  // from 40yd to 100yd to avoid running from dmg
                 break;
             case 40334:
                 spellInfo->procFlags = PROC_FLAG_SUCCESSFUL_MELEE_HIT;
@@ -3748,9 +3748,6 @@ void SpellMgr::LoadSpellCustomAttr()
             case 46564: //Holy Nova
                 spellInfo->Dispel = DISPEL_NONE;
                 spellInfo->InterruptFlags |= SPELL_INTERRUPT_FLAG_INTERRUPT;
-                break;
-            case 33813: //Hurtful Strike
-                spellInfo->rangeIndex = 137;
                 break;
             case 33671: // Gruul Shatter Radius Reduction (From 20 to 19 yards)
                 // There was a slight range issue with shatter
