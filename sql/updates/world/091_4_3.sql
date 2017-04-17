@@ -333,8 +333,23 @@ UPDATE `creature_model_info` SET `bounding_radius` = 9, `combat_reach` = 9 WHERE
 
 UPDATE `creature_model_info` SET `bounding_radius`= 2,`combat_reach`= 8 WHERE `modelid` = 19097;
 
-UPDATE `creature` SET `position_x` = '-8383.9814', `position_y` = '436.8635', `position_z` = '122.2748', `orientation` = '0.6663' WHERE `guid` = 10523; -- -8394.000000 448.941986 123.760002
-UPDATE `creature` SET `position_x` = '-8378.8388', `position_y` = '440.8860', `position_z` = '122.5259', `orientation` = '3.7961' WHERE `guid` = 10524; -- -8389.000000 452.936005 123.760002
+UPDATE `creature` SET `position_x` = '-8394.000000', `position_y` = '448.941986', `position_z` = '123.760002', `orientation` = '0.6663' WHERE `guid` = 10523;
+UPDATE `creature` SET `position_x` = '-8389.000000', `position_y` = '452.936005', `position_z` = '123.760002', `orientation` = '3.7961' WHERE `guid` = 10524;
+
+UPDATE `creature_addon` SET `path_id` = 10528 WHERE `guid` = 10528;
+DELETE FROM `waypoint_data` WHERE `id` = 10528;
+INSERT INTO `waypoint_data` VALUES (10528, 1, -8532.2, 386.405, 108.386, 1, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (10528, 2, -8520.8, 395.473, 108.386, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (10528, 3, -8510.08, 404.166, 108.386, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (10528, 4, -8502.4, 404.974, 108.386, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (10528, 5, -8497.35, 398.44, 108.386, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (10528, 6, -8488.92, 399.493, 108.386, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (10528, 7, -8483.58, 403.824, 108.386, 10000, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (10528, 8, -8488.92, 399.493, 108.386, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (10528, 9, -8497.35, 398.44, 108.386, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (10528, 10, -8502.4, 404.974, 108.386, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (10528, 11, -8510.08, 404.166, 108.386, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (10528, 12, -8520.8, 395.473, 108.386, 0, 0, 0, 100, 0);
 
 UPDATE `creature_template` SET `flags_extra` = `flags_extra`|4194304 WHERE `entry` IN (18831, 18832, 18834, 18835);
 
