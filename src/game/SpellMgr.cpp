@@ -3748,9 +3748,6 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->Dispel = DISPEL_NONE;
                 spellInfo->InterruptFlags |= SPELL_INTERRUPT_FLAG_INTERRUPT;
                 break;
-            case 33813: //Hurtful Strike
-                spellInfo->rangeIndex = COMBAT_RANGE; // 10yd instead of 5
-                break;
             case 33671: // Gruul Shatter Radius Reduction (From 20 to 19 yards)
                 // There was a slight range issue with shatter
                 spellInfo->EffectRadiusIndex[0] = 49;
