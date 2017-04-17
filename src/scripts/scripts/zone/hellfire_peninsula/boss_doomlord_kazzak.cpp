@@ -116,7 +116,7 @@ struct boss_doomlordkazzakAI : public BossAI
 
     void KilledUnit(Unit* pVictim)
     {
-        if (pVictim->GetTypeId() == TYPEID_PLAYER)
+        if ((pVictim->GetTypeId() == TYPEID_PLAYER) && (pVictim->getFaction() == me->GetLootRecipient()->getFaction()))
         {
             if (!HealthBelowPct(1))
             {
