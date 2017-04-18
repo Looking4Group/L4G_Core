@@ -397,3 +397,5 @@ INSERT INTO `npc_vendor` VALUES (24975, 22793, 1, 9000, 0);
 DELETE FROM `spell_proc_event` WHERE entry = 30482;
 -- INSERT INTO `spell_proc_event` VALUES (30482, 0, 0, 0, 131624, 0, 0, 0, 0);
 
+UPDATE `creature` SET `position_x` = '-10947.0937', `position_y` = '-1957.2091', `position_z` = '275.2672' WHERE `guid` = 135911;
+
