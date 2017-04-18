@@ -506,7 +506,7 @@ bool ItemUse_item_reset_talents(Player *player, Item* _Item, SpellCastTargets co
             else
             {
                 player->resetTalents(true);
-                player->DestroyItemCount(1000022, 1, true, false);
+                //player->DestroyItemCount(1000022, 1, true, false);
                 player->Whisper("Deine Talente wurden zurueckgesetzt", LANG_UNIVERSAL, player->GetGUID());
                 return true;
             }
