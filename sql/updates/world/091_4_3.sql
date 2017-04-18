@@ -378,3 +378,19 @@ UPDATE `creature` SET `spawntimesecs` = 300 WHERE `id` = 18554; -- 1470
 UPDATE `creature` SET `spawntimesecs` = 30 WHERE `guid` IN (86466,112008,111481);
 UPDATE `creature` SET `spawntimesecs`= 7200 WHERE `guid` IN (13590, 13414, 13244, 110619);
 
+DELETE FROM `game_event_creature` WHERE `guid` = 94378;
+INSERT INTO `game_event_creature` VALUES (94378, 46);
+
+UPDATE `creature_template` SET `npcflag` = `npcflag`|128 WHERE entry = 24975;
+
+DELETE FROM `npc_vendor` WHERE `entry` = 24975;
+INSERT INTO `npc_vendor` VALUES (24975, 3371, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (24975, 3372, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (24975, 8925, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (24975, 13467, 3, 9000, 0);
+INSERT INTO `npc_vendor` VALUES (24975, 18256, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (24975, 22785, 3, 9000, 0);
+INSERT INTO `npc_vendor` VALUES (24975, 22786, 3, 9000, 0);
+INSERT INTO `npc_vendor` VALUES (24975, 22791, 3, 9000, 0);
+INSERT INTO `npc_vendor` VALUES (24975, 22793, 1, 9000, 0);
+
