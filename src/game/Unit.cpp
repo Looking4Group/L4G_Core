@@ -8502,7 +8502,7 @@ uint32 Unit::SpellDamageBonus(Unit *pVictim, SpellEntry const *spellProto, uint3
                 DotFactor = damagetype == DOT ? 0.17f : 0.011f;
                 CastingTime = 3500;
             }
-            else if (spellProto->Id == 42463) // Seal of Vengeance fullstack additional dmg
+            else if (spellProto->Id == 42463) // Seal of Vengeance fullstack additional dmg - 2.2%
             {
                 CastingTime = 77;
             }
