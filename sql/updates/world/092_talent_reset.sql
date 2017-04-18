@@ -1,2 +1,2 @@
 -- change talent reset token to 6month duration
-UPDATE `item_template` SET `Duration` = '-2592000', `description` = 'Use to reset talents', `name`= 'Hellfire Talent Reset Token', `class` = '15', `maxcount` = '1', `stackable` = '1' `BuyPrice` = '2000000' WHERE `entry` = 1000022;
+UPDATE `item_template` SET `Duration` = '-2592000', `description` = 'Use to reset talents', `name`= 'Hellfire Talent Reset Token', `class` = '15', `maxcount` = '1', `stackable` = '1', `BuyPrice` = '2000000' WHERE `entry` = 1000022;
