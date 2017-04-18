@@ -375,3 +375,6 @@ UPDATE `creature_template` SET `mindmg`='1037',`maxdmg`='1229' WHERE `entry` = 1
 -- Sharth Voldoun
 UPDATE `creature` SET `spawntimesecs` = 300 WHERE `id` = 18554; -- 1470
 
+UPDATE `creature` SET `spawntimesecs` = 30 WHERE `guid` IN (86466,112008,111481);
+UPDATE `creature` SET `spawntimesecs`= 7200 WHERE `guid` IN (13590, 13414, 13244, 110619);
+
