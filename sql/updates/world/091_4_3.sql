@@ -394,3 +394,6 @@ INSERT INTO `npc_vendor` VALUES (24975, 22786, 3, 9000, 0);
 INSERT INTO `npc_vendor` VALUES (24975, 22791, 3, 9000, 0);
 INSERT INTO `npc_vendor` VALUES (24975, 22793, 1, 9000, 0);
 
+DELETE FROM `spell_proc_event` WHERE entry = 30482;
+-- INSERT INTO `spell_proc_event` VALUES (30482, 0, 0, 0, 131624, 0, 0, 0, 0);
+
