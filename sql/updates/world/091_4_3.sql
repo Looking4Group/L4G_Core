@@ -407,3 +407,5 @@ UPDATE `spell_affect` SET `SpellFamilyMask`='12965527033218834' WHERE (`entry`='
 UPDATE `spell_affect` SET `SpellFamilyMask`='12965527033218834' WHERE (`entry`='17121') AND effectId = 1;
 UPDATE `spell_affect` SET `SpellFamilyMask`='12965527033218834' WHERE (`entry`='17122') AND effectId = 1;
 
+DELETE FROM `gameobject` WHERE `guid` IN (82587, 82576, 82586, 82589);
+
