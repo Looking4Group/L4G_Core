@@ -399,3 +399,11 @@ DELETE FROM `spell_proc_event` WHERE entry = 30482;
 
 UPDATE `creature` SET `position_x` = '-10947.0937', `position_y` = '-1957.2091', `position_z` = '275.2672' WHERE `guid` = 135911;
 
+-- Druid [Subtlety]
+-- Add Nature's Grasp & Regrowth
+UPDATE `spell_affect` SET `SpellFamilyMask`='12965527033218834' WHERE (`entry`='17118') AND effectId = 1;
+UPDATE `spell_affect` SET `SpellFamilyMask`='12965527033218834' WHERE (`entry`='17119') AND effectId = 1;
+UPDATE `spell_affect` SET `SpellFamilyMask`='12965527033218834' WHERE (`entry`='17120') AND effectId = 1;
+UPDATE `spell_affect` SET `SpellFamilyMask`='12965527033218834' WHERE (`entry`='17121') AND effectId = 1;
+UPDATE `spell_affect` SET `SpellFamilyMask`='12965527033218834' WHERE (`entry`='17122') AND effectId = 1;
+
