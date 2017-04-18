@@ -409,3 +409,6 @@ UPDATE `spell_affect` SET `SpellFamilyMask`='12965527033218834' WHERE (`entry`='
 
 DELETE FROM `gameobject` WHERE `guid` IN (82587, 82576, 82586, 82589);
 
+-- Remove duplicate SSC bridge objects
+DELETE FROM `gameobject` WHERE `guid` IN (78715, 78716, 78717);
+
