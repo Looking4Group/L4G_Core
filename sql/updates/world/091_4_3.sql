@@ -698,3 +698,27 @@ INSERT INTO `item_template` VALUES (28071, 9, 0, -1, 'Grimoire of Anguish (Rank 
 INSERT INTO `item_template` VALUES (28072, 9, 0, -1, 'Grimoire of Anguish (Rank 2)', 1246, 1, 64, 1, 26000, 6500, 0, 31488, -1, 60, 60, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 33705, 0, -1, -1, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1, 1, '', 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, '', 0, 0, 0, 0, 0);
 INSERT INTO `item_template` VALUES (28073, 9, 0, -1, 'Grimoire of Anguish (Rank 3)', 1246, 1, 64, 1, 67000, 16750, 0, 31488, -1, 70, 70, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 33706, 0, -1, -1, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, -1, 0, -1, 1, '', 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, '', 0, 0, 0, 0, 0);
 
+-- Draenei Vindicator 16996
+UPDATE `creature_template` SET `AIName` = 'EventAI', `equipment_id` = 3001 WHERE `entry` = 16996;
+DELETE FROM `creature_equip_template` WHERE `entry` = 3001;
+INSERT INTO `creature_equip_template` VALUES (3001, 3780, 0, 0, 50267138, 0, 0, 3, 0, 0);
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 16996;
+INSERT INTO `creature_ai_scripts` VALUES
+('1699601','16996','9','0','100','1','0','8','16000','25000','11','13005','4','32','0','0','0','0','0','0','0','0','Draenei Vindicator - Cast Hammer of Justice'),
+('1699602','16996','0','0','100','1','7000','9000','30000','35000','11','33127','0','0','0','0','0','0','0','0','0','0','Draenei Vindicator - Cast Seal of Command'),
+('1699603','16996','2','0','100','0','20','0','21000','28000','11','13874','0','0','0','0','0','0','0','0','0','0','Draenei Vindicator - Cast Divine Shield at 20% HP'),
+('1699604','16996','1','0','100','0','30000','30000','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Draenei Vindicator - Despawn OOC');
+
+-- Draenei Anchorite 16994
+UPDATE `creature_template` SET `AIName` = 'EventAI', `equipment_id` = 3003 WHERE `entry` = 16994;
+DELETE FROM `creature_equip_template` WHERE `entry` IN (3002,3003);
+INSERT INTO `creature_equip_template` VALUES
+(3002,21968,0,0,50268674,0,0,2,0,0), -- non sparkle
+(3003,31608,0,0,50268674,0,0,2,0,0); -- sparkle
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 16994;
+INSERT INTO `creature_ai_scripts` VALUES
+('1699401','16994','4','0','100','0','0','0','0','0','11','25431','0','0','0','0','0','0','0','0','0','0','Draenei Anchorite - Cast Inner Fire on Aggro'),
+('1699402','16994','14','0','100','1','1000','40','12000','15000','11','17137','6','0','0','0','0','0','0','0','0','0','Draenei Anchorite - Cast Flash Heal'),
+('1699403','16994','0','0','100','1','5000','7000','17000','22000','11','17140','4','32','0','0','0','0','0','0','0','0','Draenei Anchorite - Cast Holy Fire'),
+('1699404','16994','1','0','100','0','30000','30000','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Draenei Anchorite - Despawn OOC');
+
