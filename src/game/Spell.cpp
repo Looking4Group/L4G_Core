@@ -1100,7 +1100,7 @@ void Spell::DoAllEffectOnTarget(TargetInfo *target)
     if (!m_caster->IsFriendlyTo(unit) && !SpellMgr::IsPositiveSpell(GetSpellInfo()->Id))
     {
         if(m_caster->GetTypeId() != TYPEID_PLAYER || !((Player const*)m_caster)->isGameMaster())
-            m_caster->CombatStart(unit, !(GetSpellInfo()->AttributesEx3 & SPELL_ATTR_EX3_NO_INITIAL_AGGRO));
+            m_caster->CombatStart(unit, !((GetSpellInfo()->AttributesEx3 & SPELL_ATTR_EX3_NO_INITIAL_AGGRO) || (GetSpellInfo()->AttributesEx & SPELL_ATTR_EX_NO_THREAT)));
 
         if (GetSpellInfo()->AttributesCu & SPELL_ATTR_CU_AURA_CC)
         {
