@@ -7915,6 +7915,7 @@ void Player::SendLoot(uint64 guid, LootType loot_type)
             if (loot_type == LOOT_SKINNING)
             {
                 loot->clear();
+                permission = ALL_PERMISSION;
                 loot->FillLoot(creature->GetCreatureInfo()->SkinLootId, LootTemplates_Skinning, this, false);
             }
             // set group rights only for loot_type != LOOT_SKINNING

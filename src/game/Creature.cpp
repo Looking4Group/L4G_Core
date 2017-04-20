@@ -1289,6 +1289,13 @@ void Creature::SetLootRecipient(Unit *unit)
 
     m_lootRecipient = player->GetGUID();
 
+    if (HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_SKINNABLE))
+    {
+        m_playersAllowedToLoot.clear();
+        m_playersAllowedToLoot.insert(m_lootRecipient);
+        return;
+    }
+
     // special case for world bosses
     Group* group = player->GetGroup();
     if (isWorldBoss() && group)
