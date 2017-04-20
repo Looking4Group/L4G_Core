@@ -722,3 +722,5 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('1699403','16994','0','0','100','1','5000','7000','17000','22000','11','17140','4','32','0','0','0','0','0','0','0','0','Draenei Anchorite - Cast Holy Fire'),
 ('1699404','16994','1','0','100','0','30000','30000','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Draenei Anchorite - Despawn OOC');
 
+UPDATE `spell_affect` SET `SpellFamilyMask` = 34376646656 WHERE `entry` = 37166;
+
