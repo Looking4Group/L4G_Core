@@ -7564,6 +7564,9 @@ bool Unit::IsHostileTo(Unit const* unit) const
     if (unit == this)
         return false;
 
+    if (unit->getFaction() == 35)
+        return false;
+
     // always non-hostile to GM in GM mode
     if (unit->GetTypeId() == TYPEID_PLAYER && ((Player const*)unit)->isGameMaster())
         return false;
@@ -12900,7 +12903,9 @@ void Unit::SetCharmedOrPossessedBy(Unit* charmer, bool possess)
         charmer->getThreatManager().modifyThreatPercent(this, -101);
 
     SetCharmerGUID(charmer->GetGUID());
-    setFaction(charmer->getFaction());
+
+    if (getFaction() != 35)
+        setFaction(charmer->getFaction());
 
     SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
 
