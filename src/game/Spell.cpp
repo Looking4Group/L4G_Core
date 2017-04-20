@@ -4228,6 +4228,15 @@ SpellCastResult Spell::CheckCast(bool strict)
                 }
                 break;
             }
+            case SPELL_EFFECT_APPLY_AURA:
+            {
+                // Tag Greater Felfire Diemetradon
+                if (GetSpellInfo()->Id == 37851 && m_targets.getUnitTarget() && m_targets.getUnitTarget()->HasAura(37851, 0))
+                {
+                    return SPELL_FAILED_BAD_TARGETS;
+                }
+                break;
+            }
             case SPELL_EFFECT_LEARN_SPELL:
             {
                 if (GetSpellInfo()->EffectImplicitTargetA[i] != TARGET_UNIT_PET)

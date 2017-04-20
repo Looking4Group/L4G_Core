@@ -2651,6 +2651,13 @@ void Spell::EffectTriggerSpell(uint32 i)
             }
             return;
         }
+        // Kill Credit Greater Diemetradon
+        case 37907:
+        {
+            if (Unit* owner = m_caster->GetCharmer())
+                m_caster->CastSpell(owner, 37907, true);
+            break;
+        }
         // Priest Shadowfiend (34433) need apply mana gain trigger aura on pet
         case 41967:
         {
