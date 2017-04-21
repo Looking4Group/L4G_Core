@@ -230,7 +230,7 @@ struct mob_netherweb_victimAI : public ScriptedAI
     void EnterCombat(Unit *who) { }
     void MoveInLineOfSight(Unit *who) { }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* pKiller)
     {
         Player* Killer = pKiller->GetCharmerOrOwnerPlayerOrPlayerItself();
         if (Killer && Killer->GetQuestStatus(10873) == QUEST_STATUS_INCOMPLETE)
