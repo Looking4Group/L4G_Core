@@ -230,23 +230,21 @@ struct mob_netherweb_victimAI : public ScriptedAI
     void EnterCombat(Unit *who) { }
     void MoveInLineOfSight(Unit *who) { }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* pKiller)
     {
-        if( Killer->GetTypeId() == TYPEID_PLAYER )
+        Player* Killer = pKiller->GetCharmerOrOwnerPlayerOrPlayerItself();
+        if (Killer && Killer->GetQuestStatus(10873) == QUEST_STATUS_INCOMPLETE)
         {
-            if( ((Player*)Killer)->GetQuestStatus(10873) == QUEST_STATUS_INCOMPLETE )
+            if (rand()%100 < 25)
             {
-                if( rand()%100 < 25 )
-                {
-                    DoSpawnCreature(QUEST_TARGET,0,0,0,0,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,60000);
-                    ((Player*)Killer)->KilledMonster(QUEST_TARGET, me->GetGUID());
-                }else
+                DoSpawnCreature(QUEST_TARGET,0,0,0,0,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,60000);
+                Killer->KilledMonster(QUEST_TARGET, me->GetGUID());
+            } else
                 DoSpawnCreature(netherwebVictims[rand()%6],0,0,0,0,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,60000);
 
-                if( rand()%100 < 75 )
-                    DoSpawnCreature(netherwebVictims[rand()%6],0,0,0,0,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,60000);
+            if (rand()%100 < 75)
                 DoSpawnCreature(netherwebVictims[rand()%6],0,0,0,0,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,60000);
-            }
+            DoSpawnCreature(netherwebVictims[rand()%6],0,0,0,0,TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT,60000);
         }
     }
 };
