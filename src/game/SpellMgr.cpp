@@ -1934,6 +1934,9 @@ bool SpellMgr::IsSpecialStackCase(SpellEntry const *spellInfo_1, SpellEntry cons
     uint32 spellId_1 = spellInfo_1->Id;
     uint32 spellId_2 = spellInfo_2->Id;
 
+    if ((spellId_1 == spellId_2) && (spellInfo_1->AttributesEx3 & SPELL_ATTR_EX3_STACK_FOR_DIFF_CASTERS))
+        return !sameCaster;
+
     // judgement of light stacks with judgement of wisdom
     if (spellInfo_1->SpellFamilyName == SPELLFAMILY_PALADIN && spellInfo_1->SpellFamilyFlags & 0x80000 && spellInfo_1->SpellIconID == 299 // light
             && spellInfo_2->SpellFamilyName == SPELLFAMILY_PALADIN && spellInfo_2->SpellFamilyFlags & 0x80000 && spellInfo_2->SpellIconID == 206) // wisdom
