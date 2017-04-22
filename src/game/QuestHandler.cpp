@@ -434,6 +434,12 @@ void WorldSession::HandleQuestConfirmAccept(WorldPacket& recv_data)
                 return;
         }
 
+        if (!pOriginalPlayer->IsActiveQuest(quest))
+            return;
+
+        if (!_player->CanTakeQuest(pQuest, true))
+            return;
+
         if (_player->CanAddQuest(pQuest, true))
             _player->AddQuest(pQuest, NULL);                // NULL, this prevent DB script from duplicate running
 
