@@ -1305,3 +1305,5 @@ INSERT INTO `waypoint_data` VALUES (41830, 25, 1599.24, 109.457, -62.1776, 0, 0,
 INSERT INTO `waypoint_data` VALUES (41830, 26, 1595.92, 120.261, -62.1776, 0, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (41830, 27, 1595.89, 130.826, -62.1776, 0, 0, 0, 100, 0);
 
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 2 WHERE `entry` = 2265 AND `item` IN (2489,2491,2492,2490,2493,2495,2488,2494);
+
