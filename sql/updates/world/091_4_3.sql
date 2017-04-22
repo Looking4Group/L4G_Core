@@ -1307,3 +1307,6 @@ INSERT INTO `waypoint_data` VALUES (41830, 27, 1595.89, 130.826, -62.1776, 0, 0,
 
 UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 2 WHERE `entry` = 2265 AND `item` IN (2489,2491,2492,2490,2493,2495,2488,2494);
 
+DELETE FROM `creature` WHERE `guid` = 24728;
+INSERT INTO `creature` VALUES (24728, 11833, 1, 1, 11754, 0, -1055.55, -217.179, 159.546, 1.50903, 250, 0, 0, 910, 0, 0, 0);
+
