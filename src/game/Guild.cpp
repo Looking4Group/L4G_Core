@@ -73,6 +73,8 @@ bool Guild::create(uint64 lGuid, std::string gname)
     MOTD = "No message set.";
     guildbank_money = 0;
     purchased_tabs = 0;
+    LogMaxGuid = 0;
+    GuildEventlogMaxGuid = 0;
 
     Id = sGuildMgr.GenerateGuildId();
 
