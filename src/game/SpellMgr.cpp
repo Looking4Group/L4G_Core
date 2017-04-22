@@ -3928,6 +3928,12 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->AuraInterruptFlags = AURA_INTERRUPT_FLAG_DAMAGE | AURA_INTERRUPT_FLAG_CC | AURA_INTERRUPT_FLAG_HITBYSPELL;
                 spellInfo->CastingTimeIndex = 9;
                 break;
+            case 24275: //Hammer of Wrath (Rank 1)
+            case 24274: //Hammer of Wrath (Rank 2)
+            case 24239: //Hammer of Wrath (Rank 3)
+            case 27180: //Hammer of Wrath (Rank 4)
+                spellInfo->DmgClass = SPELL_DAMAGE_CLASS_MAGIC;
+                break;
             default:
                 break;
         }
