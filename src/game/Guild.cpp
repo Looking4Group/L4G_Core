@@ -724,8 +724,8 @@ void Guild::Disband()
     RealmDataDatabase.PExecute("DELETE FROM guild_bank_tab WHERE guildid = '%u'",Id);
     RealmDataDatabase.PExecute("DELETE FROM guild_bank_item WHERE guildid = '%u'",Id);
     RealmDataDatabase.PExecute("DELETE FROM guild_bank_right WHERE guildid = '%u'",Id);
-    RealmDataDatabase.PExecute("DELETE FROM guild_bank_eventlog WHERE guildid = '%u'",Id);
-    RealmDataDatabase.PExecute("DELETE FROM guild_eventlog WHERE guildid = '%u'",Id);
+    //RealmDataDatabase.PExecute("DELETE FROM guild_bank_eventlog WHERE guildid = '%u'",Id);
+    //RealmDataDatabase.PExecute("DELETE FROM guild_eventlog WHERE guildid = '%u'",Id);
     RealmDataDatabase.CommitTransaction();
     sGuildMgr.RemoveGuild(Id);
 }
