@@ -3931,6 +3931,9 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->AuraInterruptFlags = AURA_INTERRUPT_FLAG_DAMAGE | AURA_INTERRUPT_FLAG_CC | AURA_INTERRUPT_FLAG_HITBYSPELL;
                 spellInfo->CastingTimeIndex = 9;
                 break;
+            case 34444: // Khadgar's Servant, increase despawn time
+                spellInfo->DurationIndex = 30; // 1800000ms
+                break;
             default:
                 break;
         }
