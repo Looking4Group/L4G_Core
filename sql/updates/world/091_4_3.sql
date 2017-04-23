@@ -1310,3 +1310,15 @@ UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 2 WHERE `entry` = 22
 DELETE FROM `creature` WHERE `guid` = 24728;
 INSERT INTO `creature` VALUES (24728, 11833, 1, 1, 11754, 0, -1055.55, -217.179, 159.546, 1.50903, 250, 0, 0, 910, 0, 0, 0);
 
+SET @GUID := 79442; 
+DELETE FROM `creature_addon` WHERE `guid`= @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`) VALUES (@GUID,@GUID); 
+DELETE FROM `waypoint_data` WHERE `id` IN (@GUID, 794420);
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,1, -186.1750, -712.2789, 37.8923, 0,1,0,100,0),
+(@GUID,2, -119.6896, -753.1940, 37.3466, 0,1,0,100,0),
+(@GUID,3, -94.4551, -741.1754, 35.6927, 0,1,0,100,0),
+(@GUID,4, -119.6896, -753.1940, 37.3466, 0,1,0,100,0),
+(@GUID,5, -186.1750, -712.2789, 37.8923, 0,1,0,100,0);
+-- .go -120.699135 -748.593872 36.8861732 547
+
