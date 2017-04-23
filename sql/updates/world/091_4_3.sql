@@ -1322,3 +1322,15 @@ INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`
 (@GUID,5, -186.1750, -712.2789, 37.8923, 0,1,0,100,0);
 -- .go -120.699135 -748.593872 36.8861732 547
 
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 16704;
+INSERT INTO `creature_ai_scripts` VALUES (1670401, 16704, 0, 0, 100, 7, 1000, 1000, 2000, 2000, 21, 1, 0, 0, 40, 1, 0, 0, 0, 0, 0, 0, 'Shattered Hand Sharpshooter - Start Movement and Set Melee Weapon Model');
+INSERT INTO `creature_ai_scripts` VALUES (1670402, 16704, 9, 0, 100, 3, 5, 30, 2300, 5000, 11, 15620, 1, 0, 40, 2, 0, 0, 21, 0, 0, 0, 'Shattered Hand Sharpshooter (Normal) - Cast Shoot and Set Ranged Weapon Model  and Stop Movement');
+INSERT INTO `creature_ai_scripts` VALUES (1670403, 16704, 9, 0, 100, 5, 5, 30, 2300, 5000, 11, 22907, 1, 0, 40, 2, 0, 0, 21, 0, 0, 0, 'Shattered Hand Sharpshooter (Heroic) - Cast Shoot and Set Ranged Weapon Model  and Stop Movement');
+INSERT INTO `creature_ai_scripts` VALUES (1670404, 16704, 9, 0, 100, 3, 0, 30, 6000, 9000, 11, 30481, 4, 1, 40, 2, 0, 0, 0, 0, 0, 0, 'Shattered Hand Sharpshooter (Normal) - Cast Incendiary Shot and Set Ranged Weapon Model  and Stop Movement');
+INSERT INTO `creature_ai_scripts` VALUES (1670405, 16704, 9, 0, 100, 5, 0, 30, 6000, 9000, 11, 35945, 4, 1, 40, 2, 0, 0, 0, 0, 0, 0, 'Shattered Hand Sharpshooter (Heroic) - Cast Incendiary Shotand Set Ranged Weapon Model and Stop Movement');
+INSERT INTO `creature_ai_scripts` VALUES (1670406, 16704, 9, 0, 100, 7, 5, 30, 10000, 14000, 11, 37551, 4, 33, 40, 2, 0, 0, 0, 0, 0, 0, 'Shattered Hand Sharpshooter - Cast Viper Sting and Set Ranged Weapon Model and Stop Movement');
+INSERT INTO `creature_ai_scripts` VALUES (1670407, 16704, 7, 0, 100, 6, 0, 0, 0, 0, 21, 1, 0, 0, 40, 1, 0, 0, 0, 0, 0, 0, 'Shattered Hand Sharpshooter - Set Phase to 0 and Set Melee Weapon Model on Evade');
+INSERT INTO `creature_ai_scripts` VALUES (1670408, 16704, 0, 0, 100, 7, 5000, 8000, 11000, 12000, 11, 23601, 4, 33, 40, 2, 0, 0, 0, 0, 0, 0, 'Shattered Hand Sharpshooter - Cast Random Scatter Shoot and Set Ranged Weapon Model');
+INSERT INTO `creature_ai_scripts` VALUES (1670409, 16704, 9, 0, 100, 7, 0, 5, 5000, 5000, 21, 1, 0, 0, 40, 1, 0, 0, 0, 0, 0, 0, 'Shattered Hand Sharpshooter - Start Movement and Set Melee Weapon Model Below 5 Yards');
+INSERT INTO `creature_ai_scripts` VALUES (1670410, 16704, 9, 0, 100, 7, 6, 40, 5000, 5000, 21, 0, 0, 0, 40, 2, 0, 0, 0, 0, 0, 0, 'Shattered Hand Sharpshooter - Stop Movement and Set Ranged Weapon Model Above 5 Yards');
+
