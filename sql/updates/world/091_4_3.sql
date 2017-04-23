@@ -1334,3 +1334,5 @@ INSERT INTO `creature_ai_scripts` VALUES (1670408, 16704, 0, 0, 100, 7, 5000, 80
 INSERT INTO `creature_ai_scripts` VALUES (1670409, 16704, 9, 0, 100, 7, 0, 5, 5000, 5000, 21, 1, 0, 0, 40, 1, 0, 0, 0, 0, 0, 0, 'Shattered Hand Sharpshooter - Start Movement and Set Melee Weapon Model Below 5 Yards');
 INSERT INTO `creature_ai_scripts` VALUES (1670410, 16704, 9, 0, 100, 7, 6, 40, 5000, 5000, 21, 0, 0, 0, 40, 2, 0, 0, 0, 0, 0, 0, 'Shattered Hand Sharpshooter - Stop Movement and Set Ranged Weapon Model Above 5 Yards');
 
+UPDATE command SET permission_mask=256 WHERE name IN('ban character','baninfo character','ban account','baninfo account','mute','muteinfo');
+
