@@ -147,7 +147,7 @@ struct boss_ambassador_hellmawAI : public ScriptedAI
         {
             if (EventCheck_Timer < diff)
             {
-                if (pInstance && pInstance->GetData(TYPE_RITUALIST) == DONE)
+                if (pInstance->GetData(TYPE_RITUALIST) == DONE)
                 {
                     OnPath_Delay = 0;
                     DoIntro();
