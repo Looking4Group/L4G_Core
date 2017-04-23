@@ -1338,3 +1338,27 @@ UPDATE command SET permission_mask=256 WHERE name IN('ban character','baninfo ch
 
 UPDATE creature_template SET npcflag=npcflag|64 WHERE entry=19186;
 
+DELETE FROM `creature_loot_template` WHERE `item` = 29434 AND `entry` IN (15550,16152,15687,16457,17521,17533,17534,18168,15691,15688,16524,15690,15689,17225,18831,19044,17257,25315);
+DELETE FROM `gameobject_loot_template` WHERE `entry` = 20712 AND `item` = 29434;
+INSERT INTO `creature_loot_template` VALUES (15550, 29434, 0, 0, 1, 1, 0, 0, 0); -- Attumen the Huntsman L4G
+INSERT INTO `creature_loot_template` VALUES (16152, 29434, 0, 0, 1, 1, 0, 0, 0); -- Attumen the Huntsman Blizzlike
+INSERT INTO `creature_loot_template` VALUES (15687, 29434, 0, 0, 2, 2, 0, 0, 0); -- Moroes
+INSERT INTO `creature_loot_template` VALUES (16457, 29434, 0, 0, 2, 2, 0, 0, 0); -- Maiden of Virtue
+INSERT INTO `creature_loot_template` VALUES (17521, 29434, 0, 0, 2, 2, 0, 0, 0); -- The Big Bad Wolf
+INSERT INTO `creature_loot_template` VALUES (17533, 29434, 0, 0, 1, 1, 0, 0, 0); -- Romulo
+INSERT INTO `creature_loot_template` VALUES (17534, 29434, 0, 0, 1, 1, 0, 0, 0); -- Julianne
+INSERT INTO `creature_loot_template` VALUES (18168, 29434, 0, 0, 2, 2, 0, 0, 0); -- The Crone
+INSERT INTO `creature_loot_template` VALUES (15691, 29434, 0, 0, 2, 2, 0, 0, 0); -- The Curator
+INSERT INTO `creature_loot_template` VALUES (15688, 29434, 0, 0, 2, 2, 0, 0, 0); -- Terestian Illhoof
+INSERT INTO `creature_loot_template` VALUES (16524, 29434, 0, 0, 2, 2, 0, 0, 0); -- Shade of Aran
+INSERT INTO `gameobject_loot_template` VALUES (20712, 29434, 0, 0, 2, 2, 0, 0, 0); -- Dust Covered Chest
+INSERT INTO `creature_loot_template` VALUES (15690, 29434, 0, 0, 3, 3, 0, 0, 0); -- Prince Malchezaar
+INSERT INTO `creature_loot_template` VALUES (15689, 29434, 0, 0, 2, 2, 0, 0, 0); -- Netherspite
+INSERT INTO `creature_loot_template` VALUES (17225, 29434, 0, 0, 2, 2, 0, 0, 0); -- Nightbane
+
+INSERT INTO `creature_loot_template` VALUES (18831, 29434, 0, 0, 2, 2, 0, 0, 0); -- High King Maulgar 
+INSERT INTO `creature_loot_template` VALUES (19044, 29434, 0, 0, 3, 3, 0, 0, 0); -- Gruul the Dragonkiller
+INSERT INTO `creature_loot_template` VALUES (17257, 29434, 0, 0, 3, 3, 0, 0, 0); -- Magtheridon
+
+INSERT INTO `creature_loot_template` VALUES (25315, 29434, 100, 0, 3, 3, 0, 0, 0); -- Kil'jaeden <The Deceiver>
+
