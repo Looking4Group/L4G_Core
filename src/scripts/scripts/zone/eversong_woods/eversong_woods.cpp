@@ -536,84 +536,122 @@ bool GOUse_go_second_trial(Player *player, GameObject* _GO)
 ## npc_apprentice_mirveda
 ######*/
 
-#define QUEST_UNEXPECTED_RESULT 8488
-#define MOB_GHARZUL     15958
-#define MOB_ANGERSHADE  15656
+enum
+{
+    QUEST_UNEXPECTED_RESULT = 8488,
+
+    SPELL_FIREBALL = 20811,
+
+    MOB_GHARZUL = 15958,
+    MOB_ANGERSHADE = 15656
+};
 
 struct npc_apprentice_mirvedaAI : public ScriptedAI
 {
-    npc_apprentice_mirvedaAI(Creature* c) : ScriptedAI(c), Summons(m_creature) {}
+    npc_apprentice_mirvedaAI(Creature* c) : ScriptedAI(c), summons(m_creature) {}
 
-    uint32 KillCount;
-    uint64 PlayerGUID;
-    bool Summon;
-    SummonList Summons;
+    uint32 mobCount;
+    uint32 fireballTimer;
+    uint64 playerGUID;
+    SummonList summons;
 
     void Reset()
     {
-        KillCount = 0;
-        PlayerGUID = 0;
-        Summons.DespawnAll();
-        Summon = false;
+        mobCount = 0;
+        fireballTimer = 0;
+        playerGUID = 0;
+        summons.DespawnAll();
     }
 
     void JustSummoned(Creature *summoned)
     {
         summoned->AI()->AttackStart(m_creature);
-        Summons.Summon(summoned);
+
+        summons.Summon(summoned);
+        ++mobCount;
     }
 
     void SummonedCreatureDespawn(Creature* summoned)
     {
-        Summons.Despawn(summoned);
-        ++KillCount;
+        summons.Despawn(summoned);
+
+        --mobCount;
+
+        if (mobCount)
+            return;
+
+        if (m_creature->isDead())
+            return;
+
+        // All adds killed. Proceed to give quest credit
+        if (playerGUID)
+        {
+            Player* player = Unit::GetPlayer(playerGUID);
+
+            if (player && player->GetQuestStatus(QUEST_UNEXPECTED_RESULT) == QUEST_STATUS_INCOMPLETE)
+                player->GroupEventHappens(QUEST_UNEXPECTED_RESULT, m_creature);
+
+            playerGUID = 0;
+        }
+
+        m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+
+        summons.DespawnAll();
     }
 
     void JustDied(Unit* killer)
     {
-        if (PlayerGUID)
+        if (playerGUID)
         {
-            Player* player = Unit::GetPlayer(PlayerGUID);
-            if (player)
+            Player* player = Unit::GetPlayer(playerGUID);
+
+            if (player && player->GetQuestStatus(QUEST_UNEXPECTED_RESULT) == QUEST_STATUS_INCOMPLETE)
                 player->FailQuest(QUEST_UNEXPECTED_RESULT);
         }
+
+        summons.DespawnAll();
+    }
+
+    void StartEvent(Player* player)
+    {
+        m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+
+        playerGUID = player->GetGUID();
+
+        // Actual spawn should be 8745, -7134.32, 35.22 but that means they are not able to AttackStart(m_creature)
+        m_creature->SummonCreature(MOB_GHARZUL, 8726, -7148.23f, 35.22f, 0, TEMPSUMMON_CORPSE_DESPAWN, 4000);
+        m_creature->SummonCreature(MOB_ANGERSHADE, 8726, -7148.23f, 35.22f, 0, TEMPSUMMON_CORPSE_DESPAWN, 4000);
+        m_creature->SummonCreature(MOB_ANGERSHADE, 8726, -7148.23f, 35.22f, 0, TEMPSUMMON_CORPSE_DESPAWN, 4000);
     }
 
     void UpdateAI(const uint32 diff)
     {
-        if(KillCount >= 3)
-        {
-            if (PlayerGUID)
-            {
-                Player* player = Unit::GetPlayer(PlayerGUID);
-                if(player)
-                    player->CompleteQuest(QUEST_UNEXPECTED_RESULT);
-            }
-        }
+        if (!UpdateVictim())
+            return;
 
-        if(Summon)
+        if (fireballTimer < diff)
         {
-            m_creature->SummonCreature(MOB_GHARZUL, 8745, -7134.32, 35.22, 0, TEMPSUMMON_CORPSE_DESPAWN, 4000);
-            m_creature->SummonCreature(MOB_ANGERSHADE, 8745, -7134.32, 35.22, 0, TEMPSUMMON_CORPSE_DESPAWN, 4000);
-            m_creature->SummonCreature(MOB_ANGERSHADE, 8745, -7134.32, 35.22, 0, TEMPSUMMON_CORPSE_DESPAWN, 4000);
-            Summon = false;
+            DoCast(m_creature->getVictim(), SPELL_FIREBALL);
+            fireballTimer = urand(4000, 6000);
         }
+        else
+            fireballTimer -= diff;
+
+        DoMeleeAttackIfReady();
     }
 };
 
 bool QuestAccept_npc_apprentice_mirveda(Player* player, Creature* creature, Quest const* quest)
 {
     if (quest->GetQuestId() == QUEST_UNEXPECTED_RESULT)
-    {
-        ((npc_apprentice_mirvedaAI*)creature->AI())->Summon = true;
-        ((npc_apprentice_mirvedaAI*)creature->AI())->PlayerGUID = player->GetGUID();
-    }
+        ((npc_apprentice_mirvedaAI*)creature->AI())->StartEvent(player);
+
     return true;
 }
 
 CreatureAI* GetAI_npc_apprentice_mirvedaAI(Creature *_Creature)
 {
-    return new npc_apprentice_mirvedaAI (_Creature);
+    return new npc_apprentice_mirvedaAI(_Creature);
 }
 
 /*######
