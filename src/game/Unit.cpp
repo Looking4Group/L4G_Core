@@ -12859,6 +12859,9 @@ void Unit::SetCharmedOrPossessedBy(Unit* charmer, bool possess)
     if (this == charmer)
         return;
 
+    if (!charmer)
+        return;
+
     if (IsTaxiFlying())
         return;
 

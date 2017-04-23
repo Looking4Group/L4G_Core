@@ -914,6 +914,9 @@ void Spell::DoAllEffectOnTarget(TargetInfo *target)
     if (!unit)
         return;
 
+    if (!IS_UNIT_GUID(unit->GetGUID()))
+        return;
+
     // Get original caster (if exist) and calculate damage/healing from him data
     Unit *caster = m_originalCasterGUID ? m_originalCaster : m_caster;
 
