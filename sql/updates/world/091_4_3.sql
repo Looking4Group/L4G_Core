@@ -1336,3 +1336,5 @@ INSERT INTO `creature_ai_scripts` VALUES (1670410, 16704, 9, 0, 100, 7, 6, 40, 5
 
 UPDATE command SET permission_mask=256 WHERE name IN('ban character','baninfo character','ban account','baninfo account','mute','muteinfo');
 
+UPDATE creature_template SET npcflag=npcflag|64 WHERE entry=19186;
+
