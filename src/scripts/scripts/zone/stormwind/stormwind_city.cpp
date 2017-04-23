@@ -429,7 +429,7 @@ struct npc_lord_gregor_lescovarAI : public npc_escortAI
     void DoGuardsDisappearAndDie()
     {
         std::list<Creature*> GuardList;
-        GuardList = FindAllCreaturesWithEntry(NPC_STORMWIND_ROYAL,50.0f);
+        GuardList = FindAllCreaturesWithEntry(NPC_STORMWIND_ROYAL,100.0f);
         if (!GuardList.empty())
         {
             for (std::list<Creature*>::const_iterator itr = GuardList.begin(); itr != GuardList.end(); ++itr)

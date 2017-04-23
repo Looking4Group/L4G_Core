@@ -2680,6 +2680,7 @@ struct npc_fel_guard_houndAI : public ScriptedAI
             return;
 
         DoCast(m_creature, SPELL_FAKE_DOG_SPART);
+        m_creature->HandleEmoteCommand(EMOTE_ONESHOT_ATTACKUNARMED);
         m_uiPoodadTimer = 2000;
     }
 

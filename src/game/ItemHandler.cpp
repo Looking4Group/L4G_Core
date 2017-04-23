@@ -935,9 +935,9 @@ void WorldSession::HandleSetAmmoOpcode(WorldPacket & recv_data)
 {
     CHECK_PACKET_SIZE(recv_data,4);
 
-    if (!GetPlayer()->isAlive())
+    if (!_player->isAlive())
     {
-        GetPlayer()->SendEquipError(EQUIP_ERR_YOU_ARE_DEAD, NULL, NULL);
+        _player->SendEquipError(EQUIP_ERR_YOU_ARE_DEAD, NULL, NULL);
         return;
     }
 
@@ -946,10 +946,18 @@ void WorldSession::HandleSetAmmoOpcode(WorldPacket & recv_data)
 
     recv_data >> item;
 
-    if (!item)
-        GetPlayer()->RemoveAmmo();
+    if (item)
+    {
+        if (!_player->GetItemCount(item))
+        {
+            _player->SendEquipError(EQUIP_ERR_ITEM_NOT_FOUND, NULL, NULL);
+            return;
+        }
+
+        _player->SetAmmo(item);
+    }
     else
-        GetPlayer()->SetAmmo(item);
+        _player->RemoveAmmo();
 }
 
 void WorldSession::SendEnchantmentLog(uint64 Target, uint64 Caster,uint32 ItemID,uint32 SpellID)
