@@ -133,6 +133,7 @@ enum WorldConfigs
     CONFIG_MAX_PLAYER_LEVEL,
     CONFIG_START_PLAYER_LEVEL,
     CONFIG_START_PLAYER_MONEY,
+    CONFIG_MIN_PLAYER_EXPLORE_LEVEL,
     CONFIG_MAX_HONOR_POINTS,
     CONFIG_START_HONOR_POINTS,
     CONFIG_MAX_ARENA_POINTS,
@@ -190,6 +191,9 @@ enum WorldConfigs
     CONFIG_CHATFLOOD_CHATTYPE,
     CONFIG_CHATFLOOD_EMOTE_COUNT,
     CONFIG_CHATFLOOD_EMOTE_DELAY,
+    CONFIG_SPAMREPORT_TICKETS,
+    CONFIG_SPAMREPORT_TICKET_THRESHOLD_CHAT,
+    CONFIG_SPAMREPORT_TICKET_THRESHOLD_MAIL,
     CONFIG_EVENT_ANNOUNCE,
     CONFIG_CREATURE_FAMILY_FLEE_ASSISTANCE_RADIUS,
     CONFIG_CREATURE_FAMILY_ASSISTANCE_RADIUS,
@@ -303,6 +307,7 @@ enum WorldConfigs
     CONFIG_VMSS_ENABLE,
 
     CONFIG_ENABLE_CUSTOM_XP_RATES,
+    CONFIG_GET_CUSTOM_XP_RATE_LEVEL,
     CONFIG_XP_RATE_MODIFY_ITEM_ENTRY,
     CONFIG_XP_RATE_MODIFY_ITEM_PCT,
 
@@ -328,6 +333,8 @@ enum WorldConfigs
 
     CONFIG_TARGET_POS_RECALCULATION_RANGE,
     CONFIG_TARGET_POS_RECHECK_TIMER,
+
+    CONFIG_HEALTH_IN_PERCENTS,
 
     CONFIG_PRIVATE_CHANNEL_LIMIT,
 
@@ -373,6 +380,7 @@ enum Rates
     RATE_XP_QUEST,
     RATE_XP_EXPLORE,
     RATE_XP_PAST_70,
+    RATE_CUSTOM_XP_VALUE,
     RATE_REPUTATION_GAIN,
     RATE_REPUTATION_LOWLEVEL_KILL,
     RATE_REPUTATION_LOWLEVEL_QUEST,
@@ -643,6 +651,8 @@ class LOOKING4GROUP_EXPORT World
         /// Get the maximum number of parallel sessions on the server since last reboot
         uint32 GetMaxQueuedSessionCount() const { return m_maxQueuedSessionCount; }
         uint32 GetMaxActiveSessionCount() const { return m_maxActiveSessionCount; }
+        uint32 GetMaxAllianceSessionCount() const { return m_maxAllianceSessionCount; }
+        uint32 GetMaxHordeSessionCount() const { return m_maxHordeSessionCount; }
         Player* FindPlayerInZone(uint32 zone);
 
         Weather* FindWeather(uint32 id) const;
@@ -757,6 +767,9 @@ class LOOKING4GROUP_EXPORT World
             else
                 return 0;
         }
+
+        /// Get configuration about force-loaded maps
+        std::set<uint32>* getConfigForceLoadMapIds() const { return m_configForceLoadMapIds; }
 
         /// Are we on a "Player versus Player" server?
         bool IsPvPRealm() { return (getConfig(CONFIG_GAME_TYPE) == REALM_TYPE_PVP || getConfig(CONFIG_GAME_TYPE) == REALM_TYPE_RPPVP || getConfig(CONFIG_GAME_TYPE) == REALM_TYPE_FFA_PVP); }
@@ -889,6 +902,8 @@ class LOOKING4GROUP_EXPORT World
         DisconnectMap m_disconnects;
         uint32 m_maxActiveSessionCount;
         uint32 m_maxQueuedSessionCount;
+        uint32 m_maxAllianceSessionCount;
+        uint32 m_maxHordeSessionCount;
 
         std::string m_newCharString;
 
@@ -939,6 +954,9 @@ class LOOKING4GROUP_EXPORT World
         //used versions
         std::string m_DBVersion;
         std::string m_ScriptsVersion;
+
+        // List of Maps that should be force-loaded on startup
+        std::set<uint32>* m_configForceLoadMapIds;
 };
 
 extern uint32 realmID;

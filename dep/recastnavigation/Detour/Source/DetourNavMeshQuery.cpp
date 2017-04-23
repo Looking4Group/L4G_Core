@@ -574,12 +574,10 @@ dtStatus dtNavMeshQuery::findPath(dtPolyRef startRef, dtPolyRef endRef,
 	if (!startRef || !endRef)
 		return DT_FAILURE;
 	
-	if (!maxPath)
-		return DT_FAILURE;
-	
 	// Validate input
-	if (!m_nav->isValidPolyRef(startRef) || !m_nav->isValidPolyRef(endRef))
-		return DT_FAILURE;
+    if (!m_nav->isValidPolyRef(startRef) || !m_nav->isValidPolyRef(endRef) ||
+        !startPos || !endPos || !filter || maxPath <= 0 || !path || !pathCount)
+        return DT_FAILURE;
 	
 	if (startRef == endRef)
 	{
@@ -1584,7 +1582,7 @@ dtStatus dtNavMeshQuery::getPortalPoints(dtPolyRef from, const dtPoly* fromPoly,
 	
 	// Find portal vertices.
 	const int v0 = fromPoly->verts[link->edge];
-	const int v1 = fromPoly->verts[(link->edge+1) % (int)fromPoly->vertCount];
+	const int v1 = fromPoly->verts[(((int)link->edge)+1) % (int)fromPoly->vertCount];
 	dtVcopy(left, &fromTile->verts[v0*3]);
 	dtVcopy(right, &fromTile->verts[v1*3]);
 	

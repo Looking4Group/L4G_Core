@@ -101,6 +101,44 @@ enum EffectRadiusIndex
     EFFECT_RADIUS_80_YARDS_2 = 65
 };
 
+enum rangeIndex
+{
+    SELF_ONLY                   = 1,
+    COMBAT_RANGE                = 2,
+    TWENTY_YARDS                = 3,
+    MEDIUM_RANGE_1              = 4,
+    LONG_RANGE_1                = 5, //40y
+    VISION_RANGE                = 6, //100y
+    TEN_YARDS                   = 7,
+    MIN_RANGE_10_20             = 8,
+    MEDIUM_RANGE_2              = 9,
+    LONG_RANGE_2                = 10,
+    FIFTEEN_YARDS               = 11,
+    INTERACT_RANGE              = 12,
+    ANYWHERE                    = 13,
+    TWENTY_FIVE_YARDS           = 34,
+    MEDIUM_LONG_RANGE           = 35,
+    LONGER_RANGE                = 36,
+    EXTENDED_RANGE              = 37,
+    MIN_RANGE_10_25             = 38,
+    MONSTER_SHOOT               = 54,
+    RANGED_WEAPON               = 74,
+    STING                       = 94,
+    CHARGE                      = 95,
+    TRAP                        = 96,
+    HUNTER_RANGE                = 114,
+    TOWER_80                    = 134,
+    TOWER_100                   = 135,
+    ARTILLERY_RANGE             = 136,
+    EIGHT_YARDS                 = 137,
+    LONG_RANGE_HUNTER_SHOOT_1   = 138,
+    SIX_YARDS                   = 140,
+    SEVEN_YARDS                 = 141,
+    LONG_RANGE_HUNTER_SHOOT_2   = 151,
+    HUNTER_RANGE_TEST           = 155,
+    NINETY                      = 157
+};
+
 enum SpellFamilyNames
 {
     SPELLFAMILY_GENERIC     = 0,

@@ -224,9 +224,10 @@ void PetAI::AutocastPreparedSpells()
 
         SpellCastTargets targets;
 
-        if (target)
-            targets.setUnitTarget(target);
-
+        if (!target || !target->isAlive() || !me->IsWithinLOSInMap(target))
+            return;
+        
+        targets.setUnitTarget(target);
         if (!me->HasInArc(M_PI, target))
         {
             me->SetInFront(target);
@@ -290,8 +291,7 @@ void PetAI::UpdateAI(const uint32 diff)
     if (m_creature->getVictim())
     {
         if (_needToStop())
-        {
-            sLog.outLog(LOG_DEFAULT,  "PetAI (guid = %u) is stopping attack.", m_creature->GetGUIDLow());
+        {            
             _stopAttack();
             return;
         }

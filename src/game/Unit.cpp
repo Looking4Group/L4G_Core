@@ -825,9 +825,9 @@ void Unit::RemoveSpellbyDamageTaken(AuraType auraType, uint32 damage, DamageEffe
     {
         if (SpellEntry const* iterSpellProto = (*iter)->GetSpellProto())
         {
-            // We don't have this spell attribute atm. Commenting out for now
-            // if (sSpellMgr.GetSpellCustomAttr(iterSpellProto->Id) & SPELL_ATTR_CU_DONT_BREAK_ON_DAMAGE)
-            //	 return;
+            // Horror effects don't break on damage
+            if (sSpellMgr.GetDiminishingReturnsGroupForSpell(iterSpellProto, false) == DIMINISHING_DEATHCOIL)
+                return;
 
             // ... damage spell is removable spell
             if (spellId && (*iter)->GetSpellProto()->Id == spellId)
@@ -1996,6 +1996,13 @@ void Unit::CalcAbsorbResist(Unit *pVictim, SpellSchoolMask schoolMask, DamageEff
             int32 leveldiff = int32(pCre->getLevelForTarget(this)) - int32(getLevelForTarget(pCre));
             if (leveldiff > 0)
                 victimResistance += leveldiff * 5;
+
+            if (Player* player = ToPlayer())
+                if (player->getLevel() < 20)
+                    if (leveldiff >= 2)
+                        victimResistance -= 10;
+                    else if (leveldiff == 1)
+                        victimResistance -= 5;
         }
 
         victimResistance *= (float)(0.15f / getLevel());
@@ -2754,27 +2761,24 @@ float Unit::CalculateLevelPenalty(SpellEntry const* spellProto) const
     return (100.0f - lvlPenalty) * lvlFactor / 100.0f;
 }
 
-void Unit::SendMeleeAttackStart(Unit* pVictim)
+void Unit::SendMeleeAttackStart(uint64 victimGUID)
 {
     WorldPacket data(SMSG_ATTACKSTART, 8+8);
     data << uint64(GetGUID());
-    data << uint64(pVictim->GetGUID());
+    data << uint64(victimGUID);
 
     BroadcastPacket(&data, true);
     DEBUG_LOG("WORLD: Sent SMSG_ATTACKSTART");
 }
 
-void Unit::SendMeleeAttackStop(Unit* victim)
+void Unit::SendMeleeAttackStop(uint64 victimGUID)
 {
-    if (!victim)
-        return;
-
     WorldPacket data(SMSG_ATTACKSTOP, (4+16));            // we guess size
     data << GetPackGUID();
-    data << victim->GetPackGUID();                          // can be 0x00...
+    data << victimGUID;                          // can be 0x00...
     data << uint32(0);                                      // can be 0x1
     BroadcastPacket(&data, true);
-    sLog.outDetail("%s %u stopped attacking %s %u", (GetTypeId()==TYPEID_PLAYER ? "player" : "creature"), GetGUIDLow(), (victim->GetTypeId()==TYPEID_PLAYER ? "player" : "creature"),victim->GetGUIDLow());
+    sLog.outDetail("%s %u stopped attacking %s %u", (GetTypeId()==TYPEID_PLAYER ? "player" : "creature"), GetGUIDLow(), (IS_PLAYER_GUID(victimGUID) ? "player" : "creature"),victimGUID);
 }
 
 int32 Unit::GetCurrentSpellCastTime(uint32 spell_id) const
@@ -6222,29 +6226,20 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, Aura* triggeredByAu
                     if (procFlag & PROC_FLAG_SUCCESSFUL_MELEE_SPELL_HIT)
                         return false;
 
-                    // On target with 5 stacks of Holy Vengeance direct damage is done
-                    Aura* sealAura = NULL;
-                    Unit::AuraList const& auras = pVictim->GetAurasByType(SPELL_AURA_PERIODIC_DAMAGE);
-                    for (Unit::AuraList::const_iterator itr = auras.begin(); itr != auras.end(); ++itr)
+                    // Since Patch 2.2.0 Seal of Vengeance does additional damage against fully stacked targets
+                    // Add 5-stack effect from Holy Vengeance
+                    uint32 stacks = 0;
+                    AuraList const& auras = target->GetAurasByType(SPELL_AURA_PERIODIC_DAMAGE);
+                    for (AuraList::const_iterator itr = auras.begin(); itr != auras.end(); ++itr)
                     {
-                        if ((*itr)->GetId() == 31803 && (*itr)->GetCasterGUID() == GetGUID())
+                        if (((*itr)->GetId() == 31803) && (*itr)->GetCasterGUID() == GetGUID())
                         {
-                            if ((*itr)->GetStackAmount() >= 5)
-                                sealAura = *itr;
-
+                            stacks = (*itr)->GetStackAmount();
                             break;
                         }
                     }
-
-                    if (sealAura)
-                    {
-                        Item *item = NULL;
-                        if (ToPlayer())
-                            item = ToPlayer()->GetItemByPos(INVENTORY_SLOT_BAG_0, EQUIPMENT_SLOT_MAINHAND);
-                        float speed = (item ? item->GetProto()->Delay : BASE_ATTACK_TIME)/1000.0f;
-                        int32 bp0 = 10*speed;
-                        CastCustomSpell(pVictim, 42463, &bp0, 0,0, true);
-                    }
+                    if (stacks >= 5)
+                        CastSpell(target, 42463, true, NULL, triggeredByAura);
                     break;
                 }
                 // Spiritual Att.
@@ -7465,6 +7460,32 @@ bool Unit::HandleOverrideClassScriptAuraProc(Unit *pVictim, Aura *triggeredByAur
     return true;
 }
 
+bool Unit::ShouldRevealHealthTo(Player* player) const
+{
+    if (!sWorld.getConfig(CONFIG_HEALTH_IN_PERCENTS))
+        return true;
+
+    if (player == this || player->isGameMaster())
+        return true;
+
+    if (player->IsInRaidWith(this))
+        return true;
+
+    return false;
+}
+
+void Unit::SendHealthUpdateDueToCharm(Player* charmer)
+{
+    ForceValuesUpdateAtIndex(UNIT_FIELD_HEALTH);
+    ForceValuesUpdateAtIndex(UNIT_FIELD_MAXHEALTH);
+
+    if (Group* group = charmer->GetGroup())
+    {
+        charmer->SetGroupUpdateFlag(GROUP_UPDATE_PET);
+        group->UpdatePlayerOutOfRange(charmer);
+    }
+}
+
 void Unit::setPowerType(Powers new_powertype)
 {
     SetByteValue(UNIT_FIELD_BYTES_0, 3, new_powertype);
@@ -7832,7 +7853,7 @@ bool Unit::Attack(Unit *victim, bool meleeAttack)
             if (meleeAttack && !hasUnitState(UNIT_STAT_MELEE_ATTACKING))
             {
                 addUnitState(UNIT_STAT_MELEE_ATTACKING);
-                SendMeleeAttackStart(victim);
+                SendMeleeAttackStart(victim->GetGUID());
                 return true;
             }
             return false;
@@ -7887,7 +7908,7 @@ bool Unit::Attack(Unit *victim, bool meleeAttack)
         resetAttackTimer(OFF_ATTACK);
 
     if (meleeAttack)
-        SendMeleeAttackStart(victim);
+        SendMeleeAttackStart(victim->GetGUID());
 
     return true;
 }
@@ -7897,10 +7918,7 @@ bool Unit::AttackStop()
     if (!m_attacking)
         return false;
 
-    Unit* victim = m_attacking;
-
     m_attacking->_removeAttacker(this);
-    m_attacking = NULL;
 
     //Clear our target
     SetUInt64Value(UNIT_FIELD_TARGET, 0);
@@ -7916,7 +7934,9 @@ bool Unit::AttackStop()
         ((Creature*)this)->SetNoSearchAssistance(false);
     }
 
-    SendMeleeAttackStop(victim);
+    SendMeleeAttackStop(m_attacking->GetGUID());
+
+    m_attacking = NULL;
 
     return true;
 }
@@ -8482,9 +8502,9 @@ uint32 Unit::SpellDamageBonus(Unit *pVictim, SpellEntry const *spellProto, uint3
                 DotFactor = damagetype == DOT ? 0.17f : 0.011f;
                 CastingTime = 3500;
             }
-            else if (spellProto->Id == 42463)
+            else if (spellProto->Id == 42463) // Seal of Vengeance fullstack additional dmg - 2.2%
             {
-                CastingTime = 160;
+                CastingTime = 77;
             }
             // Holy shield - 5% of Holy Damage
             else if ((spellProto->SpellFamilyFlags & 0x4000000000LL) && spellProto->SpellIconID == 453)
@@ -12069,8 +12089,8 @@ void Unit::UpdateAuraForGroup(uint8 slot)
 
 float Unit::GetAPMultiplier(WeaponAttackType attType, bool normalized)
 {
-    if (!normalized || GetTypeId() != TYPEID_PLAYER)
-        return float(GetAttackTime(attType))/1000.0f;
+    if (!normalized || GetTypeId() != TYPEID_PLAYER || (IsInFeralForm() && !normalized))
+        return float(GetAttackTime(attType)) / 1000.0f;
 
     Item *Weapon = ((Player*)this)->GetWeaponForAttack(attType);
     if (!Weapon)

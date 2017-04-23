@@ -1079,6 +1079,34 @@ void ScriptedAI::DoSpecialThings(uint32 diff, SpecialThing flags, float range, f
         m_specialThingTimer -= diff;
 }
 
+void ScriptedAI::ServerFirst(Unit *killer)
+{
+    Player* player = NULL;
+    if (killer)
+    {
+        switch(killer->GetTypeId())
+        {
+            case TYPEID_UNIT:
+                if (((Creature*) killer)->isPet() && ((Pet*) killer)->GetOwner()->GetTypeId() == TYPEID_PLAYER)
+                {
+                    player = (Player*) ((Pet*) killer)->GetOwner();
+                }
+                break;
+            case TYPEID_PLAYER:
+                player = (Player*) killer;
+                break;
+            default:
+                return;
+        }
+    }
+
+    if (player && !player->isGameMaster())
+    {
+        player->CheckAndAnnounceServerFirst(m_creature);
+    }
+        
+}
+
 BossAI::BossAI(Creature *c, uint32 id) : ScriptedAI(c),
     bossId(id), summons(me), instance(c->GetInstanceData())
 {

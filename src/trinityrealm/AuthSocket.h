@@ -38,8 +38,8 @@ typedef std::list<std::pair<REGEX_NAMESPACE::regex, REGEX_NAMESPACE::regex > > P
 #endif
 
 
-enum eStatus {
-    STATUS_CHALLENGE,
+enum eAuthStatus {
+    STATUS_CHALLENGE = 0,
     STATUS_LOGON_PROOF,
     STATUS_RECON_PROOF,
     STATUS_PATCH,      // unused in CMaNGOS
@@ -86,7 +86,7 @@ class AuthSocket: public BufferedSocket
         BigNumber K;
         BigNumber _reconnectProof;
 
-        eStatus _status;
+        eAuthStatus _status;
 
         std::string _login;
         std::string _safelogin;

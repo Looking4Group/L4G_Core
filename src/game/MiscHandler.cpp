@@ -53,6 +53,8 @@
 #include "Guild.h"
 #include "TicketMgr.h"
 
+#define SPAMREPORT_COOLDOWN 6
+
 void WorldSession::HandleRepopRequestOpcode(WorldPacket & /*recv_data*/)
 {
     sLog.outDebug("WORLD: Recvd CMSG_REPOP_REQUEST Message");
@@ -1377,9 +1379,15 @@ void WorldSession::HandleWhoisOpcode(WorldPacket& recv_data)
 
 void WorldSession::HandleReportSpamOpcode(WorldPacket & recv_data)
 {
-    CHECK_PACKET_SIZE(recv_data, 1+8);
+    CHECK_PACKET_SIZE(recv_data, 1 + 8);
     sLog.outDebug("WORLD: CMSG_REPORT_SPAM");
     recv_data.hexlike();
+
+    Player *player = GetPlayer();
+    if (!player || player->HasSpellCooldown(SPAMREPORT_COOLDOWN))
+        return;
+
+    player->AddSpellCooldown(SPAMREPORT_COOLDOWN, 0, time(NULL) + 3);
 
     uint8 spam_type;                                        // 0 - mail, 1 - chat
     uint64 spammer_guid;
@@ -1402,20 +1410,20 @@ void WorldSession::HandleReportSpamOpcode(WorldPacket & recv_data)
 
     switch (spam_type)
     {
-        case SPAM_MESSAGE_TYPE_MAIL:
-            CHECK_PACKET_SIZE(recv_data, recv_data.rpos()+4+4+4);
-            recv_data >> mailUnk1;          // const 0
-            recv_data >> mailId;            // probably mail id
-            recv_data >> mailUnk3;          // const 0
-            break;
-        case SPAM_MESSAGE_TYPE_CHAT:
-            CHECK_PACKET_SIZE(recv_data, recv_data.rpos()+4+4+4+4+1);
-            recv_data >> chatLanguage;      // probably language
-            recv_data >> chatMessageType;   // message type?
-            recv_data >> chatChannelId;     // probably channel id
-            recv_data >> chatUnk4;          // unk random value
-            recv_data >> description;        // spam description string (messagetype, channel name, player name, message)
-            break;
+    case SPAM_MESSAGE_TYPE_MAIL:
+        CHECK_PACKET_SIZE(recv_data, recv_data.rpos() + 4 + 4 + 4);
+        recv_data >> mailUnk1;          // const 0
+        recv_data >> mailId;            // probably mail id
+        recv_data >> mailUnk3;          // const 0
+        break;
+    case SPAM_MESSAGE_TYPE_CHAT:
+        CHECK_PACKET_SIZE(recv_data, recv_data.rpos() + 4 + 4 + 4 + 4 + 1);
+        recv_data >> chatLanguage;      // probably language
+        recv_data >> chatMessageType;   // message type?
+        recv_data >> chatChannelId;     // probably channel id
+        recv_data >> chatUnk4;          // unk random value
+        recv_data >> description;        // spam description string (messagetype, channel name, player name, message)
+        break;
     }
 
     // NOTE: all chat messages from this spammer automatically ignored by spam reporter until logout in case chat spam.
@@ -1426,53 +1434,103 @@ void WorldSession::HandleReportSpamOpcode(WorldPacket & recv_data)
     data << uint8(0);
     SendPacket(&data);
 
-        uint32 mail_id = 0;
-        std::string mail_subject;
-        std::string mail_message;
+    if (sWorld.getConfig(CONFIG_SPAMREPORT_TICKETS) == 0) // If spam report tickets are disbled, then we are done at this point
+        return;
 
-        if (Mail* spammer_mail = GetPlayer()->GetMail(mailId))
+    // Only proceed to create a ticket if the report count is higher than the config value
+    switch (spam_type)
+    {
+    case SPAM_MESSAGE_TYPE_MAIL:
+    {
+        QueryResultAutoPtr result = RealmDataDatabase.PQuery("SELECT report_count FROM character_reports WHERE player_guid =%u AND report_type = 0", spammer_guid);
+        if (!result)
         {
-            mail_subject = spammer_mail->subject;
-            mail_message = sObjectMgr.GetItemText(spammer_mail->itemTextId);
+            RealmDataDatabase.PExecute("INSERT INTO character_reports (player_guid, report_type, report_count) VALUES ('%u', 0, 1)", spammer_guid);
+            return;
         }
+        else
+        {
+            Field *fields = result->Fetch();
+            if (fields[0].GetUInt8() < sWorld.getConfig(CONFIG_SPAMREPORT_TICKET_THRESHOLD_MAIL))
+            {
+                RealmDataDatabase.PExecute("UPDATE character_reports SET report_count = report_count + 1 WHERE player_guid = %u AND report_type = 0", spammer_guid);
+                return;
+            }
+        }
+        break;
+    }
+    case SPAM_MESSAGE_TYPE_CHAT:
+    {
+        QueryResultAutoPtr result = RealmDataDatabase.PQuery("SELECT report_count FROM character_reports WHERE player_guid =%u AND report_type = 1", spammer_guid);
+        if (!result)
+        {
+            RealmDataDatabase.PExecute("INSERT INTO character_reports (player_guid, report_type, report_count) VALUES ('%u', 1, 1)", spammer_guid);
+            return;
+        }
+        else
+        {
+            Field *fields = result->Fetch();
+            if (fields[0].GetUInt8() < sWorld.getConfig(CONFIG_SPAMREPORT_TICKET_THRESHOLD_CHAT))
+            {
+                RealmDataDatabase.PExecute("UPDATE character_reports SET report_count = report_count + 1 WHERE player_guid = %u AND report_type = 1", spammer_guid);
+                return;
+            }
+        }
+        break;
+    }
+    }
+    
+    uint32 mail_id = 0;
+    std::string mail_subject;
+    std::string mail_message;
 
-        std::string spammer_name;
-        sObjectMgr.GetPlayerNameByGUID(spammer_guid, spammer_name);
+    if (Mail* spammer_mail = GetPlayer()->GetMail(mailId))
+    {
+        mail_subject = spammer_mail->subject;
+        mail_message = sObjectMgr.GetItemText(spammer_mail->itemTextId);
+    }
 
-        std::stringstream ss;
-        ss << "Player: '";
-        ss << GetPlayer()->GetName() << "' reported Spammer: '";
-        ss << spammer_name << "'";
+    std::string spammer_name;
+    sObjectMgr.GetPlayerNameByGUID(spammer_guid, spammer_name);
+
+    std::stringstream ss;
+    ss << "Player: '";
+    ss << GetPlayer()->GetName() << "' reported Spammer: '";
+    ss << spammer_name << "'";
+    ss << "\n";
+
+    if (spam_type == SPAM_MESSAGE_TYPE_MAIL)
+    {
+        ss << "Mail Subject: " << mail_subject;
         ss << "\n";
+        ss << "Mail Message: " << mail_message;
 
-        if (spam_type == SPAM_MESSAGE_TYPE_MAIL)
-        {
-            ss << "Mail Subject: " << mail_subject;
-            ss << "\n";
-            ss << "Mail Message: " << mail_message;
-        }
-        else if (spam_type == SPAM_MESSAGE_TYPE_CHAT)
-        {
-            ss << description;
-        }
+        RealmDataDatabase.PExecute("UPDATE character_reports SET report_count = 0 WHERE player_guid = %u AND report_type = 0", spammer_guid); // Reset report count
+    }
+    else if (spam_type == SPAM_MESSAGE_TYPE_CHAT)
+    {
+        ss << description;
 
-        GM_Ticket *ticket = new GM_Ticket;
+        RealmDataDatabase.PExecute("UPDATE character_reports SET report_count = 0 WHERE player_guid = %u AND report_type = 1", spammer_guid); // Reset report count
+    }
 
-        ticket->name = "Spam Report System";
-        ticket->guid = sTicketMgr.GenerateTicketID();
-        ticket->playerGuid = 0;
-        ticket->message = ss.str();
-        ticket->createtime = time(NULL);
-        ticket->timestamp = time(NULL);
-        ticket->closed = 0;
-        ticket->assignedToGM = 0;
-        ticket->comment = "";
+    GM_Ticket *ticket = new GM_Ticket;
 
-        // add ticket
-        sTicketMgr.AddGMTicket(ticket, false);
+    ticket->name = spammer_name;
+    ticket->guid = sTicketMgr.GenerateTicketID();
+    ticket->playerGuid = 0;
+    ticket->message = ss.str();
+    ticket->createtime = time(NULL);
+    ticket->timestamp = time(NULL);
+    ticket->closed = 0;
+    ticket->assignedToGM = 0;
+    ticket->comment = "";
 
-        std::string NameLink = "|Hplayer:"+ticket->name+"|h["+ticket->name+"]|h";
-        sWorld.SendGMText(LANG_COMMAND_TICKETNEW, NameLink.c_str(), ticket->guid);
+    // add ticket
+    sTicketMgr.AddGMTicket(ticket, false);
+
+    std::string NameLink = "|Hplayer:" + ticket->name + "|h[" + ticket->name + "]|h";
+    sWorld.SendGMText(LANG_COMMAND_TICKET_SPAM_REPORT, NameLink.c_str(), ticket->guid);
 }
 
 void WorldSession::HandleRealmStateRequestOpcode(WorldPacket & recv_data)

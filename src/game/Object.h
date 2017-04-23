@@ -527,9 +527,6 @@ class LOOKING4GROUP_IMPORT_EXPORT WorldObject : public Object//, public WorldLoc
         void BroadcastPacketInRange(WorldPacket*, float, bool, bool = false);
         void BroadcastPacketExcept(WorldPacket*, Player*);
 
-        bool IsBeingTeleported() { return mSemaphoreTeleport; }
-        void SetSemaphoreTeleport(bool semphsetting) { mSemaphoreTeleport = semphsetting; }
-
         void MonsterSay(const char* text, uint32 language, uint64 TargetGuid);
         void MonsterYell(const char* text, uint32 language, uint64 TargetGuid);
         void MonsterTextEmote(const char* text, uint64 TargetGuid, bool IsBossEmote = false);
@@ -631,7 +628,6 @@ class LOOKING4GROUP_IMPORT_EXPORT WorldObject : public Object//, public WorldLoc
         float m_positionZ;
         float m_orientation;
 
-        bool mSemaphoreTeleport;
         WorldUpdateCounter m_updateTracker;
 
         ViewPoint m_viewPoint;

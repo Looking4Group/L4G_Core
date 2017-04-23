@@ -344,6 +344,9 @@ Player::Player (WorldSession *session): Unit(), m_reputationMgr(this), m_camera(
 
     m_atLoginFlags = AT_LOGIN_NONE;
 
+    mSemaphoreTeleport_Near = false;
+    mSemaphoreTeleport_Far = false;
+
     pTrader = 0;
 
     ClearTrade();
@@ -904,6 +907,62 @@ void Player::UpdateFallInformationIfNeed(MovementInfo const& minfo,uint16 opcode
     if (m_lastFallTime >= minfo.GetFallTime() || m_lastFallZ <= minfo.GetPos()->z || opcode == MSG_MOVE_FALL_LAND)
         SetFallInformation(minfo.GetFallTime(), minfo.GetPos()->z);
 }
+
+
+void Player::UnsummonPetTemporaryIfAny()
+{
+    Pet* pet = GetPet();
+    if (!pet)
+        return;
+
+    if (!m_temporaryUnsummonedPetNumber && pet->isControlled() && !pet->isTemporarySummoned())
+        m_temporaryUnsummonedPetNumber = pet->GetCharmInfo()->GetPetNumber();
+
+    RemovePet(pet, PET_SAVE_NOT_IN_SLOT);
+}
+
+void Player::UnsummonPetIfAny()
+{
+    Pet* pet = GetPet();
+    if (!pet)
+        return;
+
+    RemovePet(pet, PET_SAVE_NOT_IN_SLOT);
+}
+
+bool Player::IsPetNeedBeTemporaryUnsummoned() const
+{
+    if (!IsInWorld() || !isAlive())
+        return true;
+
+    if (HasAuraType(SPELL_AURA_FLY) || (IsMounted() && HasAuraType(SPELL_AURA_MOD_INCREASE_FLIGHT_SPEED))) // if not IsMounted and has aura, means we are removing flying mount
+        return true;
+
+    if (hasUnitState(UNIT_STAT_TAXI_FLIGHT))
+        return true;
+
+    return false;
+}
+
+void Player::ResummonPetTemporaryUnSummonedIfAny()
+{
+    if (!m_temporaryUnsummonedPetNumber)
+        return;
+
+    // not resummon in not appropriate state
+    if (IsPetNeedBeTemporaryUnsummoned())
+        return;
+
+    if (GetPetGUID())
+        return;
+
+    Pet* NewPet = new Pet;
+    if (!NewPet->LoadPetFromDB(this, 0, m_temporaryUnsummonedPetNumber, true))
+        delete NewPet;
+
+    m_temporaryUnsummonedPetNumber = 0;
+}
+
 
 void Player::EnvironmentalDamage(EnviromentalDamage type, uint32 damage)
 {
@@ -1640,6 +1699,47 @@ bool Player::BuildEnumData(QueryResultAutoPtr result, WorldPacket * p_data)
     return true;
 }
 
+void Player::CheckAndAnnounceServerFirst(Creature* creature)
+{
+    QueryResultAutoPtr result = RealmDataDatabase.PQuery("SELECT faction FROM server_first WHERE entry = %u", creature->GetEntry());
+    if (!result || (result->GetRowCount() == 1))
+    {
+        // Construct message
+        std::string msg = "Congratulations to ";
+        msg.append(GetName());
+        std::string guildName = sGuildMgr.GetGuildNameById(GetGuildId());
+        if (guildName != "")
+        {
+            msg.append(" from ");
+            msg.append(guildName);
+        }
+        msg.append(" for defeating ");
+        msg.append(creature->GetName());
+        msg.append("!");
+
+        if (result)
+        {
+            // Faction first
+            Field *fields = result->Fetch();
+            uint32 teamId = fields[0].GetUInt32();
+            if (GetTeamId() != teamId)
+            {
+                sWorld.SendWorldText(GetTeamId() == TEAM_ALLIANCE ? LANG_ALLIANCE_FIRST : LANG_HORDE_FIRST, 0, msg.c_str());
+                // Update database
+                RealmDataDatabase.PExecute("INSERT INTO server_first (entry, faction, character_id, guild_id) VALUES (%i, %i, %i, %i)", creature->GetEntry(), GetTeamId(), GetGUIDLow(), GetGuildId());
+            }
+        }
+        else
+        {
+            // Server first
+            sWorld.SendWorldText(LANG_SERVER_FIRST, 0, msg.c_str());
+            sWorld.SendWorldText(GetTeamId() == TEAM_ALLIANCE ? LANG_ALLIANCE_FIRST : LANG_HORDE_FIRST, 0, msg.c_str());
+            // Update database
+            RealmDataDatabase.PExecute("INSERT INTO server_first (entry, faction, character_id, guild_id) VALUES (%i, %i, %i, %i)", creature->GetEntry(), GetTeamId(), GetGUIDLow(), GetGuildId());
+        }
+    }
+}
+
 bool Player::ToggleAFK()
 {
     ToggleFlag(PLAYER_FLAGS, PLAYER_FLAGS_AFK);
@@ -1735,9 +1835,7 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
         m_transport = NULL;
         m_movementInfo.ClearTransportData();
     }
-
-    SetSemaphoreTeleport(true);
-
+        
     m_AC_timer = 3000;
 
     // The player was ported to another map and looses the duel immediatly.
@@ -1756,73 +1854,38 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
 
     if ((GetMapId() == mapid) && (!m_transport))
     {
-        // prepare zone change detect
-        uint32 old_zone = GetZoneId();
-
         WorldLocation tmpWLoc(mapid, x, y, z, orientation);
 
         if (!IsWithinDistInMap(&tmpWLoc, GetMap()->GetVisibilityDistance()))
             DestroyForNearbyPlayers();
 
-        // near teleport
-        if (!GetSession()->PlayerLogout())
-        {
-            // send transfer packet to display load screen
-            WorldPacket data;
-            BuildTeleportAckMsg(data, x, y, z, orientation);
-            SendPacketToSelf(&data);
-            SetPosition(x, y, z, orientation, true);
-        }
-        else
-            // this will be used instead of the current location in SaveToDB
-            m_teleport_dest = tmpWLoc;
-
-        SetFallInformation(0, z);
-
         if (!(options & TELE_TO_NOT_UNSUMMON_PET))
         {
             //same map, only remove pet if out of range
             if (pet && !IsWithinDistInMap(pet, OWNER_MAX_DISTANCE))
-            {
-                if (pet->isControlled() && !pet->isTemporarySummoned())
-                    m_temporaryUnsummonedPetNumber = pet->GetCharmInfo()->GetPetNumber();
-                else
-                    m_temporaryUnsummonedPetNumber = 0;
-
-                RemovePet(pet, PET_SAVE_NOT_IN_SLOT);
+            {                
+                UnsummonPetTemporaryIfAny();
             }
         }
 
         if (!(options & TELE_TO_NOT_LEAVE_COMBAT))
             CombatStop();
 
-        if (!(options & TELE_TO_NOT_UNSUMMON_PET))
-        {
-            // resummon pet
-            if (pet && m_temporaryUnsummonedPetNumber)
-            {
-                Pet* NewPet = new Pet;
-                if (!NewPet->LoadPetFromDB(this, 0, m_temporaryUnsummonedPetNumber, true))
-                    delete NewPet;
+        // this will be used instead of the current location in SaveToDB
+        m_teleport_dest = WorldLocation(mapid, x, y, z, orientation);
+        SetFallInformation(0, z);
 
-                m_temporaryUnsummonedPetNumber = 0;
-            }
-        }
+        // code for finish transfer called in WorldSession::HandleMovementOpcodes() 
+        // at client packet MSG_MOVE_TELEPORT_ACK
+        SetSemaphoreTeleportNear(true);
+
 
         // near teleport, triggering send MSG_MOVE_TELEPORT_ACK from client at landing
         if (!GetSession()->PlayerLogout())
         {
-            // don't reset teleport semaphore while logging out, otherwise m_teleport_dest won't be used in Player::SaveToDB
-            SetSemaphoreTeleport(false);
-            UpdateZone(GetZoneId());
-        }
-
-        // new zone
-        if (old_zone != GetZoneId())
-        {
-            // honorless target
-            if (pvpInfo.inHostileArea)
-                CastSpell(this, 2479, true);
+            WorldPacket data;
+            BuildTeleportAckMsg(data, x, y, z, orientation);
+            GetSession()->SendPacket(&data);
         }
 
         if (getFollowingGM())
@@ -1845,7 +1908,6 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
         // this check not dependent from map instance copy and same for all instance copies of selected map
         if (!sMapMgr.CanPlayerEnter(mapid, this))
         {
-            SetSemaphoreTeleport(false);
             return false;
         }
 
@@ -1855,7 +1917,7 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
             {
                 if (iMap->EncounterInProgress(this))
                 {
-                    SetSemaphoreTeleport(false);
+                    SetSemaphoreTeleportFar(false);
                     return false;
                 }
             }
@@ -1973,6 +2035,8 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
             SetFallInformation(0, final_z);
             // if the player is saved before worldportack (at logout for example)
             // this will be used instead of the current location in SaveToDB
+
+            SetSemaphoreTeleportFar(true);
         }
         else
             return false;
@@ -2569,6 +2633,45 @@ void Player::GiveLevel(uint32 level)
 {
     if (level == getLevel())
         return;
+
+    // Server first level 70 checks
+    if ((level == 70) && (!isGameMaster()))
+    {
+        QueryResultAutoPtr result = RealmDataDatabase.PQuery("SELECT entry FROM server_first WHERE entry = %u OR entry = %u", TEAM_ALLIANCE, TEAM_HORDE);
+        if (!result || (result->GetRowCount() == 1))
+        {
+            // Construct message
+            std::string msg = "Congratulations to ";
+            msg.append(GetName());
+            std::string guildName = sGuildMgr.GetGuildNameById(GetGuildId());
+            if (guildName != "")
+            {
+                msg.append(" from ");
+                msg.append(guildName);
+            }
+            msg.append(" for achieving level 70!");
+
+            if (result)
+            {
+                // Faction first
+                Field *fields = result->Fetch();
+                uint32 teamId = fields[0].GetUInt32();
+                if (GetTeamId() != teamId)
+                {
+                    sWorld.SendWorldText(GetTeamId() == TEAM_ALLIANCE ? LANG_ALLIANCE_FIRST : LANG_HORDE_FIRST, 0, msg.c_str());
+                }
+            }
+            else
+            {
+                // Server first
+                sWorld.SendWorldText(LANG_SERVER_FIRST, 0, msg.c_str());
+                sWorld.SendWorldText(GetTeamId() == TEAM_ALLIANCE ? LANG_ALLIANCE_FIRST : LANG_HORDE_FIRST, 0, msg.c_str());
+            }
+
+            // Update database
+            RealmDataDatabase.PExecute("INSERT INTO server_first (entry, character_id, guild_id) VALUES (%i, %i, %i)", GetTeamId(), GetGUIDLow(), GetGuildId());
+        }
+    }
 
     PlayerLevelInfo info;
     sObjectMgr.GetPlayerLevelInfo(getRace(),getClass(),level,&info);
@@ -5882,7 +5985,7 @@ void Player::CheckAreaExploreAndOutdoor()
         else if (p->area_level > 0)
         {
             uint32 area = p->ID;
-            if (getLevel() >= sWorld.getConfig(CONFIG_MAX_PLAYER_LEVEL))
+            if (getLevel() >= sWorld.getConfig(CONFIG_MAX_PLAYER_LEVEL) || getLevel() < sWorld.getConfig(CONFIG_MIN_PLAYER_EXPLORE_LEVEL))
             {
                 SendExplorationExperience(area,0);
             }
@@ -7655,6 +7758,11 @@ void Player::SendLoot(uint64 guid, LootType loot_type)
 
         loot = &go->loot;
 
+        // loot was generated and respawntime has passed since then, allow to recreate loot
+        // to avoid bugs, this rule covers spawned gameobjects only
+        if (go->isSpawnedByDefault() && go->getLootState() == GO_ACTIVATED && !go->loot.isLooted() && go->GetLootGenerationTime() + go->GetRespawnDelay() < time(nullptr))
+            go->SetLootState(GO_READY);
+
         if (go->getLootState() == GO_READY)
         {
             uint32 lootid =  go->GetLootId();
@@ -7674,6 +7782,7 @@ void Player::SendLoot(uint64 guid, LootType loot_type)
                 sLog.outDebug("       if (lootid)");
                 loot->clear();
                 loot->FillLoot(lootid, LootTemplates_Gameobject, this, false);
+                go->SetLootGenerationTime();
 
                 //if chest apply 2.1.x rules
                 if ((go->GetGoType() == GAMEOBJECT_TYPE_CHEST)&&(go->GetGOInfo()->chest.groupLootRules))
@@ -7829,6 +7938,7 @@ void Player::SendLoot(uint64 guid, LootType loot_type)
             if (loot_type == LOOT_SKINNING)
             {
                 loot->clear();
+                permission = ALL_PERMISSION;
                 loot->FillLoot(creature->GetCreatureInfo()->SkinLootId, LootTemplates_Skinning, this, false);
             }
             // set group rights only for loot_type != LOOT_SKINNING
@@ -13070,12 +13180,20 @@ void Player::RewardQuest(Quest const *pQuest, uint32 reward, Object* questGiver,
         {
             if (pQuest->RewItemId[i])
             {
+                uint32 noSpaceForCount = 0;
+                uint32 count = pQuest->RewItemCount[i];
+
                 ItemPosCountVec dest;
-                if (CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, pQuest->RewItemId[i], pQuest->RewItemCount[i]) == EQUIP_ERR_OK)
+                if (CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, pQuest->RewItemId[i], count, &noSpaceForCount) == EQUIP_ERR_OK)
                 {
                     Item* item = StoreNewItem(dest, pQuest->RewItemId[i], true);
                     SendNewItem(item, pQuest->RewItemCount[i], true, false);
                 }
+                else
+                    count = noSpaceForCount;
+
+                if (count == 0 || dest.empty()) // can't add any
+                    SendItemByMail(this, pQuest->RewItemId[i], count);
             }
         }
     }
@@ -17580,6 +17698,8 @@ void Player::Uncharm()
         charm->RemoveSpellsCausingAura(SPELL_AURA_MOD_POSSESS);
     }
 
+    charm->SendHealthUpdateDueToCharm(this);
+
     if (GetCharmGUID())
     {
         sLog.outLog(LOG_DEFAULT, "ERROR: CRASH ALARM! Player %s is not able to uncharm unit (Entry: %u, Type: %u)", GetName(), charm->GetEntry(), charm->GetTypeId());
@@ -17736,6 +17856,8 @@ void Player::PetSpellInitialize()
         data << uint32(0x8e8b) << uint64(0);                // if count = 3
 
         SendPacketToSelf(&data);
+
+        pet->SendHealthUpdateDueToCharm(this);
     }
 }
 
@@ -17774,6 +17896,7 @@ void Player::PossessSpellInitialize()
     data << uint32(0x8e8b) << uint64(0);                    // if count = 3
 
     SendPacketToSelf(&data);
+    charm->SendHealthUpdateDueToCharm(this);
 }
 
 void Player::CharmSpellInitialize()
@@ -17844,6 +17967,7 @@ void Player::CharmSpellInitialize()
     data << uint32(0x8e8b) << uint64(0);                    // if count = 3
 
     SendPacketToSelf(&data);
+    charm->SendHealthUpdateDueToCharm(this);
 }
 
 int32 Player::GetTotalFlatMods(uint32 spellId, SpellModOp op)
@@ -19227,7 +19351,7 @@ void Player::SendInitialVisiblePackets(Unit* target)
     if (target->isAlive())
     {
         if (target->hasUnitState(UNIT_STAT_MELEE_ATTACKING) && target->getVictim())
-            target->SendMeleeAttackStart(target->getVictim());
+            target->SendMeleeAttackStart(target->getVictimGUID());
     }
 }
 
@@ -20165,7 +20289,7 @@ bool Player::RewardPlayerAndGroupAtKill(Unit* pVictim)
 
                         pGroupGuy->GiveXP(itr_xp, pVictim);
                         if (Pet* pet = pGroupGuy->GetPet())
-                            pet->GivePetXP(itr_xp/2);
+                            pet->GivePetXP(itr_xp);
                     }
 
                     // quest objectives updated only for alive group member or dead but with not released body
@@ -20976,8 +21100,8 @@ bool ItemPosCount::isContainedIn(ItemPosCountVec const& vec) const
 
 void Player::HandleFallDamage(MovementInfo& movementInfo)
 {
-    if (movementInfo.GetFallTime() < 50) // certain teleport spells need falldamage buffer, otherwise players die from falldamage
-        return; 
+    //if (movementInfo.GetFallTime() < sWorld.GetUpdateTime()) // certain teleport spells need falldamage buffer, otherwise players die from falldamage
+        //return; 
 
     // calculate total z distance of the fall
     float z_diff = m_lastFallZ - movementInfo.GetPos()->z;
@@ -21215,6 +21339,12 @@ void Player::SendTimeSync()
 
 float Player::GetXPRate(Rates rate)
 {
+    if (sWorld.getConfig(CONFIG_ENABLE_CUSTOM_XP_RATES) && GetSession()->IsAccountFlagged(ACC_CUSTOM_XP_RATE_1))
+        return 1.0f;
+    else if (sWorld.getConfig(CONFIG_GET_CUSTOM_XP_RATE_LEVEL) > 0)
+        if (getLevel() <= sWorld.getConfig(CONFIG_GET_CUSTOM_XP_RATE_LEVEL))
+            return (sWorld.getRate(Rates(rate)) + sWorld.getRate(RATE_CUSTOM_XP_VALUE));
+
     return sWorld.getRate(Rates(rate));
 }
 

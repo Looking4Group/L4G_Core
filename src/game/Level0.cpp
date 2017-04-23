@@ -42,7 +42,7 @@ bool ChatHandler::HandleAccountXPToggleCommand(const char* args)
 {
     if (!*args)
     {
-        PSendSysMessage("For Blizzlike Rates type \'1\', for x3 rates type \'3\', for server rates type \'server\'");
+        PSendSysMessage("For Blizzlike Rates type \'1\', for default server rates type \'server\'");
         SetSentErrorMessage(true);
         return true;
     }
@@ -54,27 +54,18 @@ bool ChatHandler::HandleAccountXPToggleCommand(const char* args)
         {
             if (argstr == "1")
             {
-                session->AddAccountFlag(ACC_BLIZZLIKE_RATES);
-                session->RemoveAccountFlag(ACC_CUSTOM_XP_RATE_3);
+                session->AddAccountFlag(ACC_CUSTOM_XP_RATE_1);
                 PSendSysMessage("Now your rates are blizzlike: x1.");
-            }
-            else if (argstr == "3")
-            {
-                session->AddAccountFlag(ACC_CUSTOM_XP_RATE_3);
-                session->RemoveAccountFlag(ACC_BLIZZLIKE_RATES);
-                PSendSysMessage("Now your rates are serverlike: x3.");
             }
             else if (argstr == "server")
             {
-                session->RemoveAccountFlag(ACC_CUSTOM_XP_RATE_3);
-                session->RemoveAccountFlag(ACC_BLIZZLIKE_RATES);
-                PSendSysMessage("Now your rates are serverlike: x3. If your Level is < 58 you will get a serverside bonus.");
+                session->RemoveAccountFlag(ACC_CUSTOM_XP_RATE_1);
+                PSendSysMessage("Now your rates are serverlike.");
             }
             else
             {
-                session->RemoveAccountFlag(ACC_CUSTOM_XP_RATE_3);
-                session->RemoveAccountFlag(ACC_BLIZZLIKE_RATES);
-                PSendSysMessage("Now your rates are serverlike: x3. And if your Level is <58 you will get a serverside bonus. Beware.");
+                session->RemoveAccountFlag(ACC_CUSTOM_XP_RATE_1);
+                PSendSysMessage("Now your rates are serverlike");
             }
 
         }
@@ -296,16 +287,28 @@ bool ChatHandler::HandleActivateLevelCharacterCommand(const char* /*args*/)
 
 bool ChatHandler::HandleServerInfoCommand(const char* /*args*/)
 {
+    // Performance issues? Should .server info be rate limited?
+    // Without updating max session counters here then the max session counter will be inaccurate
+    // Players that login are counted towards the online player count but the faction max counts are not updated
+    // as UpdateMaxSessionCounters() is called too quickly after login
+    // This is a result of players in the loading screen counting towards active sessions but not count GetLoggedInChars()
+    sWorld.UpdateMaxSessionCounters();
+
     uint32 activeClientsNum = sWorld.GetActiveSessionCount();
     uint32 queuedClientsNum = sWorld.GetQueuedSessionCount();
     uint32 maxActiveClientsNum = sWorld.GetMaxActiveSessionCount();
     uint32 maxQueuedClientsNum = sWorld.GetMaxQueuedSessionCount();
+    uint32 allianceClientsNum = sWorld.GetLoggedInCharsCount(TEAM_ALLIANCE);
+    uint32 hordeClientsNum = sWorld.GetLoggedInCharsCount(TEAM_HORDE);
+    uint32 maxAllianceClientsNum = sWorld.GetMaxAllianceSessionCount();
+    uint32 maxHordeClientsNum = sWorld.GetMaxHordeSessionCount();
     std::string str = secsToTimeString(sWorld.GetUptime());
     uint32 updateTime = sWorld.GetUpdateTime();
     std::string str2 = TimeToTimestampStr(sWorld.GetGameTime());
 
     PSendSysMessage("Looking4Group - rev: %s", REVISION_ID);
     PSendSysMessage(LANG_CONNECTED_USERS, activeClientsNum, maxActiveClientsNum, queuedClientsNum, maxQueuedClientsNum);
+    PSendSysMessage(LANG_CONNECTED_FACTIONS, allianceClientsNum, maxAllianceClientsNum, hordeClientsNum, maxHordeClientsNum);
     PSendSysMessage(LANG_UPTIME, str.c_str());
     PSendSysMessage("Current time: %s", str2.c_str());
     PSendSysMessage("Update time diff: %u.", updateTime);

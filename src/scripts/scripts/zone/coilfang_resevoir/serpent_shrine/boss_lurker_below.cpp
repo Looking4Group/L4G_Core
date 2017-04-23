@@ -14,6 +14,13 @@
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 */
 
+/* ScriptData
+SDName: Boss_Lurker_Below
+SD%Complete: 90
+SDComment: Submerged Spell Swimming in Circles, Check Timers
+SDCategory: Coilfang Resevoir, Serpent Shrine Cavern
+EndScriptData */
+
 #include "precompiled.h"
 #include "def_serpent_shrine.h"
 #include "../../../creature/simple_ai.h"
@@ -60,6 +67,7 @@ enum lurkerSpells
     SPELL_WHIRL        = 37660,
     SPELL_WATERBOLT    = 37138,
     SPELL_SUBMERGE     = 37550,
+    SPELL_SUBMERGED    = 37751,
     SPELL_EMERGE       = 20568
 };
 
@@ -271,8 +279,10 @@ struct boss_the_lurker_belowAI : public BossAI
         AttackStart(pWho);
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* killer)
     {
+        ServerFirst(killer);
+
         instance->SetData(DATA_LURKER_EVENT, DONE);
         me->RemoveAurasDueToSpell(SPELL_SUBMERGE);
     }
@@ -325,7 +335,7 @@ struct boss_the_lurker_belowAI : public BossAI
         if (!CanStartEvent)
         {            
                 if (m_submerged)
-                {                    
+                {
                     m_submerged = false;
                     WaitTimer2 = 500;
                 }
@@ -411,6 +421,7 @@ struct boss_the_lurker_belowAI : public BossAI
 
                     me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                     me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_ATTACKABLE_2);
+                    me->SetVisibility(VISIBILITY_OFF);
 
                     SummonAdds();
                     m_submerged = true;

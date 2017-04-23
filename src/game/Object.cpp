@@ -501,6 +501,32 @@ void Object::BuildValuesUpdate(uint8 updatetype, ByteBuffer * data, UpdateMask *
                     if (!ch)
                         *data << m_uint32Values[ index ];
                 }
+                else if (index == UNIT_FIELD_HEALTH)
+                {
+                    if (GetTypeId() == TYPEID_UNIT || GetTypeId() == TYPEID_PLAYER)
+                    {
+                        const Unit* me = reinterpret_cast<const Unit*>(this);
+                        if (me->ShouldRevealHealthTo(target))
+                            *data << m_uint32Values[ index ];
+                        else
+                            *data << uint32(ceil(me->GetHealthPct()));
+                    }
+                    else
+                        *data << m_uint32Values[ index ];
+                }
+                else if (index == UNIT_FIELD_MAXHEALTH)
+                {
+                    if (GetTypeId() == TYPEID_UNIT || GetTypeId() == TYPEID_PLAYER)
+                    {
+                        const Unit* me = reinterpret_cast<const Unit*>(this);
+                        if (me->ShouldRevealHealthTo(target))
+                            *data << m_uint32Values[ index ];
+                        else
+                            *data << uint32(100);
+                    }
+                    else
+                        *data << m_uint32Values[ index ];
+                }
                 else
                 {
                     // send in current format (float as float, uint32 as uint32)
@@ -895,12 +921,10 @@ std::string Object::GetUInt32ValuesString() const
 
 WorldObject::WorldObject()
     : m_mapId(0), m_InstanceId(0),
-    m_positionX(0.0f), m_positionY(0.0f), m_positionZ(0.0f), m_orientation(0.0f),
-    mSemaphoreTeleport(false)
+    m_positionX(0.0f), m_positionY(0.0f), m_positionZ(0.0f), m_orientation(0.0f)
     , m_map(NULL), m_zoneScript(NULL)
     , m_activeBy(0), IsTempWorldObject(false)
 {
-    mSemaphoreTeleport  = false;
 }
 
 void WorldObject::SetWorldObject(bool on)
@@ -1790,7 +1814,9 @@ void WorldObject::UpdateObjectVisibility(bool /*forced*/)
     //updates object's visibility for nearby players
     Looking4group::VisibleChangesNotifier notifier(*this);
     float radius = World::GetVisibleObjectGreyDistance();
-    if(Map* map = GetMap())
+    if (ToCorpse() != nullptr || !IsInWorld())
+        radius = MAX_VISIBILITY_DISTANCE;
+    else if (Map* map = GetMap())
         radius += map->GetVisibilityDistance();
     Cell::VisitWorldObjects(this, notifier, radius);
 }

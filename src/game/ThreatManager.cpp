@@ -332,17 +332,17 @@ bool CheckForAggroDropMechanics(Unit* target) {
             {
                 aggroDrop = std::find(std::begin(mechanicArray), std::end(mechanicArray), spell->Mechanic) != std::end(mechanicArray);
             }
-            if (spell->EffectMechanic[0] != 0)
+            if (!aggroDrop && spell->EffectMechanic[0] != 0)
             {
                 aggroDrop = std::find(std::begin(mechanicArray), std::end(mechanicArray), spell->EffectMechanic[0]) != std::end(mechanicArray);
             }
 
-            if (spell->EffectMechanic[1] != 0)
+            if (!aggroDrop && spell->EffectMechanic[1] != 0)
             {
                 aggroDrop = std::find(std::begin(mechanicArray), std::end(mechanicArray), spell->EffectMechanic[1]) != std::end(mechanicArray);
             }
 
-            if (spell->EffectMechanic[2] != 0) {
+            if (!aggroDrop && spell->EffectMechanic[2] != 0) {
                 aggroDrop = std::find(std::begin(mechanicArray), std::end(mechanicArray), spell->EffectMechanic[2]) != std::end(mechanicArray);
             }
         }

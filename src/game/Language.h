@@ -812,6 +812,7 @@ enum TrinityStrings
     LANG_COMMAND_TICKETLISTCOMMENT      = 2023,
     LANG_COMMAND_TICKETLISTADDCOMMENT   = 2024,
     LANG_COMMAND_TICKETLISTAGECREATE    = 2025,
+    LANG_COMMAND_TICKET_SPAM_REPORT     = 2026,
 
     // Trinity strings             5000-9999
     LANG_COMMAND_FREEZE                 = 5000,
@@ -915,8 +916,12 @@ enum TrinityStrings
     LANG_ANTICHEAT_NOFALLDMG            = 11014,
     LANG_GM_BANNED_PLAYER               = 11015,
     LANG_CHANGE_DIFFICULTY_LEVEL        = 11016,
-    LANG_GUILDINFO_LEVEL = 12000,
-    LANG_GUILDINFO_XP_INFO = 12001,
+    LANG_GUILDINFO_LEVEL                = 12000,
+    LANG_GUILDINFO_XP_INFO              = 12001,
+    LANG_CONNECTED_FACTIONS             = 13000,
+    LANG_SERVER_FIRST                   = 13001,
+    LANG_ALLIANCE_FIRST                 = 13002,
+    LANG_HORDE_FIRST                    = 13003
 
     // NOT RESERVED IDS                   12000-1999999999
     // `db_script_string` table index     2000000000-2000009999 (MIN_DB_SCRIPT_STRING_ID-MAX_DB_SCRIPT_STRING_ID)

@@ -16,8 +16,8 @@
 
 /* ScriptData
 SDName: Boss_Gruul
-SD%Complete: 25
-SDComment: Ground Slam seriously messed up due to core problem
+SD%Complete: 80
+SDComment: Hurtful Strike Facing Offtank, Fix Hurtful Strike Mechanic under Windows Compile
 SDCategory: Gruul's Lair
 EndScriptData */
 
@@ -26,29 +26,31 @@ EndScriptData */
 
 #include "../framework/Utilities/EventProcessor.h"
 
-/* Yells & Quotes */
-#define SAY_AGGRO                   -1565010
-#define SAY_SLAM1                   -1565011
-#define SAY_SLAM2                   -1565012
-#define SAY_SHATTER1                -1565013
-#define SAY_SHATTER2                -1565014
-#define SAY_SLAY1                   -1565015
-#define SAY_SLAY2                   -1565016
-#define SAY_SLAY3                   -1565017
-#define SAY_DEATH                   -1565018
-#define EMOTE_GROW                  -1565019
-#define EMOTE_SHATTER               -1565020
+enum Gruul
+{
+    AGGRO_RANGE             = 35,
+    SAY_AGGRO               = -1565010,
+    SAY_SLAM1               = -1565011,
+    SAY_SLAM2               = -1565012,
+    SAY_SHATTER1            = -1565013,
+    SAY_SHATTER2            = -1565014,
+    SAY_SLAY1               = -1565015,
+    SAY_SLAY2               = -1565016,
+    SAY_SLAY3               = -1565017,
+    SAY_DEATH               = -1565018,
+    EMOTE_GROW              = -1565019,
+    EMOTE_SHATTER           = -1565020,
 
-/* Spells */
-#define SPELL_GROWTH                36300
-#define SPELL_CAVE_IN               36240
-#define SPELL_GROUND_SLAM           33525                   // AoE Ground Slam applying Ground Slam to everyone with a script effect (most likely the knock back, we can code it to a set knockback)
-#define SPELL_REVERBERATION         36297                   // AoE Silence
-#define SPELL_SHATTER               33654
-#define SPELL_SHATTER_EFFECT        33671
-#define SPELL_HURTFUL_STRIKE        33813
-#define SPELL_STONED                33652                   // Spell is self cast -> linked on ground slam fade
-#define SPELL_GRONN_LORDS_GRASP     33572                   // Triggered by Ground Slam
+    SPELL_GROWTH            = 36300,
+    SPELL_CAVE_IN           = 36240,
+    SPELL_GROUND_SLAM       = 33525, // AoE Ground Slam applying Ground Slam to everyone with a script effect (most likely the knock back, we can code it to a set knockback)
+    SPELL_REVERBERATION     = 36297, // AoE Silence
+    SPELL_SHATTER           = 33654,
+    SPELL_SHATTER_EFFECT    = 33671,
+    SPELL_HURTFUL_STRIKE    = 33813,
+    SPELL_STONED            = 33652, // Spell is self cast -> linked on ground slam fade
+    SPELL_GRONN_LORDS_GRASP = 33572, // Triggered by Ground Slam
+};
 
 class ChaseEvent : public BasicEvent
 {
@@ -76,7 +78,7 @@ struct boss_gruulAI : public ScriptedAI
     {
         pInstance = c->GetInstanceData();
         c->GetPosition(wLoc);
-        me->ApplySpellImmune(0, IMMUNITY_STATE, SPELL_AURA_USE_NORMAL_MOVEMENT_SPEED, true);
+        me->SetAggroRange(AGGRO_RANGE);
     }
 
     ScriptedInstance *pInstance;
@@ -109,7 +111,7 @@ struct boss_gruulAI : public ScriptedAI
         pInstance->SetData(DATA_GRUULEVENT, NOT_STARTED);
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* killer)
     {
         DoScriptText(SAY_DEATH, me);
         pInstance->SetData(DATA_GRUULEVENT, DONE);
@@ -142,7 +144,6 @@ struct boss_gruulAI : public ScriptedAI
             }
 
             DoZoneInCombat();
-            //me->SetSpeed(MOVE_RUN, 2.0f);
             Check_Timer= 3000;
         }
         else
@@ -198,12 +199,10 @@ struct boss_gruulAI : public ScriptedAI
             // Hurtful Strike
             if (HurtfulStrike_Timer < diff)
             {
-                Unit* target = SelectUnit(SELECT_TARGET_TOPAGGRO, 0, me->GetMeleeReach(), true, me->getVictimGUID());
+                Unit* target = SelectUnit(SELECT_TARGET_TOPAGGRO, 0, 14.0f, true, me->getVictimGUID());
                 if (!target)
                     target = me->getVictim();
 
-                me->SetSelection(target->GetGUID());
-                me->SetInFront(target);
                 AddSpellToCast(target, SPELL_HURTFUL_STRIKE);
                 HurtfulStrike_Timer = 6000;
             }

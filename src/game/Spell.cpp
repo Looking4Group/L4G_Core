@@ -1100,7 +1100,7 @@ void Spell::DoAllEffectOnTarget(TargetInfo *target)
     if (!m_caster->IsFriendlyTo(unit) && !SpellMgr::IsPositiveSpell(GetSpellInfo()->Id))
     {
         if(m_caster->GetTypeId() != TYPEID_PLAYER || !((Player const*)m_caster)->isGameMaster())
-            m_caster->CombatStart(unit, !(GetSpellInfo()->AttributesEx3 & SPELL_ATTR_EX3_NO_INITIAL_AGGRO));
+            m_caster->CombatStart(unit, !((GetSpellInfo()->AttributesEx3 & SPELL_ATTR_EX3_NO_INITIAL_AGGRO) || (GetSpellInfo()->AttributesEx & SPELL_ATTR_EX_NO_THREAT)));
 
         if (GetSpellInfo()->AttributesCu & SPELL_ATTR_CU_AURA_CC)
         {
@@ -1766,11 +1766,14 @@ void Spell::SetTargetMap(uint32 i, uint32 cur)
                     pushType = PUSH_CHAIN;
                     break;
                 case TARGET_UNIT_TARGET_ALLY:
+                    AddUnitTarget(target, i);
+                    break;
                 case TARGET_UNIT_TARGET_RAID:
                 case TARGET_UNIT_TARGET_ANY: // SelectMagnetTarget()?
                 case TARGET_UNIT_TARGET_PARTY:
                 case TARGET_UNIT_MINIPET:
-                    AddUnitTarget(target, i);
+                    if (IsValidSingleTargetSpell(target))
+                        AddUnitTarget(target, i);
                     break;
                 case TARGET_UNIT_PARTY_TARGET:
                 case TARGET_UNIT_CLASS_TARGET:
@@ -2316,10 +2319,10 @@ void Spell::prepare(SpellCastTargets * targets, Aura* triggeredByAura)
             return;
         }
         
-        //Hack for Hexlord Spirit bolts - don't interrupt with death coil, Maim, Intercept
+        //Hexlord Spirit bolts, Underbog Colossus Acid Geyser Spore Quake  - don't interrupt with death coil, Maim, Intercept
         if (m_targets.getUnitTarget())               //Deathcoil                                //Maim                       //Intercept
             if ((GetSpellInfo()->Effect[0] == SPELL_EFFECT_HEALTH_LEECH || GetSpellInfo()->Id == 22570 || GetSpellInfo()->Id == 25275)
-                && m_targets.getUnitTarget()->HasAura(43383))
+                && (m_targets.getUnitTarget()->HasAura(43383) || m_targets.getUnitTarget()->HasAura(38971) || m_targets.getUnitTarget()->HasAura(38976)))
             {
                 SendCastResult(SPELL_FAILED_NOT_READY);
                 finish(false);
@@ -3290,6 +3293,12 @@ void Spell::SendSpellGo()
         return;
 
     sLog.outDebug("Sending SMSG_SPELL_GO id=%u", GetSpellInfo()->Id);
+
+    // Some spell mods are used already upon cast, such as Presence of Mind, remove them here already as it may cause abuse
+    // Elemental Mastery/Inner Focus/Spell Reflect/Grounding Effect/Fel Domination/Cold Snap/Preparation must not be removed on cast
+    if (m_caster->GetTypeId() == TYPEID_PLAYER && !m_caster->HasAura(16166, 0) && !m_caster->HasAura(14751, 0)
+        && !m_caster->HasAura(23920, 0) && !m_caster->HasAura(8178, 0) && !m_caster->HasAura(18708, 0) && !(m_spellInfo->Id == 11958) && !(m_spellInfo->Id == 14185))
+        m_caster->ToPlayer()->RemoveSpellMods(this);
 
     Unit *target = m_targets.getUnitTarget() ? m_targets.getUnitTarget() : m_caster;
 
@@ -4667,7 +4676,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                         // check if dispel makes sense
                         std::vector <Aura *> dispel_list;
                         target->GetDispellableAuraList(m_caster, dispelMask, dispel_list);
-                        if (dispel_list.empty() && !hasOtherEffects)
+                        if (dispel_list.empty() && !hasOtherEffects && !IsTriggeredSpell())
                             return SPELL_FAILED_NOTHING_TO_DISPEL;
                     }
                 }

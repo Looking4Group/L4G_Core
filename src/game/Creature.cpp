@@ -197,6 +197,11 @@ void Creature::AddToWorld()
         SearchFormation();
         AIM_Initialize();
 
+        // Make active if required
+        std::set<uint32> const* mapList = sWorld.getConfigForceLoadMapIds();
+        if ((mapList && mapList->find(GetMapId()) != mapList->end()) || (GetCreatureInfo()->flags_extra & CREATURE_FLAG_EXTRA_ACTIVE))
+            setActive(true);
+
         if (m_zoneScript)
             m_zoneScript->OnCreatureCreate(this, true);
     }
@@ -1283,6 +1288,13 @@ void Creature::SetLootRecipient(Unit *unit)
         return;
 
     m_lootRecipient = player->GetGUID();
+
+    if (HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_SKINNABLE))
+    {
+        m_playersAllowedToLoot.clear();
+        m_playersAllowedToLoot.insert(m_lootRecipient);
+        return;
+    }
 
     // special case for world bosses
     Group* group = player->GetGroup();

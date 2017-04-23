@@ -127,7 +127,7 @@ void DynamicObjectUpdater::VisitHelper(Unit* target)
         if (i_check->IsFriendlyTo(target))
             return;
 
-        if (!spellInfo->AttributesEx3 == SPELL_ATTR_EX3_NO_INITIAL_AGGRO)
+        if (!(spellInfo->AttributesEx3 & SPELL_ATTR_EX3_NO_INITIAL_AGGRO))
             i_check->CombatStart(target);
 
     }

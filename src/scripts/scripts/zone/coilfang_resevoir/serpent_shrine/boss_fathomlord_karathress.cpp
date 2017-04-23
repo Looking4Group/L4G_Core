@@ -228,6 +228,8 @@ struct boss_fathomlord_karathressAI : public ScriptedAI
 
     void JustDied(Unit *killer)
     {
+        ServerFirst(killer);
+
         DoScriptText(SAY_DEATH, m_creature);
 
         pInstance->SetData(DATA_KARATHRESS_EVENT, DONE);

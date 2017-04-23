@@ -81,7 +81,7 @@ public:
         if (target->GetTypeId() == TYPEID_PLAYER)
             target->SetStandState(UNIT_STAND_STATE_STAND);
 
-        target->SendMeleeAttackStop(NULL);
+        target->SendMeleeAttackStop(0);
 
         WorldPacket data(SMSG_FORCE_MOVE_ROOT, target->GetPackGUID().size() + 4);
         data << target->GetPackGUID();
@@ -146,7 +146,7 @@ public:
         target->m_movementInfo.RemoveMovementFlag(MOVEFLAG_MOVING);
         target->m_movementInfo.AddMovementFlag(MOVEFLAG_ROOT);
 
-        target->SendMeleeAttackStop(NULL);
+        target->SendMeleeAttackStop(0);
 
         if (target->GetTypeId() == TYPEID_PLAYER)
         {

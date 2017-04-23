@@ -86,6 +86,9 @@ Map* MapManager::CreateMap(uint32 id, WorldObject const* obj)
         //create InstanceMap object
         if (obj->GetTypeId() == TYPEID_PLAYER)
             m = CreateInstance(id, (Player*)obj);
+
+        // Load active objects for this map
+        sObjectMgr.LoadActiveEntities(m);
     }
     else
     {

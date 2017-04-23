@@ -123,6 +123,8 @@ World::World()
     m_startTime=m_gameTime;
     m_maxActiveSessionCount = 0;
     m_maxQueuedSessionCount = 0;
+    m_maxAllianceSessionCount = 0;
+    m_maxHordeSessionCount = 0;
     m_NextDailyQuestReset = 0;
     m_scheduledScripts = 0;
 
@@ -153,6 +155,8 @@ World::World()
     m_honorRanks[11] = 60000;
     m_honorRanks[12] = 70000;
     m_honorRanks[13] = 100000;
+
+    m_configForceLoadMapIds = NULL;
 }
 
 /// World destructor
@@ -183,6 +187,9 @@ World::~World()
 
     VMAP::VMapFactory::clear();
     MMAP::MMapFactory::clear();
+
+    if (m_configForceLoadMapIds)
+        delete m_configForceLoadMapIds;
 
     //TODO free addSessQueue
 }
@@ -276,25 +283,37 @@ void World::AddSession_ (WorldSession* s)
         }
     }
 
-    m_sessions[s->GetAccountId()] = s;
+    uint32 accountId = s->GetAccountId();
 
-    uint32 Sessions = GetActiveAndQueuedSessionCount ();
-    uint32 pLimit = GetPlayerAmountLimit ();
-    uint32 QueueSize = GetQueueSize (); //number of players in the queue
+    m_sessions[accountId] = s;
+
+    uint32 sessions = GetActiveAndQueuedSessionCount();
+    uint32 pLimit = GetPlayerAmountLimit();
+    uint32 QueueSize = GetQueueSize(); //number of players in the queue
 
     //so we don't count the user trying to
     //login as a session and queue the socket that we are using
     if (decrease_session)
-        --Sessions;
+        --sessions;
 
-    if (pLimit > 0 && Sessions >= pLimit && !s->HasPermissions(PERM_GMT))
+    // If population limit is not 0 (i.e. uncapped) and they are not a GM then check if we need to add them to the queue
+    if ((pLimit > 0) && (!s->HasPermissions(PERM_GMT)))
     {
-        if (!sObjectMgr.IsUnqueuedAccount(s->GetAccountId()) && !HasRecentlyDisconnected(s))
+        // If alliance account AND the number of online alliance players equals or exceeds the population limit(/2) then add them to the queue OR
+        // If horde account AND the number of online horde players equals or exceeds the population limit(/2) then add them to the queue
+        // If neutral account (i.e. no characters) AND the total number of online players equals or exceeds the population limit then add them to the queue
+        // Population limit divided by two to ensure equal split of Horde/Alliance.
+        if ((sessions >= pLimit) ||
+            ((GetLoggedInCharsCount(TEAM_ALLIANCE) >= (pLimit / 2)) && (s->GetAccountTeamId() == TEAM_ALLIANCE)) ||
+            ((GetLoggedInCharsCount(TEAM_HORDE) >= (pLimit / 2)) && (s->GetAccountTeamId() == TEAM_HORDE)))
         {
-            AddQueuedPlayer (s);
-            UpdateMaxSessionCounters ();
-            sLog.outDetail ("PlayerQueue: Account id %u is in Queue Position (%u).", s->GetAccountId (), ++QueueSize);
-            return;
+            if (!sObjectMgr.IsUnqueuedAccount(s->GetAccountId()) && !HasRecentlyDisconnected(s))
+            {
+                AddQueuedPlayer(s);
+                UpdateMaxSessionCounters();
+                sLog.outDetail ("PlayerQueue: Account id %u is in Queue Position (%u).", s->GetAccountId (), ++QueueSize);
+                return;
+            }
         }
     }
 
@@ -366,7 +385,7 @@ void World::AddQueuedPlayer(WorldSession* sess)
     packet << uint8 (0);
     packet << uint32 (0);
     packet << uint8 (sess->Expansion () ? 1 : 0); // 0 - normal, 1 - TBC, must be set in database manually for each account
-    packet << uint32(GetQueuePos (sess));
+    packet << uint32(GetQueuePos(sess));
     sess->SendPacket (&packet);
 
     //sess->SendAuthWaitQue (GetQueuePos (sess));
@@ -401,23 +420,33 @@ bool World::RemoveQueuedPlayer(WorldSession* sess)
     if (!found && sessions)
         --sessions;
 
-    // accept first in queue
-    if ((!m_playerLimit || (sessions < m_playerLimit)) && !m_QueuedPlayer.empty())
-    {
-        WorldSession* pop_sess = m_QueuedPlayer.front();
-        pop_sess->SetInQueue(false);
-        pop_sess->SendAuthWaitQue(0);
-        m_QueuedPlayer.pop_front();
+    uint32 pLimit = GetPlayerAmountLimit();
 
-        // update iter to point first queued socket or end() if queue is empty now
+    if ((pLimit > 0) && (sessions < pLimit) && (!m_QueuedPlayer.empty()))
+    {   
         iter = m_QueuedPlayer.begin();
-        position = 1;
+        for (; iter != m_QueuedPlayer.end(); ++iter)
+        {
+            WorldSession* session = (*iter);
+            uint32 accountTeamId = session->GetAccountTeamId();
+            if (((accountTeamId == TEAM_ALLIANCE) && (GetLoggedInCharsCount(TEAM_ALLIANCE) < (pLimit / 2))) ||
+                ((accountTeamId == TEAM_HORDE) && (GetLoggedInCharsCount(TEAM_HORDE) < (pLimit / 2))) ||
+                ((accountTeamId == TEAM_NEUTRAL)))
+            {
+                session->SetInQueue(false);
+                session->SendAuthWaitQue(0);
+                m_QueuedPlayer.erase(iter);
+                break;
+            }
+        }
     }
 
-    // update position from iter to end()
-    // iter point to first not updated socket, position store new position
-    for (; iter != m_QueuedPlayer.end(); ++iter, ++position)
+    iter = m_QueuedPlayer.begin();
+    position = 1;
+    for (; iter != m_QueuedPlayer.end(); ++iter, position++)
+    {
         (*iter)->SendAuthWaitQue(position);
+    }
     
     return found;
 }
@@ -617,6 +646,18 @@ void World::LoadConfigSettings(bool reload)
     }
     m_configs[CONFIG_ADDON_CHANNEL] = sConfig.GetBoolDefault("AddonChannel", true);
     m_configs[CONFIG_GRID_UNLOAD] = sConfig.GetBoolDefault("GridUnload", true);
+
+    std::string forceLoadGridOnMaps = sConfig.GetStringDefault("LoadAllGridsOnMaps", "");
+    if (!forceLoadGridOnMaps.empty())
+    {
+        m_configForceLoadMapIds = new std::set<uint32>;
+        unsigned int pos = 0;
+        unsigned int id;
+        VMAP::VMapFactory::chompAndTrim(forceLoadGridOnMaps);
+        while (VMAP::VMapFactory::getNextId(forceLoadGridOnMaps, pos, id))
+            m_configForceLoadMapIds->insert(id);
+    }
+
     m_configs[CONFIG_INTERVAL_SAVE] = sConfig.GetIntDefault("PlayerSaveInterval", 900000);
     m_configs[CONFIG_INTERVAL_DISCONNECT_TOLERANCE] = sConfig.GetIntDefault("DisconnectToleranceInterval", 0);
 
@@ -764,6 +805,8 @@ void World::LoadConfigSettings(bool reload)
             m_configs[CONFIG_START_PLAYER_MONEY],MAX_MONEY_AMOUNT,MAX_MONEY_AMOUNT);
         m_configs[CONFIG_START_PLAYER_MONEY] = MAX_MONEY_AMOUNT;
     }
+
+    m_configs[CONFIG_MIN_PLAYER_EXPLORE_LEVEL] = sConfig.GetIntDefault("MinPlayerExploreLevel", 1);
 
     m_configs[CONFIG_MAX_HONOR_POINTS] = sConfig.GetIntDefault("MaxHonorPoints", 75000);
     if (m_configs[CONFIG_MAX_HONOR_POINTS] < 0)
@@ -943,6 +986,9 @@ void World::LoadConfigSettings(bool reload)
     m_configs[CONFIG_CHATFLOOD_CHATTYPE] = sConfig.GetIntDefault("ChatFlood.ChatType", 159);
     m_configs[CONFIG_CHATFLOOD_EMOTE_COUNT] = sConfig.GetIntDefault("ChatFlood.EmoteCount", 5);
     m_configs[CONFIG_CHATFLOOD_EMOTE_DELAY] = sConfig.GetIntDefault("ChatFlood.EmoteDelay", 5);
+    m_configs[CONFIG_SPAMREPORT_TICKETS] = sConfig.GetIntDefault("SpamReportTickets", 1);
+    m_configs[CONFIG_SPAMREPORT_TICKET_THRESHOLD_MAIL] = sConfig.GetIntDefault("SpamReportTicketThresholdMail", 3);
+    m_configs[CONFIG_SPAMREPORT_TICKET_THRESHOLD_CHAT] = sConfig.GetIntDefault("SpamReportTicketThresholdChat", 5);
 
     m_configs[CONFIG_EVENT_ANNOUNCE] = sConfig.GetIntDefault("Event.Announce",0);
 
@@ -1136,6 +1182,8 @@ void World::LoadConfigSettings(bool reload)
     m_configs[CONFIG_VMSS_FREEZEDETECTTIME] = sConfig.GetIntDefault("VMSS.MapFreezeDetectTime", 1000);
 
     m_configs[CONFIG_ENABLE_CUSTOM_XP_RATES] = sConfig.GetBoolDefault("EnableCustomXPRates", true);
+    m_configs[CONFIG_GET_CUSTOM_XP_RATE_LEVEL] = sConfig.GetIntDefault("CustomXPRateMaxLevel", 0);
+    rate_values[RATE_CUSTOM_XP_VALUE] = sConfig.GetFloatDefault("CustomXPRateValue", 0);
     m_configs[CONFIG_XP_RATE_MODIFY_ITEM_ENTRY] = sConfig.GetIntDefault("XPRateModifyItem.Entry",0);
     m_configs[CONFIG_XP_RATE_MODIFY_ITEM_PCT] = sConfig.GetIntDefault("XPRateModifyItem.Pct",5);
 
@@ -1149,6 +1197,8 @@ void World::LoadConfigSettings(bool reload)
     m_configs[CONFIG_MIN_GM_COMMAND_LOG_LEVEL] = sConfig.GetIntDefault("GmLogMinLevel", 1);
 
     m_configs[CONFIG_PRIVATE_CHANNEL_LIMIT] = sConfig.GetIntDefault("Channel.PrivateLimitCount", 20);
+
+    m_configs[CONFIG_HEALTH_IN_PERCENTS] = sConfig.GetBoolDefault("HealthInPercents", true);
 
     m_configs[CONFIG_MMAP_ENABLED] = sConfig.GetIntDefault("mmap.enabled", true);
     sLog.outString("WORLD: mmap pathfinding %sabled", getConfig(CONFIG_MMAP_ENABLED) ? "en" : "dis");
@@ -1209,6 +1259,9 @@ void World::SetInitialWorldSettings()
 
     ///- Remove the bones after a restart
     RealmDataDatabase.PExecute("DELETE FROM corpse WHERE corpse_type = '0'");
+
+    ///- Remove all spam reports on startup
+    RealmDataDatabase.PExecute("TRUNCATE TABLE character_reports");
 
     ///- Load the DBC files
     sLog.outString("Initialize data stores...");
@@ -1592,6 +1645,10 @@ void World::SetInitialWorldSettings()
 
     if (getConfig(CONFIG_COREBALANCER_ENABLED))
         _coreBalancer.Initialize();
+
+    sLog.outString("Loading grids for active creatures or transports...");
+    sObjectMgr.LoadActiveEntities(NULL);
+    sLog.outString();
 
     sLog.outString("WORLD: World initialized");
 }
@@ -2964,8 +3021,10 @@ void World::SetPlayerLimit(int32 limit, bool needUpdate)
 
 void World::UpdateMaxSessionCounters()
 {
-    m_maxActiveSessionCount = std::max(m_maxActiveSessionCount,uint32(m_sessions.size()-m_QueuedPlayer.size()));
-    m_maxQueuedSessionCount = std::max(m_maxQueuedSessionCount,uint32(m_QueuedPlayer.size()));
+    m_maxActiveSessionCount = std::max(m_maxActiveSessionCount, uint32(m_sessions.size()-m_QueuedPlayer.size()));
+    m_maxQueuedSessionCount = std::max(m_maxQueuedSessionCount, uint32(m_QueuedPlayer.size()));
+    m_maxAllianceSessionCount = std::max(m_maxAllianceSessionCount, uint32(GetLoggedInCharsCount(TEAM_ALLIANCE)));
+    m_maxHordeSessionCount = std::max(m_maxHordeSessionCount, uint32(GetLoggedInCharsCount(TEAM_HORDE)));
 }
 
 void World::LoadDBVersion()

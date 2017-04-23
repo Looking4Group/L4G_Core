@@ -71,7 +71,8 @@ void InstanceSaveManager::UnbindBeforeDelete()
         save->m_playerList.clear();
 
         for (InstanceSave::GroupListType::iterator itr2 = save->m_groupList.begin(); itr2 != save->m_groupList.end(); ++itr2)
-            (*itr2)->UnbindInstance(save->GetMapId(), save->GetDifficulty(), true);
+            if ((*itr2) != nullptr) // just to prevent crashes on shutdown - we must find why groups can be nulled before calling this function
+                (*itr2)->UnbindInstance(save->GetMapId(), save->GetDifficulty(), true);
 
         save->m_groupList.clear();
         delete save;

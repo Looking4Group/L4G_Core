@@ -151,7 +151,8 @@ enum CreatureFlagsExtra
     CREATURE_FLAG_EXTRA_NO_HEALING_TAKEN        = 0x08000000,       // 134217728
     CREATURE_EXTRA_FLAG_MMAP_FORCE_ENABLE       = 0x10000000,       // 268435456
     CREATURE_EXTRA_FLAG_MMAP_FORCE_DISABLE      = 0x20000000,       // 536870912
-    CREATURE_FLAG_EXTRA_NORMAL_MOVEMENT_IMMUNE  = 0x40000000        // 1073741824 creature ignore SPELL_AURA_USE_NORMAL_MOVEMENT_SPEED
+    CREATURE_FLAG_EXTRA_NORMAL_MOVEMENT_IMMUNE  = 0x40000000,       // 1073741824 creature ignore SPELL_AURA_USE_NORMAL_MOVEMENT_SPEED
+    CREATURE_FLAG_EXTRA_ACTIVE          	= 0x80000000        // 23622320128 creature is active object. Grid of this creature will be loaded and creature set as active
 };
 
 // GCC have alternative #pragma pack(N) syntax and old gcc version not support pack(push,N), also any gcc version not support it at some platform

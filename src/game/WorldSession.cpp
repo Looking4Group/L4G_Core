@@ -159,6 +159,43 @@ char const* WorldSession::GetPlayerName() const
     return GetPlayer() ? GetPlayer()->GetName() : "<none>";
 }
 
+uint32 WorldSession::GetAccountTeamId()
+{
+    if (!m_accountTeamId)
+    {
+        QueryResultAutoPtr resultRace = RealmDataDatabase.PQuery("SELECT race FROM characters WHERE account ='%u' LIMIT 1", GetAccountId());
+        if (!resultRace)
+        {
+            m_accountTeamId = TEAM_NEUTRAL;
+        }
+        else
+        {
+            Field *fields = resultRace->Fetch();
+        
+            switch (fields[0].GetUInt8())
+            {
+                case RACE_HUMAN:
+                case RACE_DWARF:
+                case RACE_NIGHTELF:
+                case RACE_GNOME:
+                case RACE_DRAENEI:
+                    m_accountTeamId = TEAM_ALLIANCE;
+                    break;
+                case RACE_ORC:
+                case RACE_UNDEAD_PLAYER:
+                case RACE_TAUREN:
+                case RACE_TROLL:
+                case RACE_BLOODELF:
+                    m_accountTeamId = TEAM_HORDE;
+                    break;
+                default:
+                    m_accountTeamId = TEAM_NEUTRAL;
+            }
+        }
+    }
+    return m_accountTeamId;
+}
+
 void WorldSession::SaveOpcodesDisableFlags()
 {
     static SqlStatementID saveOpcodesDisabled;
@@ -479,7 +516,7 @@ void WorldSession::LogoutPlayer(bool Save)
         return;
 
     // finish pending transfers before starting the logout
-    while (_player && _player->IsBeingTeleported())
+    while (_player && _player->IsBeingTeleportedFar())
         HandleMoveWorldportAckOpcode();
 
     m_playerLogout = true;

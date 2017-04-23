@@ -377,8 +377,10 @@ struct boss_leotheras_the_blindAI : public ScriptedAI
             DoScriptText(RAND(SAY_NIGHTELF_SLAY1, SAY_NIGHTELF_SLAY2, SAY_NIGHTELF_SLAY3), m_creature);
     }
 
-    void JustDied(Unit *victim)
+    void JustDied(Unit *killer)
     {
+        ServerFirst(killer);
+
         DoScriptText(SAY_DEATH, m_creature);
 
         //despawn copy

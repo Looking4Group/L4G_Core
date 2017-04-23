@@ -24,19 +24,22 @@ EndScriptData */
 #include "precompiled.h"
 #include "def_karazhan.h"
 
-#define SAY_AGGRO               -1532018
-#define SAY_SLAY1               -1532019
-#define SAY_SLAY2               -1532020
-#define SAY_SLAY3               -1532021
-#define SAY_REPENTANCE1         -1532022
-#define SAY_REPENTANCE2         -1532023
-#define SAY_DEATH               -1532024
+enum Maiden
+{
+    SAY_AGGRO           = -1532018,
+    SAY_SLAY1           = -1532019,
+    SAY_SLAY2           = -1532020,
+    SAY_SLAY3           = -1532021,
+    SAY_REPENTANCE1     = -1532022,
+    SAY_REPENTANCE2     = -1532023,
+    SAY_DEATH           = -1532024,
 
-#define SPELL_REPENTANCE        29511
-#define SPELL_HOLYFIRE          29522
-#define SPELL_HOLYWRATH         32445
-#define SPELL_HOLYGROUND        29512
-#define SPELL_BERSERK           26662
+    SPELL_REPENTANCE    = 29511,
+    SPELL_HOLYFIRE      = 29522,
+    SPELL_HOLYWRATH     = 32445,
+    SPELL_HOLYGROUND    = 29512,
+    SPELL_BERSERK       = 26662
+};
 
 struct boss_maiden_of_virtueAI : public ScriptedAI
 {
@@ -62,7 +65,7 @@ struct boss_maiden_of_virtueAI : public ScriptedAI
     void Reset()
     {
         Repentance_Timer    = urand(30000, 40000);
-        Holyfire_Timer      = urand(8000, 25000);
+        Holyfire_Timer      = urand(8000, 20000);
         Holywrath_Timer     = urand(20000, 25000);
         Holyground_Timer    = 3000;
         Enrage_Timer        = 600000;
@@ -147,7 +150,7 @@ struct boss_maiden_of_virtueAI : public ScriptedAI
             if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0,GetSpellMaxRange(SPELL_HOLYFIRE), true))
                 DoCast(target,SPELL_HOLYFIRE);
 
-                Holyfire_Timer = urand(8000, 25000); //Anywhere from 8 to 25 seconds, good luck having several of those in a row!
+                Holyfire_Timer = urand(8000, 20000); //Anywhere from 8 to 20, good luck having several of those in a row! 
         }
         else
             Holyfire_Timer -= diff;

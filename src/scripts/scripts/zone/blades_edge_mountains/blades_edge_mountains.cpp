@@ -17,7 +17,7 @@
 /* ScriptData
 SDName: Blades_Edge_Mountains
 SD%Complete: 98
-SDComment: Quest support: 10503, 10504, 10556, 10609, 10682, 10980, 10518, 10859, 10674, 11058 ,11080, 11059, 10675, 10867, 10557, 10710, 10711, 10712, 10821, 10911, 10723, 10802, 11000, 11026, 11051. Assault on Bash'ir Landing!. Ogri'la->Skettis Flight. (npc_daranelle needs bit more work before consider complete)
+SDComment: Quest support: 10503, 10504, 10556, 10609, 10682, 10980, 10518, 10859, 10674, 11058 ,11080, 11059, 10675, 10867, 10557, 10710, 10711, 10712, 10821, 10911, 10723, 10802, 11000, 11026, 11051, 10506. Assault on Bash'ir Landing!. Ogri'la->Skettis Flight. (npc_daranelle needs bit more work before consider complete)
 SDCategory: Blade's Edge Mountains
 EndScriptData */
 
@@ -50,6 +50,7 @@ npc_soulgrinder
 npc_bashir_landing
 npc_banishing_crystal
 mob_phase_wyrm
+npc_bloodmaul_dire_wolf
 EndContentData */
 
 #include "precompiled.h"
@@ -1990,11 +1991,11 @@ struct npc_cannon_targetAI : public ScriptedAI
             {
                 if (Player* player = me->GetPlayer(PlayerGUID))
                 {
-                    if (Creature* bunny = GetClosestCreatureWithEntry(me, NPC_SOUTH_GATE, 20.0f))
+                    if (Creature* bunny = GetClosestCreatureWithEntry(me, NPC_SOUTH_GATE, 200.0f))
                         player->KilledMonster(CREDIT_SOUTH, me->GetGUID());
                     else
                     {   
-                        if (Creature* bunny = GetClosestCreatureWithEntry(me, NPC_NORTH_GATE, 50.0f))
+                        if (Creature* bunny = GetClosestCreatureWithEntry(me, NPC_NORTH_GATE, 200.0f))
                             player->KilledMonster(CREDIT_NORTH, me->GetGUID());
                     }
                 }
@@ -2815,6 +2816,88 @@ CreatureAI* GetAI_mob_phase_wyrm(Creature *_Creature)
 }
 
 /*######
+## npc_bloodmaul_dire_wolf
+######*/
+
+enum
+{
+    SPELL_REND = 13443,
+    SPELL_RINAS_DIMINUTION_POWDER = 36310,
+
+    NPC_DIRE_WOLF_TRIGGER = 21176,
+
+    QUEST_A_DIRE_SITUATION = 10506,
+
+    FACTION_FRIENDLY = 35,
+};
+
+struct npc_bloodmaul_dire_wolfAI : public ScriptedAI
+{
+    npc_bloodmaul_dire_wolfAI(Creature* pCreature) : ScriptedAI(pCreature) { }
+
+    bool m_bSpellHit;
+    uint32 m_uiUnfriendlyTimer; // Timer before resetting after quest item being used
+    uint32 m_uiRendTimer;
+
+    void Reset()
+    {
+        m_bSpellHit = false;
+        m_creature->RestoreFaction();
+
+        m_uiUnfriendlyTimer = 0;
+        m_uiRendTimer = urand(3000, 6000);
+    }
+
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    {
+        if (!pCaster)
+            return;
+
+        if (pCaster->GetTypeId() == TYPEID_PLAYER && pSpell->Id == SPELL_RINAS_DIMINUTION_POWDER && !m_bSpellHit)
+        {
+            m_bSpellHit = true;
+            
+            if (pCaster->ToPlayer()->GetQuestStatus(QUEST_A_DIRE_SITUATION) == QUEST_STATUS_INCOMPLETE)
+                pCaster->ToPlayer()->KilledMonster(NPC_DIRE_WOLF_TRIGGER, m_creature->GetGUID());
+
+            m_creature->setFaction(FACTION_FRIENDLY);
+            m_creature->CombatStop();
+            m_uiUnfriendlyTimer = 60000;
+        }
+    }
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        // Reset npc on timer
+        if (m_uiUnfriendlyTimer)
+        {
+            if (m_uiUnfriendlyTimer <= uiDiff)
+                EnterEvadeMode();
+            else
+                m_uiUnfriendlyTimer -= uiDiff;
+        }
+
+        if (!UpdateVictim())
+            return;
+
+        if (m_uiRendTimer < uiDiff)
+        {
+            DoCastVictim(SPELL_REND);
+            m_uiRendTimer = urand(8000, 13000);
+        }
+        else
+            m_uiRendTimer -= uiDiff;
+
+        DoMeleeAttackIfReady();
+    }
+};
+
+CreatureAI* GetAI_npc_bloodmaul_dire_wolf(Creature* pCreature)
+{
+    return new npc_bloodmaul_dire_wolfAI(pCreature);
+}
+
+/*######
 ## AddSC
 ######*/
 
@@ -2968,5 +3051,10 @@ void AddSC_blades_edge_mountains()
     newscript = new Script;
     newscript->Name = "mob_phase_wyrm";
     newscript->GetAI = &GetAI_mob_phase_wyrm;
+    newscript->RegisterSelf();
+
+    newscript = new Script;
+    newscript->Name = "npc_bloodmaul_dire_wolf";
+    newscript->GetAI = &GetAI_npc_bloodmaul_dire_wolf;
     newscript->RegisterSelf();
 }

@@ -67,11 +67,11 @@ enum AccountFlags
     ACC_SPECIAL_LOG         = 0x0001,   // all incoming/outgoing trade/mails/auctions etc. are logged to file
     ACC_WHISPER_LOG         = 0x0002,   // all incoming and outgoing whispers are logged o file
     ACC_DISABLED_GANN       = 0x0004,   // account flagged with this won't display messages related to guild announces system
-    ACC_BLIZZLIKE_RATES     = 0x0008,   // enables fully blizzlike rates for account. ex: XP, QXP etc
+    ACC_DEFAULT_RATES       = 0x0008,   // enables default rates for account. ex: XP, QXP etc
     ACC_HIDE_BONES          = 0x0010,   // client won't show bones created from corpses
     ACC_DISABLED_BGANN      = 0x0020,   // BG start announce will be disabled for this account
     ACC_DISABLED_BROADCAST  = 0x0040,   // Broadcast accounces will be disabled for this account
-    ACC_CUSTOM_XP_RATE_3    = 0x0080    // enables 3x blizzlike rates for account. ex: XP, QXP etc
+    ACC_CUSTOM_XP_RATE_1    = 0x0080    // enables 1x blizzlike rates for account. ex: XP, QXP etc
 };
 
 enum PartyOperation
@@ -184,6 +184,7 @@ class LOOKING4GROUP_IMPORT_EXPORT WorldSession
         uint32 GetAccountId() const { return _accountId; }
         Player* GetPlayer() const { return _player; }
         char const* GetPlayerName() const;
+        uint32 GetAccountTeamId();
         void SetSecurity(uint64 permissions) { m_permissions = permissions; }
         std::string const& GetRemoteAddress() { return m_Address; }
         void SetPlayer(Player *plr) { _player = plr; }
@@ -322,7 +323,7 @@ class LOOKING4GROUP_IMPORT_EXPORT WorldSession
         uint32 getDialogStatus(Player *pPlayer, Object* questgiver, uint32 defstatus);
 
     public:                                                 // opcodes handlers
-
+        
         void Handle_NULL(WorldPacket& recvPacket);          // not used
         void Handle_EarlyProccess(WorldPacket& recvPacket);// just mark packets processed in WorldSocket::OnRead
         void Handle_ServerSide(WorldPacket& recvPacket);    // sever side only, can't be accepted from client
@@ -764,6 +765,8 @@ class LOOKING4GROUP_IMPORT_EXPORT WorldSession
         uint64 m_permissions;
         uint32 _accountId;
         uint8 m_expansion;
+
+        uint32 m_accountTeamId;
 
         // Warden
         WardenBase * m_Warden;
