@@ -62,8 +62,7 @@ int ACRequest::call()
 
     if (DetectSpeedHack(pPlayer))
     {
-        if (!pPlayer->HasUnitMovementFlag(MOVEFLAG_FALLING | MOVEFLAG_FALLINGFAR | MOVEFLAG_SPLINE_ELEVATION | MOVEFLAG_SAFE_FALL | MOVEFLAG_SPLINE_ENABLED | MOVEFLAG_ONTRANSPORT | SPLINEFLAG_FLYINGING) 
-            && pPlayer->isAlive())
+        if (!pPlayer->HasUnitMovementFlag(MOVEFLAG_FALLING | MOVEFLAG_FALLINGFAR | MOVEFLAG_SPLINE_ELEVATION | MOVEFLAG_SAFE_FALL | MOVEFLAG_SPLINE_ENABLED | MOVEFLAG_ONTRANSPORT | SPLINEFLAG_FLYINGING))
         {
             sWorld.SendGMText(LANG_ANTICHEAT, pPlayer->GetName(), pPlayer->GetName());
             sLog.outLog(LOG_CHEAT, "Player %s (GUID: %u / ACCOUNT_ID: %u) possible Speed Hack.", 
@@ -138,9 +137,12 @@ bool ACRequest::DetectWaterWalkHack(Player *pPlayer)
 
 bool ACRequest::DetectSpeedHack(Player *pPlayer)
 {
+    if (!pPlayer->isAlive())
+        return false;
+
     uint8 moveType = 0;
     if (pPlayer->HasUnitMovementFlag(MOVEFLAG_SWIMMING))
-        moveType = MOVE_SWIM;
+        return false;
     else if (pPlayer->IsFlying())
         moveType = MOVE_FLIGHT;
     else if (pPlayer->HasUnitMovementFlag(MOVEFLAG_WALK_MODE))
@@ -169,7 +171,7 @@ bool ACRequest::DetectSpeedHack(Player *pPlayer)
     uint32 clientSpeedRate = exact2dDist * 1000 / timeDiff;
 
     // did the 1.1 factor to accept a margin of tolerance
-    if ((clientSpeedRate >(speedRate * 1.1)) && latency < 1000)
+    if ((clientSpeedRate >(speedRate * 1.1)) && latency < 500)
         return true;
 
     pPlayer->m_AC_timer = IN_MILISECONDS;
