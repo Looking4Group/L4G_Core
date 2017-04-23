@@ -1362,3 +1362,6 @@ INSERT INTO `creature_loot_template` VALUES (17257, 29434, 0, 0, 3, 3, 0, 0, 0);
 
 INSERT INTO `creature_loot_template` VALUES (25315, 29434, 100, 0, 3, 3, 0, 0, 0); -- Kil'jaeden <The Deceiver>
 
+DELETE FROM `game_event_creature` WHERE `guid` IN (725,724,726,727);
+INSERT INTO `game_event_creature` VALUES (725, 1),(724, 1),(726, 1),(727, 1);
+
