@@ -1368,3 +1368,8 @@ INSERT INTO `game_event_creature` VALUES (725, 1),(724, 1),(726, 1),(727, 1);
 DELETE FROM `creature_ai_scripts` WHERE `id` = 1648805;
 INSERT INTO `creature_ai_scripts` VALUES ('1648805','16488','3','0','100','3','5','0','2000','2000','42','0','1','0','0','0','0','0','0','0','0','0','Arcane Anomaly - Remove Invincible at 5% Mana'); -- sometimes doesnt work if only executed once
 
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 10928;
+INSERT INTO `creature_ai_scripts` VALUES
+(1092801, 10928, 0, 0, 100, 1, 2000, 4000, 4000, 7000, 11, 32202, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Succubus Minion - Cast Lash of Pain'),
+(1092802, 10928, 7, 0, 100, 6, 0, 0, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Succubus Minion - Despawn on Evade');
+
