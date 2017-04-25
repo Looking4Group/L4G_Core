@@ -805,6 +805,8 @@ bool SpellMgr::IsPositiveEffect(uint32 spellId, uint32 effIndex)
                         case 38638:                         // Nether Exhaustion (green)
                         case 38639:                         // Nether Exhaustion (blue)
                             return false;
+                        case 37408:                         //  Oscillation Field
+                            return true;
                         default:
                             break;
                     }
@@ -3944,6 +3946,9 @@ void SpellMgr::LoadSpellCustomAttr()
             case 7355: // Unstuck (.start) changed duration to 30sec and usable while moving/falling
                 spellInfo->AuraInterruptFlags = AURA_INTERRUPT_FLAG_DAMAGE | AURA_INTERRUPT_FLAG_CC | AURA_INTERRUPT_FLAG_HITBYSPELL;
                 spellInfo->CastingTimeIndex = 9;
+                break;
+            case 37408: // Oscillation Field
+                spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_STACK_FOR_DIFF_CASTERS;
                 break;
             case 34444: // Khadgar's Servant, increase despawn time
                 spellInfo->DurationIndex = 30; // 1800000ms

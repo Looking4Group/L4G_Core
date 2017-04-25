@@ -17,7 +17,7 @@
 /* ScriptData
 SDName: Blades_Edge_Mountains
 SD%Complete: 98
-SDComment: Quest support: 10503, 10504, 10556, 10609, 10682, 10980, 10518, 10859, 10674, 11058 ,11080, 11059, 10675, 10867, 10557, 10710, 10711, 10712, 10821, 10911, 10723, 10802, 11000, 11026, 11051, 10506. Assault on Bash'ir Landing!. Ogri'la->Skettis Flight. (npc_daranelle needs bit more work before consider complete)
+SDComment: Quest support: 10503, 10504, 10556, 10594, 10609, 10682, 10980, 10518, 10859, 10674, 11058 ,11080, 11059, 10675, 10867, 10557, 10710, 10711, 10712, 10821, 10911, 10723, 10802, 11000, 11026, 11051, 10506. Assault on Bash'ir Landing!. Ogri'la->Skettis Flight. (npc_daranelle needs bit more work before consider complete)
 SDCategory: Blade's Edge Mountains
 EndScriptData */
 
@@ -2897,6 +2897,71 @@ CreatureAI* GetAI_npc_bloodmaul_dire_wolf(Creature* pCreature)
     return new npc_bloodmaul_dire_wolfAI(pCreature);
 }
 
+
+/*######
+## npc_oscillating_frequency_scanner_master_bunny used for quest 10594 "Gauging the Resonant Frequency"
+######*/
+
+enum ScannerMasterBunny
+{
+    NPC_OSCILLATING_FREQUENCY_SCANNER_TOP_BUNNY = 21759,
+    GO_OSCILLATING_FREQUENCY_SCANNER            = 184926,
+    SPELL_OSCILLATION_FIELD                     = 37408,
+    QUEST_GAUGING_THE_RESONANT_FREQUENCY        = 10594
+};
+
+struct npc_oscillating_frequency_scanner_master_bunnyAI : public ScriptedAI
+{
+    npc_oscillating_frequency_scanner_master_bunnyAI(Creature* creature) : ScriptedAI(creature)
+    {
+        timer = 500;
+    }
+
+    void Reset()
+    {
+        if (GetClosestCreatureWithEntry(me, NPC_OSCILLATING_FREQUENCY_SCANNER_TOP_BUNNY, 25.0f))
+            me->ForcedDespawn();
+        else
+        {
+            // Spell 37392 does not exist in dbc, manually spawning
+            me->SummonCreature(NPC_OSCILLATING_FREQUENCY_SCANNER_TOP_BUNNY, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ() + 0.5f, me->GetOrientation(), TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 210000);
+            me->SummonGameObject(GO_OSCILLATING_FREQUENCY_SCANNER, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetOrientation(), 0, 0, 0, 0, 210);
+            me->ForcedDespawn(210000);
+        }
+
+        timer = 500;
+    }
+
+    void IsSummonedBy(Unit* summoner)
+    {
+        if (summoner->isType(TYPEMASK_PLAYER))
+            playerGuid = summoner->GetGUID();
+    }
+
+    void UpdateAI(uint32 diff)
+    {
+        if (timer <= diff)
+        {
+            if (Player* player = ObjectAccessor::GetPlayer(playerGuid))
+                me->CastSpell(player, SPELL_OSCILLATION_FIELD, false);
+
+            timer = 3000;
+        }
+        else
+            timer -= diff;
+    }
+
+    private:
+        ObjectGuid playerGuid;
+        uint32 timer;
+};
+
+CreatureAI* GetAI_npc_oscillating_frequency_scanner_master_bunny(Creature* creature)
+{
+    return new npc_oscillating_frequency_scanner_master_bunnyAI(creature);
+}
+
+
 /*######
 ## AddSC
 ######*/
@@ -3056,5 +3121,10 @@ void AddSC_blades_edge_mountains()
     newscript = new Script;
     newscript->Name = "npc_bloodmaul_dire_wolf";
     newscript->GetAI = &GetAI_npc_bloodmaul_dire_wolf;
+    newscript->RegisterSelf();
+
+    newscript = new Script;
+    newscript->Name = "npc_oscillating_frequency_scanner_master_bunny";
+    newscript->GetAI = &GetAI_npc_oscillating_frequency_scanner_master_bunny;
     newscript->RegisterSelf();
 }
