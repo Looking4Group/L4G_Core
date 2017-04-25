@@ -1376,3 +1376,5 @@ INSERT INTO `creature_ai_scripts` VALUES
 -- Dr. Boom
 UPDATE `creature` SET `spawntimesecs`= 300 WHERE `guid` = 124580; -- 1800
 
+UPDATE `npc_vendor` SET `incrtime` = 10800 WHERE `item` = 22907; -- 43200
+
