@@ -1431,3 +1431,9 @@ INSERT INTO `creature_ai_scripts` VALUES
 (2179602,21796,0,0,100,1,2500,7500,14000,18000,11,13321,1,0,0,0,0,0,0,0,0,0,'Wyrm from Beyond - Casts Mana Burn'),
 (2179603,21796,0,0,100,1,5000,6000,12000,13000,11,36574,0,0,0,0,0,0,0,0,0,0,'Wyrm from Beyond - Casts Phase Slip');
 
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 5459;
+INSERT INTO `creature_ai_scripts` VALUES 
+('545901','5459','4','0','100','0','0','0','0','0','11','8876','0','0','0','0','0','0','0','0','0','0','Centipaar Tunneler - Cast Thrash on Aggro'),
+('545902','5459','9','0','100','1','0','5','18000','25000','11','6016','1','0','0','0','0','0','0','0','0','0','Centipaar Tunneler - Cast Pierce Armor'),
+(545903, 5459, 1, 0, 100, 1, 1200000, 1800000, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Centipaar Tunneler - Despawn OOC');
+
