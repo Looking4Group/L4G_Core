@@ -1378,3 +1378,5 @@ UPDATE `creature` SET `spawntimesecs`= 300 WHERE `guid` = 124580; -- 1800
 
 UPDATE `npc_vendor` SET `incrtime` = 10800 WHERE `item` = 22907; -- 43200
 
+DELETE FROM `creature_ai_scripts` WHERE `id` = 1884802;
+
