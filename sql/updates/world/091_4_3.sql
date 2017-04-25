@@ -1373,3 +1373,6 @@ INSERT INTO `creature_ai_scripts` VALUES
 (1092801, 10928, 0, 0, 100, 1, 2000, 4000, 4000, 7000, 11, 32202, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Succubus Minion - Cast Lash of Pain'),
 (1092802, 10928, 7, 0, 100, 6, 0, 0, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Succubus Minion - Despawn on Evade');
 
+-- Dr. Boom
+UPDATE `creature` SET `spawntimesecs`= 300 WHERE `guid` = 124580; -- 1800
+
