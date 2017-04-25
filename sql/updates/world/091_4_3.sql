@@ -1380,3 +1380,24 @@ UPDATE `npc_vendor` SET `incrtime` = 10800 WHERE `item` = 22907; -- 43200
 
 DELETE FROM `creature_ai_scripts` WHERE `id` = 1884802;
 
+-- Add creature script
+UPDATE creature_template SET ScriptName = 'npc_oscillating_frequency_scanner_master_bunny' WHERE entry=21760;
+-- Update triggers
+UPDATE `creature_template` SET `flags_extra`=`flags_extra`|128 WHERE `entry` IN (21759,21760);
+
+-- Add spell script
+DELETE FROM `scripted_spell_id` WHERE `id`=37408;
+INSERT INTO `scripted_spell_id` (`id`,`ScriptName`) VALUES
+(37408, 'spell_oscillating_field');
+
+-- Oscillating Frequency Scanner Top Bunny (Caster) AI
+SET @ENTRY := 21759;
+UPDATE `creature_template` SET `AIName`='EventAI' WHERE `entry`=@ENTRY;
+DELETE FROM `creature_ai_scripts` WHERE `entryorguid`=@ENTRY;
+INSERT INTO `creature_ai_scripts` (`id`, `entryOrGUID`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
+(@ENTRY*10+1,@ENTRY,'1','0','100','1','1000','1000','0','0','11','37418','0','1','0','0','0','0','0','0','0','0','Oscillating Frequency Scanner Top Bunny (Caster) - On Spawn - Cast Top Bunny Beam Test Visual');
+
+DELETE FROM `spell_script_target` WHERE `Entry`=37697;
+INSERT INTO `spell_script_target` (`Entry`, `type`, `targetEntry`) VALUES
+(37697, 1, 21759);
+
