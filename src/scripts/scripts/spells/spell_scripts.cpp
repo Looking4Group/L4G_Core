@@ -206,6 +206,33 @@ bool spell_bear_capture_trap(Unit *caster, Unit* pUnit, Item* pItem, GameObject*
     return false;
 }
 
+enum ScannerMasterBunny
+{
+    SPELL_OSCILLATION_FIELD                     = 37408,
+    QUEST_GAUGING_THE_RESONANT_FREQUENCY        = 10594
+};
+
+bool spell_oscillating_field(Unit *caster, Unit* pUnit, Item* pItem, GameObject* pGameObject, SpellEntry const *pSpell, uint32 effectIndex)
+{
+    if (pUnit->GetTypeId() != TYPEID_PLAYER)
+        return true;
+
+    if (Player* player = pUnit->ToPlayer())
+    {
+        SpellEntry const *spellInfo = sSpellStore.LookupEntry(SPELL_OSCILLATION_FIELD);
+        if (spellInfo)
+        {
+            Aura *Aur = CreateAura(spellInfo, 0, NULL, caster);
+            player->AddAura(Aur);
+        }
+
+        if (player->GetAuras().count(std::make_pair(SPELL_OSCILLATION_FIELD,0)) == 5 && player->GetQuestStatus(QUEST_GAUGING_THE_RESONANT_FREQUENCY) == QUEST_STATUS_INCOMPLETE)
+            player->CompleteQuest(QUEST_GAUGING_THE_RESONANT_FREQUENCY);
+        return false;
+    }
+    return false;
+}
+
 void AddSC_spell_scripts()
 {
     Script *newscript;
@@ -243,5 +270,10 @@ void AddSC_spell_scripts()
     newscript = new Script;
     newscript->Name = "spell_bear_capture_trap";
     newscript->pSpellHandleEffect = &spell_bear_capture_trap;
+    newscript->RegisterSelf();
+
+    newscript = new Script;
+    newscript->Name = "spell_oscillating_field";
+    newscript->pSpellHandleEffect = &spell_oscillating_field;
     newscript->RegisterSelf();
 }
