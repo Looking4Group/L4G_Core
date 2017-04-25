@@ -1366,5 +1366,5 @@ DELETE FROM `game_event_creature` WHERE `guid` IN (725,724,726,727);
 INSERT INTO `game_event_creature` VALUES (725, 1),(724, 1),(726, 1),(727, 1);
 
 DELETE FROM `creature_ai_scripts` WHERE `id` = 1648805;
-INSERT INTO `creature_ai_scripts` VALUES ('1648805','16488','3','0','100','3','5','1','2000','2000','42','0','1','0','0','0','0','0','0','0','0','0','Arcane Anomaly - Remove Invincible at 5% Mana'); -- sometimes doesnt work if only executed once
+INSERT INTO `creature_ai_scripts` VALUES ('1648805','16488','3','0','100','3','5','0','2000','2000','42','0','1','0','0','0','0','0','0','0','0','0','Arcane Anomaly - Remove Invincible at 5% Mana'); -- sometimes doesnt work if only executed once
 
