@@ -2484,7 +2484,7 @@ BanReturn World::BanAccount(BanMode mode, std::string nameIPOrMail, std::string 
         uint32 account = fieldsAccount[0].GetUInt32();
         uint32 permissions = PERM_PLAYER;
 
-        QueryResultAutoPtr resultAccPerm = AccountsDatabase.PQuery("SELECT permission_mask FROM account_permissions WHERE account_id = '%u' AND realm_id = '%u')", account, realmID);
+        QueryResultAutoPtr resultAccPerm = AccountsDatabase.PQuery("SELECT permission_mask FROM account_permissions WHERE account_id = '%u' AND realm_id = '%u'", account, realmID);
         if (resultAccPerm)
         {
             Field* fieldsAccId = resultAccPerm->Fetch();

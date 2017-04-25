@@ -921,12 +921,10 @@ std::string Object::GetUInt32ValuesString() const
 
 WorldObject::WorldObject()
     : m_mapId(0), m_InstanceId(0),
-    m_positionX(0.0f), m_positionY(0.0f), m_positionZ(0.0f), m_orientation(0.0f),
-    mSemaphoreTeleport(false)
+    m_positionX(0.0f), m_positionY(0.0f), m_positionZ(0.0f), m_orientation(0.0f)
     , m_map(NULL), m_zoneScript(NULL)
     , m_activeBy(0), IsTempWorldObject(false)
 {
-    mSemaphoreTeleport  = false;
 }
 
 void WorldObject::SetWorldObject(bool on)

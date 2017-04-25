@@ -1936,6 +1936,9 @@ bool SpellMgr::IsSpecialStackCase(SpellEntry const *spellInfo_1, SpellEntry cons
     uint32 spellId_1 = spellInfo_1->Id;
     uint32 spellId_2 = spellInfo_2->Id;
 
+    if ((spellId_1 == spellId_2) && (spellInfo_1->AttributesEx3 & SPELL_ATTR_EX3_STACK_FOR_DIFF_CASTERS))
+        return !sameCaster;
+
     // judgement of light stacks with judgement of wisdom
     if (spellInfo_1->SpellFamilyName == SPELLFAMILY_PALADIN && spellInfo_1->SpellFamilyFlags & 0x80000 && spellInfo_1->SpellIconID == 299 // light
             && spellInfo_2->SpellFamilyName == SPELLFAMILY_PALADIN && spellInfo_2->SpellFamilyFlags & 0x80000 && spellInfo_2->SpellIconID == 206) // wisdom
@@ -3028,9 +3031,8 @@ void SpellMgr::LoadSpellCustomAttr()
             case 40471:
             // Enduring Judgement - T6 proc
             case 40472:
-            // Judgement of Blood
+            // Seal of Blood
             case 32221:
-            case 32220:
             // Flame Cap, Fiery Blaze
             case 28715:
             case 6297:
@@ -3052,6 +3054,11 @@ void SpellMgr::LoadSpellCustomAttr()
             // Arcane Torrent
             case 28733:
                 spellInfo->AttributesCu |= SPELL_ATTR_CU_NO_SPELL_DMG_COEFF;
+                break;
+            // Judgement of Blood
+            case 32220:
+                spellInfo->AttributesCu |= SPELL_ATTR_CU_NO_SPELL_DMG_COEFF;
+                spellInfo->AttributesCu |= SPELL_ATTR_CU_FAKE_DELAY; // add const fake delay
                 break;
             // Mana Tap
             case 28734:
@@ -3135,6 +3142,16 @@ void SpellMgr::LoadSpellCustomAttr()
             case 1543:                      // Flare no longer produces combat
                 spellInfo->speed = 0;
                 spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_NO_INITIAL_AGGRO;
+                break;
+            /* PALADIN CUSTOM ATTRIBUTES */
+            case 31893:                     // Seal of Blood Proc
+            case 20066:                     // Repentance
+            case 20424:                     // Seal of Command Proc Attack
+            case 853:                       // Hammer of Justice (Rank 1)
+            case 5588:                      // Hammer of Justice (Rank 2)
+            case 5589:                      // Hammer of Justice (Rank 3)
+            case 10308:                     // Hammer of Justice (Rank 4)    
+                spellInfo->AttributesCu |= SPELL_ATTR_CU_FAKE_DELAY; // add const fake delay
                 break;
             // Spells that should not put you in combat credits by robinsch
             case 33619: // Reflective Shield
@@ -3932,6 +3949,12 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 37408: // Oscillation Field
                 spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_STACK_FOR_DIFF_CASTERS;
+                break;
+            case 34444: // Khadgar's Servant, increase despawn time
+                spellInfo->DurationIndex = 30; // 1800000ms
+                break;
+            case 42463: //Seal of Vengeance additional fullstack DMG
+                spellInfo->EffectBasePoints[0] = 20;
                 break;
             default:
                 break;

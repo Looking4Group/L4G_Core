@@ -914,6 +914,9 @@ void Spell::DoAllEffectOnTarget(TargetInfo *target)
     if (!unit)
         return;
 
+    if (!IS_UNIT_GUID(unit->GetGUID()))
+        return;
+
     // Get original caster (if exist) and calculate damage/healing from him data
     Unit *caster = m_originalCasterGUID ? m_originalCaster : m_caster;
 
@@ -1100,7 +1103,7 @@ void Spell::DoAllEffectOnTarget(TargetInfo *target)
     if (!m_caster->IsFriendlyTo(unit) && !SpellMgr::IsPositiveSpell(GetSpellInfo()->Id))
     {
         if(m_caster->GetTypeId() != TYPEID_PLAYER || !((Player const*)m_caster)->isGameMaster())
-            m_caster->CombatStart(unit, !(GetSpellInfo()->AttributesEx3 & SPELL_ATTR_EX3_NO_INITIAL_AGGRO));
+            m_caster->CombatStart(unit, !((GetSpellInfo()->AttributesEx3 & SPELL_ATTR_EX3_NO_INITIAL_AGGRO) || (GetSpellInfo()->AttributesEx & SPELL_ATTR_EX_NO_THREAT)));
 
         if (GetSpellInfo()->AttributesCu & SPELL_ATTR_CU_AURA_CC)
         {
@@ -1766,11 +1769,14 @@ void Spell::SetTargetMap(uint32 i, uint32 cur)
                     pushType = PUSH_CHAIN;
                     break;
                 case TARGET_UNIT_TARGET_ALLY:
+                    AddUnitTarget(target, i);
+                    break;
                 case TARGET_UNIT_TARGET_RAID:
                 case TARGET_UNIT_TARGET_ANY: // SelectMagnetTarget()?
                 case TARGET_UNIT_TARGET_PARTY:
                 case TARGET_UNIT_MINIPET:
-                    AddUnitTarget(target, i);
+                    if (IsValidSingleTargetSpell(target))
+                        AddUnitTarget(target, i);
                     break;
                 case TARGET_UNIT_PARTY_TARGET:
                 case TARGET_UNIT_CLASS_TARGET:

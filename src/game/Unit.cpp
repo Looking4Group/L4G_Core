@@ -6226,29 +6226,20 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, Aura* triggeredByAu
                     if (procFlag & PROC_FLAG_SUCCESSFUL_MELEE_SPELL_HIT)
                         return false;
 
-                    // On target with 5 stacks of Holy Vengeance direct damage is done
-                    Aura* sealAura = NULL;
-                    Unit::AuraList const& auras = pVictim->GetAurasByType(SPELL_AURA_PERIODIC_DAMAGE);
-                    for (Unit::AuraList::const_iterator itr = auras.begin(); itr != auras.end(); ++itr)
+                    // Since Patch 2.2.0 Seal of Vengeance does additional damage against fully stacked targets
+                    // Add 5-stack effect from Holy Vengeance
+                    uint32 stacks = 0;
+                    AuraList const& auras = target->GetAurasByType(SPELL_AURA_PERIODIC_DAMAGE);
+                    for (AuraList::const_iterator itr = auras.begin(); itr != auras.end(); ++itr)
                     {
-                        if ((*itr)->GetId() == 31803 && (*itr)->GetCasterGUID() == GetGUID())
+                        if (((*itr)->GetId() == 31803) && (*itr)->GetCasterGUID() == GetGUID())
                         {
-                            if ((*itr)->GetStackAmount() >= 5)
-                                sealAura = *itr;
-
+                            stacks = (*itr)->GetStackAmount();
                             break;
                         }
                     }
-
-                    if (sealAura)
-                    {
-                        Item *item = NULL;
-                        if (ToPlayer())
-                            item = ToPlayer()->GetItemByPos(INVENTORY_SLOT_BAG_0, EQUIPMENT_SLOT_MAINHAND);
-                        float speed = (item ? item->GetProto()->Delay : BASE_ATTACK_TIME)/1000.0f;
-                        int32 bp0 = 10*speed;
-                        CastCustomSpell(pVictim, 42463, &bp0, 0,0, true);
-                    }
+                    if (stacks >= 5)
+                        CastSpell(target, 42463, true, NULL, triggeredByAura);
                     break;
                 }
                 // Spiritual Att.
@@ -8511,9 +8502,9 @@ uint32 Unit::SpellDamageBonus(Unit *pVictim, SpellEntry const *spellProto, uint3
                 DotFactor = damagetype == DOT ? 0.17f : 0.011f;
                 CastingTime = 3500;
             }
-            else if (spellProto->Id == 42463)
+            else if (spellProto->Id == 42463) // Seal of Vengeance fullstack additional dmg - 2.2%
             {
-                CastingTime = 160;
+                CastingTime = 77;
             }
             // Holy shield - 5% of Holy Damage
             else if ((spellProto->SpellFamilyFlags & 0x4000000000LL) && spellProto->SpellIconID == 453)
@@ -12866,6 +12857,9 @@ void Unit::SetFlying(bool apply)
 void Unit::SetCharmedOrPossessedBy(Unit* charmer, bool possess)
 {
     if (this == charmer)
+        return;
+
+    if (!charmer)
         return;
 
     if (IsTaxiFlying())

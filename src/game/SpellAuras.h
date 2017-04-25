@@ -325,7 +325,7 @@ class LOOKING4GROUP_IMPORT_EXPORT Aura
             if (GetSpellProto()->SpellFamilyName == SPELLFAMILY_SHAMAN && this->GetSpellProto()->SpellIconID == 1677) // Grounding Totem
                 return true;
 
-            return false;
+            return (GetSpellProto()->AttributesEx3 & SPELL_ATTR_EX3_STACK_FOR_DIFF_CASTERS);
         }
 
         void CleanupTriggeredSpells();

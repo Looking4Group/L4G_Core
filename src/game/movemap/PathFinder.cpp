@@ -80,7 +80,7 @@ bool PathFinder::calculate(float destX, float destY, float destZ, bool forceDest
 
     // check if destination moved - if not we can optimize something here
     // we are following old, precalculated path?
-    float dist = m_sourceUnit->GetObjectBoundingRadius();
+    float dist = m_sourceUnit->GetObjectBoundingRadius() < DEFAULT_WORLD_OBJECT_SIZE ? DEFAULT_WORLD_OBJECT_SIZE : m_sourceUnit->GetObjectBoundingRadius();
     if (inRange(oldDest, dest, dist, dist) && m_pathPoints.size() > 2)
     {
         // our target is not moving - we just coming closer

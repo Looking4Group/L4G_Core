@@ -73,6 +73,8 @@ bool Guild::create(uint64 lGuid, std::string gname)
     MOTD = "No message set.";
     guildbank_money = 0;
     purchased_tabs = 0;
+    LogMaxGuid = 0;
+    GuildEventlogMaxGuid = 0;
 
     Id = sGuildMgr.GenerateGuildId();
 
@@ -724,8 +726,8 @@ void Guild::Disband()
     RealmDataDatabase.PExecute("DELETE FROM guild_bank_tab WHERE guildid = '%u'",Id);
     RealmDataDatabase.PExecute("DELETE FROM guild_bank_item WHERE guildid = '%u'",Id);
     RealmDataDatabase.PExecute("DELETE FROM guild_bank_right WHERE guildid = '%u'",Id);
-    RealmDataDatabase.PExecute("DELETE FROM guild_bank_eventlog WHERE guildid = '%u'",Id);
-    RealmDataDatabase.PExecute("DELETE FROM guild_eventlog WHERE guildid = '%u'",Id);
+    //RealmDataDatabase.PExecute("DELETE FROM guild_bank_eventlog WHERE guildid = '%u'",Id);
+    //RealmDataDatabase.PExecute("DELETE FROM guild_eventlog WHERE guildid = '%u'",Id);
     RealmDataDatabase.CommitTransaction();
     sGuildMgr.RemoveGuild(Id);
 }
