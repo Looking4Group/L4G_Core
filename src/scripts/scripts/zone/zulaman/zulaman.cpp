@@ -1233,6 +1233,8 @@ struct npc_amanishi_scoutAI : public ScriptedAI
 
     void EnterCombat(Unit *who)
     {
+        me->SetVisibility(VISIBILITY_ON);
+        me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PACIFIED);
         DoScriptText(YELL_SCOUT_AGGRO, me);
         me->SetWalk(false);
         Unit *drums = FindCreature(22515, 50, me);
