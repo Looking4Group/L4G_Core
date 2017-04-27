@@ -204,3 +204,11 @@ INSERT INTO `creature_loot_template` VALUES (7072, 18335, 3.03, 0, 1, 1, 0, 0, 0
 -- or add creature_template_addon: entry	0	0	16908544	0	4097	0	0
 UPDATE `creature_template` SET `InhabitType` = 3 WHERE `entry` IN (1088,2232,2233,2234,2235,2236,3107,3108,3228,5439,17216,17217);
 
+-- AI Cleanup
+DELETE FROM `creature_ai_scripts` WHERE `id` IN (1565101,1565201,1617001,1622601,1623201,1705601,1822501,1822502,1822503);
+INSERT INTO `creature_ai_scripts` VALUES (1617001, 16170, 1, 0, 100, 2, 0, 0, 0, 0, 11, 29291, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Coldmist Stalker - Cast Chilling Poison OOC');
+INSERT INTO `creature_ai_scripts` VALUES (1705601, 17056, 1, 0, 100, 0, 0, 0, 0, 0, 5, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Eversong Partygoer - Dance State OOC');
+INSERT INTO `creature_ai_scripts` VALUES (1822501, 18225, 0, 0, 100, 0, 11500, 11500, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Fire Bomb Target - Despawn IC');
+INSERT INTO `creature_ai_scripts` VALUES (1822502, 18225, 1, 0, 100, 0, 0, 0, 0, 0, 11, 31961, 0, 7, 20, 0, 0, 0, 21, 0, 0, 0, 'Fire Bomb Target - Cast Fire Bomb and Stop Melee and Stop Movement OOC');
+INSERT INTO `creature_ai_scripts` VALUES (1822503, 18225, 0, 0, 100, 1, 2500, 2500, 2500, 2500, 11, 31961, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 'Fire Bomb Target - Cast Fire Bomb');
+
