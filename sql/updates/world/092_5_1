@@ -200,3 +200,7 @@ INSERT INTO `creature_loot_template` VALUES (10391, 18335, 3.037, 0, 1, 1, 0, 0,
 INSERT INTO `creature_loot_template` VALUES (11353, 18335, 3.0322, 0, 1, 1, 0, 0, 0);
 INSERT INTO `creature_loot_template` VALUES (7072, 18335, 3.03, 0, 1, 1, 0, 0, 0);
 
+-- Crabs should all swim
+-- or add creature_template_addon: entry	0	0	16908544	0	4097	0	0
+UPDATE `creature_template` SET `InhabitType` = 3 WHERE `entry` IN (1088,2232,2233,2234,2235,2236,3107,3108,3228,5439,17216,17217);
+
