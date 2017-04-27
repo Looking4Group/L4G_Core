@@ -215,3 +215,6 @@ INSERT INTO `creature_ai_scripts` VALUES (1822503, 18225, 0, 0, 100, 1, 2500, 25
 -- Motes of Shadow Demons https://github.com/Looking4Group/L4G_Core/issues/1585
 UPDATE `creature_loot_template` SET `ChanceOrQuestChance`= 20 WHERE `entry` IN (18869,18870) AND `item` = 22577; -- 1,0615 1,0194
 
+-- Lockpicking Progress
+UPDATE `gameobject` SET `spawntimesecs` = 300 WHERE `id` IN (179486, 179488, 179490, 179492, 179493, 179496, 184740, 184741);
+
