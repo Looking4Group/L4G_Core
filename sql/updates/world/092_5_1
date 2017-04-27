@@ -218,3 +218,5 @@ UPDATE `creature_loot_template` SET `ChanceOrQuestChance`= 20 WHERE `entry` IN (
 -- Lockpicking Progress
 UPDATE `gameobject` SET `spawntimesecs` = 300 WHERE `id` IN (179486, 179488, 179490, 179492, 179493, 179496, 184740, 184741);
 
+UPDATE `creature_ai_scripts` SET `action1_param3` = 7 WHERE `id` = 1648802; -- force manashield arcane anomalys
+
