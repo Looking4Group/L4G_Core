@@ -212,3 +212,6 @@ INSERT INTO `creature_ai_scripts` VALUES (1822501, 18225, 0, 0, 100, 0, 11500, 1
 INSERT INTO `creature_ai_scripts` VALUES (1822502, 18225, 1, 0, 100, 0, 0, 0, 0, 0, 11, 31961, 0, 7, 20, 0, 0, 0, 21, 0, 0, 0, 'Fire Bomb Target - Cast Fire Bomb and Stop Melee and Stop Movement OOC');
 INSERT INTO `creature_ai_scripts` VALUES (1822503, 18225, 0, 0, 100, 1, 2500, 2500, 2500, 2500, 11, 31961, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 'Fire Bomb Target - Cast Fire Bomb');
 
+-- Motes of Shadow Demons https://github.com/Looking4Group/L4G_Core/issues/1585
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance`= 20 WHERE `entry` IN (18869,18870) AND `item` = 22577; -- 1,0615 1,0194
+
