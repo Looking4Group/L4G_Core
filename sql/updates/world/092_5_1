@@ -200,3 +200,6 @@ INSERT INTO `creature_loot_template` VALUES (10391, 18335, 3.037, 0, 1, 1, 0, 0,
 INSERT INTO `creature_loot_template` VALUES (11353, 18335, 3.0322, 0, 1, 1, 0, 0, 0);
 INSERT INTO `creature_loot_template` VALUES (7072, 18335, 3.03, 0, 1, 1, 0, 0, 0);
 
+DELETE FROM `creature_questrelation` WHERE `id` = 24369;
+DELETE FROM `creature_questrelation` WHERE `id` = 24370;
+
