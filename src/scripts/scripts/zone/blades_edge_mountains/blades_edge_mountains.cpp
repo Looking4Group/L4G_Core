@@ -2942,7 +2942,7 @@ struct npc_oscillating_frequency_scanner_master_bunnyAI : public ScriptedAI
     {
         if (timer <= diff)
         {
-            if (Player* player = ObjectAccessor::GetPlayer(playerGuid))
+            if (Player* player = Unit::GetPlayer(playerGuid))
                 me->CastSpell(player, SPELL_OSCILLATION_FIELD, false);
 
             timer = 3000;
