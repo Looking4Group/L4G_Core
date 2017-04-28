@@ -220,3 +220,6 @@ UPDATE `gameobject` SET `spawntimesecs` = 300 WHERE `id` IN (179486, 179488, 179
 
 UPDATE `creature_ai_scripts` SET `action1_param3` = 7 WHERE `id` = 1648802; -- force manashield arcane anomalys
 
+-- Change EM procflags
+UPDATE `spell_proc_event` SET `procflags` = 0x01000000 WHERE `entry` = 16166;
+
