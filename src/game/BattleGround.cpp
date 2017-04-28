@@ -188,8 +188,8 @@ void BattleGround::Update(uint32 diff)
                 if (itr->second.LastOnlineTime >= MAX_OFFLINE_TIME)
                     m_RemovedPlayers[itr->first] = 1;           // add to remove list (BG)
 
-            if (plr && plr->HasAura(SPELL_AURA_PLAYER_INACTIVE))
-                RemovePlayerAtLeave(itr->first, true, true); // itr is erased here! Do not change any battleground's private variables !
+            //if (plr && plr->HasAura(SPELL_AURA_PLAYER_INACTIVE))
+                //RemovePlayerAtLeave(itr->first, true, true); // itr is erased here! Do not change any battleground's private variables !
         }
     }
 
@@ -1327,7 +1327,7 @@ void BattleGround::UpdatePlayerScore(Player *Source, uint32 type, uint32 value)
             break;
         case SCORE_BONUS_HONOR:                             // Honor bonus
             // do not add honor in arenas
-            if (isBattleGround())
+            if (isBattleGround() && !Source->GetDummyAura(SPELL_AURA_PLAYER_INACTIVE))
             {
                 // reward honor instantly
                 if (Source->RewardHonor(NULL, 1, value))
