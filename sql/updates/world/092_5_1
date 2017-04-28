@@ -223,3 +223,21 @@ UPDATE `creature_ai_scripts` SET `action1_param3` = 7 WHERE `id` = 1648802; -- f
 -- Change EM procflags
 UPDATE `spell_proc_event` SET `procflags` = 0x01000000 WHERE `entry` = 16166;
 
+-- Icewing Marshal 14764
+UPDATE `creature_template` SET `minhealth`='140000',`maxhealth`='140000',`armor`='6800',`speed`='2',`mindmg`='3450',`maxdmg`='6900',`unit_flags`='36928',`lootid`='0',`mingold`='0',`maxgold`='0' WHERE `entry` = 14764;
+
+-- Stonehearth Marshal 14765
+UPDATE `creature_template` SET `minhealth`='140000',`maxhealth`='140000',`armor`='6800',`speed`='2',`mindmg`='3450',`maxdmg`='6900',`unit_flags`='36928',`lootid`='0',`mingold`='0',`maxgold`='0' WHERE `entry` = 14765;
+
+-- East Frostwolf Warmaster 14772
+UPDATE `creature_template` SET `minhealth`='140000',`maxhealth`='140000',`armor`='6800',`speed`='2',`mindmg`='3450',`maxdmg`='6900',`unit_flags`='36928',`lootid`='0',`mingold`='0',`maxgold`='0' WHERE `entry` = 14772;
+
+-- Iceblood Warmaster 14773
+UPDATE `creature_template` SET `minhealth`='140000',`maxhealth`='140000',`armor`='6800',`speed`='2',`mindmg`='3450',`maxdmg`='6900',`unit_flags`='36928',`lootid`='0',`mingold`='0',`maxgold`='0' WHERE `entry` = 14773;
+
+-- Tower Point Warmaster 14776
+UPDATE `creature_template` SET `minhealth`='140000',`maxhealth`='140000',`armor`='6800',`speed`='2',`mindmg`='3450',`maxdmg`='6900',`unit_flags`='36928',`lootid`='0',`mingold`='0',`maxgold`='0' WHERE `entry` = 14776;
+
+-- West Frostwolf Warmaster 14777
+UPDATE `creature_template` SET `minhealth`='140000',`maxhealth`='140000',`armor`='6800',`speed`='2',`mindmg`='3450',`maxdmg`='6900',`unit_flags`='36928',`lootid`='0',`mingold`='0',`maxgold`='0' WHERE `entry` = 14777;
+
