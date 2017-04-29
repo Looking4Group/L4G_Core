@@ -91,6 +91,9 @@ void HomeMovementGenerator<Creature>::Finalize(Creature& owner)
         owner.SetWalk(true);
         owner.LoadCreaturesAddon(true);
 
+        owner.SetNoSearchAssistance(false);
+        owner.UpdateSpeed(MOVE_RUN, false);
+
         owner.AI()->JustReachedHome();
 
         BasicEvent* event = new RestoreReactState(owner);
