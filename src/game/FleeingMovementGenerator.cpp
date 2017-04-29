@@ -56,6 +56,9 @@ void FleeingMovementGenerator<Creature>::_moveToNextLocation(Creature &unit)
         _nextCheckTime.Reset(2000);
     else
         _nextCheckTime.Reset(0);
+
+    ((Creature*)&unit)->SetNoCallAssistance(false);
+    ((Creature*)&unit)->CallAssistance();
 }
 
 template<>

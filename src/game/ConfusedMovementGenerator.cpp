@@ -139,6 +139,9 @@ bool ConfusedMovementGenerator<Creature>::Update(Creature &unit, const uint32 &d
         }
     }
 
+    ((Creature*)&unit)->SetNoCallAssistance(false);
+    ((Creature*)&unit)->CallAssistance();
+
     return true;
 }
 
