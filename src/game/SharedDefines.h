@@ -2548,14 +2548,14 @@ enum MailResponseResult
 enum BattleGroundTypeId
 {
     BATTLEGROUND_TYPE_NONE      = 0,
-    BATTLEGROUND_AV             = 1,
-    BATTLEGROUND_WS             = 2,
-    BATTLEGROUND_AB             = 3,
-    BATTLEGROUND_NA             = 4,
-    BATTLEGROUND_BE             = 5,
-    BATTLEGROUND_AA             = 6,
-    BATTLEGROUND_EY             = 7,
-    BATTLEGROUND_RL             = 8
+    BATTLEGROUND_AV             = 1, // Alterac Valley
+    BATTLEGROUND_WS             = 2, // Warsong Gulch
+    BATTLEGROUND_AB             = 3, // Arathi Basin
+    BATTLEGROUND_NA             = 4, // Nagrand Arena
+    BATTLEGROUND_BE             = 5, // Blade's Edge Arena
+    BATTLEGROUND_AA             = 6, // All Arenas
+    BATTLEGROUND_EY             = 7, // Eye of the Storm
+    BATTLEGROUND_RL             = 8  // Ruins of Lordaeron
 };
 #define MAX_BATTLEGROUND_TYPE_ID 9
 

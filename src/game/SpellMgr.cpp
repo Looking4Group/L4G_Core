@@ -3956,6 +3956,10 @@ void SpellMgr::LoadSpellCustomAttr()
             case 42463: //Seal of Vengeance additional fullstack DMG
                 spellInfo->EffectBasePoints[0] = 20;
                 break;
+            case 43680: // Idle (Received on BG AFK report)
+                spellInfo->DurationIndex = 5; // Increase duration to 5 min until we rework the system, to prevent players from getting kicked before match starts.
+                spellInfo->EffectAmplitude[0] = 300000;
+                break;
             default:
                 break;
         }
