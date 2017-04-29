@@ -23,6 +23,8 @@
 #include "Creature.h"
 #include "Player.h"
 
+#include "VMapFactory.h"
+
 #include "movement/MoveSplineInit.h"
 #include "movement/MoveSpline.h"
 
@@ -100,6 +102,10 @@ bool ConfusedMovementGenerator<Creature>::Update(Creature &unit, const uint32 &d
             PathFinder path(&unit);
             path.setPathLengthLimit(30.0f);
 
+            bool resultHitPosition;
+            resultHitPosition = VMAP::VMapFactory::createOrGetVMapManager()->getObjectHitPos(unit.GetMapId(), unit.GetPositionX(), unit.GetPositionY(), unit.GetPositionZ() + 0.5f, rPos[nextMove].x, rPos[nextMove].y, rPos[nextMove].z + 0.5f, rPos[nextMove].x, rPos[nextMove].y, rPos[nextMove].z, -0.5f);
+            resultHitPosition = VMAP::VMapFactory::createOrGetVMapManager()->getObjectHitPos(unit.GetMapId(), unit.GetPositionX(), unit.GetPositionY(), unit.GetPositionZ() + 0.5f, sPos.x, sPos.y, sPos.z + 0.5f, sPos.x, sPos.y, sPos.z, -0.5f);
+
             bool result = path.calculate(sPos.x, sPos.y, sPos.z);
             if (!result || path.getPathType() & PATHFIND_NOPATH)
                 init.MoveTo(rPos[nextMove].x, rPos[nextMove].y, rPos[nextMove].z);
@@ -118,6 +124,9 @@ bool ConfusedMovementGenerator<Creature>::Update(Creature &unit, const uint32 &d
         {
             PathFinder path(&unit);
             path.setPathLengthLimit(30.0f);
+
+            bool resultHitPosition;
+            resultHitPosition = VMAP::VMapFactory::createOrGetVMapManager()->getObjectHitPos(unit.GetMapId(), unit.GetPositionX(), unit.GetPositionY(), unit.GetPositionZ() + 0.5f, rPos[nextMove].x, rPos[nextMove].y, rPos[nextMove].z + 0.5f, rPos[nextMove].x, rPos[nextMove].y, rPos[nextMove].z, -0.5f);
 
             bool result = path.calculate(rPos[nextMove].x, rPos[nextMove].y, rPos[nextMove].z);
             if (!result || path.getPathType() & PATHFIND_NOPATH)

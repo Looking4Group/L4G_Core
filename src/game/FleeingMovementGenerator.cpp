@@ -23,6 +23,8 @@
 #include "Unit.h"
 #include "CreatureAIImpl.h"
 
+#include "VMapFactory.h"
+
 #include "movement/MoveSplineInit.h"
 #include "movement/MoveSpline.h"
 
@@ -35,6 +37,9 @@ void FleeingMovementGenerator<Creature>::_moveToNextLocation(Creature &unit)
 
     PathFinder path(&unit);
     path.setPathLengthLimit(30.0f);
+
+    bool resultHitPosition;
+    resultHitPosition = VMAP::VMapFactory::createOrGetVMapManager()->getObjectHitPos(unit.GetMapId(), unit.GetPositionX(), unit.GetPositionY(), unit.GetPositionZ() + 0.5f, dest.x, dest.y, dest.z + 0.5f, dest.x, dest.y, dest.z, -0.5f);
 
     bool result = path.calculate(dest.x, dest.y, dest.z);
 
