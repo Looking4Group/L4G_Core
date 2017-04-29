@@ -2905,7 +2905,7 @@ CreatureAI* GetAI_npc_bloodmaul_dire_wolf(Creature* pCreature)
 enum ScannerMasterBunny
 {
     NPC_OSCILLATING_FREQUENCY_SCANNER_TOP_BUNNY = 21759,
-    NPC_WYRM_FROM_BEYOND = 21796,
+    NPC_WYRM_FROM_BEYOND                        = 21796,
     GO_OSCILLATING_FREQUENCY_SCANNER            = 184926,
     SPELL_OSCILLATION_FIELD                     = 37408,
     QUEST_GAUGING_THE_RESONANT_FREQUENCY        = 10594
