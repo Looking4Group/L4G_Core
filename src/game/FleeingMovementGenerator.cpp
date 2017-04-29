@@ -26,8 +26,8 @@
 #include "movement/MoveSplineInit.h"
 #include "movement/MoveSpline.h"
 
-template<class UNIT>
-void FleeingMovementGenerator<UNIT>::_moveToNextLocation(UNIT &unit)
+template<>
+void FleeingMovementGenerator<Creature>::_moveToNextLocation(Creature &unit)
 {
     Position dest;
     if (!_getPoint(unit, dest))
@@ -35,7 +35,9 @@ void FleeingMovementGenerator<UNIT>::_moveToNextLocation(UNIT &unit)
 
     PathFinder path(&unit);
     path.setPathLengthLimit(30.0f);
-    bool result = path.calculate(dest.x, dest.y, dest.z);    
+
+    bool result = path.calculate(dest.x, dest.y, dest.z);
+
     if (!result || path.getPathType() & PATHFIND_NOPATH)
         unit.GetPosition(dest);
 
@@ -49,29 +51,101 @@ void FleeingMovementGenerator<UNIT>::_moveToNextLocation(UNIT &unit)
     init.Launch();
 
     static_cast<MovementGenerator*>(this)->_recalculateTravel = false;
-    _nextCheckTime.Reset(urand(500,1000));
+
+    if (unit.GetExactDist2d(_startPosition.x, _startPosition.y) > 30.0f)
+        _nextCheckTime.Reset(2000);
+    else
+        _nextCheckTime.Reset(0);
+}
+
+template<>
+void FleeingMovementGenerator<Player>::_moveToNextLocation(Player &unit)
+{
+    Position dest;
+    if (!_getPoint(unit, dest))
+        return;
+
+    PathFinder path(&unit);
+    path.setPathLengthLimit(30.0f);
+
+    bool result = path.calculate(dest.x, dest.y, dest.z);
+
+    if (!result || path.getPathType() & PATHFIND_NOPATH)
+        unit.GetPosition(dest);
+
+    Movement::MoveSplineInit init(unit);
+    if (path.getPathType() & PATHFIND_NOPATH)
+        init.MoveTo(dest.x, dest.y, dest.z);
+    else
+        init.MovebyPath(path.getPath());
+
+    init.SetWalk(false);
+    init.Launch();
+
+    static_cast<MovementGenerator*>(this)->_recalculateTravel = false;
+
+    if (unit.GetExactDist2d(_startPosition.x, _startPosition.y) > 30.0f)
+        _nextCheckTime.Reset(2000);
+    else
+        _nextCheckTime.Reset(0);
 }
 
 template<class UNIT>
 bool FleeingMovementGenerator<UNIT>::_getPoint(UNIT &unit, Position &dest)
 {
-    // _angle is orientation for running like hell from caster in straight line :p
-    float angle = _angle;
-    if (roll_chance_i(20))
-        angle += RAND(M_PI/4.0f, M_PI/2.0f, -M_PI/4.0f, -M_PI/2.0f, M_PI*3/4.0f, -M_PI*3/4.0f, M_PI);
+    Position tmp;
+    float angle_inc = 0.0f;
+    float angle_dec = 0.0f;
 
-    // destination point
-    unit.GetValidPointInAngle(dest, 8.0f, angle, true, true);
-    return true;
+    // If distance from start position > 30.0f, get random angle (blizzlike)
+    if (unit.GetExactDist2d(_startPosition.x, _startPosition.y) > 30.0f)
+        _angle_rand = frand(0, M_PI * 2.0f);
+    else
+        _angle_rand = 0.0f;
+
+    // Get temp point (for check)
+    unit.GetValidPointInAngle(tmp, 12.0f, _isFirstPoint ? _angle : _angle_rand, true, true);
+
+    // Get correct angle (for destination point)
+    if (unit.GetExactDist2d(tmp.x, tmp.y) < 10.0f)
+    {
+        for (uint8 i = 0; i < 6; ++i)
+        {
+            angle_inc += M_PI/6;
+            unit.GetValidPointInAngle(tmp, 9.5f, angle_inc, true, true);
+            if (unit.GetExactDist2d(tmp.x, tmp.y) < 9.0f || fabs(_startPosition.z - tmp.z) > COMMON_ALLOW_HEIGHT_DIFF)
+                continue;
+            else
+                break;
+        }
+        for (uint8 i = 0; i < 6; ++i)
+        {
+            angle_dec -= M_PI/6;
+            unit.GetValidPointInAngle(tmp, 9.5f, angle_dec, true, true);
+            if (unit.GetExactDist2d(tmp.x, tmp.y) < 9.0f || fabs(_startPosition.z - tmp.z) > COMMON_ALLOW_HEIGHT_DIFF)
+                continue;
+            else
+                break;
+        }
+
+        // Get destination point with correct angle
+        unit.GetValidPointInAngle(dest, 8.0f, angle_inc < -angle_dec ? angle_inc : angle_dec, true, true);
+        _isFirstPoint = false;
+        return true;
+    }
+    else
+    {
+        unit.GetValidPointInAngle(dest, 8.0f, _isFirstPoint ? _angle : _angle_rand, true, true);
+
+        _isFirstPoint = false;
+        return true;
+    }
 }
 
 template<class UNIT>
 void FleeingMovementGenerator<UNIT>::Initialize(UNIT &unit)
 {
-    if (Unit* pFright = unit.GetUnit(_frightGUID))
-        _angle = pFright->GetAngle(&unit);
-    else
-        _angle = unit.GetOrientation();
+    _angle = frand(0, M_PI * 2.0f);
 
     _nextCheckTime.Reset(0);
 
@@ -79,6 +153,9 @@ void FleeingMovementGenerator<UNIT>::Initialize(UNIT &unit)
 
     unit.StopMoving();
     unit.addUnitState(UNIT_STAT_FLEEING);
+
+    _isFirstPoint = true;
+    unit.GetPosition(_startPosition);
 }
 
 template<class UNIT>
