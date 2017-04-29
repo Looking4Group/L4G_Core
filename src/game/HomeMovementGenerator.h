@@ -32,8 +32,8 @@ template <>
 class LOOKING4GROUP_IMPORT_EXPORT HomeMovementGenerator<Creature> : public MovementGeneratorMedium< Creature, HomeMovementGenerator<Creature> >
 {
     public:
-        HomeMovementGenerator() : arrived(false) {}
-        ~HomeMovementGenerator() {}
+        HomeMovementGenerator() : arrived(false), _path(NULL) {}
+        ~HomeMovementGenerator() { delete _path; }
 
         void Initialize(Creature &);
         void Finalize(Creature &);
@@ -47,6 +47,7 @@ class LOOKING4GROUP_IMPORT_EXPORT HomeMovementGenerator<Creature> : public Movem
     private:
         void _setTargetLocation(Creature &);
         bool arrived;
+        PathFinder* _path;
 };
 
 #endif

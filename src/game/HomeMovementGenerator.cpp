@@ -50,7 +50,8 @@ void HomeMovementGenerator<Creature>::_setTargetLocation(Creature & owner)
     // at apply we can select more nice return points base at current move generator
     owner.GetHomePosition(x, y, z, o);
 
-    PathFinder* _path = new PathFinder(&owner);
+    if (!_path)
+        _path = new PathFinder(&owner);
 
     bool result = _path->calculate(x, y, z, true);
 
