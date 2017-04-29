@@ -241,3 +241,5 @@ UPDATE `creature_template` SET `minhealth`='140000',`maxhealth`='140000',`armor`
 -- West Frostwolf Warmaster 14777
 UPDATE `creature_template` SET `minhealth`='140000',`maxhealth`='140000',`armor`='6800',`speed`='2',`mindmg`='3450',`maxdmg`='6900',`unit_flags`='36928',`lootid`='0',`mingold`='0',`maxgold`='0' WHERE `entry` = 14777;
 
+DELETE FROM `creature` WHERE `id` = 21796;
+
