@@ -506,7 +506,7 @@ void PathFinder::BuildPointPath(const float *startPoint, const float *endPoint)
         }
         else
         {
-            m_pathPoints[1] = m_pathPoints[pointCount];
+            m_pathPoints[1] = m_pathPoints[pointCount-1];
             m_pathPoints.resize(2);
             pointCount = 2;
         }
