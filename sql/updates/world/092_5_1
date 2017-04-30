@@ -243,3 +243,5 @@ UPDATE `creature_template` SET `minhealth`='140000',`maxhealth`='140000',`armor`
 
 DELETE FROM `creature` WHERE `id` = 21796;
 
+UPDATE `creature_template` SET `mechanic_immune_mask`= 583155543 WHERE `entry` = 16488;
+
