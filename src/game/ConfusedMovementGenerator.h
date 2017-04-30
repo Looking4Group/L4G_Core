@@ -49,7 +49,8 @@ class LOOKING4GROUP_EXPORT ConfusedMovementGenerator : public MovementGeneratorM
 
         TimeTrackerSmall _nextMoveTime;
 
-        Position _randomPosition[MAX_RANDOM_POINTS+1];
+        Position sPos, rPos[MAX_RANDOM_POINTS+1];
+        bool to_sPos;
 };
 
 #endif

@@ -23,6 +23,8 @@
 #include "Creature.h"
 #include "Player.h"
 
+#include "VMapFactory.h"
+
 #include "movement/MoveSplineInit.h"
 #include "movement/MoveSpline.h"
 
@@ -54,12 +56,106 @@ void ConfusedMovementGenerator<UNIT>::Interrupt(UNIT &unit)
 template<class UNIT>
 void ConfusedMovementGenerator<UNIT>::_generateMovement(UNIT &unit)
 {
+    // Get array of valid points in angle
     for (uint8 idx = 0; idx < MAX_RANDOM_POINTS; ++idx)
-        unit.GetValidPointInAngle(_randomPosition[idx], WANDER_DISTANCE, frand(0, 2*M_PI), true, true);
+    {
+        Position tmp;
+        float angle;
+        if (!unit.IsPolymorphed())
+            // For blind/scatter shot and the same spells
+            angle = frand(-M_PI/4, M_PI/4);
+        else
+            // For polymorph
+            angle = frand(0, M_PI*2);
+
+        unit.GetValidPointInAngle(tmp, WANDER_DISTANCE, angle, true, true);
+        if (unit.GetExactDist2d(tmp.x, tmp.y) < WANDER_DISTANCE - 0.5f)
+            for (uint8 j = 0; j < 8; ++j)
+            {
+                angle += M_PI/4;
+                unit.GetValidPointInAngle(tmp, WANDER_DISTANCE, angle, true, true);
+
+                if (unit.GetExactDist2d(tmp.x, tmp.y) < WANDER_DISTANCE - 0.5f)
+                    continue;
+                else
+                    break;
+            }
+        unit.GetValidPointInAngle(rPos[idx], WANDER_DISTANCE, angle, true, true);
+    }
 }
 
-template<class UNIT>
-bool ConfusedMovementGenerator<UNIT>::Update(UNIT &unit, const uint32 &diff)
+template<class Creature>
+bool ConfusedMovementGenerator<Creature>::Update(Creature &unit, const uint32 &diff)
+{
+    unit.SetSelection(0);
+
+    _nextMoveTime.Update(diff);
+
+    if (_nextMoveTime.Passed() || static_cast<MovementGenerator*>(this)->_recalculateTravel)
+    {
+        uint32 nextMove = urand(0, MAX_RANDOM_POINTS-1);
+
+        Movement::MoveSplineInit init(unit);
+
+        if (to_sPos && !unit.IsPolymorphed())
+        {
+            PathFinder path(&unit);
+            path.setPathLengthLimit(30.0f);
+
+            bool resultHitPosition;
+            resultHitPosition = VMAP::VMapFactory::createOrGetVMapManager()->getObjectHitPos(unit.GetMapId(), unit.GetPositionX(), unit.GetPositionY(), unit.GetPositionZ() + 0.5f, rPos[nextMove].x, rPos[nextMove].y, rPos[nextMove].z + 0.5f, rPos[nextMove].x, rPos[nextMove].y, rPos[nextMove].z, -0.5f);
+            resultHitPosition = VMAP::VMapFactory::createOrGetVMapManager()->getObjectHitPos(unit.GetMapId(), unit.GetPositionX(), unit.GetPositionY(), unit.GetPositionZ() + 0.5f, sPos.x, sPos.y, sPos.z + 0.5f, sPos.x, sPos.y, sPos.z, -0.5f);
+
+            bool result = path.calculate(sPos.x, sPos.y, sPos.z);
+            if (!result || path.getPathType() & PATHFIND_NOPATH)
+                init.MoveTo(rPos[nextMove].x, rPos[nextMove].y, rPos[nextMove].z);
+            else
+                init.MovebyPath(path.getPath());
+
+            init.SetWalk(true);
+            init.Launch();
+
+            static_cast<MovementGenerator*>(this)->_recalculateTravel = false;
+            _nextMoveTime.Reset(urand(800, 1000));
+
+            to_sPos = false;
+        }
+        else
+        {
+            PathFinder path(&unit);
+            path.setPathLengthLimit(30.0f);
+
+            bool resultHitPosition;
+            resultHitPosition = VMAP::VMapFactory::createOrGetVMapManager()->getObjectHitPos(unit.GetMapId(), unit.GetPositionX(), unit.GetPositionY(), unit.GetPositionZ() + 0.5f, rPos[nextMove].x, rPos[nextMove].y, rPos[nextMove].z + 0.5f, rPos[nextMove].x, rPos[nextMove].y, rPos[nextMove].z, -0.5f);
+
+            bool result = path.calculate(rPos[nextMove].x, rPos[nextMove].y, rPos[nextMove].z);
+            if (!result || path.getPathType() & PATHFIND_NOPATH)
+                init.MoveTo(rPos[nextMove].x, rPos[nextMove].y, rPos[nextMove].z);
+            else
+                init.MovebyPath(path.getPath());
+
+            init.SetWalk(true);
+            init.Launch();
+
+            static_cast<MovementGenerator*>(this)->_recalculateTravel = false;
+            if (unit.IsPolymorphed())
+                _nextMoveTime.Reset(urand(1500, 2000));
+            else
+            {
+                to_sPos = true;
+                _nextMoveTime.Reset(urand(800, 1000));
+            }
+        }
+    }
+
+    ((Creature*)&unit)->SetNoCallAssistance(false);
+    ((Creature*)&unit)->CallAssistance();
+
+    return true;
+}
+
+template<>
+bool ConfusedMovementGenerator<Player>::Update(Player &unit, const uint32 &diff)
 {
     unit.SetSelection(0);
 
@@ -70,20 +166,50 @@ bool ConfusedMovementGenerator<UNIT>::Update(UNIT &unit, const uint32 &diff)
 
         Movement::MoveSplineInit init(unit);
 
-        PathFinder path(&unit);
-        path.setPathLengthLimit(30.0f);
-        bool result = path.calculate(_randomPosition[nextMove].x, _randomPosition[nextMove].y, _randomPosition[nextMove].z);
-        if (!result || path.getPathType() & PATHFIND_NOPATH)
-            init.MoveTo(_randomPosition[nextMove].x, _randomPosition[nextMove].y, _randomPosition[nextMove].z);
+        if (to_sPos && !unit.IsPolymorphed())
+        {
+            PathFinder path(&unit);
+            path.setPathLengthLimit(30.0f);
+
+            bool result = path.calculate(sPos.x, sPos.y, sPos.z);
+            if (!result || path.getPathType() & PATHFIND_NOPATH)
+                init.MoveTo(rPos[nextMove].x, rPos[nextMove].y, rPos[nextMove].z);
+            else
+                init.MovebyPath(path.getPath());
+
+            init.SetWalk(true);
+            init.Launch();
+
+            static_cast<MovementGenerator*>(this)->_recalculateTravel = false;
+            _nextMoveTime.Reset(urand(800, 1000));
+
+            to_sPos = false;
+        }
         else
-            init.MovebyPath(path.getPath());
+        {
+            PathFinder path(&unit);
+            path.setPathLengthLimit(30.0f);
 
-        init.SetWalk(true);
-        init.Launch();
+            bool result = path.calculate(rPos[nextMove].x, rPos[nextMove].y, rPos[nextMove].z);
+            if (!result || path.getPathType() & PATHFIND_NOPATH)
+                init.MoveTo(rPos[nextMove].x, rPos[nextMove].y, rPos[nextMove].z);
+            else
+                init.MovebyPath(path.getPath());
 
-        static_cast<MovementGenerator*>(this)->_recalculateTravel = false;
-        _nextMoveTime.Reset(urand(0, 2000));
+            init.SetWalk(true);
+            init.Launch();
+
+            static_cast<MovementGenerator*>(this)->_recalculateTravel = false;
+            if (unit.IsPolymorphed())
+                _nextMoveTime.Reset(urand(1500, 2000));
+            else
+            {
+                to_sPos = true;
+                _nextMoveTime.Reset(urand(800, 1000));
+            }
+        }
     }
+
     return true;
 }
 

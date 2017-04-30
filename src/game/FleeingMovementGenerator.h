@@ -44,9 +44,12 @@ class FleeingMovementGenerator : public MovementGeneratorMedium< UNIT, FleeingMo
         void _moveToNextLocation(UNIT &);
         bool _getPoint(UNIT &, Position &);
 
-        float _angle;
+        float _angle, _angle_rand;
         uint64 _frightGUID;
         TimeTracker _nextCheckTime;
+
+        bool _isFirstPoint;
+        Position _startPosition;
 };
 
 class TimedFleeingMovementGenerator : public FleeingMovementGenerator<Creature>
