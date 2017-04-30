@@ -245,3 +245,6 @@ DELETE FROM `creature` WHERE `id` = 21796;
 
 UPDATE `creature_template` SET `mechanic_immune_mask`= 583155543 WHERE `entry` = 16488;
 
+-- Area 52 Death Machine 21976
+UPDATE `creature_template` SET `faction_A` = 1806, `faction_H` = 1806, `mindmg` = 1000, `maxdmg` = 2000, `flags_extra` = 0 WHERE `entry`  = 21976; -- 35 2
+
