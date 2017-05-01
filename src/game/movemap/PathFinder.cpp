@@ -72,7 +72,7 @@ bool PathFinder::calculate(float destX, float destY, float destZ, bool forceDest
         !HaveTile(start) || !HaveTile(dest))
     {
         BuildShortcut();
-        m_type = PathType(PATHFIND_NORMAL | PATHFIND_NOT_USING_PATH);
+        m_type = PathType(PATHFIND_SHORTCUT | PATHFIND_NOT_USING_PATH);
         return true;
     }
 
@@ -155,7 +155,10 @@ dtPolyRef PathFinder::getPolyByLocation(const float* point, float *distance) con
 
     // still nothing ..
     // try with bigger search box
-    extents[1] = 200.0f;
+    // From dtNavMeshQuery::findNearestPoly: "If the search extents overlaps more than
+    // 128 polygons it may return an invalid result". So use about 45 yards on Y.
+    extents[1] = DEFAULT_VISIBILITY_DISTANCE / 2.0f;
+
     result = m_navMeshQuery->findNearestPoly(point, extents, &m_filter, &polyRef, closestPoint);
     if(DT_SUCCESS == result && polyRef != INVALID_POLYREF)
     {
@@ -200,7 +203,7 @@ void PathFinder::BuildPolyPath(const Vector3 &startPos, const Vector3 &endPos)
             }
         }
 
-        m_type = (path || waterPath) ? PathType(PATHFIND_NORMAL | PATHFIND_NOT_USING_PATH) : PATHFIND_NOPATH;
+        m_type = (path || waterPath) ? PathType(PATHFIND_SHORTCUT | PATHFIND_NOT_USING_PATH) : PATHFIND_NOPATH;
         return;
     }
 
@@ -233,7 +236,7 @@ void PathFinder::BuildPolyPath(const Vector3 &startPos, const Vector3 &endPos)
         if (buildShotrcut)
         {
             BuildShortcut();
-            m_type = PathType(PATHFIND_NORMAL | PATHFIND_NOT_USING_PATH);
+            m_type = PathType(PATHFIND_SHORTCUT | PATHFIND_NOT_USING_PATH);
             return;
         }
         else
@@ -263,7 +266,7 @@ void PathFinder::BuildPolyPath(const Vector3 &startPos, const Vector3 &endPos)
         m_pathPolyRefs[0] = startPoly;
         m_polyLength = 1;
 
-        m_type = farFromPoly ? PATHFIND_INCOMPLETE : PATHFIND_NORMAL;
+        m_type = farFromPoly ? PATHFIND_INCOMPLETE : PATHFIND_SHORTCUT;
         //DEBUG_FILTER_LOG(LOG_FILTER_PATHFINDING, "++ BuildPolyPath :: path type %d\n", m_type);
         return;
     }
@@ -484,7 +487,7 @@ void PathFinder::BuildPointPath(const float *startPoint, const float *endPoint)
             BuildShortcut();
         }
 
-        m_type = PathType(PATHFIND_NORMAL | PATHFIND_NOT_USING_PATH);
+        m_type = PathType(PATHFIND_SHORTCUT | PATHFIND_NOT_USING_PATH);
     }
 
     //DEBUG_FILTER_LOG(LOG_FILTER_PATHFINDING, "++ PathFinder::BuildPointPath path type %d size %d poly-size %d\n", m_type, pointCount, m_polyLength);
