@@ -487,7 +487,7 @@ void PathFinder::BuildPointPath(const float *startPoint, const float *endPoint)
             BuildShortcut();
         }
 
-        m_type = PathType(PATHFIND_SHORTCUT | PATHFIND_NOT_USING_PATH);
+        m_type = PathType(PATHFIND_INCOMPLETE);
     }
 
     //DEBUG_FILTER_LOG(LOG_FILTER_PATHFINDING, "++ PathFinder::BuildPointPath path type %d size %d poly-size %d\n", m_type, pointCount, m_polyLength);
