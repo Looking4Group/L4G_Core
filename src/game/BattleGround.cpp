@@ -186,6 +186,8 @@ void BattleGround::Update(uint32 diff)
                     if (itr->second.RemovePlayerTime >= TIME_TO_REMOVE_AFK_PLAYERS)
                         m_RemovedPlayers[itr->first] = 1;           // add to remove list (BG)
                 }
+                else
+                    itr->second.RemovePlayerTime = 0;                 // update last "idle" time
             }
             else
             {
