@@ -462,6 +462,56 @@ void PathFinder::BuildPointPath(const float *startPoint, const float *endPoint)
     for (uint32 i = 0; i < pointCount; ++i)
         m_pathPoints[i] = Vector3(pathPoints[i*VERTEX_SIZE+2], pathPoints[i*VERTEX_SIZE], pathPoints[i*VERTEX_SIZE+1]);
 
+    if (m_pathPoints.size() > 2 && m_sourceUnit->GetTypeId() == TYPEID_UNIT)
+    {
+        uint32 count = 0;
+        PointsArray    temp_pathPoints;
+        temp_pathPoints.resize(pointCount);
+        temp_pathPoints[0] =m_pathPoints[0];
+
+        for (uint32 i = 1; i < m_pathPoints.size()-1; ++i)
+        {
+              float dx = m_pathPoints[i].x - temp_pathPoints[count].x;
+              float dy = m_pathPoints[i].y - temp_pathPoints[count].y;
+              float dist = sqrt((dx*dx) + (dy*dy));
+              if (dist > SMOOTH_PATH_SLOP)
+              {
+                  count++;
+                  temp_pathPoints[count] =m_pathPoints[i];
+              }
+        }
+
+        float dx = m_pathPoints[pointCount].x - temp_pathPoints[count].x;
+        float dy = m_pathPoints[pointCount].y - temp_pathPoints[count].y;
+        float dist = sqrt((dx*dx) + (dy*dy));
+        if (dist > SMOOTH_PATH_SLOP)
+        {
+            count++;
+            temp_pathPoints[count] =m_pathPoints[pointCount];
+        }
+        else
+            temp_pathPoints[count] =m_pathPoints[pointCount];
+
+        if (count > 2)
+        {
+            if (count != m_pathPoints.size())
+            {
+               m_pathPoints.resize(count);
+               for (uint32 i = 1; i < count; ++i)
+               {
+                    m_pathPoints[i] = temp_pathPoints[i];
+               }
+               pointCount = count;
+            }
+        }
+        else
+        {
+            m_pathPoints[1] = m_pathPoints[pointCount-1];
+            m_pathPoints.resize(2);
+            pointCount = 2;
+        }
+    }
+
     NormalizePath();
 
     // first point is always our current location - we need the next one
@@ -472,19 +522,10 @@ void PathFinder::BuildPointPath(const float *startPoint, const float *endPoint)
         (!(m_type & PATHFIND_NORMAL) || !inRange(getEndPosition(), getActualEndPosition(), 1.0f, 1.0f)))
     {
         // we may want to keep partial subpath
-        if(dist3DSqr(getActualEndPosition(), getEndPosition()) <
-            0.3f * dist3DSqr(getStartPosition(), getEndPosition()))
-        {
-            setActualEndPosition(getEndPosition());
-            m_pathPoints[m_pathPoints.size()-1] = getEndPosition();
-        }
-        else
-        {
-            setActualEndPosition(getEndPosition());
-            BuildShortcut();
-        }
+        setActualEndPosition(getEndPosition());
+        m_pathPoints[m_pathPoints.size()-1] = getEndPosition();
 
-        m_type = PathType(PATHFIND_NORMAL | PATHFIND_NOT_USING_PATH);
+        m_type = PathType(PATHFIND_INCOMPLETE);
     }
 
     //DEBUG_FILTER_LOG(LOG_FILTER_PATHFINDING, "++ PathFinder::BuildPointPath path type %d size %d poly-size %d\n", m_type, pointCount, m_polyLength);
