@@ -252,3 +252,12 @@ UPDATE `creature_template` SET `faction_A` = 1806, `faction_H` = 1806, `mindmg` 
 -- Progressive Only!
 UPDATE `item_template` SET `SellPrice` = 2500 WHERE `entry` = 10050;
 
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN (19754,22315);
+INSERT INTO `creature_ai_scripts` VALUES
+('2231501','22315','4','0','100','0','0','0','0','0','21','0','0','0','20','0','0','0','0','0','0','0','Deathforge Mine - Stop Movement and Stop Melee on Aggro'),
+('2231502','22315','0','0','100','0','2000','2000','0','0','11','38108','0','1','0','0','0','0','0','0','0','0','Deathforge Mine - Cast Deathforge Mine Explosion'),
+('2231503','22315','0','0','100','0','2500','2500','0','0','37','0','0','0','0','0','0','0','0','0','0','0','Deathforge Mine - Kill Self after Explosion'),
+
+('1975401','19754','1','0','100','1','1000','1000','15000','30000','11','38107','0','0','0','0','0','0','0','0','0','0','Deathforge Tinkerer - Create Mine OCC'),
+('1975402','19754','0','0','100','1','11000','16000','15000','30000','11','38107','1','0','0','0','0','0','0','0','0','0','Deathforge Tinkerer - Create Mine (In Combat)');
+
