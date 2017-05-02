@@ -159,7 +159,7 @@ pEffect SpellEffects[TOTAL_SPELL_EFFECTS]=
     &Spell::EffectUnused,                                   // 93 SPELL_EFFECT_SUMMON_PHANTASM
     &Spell::EffectSelfResurrect,                            // 94 SPELL_EFFECT_SELF_RESURRECT
     &Spell::EffectSkinning,                                 // 95 SPELL_EFFECT_SKINNING
-    &Spell::EffectUnused,                                   // 96 SPELL_EFFECT_CHARGE
+    &Spell::EffectCharge,                                   // 96 SPELL_EFFECT_CHARGE
     &Spell::EffectSummonCritter,                            // 97 SPELL_EFFECT_SUMMON_CRITTER
     &Spell::EffectKnockBack,                                // 98 SPELL_EFFECT_KNOCK_BACK
     &Spell::EffectDisEnchant,                               // 99 SPELL_EFFECT_DISENCHANT
@@ -7408,7 +7408,7 @@ void Spell::EffectCharge(uint32 /*i*/)
         target->GetPosition(dest);
 
         float angle = m_caster->GetAngle(target) - m_caster->GetOrientation() - M_PI;
-        m_caster->GetValidPointInAngle(dest, 2.0f, angle, false);
+        m_caster->GetValidPointInAngle(dest, target->GetObjectSize() + m_caster->GetCombatReach(), angle, false);
         m_caster->GetMotionMaster()->MoveCharge(dest.x, dest.y, dest.z);
     }
     else
@@ -7439,7 +7439,7 @@ void Spell::EffectCharge2(uint32 /*i*/)
             target->GetPosition(dest);
 
             float angle = m_caster->GetAngle(target) - m_caster->GetOrientation() - M_PI;
-            m_caster->GetValidPointInAngle(dest, 2.0f, angle, false);
+            m_caster->GetValidPointInAngle(dest, target->GetObjectSize() + m_caster->GetCombatReach(), angle, false);
         }
 
         m_caster->GetMotionMaster()->MoveCharge(dest.x, dest.y, dest.z);

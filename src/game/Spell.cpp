@@ -4353,13 +4353,13 @@ SpellCastResult Spell::CheckCast(bool strict)
                     target->GetPosition(dest);
 
                     float angle = m_caster->GetAngle(target) - m_caster->GetOrientation() - M_PI;
-                    m_caster->GetValidPointInAngle(dest, 2.0f, angle, false);
+                    m_caster->GetValidPointInAngle(dest, target->GetObjectSize() + m_caster->GetCombatReach(), angle, false);
                     _path.setPathLengthLimit(SpellMgr::GetSpellMaxRange(GetSpellInfo()) * 1.5f);
                     bool result = _path.calculate(dest.x, dest.y, dest.z);
 
-                    if (_path.getPathType() & PATHFIND_SHORT)
+                    if ((_path.getPathType() & PATHFIND_SHORT) || (target->GetDistance2d(_path.getActualEndPosition().x, _path.getActualEndPosition().y) > SpellMgr::GetSpellMaxRange(GetSpellInfo())))
                         return SPELL_FAILED_OUT_OF_RANGE;
-                    else if (!result && !m_caster->ToCreature()->isPet()) //Petcharge with mmaps doesn't work
+                    else if (!result)
                         return SPELL_FAILED_NOPATH;
                 }
                 break;
