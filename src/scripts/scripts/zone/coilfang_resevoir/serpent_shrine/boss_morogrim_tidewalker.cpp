@@ -39,7 +39,6 @@ EndScriptData */
 #define EMOTE_EARTHQUAKE            -1548040
 #define EMOTE_WATERY_GLOBULES       -1548041
 
-#define SPELL_THRASH_PASSIVE        19818
 #define SPELL_TIDAL_WAVE            37730
 #define SPELL_WATERY_GRAVE          38049
 #define SPELL_EARTHQUAKE            37764
@@ -103,13 +102,12 @@ struct boss_morogrim_tidewalkerAI : public ScriptedAI
     void Reset()
     {
         TidalWave_Timer = 10000;
-        WateryGrave_Timer = 20000;
-        Earthquake_Timer = 45000;
+        WateryGrave_Timer = 30000;
+        Earthquake_Timer = 40000;
         WateryGlobules_Timer = 0;
 
         Earthquake = false;
         Phase2 = false;
-        m_creature->CastSpell(m_creature, SPELL_THRASH_PASSIVE, true);
 
         pInstance->SetData(DATA_MOROGRIM_EVENT, NOT_STARTED);
     }
@@ -164,9 +162,10 @@ struct boss_morogrim_tidewalkerAI : public ScriptedAI
                         Murloc->setActive(true);
                         Murloc->AI()->AttackStart(target);
                     }
-                }                
+                }
+
                 Earthquake = false;
-                Earthquake_Timer = urand(35000, 50000);
+                Earthquake_Timer = urand(40000, 45000);
             }
         }
         else
@@ -192,12 +191,11 @@ struct boss_morogrim_tidewalkerAI : public ScriptedAI
 
                 int i = 0;
                 for (std::list<Unit*>::const_iterator itr = tmpList.begin(); itr != tmpList.end(); ++itr)
-                {
-                    (*itr)->CastSpell(*itr, wateryGraves[i++], true);
-                }
-                             
+                    (*itr)->CastSpell((*itr), wateryGraves[i++], false);
+
+                DoScriptText(RAND(SAY_SUMMON_BUBL1, SAY_SUMMON_BUBL2), m_creature);
                 DoScriptText(EMOTE_WATERY_GRAVE, m_creature);
-                WateryGrave_Timer = 28500;
+                WateryGrave_Timer = 30000;
             }
             else
                 WateryGrave_Timer -= diff;
@@ -216,13 +214,10 @@ struct boss_morogrim_tidewalkerAI : public ScriptedAI
 
                 int i = 0;
                 for (std::list<Unit*>::const_iterator itr = tmpList.begin(); itr != tmpList.end(); ++itr)
-                 {                   
-                    (*itr)->CastSpell((*itr), summonGlobules[i], true);                    
-                    i++;
-                }
-                DoScriptText(EMOTE_WATERY_GLOBULES, m_creature);              
-                DoScriptText(RAND(SAY_SUMMON_BUBL1, SAY_SUMMON_BUBL2), m_creature);                
-                WateryGlobules_Timer = 40000;
+                    (*itr)->CastSpell((*itr), summonGlobules[i++], true);
+
+                DoScriptText(EMOTE_WATERY_GLOBULES, m_creature);
+                WateryGlobules_Timer = 25000;
             }
             else
                 WateryGlobules_Timer -= diff;
@@ -244,46 +239,57 @@ struct mob_water_globuleAI : public ScriptedAI
     }
 
     uint32 Check_Timer;
+    uint32 Despawn_Timer;
     WorldLocation wLoc;
-    bool Start;
 
     void Reset()
     {
         Check_Timer = 1000;
+        Despawn_Timer = 30000;
 
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
         m_creature->setFaction(14);
-        Start = true;
-    }    
+    }
+
+    void EnterCombat(Unit *who) {}
+
+    void IsSummonedBy(Unit* summoner)
+    {
+        DoZoneInCombat(200.0f);
+
+        Unit* tmpUnit = summoner;
+
+        if (!tmpUnit)
+            tmpUnit = m_creature->SelectNearestTarget(200.0f);
+
+        if (!tmpUnit)
+            return;
+
+        m_creature->AddThreat(tmpUnit, 20000.0f);
+        ((Creature*)m_creature)->GetMotionMaster()->MoveChase(tmpUnit);
+    }
 
     void UpdateAI(const uint32 diff)
     {
-        if (Start) {
-            DoZoneInCombat(200.0f);            
-            Unit * tmpUnit = SelectUnit(SELECT_TARGET_RANDOM, 0, 200.0f, true);
-            if (tmpUnit) {
-                m_creature->AddThreat(tmpUnit, 20000.0f);
-                AttackStart(tmpUnit);
-            }
-            
-            Start = false;
-        }
         //Return since we have no target
         if (!UpdateVictim())
             return;
 
+        if (Despawn_Timer < diff)
+        {
+            m_creature->ForcedDespawn();
+            return;
+        }
+        else
+            Despawn_Timer -= diff;
+
         if (Check_Timer < diff)
         {
-            if (!m_creature->IsWithinDistInMap(&wLoc, 85.0f))
+            Unit* victim = m_creature->getVictim();
+            if (m_creature->IsWithinDistInMap(victim, 5))
             {
-                m_creature->ForcedDespawn();
-                return;
-            }
-
-            if (m_creature->IsWithinDistInMap(m_creature->getVictim(), 5))
-            {
-                m_creature->CastSpell(m_creature->getVictim(), SPELL_GLOBULE_EXPLOSION, false);
+                victim->CastSpell(victim, SPELL_GLOBULE_EXPLOSION, false);
                 m_creature->ForcedDespawn();
             }
 
