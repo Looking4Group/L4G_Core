@@ -261,3 +261,5 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('1975401','19754','1','0','100','1','1000','1000','15000','30000','11','38107','0','0','0','0','0','0','0','0','0','0','Deathforge Tinkerer - Create Mine OCC'),
 ('1975402','19754','0','0','100','1','11000','16000','15000','30000','11','38107','1','0','0','0','0','0','0','0','0','0','Deathforge Tinkerer - Create Mine (In Combat)');
 
+UPDATE `instance_template` SET `reset_delay` = 3 WHERE `map` = 568;
+
