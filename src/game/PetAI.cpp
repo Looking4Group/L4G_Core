@@ -190,6 +190,9 @@ void PetAI::AddSpellForAutocast(uint32 spellID, Unit* target)
 
 void PetAI::AutocastPreparedSpells()
 {
+    if (me->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_DISABLE_ROTATE))
+        return;
+
     //found units to cast on to
     if (!m_targetSpellStore.empty())
     {
@@ -197,53 +200,30 @@ void PetAI::AutocastPreparedSpells()
 
         Spell* spell  = m_targetSpellStore[index].second;
         Unit*  target = m_targetSpellStore[index].first;
+        uint32 spellId = spell->GetSpellInfo()->Id; 
 
-        if (!m_creature->isInCombat())
-        {
-            switch (spell->GetSpellInfo()->Id)
-            {
-                //Spurt 1-3
-                case 23110:
-                case 23109:
-                case 23099:
-                //Sturzflug 1-3
-                case 23145:
-                case 23147:
-                case 23148:
-                //Wutgeheul 1-4
-                case 24604:
-                case 24605:
-                case 24603:
-                case 24597:                
-                    return;
-                    break;
-            }
-        }
+        CharmInfo *pCharmInfo = me->GetCharmInfo();
+        SpellCastResult result = spell->CheckPetCast(target);
+
+        if (me->GetPower(Powers(spell->GetSpellInfo()->powerType)) < spell->GetSpellInfo()->manaCost)
+            result = SPELL_FAILED_NO_POWER;
 
         m_targetSpellStore.erase(m_targetSpellStore.begin() + index);
+        delete spell;
 
-        SpellCastTargets targets;
-
-        if (!target || !target->isAlive() || !me->IsWithinLOSInMap(target))
+        if (me->hasUnitState(UNIT_STAT_CASTING))
             return;
-        
-        targets.setUnitTarget(target);
-        if (!me->HasInArc(M_PI, target))
+
+        if (pCharmInfo && (me->canAttack(target) || me->IsFriendlyTo(target)) && (result == SPELL_FAILED_UNIT_NOT_INFRONT || result == SPELL_CAST_OK))
         {
-            me->SetInFront(target);
-            if (target->GetTypeId() == TYPEID_PLAYER)
-                me->SendCreateUpdateToPlayer((Player*)target);
-
-            if (m_owner && m_owner->GetTypeId() == TYPEID_PLAYER)
-                me->SendCreateUpdateToPlayer((Player*)m_owner);
+            pCharmInfo->HandleSpellActCommand(target->GetGUID(), spellId);
         }
-
-        me->AddCreatureSpellCooldown(spell->GetSpellInfo()->Id);
-
-        if (me->isPet())
-            ((Pet*)me)->CheckLearning(spell->GetSpellInfo()->Id);
-
-        spell->prepare(&targets);
+        else
+        {
+            me->SendPetCastFail(spellId, result);
+            if (!me->HasSpellCooldown(spellId))
+                me->SendPetClearCooldown(spellId);
+        }
     }
 
     while (!m_targetSpellStore.empty())
