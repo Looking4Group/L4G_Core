@@ -186,7 +186,8 @@ void CharmInfo::InitPossessCreateSpells()
             {
                 // add spell only if there are cooldown or global cooldown // TODO: find proper solution
                 const SpellEntry * tmpSpellEntry = sSpellStore.LookupEntry(spellid);
-                if (tmpSpellEntry && (tmpSpellEntry->RecoveryTime || tmpSpellEntry->StartRecoveryTime || tmpSpellEntry->CategoryRecoveryTime))
+                uint32 CastingTime = tmpSpellEntry ? !SpellMgr::IsChanneledSpell(tmpSpellEntry) ? SpellMgr::GetSpellBaseCastTime(tmpSpellEntry) : SpellMgr::GetSpellDuration(tmpSpellEntry) : 0;
+                if (tmpSpellEntry && (tmpSpellEntry->RecoveryTime || tmpSpellEntry->StartRecoveryTime || tmpSpellEntry->CategoryRecoveryTime || tmpSpellEntry->StartRecoveryCategory == 133 || CastingTime > 0))
                     AddSpellToActionBar(0, spellid, ACT_CAST);
             }
         }
@@ -241,8 +242,9 @@ void CharmInfo::InitCharmCreateSpells()
             else
                 newstate = ACT_CAST;
 
+            uint32 CastingTime = spellInfo ? !SpellMgr::IsChanneledSpell(spellInfo) ? SpellMgr::GetSpellBaseCastTime(spellInfo) : SpellMgr::GetSpellDuration(spellInfo) : 0;
             // add spell only if there are cooldown or global cooldown // TODO: find proper solution
-            if (spellInfo && (spellInfo->RecoveryTime || spellInfo->StartRecoveryTime || spellInfo->CategoryRecoveryTime))
+            if (spellInfo && (spellInfo->RecoveryTime || spellInfo->StartRecoveryTime || spellInfo->CategoryRecoveryTime || spellInfo->StartRecoveryCategory == 133 || CastingTime > 0))
                 AddSpellToActionBar(0, spellId, newstate);
         }
     }
@@ -393,7 +395,7 @@ void CharmInfo::HandleSpellActCommand(uint64 targetGUID, uint32 spellId)
         if (Unit *pTarget2 = targetGUID ? pTarget : spell->m_targets.getUnitTarget())
             m_unit->SetFacingToObject(pTarget2);
 
-        result = SPELL_CAST_OK;
+        result = spell->CheckPetCast(targetGUID ? pTarget : spell->m_targets.getUnitTarget());
     }
 
     if (result == SPELL_CAST_OK)
@@ -427,6 +429,18 @@ void CharmInfo::HandleSpellActCommand(uint64 targetGUID, uint32 spellId)
         //m_unit->GetMotionMaster()->MovementExpired(false);
 
         spell->prepare(&(spell->m_targets));
+
+        uint32 cooldown = SpellMgr::GetSpellRecoveryTime(spellInfo);
+        uint32 CategoryCooldown = spellInfo->CategoryRecoveryTime;
+        uint32 CastingTime = !SpellMgr::IsChanneledSpell(spellInfo) ? SpellMgr::GetSpellBaseCastTime(spellInfo) : SpellMgr::GetSpellDuration(spellInfo);
+
+        if (spellInfo->StartRecoveryCategory == 133 && CategoryCooldown == 0)
+            CategoryCooldown = 1500;
+
+        uint32 gcd = std::max(std::max(CategoryCooldown,cooldown), CastingTime);
+        GetCooldownMgr().AddGlobalCooldown(spellInfo, gcd);
+        GetCooldownMgr().AddSpellCategoryCooldown(spellInfo, gcd);
+        GetCooldownMgr().AddSpellIdCooldown(spellInfo, gcd);
     }
     else
     {

@@ -1081,6 +1081,19 @@ void Aura::_RemoveAura()
 {
     Unit* caster = GetCaster();
 
+    switch (m_spellProto->EffectApplyAuraName[m_effIndex])
+    {
+        case SPELL_AURA_MOD_CHARM:
+            if (caster)
+                m_target->RemoveCharmedOrPossessedBy(GetCaster());
+        case SPELL_AURA_MOD_POSSESS:
+            if (caster)
+                m_target->RemoveCharmedOrPossessedBy(GetCaster());
+        case SPELL_AURA_MOD_POSSESS_PET:
+            if (caster)
+                m_target->RemoveCharmedOrPossessedBy(GetCaster());
+    }
+
     if (caster && IsPersistent())
     {
         DynamicObject *dynObj = caster->GetDynObject(GetId(), GetEffIndex());
@@ -3935,6 +3948,9 @@ void Aura::HandleModPossess(bool apply, bool Real)
         HandleModCharm(apply, Real);
         return;
     }
+
+    if (caster && apply && caster->GetTypeId() == TYPEID_PLAYER && m_target->GetCharmerGUID())
+        return;
 
     if (apply)
     {

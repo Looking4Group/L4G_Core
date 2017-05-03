@@ -2455,6 +2455,9 @@ void Creature::AddCreatureSpellCooldown(uint32 spellid)
     uint32 cooldown = SpellMgr::GetSpellRecoveryTime(spellInfo);
     uint32 CategoryCooldown = spellInfo->CategoryRecoveryTime;
 
+    if (spellInfo->StartRecoveryCategory == 133 && CategoryCooldown == 0)
+        CategoryCooldown = 1500;
+
     if (isPet())
         if (Unit* Owner = GetOwner())
             if (Owner->GetTypeId() == TYPEID_PLAYER)
