@@ -5082,6 +5082,7 @@ void Aura::HandlePeriodicTriggerSpell(bool apply, bool Real)
             {
                 if (m_removeMode != AURA_REMOVE_BY_EXPIRE)
                     m_target->CastSpell(m_target, 29947, true, NULL, this);
+                break;
             }
         }
     }
