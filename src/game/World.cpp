@@ -1799,8 +1799,8 @@ void World::Update(uint32 diff)
         extmail_timer.Update(diff);
         if (extmail_timer.Passed())
         {
-            WorldSession::SendExternalMails();
             extmail_timer.Reset();
+            WorldSession::SendExternalMails();
         }
     }    
 
