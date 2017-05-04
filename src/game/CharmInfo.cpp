@@ -422,7 +422,6 @@ void CharmInfo::HandleSpellActCommand(uint64 targetGUID, uint32 spellId)
                 CategoryCooldown = 1500;
 
             uint32 gcd = std::max(CategoryCooldown,cooldown);
-            GetCooldownMgr().AddGlobalCooldown(spellInfo, gcd);
             GetCooldownMgr().AddSpellCategoryCooldown(spellInfo, CategoryCooldown > 0 ? CategoryCooldown : gcd);
             GetCooldownMgr().AddSpellIdCooldown(spellInfo, cooldown > 0 ? cooldown : gcd);
         }
