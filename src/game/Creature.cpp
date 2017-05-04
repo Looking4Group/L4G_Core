@@ -991,11 +991,14 @@ void Creature::prepareGossipMenu(Player *pPlayer,uint32 gossipid)
                         if (!isCanInteractWithBattleMaster(pPlayer,false))
                             cantalking=false;
                         break;
+                    case GOSSIP_OPTION_STABLEPET:
+                        if (getClass() != CLASS_HUNTER)
+                            cantalking=false;
+                        break;
                     case GOSSIP_OPTION_SPIRITGUIDE:
                     case GOSSIP_OPTION_INNKEEPER:
                     case GOSSIP_OPTION_BANKER:
                     case GOSSIP_OPTION_PETITIONER:
-                    case GOSSIP_OPTION_STABLEPET:
                     case GOSSIP_OPTION_TABARDDESIGNER:
                     case GOSSIP_OPTION_AUCTIONEER:
                         break;                              // no checks
