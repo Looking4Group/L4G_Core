@@ -295,3 +295,6 @@ INSERT INTO `script_texts` VALUES (-1532116, 'You\'ve got my attention, dragon. 
 UPDATE `creature_ai_scripts` SET `action3_type` = 0, `action3_param1` = 0, `action3_param2` = 0 WHERE `id` IN (1767008,1772908,2090104,2090105);
 UPDATE `creature_ai_scripts` SET `action2_type` = 0, `action2_param1` = 0, `action2_param2` = 0 WHERE `id` IN (1820404,1849306,1879412,1879413,2180906);
 
+-- Formula: Enchant Shield - Major Stamina, Formula: Runed Eternium Rod
+UPDATE `npc_vendor` SET `incrtime` = 10800 WHERE `item` IN (25849, 28282);
+
