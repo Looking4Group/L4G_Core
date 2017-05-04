@@ -412,7 +412,20 @@ void CharmInfo::HandleSpellActCommand(uint64 targetGUID, uint32 spellId)
                 pPet->SendPetAIReaction(charmerGUID);
         }
         else
+        {
             m_unit->SendPetAIReaction(charmerGUID);
+
+            uint32 cooldown = SpellMgr::GetSpellRecoveryTime(spellInfo);
+            uint32 CategoryCooldown = spellInfo->CategoryRecoveryTime;
+
+            if (spellInfo->StartRecoveryCategory == 133 && CategoryCooldown == 0)
+                CategoryCooldown = 1500;
+
+            uint32 gcd = std::max(CategoryCooldown,cooldown);
+            GetCooldownMgr().AddGlobalCooldown(spellInfo, gcd);
+            GetCooldownMgr().AddSpellCategoryCooldown(spellInfo, CategoryCooldown > 0 ? CategoryCooldown : gcd);
+            GetCooldownMgr().AddSpellIdCooldown(spellInfo, cooldown > 0 ? cooldown : gcd);
+        }
 
         Unit *pSpellTarget = spell->m_targets.getUnitTarget();
 
@@ -429,18 +442,6 @@ void CharmInfo::HandleSpellActCommand(uint64 targetGUID, uint32 spellId)
         //m_unit->GetMotionMaster()->MovementExpired(false);
 
         spell->prepare(&(spell->m_targets));
-
-        uint32 cooldown = SpellMgr::GetSpellRecoveryTime(spellInfo);
-        uint32 CategoryCooldown = spellInfo->CategoryRecoveryTime;
-        uint32 CastingTime = !SpellMgr::IsChanneledSpell(spellInfo) ? SpellMgr::GetSpellBaseCastTime(spellInfo) : SpellMgr::GetSpellDuration(spellInfo);
-
-        if (spellInfo->StartRecoveryCategory == 133 && CategoryCooldown == 0)
-            CategoryCooldown = 1500;
-
-        uint32 gcd = std::max(std::max(CategoryCooldown,cooldown), CastingTime);
-        GetCooldownMgr().AddGlobalCooldown(spellInfo, gcd);
-        GetCooldownMgr().AddSpellCategoryCooldown(spellInfo, gcd);
-        GetCooldownMgr().AddSpellIdCooldown(spellInfo, gcd);
     }
     else
     {
