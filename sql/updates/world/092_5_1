@@ -269,3 +269,25 @@ UPDATE `creature_template` SET `minlevel` = 70, `maxlevel` = 70, `minhealth` = 5
 -- Furious Mr. Pinchy should be hostile, player item summoned unit gets summoners faction adopted
 UPDATE `creature_template` SET `faction_A` = 16, `faction_H` = 16, `flags_extra` = 0 WHERE `entry` = 18846; -- 35
 
+DELETE FROM `script_texts` WHERE `entry` BETWEEN -1532135 AND -1532116;
+INSERT INTO `script_texts` VALUES (-1532135, 'emerges from the shadows...', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 2, 0, 0, 'hyakiss_the_lurker EMOTE_SPIDER_SPAWN');
+INSERT INTO `script_texts` VALUES (-1532134, 'howls through the halls...', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 2, 0, 0, 'rokad_the_ravager EMOTE_DOG_SPAWN');
+INSERT INTO `script_texts` VALUES (-1532133, 'flaps down from the ceiling...', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 2, 0, 0, 'shadikith_the_glider EMOTE_BAT_SPAWN');
+INSERT INTO `script_texts` VALUES (-1532132, 'cheats!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 3, 0, 0, 'echo_of_medivh EMOTE_CHEAT');
+INSERT INTO `script_texts` VALUES (-1532131, 'The halls of Karazhan shake, as the curse binding the doors of the Gamemaster\'s Hall is lifted.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 2, 0, 0, 'echo_of_medivh EMOTE_LIFT_CURSE');
+INSERT INTO `script_texts` VALUES (-1532130, 'takes a deep breath.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 3, 0, 0, 'nightbane EMOTE_DEEP_BREATH');
+INSERT INTO `script_texts` VALUES (-1532129, 'Insects! Let me show you my strength up close!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, 'nightbane SAY_LAND_PHASE_2');
+INSERT INTO `script_texts` VALUES (-1532128, 'Enough! I shall land and crush you myself!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, 'nightbane SAY_LAND_PHASE_1');
+INSERT INTO `script_texts` VALUES (-1532127, 'Miserable vermin. I shall exterminate you from the air!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, 'nightbane SAY_AIR_PHASE');
+INSERT INTO `script_texts` VALUES (-1532126, 'What fools! I shall bring a quick end to your suffering!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, 'nightbane SAY_AGGRO');
+INSERT INTO `script_texts` VALUES (-1532125, 'An ancient being awakens in the distance...', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 2, 0, 0, 'nightbane EMOTE_AWAKEN');
+INSERT INTO `script_texts` VALUES (-1532124, 'He should not have angered me. I must go... recover my strength now...', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 'image of medivh SAY_MEDIVH_8');
+INSERT INTO `script_texts` VALUES (-1532123, 'What have you done, wizard? This cannot be! I\'m burning from... within!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, 'arcanagos SAY_ARCANAGOS_7');
+INSERT INTO `script_texts` VALUES (-1532122, 'begins to cast a spell of great power, weaving his own essence into the magic.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 2, 0, 0, 'image of medivh EMOTE_CAST_SPELL');
+INSERT INTO `script_texts` VALUES (-1532121, 'You leave me no alternative. I will stop you by force if you wont listen to reason.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, 'arcanagos SAY_ARCANAGOS_6');
+INSERT INTO `script_texts` VALUES (-1532120, 'I do not know what you speak of, dragon... but I will not be bullied by this display of insolence. I\'ll leave Karazhan when it suits me!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, 'image of medivh SAY_MEDIVH_5');
+INSERT INTO `script_texts` VALUES (-1532119, 'A dark power seeks to use you, Medivh! If you stay, dire days will follow. You must hurry, we don\'t have much time!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, 'arcanagos SAY_ARCANAGOS_4');
+INSERT INTO `script_texts` VALUES (-1532118, 'You dare challenge me at my own dwelling? Your arrogance is astounding, even for a dragon.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, 'image of medivh SAY_MEDIVH_3');
+INSERT INTO `script_texts` VALUES (-1532117, 'Your dabbling in the arcane has gone too far, Medivh. You\'ve attracted the attention of powers beyond your understanding. You must leave Karazhan at once!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, 'arcanagos SAY_ARCANAGOS_2');
+INSERT INTO `script_texts` VALUES (-1532116, 'You\'ve got my attention, dragon. You\'ll find I\'m not as easily scared as the villagers below.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, 'image of medivh SAY_MEDIVH_1');
+
