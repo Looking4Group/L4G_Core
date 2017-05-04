@@ -263,3 +263,9 @@ INSERT INTO `creature_ai_scripts` VALUES
 
 UPDATE `instance_template` SET `reset_delay` = 3 WHERE `map` = 568;
 
+-- Benevolent Mr. Pinchy Update General Stats to those of Furious Mr. Pinchy, is spellsummoned adopts player stats
+UPDATE `creature_template` SET `minlevel` = 70, `maxlevel` = 70, `minhealth` = 5800, `maxhealth` = 5800, `minmana` = 3155, `maxmana` = 3155, `mindmg` = 20, `maxdmg` = 61, `attackpower` = 846 WHERE `entry` = 18845; -- 35
+
+-- Furious Mr. Pinchy should be hostile, player item summoned unit gets summoners faction adopted
+UPDATE `creature_template` SET `faction_A` = 16, `faction_H` = 16, `flags_extra` = 0 WHERE `entry` = 18846; -- 35
+
