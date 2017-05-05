@@ -1958,6 +1958,7 @@ struct npc_cannon_targetAI : public ScriptedAI
     uint64 CannonGUID;
     uint32 PartyTimer;
     uint8 Count;
+    float x, y, z, o;
 
     void Reset() 
     {
@@ -1966,6 +1967,9 @@ struct npc_cannon_targetAI : public ScriptedAI
         CannonGUID = 0;
         PartyTimer = 0;
         Count = 0;
+        o = me->GetOrientation();
+        me->GetPosition(x, y, z);
+        x = x+1.0f;
     }
 
     void SpellHit(Unit* caster, const SpellEntry* spell)
@@ -2018,6 +2022,8 @@ struct npc_cannon_targetAI : public ScriptedAI
                 summoned->CastSpell(summoned, SPELL_HOUND_AURA, true);
         }
 
+        summoned->UpdateGroundPositionZ(x, y, z);
+
         if (Creature* cannon = me->GetCreature(CannonGUID))
             summoned->AI()->AttackStart(cannon); 
     }
@@ -2035,9 +2041,9 @@ struct npc_cannon_targetAI : public ScriptedAI
                 }
 
                 if (roll_chance_i(20))
-                    me->SummonCreature(NPC_HOUND, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                    me->SummonCreature(NPC_HOUND, x, y, z, o, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 10000);
                 else
-                    me->SummonCreature(NPC_IMP, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                    me->SummonCreature(NPC_IMP, x, y, z, o, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 10000);
 
                 PartyTimer = 3000;
             }
