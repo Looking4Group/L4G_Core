@@ -298,8 +298,7 @@ struct boss_terestianAI : public ScriptedAI
                 if (pTarget->isAlive())
                 {
                     DoCast(pTarget, SPELL_SACRIFICE, true);
-                    //DoCast(pTarget, SPELL_SUMMON_DEMONCHAINS, true);
-                    m_creature->SummonCreature(NPC_DEMONCHAINS, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 21000);
+                    DoCast(pTarget, SPELL_SUMMON_DEMONCHAINS, true);
 
                     if (Unit* Chain = FindCreature(NPC_DEMONCHAINS, 100, me))
                         if (Creature* Chains = Chain->ToCreature())
