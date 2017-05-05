@@ -2908,6 +2908,7 @@ enum ScannerMasterBunny
     NPC_WYRM_FROM_BEYOND                        = 21796,
     GO_OSCILLATING_FREQUENCY_SCANNER            = 184926,
     SPELL_OSCILLATION_FIELD                     = 37408,
+    SPELL_OSCILLATING_FREQUENCY_SCANNER         = 37407,
     QUEST_GAUGING_THE_RESONANT_FREQUENCY        = 10594
 };
 
@@ -2928,6 +2929,7 @@ struct npc_oscillating_frequency_scanner_master_bunnyAI : public ScriptedAI
             me->SummonCreature(NPC_OSCILLATING_FREQUENCY_SCANNER_TOP_BUNNY, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ() + 0.5f, me->GetOrientation(), TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 210000);
             me->SummonGameObject(GO_OSCILLATING_FREQUENCY_SCANNER, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), me->GetOrientation(), 0, 0, 0, 0, 210);
             me->ForcedDespawn(210000);
+            me->CastSpell(me, SPELL_OSCILLATING_FREQUENCY_SCANNER, false);
             // Spell 37503 does not exist in dbc, manually spawning
             if (roll_chance_i(75))
                 me->SummonCreature(NPC_WYRM_FROM_BEYOND, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ() + 0.5f, me->GetOrientation(), TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 210000);

@@ -4478,6 +4478,8 @@ SpellCastResult Spell::CheckCast(bool strict)
                         break;
                     }
                 }
+                if (m_caster->GetDummyAura(37407)) // Oscillating Frequency Scanner)
+                    return SPELL_FAILED_NOT_HERE;
                 break;
             }
             // Don't make this check for SPELL_EFFECT_SUMMON_CRITTER, SPELL_EFFECT_SUMMON_WILD or SPELL_EFFECT_SUMMON_GUARDIAN.
