@@ -221,7 +221,7 @@ bool spell_oscillating_field(Unit *caster, Unit* pUnit, Item* pItem, GameObject*
     {
         player->AddAura(SPELL_OSCILLATION_FIELD, caster);
 
-        if (player->GetAuras().count(std::make_pair(SPELL_OSCILLATION_FIELD,0)) > 4 && player->GetQuestStatus(QUEST_GAUGING_THE_RESONANT_FREQUENCY) == QUEST_STATUS_INCOMPLETE)
+        if (player->GetAuras().count(std::make_pair(SPELL_OSCILLATION_FIELD,0)) > 3 && player->GetQuestStatus(QUEST_GAUGING_THE_RESONANT_FREQUENCY) == QUEST_STATUS_INCOMPLETE)
             player->CompleteQuest(QUEST_GAUGING_THE_RESONANT_FREQUENCY);
         return false;
     }

@@ -3947,6 +3947,9 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->AuraInterruptFlags = AURA_INTERRUPT_FLAG_DAMAGE | AURA_INTERRUPT_FLAG_CC | AURA_INTERRUPT_FLAG_HITBYSPELL;
                 spellInfo->CastingTimeIndex = 9;
                 break;
+            case 37407: // Oscillating Frequency Scanner
+                spellInfo->Effect[0] = SPELL_EFFECT_APPLY_AREA_AURA_FRIEND;
+                break;
             case 37408: // Oscillation Field
                 spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_STACK_FOR_DIFF_CASTERS;
                 break;
