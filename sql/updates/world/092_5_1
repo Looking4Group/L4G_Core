@@ -309,3 +309,5 @@ INSERT INTO `reference_loot_template` VALUES (25040, 29250, 0, 3, 1, 1, 0, 0, 0)
 INSERT INTO `reference_loot_template` VALUES (25040, 30534, 0, 3, 1, 1, 0, 0, 0);
 INSERT INTO `reference_loot_template` VALUES (25040, 30536, 0, 3, 1, 1, 0, 0, 0);
 
+UPDATE `item_template` SET `duration` = 604800 WHERE `entry` = 18597; -- 0
+
