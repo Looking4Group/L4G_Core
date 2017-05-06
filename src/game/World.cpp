@@ -1796,7 +1796,11 @@ void World::Update(uint32 diff)
     /// Handle external mail
     if (m_configs[CONFIG_EXTERNAL_MAIL] != 0)
     {
-        extmail_timer.Update(diff);
+        if (extmail_timer.GetCurrent() >= 0)
+            extmail_timer.Update(diff);
+        else
+            extmail_timer.SetCurrent(0);
+
         if (extmail_timer.Passed())
         {
             extmail_timer.Reset();
