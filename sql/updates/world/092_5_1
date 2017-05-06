@@ -317,3 +317,5 @@ DELETE FROM `creature_loot_template` WHERE `entry` IN (20885, 21590) AND `item` 
 INSERT INTO `creature_loot_template` VALUES (20885, 24308, 10, 0, 1, 1, 7, 197, 1);
 INSERT INTO `creature_loot_template` VALUES (21590, 24308, 10, 0, 1, 1, 7, 197, 1);
 
+UPDATE `gameobject` SET `position_z` = -10.0576 WHERE `guid` = 23107;
+
