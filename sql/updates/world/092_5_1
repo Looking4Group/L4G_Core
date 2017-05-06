@@ -311,3 +311,9 @@ INSERT INTO `reference_loot_template` VALUES (25040, 30536, 0, 3, 1, 1, 0, 0, 0)
 
 UPDATE `item_template` SET `duration` = 604800 WHERE `entry` = 18597; -- 0
 
+-- Whitemend Set 
+DELETE FROM `creature_loot_template` WHERE `entry` = 18053 AND `item` = 24311;
+DELETE FROM `creature_loot_template` WHERE `entry` IN (20885, 21590) AND `item` = 24308;
+INSERT INTO `creature_loot_template` VALUES (20885, 24308, 10, 0, 1, 1, 7, 197, 1);
+INSERT INTO `creature_loot_template` VALUES (21590, 24308, 10, 0, 1, 1, 7, 197, 1);
+
