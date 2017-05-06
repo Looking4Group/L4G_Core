@@ -1886,6 +1886,7 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
             WorldPacket data;
             BuildTeleportAckMsg(data, x, y, z, orientation);
             GetSession()->SendPacket(&data);
+            SetPosition(x, y, z, orientation, true);
         }
 
         if (getFollowingGM())
