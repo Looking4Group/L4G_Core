@@ -319,3 +319,5 @@ INSERT INTO `creature_loot_template` VALUES (21590, 24308, 10, 0, 1, 1, 7, 197, 
 
 UPDATE `gameobject` SET `position_z` = -10.0576 WHERE `guid` = 23107;
 
+DELETE FROM `npc_vendor` WHERE `item` IN (28379, 28380) AND `entry` = 12793;
+
