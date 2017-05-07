@@ -55,7 +55,7 @@ class TargetedMovementGeneratorMedium
 
         bool IsReachable() const
         {
-            return (_path) ? (_path->getPathType() & (PATHFIND_NORMAL | PATHFIND_SHORTCUT | PATHFIND_INCOMPLETE)) : true;
+            return (_path) ? (_path->getPathType() & PATHFIND_NORMAL) : true;
         }
 
         Unit* GetTarget() const { return _target.getTarget(); }
