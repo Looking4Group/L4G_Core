@@ -57,12 +57,8 @@ void TargetedMovementGeneratorMedium<T,D>::_setTargetLocation(T &owner)
             return;
         }
 
-        // this should prevent weird behavior on tight spaces like lines between columns and bridge on BEM
-        if (Pet* pet = owner.ToPet())
-            _target->GetPosition(x, y, z);
-        else
-            // to nearest random contact position
-            _target->GetRandomContactPoint(&owner, x, y, z, 0, MELEE_RANGE - 0.5f);
+        // to nearest random contact position
+        _target->GetRandomContactPoint(&owner, x, y, z, 0, owner.GetCombatReach());
     }
     else
     {
@@ -75,34 +71,25 @@ void TargetedMovementGeneratorMedium<T,D>::_setTargetLocation(T &owner)
         }
 
         // to at _offset distance from target and _angle from target facing
-        _target->GetNearPoint(x, y, z, owner.GetObjectSize(), _offset, _angle);
+        _target->GetNearPoint(x, y, z, 0, _offset, _angle);
     }
 
     if (!_path)
         _path = new PathFinder(&owner);
     // allow pets following their master to cheat while generating paths
     bool forceDest = (owner.GetObjectGuid().IsPet() && owner.hasUnitState(UNIT_STAT_FOLLOW));
-    bool result = _path->calculate(x, y, z, forceDest);
+    _path->calculate(x, y, z);
     if (_path->getPathType() & PATHFIND_NOPATH)
-    {
-        if (owner.GetObjectGuid().IsPet())
-        {
-            _path->BuildShortcut();
-            owner.addUnitState(UNIT_STAT_IGNORE_PATHFINDING);
-            _path = new PathFinder(&owner);
-        }
-    }
-    else if (owner.GetObjectGuid().IsPet())
-         owner.clearUnitState(UNIT_STAT_IGNORE_PATHFINDING);
-
-    if (!result)
         return;
 
     _targetReached = false;
     static_cast<MovementGenerator*>(this)->_recalculateTravel = false;
 
     Movement::MoveSplineInit init(owner);
-    init.MovebyPath(_path->getPath());
+    if (forceDest || _path->getPathType() & (PATHFIND_NOT_USING_PATH | PATHFIND_SHORTCUT))
+        init.MoveTo(x,y,z);
+    else
+        init.MovebyPath(_path->getPath());
     init.SetWalk(((D*)this)->EnableWalking(owner));
     init.Launch();
 }
@@ -152,12 +139,6 @@ bool TargetedMovementGeneratorMedium<T,D>::Update(T &owner, const uint32 & time_
         uint32 recheckTimer = sWorld.getConfig(CONFIG_TARGET_POS_RECHECK_TIMER);
         uint32 recalculateRange = sWorld.getConfig(CONFIG_TARGET_POS_RECALCULATION_RANGE);
 
-         if (owner.GetObjectGuid().IsPet())
-         {
-             recheckTimer /= 2;
-             recalculateRange /= 2;
-         }
-
         _recheckDistance.Reset(recheckTimer);
 
         float allowed_dist = _offset + owner.GetObjectBoundingRadius() + recalculateRange;
@@ -172,7 +153,7 @@ bool TargetedMovementGeneratorMedium<T,D>::Update(T &owner, const uint32 & time_
                 return false;
 
             if (owner.GetObjectGuid().IsPet() || owner.GetObjectGuid().IsCreature() && owner.IsStopped())
-                targetMoved = !owner.IsWithinMeleeRange(victim, MELEE_RANGE + _offset);
+                targetMoved = !owner.IsWithinMeleeRange(victim, MELEE_RANGE);
         }
 
         if (targetMoved)
