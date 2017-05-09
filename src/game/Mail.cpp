@@ -425,9 +425,12 @@ void WorldSession::SendExternalMails()
     QueryResultAutoPtr result = RealmDataDatabase.Query("SELECT * FROM `mail_external` ORDER by id ASC");
     if (!result)
     {
-        sLog.outDebug("EXTERNAL MAIL> No Mials to deliver!");
+        sLog.outDebug("EXTERNAL MAIL> No Mails to deliver!");
         return;
     }
+
+    uint32 last_id = 0;
+
     do
     {
         Field *fields = result->Fetch();
@@ -440,7 +443,7 @@ void WorldSession::SendExternalMails()
         uint32 ItemCount = fields[6].GetUInt32();
 
         Player *receiver = ObjectAccessor::FindPlayer(receiver_guid);
-        if (receiver != 0)
+        if (receiver != 0 && id != last_id)
         {
             sLog.outLog(LOG_CHAR, "EXTERNAL MAIL> Sending mail to %u, Item:%u", receiver->GetGUIDLow(), ItemID);
             uint32 itemTextId = !message.empty() ? sObjectMgr.CreateItemText(message) : 0;
@@ -464,7 +467,8 @@ void WorldSession::SendExternalMails()
                     .SendMailTo(MailReceiver(receiver), MailSender(MAIL_NORMAL, uint32(0), MAIL_STATIONERY_GM), MAIL_CHECK_MASK_RETURNED);
             }
         }
+        last_id = id;
     }
-    while(result -> NextRow());    
+    while(result -> NextRow());
 }
 
