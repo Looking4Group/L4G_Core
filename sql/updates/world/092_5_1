@@ -321,3 +321,15 @@ UPDATE `gameobject` SET `position_z` = -10.0576 WHERE `guid` = 23107;
 
 DELETE FROM `npc_vendor` WHERE `item` IN (28379, 28380) AND `entry` = 12793;
 
+-- Remove Dublicate Steampump Overseer
+DELETE FROM `creature` WHERE `guid` =  65679;
+
+-- Balance Drain Schematics Drop Chance
+DELETE FROM `creature_loot_template` WHERE `item` = 24330;
+INSERT INTO `creature_loot_template` VALUES (18088, 24330, 3, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (18089, 24330, 3, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (18340, 24330, 10, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (20088, 24330, 3, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (20089, 24330, 3, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (18123, 24330, 0.01, 0, 1, 1, 0, 0, 0);
+
