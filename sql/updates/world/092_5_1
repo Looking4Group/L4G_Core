@@ -336,3 +336,6 @@ INSERT INTO `creature_loot_template` VALUES (18123, 24330, 0.01, 0, 1, 1, 0, 0, 
 -- Dread Tactician, Sister of Grief, Pit Commander
 UPDATE `creature_template` SET `mechanic_immune_mask` = 1 WHERE `entry` IN (16960, 18945, 16959);
 
+DELETE FROM `npc_vendor` WHERE `item` = 33151;
+INSERT INTO `npc_vendor` VALUES (17585, 33151, 0, 0, 0);
+
