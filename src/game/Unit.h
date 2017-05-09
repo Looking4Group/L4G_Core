@@ -1575,6 +1575,10 @@ class LOOKING4GROUP_IMPORT_EXPORT Unit : public WorldObject
         bool IsStopped() const;
 
         virtual bool SetPosition(float x, float y, float z, float ang, bool teleport = false);
+        void SetDeathPosition(float x, float y, float z) { m_dpositionX = x; m_dpositionY = y; m_dpositionZ = z; }
+        virtual float GetPositionX() const { return isDead() ? m_dpositionX : WorldObject::GetPositionX(); }
+        virtual float GetPositionY() const { return isDead() ? m_dpositionY : WorldObject::GetPositionY(); }
+        virtual float GetPositionZ() const { return isDead() ? m_dpositionZ : WorldObject::GetPositionZ(); }
 
         void StopMoving();
 
@@ -1707,6 +1711,10 @@ class LOOKING4GROUP_IMPORT_EXPORT Unit : public WorldObject
         uint32 m_regenTimer;
 
         int32 m_meleeAPAttackerBonus;
+
+        float m_dpositionX;
+        float m_dpositionY;
+        float m_dpositionZ;
 
     public:
         void DisableSpline();
