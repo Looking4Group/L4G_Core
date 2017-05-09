@@ -3862,6 +3862,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->Mechanic = MECHANIC_HORROR;
                 break;
             case 8064: // Sleepy
+            case 29679: // Bad Poetry
                 spellInfo->Mechanic = MECHANIC_SLEEP;
                 break;
             case 29425: // Moroes Gouge
