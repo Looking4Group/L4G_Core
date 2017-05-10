@@ -347,3 +347,5 @@ INSERT INTO `creature_loot_template` VALUES (16807, 24312, 10, 0, 1, 1, 7, 197, 
 INSERT INTO `creature_loot_template` VALUES (20568, 24312, 10, 0, 1, 1, 7, 197, 1);
 INSERT INTO `creature_loot_template` VALUES (20657, 24309, 10, 0, 1, 1, 7, 197, 1);
 
+DELETE FROM `reference_loot_template` WHERE `item` = 24308;
+
