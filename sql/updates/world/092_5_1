@@ -339,3 +339,11 @@ UPDATE `creature_template` SET `mechanic_immune_mask` = 1 WHERE `entry` IN (1696
 DELETE FROM `npc_vendor` WHERE `item` = 33151;
 INSERT INTO `npc_vendor` VALUES (17585, 33151, 0, 0, 0);
 
+-- Move Spellstrike Hood to creature_loot_template
+DELETE FROM `reference_loot_template` WHERE `entry` = 50022 AND `item` = 24312;
+DELETE FROM `creature_loot_template` WHERE `item` IN (24312,24309);
+INSERT INTO `creature_loot_template` VALUES (18708, 24309, 10, 0, 1, 1, 7, 197, 1);
+INSERT INTO `creature_loot_template` VALUES (16807, 24312, 10, 0, 1, 1, 7, 197, 1);
+INSERT INTO `creature_loot_template` VALUES (20568, 24312, 10, 0, 1, 1, 7, 197, 1);
+INSERT INTO `creature_loot_template` VALUES (20657, 24309, 10, 0, 1, 1, 7, 197, 1);
+
