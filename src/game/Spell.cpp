@@ -3957,6 +3957,10 @@ SpellCastResult Spell::CheckCast(bool strict)
         if (GetSpellInfo()->TargetAuraStateNot && target->HasAuraState(AuraState(GetSpellInfo()->TargetAuraStateNot)))
             return SPELL_FAILED_TARGET_AURASTATE;
 
+        // Do not consume bandage with "recent bandaged" debuff
+        if (m_spellInfo->Mechanic == MECHANIC_BANDAGE && target->HasAura(11196, 0))
+            return SPELL_FAILED_TARGET_AURASTATE;
+
         if (target != m_caster)
         {
             // target state requirements (apply to non-self only), to allow cast affects to self like Dirty Deeds
