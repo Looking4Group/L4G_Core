@@ -62,7 +62,9 @@ enum Gossip_Option
     GOSSIP_OPTION_ARMORER           = 15,                   //UNIT_NPC_FLAG_ARMORER           = 16384,
     GOSSIP_OPTION_UNLEARNTALENTS    = 16,                   //UNIT_NPC_FLAG_TRAINER (bonus option for GOSSIP_OPTION_TRAINER)
     GOSSIP_OPTION_UNLEARNPETSKILLS  = 17,                   //UNIT_NPC_FLAG_TRAINER (bonus option for GOSSIP_OPTION_TRAINER)
-    GOSSIP_OPTION_OUTDOORPVP        = 18                    //added by code (option for outdoor pvp creatures)
+    GOSSIP_OPTION_OUTDOORPVP        = 18,                   //added by code (option for outdoor pvp creatures)
+    GOSSIP_OPTION_UNLEARNTALENTS_C  = 19,                   //Custom talent reset token feature
+    GOSSIP_OPTION_UNLEARNTALENTS_CB = 20                    //Gossip option to buy the custom talent reset token
 };
 
 enum Gossip_Guard

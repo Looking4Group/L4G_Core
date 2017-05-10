@@ -1753,6 +1753,12 @@ Network.KickOnBadPacket = 1
 #    NoResetTalentsCost
 #        Enable or disable no cost when reseting talents
 #
+#    CustomTalentResetToken
+#        Enable or disable the custom talent reset token. 
+#        This item has a duration of 30 days and allows the player to reset talents for free at the trainer until the duration runs out.
+#        Set to 0 to prevent players from being able to buy and use it. Set to 1 and it will be sold by class trainers.
+#        Default: 0 (Token not available to players)
+#
 #   ForbiddenMaps
 #       map ids that users below SEC_GAMEMASTER cannot enter, with delimiter ','
 #       Default: ""
@@ -1826,6 +1832,7 @@ PvPToken.MapAllowType = 4
 PvPToken.ItemID = 29434
 PvPToken.ItemCount = 1
 NoResetTalentsCost = 0
+CustomTalentResetToken = 0
 ShowKickInWorld = 0
 RecordUpdateTimeDiffInterval = 60000
 MinRecordUpdateTimeDiff = 10
