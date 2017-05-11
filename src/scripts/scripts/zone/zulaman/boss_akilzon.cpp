@@ -55,7 +55,7 @@ enum Akilzon
 
 struct boss_akilzonAI : public ScriptedAI
 {
-    boss_akilzonAI(Creature *c) : ScriptedAI(c)
+    boss_akilzonAI(Creature *c) : ScriptedAI(c), Summons(c)
     {
         m_creature->SetAggroRange(AGGRO_RANGE);
         pInstance = (c->GetInstanceData());
@@ -76,6 +76,7 @@ struct boss_akilzonAI : public ScriptedAI
 
     uint32 checkTimer;
     WorldLocation wLoc;
+    SummonList Summons;
 
     void Reset()
     {
@@ -111,8 +112,14 @@ struct boss_akilzonAI : public ScriptedAI
     void JustDied(Unit* Killer)
     {
         DoScriptText(SAY_DEATH, m_creature);
+        Summons.DespawnAll();
         if(pInstance)
             pInstance->SetData(DATA_AKILZONEVENT, DONE);
+    }
+
+    void JustSummoned(Creature* summoned)
+    {
+        Summons.Summon(summoned);
     }
 
     void KilledUnit(Unit* victim)
