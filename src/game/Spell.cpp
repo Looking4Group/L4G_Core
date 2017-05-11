@@ -2661,7 +2661,7 @@ void Spell::cast(bool skipCheck)
     }
 
     // Okay, everything is prepared. Now we need to distinguish between immediate and evented delayed spells
-    if (IsDelayedSpell() && !SpellMgr::IsChanneledSpell(GetSpellInfo()))
+    if (IsDelayedSpell() && !SpellMgr::IsChanneledSpell(GetSpellInfo()) && spellInfo->Effect[0] != SPELL_EFFECT_CHARGE)
     {
         // Remove used for cast item if need (it can be already NULL after TakeReagents call
         // in case delayed spell remove item at cast delay start
