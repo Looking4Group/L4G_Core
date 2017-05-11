@@ -351,3 +351,7 @@ DELETE FROM `reference_loot_template` WHERE `item` = 24308;
 
 UPDATE `creature` SET `spawndist` = 0, `MovementType` = 0 WHERE `guid` = 9464;
 
+UPDATE `creature_template` SET `AIName` = '' WHERE `entry` = 21960;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 3875;
+INSERT INTO `creature_ai_scripts` VALUES ('387501','3875','0','0','100','3','9200','13200','4000','6000','11','7057','4','32','0','0','0','0','0','0','0','0','Haunted Servitor - Cast Haunting Spirits');
+
