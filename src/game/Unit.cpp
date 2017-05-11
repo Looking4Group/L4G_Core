@@ -9944,7 +9944,7 @@ bool Unit::canDetectInvisibilityOf(Unit const* u, WorldObject const* viewPoint) 
 
 bool Unit::canDetectStealthOf(Unit const* target, WorldObject const* viewPoint, float distance) const
 {
-    if (hasUnitState(UNIT_STAT_STUNNED))
+    if (hasUnitState(UNIT_STAT_SIGHTLESS))
         return false;
 
     if (distance < 0.24f) //collision
