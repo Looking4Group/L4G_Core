@@ -30,7 +30,6 @@ protected:
 	bool m_keepInterResults;
 	bool m_buildAll;
 	float m_totalBuildTimeMs;
-	bool m_drawPortals;
 
 	unsigned char* m_triareas;
 	rcHeightfield* m_solid;
@@ -59,10 +58,10 @@ protected:
 		DRAWMODE_BOTH_CONTOURS,
 		DRAWMODE_CONTOURS,
 		DRAWMODE_POLYMESH,
-		DRAWMODE_POLYMESH_DETAIL,
+		DRAWMODE_POLYMESH_DETAIL,		
 		MAX_DRAWMODE
 	};
-	
+		
 	DrawMode m_drawMode;
 	
 	int m_maxTiles;
@@ -70,8 +69,8 @@ protected:
 	float m_tileSize;
 	
 	unsigned int m_tileCol;
-	float m_tileBmin[3];
-	float m_tileBmax[3];
+	float m_lastBuiltTileBmin[3];
+	float m_lastBuiltTileBmax[3];
 	float m_tileBuildTime;
 	float m_tileMemUsage;
 	int m_tileTriCount;
@@ -94,6 +93,7 @@ public:
 	virtual void handleRenderOverlay(double* proj, double* model, int* view);
 	virtual void handleMeshChanged(class InputGeom* geom);
 	virtual bool handleBuild();
+	virtual void collectSettings(struct BuildSettings& settings);
 	
 	void getTilePos(const float* pos, int& tx, int& ty);
 	
@@ -101,6 +101,11 @@ public:
 	void removeTile(const float* pos);
 	void buildAllTiles();
 	void removeAllTiles();
+
+private:
+	// Explicitly disabled copy constructor and copy assignment operator.
+	Sample_TileMesh(const Sample_TileMesh&);
+	Sample_TileMesh& operator=(const Sample_TileMesh&);
 };
 
 

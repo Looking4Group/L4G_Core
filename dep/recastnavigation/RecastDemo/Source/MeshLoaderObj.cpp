@@ -19,11 +19,12 @@
 #include "MeshLoaderObj.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <cstring>
 #define _USE_MATH_DEFINES
 #include <math.h>
 
 rcMeshLoaderObj::rcMeshLoaderObj() :
+	m_scale(1.0f),
 	m_verts(0),
 	m_tris(0),
 	m_normals(0),
@@ -51,9 +52,9 @@ void rcMeshLoaderObj::addVertex(float x, float y, float z, int& cap)
 		m_verts = nv;
 	}
 	float* dst = &m_verts[m_vertCount*3];
-	*dst++ = x;
-	*dst++ = y;
-	*dst++ = z;
+	*dst++ = x*m_scale;
+	*dst++ = y*m_scale;
+	*dst++ = z*m_scale;
 	m_vertCount++;
 }
 
@@ -77,7 +78,6 @@ void rcMeshLoaderObj::addTriangle(int a, int b, int c, int& cap)
 
 static char* parseRow(char* buf, char* bufEnd, char* row, int len)
 {
-	bool cont = false;
 	bool start = true;
 	bool done = false;
 	int n = 0;
@@ -89,7 +89,6 @@ static char* parseRow(char* buf, char* bufEnd, char* row, int len)
 		switch (c)
 		{
 			case '\\':
-				cont = true; // multirow
 				break;
 			case '\n':
 				if (start) break;
@@ -102,7 +101,6 @@ static char* parseRow(char* buf, char* bufEnd, char* row, int len)
 				if (start) break;
 			default:
 				start = false;
-				cont = false;
 				row[n++] = c;
 				if (n >= len-1)
 					done = true;
@@ -137,23 +135,42 @@ static int parseFace(char* row, int* data, int n, int vcnt)
 	return j;
 }
 
-bool rcMeshLoaderObj::load(const char* filename)
+bool rcMeshLoaderObj::load(const std::string& filename)
 {
 	char* buf = 0;
-	FILE* fp = fopen(filename, "rb");
+	FILE* fp = fopen(filename.c_str(), "rb");
 	if (!fp)
 		return false;
-	fseek(fp, 0, SEEK_END);
-	int bufSize = ftell(fp);
-	fseek(fp, 0, SEEK_SET);
+	if (fseek(fp, 0, SEEK_END) != 0)
+	{
+		fclose(fp);
+		return false;
+	}
+	long bufSize = ftell(fp);
+	if (bufSize < 0)
+	{
+		fclose(fp);
+		return false;
+	}
+	if (fseek(fp, 0, SEEK_SET) != 0)
+	{
+		fclose(fp);
+		return false;
+	}
 	buf = new char[bufSize];
 	if (!buf)
 	{
 		fclose(fp);
 		return false;
 	}
-	fread(buf, bufSize, 1, fp);
+	size_t readLen = fread(buf, bufSize, 1, fp);
 	fclose(fp);
+
+	if (readLen != 1)
+	{
+		delete[] buf;
+		return false;
+	}
 
 	char* src = buf;
 	char* srcEnd = buf + bufSize;
@@ -222,8 +239,6 @@ bool rcMeshLoaderObj::load(const char* filename)
 		}
 	}
 	
-	strncpy(m_filename, filename, sizeof(m_filename));
-	m_filename[sizeof(m_filename)-1] = '\0';
-	
+	m_filename = filename;
 	return true;
 }

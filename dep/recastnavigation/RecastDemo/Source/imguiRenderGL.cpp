@@ -17,7 +17,8 @@
 //
 
 #define _USE_MATH_DEFINES
-#include <math.h>
+#include <cmath>
+#include <cstdio>
 #include "imgui.h"
 #include "SDL.h"
 #include "SDL_opengl.h"
@@ -246,9 +247,22 @@ bool imguiRenderGLInit(const char* fontpath)
 	// Load font.
 	FILE* fp = fopen(fontpath, "rb");
 	if (!fp) return false;
-	fseek(fp, 0, SEEK_END);
-	int size = ftell(fp);
-	fseek(fp, 0, SEEK_SET);
+	if (fseek(fp, 0, SEEK_END) != 0)
+	{
+		fclose(fp);
+		return false;
+	}
+	long size = ftell(fp);
+	if (size < 0)
+	{
+		fclose(fp);
+		return false;
+	}
+	if (fseek(fp, 0, SEEK_SET) != 0)
+	{
+		fclose(fp);
+		return false;
+	}
 	
 	unsigned char* ttfBuffer = (unsigned char*)malloc(size); 
 	if (!ttfBuffer)
@@ -257,8 +271,14 @@ bool imguiRenderGLInit(const char* fontpath)
 		return false;
 	}
 	
-	fread(ttfBuffer, 1, size, fp);
+	size_t readLen = fread(ttfBuffer, 1, size, fp);
 	fclose(fp);
+	if (readLen != static_cast<size_t>(size))
+	{
+		free(ttfBuffer);
+		return false;
+	}
+
 	fp = 0;
 	
 	unsigned char* bmap = (unsigned char*)malloc(512*512);
