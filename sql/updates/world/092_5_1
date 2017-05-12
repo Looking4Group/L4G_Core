@@ -369,3 +369,5 @@ INSERT INTO `waypoint_data` VALUES (79421, 7, -52.6052, -552.869, -1.59247, 0, 0
 INSERT INTO `waypoint_data` VALUES (79421, 8, -60.5818, -566.1968, -1.4175, 0, 0, 0, 100, 0);
 INSERT INTO `waypoint_data` VALUES (79421, 9, -70.6825, -574.7322, 0.0300, 0, 0, 0, 100, 0);
 
+UPDATE `npc_vendor` SET `incrtime` = 10800 WHERE `item` IN (21901,21900);
+
