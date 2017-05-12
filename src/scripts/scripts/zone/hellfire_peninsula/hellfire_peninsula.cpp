@@ -2405,11 +2405,12 @@ bool go_moh_cage(Player* player, GameObject* go)
 
         Moh = GetClosestCreatureWithEntry(go, NPC_MOH, 5);
 
-        if (npc_mohAI* escortAI = CAST_AI(npc_mohAI, Moh->AI()))
-        {
-            escortAI->StartRun(player);
-            go->SetGoState(GO_STATE_ACTIVE);
-        }
+        if (Moh)
+            if (npc_mohAI* escortAI = CAST_AI(npc_mohAI, Moh->AI()))
+            {
+                escortAI->StartRun(player);
+                go->SetGoState(GO_STATE_ACTIVE);
+            }
 
         return false;
     }
@@ -2475,11 +2476,12 @@ bool go_jakk_cage(Player* player, GameObject* go)
 
         Jakk = GetClosestCreatureWithEntry(go, NPC_JAKK, 5);
 
-        if (npc_jakkAI* escortAI = CAST_AI(npc_jakkAI, Jakk->AI()))
-        {
-            escortAI->StartRun(player);
-            go->SetGoState(GO_STATE_ACTIVE);
-        }
+        if (Jakk)
+            if (npc_jakkAI* escortAI = CAST_AI(npc_jakkAI, Jakk->AI()))
+            {
+                escortAI->StartRun(player);
+                go->SetGoState(GO_STATE_ACTIVE);
+            }
 
         return false;
     }
