@@ -26,7 +26,7 @@ EndScriptData */
 #include "../../../creature/simple_ai.h"
 #include "Spell.h"
 
-#define AGGRO_RANGE			35.0
+#define AGGRO_RANGE			50.0
 
 #define SAY_INTRO                   -1548042
 #define SAY_AGGRO1                  -1548043
