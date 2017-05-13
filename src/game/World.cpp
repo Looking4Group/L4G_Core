@@ -1212,6 +1212,9 @@ void World::LoadConfigSettings(bool reload)
     m_configs[CONFIG_DAILY_MAX_PER_DAY] = sConfig.GetIntDefault("DailyQuest.MaxPerDay", 25);
 
     m_configs[CONFIG_CREATURE_RESTORE_STATE] = sConfig.GetIntDefault("Creature.RestoreStateTimer", 5000);
+
+    m_configs[CONFIG_BOOL_PATH_FIND_OPTIMIZE] = sConfig.GetBoolDefault("PathFinder.OptimizePath", true);
+    m_configs[CONFIG_BOOL_PATH_FIND_NORMALIZE_Z] = sConfig.GetBoolDefault("PathFinder.NormalizeZ", false);
 }
 
 /// Initialize the World
