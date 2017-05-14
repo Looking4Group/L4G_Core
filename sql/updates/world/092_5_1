@@ -385,3 +385,6 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('2117901','21179','2','0','100','0','50','0','0','0','1','-1459','0','0','11','37683','0','0','0','0','0','0','Demon Hunter Supplicant - Cast Evasion at 50% HP'),
 ('2117902','21179','2','0','100','0','25','0','0','0','11','32720','0','0','0','0','0','0','0','0','0','0','Demon Hunter Supplicant - Cast Sprint at 25% HP');
 
+DELETE FROM `creature_ai_texts` WHERE `entry` = -1459;
+INSERT INTO `creature_ai_texts` VALUES (-1459, 'begins intensely dodging incoming attacks.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 2, 0, 0, 'Demon Hunter Supplicant');
+
