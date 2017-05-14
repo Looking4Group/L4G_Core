@@ -379,7 +379,7 @@ DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17261;
 INSERT INTO `creature_ai_scripts` VALUES ('1726101','17261','1','0','100','0','30000','30000','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Restless Skeleton - Despawn OOC');
 
 -- Demon Hunter Supplicant 21179 & Netharel 21164
-UPDATE `creature_template` SET `flags_extra` = `flags_extra`|536870912 WHERE `entry` IN (21179,21164); -- Abuse Prevention due to Leashing Flaw
+UPDATE `creature_template` SET `flags_extra` = `flags_extra`|536870912 WHERE `entry` IN (21179,21164,21171,21168); -- Abuse Prevention due to Leashing Flaw
 DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 21179;
 INSERT INTO `creature_ai_scripts` VALUES
 ('2117901','21179','2','0','100','0','50','0','0','0','1','-1459','0','0','11','37683','0','0','0','0','0','0','Demon Hunter Supplicant - Cast Evasion at 50% HP'),
