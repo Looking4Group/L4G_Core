@@ -1458,3 +1458,11 @@ UPDATE `creature_template` SET `minhealth` = 8, `maxhealth` = 8 WHERE `entry` = 
 
 UPDATE `creature`, `creature_template` SET `creature`.`curhealth` = `creature_template`.`MinHealth`, `creature`.`curmana` = `creature_template`.`MinMana` WHERE `creature`.`id` = `creature_template`.`entry` AND `creature_template`.`RegenHealth` & 1;
 
+UPDATE `quest_template` SET `ReqSourceId1` = 30811, `ReqCreatureOrGoId1` = 21506, `ReqSpellCast1` = 37834 WHERE `entry` IN (10637, 10688); -- 30811 21506
+UPDATE `creature_template` SET `unit_flags` = 33344 WHERE `entry` = 21506; -- 2148270144
+UPDATE `creature_template_addon` SET `auras` = '37833 0 37833 1' WHERE `entry` = 21506; -- 37833 0 37833 1
+UPDATE `creature_addon` SET `auras` = '37833 0 37833 1' WHERE `guid` = 28167;
+
+-- Increase Quest Item Droprate
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 25 WHERE `entry` = 21503 AND `item` = 30811;
+
