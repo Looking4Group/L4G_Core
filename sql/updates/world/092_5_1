@@ -374,3 +374,7 @@ UPDATE `npc_vendor` SET `incrtime` = 10800 WHERE `item` IN (21901,21900, 22563);
 -- Illadari Point - Succubi Caster Position 02 20289
 UPDATE `creature_template` SET `modelid_A` = 15880, `modelid_H` = 15880, `faction_A` = 954, `faction_H` = 954, `unit_flags` = 33555200 WHERE `entry` = 20289;
 
+UPDATE `creature_template` SET `AIName` = 'EventAI' WHERE `entry` = 17261;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17261;
+INSERT INTO `creature_ai_scripts` VALUES ('1726101','17261','1','0','100','0','30000','30000','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Restless Skeleton - Despawn OOC');
+
