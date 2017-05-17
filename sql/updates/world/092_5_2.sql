@@ -16,3 +16,9 @@ UPDATE `creature_template` SET `AIName` = 'EventAI'  WHERE `entry` = 89;
 DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 89;
 INSERT INTO `creature_ai_scripts` VALUES ('8901','89','1','0','100','0','10000','10000','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Infernal - Despawn OOC');
 
+UPDATE `npc_vendor` SET `incrtime` = 3600 WHERE `item` IN (12163,16243,22901,22911); -- 7200
+UPDATE `npc_vendor` SET `incrtime` = 3600 WHERE `item` = 23574; -- 9000
+UPDATE `npc_vendor` SET `incrtime` = 3600 WHERE `item` IN (22563,21900,21901,25849,28282,22907); -- 10800
+UPDATE `npc_vendor` SET `incrtime` = 3600 WHERE `item` IN (25720,25848); -- 21600
+UPDATE `npc_vendor` SET `incrtime` = 3600 WHERE `item` IN (22562,22565,21894,23799,23811,23815,23816,23590,23591,23592,23593,21898,21899,23807,25846,25847); -- 43200
+
