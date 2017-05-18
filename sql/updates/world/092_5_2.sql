@@ -25,3 +25,6 @@ UPDATE `npc_vendor` SET `incrtime` = 3600 WHERE `item` IN (22562,22565,21894,237
 -- Add Deadly Throw to Cold Blood spell_affect
 UPDATE  `spell_affect` SET `SpellFamilyMask` = 66044691230  WHERE `entry` = 14177;
 
+-- Moonstalker Runt 2070
+UPDATE `creature_template` SET `minlevel` = 10, `maxlevel` = 11 WHERE `entry` = 2070; -- 16 17
+
