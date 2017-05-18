@@ -28,3 +28,6 @@ UPDATE  `spell_affect` SET `SpellFamilyMask` = 66044691230  WHERE `entry` = 1417
 -- Moonstalker Runt 2070
 UPDATE `creature_template` SET `minlevel` = 10, `maxlevel` = 11 WHERE `entry` = 2070; -- 16 17
 
+-- Shadow of Leotheras 21875
+UPDATE `creature_template` SET `flags_extra` = 1078001665 WHERE `entry` = 21875;
+
