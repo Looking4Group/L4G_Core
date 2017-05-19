@@ -44,3 +44,12 @@ DELETE FROM `npc_option` WHERE `id`=53;
 INSERT INTO `npc_option` (`id`, `npcflag`, `icon`, `action`, `box_money`, `option_text`, `box_text`) VALUES 
 ('53', '16', '2', '20', '2000000', 'Buy a talent reset token', 'This token lasts for 30 days and costs 200 gold. During that time you can reset your talents an unlimited amount of times for free by talking to your class trainer. Do you wish to buy this item?');
 
+-- Son of Cenarius 4057
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 4057;
+INSERT INTO `creature_ai_scripts` VALUES (405701, 4057, 1, 0, 100, 0, 0, 0, 0, 0, 11, 7993, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 'Son of Cenarius - Summon Treant Ally OOC');
+
+-- Treant Ally 5806
+UPDATE `creature_template` SET `AIName` = 'EventAI' WHERE `entry` = 5806;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 5806;
+INSERT INTO `creature_ai_scripts` VALUES (580601, 5806, 7, 0, 100, 0, 0, 0, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Treant Ally - Despawn on Evade');
+
