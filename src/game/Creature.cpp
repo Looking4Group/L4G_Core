@@ -1006,6 +1006,14 @@ void Creature::prepareGossipMenu(Player *pPlayer,uint32 gossipid)
                         if (!sOutdoorPvPMgr.CanTalkTo(pPlayer,this,(*gso)))
                             cantalking = false;
                         break;
+                    case GOSSIP_OPTION_UNLEARNTALENTS_C:
+                        if (!isCanTrainingAndResetTalentsOf(pPlayer) || !sWorld.getConfig(CONFIG_CUSTOM_TALENT_RESET_TOKEN) || !pPlayer->HasItemCount(1000021, 1)) // If player is not allowed to reset talents (below lvl 10 or at the wrong class trainer) or if player doesn't own the token
+                            cantalking = false;
+                        break;
+                    case GOSSIP_OPTION_UNLEARNTALENTS_CB:
+                        if (!isCanTrainingAndResetTalentsOf(pPlayer) || !sWorld.getConfig(CONFIG_CUSTOM_TALENT_RESET_TOKEN) || pPlayer->HasItemCount(1000021, 1)) // Don't allow the player to buy two tokens
+                            cantalking = false;
+                        break;
                     default:
                         sLog.outLog(LOG_DB_ERR, "Creature %u (entry: %u) have unknown gossip option %u",GetDBTableGUIDLow(),GetEntry(),gso->Action);
                         break;
@@ -1164,6 +1172,26 @@ void Creature::OnGossipSelect(Player* player, uint32 option)
         {
             BattleGroundTypeId bgTypeId = sBattleGroundMgr.GetBattleMasterBG(GetEntry());
             player->GetSession()->SendBattlegGroundList(ObjectGuid(GetGUID()), bgTypeId);
+            break;
+        }
+        case GOSSIP_OPTION_UNLEARNTALENTS_C:
+            player->PlayerTalkClass->CloseGossip();
+            player->resetTalents(true);
+            player->CastSpell(player, 14867, true); // Talent reset visual
+            break;
+        case GOSSIP_OPTION_UNLEARNTALENTS_CB:
+        {
+            if (!(player->GetMoney() >= gossip->BoxMoney))
+            {
+                player->SendBuyError(BUY_ERR_NOT_ENOUGHT_MONEY, 0, 0, 0);
+            }
+            else
+            {
+                player->AddItem(1000021, 1);
+                player->ModifyMoney(-int32(gossip->BoxMoney));
+            }
+
+            player->PlayerTalkClass->CloseGossip();
             break;
         }
         default:
