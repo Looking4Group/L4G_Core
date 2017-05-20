@@ -174,7 +174,10 @@ struct instance_serpentshrine_cavern : public ScriptedInstance
             case CONSOLE_BRIDGE: // Lady Vashj Bridge Console
                 BridgeConsoleGuid = go->GetGUID();
                 if ((GetData(DATA_HYDROSS_EVENT) == SPECIAL) && (GetData(DATA_LURKER_EVENT) == SPECIAL) && (GetData(DATA_LEOTHERAS_EVENT) == SPECIAL) && (GetData(DATA_KARATHRESS_EVENT) == SPECIAL) && (GetData(DATA_MOROGRIM_EVENT) == SPECIAL))
+                {
                     HandleGameObject(0, true, go);
+                    go->SetLootState(GO_ACTIVATED);
+                }
                 break;
             case 184203: // Doodad_Coilfang_Raid_Bridge_Part01
                 BridgePartGuids[0] = go->GetGUID();
