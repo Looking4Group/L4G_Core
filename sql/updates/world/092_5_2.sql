@@ -53,3 +53,5 @@ UPDATE `creature_template` SET `AIName` = 'EventAI' WHERE `entry` = 5806;
 DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 5806;
 INSERT INTO `creature_ai_scripts` VALUES (580601, 5806, 7, 0, 100, 0, 0, 0, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Treant Ally - Despawn on Evade');
 
+UPDATE `petcreateinfo_spell` SET `spell2` = 27349 WHERE `entry` = 21042; -- 27051
+
