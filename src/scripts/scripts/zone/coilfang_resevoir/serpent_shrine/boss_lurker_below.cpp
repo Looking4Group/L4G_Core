@@ -285,6 +285,7 @@ struct boss_the_lurker_belowAI : public BossAI
 
         instance->SetData(DATA_LURKER_EVENT, DONE);
         me->RemoveAurasDueToSpell(SPELL_SUBMERGE);
+        me->SetVisibility(VISIBILITY_ON);
     }
 
     void SummonAdds()
