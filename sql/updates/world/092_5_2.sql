@@ -55,3 +55,6 @@ INSERT INTO `creature_ai_scripts` VALUES (580601, 5806, 7, 0, 100, 0, 0, 0, 0, 0
 
 UPDATE `petcreateinfo_spell` SET `spell2` = 27349 WHERE `entry` = 21042; -- 27051
 
+-- Quest 9719 should be available to both factions.
+UPDATE `quest_template` SET `RequiredRaces` = 0 WHERE  `entry` = 9719; -- 1101
+
