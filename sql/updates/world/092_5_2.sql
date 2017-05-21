@@ -74,3 +74,16 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('1812401','18124','0','0','100','1','6000','11000','8000','14000','11','35235','0','0','0','0','0','0','0','0','0','0','Withered Giant - Cast Osmosis');
 -- (1812401, 18124, 0, 0, 100, 1, 6000, 6000, 10000, 10000, 11, 35235, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Withered Giant - Cast Osmosis');
 
+UPDATE `creature` SET `spawntimesecs` = 180 WHERE `id` = 22355;
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 22355;
+INSERT INTO `creature_ai_scripts` VALUES
+('2235501','22355','4','0','100','0','0','0','0','0','31','1','6','0','0','0','0','0','0','0','0','0','Netherweb Victim - Choose Random Phase on Aggro'),
+('2235502','22355','6','62','90','0','0','0','0','0','12','21242','0','30000','0','0','0','0','0','0','0','0','Netherweb Victim - Summon Auchenai Death-Speaker on Death (Phase 1)'),
+('2235503','22355','6','61','90','0','0','0','0','0','12','18470','0','30000','0','0','0','0','0','0','0','0','Netherweb Victim - Summon Bonelasher on Death (Phase 2)'),
+('2235504','22355','6','59','90','0','0','0','0','0','12','21661','0','30000','0','0','0','0','0','0','0','0','Netherweb Victim - Summon Cabal Skirmisher on Death (Phase 3)'),
+('2235505','22355','6','55','90','0','0','0','0','0','12','16805','0','30000','0','0','0','0','0','0','0','0','Netherweb Victim - Summon Broken Skeleton on Death (Phase 4)'),
+('2235506','22355','6','47','90','0','0','0','0','0','12','18452','0','30000','0','0','0','0','0','0','0','0','Netherweb Victim - Summon Skithian Dreadhawk on Death (Phase 5)'),
+('2235507','22355','6','31','90','0','0','0','0','0','12','22459','0','60000','0','0','0','0','0','0','0','0','Netherweb Victim - Summon Freed Sha\'tar Warrior on Death (Phase 6)'),
+('2235508','22355','6','0','10','0','0','0','0','0','12','22459','0','60000','0','0','0','0','0','0','0','0','Netherweb Victim - Summon Freed Sha\'tar Warrior on Death');
+
