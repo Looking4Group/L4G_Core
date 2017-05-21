@@ -90,3 +90,6 @@ INSERT INTO `creature_ai_scripts` VALUES
 -- Eredar Sorcerer 25033 
 UPDATE `creature_template` SET `flags_extra` = 64 WHERE `entry` = 25033;
 
+-- Coilskar Assassin 21044
+UPDATE `creature_template` SET `equipment_id` = 1571 WHERE `entry` = 21044;
+
