@@ -291,6 +291,10 @@ void PetAI::UpdateAI(const uint32 diff)
 
             //targetHasCC = _CheckTargetCC(me->getVictim());
             // not required to be stopped case
+			
+			// Owner should be set in combat if pet attacks 
+			if (Unit* owner = me->GetOwner())
+			owner->SetInCombatWith(target);
 
             if (me->GetCurrentSpellId() != 6358 && !m_creature->hasUnitState(UNIT_STAT_CASTING))
                 DoMeleeAttackIfReady();

@@ -5005,7 +5005,7 @@ void Spell::EffectLearnPetSpell(uint32 i)
     pet->learnSpell(learn_spellproto->Id);
 
     pet->SavePetToDB(PET_SAVE_AS_CURRENT);
-    _player->PetSpellInitialize();
+    // _player->PetSpellInitialize(); -- action bar not removed at death and not required send at revive
 }
 
 void Spell::EffectTaunt(uint32 /*i*/)
