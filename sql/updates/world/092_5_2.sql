@@ -87,3 +87,6 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('2235507','22355','6','31','90','0','0','0','0','0','12','22459','0','60000','0','0','0','0','0','0','0','0','Netherweb Victim - Summon Freed Sha\'tar Warrior on Death (Phase 6)'),
 ('2235508','22355','6','0','10','0','0','0','0','0','12','22459','0','60000','0','0','0','0','0','0','0','0','Netherweb Victim - Summon Freed Sha\'tar Warrior on Death');
 
+-- Eredar Sorcerer 25033 
+UPDATE `creature_template` SET `flags_extra` = 64 WHERE `entry` = 25033;
+
