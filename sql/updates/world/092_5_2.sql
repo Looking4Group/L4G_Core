@@ -58,3 +58,19 @@ UPDATE `petcreateinfo_spell` SET `spell2` = 27349 WHERE `entry` = 21042; -- 2705
 -- Quest 9719 should be available to both factions.
 UPDATE `quest_template` SET `RequiredRaces` = 0 WHERE  `entry` = 9719; -- 1101
 
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN (18124, 19402, 20324);
+INSERT INTO `creature_ai_scripts` VALUES
+-- Parched Hydra
+('2032401','20324','9','0','75','1','0','5','9000','14000','11','35236','1','0','0','0','0','0','0','0','0','0','Parched Hydra - Cast Heat Wave'),
+-- (2032401, 20324, 0, 0, 75, 1, 1000, 1000, 6000, 6000, 11, 35236, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Parched Hydra - Cast Heat Wave');
+
+-- Withered Bog Lord
+('1940201','19402','9','0','75','1','0','5','12000','16000','11','35238','1','0','0','0','0','0','0','0','0','0','Withered Bog Lord - Cast War Stomp'),
+('1940202','19402','0','0','100','1','6000','11000','8000','14000','11','35235','0','0','0','0','0','0','0','0','0','0','Withered Bog Lord - Cast Osmosis'),
+-- (1940201, 19402, 0, 0, 100, 1, 6000, 6000, 10000, 10000, 11, 35235, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Withered Bog Lord - Cast Osmosis');
+-- (1940202, 19402, 0, 0, 75, 1, 3000, 3000, 10000, 10000, 11, 35238, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Withered Bog Lord - Cast War Stomp');
+
+-- Withered Giant
+('1812401','18124','0','0','100','1','6000','11000','8000','14000','11','35235','0','0','0','0','0','0','0','0','0','0','Withered Giant - Cast Osmosis');
+-- (1812401, 18124, 0, 0, 100, 1, 6000, 6000, 10000, 10000, 11, 35235, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Withered Giant - Cast Osmosis');
+
