@@ -93,3 +93,10 @@ UPDATE `creature_template` SET `flags_extra` = 64 WHERE `entry` = 25033;
 -- Coilskar Assassin 21044
 UPDATE `creature_template` SET `equipment_id` = 1571 WHERE `entry` = 21044;
 
+
+-- Set 20145  Level 60 doesnt matter as spellsummoned
+UPDATE `creature_template` SET `minlevel`='60',`maxlevel`='60' WHERE `entry` = '20145';
+
+-- Set 20143 Invis for Players
+UPDATE `creature_template` SET `modelid_A` = 18684, `modelid_H` = 18684, `minlevel`='60',`maxlevel`='60', `unit_flags` = 33554688, `flags_extra` = 2, `maxdmg` = 60 WHERE `entry` = '20143';
+
