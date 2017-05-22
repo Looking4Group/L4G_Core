@@ -113,3 +113,27 @@ DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 22369;
 INSERT INTO `creature_ai_scripts` VALUES
 ('2236901','22369','1','0','100','1','29000','31000','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Dread Relic Thrall - Despawn OOC');
 
+-- Farahlon Giant 18885
+-- missing summoning spell with included shrink component from dbc
+UPDATE `creature_template` SET `AIName` = 'EventAI' WHERE `entry` = 18885; -- 277 623
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 18885;
+INSERT INTO `creature_ai_scripts` VALUES
+('1888501','18885','2','0','100','0','75','0','0','0','12','21077','1','0','0','0','0','0','0','0','0','0','Farahlon Giant - Summon Farahlon Shardling and Cast Shrink at 75% HP'),
+('1888502','18885','2','0','100','0','50','0','0','0','12','21077','1','0','0','0','0','0','0','0','0','0','Farahlon Giant - Summon Farahlon Shardling and Cast Shrink at 50% HP'),
+('1888503','18885','2','0','100','0','25','0','0','0','12','21077','1','0','0','0','0','0','0','0','0','0','Farahlon Giant - Summon Farahlon Shardling and Cast Shrink at 25% HP');
+
+-- Farahlon Breaker 18886
+-- missing summoning spell with included shrink component from dbc
+UPDATE `creature_template` SET `AIName` = 'EventAI' WHERE `entry` = 18886; -- 303 684
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 18886;
+INSERT INTO `creature_ai_scripts` VALUES
+('1888601','18886','2','0','100','0','75','0','0','0','12','21078','1','0','0','0','0','0','0','0','0','0','Farahlon Breaker - Summon Farahlon Shardling and Cast Shrink at 75% HP'),
+('1888602','18886','2','0','100','0','50','0','0','0','12','21078','1','0','0','0','0','0','0','0','0','0','Farahlon Breaker - Summon Farahlon Shardling and Cast Shrink at 50% HP'),
+('1888603','18886','2','0','100','0','25','0','0','0','12','21078','1','0','0','0','0','0','0','0','0','0','Farahlon Breaker - Summon Farahlon Shardling and Cast Shrink at 25% HP');
+
+-- Farahlon Crumbler 21077
+UPDATE `creature_template` SET `minhealth` = 4057, `maxhealth` = 4192 WHERE `entry` = 21077;
+
+-- Farahlon Shardling 21078
+UPDATE `creature_template` SET `minhealth` = 7591, `maxhealth` = 7591,`faction_A` = 778, `faction_H` = 778 WHERE `entry` = 21078;
+
