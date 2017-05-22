@@ -2447,12 +2447,15 @@ bool Player::IsGroupVisiblefor (Player* p) const
 
 bool Player::IsInSameGroupWith(Player const* p) const
 {
-    return p == this || (GetGroup() != nullptr && GetGroup() == p->GetGroup());
+    return  p == this || GetGroup() != nullptr && 
+    GetGroup() == p->GetGroup() &&
+    GetGroup()->SameSubGroup((Player*)this, (Player*)p);
 }
 
 bool Player::IsInSameRaidWith(Player const* p) const
 {
-    return p == this || (GetGroup() != nullptr && GetGroup() == p->GetGroup());
+    return p == this || (GetGroup() != nullptr &&
+    GetGroup() == p->GetGroup());
 }
 
 ///- If the player is invited, remove him. If the group if then only 1 person, disband the group.
