@@ -24,3 +24,6 @@ ALTER TABLE `guild_bank_eventlog_history`
 MODIFY COLUMN `LogGuid`  int(11) UNSIGNED NOT NULL AUTO_INCREMENT FIRST ,
 DROP PRIMARY KEY,
 ADD PRIMARY KEY (`LogGuid`);
+
+ALTER TABLE `guild_bank_eventlog_history`
+MODIFY COLUMN `LogGuid`  int(11) UNSIGNED NOT NULL DEFAULT 0 FIRST ;
