@@ -2024,3 +2024,7 @@ INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`
 (@PATH,20,4811.917,2533.514,111.25555,0,0,0,100,0),
 (@PATH,21,4819.647,2537.184,110.34905,0,0,0,100,0);
 
+DELETE FROM `npc_vendor` WHERE `item` = 22911;
+INSERT INTO `npc_vendor` VALUES (19042, 22911, 1, 3600, 0);
+INSERT INTO `npc_vendor` VALUES (19837, 22911, 1, 3600, 0);
+
