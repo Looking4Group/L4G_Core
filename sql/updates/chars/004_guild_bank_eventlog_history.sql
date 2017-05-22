@@ -3,7 +3,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 -- Table structure for guild_bank_eventlog_history
 -- ----------------------------
-DROP TABLE IF EXISTS `guild_bank_eventlog_log_history`;
+DROP TABLE IF EXISTS `guild_bank_eventlog_history`;
 CREATE TABLE `guild_bank_eventlog_history` (
   `guildid` int(11) unsigned NOT NULL DEFAULT '0',
   `LogGuid` int(11) unsigned NOT NULL DEFAULT '0',
