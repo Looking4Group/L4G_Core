@@ -100,3 +100,16 @@ UPDATE `creature_template` SET `minlevel`='60',`maxlevel`='60' WHERE `entry` = '
 -- Set 20143 Invis for Players
 UPDATE `creature_template` SET `modelid_A` = 18684, `modelid_H` = 18684, `minlevel`='60',`maxlevel`='60', `unit_flags` = 33554688, `flags_extra` = 2, `maxdmg` = 60 WHERE `entry` = '20143';
 
+DELETE FROM `creature_questrelation` WHERE `quest` = 10877;
+INSERT INTO `creature_questrelation` VALUES (22456, 10877);
+
+-- Massive Treasure Chest Quest 10877
+UPDATE `gameobject` SET `spawntimesecs`='301' WHERE `guid` = 26109;
+UPDATE `gameobject_template` SET `data2`='300',`data3`='1' WHERE `entry` = 185220;
+
+-- Dread Relic Thrall
+UPDATE `creature_template` SET `minlevel`='66',`maxlevel`='69',`armor`='4200',`speed`='1.20',`mindmg`='100',`maxdmg`='200',`AIName`='EventAI' WHERE `entry` = 22369;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 22369;
+INSERT INTO `creature_ai_scripts` VALUES
+('2236901','22369','1','0','100','1','29000','31000','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Dread Relic Thrall - Despawn OOC');
+
