@@ -24,6 +24,8 @@
 int ACRequest::call()
 {
     Player *pPlayer = sObjectMgr.GetPlayer(m_ownerGUID);
+    Player *lastPlayer;
+
     if (!pPlayer)
         return -1;
 
@@ -65,11 +67,13 @@ int ACRequest::call()
         if (!pPlayer->HasUnitMovementFlag(MOVEFLAG_FALLING | MOVEFLAG_FALLINGFAR | MOVEFLAG_SPLINE_ELEVATION | MOVEFLAG_SAFE_FALL | MOVEFLAG_SPLINE_ENABLED | MOVEFLAG_ONTRANSPORT | SPLINEFLAG_FLYINGING) 
             && pPlayer->isAlive())
         {
-            sWorld.SendGMText(LANG_ANTICHEAT, pPlayer->GetName(), pPlayer->GetName());
+            if (pPlayer == lastPlayer) // Only notify GM if the same player was detected twice (to prevent false positive spam)
+                sWorld.SendGMText(LANG_ANTICHEAT, pPlayer->GetName(), pPlayer->GetName());
+
             sLog.outLog(LOG_CHEAT, "Player %s (GUID: %u / ACCOUNT_ID: %u) possible Speed Hack.", 
                 pPlayer->GetName(), pPlayer->GetGUIDLow(), pPlayer->GetSession()->GetAccountId());
             // pPlayer->GetSession()->KickPlayer(); deactivated for further testing on live
-
+            lastPlayer = pPlayer;
             return -1;
         }
     }
