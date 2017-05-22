@@ -2982,6 +2982,8 @@ void SpellMgr::LoadSpellCustomAttr()
                     spellInfo->EffectRadiusIndex[2] = 13;
                     spellInfo->EffectTriggerSpell[2] = 39897;
                 }
+                else if (spellInfo->SpellIconID == 1874)  //Holy Nova
+                    spellInfo->AttributesEx |= SPELL_ATTR_EX_NO_THREAT;
                 break;
             }
             case SPELLFAMILY_MAGE:
