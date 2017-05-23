@@ -1233,6 +1233,9 @@ struct npc_amanishi_scoutAI : public ScriptedAI
 
     void EnterCombat(Unit *who)
     {
+        me->SetVisibility(VISIBILITY_ON);
+        me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PACIFIED);
+        me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
         DoScriptText(YELL_SCOUT_AGGRO, me);
         me->SetWalk(false);
         Unit *drums = FindCreature(22515, 50, me);
@@ -1256,7 +1259,7 @@ struct npc_amanishi_scoutAI : public ScriptedAI
                 if (urand(0, 100) < 25)
                 DoCast(me, SPELL_SUMMON_SENTRIES3, false);
 
-                SummonTimer = urand(2000, 3000);
+                SummonTimer = 5000;
             } else
                 SummonTimer -= diff;
         }
