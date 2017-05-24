@@ -64,7 +64,8 @@ enum Gossip_Option
     GOSSIP_OPTION_UNLEARNPETSKILLS  = 17,                   //UNIT_NPC_FLAG_TRAINER (bonus option for GOSSIP_OPTION_TRAINER)
     GOSSIP_OPTION_OUTDOORPVP        = 18,                   //added by code (option for outdoor pvp creatures)
     GOSSIP_OPTION_UNLEARNTALENTS_C  = 19,                   //Custom talent reset token feature
-    GOSSIP_OPTION_UNLEARNTALENTS_CB = 20                    //Gossip option to buy the custom talent reset token
+    GOSSIP_OPTION_UNLEARNTALENTS_CB = 20,                   //Gossip option to buy the custom talent reset token
+    GOSSIP_OPTION_ROGUE_LETTER      = 21                    //Gossip option to get item 17126 for quest 6681 from any rogue trainer
 };
 
 enum Gossip_Guard
