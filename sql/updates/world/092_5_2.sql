@@ -2028,3 +2028,11 @@ DELETE FROM `npc_vendor` WHERE `item` = 22911;
 INSERT INTO `npc_vendor` VALUES (19042, 22911, 1, 3600, 0);
 INSERT INTO `npc_vendor` VALUES (19837, 22911, 1, 3600, 0);
 
+UPDATE `creature` SET `spawntimesecs` = 120 WHERE `id` IN (19723,19724);
+
+UPDATE `creature_template` SET `AIName` = 'EventAI' WHERE `entry` IN (19723,19724);
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` IN (19723,19724);
+INSERT INTO `creature_ai_scripts` VALUES
+('1972301','19723','8','0','100','0','34526','-1','0','0','104','181915','140','0','37','0','0','0','0','0','0','0','Invis BE Ballista - Summon Fire Go and Die on Burn Blood Elf Equipment Spellhit'),
+('1972401','19724','8','0','100','0','34526','-1','0','0','104','181915','140','0','37','0','0','0','0','0','0','0','Invis BE Tent - Summon Fire Go and Die on Burn Blood Elf Equipment Spellhit');
+
