@@ -24,25 +24,28 @@ EndScriptData */
 #include "precompiled.h"
 #include "def_old_hillsbrad.h"
 
-#define SAY_ENTER                   -1560000
-#define SAY_TAUNT1                  -1560001
-#define SAY_TAUNT2                  -1560002
-#define SAY_SLAY1                   -1560003
-#define SAY_SLAY2                   -1560004
-#define SAY_DEATH                   -1560005
+enum CaptainSkarloc
+{
+    SAY_ENTER               =    -1560000,
+    SAY_TAUNT1              =    -1560001,
+    SAY_TAUNT2              =    -1560002,
+    SAY_SLAY1               =    -1560003,
+    SAY_SLAY2               =    -1560004,
+    SAY_DEATH               =    -1560005,
 
-#define SPELL_HOLY_LIGHT            29427
-#define SPELL_CLEANSE               29380
-#define SPELL_HAMMER_OF_JUSTICE     13005
-#define SPELL_HOLY_SHIELD           31904
-#define SPELL_DEVOTION_AURA         8258
-#define SPELL_CONSECRATION          38385
+    SPELL_HOLY_LIGHT        =       29427,
+    SPELL_CLEANSE           =       29380,
+    SPELL_HAMMER_OF_JUSTICE =       13005,
+    SPELL_HOLY_SHIELD       =       31904,
+    SPELL_DEVOTION_AURA     =        8258,
+    SPELL_CONSECRATION      =       38385,
 
-#define NPC_THRALL                  17876
-#define C_WARDEN                    17833
-#define C_VETERAN                   17860
-#define SKARLOC_MOUNT               18798
-#define SKARLOC_MOUNT_MODEL         18223
+    C_THRALL                =       17876,
+    C_WARDEN                =       17833,
+    C_VETERAN               =       17860,
+    SKARLOC_MOUNT           =       18798,
+    SKARLOC_MOUNT_MODEL     =       18223
+};
 
 struct boss_captain_skarlocAI : public ScriptedAI
 {
@@ -76,12 +79,12 @@ struct boss_captain_skarlocAI : public ScriptedAI
         Add1GUID = 0;
         Add2GUID = 0;
         IntroTimer = 20000;
-        Holy_Light_Timer = 30000;
-        Cleanse_Timer = 10000;
-        HammerOfJustice_Timer = 60000;
-        HolyShield_Timer = 240000;
+        Holy_Light_Timer = urand(13300, 15700);
+        Cleanse_Timer = urand(10000, 14000);
+        HammerOfJustice_Timer = urand(2200, 6400);
+        HolyShield_Timer = urand(2200, 4300);
         DevotionAura_Timer = 3000;
-        Consecration_Timer = 8000;
+        Consecration_Timer = HeroicMode ? 8000 : 0;
         me->SetReactState(REACT_PASSIVE);
         me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
         me->Mount(SKARLOC_MOUNT_MODEL);
@@ -126,7 +129,7 @@ struct boss_captain_skarlocAI : public ScriptedAI
                     me->Unmount();
 
                     if (Creature* Thrall = me->GetMap()->GetCreature(ThrallinGUID))
-                        Thrall->SummonCreature(SKARLOC_MOUNT,2047.90f, 254.85f, 62.822f, me->GetOrientation(), TEMPSUMMON_DEAD_DESPAWN, 5000);
+                        Thrall->SummonCreature(SKARLOC_MOUNT, 2047.90f, 254.85f, 62.822f, me->GetOrientation(), TEMPSUMMON_DEAD_DESPAWN, 5000);
                             
                     me->SetWalk(true);
                     me->GetMotionMaster()->MovePoint(0, 2056.80f, 240.81f, 63.538f);
@@ -226,7 +229,7 @@ struct boss_captain_skarlocAI : public ScriptedAI
     {
         if (Intro)
         {
-            if (IntroTimer < diff)
+            if (IntroTimer <= diff)
             {
                 IntroEnd();
                 Intro = false;
@@ -240,43 +243,43 @@ struct boss_captain_skarlocAI : public ScriptedAI
             return;
 
         //Holy_Light
-        if (Holy_Light_Timer < diff)
+        if (Holy_Light_Timer <= diff)
         {
             DoCast(me, SPELL_HOLY_LIGHT);
-            Holy_Light_Timer = 30000;
+            Holy_Light_Timer = urand(13300, 15700);
         }
         else
             Holy_Light_Timer -= diff;
 
         //Cleanse
-        if(Cleanse_Timer  < diff)
+        if (Cleanse_Timer  <= diff)
         {
             DoCast(me, SPELL_CLEANSE);
-            Cleanse_Timer = 10000;
+            Cleanse_Timer = urand(10000, 14000);
         }
         else
             Cleanse_Timer -= diff;
 
         //Hammer of Justice
-        if (HammerOfJustice_Timer < diff)
+        if (HammerOfJustice_Timer <= diff)
         {
             DoCast(me->getVictim(), SPELL_HAMMER_OF_JUSTICE);
-            HammerOfJustice_Timer = 60000;
+            HammerOfJustice_Timer = urand(10800, 15200);
         }
         else
             HammerOfJustice_Timer -= diff;
 
         //Holy Shield
-        if(HolyShield_Timer < diff)
+        if (HolyShield_Timer <= diff)
         {
             DoCast(me, SPELL_HOLY_SHIELD);
-            HolyShield_Timer = 240000;
+            HolyShield_Timer = urand(13300, 21700);
         }
         else
             HolyShield_Timer -= diff;
 
         //Devotion_Aura
-        if (DevotionAura_Timer < diff)
+        if (DevotionAura_Timer <= diff)
         {
             DoCast(me, SPELL_DEVOTION_AURA);
             DevotionAura_Timer = 60000;
@@ -284,8 +287,8 @@ struct boss_captain_skarlocAI : public ScriptedAI
         else
             DevotionAura_Timer -= diff;
 
-        if(HeroicMode)
-        if(Consecration_Timer < diff)
+        //Consecration (Heroic)
+        if (Consecration_Timer && Consecration_Timer <= diff)
         {
             DoCast(me, SPELL_CONSECRATION);
             Consecration_Timer = 8000;
