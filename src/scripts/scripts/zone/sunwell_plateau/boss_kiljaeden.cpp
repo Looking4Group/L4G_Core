@@ -16,7 +16,7 @@
 
 /* ScriptData
 SDName: Boss_Kiljaeden
-SD%Complete: 70
+SD%Complete: 75
 SDComment: Phase4, Phase5, Shadow Spike, Armageddon
 SDCategory: Sunwell_Plateau
 EndScriptData */
@@ -97,6 +97,7 @@ enum SpellIds
     SPELL_FIRE_BLOOM                                    = 45641, // Places a debuff on 5 raid members, which causes them to deal 2k Fire damage to nearby allies and selves. MIGHT NOT WORK
 
     SPELL_SINISTER_REFLECTION                           = 45785, // Summon shadow copies of 5 raid members that fight against KJ's enemies
+                                                                 //  45892  // right one for SPELL_SINISTER_REFLECTION but no EffectScriptEffect
     SPELL_COPY_WEAPON                                   = 41055, // }
     SPELL_COPY_WEAPON2                                  = 41054, // }
     SPELL_COPY_OFFHAND                                  = 45206, // }- Spells used in Sinister Reflection creation
@@ -117,7 +118,6 @@ enum SpellIds
 
     /* Shield Orb Spells*/
     SPELL_SHADOW_BOLT                                   = 45680, //45679 would be correct but triggers to often //TODO fix console error
-
 
     /* Anveena's spells and cosmetics (Or, generally, everything that has "Anveena" in name) */
     SPELL_ANVEENA_PRISON                                = 46367, // She hovers locked within a bubble
@@ -155,7 +155,7 @@ enum SpellIds
     SPELL_RING_OF_BLUE_FLAMES                           = 45825  //Cast this spell when the go is activated
 };
 
-enum CreatureIds
+enum CreatureGoIds
 {
     CREATURE_ANVEENA                        = 26046, // Embodiment of the Sunwell
     CREATURE_KALECGOS                       = 25319, // Helps the raid throughout the fight
@@ -170,11 +170,10 @@ enum CreatureIds
     CREATURE_POWER_OF_THE_BLUE_DRAGONFLIGHT = 25653, // NPC that players possess when using the Orb of the Blue Dragonflight
     CREATURE_SPIKE_TARGET1                  = 30598, //Should summon these under Shadow Spike Channel on targets place
     CREATURE_SPIKE_TARGET2                  = 30614,
-    CREATURE_SINISTER_REFLECTION            = 25708  //Sinister Relection spawnd on Phase swichtes
-};
+    CREATURE_SINISTER_REFLECTION            = 25708, //Sinister Relection spawnd on Phase swichtes
 
-/*** GameObjects ***/
-#define GAMEOBJECT_ORB_OF_THE_BLUE_DRAGONFLIGHT 188415
+    GAMEOBJECT_ORB_OF_THE_BLUE_DRAGONFLIGHT = 188415
+};
 
 /*** Error messages ***/
 #define ERROR_KJ_NOT_SUMMONED "TSCR ERROR: Unable to summon Kil'Jaeden for some reason"
@@ -192,12 +191,13 @@ enum Phase
     PHASE_SACRIFICE     = 5, // At 25%, Anveena sacrifices herself into the Sunwell; at this point he becomes enraged and has *significally* shorter cooldowns.
 };
 
-//Timers
-enum KilJaedenTimers {
+//Timers & Aggro Range
+enum KilJaedenTimers
+{
     TIMER_KALEC_JOIN       = 0,
 
     //Phase 2 Timer
-    TIMER_SOUL_FLAY           = 1,
+    TIMER_SOUL_FLAY        = 1,
     TIMER_LEGION_LIGHTNING = 2,
     TIMER_FIRE_BLOOM       = 3,
     TIMER_SUMMON_SHILEDORB = 4,
@@ -209,15 +209,9 @@ enum KilJaedenTimers {
     TIMER_ORBS_EMPOWER     = 8,
 
     //Phase 4 Timer
-    TIMER_ARMAGEDDON       = 9
-};
+    TIMER_ARMAGEDDON       = 9,
 
-// Locations of the Hand of Deceiver adds
-float DeceiverLocations[3][3]=
-{
-    {1682.045, 631.299, 5.936},
-    {1684.099, 618.848, 0.589},
-    {1694.170, 612.272, 1.416},
+    AGGRO_RANGE            = 33
 };
 
 // Locations, where Shield Orbs will spawn
@@ -229,7 +223,8 @@ float ShieldOrbLocations[4][2]=
     {12, 3.14*3.8}  // Third one spawns (?)
 };
 
-float OrbLocations[4][5] = {
+float OrbLocations[4][5] = 
+{
     (1694.48, 674.29,  28.0502, 4.86985),
     (1745.68, 621.823, 28.0505, 2.93777),
     (1704.14, 583.591, 28.1696, 1.59003),
@@ -295,7 +290,9 @@ bool GOUse_go_orb_of_the_blue_flight(Player *plr, GameObject* go)
     return true;
 }
 
-//AI for Kalecgos
+/****************
+* Kalecgos 25319
+*****************/
 struct boss_kalecgos_kjAI : public ScriptedAI
 {
     boss_kalecgos_kjAI(Creature* c) : ScriptedAI(c){
@@ -303,12 +300,6 @@ struct boss_kalecgos_kjAI : public ScriptedAI
     }
     ScriptedInstance* pInstance;
     uint32 FelmystOutroTimer;
-
-    void Reset()
-    {
-        if(pInstance->GetData(DATA_EREDAR_TWINS_EVENT) == DONE)
-            me->SetVisibility(VISIBILITY_OFF);
-    }
 
     void MovementInform(uint32 Type, uint32 Id)
     {
@@ -446,10 +437,13 @@ CreatureAI* GetAI_boss_kalecgos_kj(Creature *_Creature)
     return new boss_kalecgos_kjAI (_Creature);
 }
 
-//AI for Kil'jaeden
+/****************
+* Kil'jaeden < The Deceiver > 25315
+*****************/
 struct boss_kiljaedenAI : public Scripted_NoMovementAI
 {
-    boss_kiljaedenAI(Creature* c) : Scripted_NoMovementAI(c), Summons(m_creature){
+    boss_kiljaedenAI(Creature* c) : Scripted_NoMovementAI(c), Summons(m_creature)
+    {
         pInstance = (c->GetInstanceData());
     }
 
@@ -473,16 +467,14 @@ struct boss_kiljaedenAI : public Scripted_NoMovementAI
 
     void Reset()
     {
-        // just for now
         me->SetVisibility(VISIBILITY_OFF);
-        // TODO: Fix timers
-        Timer[TIMER_KALEC_JOIN]       = 26000;
 
         //Phase 2 Timer
-        Timer[TIMER_SOUL_FLAY]        = 20000;
-        Timer[TIMER_LEGION_LIGHTNING] = 40000;
-        Timer[TIMER_FIRE_BLOOM]       = 30000;
-        Timer[TIMER_SUMMON_SHILEDORB] = 45000;
+        Timer[TIMER_KALEC_JOIN]       = 36000;
+        Timer[TIMER_SOUL_FLAY]        = 11000;
+        Timer[TIMER_LEGION_LIGHTNING] = 30000;
+        Timer[TIMER_FIRE_BLOOM]       = 20000;
+        Timer[TIMER_SUMMON_SHILEDORB] = 35000;
 
         //Phase 3 Timer
         Timer[TIMER_SHADOW_SPIKE]     = 4000;
@@ -496,7 +488,7 @@ struct boss_kiljaedenAI : public Scripted_NoMovementAI
         ActiveTimers = 5;
         WaitTimer    = 0;
 
-        Phase = PHASE_DECEIVERS;
+        Phase = PHASE_NORMAL;
 
         IsKalecJoined = false;
         IsInDarkness  = false;
@@ -573,9 +565,8 @@ struct boss_kiljaedenAI : public Scripted_NoMovementAI
             return;
         }
         DoZoneInCombat();
-        DoScriptText(SAY_KJ_EMERGE, m_creature);
 
-        //pInstance->SetData(DATA_KILJAEDEN_EVENT, IN_PROGRESS);
+        pInstance->SetData(DATA_KILJAEDEN_EVENT, IN_PROGRESS);
     }
 
     void CastSinisterReflection()
@@ -770,7 +761,9 @@ CreatureAI* GetAI_boss_kiljaeden(Creature *_Creature)
     return new boss_kiljaedenAI (_Creature);
 }
 
-//AI for Kil'jaeden Event Controller
+/****************
+* Kil'jaeden Event Controller 25608
+*****************/
 struct mob_kiljaeden_controllerAI : public Scripted_NoMovementAI
 {
     mob_kiljaeden_controllerAI(Creature* c) : Scripted_NoMovementAI(c), Summons(m_creature){
@@ -788,14 +781,13 @@ struct mob_kiljaeden_controllerAI : public Scripted_NoMovementAI
     uint32 Phase;
     uint8 DeceiverDeathCount;
 
-    void InitializeAI(){
+    void InitializeAI()
+    {
         KalecKJ = Unit::GetCreature((*m_creature), pInstance->GetData64(DATA_KALECGOS_KJ));
-        m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-        m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-        m_creature->addUnitState(UNIT_STAT_STUNNED);
     }
 
-    void Reset(){
+    void Reset()
+    {
         Phase = PHASE_DECEIVERS;
         //if(KalecKJ)((boss_kalecgos_kjAI*)KalecKJ->AI())->ResetOrbs();
         DeceiverDeathCount = 0;
@@ -807,15 +799,13 @@ struct mob_kiljaeden_controllerAI : public Scripted_NoMovementAI
 
     void JustSummoned(Creature* summoned){
         switch(summoned->GetEntry()){
-            case CREATURE_HAND_OF_THE_DECEIVER:
-                summoned->CastSpell(summoned, SPELL_SHADOW_CHANNELING, false);
-                break;
             case CREATURE_ANVEENA:
                 summoned->SetLevitate(true);
                 summoned->CastSpell(summoned, SPELL_ANVEENA_PRISON, true);
                 summoned->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                 break;
             case CREATURE_KILJAEDEN:
+                summoned->SetVisibility(VISIBILITY_ON);
                 summoned->CastSpell(summoned, SPELL_REBIRTH, false);
                 ((boss_kiljaedenAI*)summoned->AI())->Phase=PHASE_NORMAL;
                 summoned->AddThreat(m_creature->getVictim(), 1.0f);
@@ -841,19 +831,21 @@ struct mob_kiljaeden_controllerAI : public Scripted_NoMovementAI
 
         if(!SummonedDeceivers)
         {
-            for(uint8 i = 0; i < 3; ++i)
-                m_creature->SummonCreature(CREATURE_HAND_OF_THE_DECEIVER, DeceiverLocations[i][0], DeceiverLocations[i][1], FLOOR_Z, DeceiverLocations[i][2], TEMPSUMMON_DEAD_DESPAWN, 0);
-
             DoSpawnCreature(CREATURE_ANVEENA,  0, 0, 40, 0, TEMPSUMMON_DEAD_DESPAWN, 0);
             DoCast(m_creature, SPELL_ANVEENA_ENERGY_DRAIN);
             SummonedDeceivers = true;
         }
 
-        if(DeceiverDeathCount > 2 && Phase == PHASE_DECEIVERS){
-            m_creature->RemoveAurasDueToSpell(SPELL_ANVEENA_ENERGY_DRAIN) ;
+        if(DeceiverDeathCount > 2 && Phase == PHASE_DECEIVERS)
+        {
+            m_creature->RemoveAurasDueToSpell(SPELL_ANVEENA_ENERGY_DRAIN);
             Phase = PHASE_NORMAL;
             DoSpawnCreature(CREATURE_KILJAEDEN, 0, 0,0, 0, TEMPSUMMON_MANUAL_DESPAWN, 0);
+            DoScriptText(SAY_KJ_EMERGE, m_creature);
         }
+
+        if (pInstance && pInstance->GetData(DATA_KILJAEDEN_EVENT) != DONE)
+            m_creature->Kill(m_creature);
     }
 };
 
@@ -862,12 +854,15 @@ CreatureAI* GetAI_mob_kiljaeden_controller(Creature *_Creature)
     return new mob_kiljaeden_controllerAI (_Creature);
 }
 
-//AI for Hand of the Deceiver
+/****************
+* Hand of the Deceiver 25588
+*****************/
 struct mob_hand_of_the_deceiverAI : public ScriptedAI
 {
     mob_hand_of_the_deceiverAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = (c->GetInstanceData());
+        m_creature->SetAggroRange(AGGRO_RANGE);
     }
 
     ScriptedInstance* pInstance;
@@ -877,29 +872,24 @@ struct mob_hand_of_the_deceiverAI : public ScriptedAI
 
     void Reset()
     {
-        DoCast(m_creature, SPELL_SHADOW_CHANNELING);
-        // TODO: Timers!
-        ShadowBoltVolleyTimer = 8000 + rand()%6000; // So they don't all cast it in the same moment.
-        FelfirePortalTimer = 20000;
+        ShadowBoltVolleyTimer = urand(1000, 3000);
+        FelfirePortalTimer = urand(9000, 15000);
         if(pInstance)
             pInstance->SetData(DATA_KILJAEDEN_EVENT, NOT_STARTED);
     }
 
-    void JustSummoned(Creature* summoned)
+    void JustReachedHome()
     {
-        summoned->setFaction(m_creature->getFaction());
-        summoned->SetLevel(m_creature->getLevel());
+        DoCast(m_creature, SPELL_SHADOW_CHANNELING, false);
+    }
+
+    void JustRespawned()
+    {
+        DoCast(m_creature, SPELL_SHADOW_CHANNELING, false);
     }
 
     void EnterCombat(Unit* who)
     {
-        if(pInstance)
-        {
-            //pInstance->SetData(DATA_KILJAEDEN_EVENT, IN_PROGRESS);
-            Creature* Control = ((Creature*)Unit::GetUnit(*m_creature, pInstance->GetData64(DATA_KILJAEDEN_CONTROLLER)));
-            if(Control)
-                Control->AddThreat(who, 1.0f);
-        }
         m_creature->InterruptNonMeleeSpells(true);
     }
 
@@ -915,22 +905,18 @@ struct mob_hand_of_the_deceiverAI : public ScriptedAI
 
     void UpdateAI(const uint32 diff)
     {
-        /*
-        if(!m_creature->isInCombat())
-            DoCast(m_creature, SPELL_SHADOW_CHANNELING);*/
-
         if(!UpdateVictim())
             return;
 
         // Gain Shadow Infusion at 20% health
-        if(((m_creature->GetHealth()*100 / m_creature->GetMaxHealth()) < 20) && !m_creature->HasAura(SPELL_SHADOW_INFUSION, 0))
+        if ((m_creature->GetHealthPct() <= 20) && !m_creature->HasAura(SPELL_SHADOW_INFUSION, 0))
             DoCast(m_creature, SPELL_SHADOW_INFUSION, true);
 
         // Shadow Bolt Volley - Shoots Shadow Bolts at all enemies within 30 yards, for ~2k Shadow damage.
         if(ShadowBoltVolleyTimer < diff)
         {
             DoCast(m_creature->getVictim(), SPELL_SHADOW_BOLT_VOLLEY);
-            ShadowBoltVolleyTimer = 12000;
+            ShadowBoltVolleyTimer = urand(4000, 6000);
         }
         else
             ShadowBoltVolleyTimer -= diff;
@@ -938,17 +924,7 @@ struct mob_hand_of_the_deceiverAI : public ScriptedAI
         // Felfire Portal - Creatres a portal, that spawns Volatile Felfire Fiends, which do suicide bombing.
         if(FelfirePortalTimer < diff)
         {
-            Creature* Portal = DoSpawnCreature(CREATURE_FELFIRE_PORTAL, 0, 0,0, 0, TEMPSUMMON_TIMED_DESPAWN, 20000);
-            if(Portal)
-            {
-                std::list<HostilReference*>::iterator itr;
-                for(itr = m_creature->getThreatManager().getThreatList().begin(); itr != m_creature->getThreatManager().getThreatList().end(); ++itr)
-                {
-                    Unit* pUnit = Unit::GetUnit(*m_creature, (*itr)->getUnitGuid());
-                    if(pUnit)
-                        Portal->AddThreat(pUnit, 1.0f);
-                }
-            }
+            DoCast(m_creature, SPELL_FELFIRE_PORTAL, true);
             FelfirePortalTimer = 20000;
         }
         else
@@ -963,53 +939,9 @@ CreatureAI* GetAI_mob_hand_of_the_deceiver(Creature *_Creature)
     return new mob_hand_of_the_deceiverAI (_Creature);
 }
 
-//AI for Felfire Portal
-struct mob_felfire_portalAI : public Scripted_NoMovementAI
-{
-    mob_felfire_portalAI(Creature* c) : Scripted_NoMovementAI(c) {}
-
-    uint32 SpawnFiendTimer;
-
-    void InitializeAI(){
-        SpawnFiendTimer = 5000;
-        m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-        m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-    }
-
-    // TODO: Timers
-    void Reset() {
-
-    }
-
-    void JustSummoned(Creature* summoned)
-    {
-        summoned->setFaction(m_creature->getFaction());
-        summoned->SetLevel(m_creature->getLevel());
-    }
-
-    void UpdateAI(const uint32 diff)
-    {
-        if(!UpdateVictim())
-            return;
-
-        if(SpawnFiendTimer < diff)
-        {
-            Creature* Fiend = DoSpawnCreature(CREATURE_VOLATILE_FELFIRE_FIEND, 0, 0, 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 20000);
-            if(Fiend)
-                Fiend->AddThreat(SelectUnit(SELECT_TARGET_RANDOM,0), 100000.0f);
-            SpawnFiendTimer = 4000 + rand()%4000;
-        }
-        else
-            SpawnFiendTimer -= diff;
-    }
-};
-
-CreatureAI* GetAI_mob_felfire_portal(Creature *_Creature)
-{
-    return new mob_felfire_portalAI (_Creature);
-}
-
-//AI for Felfire Fiend
+/****************
+* Volatile Felfire Fiend 25598
+*****************/
 struct mob_volatile_felfire_fiendAI : public ScriptedAI
 {
     mob_volatile_felfire_fiendAI(Creature* c) : ScriptedAI(c) {}
@@ -1362,11 +1294,6 @@ void AddSC_boss_kiljaeden()
     newscript = new Script;
     newscript->GetAI = &GetAI_mob_hand_of_the_deceiver;
     newscript->Name = "mob_hand_of_the_deceiver";
-    newscript->RegisterSelf();
-
-    newscript = new Script;
-    newscript->GetAI = &GetAI_mob_felfire_portal;
-    newscript->Name = "mob_felfire_portal";
     newscript->RegisterSelf();
 
     newscript = new Script;
