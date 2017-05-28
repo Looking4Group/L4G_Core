@@ -292,9 +292,9 @@ struct instance_sunwell_plateau : public ScriptedInstance
             case 188421: ForceField     = gobj->GetGUID(); break;
             case 188523: Collision_1    = gobj->GetGUID(); break;
             case 188524: Collision_2    = gobj->GetGUID(); break;
-            case 188075: 
-                //FireBarrier    = gobj->GetGUID();
-                if(GetData(DATA_FELMYST_EVENT) == DONE) {
+            case 188075: FireBarrier    = gobj->GetGUID();
+                if(GetData(DATA_FELMYST_EVENT) == DONE) 
+                {
                     HandleGameObject(FireBarrier, OPEN);
                 }
                 else 
