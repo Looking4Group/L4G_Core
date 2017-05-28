@@ -2441,3 +2441,34 @@ INSERT INTO `waypoint_data` VALUES (70862, 2, -4486.05, 1693.03, 164.847, 60000,
 -- INSERT INTO `dbscripts_on_creature_movement` VALUES (1979601, 9, 1, 1, 0, 19792, 10, 4, 0, 0, 0, 0, 0, 0, 0, 0, 'force 19792 to: emote');
 -- INSERT INTO `dbscripts_on_creature_movement` VALUES (1979601, 11, 1, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
 
+UPDATE `creature_template` SET `skinloot` = 80010 WHERE `entry` = 18343; -- 80004
+UPDATE `creature_template` SET `skinloot` = 80011 WHERE `entry` = 20268; -- 80004
+
+DELETE FROM `skinning_loot_template` WHERE `entry` = 80010;
+INSERT INTO `skinning_loot_template` VALUES (80010, 23425, 100, 0, 4, 8, 0, 0, 0);
+INSERT INTO `skinning_loot_template` VALUES (80010, 23427, 75, 0, 1, 2, 0, 0, 0);
+INSERT INTO `skinning_loot_template` VALUES (80010, 22447, 50, 0, 3, 6, 0, 0, 0);
+INSERT INTO `skinning_loot_template` VALUES (80010, 21929, 0, 1, 1, 2, 0, 0, 0);
+INSERT INTO `skinning_loot_template` VALUES (80010, 23077, 0, 2, 1, 2, 0, 0, 0);
+INSERT INTO `skinning_loot_template` VALUES (80010, 23079, 0, 1, 1, 2, 0, 0, 0);
+INSERT INTO `skinning_loot_template` VALUES (80010, 23107, 0, 1, 1, 2, 0, 0, 0);
+INSERT INTO `skinning_loot_template` VALUES (80010, 23112, 0, 2, 1, 2, 0, 0, 0);
+INSERT INTO `skinning_loot_template` VALUES (80010, 23117, 0, 2, 1, 2, 0, 0, 0);
+
+DELETE FROM `skinning_loot_template` WHERE `entry` = 80011;
+INSERT INTO `skinning_loot_template` VALUES (80011, 23425, 100, 0, 4, 8, 0, 0, 0);
+INSERT INTO `skinning_loot_template` VALUES (80011, 23427, 75, 0, 1, 2, 0, 0, 0);
+INSERT INTO `skinning_loot_template` VALUES (80011, 22447, 50, 0, 3, 6, 0, 0, 0);
+INSERT INTO `skinning_loot_template` VALUES (80011, 21929, 0, 1, 1, 2, 0, 0, 0);
+INSERT INTO `skinning_loot_template` VALUES (80011, 23077, 0, 2, 1, 2, 0, 0, 0);
+INSERT INTO `skinning_loot_template` VALUES (80011, 23079, 0, 1, 1, 2, 0, 0, 0);
+INSERT INTO `skinning_loot_template` VALUES (80011, 23107, 0, 1, 1, 2, 0, 0, 0);
+INSERT INTO `skinning_loot_template` VALUES (80011, 23112, 0, 2, 1, 2, 0, 0, 0);
+INSERT INTO `skinning_loot_template` VALUES (80011, 23117, 0, 2, 1, 2, 0, 0, 0);
+INSERT INTO `skinning_loot_template` VALUES (80011, 23439, 0, 3, 1, 1, 0, 0, 0);
+INSERT INTO `skinning_loot_template` VALUES (80011, 23436, 0, 3, 1, 1, 0, 0, 0);
+INSERT INTO `skinning_loot_template` VALUES (80011, 23437, 0, 3, 1, 1, 0, 0, 0);
+INSERT INTO `skinning_loot_template` VALUES (80011, 23441, 0, 3, 1, 1, 0, 0, 0);
+INSERT INTO `skinning_loot_template` VALUES (80011, 23440, 0, 3, 1, 1, 0, 0, 0);
+INSERT INTO `skinning_loot_template` VALUES (80011, 23438, 0, 3, 1, 1, 0, 0, 0);
+
