@@ -3959,7 +3959,8 @@ void SpellMgr::LoadSpellCustomAttr()
             case 30564: // Worgen's Spite has a duration of 1.1 seconds (Will fade once Transform fades)
                 spellInfo->DurationIndex = DURATION_MAX_1_1_SEC_1;
                 break;
-            case 32358: // Dark Shell (Pandemonious)
+            case 32358: // Dark Shell (Pandemonious NH)
+            case 38759: // Dark Shell (Pandemonious HC)
                 spellInfo->DurationIndex = DURATION_MAX_8_SEC;
                 break;
             case 29952: // Circular Blizzard (Shade of Aran)
