@@ -2472,3 +2472,32 @@ INSERT INTO `skinning_loot_template` VALUES (80011, 23441, 0, 3, 1, 1, 0, 0, 0);
 INSERT INTO `skinning_loot_template` VALUES (80011, 23440, 0, 3, 1, 1, 0, 0, 0);
 INSERT INTO `skinning_loot_template` VALUES (80011, 23438, 0, 3, 1, 1, 0, 0, 0);
 
+UPDATE `creature_template` SET `npcflag` = `npcflag`|64 WHERE `subname` LIKE '%First Aid Trainer%'; -- npc to check 2327
+UPDATE `creature_template` SET `npcflag` = `npcflag`|64 WHERE `subname` LIKE '%Blacksmithing Trainer%'; -- 2998
+UPDATE `creature_template` SET `npcflag` = `npcflag`|64 WHERE `subname` LIKE '%Herbalism Trainer%'; -- 908
+UPDATE `creature_template` SET `npcflag` = `npcflag`|64 WHERE `subname` LIKE '%Tailoring Trainer%'; -- 2399
+UPDATE `creature_template` SET `npcflag` = `npcflag`|64 WHERE `subname` LIKE '%Alchemy Trainer%'; -- 1386
+UPDATE `creature_template` SET `npcflag` = `npcflag`|64 WHERE `subname` LIKE '%Skinning Trainer%'; -- 6289
+UPDATE `creature_template` SET `npcflag` = `npcflag`|64 WHERE `subname` LIKE '%Enchanting Trainer%'; -- 11073
+UPDATE `creature_template` SET `npcflag` = `npcflag`|64 WHERE `subname` LIKE '%Cooking Trainer%'; -- 16277
+UPDATE `creature_template` SET `npcflag` = `npcflag`|64 WHERE `subname` LIKE '%Mining Trainer%'; -- 16663
+UPDATE `creature_template` SET `npcflag` = `npcflag`|64 WHERE `subname` LIKE '%Engineering Trainer%'; -- 3494
+UPDATE `creature_template` SET `npcflag` = `npcflag`|64 WHERE `subname` LIKE '%Fishing Trainer%'; -- 1700 Alliance
+UPDATE `creature_template` SET `npcflag` = `npcflag`|64 WHERE `subname` LIKE '%Jewelcrafting Trainer%'; -- 15501
+UPDATE `creature_template` SET `npcflag` = `npcflag`|64 WHERE `subname` LIKE '%Leatherworking Trainer%'; -- 21087
+UPDATE `creature_template` SET `npcflag` = `npcflag`|64 WHERE `subname` LIKE '%Armorsmith Trainer%'; -- 7230
+UPDATE `creature_template` SET `npcflag` = `npcflag`|64 WHERE `subname` LIKE '%Weaponsmith Trainer%'; -- 20124
+
+UPDATE `creature_template` SET `npcflag` = `npcflag`|32 WHERE `subname` LIKE '%Mage Trainer%'; -- 198
+UPDATE `creature_template` SET `npcflag` = `npcflag`|32 WHERE `subname` LIKE '%Portal Trainer%'; -- 2485
+UPDATE `creature_template` SET `npcflag` = `npcflag`|32 WHERE `subname` LIKE '%Priest Trainer%'; -- 375
+UPDATE `creature_template` SET `npcflag` = `npcflag`|32 WHERE `subname` LIKE '%Warlock Trainer%'; -- 459
+UPDATE `creature_template` SET `npcflag` = `npcflag`|32 WHERE `subname` LIKE '%Demon Trainer%'; -- 5520
+UPDATE `creature_template` SET `npcflag` = `npcflag`|32 WHERE `subname` LIKE '%Rogue Trainer%'; -- 915
+UPDATE `creature_template` SET `npcflag` = `npcflag`|32 WHERE `subname` LIKE '%Druid Trainer%'; -- 3033
+UPDATE `creature_template` SET `npcflag` = `npcflag`|32 WHERE `subname` LIKE '%Hunter Trainer%'; -- 895
+UPDATE `creature_template` SET `npcflag` = `npcflag`|32 WHERE `subname` LIKE '%Pet Trainer%'; -- 543
+UPDATE `creature_template` SET `npcflag` = `npcflag`|32 WHERE `subname` LIKE '%Shaman Trainer%'; -- 986
+UPDATE `creature_template` SET `npcflag` = `npcflag`|32 WHERE `subname` LIKE '%Warrior Trainer%'; -- 911
+UPDATE `creature_template` SET `npcflag` = `npcflag`|32 WHERE `subname` LIKE '%Paladin Trainer%'; -- 925
+
