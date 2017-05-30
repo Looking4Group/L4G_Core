@@ -8897,7 +8897,6 @@ uint32 Unit::SpellHealingBonus(SpellEntry const *spellProto, uint32 healamount, 
 
     // Healing Taken
     AdvertisedBenefit += SpellBaseHealingBonusForVictim(SpellMgr::GetSpellSchoolMask(spellProto), pVictim);
-    
     // Blessing of Light dummy effects healing taken from Holy Light and Flash of Light
     if (spellProto->SpellFamilyName == SPELLFAMILY_PALADIN && (spellProto->SpellFamilyFlags & 0x00000000C0000000LL))
     {
