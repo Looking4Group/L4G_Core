@@ -17,7 +17,7 @@
 /* ScriptData
 SDName: Shadowmoon_Valley
 SD%Complete: 100
-SDComment: Quest support: 10519, 10583, 10601, 10814, 10804, 10854, 10458, 10481, 10480, 11082, 10781, 10451. Vendor Drake Dealer Hurlunk.
+SDComment: Quest support: 10519, 10583, 10601, 10672, 10814, 10804, 10854, 10458, 10481, 10480, 11082, 10781, 10451. Vendor Drake Dealer Hurlunk.
 SDCategory: Shadowmoon Valley
 EndScriptData */
 
@@ -3530,6 +3530,19 @@ bool GOUse_go_forged_illidari_bane(Player *pPlayer, GameObject *pGo)
     return true;
 }
 
+/*######
+## GO_ARCANO_CONTROL
+######*/
+
+#define QUEST_FRANKLY_IT_MAKES_NO_SENSE          10672
+
+bool GOUse_go_arcanocontroller(Player* player, GameObject* go)
+{
+    if (player->GetQuestStatus(QUEST_FRANKLY_IT_MAKES_NO_SENSE) == QUEST_STATUS_INCOMPLETE)
+        player->CastSpell(player, 37895, false);
+
+    return true;
+}
 
 void AddSC_shadowmoon_valley()
 {
@@ -3711,5 +3724,10 @@ void AddSC_shadowmoon_valley()
     newscript = new Script;
     newscript->Name="go_forged_illidari_bane";
     newscript->pGOUse = &GOUse_go_forged_illidari_bane;
+    newscript->RegisterSelf();
+
+    newscript = new Script;
+    newscript->Name="go_arcanocontroller";
+    newscript->pGOUse = &GOUse_go_arcanocontroller;
     newscript->RegisterSelf();
 }
