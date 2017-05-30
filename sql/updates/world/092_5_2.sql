@@ -2501,3 +2501,18 @@ UPDATE `creature_template` SET `npcflag` = `npcflag`|32 WHERE `subname` LIKE '%S
 UPDATE `creature_template` SET `npcflag` = `npcflag`|32 WHERE `subname` LIKE '%Warrior Trainer%'; -- 911
 UPDATE `creature_template` SET `npcflag` = `npcflag`|32 WHERE `subname` LIKE '%Paladin Trainer%'; -- 925
 
+DELETE FROM creature  WHERE id IN (21909, 21924);
+
+INSERT INTO `creature` (`guid`, `id`, `map`, `spawnMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `MovementType`) VALUES
+(200059, 21909, 530, 1, 0, 0, -3413.58, 828.195, -30.7598, 1.18588, 300, 3, 0, 2800, 0, 1),
+('200060','21909','530','1','0','0','-3414.29','813.942','-31.1204','1.47848','300','3','0','2800','0','1'),
+('200061','21909','530','1','0','0','-3408.51','795.854','-31.4297','1.45215','300','3','0','2800','0','1');
+
+-- Arcano-Scorp Credit 21924
+
+-- Arcano-Scorp 21909
+UPDATE creature_template SET spell1=37918, spell2=37851 WHERE entry=21909;
+
+-- Arcano Control Unit 185008, 185009, 185010
+UPDATE gameobject_template SET ScriptName='go_arcanocontroller' WHERE entry IN (185008, 185009, 185010);
+
