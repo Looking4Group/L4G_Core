@@ -2516,3 +2516,9 @@ UPDATE creature_template SET spell1=37918, spell2=37851 WHERE entry=21909;
 -- Arcano Control Unit 185008, 185009, 185010
 UPDATE gameobject_template SET ScriptName='go_arcanocontroller' WHERE entry IN (185008, 185009, 185010);
 
+UPDATE `creature_template` SET `ScriptName`='' WHERE `ScriptName`='npc_rogue_trainer';
+
+DELETE FROM `npc_option` WHERE `id`=54;
+INSERT INTO `npc_option` (`id`, `npcflag`, `action`, `option_text`) VALUES
+('54', '16', '21', '<Take the letter>');
+
