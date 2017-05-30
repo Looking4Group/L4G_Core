@@ -8897,9 +8897,6 @@ uint32 Unit::SpellHealingBonus(SpellEntry const *spellProto, uint32 healamount, 
 
     // Healing Taken
     AdvertisedBenefit += SpellBaseHealingBonusForVictim(SpellMgr::GetSpellSchoolMask(spellProto), pVictim);
-
-    // If the caster has Libram of Souls Redeemed itemid 28592 equipped then Flash of Light and Holy Light are granted a bonus
-    int32 LibramAdvertisedBenefit = 0;
     
     // Blessing of Light dummy effects healing taken from Holy Light and Flash of Light
     if (spellProto->SpellFamilyName == SPELLFAMILY_PALADIN && (spellProto->SpellFamilyFlags & 0x00000000C0000000LL))
@@ -8909,7 +8906,10 @@ uint32 Unit::SpellHealingBonus(SpellEntry const *spellProto, uint32 healamount, 
         {
             if ((*i)->GetSpellProto()->SpellVisual == 9180)
             {
-                // Check for caster having equipped Libram of Souls Redeemed itemid 28592
+                // If the caster has Libram of Souls Redeemed itemid 28592 equipped then Flash of Light and Holy Light are granted a bonus
+                int32 LibramAdvertisedBenefit = 0;
+		    
+		// Check for caster having equipped Libram of Souls Redeemed itemid 28592
                 if (Aura* aura = this->GetAura(38320, 0))
                     LibramAdvertisedBenefit = aura->GetModifier()->m_amount;
                 else
