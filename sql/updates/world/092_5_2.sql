@@ -2532,3 +2532,7 @@ UPDATE creature SET position_x = '-3844.830078', position_y = '388.716003', posi
 UPDATE creature SET position_x = '-3840.110107', position_y = '403.463989', position_z = '120.544998', orientation = '5.052265' WHERE guid = '75410';
 UPDATE creature SET position_x = '-3833.280029', position_y = '384.148010', position_z = '120.570999', orientation = '4.680910' WHERE guid = '28167';
 
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17357;
+INSERT INTO `creature_ai_scripts` VALUES
+('1735701','17357','0','0','100','7','3000','6000','3800','6500','11','30494','0','0','0','0','0','0','0','0','0','0','Creeping Oozeling - Cast Sticky Ooze');
+
