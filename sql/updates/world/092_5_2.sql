@@ -2536,3 +2536,7 @@ DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 17357;
 INSERT INTO `creature_ai_scripts` VALUES
 ('1735701','17357','0','0','100','7','3000','6000','3800','6500','11','30494','0','0','0','0','0','0','0','0','0','0','Creeping Oozeling - Cast Sticky Ooze');
 
+-- Raging Flames 20481,21538
+UPDATE `creature_template` SET `speed`='0.50', `resistance1` = -1, `resistance2` = -1, `resistance3` = -1, `resistance4` = -1, `resistance5` = -1, `resistance6` = -1 WHERE `entry` = 20481;
+UPDATE `creature_template` SET `speed`='0.80', `resistance1` = -1, `resistance2` = -1, `resistance3` = -1, `resistance4` = -1, `resistance5` = -1, `resistance6` = -1 WHERE `entry` = 21538;
+
