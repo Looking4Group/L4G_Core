@@ -24,21 +24,24 @@ EndScriptData */
 #include "precompiled.h"
 #include "def_mechanar.h"
 
-#define SAY_AGGRO                       -1554013
-#define SAY_SUMMON                      -1554014    // using this when resummoning adds, used on timer here to prevent double yell
-#define SAY_DRAGONS_BREATH_1            -1554015
-#define SAY_DRAGONS_BREATH_2            -1554016
-#define SAY_SLAY1                       -1554017
-#define SAY_SLAY2                       -1554018
-#define SAY_DEATH                       -1554019
+enum NethermancerSepethrea
+{
+    AGGRO_RANGE                 = 24,
+    SAY_AGGRO                   = -1554013,
+    SAY_SUMMON                  = -1554014,
+    SAY_DRAGONS_BREATH_1        = -1554015,
+    SAY_DRAGONS_BREATH_2        = -1554016,
+    SAY_SLAY1                   = -1554017,
+    SAY_SLAY2                   = -1554018,
+    SAY_DEATH                   = -1554019,
 
-#define SPELL_SUMMON_RAGIN_FLAMES       35275
-#define H_SPELL_SUMMON_RAGIN_FLAMES     39084
+    SPELL_SUMMON_RAGIN_FLAMES   = 35275,
+    H_SPELL_SUMMON_RAGIN_FLAMES = 39084,
+    SPELL_FROST_ATTACK          = 45195,
+    SPELL_ARCANE_BLAST          = 35314,
+    SPELL_DRAGONS_BREATH        = 35250
+};
 
-#define SPELL_FROST_ATTACK              45195
-#define SPELL_ARCANE_BLAST              35314
-#define SPELL_DRAGONS_BREATH            35250
-//#define SPELL_SOLARBURN                 35267 // its an NPC ability, not this boss
 
 struct boss_nethermancer_sepethreaAI : public ScriptedAI
 {
@@ -46,15 +49,18 @@ struct boss_nethermancer_sepethreaAI : public ScriptedAI
     {
         pInstance = c->GetInstanceData();
         HeroicMode = me->GetMap()->IsHeroic();
+        me->GetPosition(wLoc);
+        me->SetAggroRange(AGGRO_RANGE);
     }
 
     ScriptedInstance *pInstance;
-
+    WorldLocation wLoc;
     bool HeroicMode;
 
     uint32 arcane_blast_Timer;
     uint32 dragons_breath_Timer;
-    uint32 yell_timer;
+    uint32 resummon_Timer;
+    uint32 check_Timer;
 
     SummonList summons;
 
@@ -62,7 +68,8 @@ struct boss_nethermancer_sepethreaAI : public ScriptedAI
     {
         arcane_blast_Timer = urand(12000, 18000);
         dragons_breath_Timer = urand(22000, 28000);
-        yell_timer = 5000;
+        resummon_Timer = 900000;
+        check_Timer = 6000;
 
         pInstance->SetData(DATA_NETHERMANCER_EVENT, NOT_STARTED);
 
@@ -109,6 +116,18 @@ struct boss_nethermancer_sepethreaAI : public ScriptedAI
         if (!UpdateVictim() )
             return;
 
+        if (check_Timer < diff)
+        {
+            if (!m_creature->IsWithinDistInMap(&wLoc, 80.0f))
+                EnterEvadeMode();
+            else
+                DoZoneInCombat();
+
+            check_Timer = 3000;
+        }
+        else
+            check_Timer -= diff;
+
         //Arcane Blast with knockback, reducing threat by 50%
         if (arcane_blast_Timer < diff)
         {
@@ -119,24 +138,29 @@ struct boss_nethermancer_sepethreaAI : public ScriptedAI
         else
             arcane_blast_Timer -= diff;
 
-        //Dragons Breath
         if (dragons_breath_Timer < diff)
         {
-            AddSpellToCastWithScriptText(SPELL_DRAGONS_BREATH, CAST_TANK, RAND(SAY_DRAGONS_BREATH_1, SAY_DRAGONS_BREATH_2, 0, 0));
-            dragons_breath_Timer = urand(20000, 35000);
+            AddSpellToCast(SPELL_DRAGONS_BREATH, CAST_TANK, false, true);
+            {
+                if (urand(0, 1))
+                    DoScriptText(urand(0, 1) ? SAY_DRAGONS_BREATH_1 : SAY_DRAGONS_BREATH_2, m_creature);
+
+                dragons_breath_Timer = urand(20000, 35000);
+            }
         }
         else
             dragons_breath_Timer -= diff;
 
-        if(yell_timer)
+        if(resummon_Timer)
         {
-            if (yell_timer <= diff)
+            if (resummon_Timer <= diff)
             {
                 DoScriptText(SAY_SUMMON, me);
-                yell_timer = 0;
+                AddSpellToCast(HeroicMode ? H_SPELL_SUMMON_RAGIN_FLAMES : SPELL_SUMMON_RAGIN_FLAMES, CAST_SELF);
+                resummon_Timer = 900000;
             }
             else
-                yell_timer -= diff;
+                resummon_Timer -= diff;
         }
 
         CastNextSpellIfAnyAndReady();
@@ -149,8 +173,12 @@ CreatureAI* GetAI_boss_nethermancer_sepethrea(Creature *_Creature)
     return new boss_nethermancer_sepethreaAI (_Creature);
 }
 
-#define SPELL_INFERNO                   39346
-#define SPELL_FIRE_TAIL                 35278
+enum RagingFlames
+{
+    // SPELL_INFERNO_NH    = 35268, using 39346 only as 35268 doesnt trigger periodic, could be ported to db if all spells would work as intended.
+    SPELL_INFERNO_HC    = 39346,
+    SPELL_RAGING_FLAMES = 35278
+};
 
 struct mob_ragin_flamesAI : public ScriptedAI
 {
@@ -169,14 +197,10 @@ struct mob_ragin_flamesAI : public ScriptedAI
 
     void Reset()
     {
-        infernoTimer = urand(8000,13000);
+        infernoTimer = urand(15700, 31300);
         canMelee = true;
-
-        me->ApplySpellImmune(0, IMMUNITY_DAMAGE, SPELL_SCHOOL_MASK_MAGIC, true);
         me->ApplySpellImmune(0, IMMUNITY_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, true);
-        me->SetSpeed(MOVE_RUN, HeroicMode ? 0.8f : 0.5f);
-
-        SetAutocast(SPELL_FIRE_TAIL, HeroicMode ? 700 : 1200, true, CAST_SELF);
+        SetAutocast(SPELL_RAGING_FLAMES, HeroicMode ? 700 : 1200, true, CAST_SELF);
     }
 
     void ChangeTarget()
@@ -201,7 +225,7 @@ struct mob_ragin_flamesAI : public ScriptedAI
 
     void OnAuraApply(Aura* aur, Unit* caster, bool stackApply)
     {
-        if (aur->GetId() == SPELL_INFERNO)
+        if (aur->GetId() == (SPELL_INFERNO_HC))
         {
             StopAutocast();
             canMelee = false;
@@ -210,7 +234,7 @@ struct mob_ragin_flamesAI : public ScriptedAI
 
     void OnAuraRemove(Aura* aur, bool stackApply)
     {
-        if (aur->GetId() == SPELL_INFERNO)
+        if (aur->GetId() == (SPELL_INFERNO_HC))
         {
             StartAutocast();
             ChangeTarget();
@@ -223,12 +247,10 @@ struct mob_ragin_flamesAI : public ScriptedAI
         if (!UpdateVictim())
             return;
 
-        DoSpecialThings(diff, DO_COMBAT_N_SPEED, 200.0f, HeroicMode ? 0.8f : 0.5f);
-
         if (infernoTimer < diff)
         {
-            AddSpellToCast(SPELL_INFERNO, CAST_SELF);
-            infernoTimer = urand(16000,21000);
+            AddSpellToCast(SPELL_INFERNO_HC, CAST_SELF);
+            infernoTimer = urand(15700, 28900);
         }
         else
             infernoTimer -= diff;
