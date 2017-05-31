@@ -2540,3 +2540,5 @@ INSERT INTO `creature_ai_scripts` VALUES
 UPDATE `creature_template` SET `speed`='0.50', `resistance1` = -1, `resistance2` = -1, `resistance3` = -1, `resistance4` = -1, `resistance5` = -1, `resistance6` = -1 WHERE `entry` = 20481;
 UPDATE `creature_template` SET `speed`='0.80', `resistance1` = -1, `resistance2` = -1, `resistance3` = -1, `resistance4` = -1, `resistance5` = -1, `resistance6` = -1 WHERE `entry` = 21538;
 
+UPDATE `item_template` SET `RequiredLevel` = 70 WHERE `entry` IN (34060, 34061);
+
