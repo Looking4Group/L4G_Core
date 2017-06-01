@@ -2542,3 +2542,6 @@ UPDATE `creature_template` SET `speed`='0.80', `resistance1` = -1, `resistance2`
 
 UPDATE `item_template` SET `RequiredLevel` = 70 WHERE `entry` IN (34060, 34061);
 
+DELETE FROM `creature_template_addon` WHERE `entry` = 17261;
+INSERT INTO `creature_template_addon` VALUES (17261, 0, 0, 0, 0, 0, 0, 0, '37059 0');
+
