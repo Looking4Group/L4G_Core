@@ -17,7 +17,7 @@
 /* ScriptData
 SDName: Boss_Nightbane
 SD%Complete: 80
-SDComment: SDComment: Timers may incorrect
+SDComment: SDComment:
 SDCategory: Karazhan
 EndScriptData */
 
@@ -25,7 +25,7 @@ EndScriptData */
 #include "def_karazhan.h"
 
 //phase 1
-#define SPELL_BELLOWING_ROAR        39427
+#define SPELL_BELLOWING_ROAR        36922
 #define SPELL_CHARRED_EARTH         30129
 #define SPELL_DISTRACTING_ASH       30130
 #define SPELL_SMOLDERING_BREATH     30210
@@ -113,15 +113,15 @@ struct boss_nightbaneAI : public ScriptedAI
 
         BellowingRoarTimer = 30000;
         CharredEarthTimer = 15000;
-        DistractingAshTimer = 20000;
-        SmolderingBreathTimer = 10000;
-        TailSweepTimer = 12000;
-        RainofBonesTimer = 10000;
-        SmokingBlastTimer = 20000;
-        FireballBarrageTimer = 13000;
+        DistractingAshTimer = urand(10000, 12000);
+        SmolderingBreathTimer = urand(9000, 13000);
+        TailSweepTimer = urand(12000, 15000);
+        RainofBonesTimer = 3000;
+        SmokingBlastTimer = urand(10000, 12000);
+        FireballBarrageTimer = 10000;
         SearingCindersTimer = 14000;
         WaitTimer = 1000;
-        Cleave_Timer = 6000;
+        Cleave_Timer = urand(4000, 8000);
         NoGround_Timer = 1000;
 
         Phase =1;
@@ -269,14 +269,14 @@ struct boss_nightbaneAI : public ScriptedAI
         (*m_creature).GetMotionMaster()->MovePoint(0,IntroWay[2][0],IntroWay[2][1],IntroWay[2][2]);
 
         // Set Flight Speed to normal at begin of takeoff
-        m_creature->SetSpeed(MOVE_FLIGHT, 1.0f);
+        m_creature->SetSpeed(MOVE_FLIGHT, 3.0f);
 
         Flying = true;
 
-        FlyTimer = 45000+rand()%15000; //timer wrong between 45 and 60 seconds
+        FlyTimer = 40000; //Flightphase with Movement should be about 60sec total
         ++FlyCount;
 
-        RainofBonesTimer = 5000; //timer wrong (maybe)
+        RainofBonesTimer = 3000;
         RainBones = false;
         Skeletons = false;
      }
@@ -340,19 +340,19 @@ struct boss_nightbaneAI : public ScriptedAI
             if (BellowingRoarTimer < diff)
             {
                 DoCast(m_creature->getVictim(),SPELL_BELLOWING_ROAR);
-                BellowingRoarTimer = 30000+rand()%10000 ; //Timer
+                BellowingRoarTimer = urand(45000, 60000);
             }else BellowingRoarTimer -= diff;
 
             if (SmolderingBreathTimer < diff)
             {
                 DoCast(m_creature->getVictim(),SPELL_SMOLDERING_BREATH);
-                SmolderingBreathTimer = 20000;//timer
+                SmolderingBreathTimer = urand(14000, 20000);
             }else SmolderingBreathTimer -= diff;
 
             if(Cleave_Timer < diff)
             {
                 DoCast(m_creature->getVictim(), SPELL_CLEAVE);
-                Cleave_Timer = 6000 + rand()%6000;
+                Cleave_Timer = urand(6000, 12000);
             }else Cleave_Timer -= diff;
 
             if (CharredEarthTimer < diff)
@@ -365,16 +365,16 @@ struct boss_nightbaneAI : public ScriptedAI
             if (TailSweepTimer < diff)
             {
                 if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_TAIL_SWEEP), true))
-                    if (!m_creature->HasInArc( M_PI, target))
+                    if (!m_creature->HasInArc( M_PI*3/2, target)) // Not in Arc 270° = Behind, otherwise 180° = can hit sideways
                         DoCast(target,SPELL_TAIL_SWEEP);
-                TailSweepTimer = 15000;//timer
+                TailSweepTimer = urand(14000, 20000);
             }else TailSweepTimer -= diff;
 
             if (SearingCindersTimer < diff)
             {
                 if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0,GetSpellMaxRange(SPELL_SEARING_CINDERS), true))
                     DoCast(target,SPELL_SEARING_CINDERS);
-                SearingCindersTimer = 10000; //timer
+                SearingCindersTimer = urand(1000, 3000);
             }else SearingCindersTimer -= diff;
 
             uint32 Prozent;
@@ -416,9 +416,10 @@ struct boss_nightbaneAI : public ScriptedAI
 
                 if (RainofBonesTimer < diff && !RainBones) // only once at the beginning of phase 2
                 {
-                    DoCast(m_creature->getVictim(),SPELL_RAIN_OF_BONES);
+                    if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_RAIN_OF_BONES), true))
+                    DoCast(target,SPELL_RAIN_OF_BONES);
                     RainBones = true;
-                    SmokingBlastTimer = 20000;
+                    SmokingBlastTimer = 10000; // needs to be lowred as flightphase lasts 15sec less
                 }else RainofBonesTimer -= diff;
 
                 if (DistractingAshTimer < diff)
@@ -426,7 +427,7 @@ struct boss_nightbaneAI : public ScriptedAI
                     if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_DISTRACTING_ASH), true))
                         m_creature->AddAura(SPELL_DISTRACTING_ASH,target);
 
-                    DistractingAshTimer = 2000;//timer wrong
+                    DistractingAshTimer = urand(7000, 13000);
                 }
                 else
                     DistractingAshTimer -= diff;
@@ -437,7 +438,7 @@ struct boss_nightbaneAI : public ScriptedAI
                 if (SmokingBlastTimer < diff)
                  {
                     DoCast(m_creature->getVictim(),SPELL_SMOKING_BLAST);
-                    SmokingBlastTimer = 1500 ; //timer wrong
+                    SmokingBlastTimer = urand(1000, 3000);
                  }else SmokingBlastTimer -= diff;
             }
 
@@ -445,7 +446,7 @@ struct boss_nightbaneAI : public ScriptedAI
             {
                 if (Unit* target = SelectUnit(SELECT_TARGET_FARTHEST, 0,GetSpellMaxRange(SPELL_FIREBALL_BARRAGE), true))
                     DoCast(target,SPELL_FIREBALL_BARRAGE);
-                FireballBarrageTimer = 20000; //Timer
+                FireballBarrageTimer = urand(3000, 6000);
             }
             else
                 FireballBarrageTimer -= diff;
@@ -462,8 +463,8 @@ struct boss_nightbaneAI : public ScriptedAI
 
                 Flying = true;
 
-                // Set flying speed to x6.0 so doesnt take so long to land
-                m_creature->SetSpeed(MOVE_FLIGHT, 6.0f);
+                // Reducing back to 3 from 6 as it looked somewhat ugly reduced flightphase of 15sec should do the trick
+                m_creature->SetSpeed(MOVE_FLIGHT, 3.0f);
 
             }else FlyTimer -= diff;
         }
