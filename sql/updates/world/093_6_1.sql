@@ -240,3 +240,42 @@ UPDATE `creature_template` SET `mindmg`='42', `maxdmg`='56' WHERE (`entry`='3414
 DELETE FROM `gameobject` WHERE `guid` = 195036;
 INSERT INTO `gameobject` VALUES (195036, 179545, 429, 1, 116.135, 638.836, -48.467, -0.785397, 0, 0, 0, 0, 300, 255, 1);
 
+DELETE FROM `creature_loot_template` WHERE `entry` IN (18497,20299);
+INSERT INTO `creature_loot_template` VALUES (18497, 21877, 24.59, 0, 2, 3, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (18497, 27855, 6, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (18497, 27860, 3, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (18497, 23605, 8.56, 0, 1, 1, 7, 164, 1);
+INSERT INTO `creature_loot_template` VALUES (18497, 24000, 3, 1, -24000, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (18497, 24001, 3, 1, -24001, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (18497, 24007, 1, 1, -24007, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (18497, 24008, 1, 1, -24008, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (18497, 24035, 1, 1, -24035, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (18497, 24092, 0.5, 1, -24092, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (18497, 50028, 0.005, 1, -50028, 1, 0, 0, 0);
+
+INSERT INTO `creature_loot_template` VALUES (20299, 21877, 24.59, 0, 2, 3, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (20299, 27855, 9, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (20299, 27860, 4, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (20299, 23605, 11.2, 0, 1, 1, 7, 164, 1);
+INSERT INTO `creature_loot_template` VALUES (20299, 24001, 3, 1, -24001, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (20299, 24002, 3, 1, -24002, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (20299, 24011, 1, 1, -24011, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (20299, 24013, 1, 1, -24013, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (20299, 24014, 0.2, 1, -24014, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (20299, 24035, 1, 1, -24035, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (20299, 24092, 0.5, 1, -24092, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (20299, 50028, 0.005, 1, -50028, 1, 0, 0, 0);
+
+UPDATE `creature_template` SET `pickpocketloot` = 20299 WHERE `entry` = 20299;
+DELETE FROM `pickpocketing_loot_template` WHERE `entry` = 20299;
+INSERT INTO `pickpocketing_loot_template` VALUES (20299, 29571, 8.64, 0, 1, 1, 0, 0, 0);
+INSERT INTO `pickpocketing_loot_template` VALUES (20299, 29569, 10.08, 0, 1, 1, 0, 0, 0);
+INSERT INTO `pickpocketing_loot_template` VALUES (20299, 22829, 3.52, 0, 1, 1, 0, 0, 0);
+INSERT INTO `pickpocketing_loot_template` VALUES (20299, 27855, 3.2, 0, 1, 1, 0, 0, 0);
+INSERT INTO `pickpocketing_loot_template` VALUES (20299, 30458, 2.24, 0, 1, 1, 0, 0, 0);
+INSERT INTO `pickpocketing_loot_template` VALUES (20299, 23439, 0.16, 0, 1, 1, 0, 0, 0);
+INSERT INTO `pickpocketing_loot_template` VALUES (20299, 27856, 2.56, 0, 1, 1, 0, 0, 0);
+
+-- this is just wrong
+DELETE FROM `creature_loot_template` WHERE `item` = 28551;
+
