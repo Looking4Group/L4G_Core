@@ -93,7 +93,8 @@ enum BattleGroundTimeIntervals
     RESPAWN_ONE_DAY                 = 86400,                // secs
     RESPAWN_IMMEDIATELY             = 0,                    // secs
     BUFF_RESPAWN_TIME               = 180,                  // secs
-    BG_HONOR_SCORE_TICKS            = 330                   // points
+    BG_HONOR_SCORE_TICKS            = 330,                  // points
+    TIME_TO_REMOVE_AFK_PLAYERS      = 60000                 // ms
 };
 
 enum BattleGroundBuffObjects
@@ -117,6 +118,7 @@ enum BattleGroundStatus
 struct BattleGroundPlayer
 {
     uint32  LastOnlineTime;                                 // for tracking and removing offline players from queue after 5 minutes
+    uint32  RemovePlayerTime;                               // for tracking and removing afk(reported) players from queue after 1 minutes
     uint32  Team;                                           // Player's team
 };
 

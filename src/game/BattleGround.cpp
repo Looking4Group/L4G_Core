@@ -141,13 +141,11 @@ void BattleGround::Update(uint32 diff)
 
     m_StartTime += diff;
 
-
-
     if (GetRemovedPlayersSize())
     {
         for (std::map<uint64, uint8>::iterator itr = m_RemovedPlayers.begin(); itr != m_RemovedPlayers.end(); ++itr)
         {
-            Player *plr = sObjectMgr.GetPlayer(itr->first);
+            Player* plr = sObjectMgr.GetPlayer(itr->first);
             if (!plr)
             {
                 sLog.outDebug("BattleGround: Player " UI64FMTD " not found!", itr->first);
@@ -174,22 +172,28 @@ void BattleGround::Update(uint32 diff)
     // remove offline players from bg after 1 minutes && afk kick
     if (GetPlayersSize() && !m_Players.empty())
     {
-        BattleGroundPlayerMap::iterator itr, next;
-        for (itr = m_Players.begin(); itr != m_Players.end(); itr = next)
+        for (BattleGroundPlayerMap::iterator itr = m_Players.begin(); itr != m_Players.end(); ++itr)
         {
-            next = itr;
-            ++next;
-            Player *plr = sObjectMgr.GetPlayer(itr->first);
+            Player* plr = sObjectMgr.GetPlayer(itr->first);
             itr->second.LastOnlineTime += diff;
 
             if (plr)
+            {
                 itr->second.LastOnlineTime = 0;                 // update last online time
+                if (plr->GetDummyAura(SPELL_AURA_PLAYER_INACTIVE))
+                {
+                    itr->second.RemovePlayerTime += diff;
+                    if (itr->second.RemovePlayerTime >= TIME_TO_REMOVE_AFK_PLAYERS)
+                        m_RemovedPlayers[itr->first] = 1;           // add to remove list (BG)
+                }
+                else
+                    itr->second.RemovePlayerTime = 0;                 // update last "idle" time
+            }
             else
+            {
                 if (itr->second.LastOnlineTime >= MAX_OFFLINE_TIME)
                     m_RemovedPlayers[itr->first] = 1;           // add to remove list (BG)
-
-            if (plr && plr->HasAura(SPELL_AURA_PLAYER_INACTIVE))
-                RemovePlayerAtLeave(itr->first, true, true); // itr is erased here! Do not change any battleground's private variables !
+            }
         }
     }
 

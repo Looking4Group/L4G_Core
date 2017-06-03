@@ -2640,6 +2640,19 @@ void Aura::HandleAuraDummy(bool apply, bool Real)
                 }
                 return;
             }
+            case 31736:                                     // Ironvine Seeds
+            {
+                if (Unit* caster = GetCaster())
+                {
+                    Creature* pCreature = NULL;
+                    Looking4group::NearestCreatureEntryWithLiveStateInObjectRangeCheck creature_check(*caster, 18340, false, 15.0f, false);
+                    Looking4group::ObjectLastSearcher<Creature, Looking4group::NearestCreatureEntryWithLiveStateInObjectRangeCheck> searcher(pCreature, creature_check);
+                    Cell::VisitGridObjects(caster, searcher, 15.0f);
+                    if (pCreature)
+                        pCreature->Respawn();
+                }
+                return;
+            }
         }
 
         // Earth Shield

@@ -1014,6 +1014,10 @@ void Creature::prepareGossipMenu(Player *pPlayer,uint32 gossipid)
                         if (!isCanTrainingAndResetTalentsOf(pPlayer) || !sWorld.getConfig(CONFIG_CUSTOM_TALENT_RESET_TOKEN) || pPlayer->HasItemCount(1000021, 1)) // Don't allow the player to buy two tokens
                             cantalking = false;
                         break;
+                    case GOSSIP_OPTION_ROGUE_LETTER:
+                        if (pPlayer->getClass() != CLASS_ROGUE || pPlayer->getLevel() < 24 || pPlayer->HasItemCount(17126, 1) || pPlayer->GetQuestRewardStatus(6681) || pPlayer->IsActiveQuest(6681))
+                            cantalking = false;
+                        break;
                     default:
                         sLog.outLog(LOG_DB_ERR, "Creature %u (entry: %u) have unknown gossip option %u",GetDBTableGUIDLow(),GetEntry(),gso->Action);
                         break;
@@ -1193,6 +1197,11 @@ void Creature::OnGossipSelect(Player* player, uint32 option)
 
             player->PlayerTalkClass->CloseGossip();
             break;
+        }
+        case GOSSIP_OPTION_ROGUE_LETTER:
+        {
+            player->PlayerTalkClass->CloseGossip();
+            player->CastSpell(player, 21100, false);
         }
         default:
             OnPoiSelect(player, gossip);

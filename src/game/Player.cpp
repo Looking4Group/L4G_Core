@@ -19042,7 +19042,7 @@ bool Player::CanReportAfkDueToLimit()
 void Player::ReportedAfkBy(Player* reporter)
 {
     BattleGround *bg = GetBattleGround();
-    if (!bg || bg != reporter->GetBattleGround() || GetBGTeam() != reporter->GetBGTeam())
+    if (!bg || (bg->GetStatus() != STATUS_IN_PROGRESS) || bg != reporter->GetBattleGround() || GetBGTeam() != reporter->GetBGTeam())
         return;
 
     // check if player has 'Idle' or 'Inactive' debuff
@@ -19058,9 +19058,6 @@ void Player::ReportedAfkBy(Player* reporter)
 
             // cast 'Idle' spell
             CastSpell(this, 43680, true);
-
-            if (!alive)
-                Kill(this, true);
 
             m_bgAfkReporter.clear();
         }
