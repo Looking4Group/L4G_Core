@@ -232,3 +232,11 @@ DELETE FROM `gameobject` WHERE `guid` BETWEEN 2881461 AND 3021673;
 -- http://db.hellfire-tbc.com/?spell=14195 add Shiv to Seal Fate
 UPDATE `spell_proc_event` SET `Spellfamilymask` = 27388806408 WHERE `entry` IN (14186, 14190, 14193, 14194, 14195); -- 26851935496
 
+-- someone made mistake and made for him 567 max damage...too much for 30 lvl mob. I took data from silvermoon db
+-- http://www.wowhead.com/npc=3414
+UPDATE `creature_template` SET `mindmg`='42', `maxdmg`='56' WHERE (`entry`='3414');
+
+-- http://www.wowwiki.com/Quest:Unfinished_Gordok_Business
+DELETE FROM `gameobject` WHERE `guid` = 195036;
+INSERT INTO `gameobject` VALUES (195036, 179545, 429, 1, 116.135, 638.836, -48.467, -0.785397, 0, 0, 0, 0, 300, 255, 1);
+
