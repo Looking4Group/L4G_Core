@@ -229,3 +229,6 @@ DELETE FROM `creature` WHERE `guid` IN (26901,194893);
 INSERT INTO `creature` VALUES (26901, 15350, 1, 1, 15387, 1, -1385.16, -91.2934, 159.055, 3.12414, 300, 0, 0, 126000, 0, 0, 0);
 DELETE FROM `gameobject` WHERE `guid` BETWEEN 2881461 AND 3021673;
 
+-- http://db.hellfire-tbc.com/?spell=14195 add Shiv to Seal Fate
+UPDATE `spell_proc_event` SET `Spellfamilymask` = 27388806408 WHERE `entry` IN (14186, 14190, 14193, 14194, 14195); -- 26851935496
+
