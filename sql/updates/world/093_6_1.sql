@@ -24,3 +24,6 @@ INSERT INTO `waypoint_data` VALUES
 ('99269', '19', '-3839.19', '1713.32', '97.2489', 0, 0, 0, 0, 0),
 ('99269', '20', '-3856.33', '1659.5', '85.4238', 0, 0, 0, 0, 0);
 
+-- http://www.wowhead.com/item=30850/freshly-drawn-blood
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 50 WHERE `entry` = 18859 AND `item` = 30850;
+
