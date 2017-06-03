@@ -27,3 +27,8 @@ INSERT INTO `waypoint_data` VALUES
 -- http://www.wowhead.com/item=30850/freshly-drawn-blood
 UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 50 WHERE `entry` = 18859 AND `item` = 30850;
 
+DELETE FROM `creature_template_addon` WHERE `entry` IN (18472,20690);
+INSERT INTO `creature_template_addon` VALUES
+(18472, 0, 0, 0, 0, 0, 0, 0, '18950 0 18950 1'),
+(20690, 0, 0, 0, 0, 0, 0, 0, '18950 0 18950 1');
+
