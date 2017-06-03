@@ -287,3 +287,6 @@ INSERT INTO `creature_loot_template` VALUES (4846, 7666, 1.5, 0, 1, 1, 0, 0, 0);
 INSERT INTO `creature_loot_template` VALUES (4845, 7666, 1.4, 0, 1, 1, 0, 0, 0);
 INSERT INTO `creature_loot_template` VALUES (4844, 7666, 1.2, 0, 1, 1, 0, 0, 0);
 
+-- Ragnaros 11502
+UPDATE `creature_template` SET `dmgschool` = 2 WHERE `entry` = 11502;
+
