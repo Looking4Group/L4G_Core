@@ -279,3 +279,11 @@ INSERT INTO `pickpocketing_loot_template` VALUES (20299, 27856, 2.56, 0, 1, 1, 0
 -- this is just wrong
 DELETE FROM `creature_loot_template` WHERE `item` = 28551;
 
+DELETE FROM `creature_loot_template` WHERE `item` IN (7666);
+INSERT INTO `creature_loot_template` VALUES (4856, 7666, 4.7, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (4852, 7666, 3.9, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (4851, 7666, 2.3, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (4846, 7666, 1.5, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (4845, 7666, 1.4, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (4844, 7666, 1.2, 0, 1, 1, 0, 0, 0);
+
