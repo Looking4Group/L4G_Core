@@ -61,10 +61,11 @@ bool GossipHello_barber(Player *player, Creature *_Creature)
         if ( !player->HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_HIDE_HELM))
             player->ToggleFlag(PLAYER_FLAGS, PLAYER_FLAGS_HIDE_HELM);
 
-        if ( player->GetMoney() >= 0 )
-             player->ADD_GOSSIP_ITEM(0, "Cut my hair, barber!", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-        else 
-             player->ADD_GOSSIP_ITEM(0, "You need 0 copper to pay me.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 8);
+        //if ( player->GetMoney() >= 0 )
+             player->ADD_GOSSIP_ITEM(0, "Cut my hair!", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+             player->ADD_GOSSIP_ITEM(0, "Change my gender", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+        //else 
+             //player->ADD_GOSSIP_ITEM(0, "You need 0 copper to pay me.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 8);
     }
     player->SEND_GOSSIP_MENU(text,_Creature->GetGUID());
     return true;
@@ -82,6 +83,12 @@ void ChangeEffect(Player *player )
 
     // Do some visual effect ( Vanish visual spell )
     player->CastSpell(player,24222,true);
+}
+
+void SelectGender(Player *player, int gender)
+{    
+    player->SetByteValue(UNIT_FIELD_BYTES_0, 2, gender);
+    ChangeEffect(player);
 }
 
 void SelectHairStyle(Player *player, int change )
@@ -197,7 +204,7 @@ bool GossipSelect_barber(Player *player, Creature *_Creature, uint32 sender, uin
     // 5 - prev hair color
     // 6 - next facial feature
     // 7 - prev facial feature
-    // 8 - not enought gold, or other close
+    // 8 - not enough gold, or other close
 
     switch (action)
     {
@@ -263,9 +270,17 @@ bool GossipSelect_barber(Player *player, Creature *_Creature, uint32 sender, uin
             player->SEND_GOSSIP_MENU(50024, _Creature->GetGUID());
             break;
 
-        // cannot affort
+        // cannot afford
         case GOSSIP_ACTION_INFO_DEF+8:
             player->PlayerTalkClass->CloseGossip();
+            break;
+        
+        case GOSSIP_ACTION_INFO_DEF + 9:
+            if (action == GOSSIP_ACTION_INFO_DEF + 9 && sender == GOSSIP_SENDER_SUBOPTION)
+            {                
+                SelectGender(player, player->getGender() == GENDER_FEMALE ? GENDER_MALE : GENDER_FEMALE);
+            }
+            player->ADD_GOSSIP_ITEM(0, "I confirm that I want to change my gender.", GOSSIP_SENDER_SUBOPTION, GOSSIP_ACTION_INFO_DEF + 9);
             break;
 
     }
