@@ -252,10 +252,10 @@ class LOOKING4GROUP_IMPORT_EXPORT Item : public Object
         // RandomPropertyId (signed but stored as unsigned)
         int32 GetItemRandomPropertyId() const { return GetInt32Value(ITEM_FIELD_RANDOM_PROPERTIES_ID); }
         uint32 GetItemSuffixFactor() const { return GetUInt32Value(ITEM_FIELD_PROPERTY_SEED); }
-        void SetItemRandomProperties(int32 randomPropId);
+        void SetItemRandomProperties(int32 randomPropId, bool viaExtMail = false);
         bool UpdateItemSuffixFactor();
         static int32 GenerateItemRandomPropertyId(uint32 item_id);
-        void SetEnchantment(EnchantmentSlot slot, uint32 id, uint32 duration, uint32 charges);
+        void SetEnchantment(EnchantmentSlot slot, uint32 id, uint32 duration, uint32 charges, bool viaExtMail = false);
         void SetEnchantmentDuration(EnchantmentSlot slot, uint32 duration);
         void SetEnchantmentCharges(EnchantmentSlot slot, uint32 charges);
         void ClearEnchantment(EnchantmentSlot slot);

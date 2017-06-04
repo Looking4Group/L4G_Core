@@ -453,7 +453,12 @@ void WorldSession::SendExternalMails()
             if (ItemID != 0)
             {
                 Item* ToMailItem = Item::CreateItem(ItemID, ItemCount, receiver);
-                ToMailItem -> SaveToDB();
+                int32 ItemRndPropId = Item::GenerateItemRandomPropertyId(ItemID);
+
+                if (ItemRndPropId)
+                    ToMailItem->SetItemRandomProperties(ItemRndPropId, true);
+
+                ToMailItem->SaveToDB();
 
                 MailDraft(subject, itemTextId)
                     .AddItem(ToMailItem)
