@@ -91,8 +91,29 @@ void ChangeEffect(Player *player )
 }
 
 void SelectGender(Player *player, int gender)
-{    
+{   
+
+    uint32 displayId = player->GetNativeDisplayId();    
+    uint32 new_displayId = displayId;
+
+    if (gender == GENDER_MALE)
+    {                
+        new_displayId = player->getRace() == RACE_BLOODELF ? displayId + 1 : displayId - 1;     
+    }
+    else
+    {        
+        new_displayId = player->getRace() == RACE_BLOODELF ? displayId - 1 : displayId + 1;     
+    }    
+
+    // Set gender
     player->SetByteValue(UNIT_FIELD_BYTES_0, 2, gender);
+    player->SetByteValue(PLAYER_BYTES_3, 0, gender);
+
+    // Change display ID
+    player->SetDisplayId(new_displayId);
+    player->SetNativeDisplayId(new_displayId);    
+   
+    
     ChangeEffect(player);
 }
 
