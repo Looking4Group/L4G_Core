@@ -10,13 +10,19 @@ bool GossipHello_barber(Player *player, Creature *_Creature)
     if (player->IsStandState() || standState == sitting )
         sitting = false;
 
+    if (!player->HasItemCount(1000024, 1))
+    {
+        _Creature->Whisper("You need a Barber token to pay me! Checkout our website for more info.", player->GetGUID());
+        return true;
+    }
+
     // Select a gossip text
-    if(!sitting)
-        //text = player->GetTeam() == ALLIANCE ? 50011 : 50000;
-        {
-                _Creature->Whisper("Please sit down!", player->GetGUID());
-                return true;
-        }
+    if(!sitting)    
+    {
+        _Creature->Whisper("Please sit down!", player->GetGUID());
+        return true;
+    }    
+
     else switch (player->getRace())
     {
         case RACE_HUMAN:
@@ -55,23 +61,16 @@ bool GossipHello_barber(Player *player, Creature *_Creature)
     // store values to restore if player choose to cancel
     hairstyle = player->GetByteValue(PLAYER_BYTES, 2); 
     haircolor = player->GetByteValue(PLAYER_BYTES, 3); 
-    facialfeature = player->GetByteValue(PLAYER_BYTES_2, 0); 
-    
-    if (!player->HasItemCount(1000024, 1))
-    {
-        player->ADD_GOSSIP_ITEM(0, "You need a Barber token to pay me! Checkout our website for more info.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 8);
-    }
+    facialfeature = player->GetByteValue(PLAYER_BYTES_2, 0);      
 
     if ( sitting )
     {
         if ( !player->HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_HIDE_HELM))
             player->ToggleFlag(PLAYER_FLAGS, PLAYER_FLAGS_HIDE_HELM);
 
-        //if ( player->GetMoney() >= 0 )
-             player->ADD_GOSSIP_ITEM(0, "Cut my hair!", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-             player->ADD_GOSSIP_ITEM(0, "Change my gender", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 9);
-        //else 
-             //player->ADD_GOSSIP_ITEM(0, "You need 0 copper to pay me.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 8);
+        
+        player->ADD_GOSSIP_ITEM(0, "Cut my hair!", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+        player->ADD_GOSSIP_ITEM(0, "Change my gender", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 9);        
     }
     player->SEND_GOSSIP_MENU(text,_Creature->GetGUID());
     return true;
