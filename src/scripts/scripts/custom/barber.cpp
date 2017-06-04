@@ -56,6 +56,12 @@ bool GossipHello_barber(Player *player, Creature *_Creature)
     hairstyle = player->GetByteValue(PLAYER_BYTES, 2); 
     haircolor = player->GetByteValue(PLAYER_BYTES, 3); 
     facialfeature = player->GetByteValue(PLAYER_BYTES_2, 0); 
+    
+    if (!player->HasItemCount(1000024, 1))
+    {
+        player->ADD_GOSSIP_ITEM(0, "You need a Barber token to pay me! Checkout our website for more info.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 8);
+    }
+
     if ( sitting )
     {
         if ( !player->HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_HIDE_HELM))
