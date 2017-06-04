@@ -308,3 +308,5 @@ UPDATE `creature` SET `spawntimesecs`= 86400 WHERE `id` = 17427;
 UPDATE `creature` SET `position_x` = '513.24', `position_y` = '315.927', `position_z` = '1.93557', `orientation` = '3.1429', `spawntimesecs`= 86400 WHERE `id` = 17461;
 UPDATE `creature` SET `spawntimesecs`= 86400 WHERE `id` = 20923;
 
+UPDATE `creature` SET `MovementType` = 0, `spawndist` = 0 WHERE `guid` IN (57324,57334);
+
