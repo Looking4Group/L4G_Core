@@ -69,7 +69,7 @@ bool GossipHello_barber(Player *player, Creature *_Creature)
 
         //if ( player->GetMoney() >= 0 )
              player->ADD_GOSSIP_ITEM(0, "Cut my hair!", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-             player->ADD_GOSSIP_ITEM(0, "Change my gender", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+             player->ADD_GOSSIP_ITEM(0, "Change my gender", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 9);
         //else 
              //player->ADD_GOSSIP_ITEM(0, "You need 0 copper to pay me.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 8);
     }
