@@ -305,6 +305,7 @@ bool GossipSelect_barber(Player *player, Creature *_Creature, uint32 sender, uin
             if (action == GOSSIP_ACTION_INFO_DEF+ 9 && sender == GOSSIP_SENDER_SUBOPTION)
             {                
                 SelectGender(player, player->getGender() == GENDER_FEMALE ? GENDER_MALE : GENDER_FEMALE);
+                player->PlayerTalkClass->CloseGossip();
             }
             player->ADD_GOSSIP_ITEM(0, "I confirm that I want to change my gender.", GOSSIP_SENDER_SUBOPTION, GOSSIP_ACTION_INFO_DEF + 9);
             player->SEND_GOSSIP_MENU(50024, _Creature->GetGUID());
