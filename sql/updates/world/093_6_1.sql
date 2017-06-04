@@ -290,3 +290,21 @@ INSERT INTO `creature_loot_template` VALUES (4844, 7666, 1.2, 0, 1, 1, 0, 0, 0);
 -- Ragnaros 11502
 UPDATE `creature_template` SET `dmgschool` = 2 WHERE `entry` = 11502;
 
+DELETE FROM `creature` WHERE `guid` IN (16777014,34038);
+INSERT INTO `creature` VALUES (34038, 20923, 540, 2, 0, 0, 513.24, 315.927, 1.93557, 3.1429, 86400, 0, 0, 103320, 0, 0, 0);
+
+DELETE FROM `creature_formations` WHERE `leaderGUID` IN (16777014,34038,62871,62872);
+INSERT INTO `creature_formations` VALUES
+(34038,34038,150,360,2),
+(34038,62921,150,360,2),
+(34038,62871,150,360,2),
+(34038,62872,150,360,2);
+
+DELETE FROM `creature_linked_respawn` WHERE `linkedguid` IN (16777014,34038,62921);
+INSERT INTO `creature_linked_respawn` VALUES (62921, 62921);
+INSERT INTO `creature_linked_respawn` VALUES (34038, 34038);
+
+UPDATE `creature` SET `spawntimesecs`= 86400 WHERE `id` = 17427;
+UPDATE `creature` SET `position_x` = '513.24', `position_y` = '315.927', `position_z` = '1.93557', `orientation` = '3.1429', `spawntimesecs`= 86400 WHERE `id` = 17461;
+UPDATE `creature` SET `spawntimesecs`= 86400 WHERE `id` = 20923;
+
