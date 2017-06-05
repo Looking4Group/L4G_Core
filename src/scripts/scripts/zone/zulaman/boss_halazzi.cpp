@@ -16,7 +16,7 @@
 
 /* ScriptData
 SDName: boss_Halazzi
-SD%Complete: 80
+SD%Complete: 90
 SDComment:
 SDCategory: Zul'Aman
 EndScriptData */
@@ -25,45 +25,54 @@ EndScriptData */
 #include "def_zulaman.h"
 //#include "spell.h"
 
-#define YELL_AGGRO                      -1800484
-#define YELL_SABER_ONE                  -1800485
-#define YELL_SABER_TWO                  -1800486
-#define YELL_SPLIT                      -1800487
-#define YELL_MERGE                      -1800488
-#define YELL_KILL_ONE                   -1800489
-#define YELL_KILL_TWO                   -1800490
-#define YELL_DEATH                      -1800491
-#define YELL_BERSERK                    -1800492
-#define YELL_INTRO1                     -1800510
-#define YELL_INTRO2                     -1800511
+enum Halazzi
+{
+    AGGRO_RANGE                 = 38,
 
-#define SPELL_DUAL_WIELD                29651
-#define SPELL_SABER_LASH                43267
-#define SPELL_FRENZY                    43139
-#define SPELL_FLAMESHOCK                43303
-#define SPELL_EARTHSHOCK                43305
-#define SPELL_TRANSFORM_SPLIT           43142
-#define SPELL_TRANSFORM_SPLIT2          43573
-#define SPELL_TRANSFORM_MERGE           43271
-#define SPELL_SUMMON_LYNX               43143
-#define SPELL_SUMMON_TOTEM              43302
-#define SPELL_BERSERK                   45078
+    YELL_AGGRO                  = -1800484,
+    YELL_SABER_ONE              = -1800485,
+    YELL_SABER_TWO              = -1800486,
+    YELL_SPLIT                  = -1800487,
+    YELL_MERGE                  = -1800488,
+    YELL_KILL_ONE               = -1800489,
+    YELL_KILL_TWO               = -1800490,
+    YELL_DEATH                  = -1800491,
+    YELL_BERSERK                = -1800492,
+    YELL_INTRO1                 = -1800510,
+    YELL_INTRO2                 = -1800511,
 
-#define MOB_SPIRIT_LYNX                 24143
-#define SPELL_LYNX_FRENZY               43290
-#define SPELL_SHRED_ARMOR               43243
+    SPELL_DUAL_WIELD            = 29651,
+    SPELL_SABER_LASH            = 43267,
+    SPELL_FRENZY                = 43139,
+    SPELL_FLAMESHOCK            = 43303,
+    SPELL_EARTHSHOCK            = 43305,
+    SPELL_TRANSFORM_SPLIT       = 43142,
+    SPELL_TRANSFORM_SPLIT2      = 43573,
+    SPELL_TRANSFORM_MERGE       = 43271,
+    // SPELL_HALAZZI_TRANSFORM  = 43311, unused
+    // SPELL_TRANSFORM_75       = 43145,
+    // SPELL_TRANSFORM_50       = 43271,
+    // SPELL_TRANSFORM_25       = 43272,
+    SPELL_SUMMON_LYNX           = 43143,
+    SPELL_SUMMON_TOTEM          = 43302,
+    SPELL_BERSERK               = 45078,
 
-#define MOB_TOTEM                       24224
-#define SPELL_LIGHTNING                 43301
+    MOB_SPIRIT_LYNX             = 24143,
+    SPELL_LYNX_FRENZY           = 43290,
+    SPELL_SHRED_ARMOR           = 43243,
+
+    MOB_TOTEM                   = 24224,
+    SPELL_LIGHTNING             = 43301
+};
 
 enum PhaseHalazzi
 {
-    PHASE_NONE = 0,
-    PHASE_LYNX = 1,
-    PHASE_SPLIT = 2,
-    PHASE_HUMAN = 3,
-    PHASE_MERGE = 4,
-    PHASE_ENRAGE = 5
+    PHASE_NONE      = 0,
+    PHASE_LYNX      = 1,
+    PHASE_SPLIT     = 2,
+    PHASE_HUMAN     = 3,
+    PHASE_MERGE     = 4,
+    PHASE_ENRAGE    = 5
 };
 
 struct boss_halazziAI : public ScriptedAI
@@ -71,11 +80,9 @@ struct boss_halazziAI : public ScriptedAI
     boss_halazziAI(Creature *c) : ScriptedAI(c)
     {
         pInstance = (c->GetInstanceData());
-        // need to find out what controls totem's spell cooldown
-        SpellEntry *TempSpell = (SpellEntry*)GetSpellStore()->LookupEntry(SPELL_LIGHTNING);
-        if(TempSpell && TempSpell->CastingTimeIndex != 5)
-            TempSpell->CastingTimeIndex = 5; // 2000 ms casting time
         m_creature->GetPosition(wLoc);
+        m_creature->SetAggroRange(AGGRO_RANGE);
+        maxhp = m_creature->GetMaxHealth();
     }
 
     ScriptedInstance *pInstance;
@@ -90,7 +97,7 @@ struct boss_halazziAI : public ScriptedAI
     uint32 TransformCount;
 
     PhaseHalazzi Phase;
-
+    uint32 maxhp;
     uint64 LynxGUID;
 
     uint32 checkTimer2;
@@ -178,8 +185,8 @@ struct boss_halazziAI : public ScriptedAI
                 Lynx->SetVisibility(VISIBILITY_OFF);
                 Lynx->setDeathState(JUST_DIED);
             }
-            m_creature->SetMaxHealth(600000);
-            m_creature->SetHealth(600000 - 150000 * TransformCount);
+            m_creature->SetMaxHealth(maxhp);
+            m_creature->SetHealth(m_creature->GetMaxHealth() - m_creature->GetMaxHealth() / 4 * TransformCount);
             FrenzyTimer = 16000;
             SaberlashTimer = 5000;
             ShockTimer = 10000;
@@ -191,8 +198,8 @@ struct boss_halazziAI : public ScriptedAI
         case PHASE_HUMAN:
             //DoCast(m_creature, SPELL_SUMMON_LYNX, true);
             DoSpawnCreature(MOB_SPIRIT_LYNX, 5,5,0,0, TEMPSUMMON_CORPSE_DESPAWN, 0);
-            m_creature->SetMaxHealth(400000);
-            m_creature->SetHealth(400000);
+            m_creature->SetMaxHealth(m_creature->GetMaxHealth() * 2 / 3);
+            m_creature->SetHealth(m_creature->GetMaxHealth() * 2 / 3);
             ShockTimer = 10000;
             TotemTimer = 12000;
             break;
@@ -200,7 +207,6 @@ struct boss_halazziAI : public ScriptedAI
             if(Unit *Lynx = Unit::GetUnit(*m_creature, LynxGUID))
             {
                 DoScriptText(YELL_MERGE, m_creature);
-                Lynx->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                 Lynx->GetMotionMaster()->Clear();
                 Lynx->GetMotionMaster()->MoveFollow(m_creature, 0, 0);
                 m_creature->GetMotionMaster()->Clear();
@@ -240,13 +246,13 @@ struct boss_halazziAI : public ScriptedAI
             if(SaberlashTimer < diff)
             {
                 AddSpellToCastWithScriptText(m_creature->getVictim(), SPELL_SABER_LASH, RAND(YELL_SABER_ONE, YELL_SABER_TWO));
-                SaberlashTimer = 5000 + rand() % 10000;
+                SaberlashTimer = urand(5000, 15000);
             }else SaberlashTimer -= diff;
 
             if(FrenzyTimer < diff)
             {
                 AddSpellToCast(m_creature, SPELL_FRENZY);
-                FrenzyTimer = (10+rand()%5)*1000;
+                FrenzyTimer = urand(10000, 15000);
             }else FrenzyTimer -= diff;
 
             if(Phase == PHASE_LYNX)
@@ -274,19 +280,19 @@ struct boss_halazziAI : public ScriptedAI
                         AddSpellToCast(target,SPELL_EARTHSHOCK);
                     else
                         AddSpellToCast(target,SPELL_FLAMESHOCK);
-                    ShockTimer = 10000 + rand()%5000;
+                    ShockTimer = urand(10000, 14000);
                 }
             }else ShockTimer -= diff;
 
             if(Phase == PHASE_HUMAN)
                 if(CheckTimer < diff)
                 {
-                    if( ((m_creature->GetHealth()*100) / m_creature->GetMaxHealth() <= 20)/*m_creature->GetHealth() * 10 < m_creature->GetMaxHealth()*/)
+                    if( ((m_creature->GetHealth()*100) / m_creature->GetMaxHealth() < 20))
                         EnterPhase(PHASE_MERGE);
                     else
                     {
                         Unit *Lynx = Unit::GetUnit(*m_creature, LynxGUID);
-                        if(Lynx && ((Lynx->GetHealth()*100) / Lynx->GetMaxHealth() <= 20)/*Lynx->GetHealth() * 10 < Lynx->GetMaxHealth()*/)
+                        if(Lynx && ((Lynx->GetHealth()*100) / Lynx->GetMaxHealth() < 20))
                             EnterPhase(PHASE_MERGE);
                     }
                     CheckTimer = 1000;
@@ -332,65 +338,9 @@ struct boss_halazziAI : public ScriptedAI
     }
 };
 
-// Spirits Lynx AI
-
-struct boss_spiritlynxAI : public ScriptedAI
-{
-    boss_spiritlynxAI(Creature *c) : ScriptedAI(c) {}
-
-    uint32 FrenzyTimer;
-    uint32 shredder_timer;
-
-    void Reset()
-    {
-        FrenzyTimer = (30+rand()%20)*1000;  //frenzy every 30-50 seconds
-        shredder_timer = 4000;
-    }
-
-    void DamageTaken(Unit *done_by, uint32 &damage)
-    {
-        if(damage >= m_creature->GetHealth())
-            damage = 0;
-    }
-
-    void AttackStart(Unit *who)
-    {
-        if(!m_creature->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE))
-            ScriptedAI::AttackStart(who);
-    }
-
-    void EnterCombat(Unit *who) {/*DoZoneInCombat();*/}
-
-    void UpdateAI(const uint32 diff)
-    {
-        if (!UpdateVictim())
-            return;
-
-        if(FrenzyTimer < diff)
-        {
-            DoCast(m_creature, SPELL_LYNX_FRENZY);
-            FrenzyTimer = (30+rand()%20)*1000;
-        }else FrenzyTimer -= diff;
-
-        if(shredder_timer < diff)
-        {
-            DoCast(m_creature->getVictim(), SPELL_SHRED_ARMOR);
-            shredder_timer = 4000;
-        }else shredder_timer -= diff;
-
-        DoMeleeAttackIfReady();
-    }
-
-};
-
 CreatureAI* GetAI_boss_halazziAI(Creature *_Creature)
 {
     return new boss_halazziAI (_Creature);
-}
-
-CreatureAI* GetAI_boss_spiritlynxAI(Creature *_Creature)
-{
-    return new boss_spiritlynxAI (_Creature);
 }
 
 void AddSC_boss_halazzi()
@@ -400,10 +350,4 @@ void AddSC_boss_halazzi()
     newscript->Name="boss_halazzi";
     newscript->GetAI = &GetAI_boss_halazziAI;
     newscript->RegisterSelf();
-
-    newscript = new Script;
-    newscript->Name="mob_halazzi_lynx";
-    newscript->GetAI = &GetAI_boss_spiritlynxAI;
-    newscript->RegisterSelf();
 }
-
