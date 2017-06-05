@@ -345,3 +345,5 @@ INSERT INTO `creature_loot_template` VALUES (21621, 22146, 0.01, 0, 1, 1, 0, 0, 
 -- chests in azeroth
 UPDATE `gameobject` SET `spawnmask` = 1 WHERE `id` IN (2850, 2855, 2857, 4149, 153454);
 
+UPDATE `creature_template` SET `unit_flags` = 32832 WHERE `entry` = 21506;
+
