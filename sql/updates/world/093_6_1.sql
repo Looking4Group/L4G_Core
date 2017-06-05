@@ -342,3 +342,6 @@ INSERT INTO `creature_loot_template` VALUES (21621, 24015, 0.05, 1, -24015, 1, 0
 INSERT INTO `creature_loot_template` VALUES (21621, 29549, 0.03, 0, 1, 1, 0, 0, 0);
 INSERT INTO `creature_loot_template` VALUES (21621, 22146, 0.01, 0, 1, 1, 0, 0, 0);
 
+-- chests in azeroth
+UPDATE `gameobject` SET `spawnmask` = 1 WHERE `id` IN (2850, 2855, 2857, 4149, 153454);
+
