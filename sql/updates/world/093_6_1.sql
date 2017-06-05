@@ -310,3 +310,35 @@ UPDATE `creature` SET `spawntimesecs`= 86400 WHERE `id` = 20923;
 
 UPDATE `creature` SET `MovementType` = 0, `spawndist` = 0 WHERE `guid` IN (57324,57334);
 
+DELETE FROM `creature_loot_template` WHERE `entry` = 20900;
+INSERT INTO `creature_loot_template` VALUES (20900, 23606, 15, 9, 1, 1, 7, 164, 1);
+INSERT INTO `creature_loot_template` VALUES (20900, 29740, 6, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (20900, 30809, 36, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (20900, 32902, 5, 0, 1, 2, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (20900, 32905, 1, 0, 1, 2, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (20900, 24011, 1, 1, -24011, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (20900, 24013, 1, 1, -24013, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (20900, 24001, 3, 1, -24001, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (20900, 24002, 3, 1, -24002, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (20900, 24092, 0.05, 1, -24092, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (20900, 24014, 0.2, 1, -24014, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (20900, 24015, 0.05, 1, -24015, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (20900, 29549, 0.03, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (20900, 22146, 0.01, 0, 1, 1, 0, 0, 0);
+
+DELETE FROM `creature_loot_template` WHERE `entry` = 21621;
+INSERT INTO `creature_loot_template` VALUES (21621, 23606, 30, 9, 1, 1, 7, 164, 1);
+INSERT INTO `creature_loot_template` VALUES (21621, 29740, 5, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (21621, 30809, 53, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (21621, 32902, 8, 0, 1, 2, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (21621, 32905, 3, 0, 1, 2, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (21621, 24011, 1, 1, -24011, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (21621, 24013, 1, 1, -24013, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (21621, 24001, 3, 1, -24001, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (21621, 24002, 3, 1, -24002, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (21621, 24092, 0.05, 1, -24092, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (21621, 24014, 0.2, 1, -24014, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (21621, 24015, 0.05, 1, -24015, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (21621, 29549, 0.03, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (21621, 22146, 0.01, 0, 1, 1, 0, 0, 0);
+
