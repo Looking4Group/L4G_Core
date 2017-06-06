@@ -3519,11 +3519,12 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 41363: // Shared Bonds
                 spellInfo->AttributesEx &= ~SPELL_ATTR_EX_CHANNELED_1;
+                break;
             case 16007: // DRACO_INCARCINATRIX_900
                 spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ENEMY;
                 break;
             case 39331: // In Session
-                spellInfo->DurationIndex = 21;  // infinity
+                spellInfo->DurationIndex = DURATION_MAX_INFINITY;
                 spellInfo->Effect[0] = SPELL_EFFECT_APPLY_AREA_AURA_FRIEND;
                 spellInfo->EffectRadiusIndex[0] = 27;   // effect radius from 65 to 50 yd
                 break;
@@ -3572,9 +3573,6 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 29946: // Flame Wreath (Shade of Aran)
                 spellInfo->EffectRadiusIndex[0] = EFFECT_RADIUS_2_YARDS;
-                break;
-            case 29952: // Circular Blizzard (Shade of Aran)
-                spellInfo->DurationIndex = 9;
                 break;
             case 32785: // Infernal Rain                
                 spellInfo->EffectImplicitTargetA[0] = TARGET_UNIT_TARGET_ENEMY;
@@ -3673,9 +3671,6 @@ void SpellMgr::LoadSpellCustomAttr()
             case 32686: //earthsquake doomwalker 
                 spellInfo->AttributesCu |= SPELL_ATTR_CU_IGNORE_ARMOR; 
                 break;
-            case 44032: // Mind Exhaustion Magtheridon
-                spellInfo->DurationIndex = 25;
-            break;
             case 24869: //Halooween food
                 spellInfo->Effect[2] = 6;
                 spellInfo->EffectBasePoints[2] = 1;
@@ -3683,20 +3678,21 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->EffectImplicitTargetA[2] = 1;
                 spellInfo->EffectAmplitude[2] = 10000;
                 spellInfo->EffectTriggerSpell[2] = 19709;
-            break;
+                break;
             case 37674: // leo chaosblast
                 spellInfo->EffectRadiusIndex[0] = 18;
-            break;
+                break;
             case 37284:  //scalding water
                 spellInfo->EffectBasePoints[1] = 999;
                 spellInfo->EffectBasePoints[0] = 999;
                 spellInfo->AttributesCu |= SPELL_ATTR_CU_NO_SPELL_DMG_COEFF;
-            break;
+                break;
             case 29838: //Second Wind (Rank 2)
                 spellInfo->procFlags &= ~PROC_FLAG_ON_TAKE_PERIODIC;
                 break;
             case 38971: //acid geysir - spell of ssc underbog colossus
-                spellInfo->EffectBasePoints[0] = 2478;                
+                spellInfo->EffectBasePoints[0] = 2478;
+                break;                
             case 39032: //Initial Infection - spell of ssc underbog colossus
             case 39044: //Summon Serpentshrine parasite - spell of ssc underbog colossus
                 spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_PLAYERS_ONLY;
@@ -3786,9 +3782,6 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->EffectTriggerSpell[0] = 30564;
                 spellInfo->EffectApplyAuraName[0] = 42;
                 spellInfo->EffectImplicitTargetA[0] = 1;
-                break;
-            case 30564: // Worgen's Spite has a duration of 1.1 seconds (Will fade once Transform fades)
-                spellInfo->DurationIndex = 555;
                 break;
             case 38316: // Lady Vashj Entangle
             case 38280: // Lady Vashj Static Charge
@@ -3937,6 +3930,7 @@ void SpellMgr::LoadSpellCustomAttr()
                 break;
             case 3237: // Curse of Thule (Used by some gnolls in Tirisfall)
                 spellInfo->Attributes &= ~SPELL_ATTR_ON_NEXT_SWING_2;
+                break;
             case 37468: //Spectrecles
             case 37495:
             case 39841:
@@ -3955,15 +3949,27 @@ void SpellMgr::LoadSpellCustomAttr()
             case 37408: // Oscillation Field
                 spellInfo->AttributesEx3 |= SPELL_ATTR_EX3_STACK_FOR_DIFF_CASTERS;
                 break;
-            case 34444: // Khadgar's Servant, increase despawn time
-                spellInfo->DurationIndex = 30; // 1800000ms
-                break;
             case 42463: //Seal of Vengeance additional fullstack DMG
                 spellInfo->EffectBasePoints[0] = 20;
                 break;
             case 43680: // Idle (Received on BG AFK report)
-                spellInfo->DurationIndex = 5; // Increase duration to 5 min until we rework the system, to prevent players from getting kicked before match starts.
+                spellInfo->DurationIndex = DURATION_MAX_300_SEC; // Increase duration to 5 min until we rework the system, to prevent players from getting kicked before match starts.
                 spellInfo->EffectAmplitude[0] = 300000;
+                break;
+            case 30564: // Worgen's Spite has a duration of 1.1 seconds (Will fade once Transform fades)
+                spellInfo->DurationIndex = DURATION_MAX_1_1_SEC_1;
+                break;
+            case 38759: // Dark Shell (Pandemonious HC)
+                spellInfo->DurationIndex = DURATION_MAX_8_SEC;
+                break;
+            case 29952: // Circular Blizzard (Shade of Aran)
+                spellInfo->DurationIndex = DURATION_MAX_30_SEC;
+                break;
+            case 44032: // Mind Exhaustion Magtheridon
+                spellInfo->DurationIndex = DURATION_MAX_180_SEC;
+                break;
+            case 34444: // Khadgar's Servant, increase despawn time
+                spellInfo->DurationIndex = DURATION_MAX_30_MIN;
                 break;
             default:
                 break;
