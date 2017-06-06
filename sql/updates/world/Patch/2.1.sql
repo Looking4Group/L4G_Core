@@ -6,9 +6,6 @@
 -- Temp Out
 -- ========
 
--- MH, BT
--- UPDATE `access_requirement` SET `level_min` = 70 WHERE `id` IN (29, 47);
-
 -- ========
 -- Creatures
 -- ========
@@ -109,6 +106,9 @@ DELETE FROM `creature_ai_scripts` WHERE `id` = 2192002;
 -- ========
 -- Quests & Access
 -- ========
+
+-- MH, BT
+UPDATE `access_requirement` SET `level_min` = 70 WHERE `id` IN (29, 47);
 
 -- MH
 DELETE FROM `creature_questrelation` WHERE `quest` IN (10460,10461,10462,10463);
