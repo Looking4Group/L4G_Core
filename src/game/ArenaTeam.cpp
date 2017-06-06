@@ -529,6 +529,9 @@ uint32 ArenaTeam::GetPoints(uint32 MemberRating)
         points = (float)rating * 0.22f + 14.0f;
     else
         points = 1511.26f / (1.0f + 1639.28f * exp(-0.00412f * (float)rating));
+    
+    // Rate.Arena.Points
+    points *= sWorld.getRate(RATE_ARENA_POINTS);
 
     // type penalties for <5v5 teams
     if (Type == ARENA_TEAM_2v2)
