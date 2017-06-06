@@ -5077,6 +5077,15 @@ void Aura::HandlePeriodicTriggerSpell(bool apply, bool Real)
 
                 break;
             }
+            case 38023: // Watery Grave
+            case 38024: // Watery Grave
+            case 38025: // Watery Grave
+            case 37850: // Watery Grave
+            {
+                if (m_removeMode == AURA_REMOVE_BY_EXPIRE)
+                    m_target->CastSpell(m_target, 37852, true, 0, this);
+                break;
+            }
             case 42783: // Wrath of the Astromancer
             {
                 if (m_removeMode == AURA_REMOVE_BY_EXPIRE)
@@ -7622,6 +7631,9 @@ void Aura::PeriodicTick()
             PeriodicDummyTick();
             break;
         case SPELL_AURA_PERIODIC_TRIGGER_SPELL:
+            if (GetSpellProto()->EffectTriggerSpell[m_effIndex] == 37852)
+                break;
+
             TriggerSpell();
             break;
         case SPELL_AURA_PERIODIC_TRIGGER_SPELL_WITH_VALUE:
