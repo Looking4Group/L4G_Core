@@ -104,10 +104,10 @@ class LOOKING4GROUP_IMPORT_EXPORT InstanceData : public ZoneScript
         virtual void ResetEncounterInProgress();
 
         //Called when a player successfully enters the instance.
-        virtual void OnPlayerEnter(Player *) {}
+        void OnPlayerEnter(Player *);
 
         //Called when a player deaths in the instance.
-        virtual void OnPlayerDeath(Player *) {}
+        void OnPlayerDeath(Player *);
 
         //Called on creature death (after CreatureAI::JustDied)
         virtual void OnCreatureDeath(Creature *) {}

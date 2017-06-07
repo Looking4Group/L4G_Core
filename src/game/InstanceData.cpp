@@ -25,12 +25,38 @@
 #include "Map.h"
 #include "GameObject.h"
 #include "Creature.h"
+#include "Player.h"
 
 void InstanceData::SaveToDB()
 {
     std::string data = GetSaveData();
     if (data.empty())
         return;
+
+    std::stringstream ss(data);
+    int bossState;
+    bool instanceComplete = true;
+    int count = 1;
+
+    while(ss >> bossState)
+    {
+        if ((bossState != DONE) && (bossState != SPECIAL))
+        {
+            // Allow skipping of Karazhan optional Boss
+            if (instance->GetId() == 532 && count == 4)
+            {
+                break;   
+            }
+            instanceComplete = false;
+            break;           
+        }
+        count = count + 1;
+    }
+
+    if (instanceComplete)
+    {
+        RealmDataDatabase.PExecute("UPDATE `instance_times` SET `end_time` = CURTIME() WHERE `instance_id` = %i", instance->GetInstanceId());
+    }
 
     static SqlStatementID updateInstance;
 
@@ -58,6 +84,39 @@ bool InstanceData::IsEncounterInProgress() const
             return true;
 
     return false;
+}
+
+void InstanceData::OnPlayerEnter(Player *player)
+{
+    if (player->isGameMaster())
+    {
+        return;
+    }
+
+    QueryResultAutoPtr resultPlayerIds = QueryResultAutoPtr(NULL);
+    resultPlayerIds = RealmDataDatabase.PQuery("SELECT `player_ids` FROM `instance_times` WHERE `instance_id` = %i", instance->GetInstanceId());
+    if (resultPlayerIds)
+    {
+        Field* fields = resultPlayerIds->Fetch();
+        std::string playerIds = fields[0].GetString();
+        std::istringstream ss(playerIds);
+        int playerId;
+
+        while(ss >> playerId)
+        {
+            if (playerId == player->GetGUIDLow())
+            {
+                return;
+            }
+        }
+    }
+
+    RealmDataDatabase.PExecute("INSERT INTO `instance_times` (`instance_id`, `map`, `difficulty`, `player_ids`) VALUES (%i, %i, %i, %i) ON DUPLICATE KEY UPDATE `player_ids` = CONCAT(player_ids, ' %i')", instance->GetInstanceId(), instance->GetId(), instance->IsHeroic(), player->GetGUIDLow(), player->GetGUIDLow());
+}
+
+void InstanceData::OnPlayerDeath(Player *player)
+{
+    RealmDataDatabase.PExecute("UPDATE `instance_times` SET `deaths` = `deaths`+1 WHERE instance_id = %i", instance->GetInstanceId());  
 }
 
 //This will be removed in the future, just compitiable with Mangos
