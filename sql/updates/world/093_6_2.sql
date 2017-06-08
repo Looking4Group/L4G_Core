@@ -14,3 +14,5 @@ INSERT INTO `game_event_creature` VALUES (359460, 15);
 INSERT INTO `game_event_creature` VALUES (359462, 15);
 INSERT INTO `game_event_creature` VALUES (359464, 15);
 
+UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 25, `groupid` = 9 WHERE `entry` = 9736 AND `item` = 12835;
+
