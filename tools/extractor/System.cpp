@@ -18,7 +18,8 @@
 #include "loadlib/wdt.h"
 #include <fcntl.h>
 
-#if defined( __GNUC__ )
+#if defined( __unix__ )
+    #include <unistd.h>
     #define _open   open
     #define _close close
     #ifndef O_BINARY
