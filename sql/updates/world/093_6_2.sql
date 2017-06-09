@@ -16,3 +16,5 @@ INSERT INTO `game_event_creature` VALUES (359464, 15);
 
 UPDATE `creature_loot_template` SET `ChanceOrQuestChance` = 25, `groupid` = 9 WHERE `entry` = 9736 AND `item` = 12835;
 
+UPDATE `creature` SET `spawnmask` = 0 WHERE `guid` IN (140773, 140774);
+
