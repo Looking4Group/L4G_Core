@@ -104,10 +104,10 @@ class LOOKING4GROUP_IMPORT_EXPORT InstanceData : public ZoneScript
         virtual void ResetEncounterInProgress();
 
         //Called when a player successfully enters the instance.
-        void OnPlayerEnter(Player *);
+        virtual void OnPlayerEnter(Player *player);
 
         //Called when a player deaths in the instance.
-        void OnPlayerDeath(Player *);
+        virtual void OnPlayerDeath(Player *player);
 
         //Called on creature death (after CreatureAI::JustDied)
         virtual void OnCreatureDeath(Creature *) {}
@@ -148,7 +148,6 @@ class LOOKING4GROUP_IMPORT_EXPORT InstanceData : public ZoneScript
     private:
         std::vector<BossInfo> bosses;
         DoorInfoMap doors;
-
 
         virtual void OnObjectCreate(GameObject *) {}
         virtual void OnCreatureCreate(Creature *, uint32 entry) {}
