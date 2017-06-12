@@ -1275,3 +1275,5 @@ INSERT INTO `waypoint_data` (`id`, `point`, `position_x`, `position_y`, `positio
 (@GUID + 17, @POINT := @POINT + 1, '-3922.993', '3396.193', '351.9707'),
 (@GUID + 17, @POINT := @POINT + 1, '-3894.564', '3430.655', '372.4708');
 
+UPDATE `npc_vendor` SET `maxcount` = 1 WHERE `item` = 21894;
+
