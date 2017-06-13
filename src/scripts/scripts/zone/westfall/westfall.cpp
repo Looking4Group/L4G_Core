@@ -54,7 +54,7 @@ EndContentData */
 #define SAY_BEGIN "You won't ruin my lands, you scum!"
 #define SAY_WAVE "One more down!"
 #define SAY_END "We've done it, we won!"
-#define SAY_MOVE_BACK "Meet me at the orchad--I just need to put my gun away."
+#define SAY_MOVE_BACK "Meet me at the orchard--I just need to put my gun away."
 
 struct npc_daphne_stilwellAI : public npc_escortAI
 {
@@ -438,4 +438,3 @@ void AddSC_westfall()
     newscript->pQuestAcceptNPC = &QuestAccept_npc_Mikhail;
     newscript->RegisterSelf();
 }
-
