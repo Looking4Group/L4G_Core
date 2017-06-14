@@ -50,28 +50,34 @@ static Say PeonDies[]=
     {-1540008},
 };
 
-#define SAY_INTRO                   -1540000
-#define SAY_TAUNT_1                 -1540009
-#define SAY_TAUNT_2                 -1540010
-#define SAY_TAUNT_3                 -1540011
-#define SAY_AGGRO_1                 -1540012
-#define SAY_AGGRO_2                 -1540013
-#define SAY_AGGRO_3                 -1540014
-#define SAY_SLAY_1                  -1540015
-#define SAY_SLAY_2                  -1540016
-#define SAY_DIE                     -1540017
+enum GrandWarlockNetherkurse
+{
+    SAY_INTRO               = -1540000,
+    SAY_TAUNT_1             = -1540009,
+    SAY_TAUNT_2             = -1540010,
+    SAY_TAUNT_3             = -1540011,
+    SAY_AGGRO_1             = -1540012,
+    SAY_AGGRO_2             = -1540013,
+    SAY_AGGRO_3             = -1540014,
+    SAY_SLAY_1              = -1540015,
+    SAY_SLAY_2              = -1540016,
+    SAY_DIE                 = -1540017,
 
-#define SPELL_DEATH_COIL            30500
-#define SPELL_DARK_SPIN             30502
-#define SPELL_SHADOW_FISSURE        30496
-#define SPELL_SHADOW_SEAR           30735
-#define SPELL_SHADOW_BOLT           30505
-#define SPELL_DARK_CLEAVE           30508
-#define SPELL_SHADOW_CLEAVE         30495
-#define H_SPELL_SHADOW_SLAM         35953
+    SPELL_DEATH_COIL        = 30500,
+    SPELL_DARK_SPIN         = 30502,
+    SPELL_SHADOW_FISSURE    = 30496,
+    SPELL_SHADOW_SEAR       = 30735,
+    SPELL_SHADOW_BOLT       = 30505,
+    SPELL_DARK_CLEAVE       = 30508,
+    SPELL_SHADOW_CLEAVE     = 30495,
+    H_SPELL_SHADOW_SLAM     = 35953,
 
-#define SPELL_HEMORRHAGE            30478
-#define SPELL_CONSUMPTION           30497
+    SPELL_HEMORRHAGE        = 30478,
+    //SPELL_CONSUMPTION       = 30497,
+
+    NPC_FEL_ORC_CONVERT     = 17083
+};
+
 
 struct boss_grand_warlock_nethekurseAI : public ScriptedAI
 {
@@ -89,6 +95,7 @@ struct boss_grand_warlock_nethekurseAI : public ScriptedAI
     bool IsMainEvent;
     bool SpinOnce;
     bool Phase;
+    bool CombatYell;
 
     uint32 PeonEngagedCount;
     uint32 PeonKilledCount;
@@ -108,6 +115,7 @@ struct boss_grand_warlock_nethekurseAI : public ScriptedAI
         IsMainEvent = false;
         SpinOnce = false;
         Phase = false;
+        CombatYell = false;
 
         PeonEngagedCount = 0;
         PeonKilledCount = 0;
@@ -115,7 +123,7 @@ struct boss_grand_warlock_nethekurseAI : public ScriptedAI
         IntroEvent_Timer = 20000;
         DeathCoil_Timer = 12000;
         ShadowFissure_Timer = 8000;
-        Cleave_Timer = 17000;
+        Cleave_Timer = 5000;
         ShadowBolt_Timer = 1000;
         DarkCleave_Timer = 1000;
 
@@ -145,7 +153,7 @@ struct boss_grand_warlock_nethekurseAI : public ScriptedAI
             IsIntroEvent = false;
             IsMainEvent = true;
             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-            me->Attack(me->SelectNearbyTarget(40), false);
+            me->Attack(me->SelectNearbyTarget(80), false);
         }
     }
 
@@ -170,7 +178,7 @@ struct boss_grand_warlock_nethekurseAI : public ScriptedAI
 
     void MoveInLineOfSight(Unit *who)
     {
-        if (!IntroOnce && me->IsWithinDistInMap(who, 40.0f))
+        if (PeonKilledCount == 0 && !IntroOnce && me->IsWithinDistInMap(who, 40.0f))
         {
             if (who->GetTypeId() != TYPEID_PLAYER || ((Player*)who)->isGameMaster())
                 return;
@@ -194,15 +202,8 @@ struct boss_grand_warlock_nethekurseAI : public ScriptedAI
 
     void EnterCombat(Unit* who)
     {
-        DoScriptText(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3), me);
-    }
-
-    void JustSummoned(Creature *summoned)
-    {
-        summoned->setFaction(14);
-        summoned->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-        summoned->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-        summoned->CastSpell(summoned,SPELL_CONSUMPTION,false,0,0,me->GetGUID());
+        me->InterruptNonMeleeSpells(true);
+        CombatYell = true;
     }
 
     void KilledUnit(Unit* victim)
@@ -267,7 +268,9 @@ struct boss_grand_warlock_nethekurseAI : public ScriptedAI
                 if (IntroEvent_Timer <= diff)
                 {
                     PeonsAreDead();
-                } else IntroEvent_Timer -= diff;
+                }
+                else
+                    IntroEvent_Timer -= diff;
             }
         }
 
@@ -291,13 +294,17 @@ struct boss_grand_warlock_nethekurseAI : public ScriptedAI
                 if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM,0))
                     DoCast(pTarget,SPELL_SHADOW_BOLT);
                 ShadowBolt_Timer = 1000;
-            } else ShadowBolt_Timer -= diff;
+            }
+            else
+                ShadowBolt_Timer -= diff;
 
             if (DarkCleave_Timer <= diff)
             {
                 DoCast(me->getVictim(),SPELL_DARK_CLEAVE);
                 DarkCleave_Timer = 1000;
-            } else DarkCleave_Timer -= diff;
+            }
+            else
+                DarkCleave_Timer -= diff;
         }
         else
         {
@@ -305,23 +312,36 @@ struct boss_grand_warlock_nethekurseAI : public ScriptedAI
             {
                 if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0, 40, true))
                     DoCast(pTarget,SPELL_SHADOW_FISSURE);
-                ShadowFissure_Timer = 5500+rand()%5500;
-            } else ShadowFissure_Timer -= diff;
+                ShadowFissure_Timer = urand(5500, 11000);
+            }
+            else
+                ShadowFissure_Timer -= diff;
 
             if (DeathCoil_Timer <= diff)
             {
                 if (Unit *pTarget = SelectUnit(SELECT_TARGET_RANDOM, 0, 40, true))
                     DoCast(pTarget,SPELL_DEATH_COIL);
-                DeathCoil_Timer = 10000+rand()%5000;
-            } else DeathCoil_Timer -= diff;
+                DeathCoil_Timer = urand(10000, 15000);
+            }
+            else
+                DeathCoil_Timer -= diff;
 
             if (Cleave_Timer <= diff)
             {
+                if (CombatYell)
+                {
+                    DoScriptText(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3), me);
+                    CombatYell = false;
+                }
+
                 DoCast(me->getVictim(),(HeroicMode ? H_SPELL_SHADOW_SLAM : SPELL_SHADOW_CLEAVE));
                 Cleave_Timer = urand(6000, 8500);
-            } else Cleave_Timer -= diff;
 
-            if ((me->GetHealth()*100) / me->GetMaxHealth() <= 20)
+            }
+            else
+                Cleave_Timer -= diff;
+
+            if ((me->GetHealthPct() <= 20))
                 Phase = true;
 
             DoMeleeAttackIfReady();
@@ -343,7 +363,7 @@ struct mob_fel_orc_convertAI : public ScriptedAI
     void Reset()
     {
         me->SetNoCallAssistance(true);
-        Hemorrhage_Timer = 3000;
+        Hemorrhage_Timer = urand(3000, 6000);
         Kill_Timer = 0;
     }
 
@@ -399,7 +419,9 @@ struct mob_fel_orc_convertAI : public ScriptedAI
             {
                 me->DealDamage(me, me->GetHealth(), DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
                 Kill_Timer = 0;
-            } else Kill_Timer -= diff;
+            }
+            else
+                Kill_Timer -= diff;
         }
 
         if (!UpdateVictim())
@@ -408,8 +430,10 @@ struct mob_fel_orc_convertAI : public ScriptedAI
         if (Hemorrhage_Timer <= diff)
         {
             DoCast(me->getVictim(),SPELL_HEMORRHAGE);
-            Hemorrhage_Timer = 15000;
-        } else Hemorrhage_Timer -= diff;
+            Hemorrhage_Timer = urand(5000, 15000);
+        }
+        else
+            Hemorrhage_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }
