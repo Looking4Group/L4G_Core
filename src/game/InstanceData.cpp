@@ -55,7 +55,7 @@ void InstanceData::SaveToDB()
 
     if (instanceComplete)
     {
-        RealmDataDatabase.PExecute("UPDATE `instance_times` SET `end_time` = CURTIME() WHERE `instance_id` = %i", instance->GetInstanceId());
+        RealmDataDatabase.PExecute("UPDATE `instance_times` SET `end_time` = NOW() WHERE `instance_id` = %i", instance->GetInstanceId());
     }
 
     static SqlStatementID updateInstance;
