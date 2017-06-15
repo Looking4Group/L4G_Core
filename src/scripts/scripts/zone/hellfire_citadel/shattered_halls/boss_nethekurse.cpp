@@ -73,8 +73,6 @@ enum GrandWarlockNetherkurse
     H_SPELL_SHADOW_SLAM     = 35953,
 
     SPELL_HEMORRHAGE        = 30478,
-    //SPELL_CONSUMPTION       = 30497,
-
     NPC_FEL_ORC_CONVERT     = 17083
 };
 
