@@ -161,3 +161,11 @@ INSERT INTO `creature_formations` VALUES (12726, 12724, 0, 0, 2);
 INSERT INTO `creature_formations` VALUES (12726, 12725, 0, 0, 2);
 INSERT INTO `creature_formations` VALUES (12726, 12726, 0, 0, 2);
 
+DELETE FROM `creature_formations` WHERE `leaderguid` = 52745;
+INSERT INTO `creature_formations` VALUES
+(52745, 52754, 0, 0, 2),
+(52745, 12883, 0, 0, 2),
+(52745, 52744, 0, 0, 2),
+(52745, 52745, 0, 0, 2),
+(52745, 52755, 0, 0, 2);
+
