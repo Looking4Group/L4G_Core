@@ -169,3 +169,19 @@ INSERT INTO `creature_formations` VALUES
 (52745, 52745, 0, 0, 2),
 (52745, 52755, 0, 0, 2);
 
+-- Spell Summoned 91405,91406,91407,91421,91422,91427
+DELETE FROM `creature` WHERE `id` = 11258;
+UPDATE `creature_template` SET `mindmg` = '102', `maxdmg` = '135' WHERE `entry` = 11258;
+
+DELETE FROM `creature_ai_texts` WHERE `entry` IN (-762,-763);
+INSERT INTO `creature_ai_texts` (`entry`,`content_default`,`sound`,`type`,`language`,`comment`,`emote`) VALUES
+('-762','Note the weak binding structure of this one. Be sure to finish your incantations or this is what you will end up with.','0','0','0','11582','1'),
+('-763','Wow, this one is just plain useless. Let me try again.','0','0','0','11582','1');
+
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 11582;
+INSERT INTO `creature_ai_scripts` VALUES
+('1158201','11582','1','0','100','3','1000','2500','30000','31000','11','16531','0','1','0','0','0','0','0','0','0','0','Scholomance Dark Summoner - Cast Frail Skeleton OOC'),
+('1158202','11582','1','0','100','3','16000','17500','30000','31000','1','-410','-311','-435','1','-762','-763','0','0','0','0','0','Scholomance Dark Summoner - Random Say OOC'),
+('1158203','11582','0','0','95','3','500','2800','1900','3700','11','17618','0','1','0','0','0','0','0','0','0','0','Scholomance Dark Summoner - Summon Risen Lackey'),
+('1158204','11582','0','0','100','3','0','500','38700','49300','11','12279','1','32','0','0','0','0','0','0','0','0','Scholomance Dark Summoner - Cast Curse of Blood');
+
