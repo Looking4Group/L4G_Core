@@ -185,3 +185,7 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('1158203','11582','0','0','95','3','500','2800','1900','3700','11','17618','0','1','0','0','0','0','0','0','0','0','Scholomance Dark Summoner - Summon Risen Lackey'),
 ('1158204','11582','0','0','100','3','0','500','38700','49300','11','12279','1','32','0','0','0','0','0','0','0','0','Scholomance Dark Summoner - Cast Curse of Blood');
 
+-- Nethermancer Sepethrea  19221,21536
+UPDATE `creature_template` SET `mindmg`='800',`maxdmg`='1200' WHERE `entry` = 19221;
+UPDATE `creature_template` SET `mindmg`='1982',`maxdmg`='2345' WHERE `entry` = 21536;
+
