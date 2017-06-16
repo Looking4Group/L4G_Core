@@ -1,5 +1,5 @@
 -- ================
--- Arena Season 2
+-- Arena Season 1
 -- ================
 
 SET @GUID := 199900;
