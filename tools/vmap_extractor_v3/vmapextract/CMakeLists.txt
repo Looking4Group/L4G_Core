@@ -11,6 +11,19 @@
 cmake_minimum_required (VERSION 2.6)
 project (MANGOS_IOMAP_EXTRACTOR)
 
-LINK_DIRECTORIES( ${LINK_DIRECTORIES} ../../../dep/libmpq/libmpq/.libs/ )
+include_directories(
+     ../../libmpq
+     ../../libmpq/libmpq
+)
+
+add_library(libmpq
+     ../../libmpq/libmpq/common.c
+     ../../libmpq/libmpq/extract.c
+     ../../libmpq/libmpq/explode.c
+     ../../libmpq/libmpq/wave.c
+     ../../libmpq/libmpq/huffman.c
+     ../../libmpq/libmpq/mpq.c
+)
+
 add_executable(vmapextractor adtfile.cpp  dbcfile.cpp  model.cpp  mpq_libmpq.cpp  vmapexport.cpp  wdtfile.cpp  wmo.cpp)
-target_link_libraries(vmapextractor libmpq.a bz2 z)
+target_link_libraries(vmapextractor libmpq bz2 z)
