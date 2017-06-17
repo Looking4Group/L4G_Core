@@ -23,49 +23,52 @@ ADD_DEFINITIONS("-O3")
 
 include_directories(../../src/shared)
 include_directories(../../src/game/vmap/)
-include_directories(../../dep/include/g3dlite/)
+include_directories(../../dep/include/)
 include_directories(../../dep/ACE_wrappers/)
 include_directories(../../objdir/dep/ACE_wrappers)
 include_directories(../../src/framework/)
 
-add_library(g3dlite ../../dep/src/g3dlite/AABox.cpp
-	../../dep/src/g3dlite/Box.cpp
-	../../dep/src/g3dlite/Crypto.cpp
-	../../dep/src/g3dlite/format.cpp
-	../../dep/src/g3dlite/Matrix3.cpp
-	../../dep/src/g3dlite/Plane.cpp
-	../../dep/src/g3dlite/System.cpp
-	../../dep/src/g3dlite/Triangle.cpp
-	../../dep/src/g3dlite/Vector3.cpp
-	../../dep/src/g3dlite/Vector4.cpp
-	../../dep/src/g3dlite/debugAssert.cpp
-	../../dep/src/g3dlite/fileutils.cpp
-	../../dep/src/g3dlite/g3dmath.cpp
-	../../dep/src/g3dlite/g3dfnmatch.cpp
-	../../dep/src/g3dlite/prompt.cpp
-	../../dep/src/g3dlite/stringutils.cpp
-	../../dep/src/g3dlite/Any.cpp
-	../../dep/src/g3dlite/BinaryFormat.cpp
-	../../dep/src/g3dlite/BinaryInput.cpp
-	../../dep/src/g3dlite/BinaryOutput.cpp
-	../../dep/src/g3dlite/Capsule.cpp
-	../../dep/src/g3dlite/CollisionDetection.cpp
-	../../dep/src/g3dlite/CoordinateFrame.cpp
-	../../dep/src/g3dlite/Cylinder.cpp
-	../../dep/src/g3dlite/Line.cpp
-	../../dep/src/g3dlite/LineSegment.cpp
-	../../dep/src/g3dlite/Log.cpp
-	../../dep/src/g3dlite/Matrix4.cpp
-	../../dep/src/g3dlite/MemoryManager.cpp
-	../../dep/src/g3dlite/Quat.cpp
-	../../dep/src/g3dlite/Random.cpp
-	../../dep/src/g3dlite/Ray.cpp
-	../../dep/src/g3dlite/ReferenceCount.cpp
-	../../dep/src/g3dlite/Sphere.cpp
-	../../dep/src/g3dlite/TextInput.cpp
-	../../dep/src/g3dlite/TextOutput.cpp
-	../../dep/src/g3dlite/UprightFrame.cpp
-	../../dep/src/g3dlite/Vector2.cpp
+add_library(g3dlite ../../dep/g3dlite/source/AABox.cpp
+	../../dep/g3dlite/source/Box.cpp
+	../../dep/g3dlite/source/Crypto.cpp
+	../../dep/g3dlite/source/format.cpp
+	../../dep/g3dlite/source/Matrix3.cpp
+	../../dep/g3dlite/source/Plane.cpp
+	../../dep/g3dlite/source/System.cpp
+	../../dep/g3dlite/source/Triangle.cpp
+	../../dep/g3dlite/source/Vector3.cpp
+	../../dep/g3dlite/source/Vector4.cpp
+	../../dep/g3dlite/source/debugAssert.cpp
+	../../dep/g3dlite/source/FileSystem.cpp
+	../../dep/g3dlite/source/fileutils.cpp
+	../../dep/g3dlite/source/g3dmath.cpp
+	../../dep/g3dlite/source/g3dfnmatch.cpp
+	../../dep/g3dlite/source/prompt.cpp
+	../../dep/g3dlite/source/stringutils.cpp
+	../../dep/g3dlite/source/Any.cpp
+	../../dep/g3dlite/source/BinaryFormat.cpp
+	../../dep/g3dlite/source/BinaryInput.cpp
+	../../dep/g3dlite/source/BinaryOutput.cpp
+	../../dep/g3dlite/source/Capsule.cpp
+	../../dep/g3dlite/source/CollisionDetection.cpp
+	../../dep/g3dlite/source/CoordinateFrame.cpp
+	../../dep/g3dlite/source/Cylinder.cpp
+	../../dep/g3dlite/source/Line.cpp
+	../../dep/g3dlite/source/LineSegment.cpp
+	../../dep/g3dlite/source/Log.cpp
+	../../dep/g3dlite/source/Matrix4.cpp
+	../../dep/g3dlite/source/MemoryManager.cpp
+	../../dep/g3dlite/source/PhysicsFrame.cpp
+	../../dep/g3dlite/source/Quat.cpp
+	../../dep/g3dlite/source/Random.cpp
+	../../dep/g3dlite/source/uint128.cpp
+	../../dep/g3dlite/source/Ray.cpp
+	../../dep/g3dlite/source/ReferenceCount.cpp
+	../../dep/g3dlite/source/Sphere.cpp
+	../../dep/g3dlite/source/TextInput.cpp
+	../../dep/g3dlite/source/TextOutput.cpp
+	../../dep/g3dlite/source/UprightFrame.cpp
+	../../dep/g3dlite/source/Vector2.cpp
 	)
 
 add_library(vmap
