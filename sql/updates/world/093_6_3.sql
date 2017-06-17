@@ -2129,3 +2129,17 @@ INSERT INTO `waypoint_data` VALUES (69889, 9, -4114.31, 1164.54, 49.4808, 0, 0, 
 INSERT INTO `waypoint_data` VALUES (69889, 10, -4106.93, 1146.83, 44.482, 0, 0, 0, 0, 0);
 INSERT INTO `waypoint_data` VALUES (69889, 11, -4098.17, 1125.77, 42.6165, 3000, 0, 0, 0, 0);
 
+-- Void Zone 16697- EventAI
+-- 90000 Duration as DBC Guids say 25sec
+-- http://www.wowhead.com/spell=37063/void-zone
+UPDATE `creature_template` SET `minlevel` = 73, `maxlevel` = 73, `minhealth` = 879800, `maxhealth` = 879800, `unit_flags` = 33816710, `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = 16697;
+DELETE FROM `creature_template_addon` WHERE `entry` = 16697;
+INSERT INTO `creature_template_addon` VALUES (16697, 0, 0, 0, 0, 0, 0, 0, '46262 0');
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 16697;
+INSERT INTO `creature_ai_scripts` VALUES ('1669701','16697','4','0','100','0','0','0','0','0','20','0','0','0','0','0','0','0','0','0','0','0','Void Zone - Stop Melee on Aggro');
+INSERT INTO `creature_ai_scripts` VALUES ('1669702','16697','0','0','100','0','25000','25000','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Void Zone - Despawn IC');
+INSERT INTO `creature_ai_scripts` VALUES ('1669703','16697','1','0','100','0','25000','25000','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Void Zone - Despawn OOC');
+
+-- Netherspite hits for roughly 8k on cloth without any buffs stacked on him. 
+UPDATE `creature_template` SET `mindmg`='6000',`maxdmg`='7000' WHERE `entry` = 15689;
+
