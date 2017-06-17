@@ -27,12 +27,7 @@ enum Netherspite
     SPELL_BANISH_VISUAL     = 39833,
     SPELL_BANISH_ROOT       = 42716,
     SPELL_EMPOWERMENT       = 38549,
-    SPELL_NETHERSPITE_ROAR  = 38684,
-    SPELL_VOID_ZONE_EFFECT  = 46264,
-
-    NETHER_PATROL_PATH      = 15689,
-
-    NPC_VOID_ZONE           = 16697
+    SPELL_NETHERSPITE_ROAR  = 38684
 };
 
 const float PortalCoord[3][3] =
