@@ -276,7 +276,7 @@ struct boss_netherspiteAI : public ScriptedAI
 
         if (VoidZoneTimer < diff)
         {
-            if (Unit *target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_VOIDZONE), true, m_creature->getVictimGUID()))
+            if (Unit *target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_VOIDZONE), true))
                 AddSpellToCast(target, SPELL_VOIDZONE, true);
 
             VoidZoneTimer = 15000;
