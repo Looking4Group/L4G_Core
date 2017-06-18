@@ -5,6 +5,13 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('2232301','22323','0','0','100','1','0','1000','10000','11000','11','36247','1','0','0','0','0','0','0','0','0','0','Incandescent Fel Spark - Cast Fel Fireball'),
 ('2232302','22323','6','0','100','0','0','0','0','0','11','44877','0','3','0','0','0','0','0','0','0','0','Incandescent Fel Spark - Cast Living Flare Master on Death');
 
+-- Add Missing Elemental Damageschool to creatures
+UPDATE `creature_template` SET `dmgschool` = 2 WHERE `entry` IN (14461,20703);
+UPDATE `creature_template` SET `dmgschool` = 3 WHERE `entry` IN (13282,13456,14454,18881,20774);
+UPDATE `creature_template` SET `dmgschool` = 4 WHERE `entry` IN (5461,5462,14457,14458,20704);
+UPDATE `creature_template` SET `dmgschool` = 5 WHERE `entry` IN (18659,19480,20705,25772);
+UPDATE `creature_template` SET `dmgschool` = 6 WHERE `entry` IN (18865,25571,25573,20702);
+
 -- Elemental Melee Attacks can not be blocked
 UPDATE `creature_template` SET `flags_extra` = `flags_extra`|262144 WHERE `dmgschool` != 0 AND `flags_extra` != `flags_extra`|262144;
 
