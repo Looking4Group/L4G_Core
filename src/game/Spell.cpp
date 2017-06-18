@@ -511,6 +511,7 @@ void Spell::FillTargetMap()
                 case SPELL_EFFECT_ADD_FARSIGHT:
                 case SPELL_EFFECT_STUCK:
                 case SPELL_EFFECT_DESTROY_ALL_TOTEMS:
+                case SPELL_EFFECT_FRIEND_SUMMON:
                     AddUnitTarget(m_caster, i);
                     break;
                 case SPELL_EFFECT_LEARN_PET_SPELL:
@@ -4541,7 +4542,7 @@ SpellCastResult Spell::CheckCast(bool strict)
                     return SPELL_FAILED_BAD_TARGETS;
 
                 Player* target = m_targets.getUnitTarget()->ToPlayer();
-                if (!target || m_caster == target || !target->IsInSameRaidWith(pCaster))
+                if (!target || m_caster == target || (!target->IsInSameRaidWith(pCaster) && m_spellInfo->Id != 48955))
                     return SPELL_FAILED_BAD_TARGETS;
 
                 if (pCaster->GetBattleGround())
@@ -4578,6 +4579,21 @@ SpellCastResult Spell::CheckCast(bool strict)
                     if (!target->CanBeSummonedBy(pCaster))
                         return SPELL_FAILED_TARGET_LOCKED_TO_RAID_INSTANCE;
                 }
+                break;
+            }
+            case SPELL_EFFECT_FRIEND_SUMMON:
+            {
+                if (m_caster->GetTypeId() != TYPEID_PLAYER)
+                    return SPELL_FAILED_BAD_TARGETS;
+
+                if (((Player*)m_caster)->GetSelection() == NULL)
+                    return SPELL_FAILED_BAD_TARGETS;
+
+                Player* target = sObjectMgr.GetPlayer(((Player*)m_caster)->GetSelection());
+
+                if (!target || !target->IsReferAFriendLinked(((Player*)m_caster)))
+                    return SPELL_FAILED_BAD_TARGETS;
+
                 break;
             }
             case SPELL_EFFECT_LEAP:
@@ -5762,6 +5778,7 @@ bool Spell::CheckTarget(Unit* target, uint32 eff)
     //Check targets for LOS visibility (except spells without range limitations)
     switch (GetSpellInfo()->Effect[eff])
     {
+        case SPELL_EFFECT_FRIEND_SUMMON:
         case SPELL_EFFECT_SUMMON_PLAYER:                    // from anywhere
             break;
         case SPELL_EFFECT_DUMMY:

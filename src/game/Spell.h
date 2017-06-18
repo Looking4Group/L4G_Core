@@ -354,6 +354,7 @@ class Spell
         void EffectQuestFail(uint32 i);
         void EffectRedirectThreat(uint32 i);
         void EffectPlayMusic(uint32 i);
+        void EffectFriendSummon(uint32 eff_idx);
 
         Spell(Unit* Caster, SpellEntry const *info, bool triggered, uint64 originalCasterGUID = 0, Spell** triggeringContainer = NULL, bool skipCheck = false);
         ~Spell();

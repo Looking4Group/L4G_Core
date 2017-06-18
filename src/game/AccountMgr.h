@@ -50,6 +50,10 @@ namespace AccountMgr
     bool GetName(uint32 acc_id, std::string &name);
 
     bool normilizeString(std::string& utf8str);
+    
+    std::vector<uint32> GetRAFAccounts(uint32 accid, bool referred = true);
+    AccountOpResult AddRAFLink(uint32 accid, uint32 friendid);
+    AccountOpResult DeleteRAFLink(uint32 accid, uint32 friendid);
 };
 
 #endif

@@ -217,13 +217,11 @@ void SocialMgr::GetFriendInfo(Player *player, uint32 friendGUID, FriendInfo &fri
         (pFriend->GetTeam() == team || allowTwoSideWhoList) &&
         (!pFriend->GetSession()->HasPermissions(PERM_GMT) || gmInWhoList && pFriend->IsVisibleGloballyfor (player))))
     {
-        friendInfo.Status = FRIEND_STATUS_ONLINE;
+        friendInfo.Status = FriendStatus(friendInfo.Status | FRIEND_STATUS_ONLINE);
 
-        if (pFriend->isAFK())
-            friendInfo.Status = FRIEND_STATUS_AFK;
-
-        if (pFriend->isDND())
-            friendInfo.Status = FRIEND_STATUS_DND;
+        pFriend->isAFK() ? friendInfo.Status = FriendStatus(friendInfo.Status | FRIEND_STATUS_AFK) : friendInfo.Status = FriendStatus(friendInfo.Status & ~FRIEND_STATUS_AFK);
+        pFriend->isDND() ? friendInfo.Status = FriendStatus(friendInfo.Status | FRIEND_STATUS_DND) : friendInfo.Status = FriendStatus(friendInfo.Status & ~FRIEND_STATUS_DND);
+        pFriend->IsReferAFriendLinked(player) ? friendInfo.Status = FriendStatus(friendInfo.Status | FRIEND_STATUS_RAF) : friendInfo.Status = FriendStatus(friendInfo.Status & ~FRIEND_STATUS_RAF);
 
         friendInfo.Area = pFriend->GetCachedZone();
 

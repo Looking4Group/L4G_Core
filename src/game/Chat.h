@@ -190,6 +190,10 @@ class ChatHandler
         bool HandleGameObjectTargetCommand(const char* args);
         bool HandleGameObjectTurnCommand(const char* args);
 
+        bool HandleAccountFriendAddCommand(const char* args);
+        bool HandleAccountFriendDeleteCommand(const char* args);
+        bool HandleAccountFriendListCommand(const char* args);
+
         bool HandleGMAnnounceCommand(const char* args);
         bool HandleGMCommand(const char* args);
         bool HandleGMChatCommand(const char* args);

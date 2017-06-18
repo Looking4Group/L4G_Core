@@ -57,6 +57,14 @@ ChatCommand * ChatHandler::getCommandTable()
         { NULL,             0,                  false,  NULL,                                               "", NULL }
     };
 
+    static ChatCommand accountFriendCommandTable[] =
+    {
+        { "add",    PERM_ADM, true, &ChatHandler::HandleAccountFriendAddCommand,    "", NULL },
+        { "delete", PERM_ADM, true, &ChatHandler::HandleAccountFriendDeleteCommand, "", NULL },
+        { "list",   PERM_ADM, true, &ChatHandler::HandleAccountFriendListCommand,   "", NULL },
+        { NULL,     0,        false, NULL,                                          "", NULL }
+    };
+
     static ChatCommand accountCommandTable[] =
     {
         { "announce",       PERM_PLAYER,    false,  NULL,                                           "", accountAnnounceCommandTable },
@@ -64,6 +72,7 @@ ChatCommand * ChatHandler::getCommandTable()
         { "bgann",          PERM_PLAYER,    false,  &ChatHandler::HandleAccountBattleGroundAnnCommand, "", NULL },
         { "delete",         PERM_CONSOLE,   true,   &ChatHandler::HandleAccountDeleteCommand,       "", NULL },
         { "gann",           PERM_PLAYER,    false,  &ChatHandler::HandleAccountGuildAnnToggleCommand, "", NULL },
+        { "friend",         PERM_ADM,       true,   NULL,                                           "", accountFriendCommandTable },
         { "bones",          PERM_PLAYER,    false,  &ChatHandler::HandleAccountBonesHideCommand,    "", NULL },
         { "log",            PERM_ADM,       true,   &ChatHandler::HandleAccountSpecialLogCommand,   "", NULL },
         { "onlinelist",     PERM_CONSOLE,   true,   &ChatHandler::HandleAccountOnlineListCommand,   "", NULL },

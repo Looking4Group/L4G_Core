@@ -1811,3 +1811,58 @@ void WorldSession::HandleSetTaxiBenchmarkOpcode(WorldPacket & recv_data)
     sLog.outDebug("Client used \"/timetest %d\" command", mode);
 }
 
+// Refer-A-Friend
+void WorldSession::HandleGrantLevel(WorldPacket& recv_data)
+{
+    DEBUG_LOG("WORLD: CMSG_GRANT_LEVEL");
+
+    ObjectGuid guid;
+    recv_data >> guid.ReadAsPacked();
+
+    if (!guid.IsPlayer())
+        return;
+
+    Player * target = sObjectMgr.GetPlayer(guid);
+
+    // cheating and other check
+    ReferAFriendError err = _player->GetReferFriendError(target, false);
+
+    if (err)
+    {
+        _player->SendReferFriendError(err, target);
+        return;
+    }
+
+    target->AccessGrantableLevel(_player->GetObjectGuid());
+
+    WorldPacket data(SMSG_PROPOSE_LEVEL_GRANT, 8);
+    data << _player->GetPackGUID();
+    target->GetSession()->SendPacket(&data);
+}
+
+void WorldSession::HandleAcceptGrantLevel(WorldPacket& recv_data)
+{
+    DEBUG_LOG("WORLD: CMSG_ACCEPT_LEVEL_GRANT");
+
+    ObjectGuid guid;
+    recv_data >> guid.ReadAsPacked();
+
+    if (!guid.IsPlayer())
+        return;
+
+    if (!_player->IsAccessGrantableLevel(guid))
+        return;
+
+    _player->AccessGrantableLevel(ObjectGuid());
+    Player * grant_giver = sObjectMgr.GetPlayer(guid);
+
+    if (!grant_giver)
+        return;
+
+    if (grant_giver->GetGrantableLevels())
+        grant_giver->ChangeGrantableLevels(0);
+    else
+        return;
+
+    _player->GiveLevel(_player->getLevel() + 1);
+}

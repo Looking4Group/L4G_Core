@@ -188,3 +188,44 @@ bool AccountMgr::normilizeString(std::string& utf8str)
 
     return WStrToUtf8(wstr_buf,wstr_len,utf8str);
 }
+
+std::vector<uint32> AccountMgr::GetRAFAccounts(uint32 accid, bool referred)
+{
+
+    QueryResultAutoPtr result;
+
+    if (referred)
+        result = AccountsDatabase.PQuery("SELECT `friend_id` FROM `account_friends` WHERE `id` = %u AND `expire_date` > NOW() LIMIT %u", accid, sWorld.getConfig(CONFIG_UINT32_RAF_MAXREFERERS));
+    else
+        result = AccountsDatabase.PQuery("SELECT `id` FROM `account_friends` WHERE `friend_id` = %u AND `expire_date` > NOW() LIMIT %u", accid, sWorld.getConfig(CONFIG_UINT32_RAF_MAXREFERALS));
+
+    std::vector<uint32> acclist;
+
+    if (result)
+    {
+        do
+        {
+            Field* fields = result->Fetch();
+            uint32 refaccid = fields[0].GetUInt32();
+            acclist.push_back(refaccid);
+        } while (result->NextRow());
+    }
+
+    return acclist;
+}
+
+AccountOpResult AccountMgr::AddRAFLink(uint32 accid, uint32 friendid)
+{
+    if (!AccountsDatabase.PExecute("INSERT INTO `account_friends`  (`id`, `friend_id`, `expire_date`) VALUES (%u,%u,NOW() + INTERVAL 3 MONTH)", accid, friendid))
+        return AOR_DB_INTERNAL_ERROR;
+
+    return AOR_OK;
+}
+
+AccountOpResult AccountMgr::DeleteRAFLink(uint32 accid, uint32 friendid)
+{
+    if (!AccountsDatabase.PExecute("DELETE FROM `account_friends` WHERE `id` = %u AND `friend_id` = %u", accid, friendid))
+        return AOR_DB_INTERNAL_ERROR;
+
+    return AOR_OK;
+}

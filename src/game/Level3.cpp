@@ -7501,3 +7501,78 @@ bool ChatHandler::HandleSetTitleCommand(char const* args)
     
     return true;
 }
+
+// Set friends for account
+bool ChatHandler::HandleAccountFriendAddCommand(const char* args)
+{
+    ///- Get the command line arguments
+    char* arg1 = strtok((char*)args, " ");
+    if (arg1 == nullptr || arg1 == "")
+        return false;
+
+    uint32 targetAccountId = atoi(arg1);
+    if (!targetAccountId)
+        return false;
+
+    uint32 friendAccountId = atoi(strtok(NULL, " "));
+
+    if (!friendAccountId)
+        return false;
+
+    AccountOpResult result = AccountMgr::AddRAFLink(targetAccountId, friendAccountId);
+
+    switch (result)
+    {
+    case AOR_OK:
+        SendSysMessage(LANG_COMMAND_FRIEND);
+        break;
+    default:
+        SendSysMessage(LANG_COMMAND_FRIEND_ERROR);
+        SetSentErrorMessage(true);
+        return false;
+    }
+
+    return true;
+}
+
+// Delete friends for account
+bool ChatHandler::HandleAccountFriendDeleteCommand(const char* args)
+{
+    ///- Get the command line arguments
+    char* arg1 = strtok((char*)args, " ");
+    if (arg1 == nullptr || arg1 == "")
+        return false;
+
+    uint32 targetAccountId = atoi(arg1);
+    if (!targetAccountId)
+        return false;
+
+    char* arg2 = strtok(NULL, " ");
+    if (arg2 == nullptr || arg2 == "")
+        return false;
+
+    uint32 friendAccountId = atoi(arg2);
+    if (!friendAccountId)
+        return false;
+
+    AccountOpResult result = AccountMgr::DeleteRAFLink(targetAccountId, friendAccountId);
+
+    switch (result)
+    {
+    case AOR_OK:
+        SendSysMessage(LANG_COMMAND_FRIEND);
+        break;
+    default:
+        SendSysMessage(LANG_COMMAND_FRIEND_ERROR);
+        SetSentErrorMessage(true);
+        return false;
+    }
+
+    return true;
+}
+
+// List friends for account
+bool ChatHandler::HandleAccountFriendListCommand(const char* args)
+{
+    return false;
+}
