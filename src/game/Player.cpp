@@ -15211,7 +15211,7 @@ bool Player::LoadFromDB(uint32 guid, SqlQueryHolder *holder)
 
     _LoadAuras(holder->GetResult(PLAYER_LOGIN_QUERY_LOADAURAS), time_diff);
 
-    m_GrantableLevelsCount = fields[43].GetUInt32();
+    m_GrantableLevelsCount = fields[44].GetUInt32();
     
     // refer-a-friend flag - maybe wrong and hacky
     LoadAccountLinkedState();
