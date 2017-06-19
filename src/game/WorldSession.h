@@ -750,6 +750,9 @@ class LOOKING4GROUP_IMPORT_EXPORT WorldSession
         // Other
         void HandleGetMirrorimageData(WorldPacket& recv_data);
 
+        void HandleGrantLevel(WorldPacket& recv_data);
+        void HandleAcceptGrantLevel(WorldPacket& recv_data);
+
     private:
         // private trade methods
         void moveItems(Item* myItems[], Item* hisItems[]);

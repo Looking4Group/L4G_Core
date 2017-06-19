@@ -356,6 +356,10 @@ enum WorldConfigs
     CONFIG_CREATURE_RESTORE_STATE,
     CONFIG_FFA_DISALLOWGROUP,
 
+    CONFIG_UINT32_RAF_MAXGRANTLEVEL,
+    CONFIG_UINT32_RAF_MAXREFERALS,
+    CONFIG_UINT32_RAF_MAXREFERERS,
+
     CONFIG_VALUE_COUNT
 };
 
@@ -421,6 +425,10 @@ enum Rates
     RATE_DURABILITY_LOSS_PARRY,
     RATE_DURABILITY_LOSS_ABSORB,
     RATE_DURABILITY_LOSS_BLOCK,
+
+    CONFIG_FLOAT_RATE_RAF_XP,
+    CONFIG_FLOAT_RATE_RAF_LEVELPERLEVEL,
+
     MAX_RATES
 };
 
@@ -755,19 +763,29 @@ class LOOKING4GROUP_EXPORT World
         float getRate(Rates rate) const { return rate_values[rate]; }
 
         /// Set a server configuration element (see #WorldConfigs)
-        void setConfig(uint32 index,uint32 value)
+        void setConfig(WorldConfigs index,uint32 value)
         {
             if (index<CONFIG_VALUE_COUNT)
                 m_configs[index]=value;
         }
 
+        void setConfig(Rates index, float value)
+        {
+            setRate(index, value);
+        }
+
         /// Get a server configuration element (see #WorldConfigs)
-        uint32 getConfig(uint32 index) const
+        uint32 getConfig(WorldConfigs index) const
         {
             if (index<CONFIG_VALUE_COUNT)
                 return m_configs[index];
             else
                 return 0;
+        }
+
+        float getConfig(Rates index) const
+        {
+            return getRate(index);
         }
 
         /// Get configuration about force-loaded maps

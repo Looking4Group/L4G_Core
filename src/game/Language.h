@@ -785,6 +785,9 @@ enum TrinityStrings
     LANG_CINEMATIC_NOT_EXIST            = 1200,
     // Room for more debug                1201-1299 not used
 
+    LANG_COMMAND_FRIEND = 1700,
+    LANG_COMMAND_FRIEND_ERROR = 1701,
+
     // Ticket Strings 2000-2029
     LANG_COMMAND_TICKETNEW              = 2000,
     LANG_COMMAND_TICKETUPDATED          = 2001,

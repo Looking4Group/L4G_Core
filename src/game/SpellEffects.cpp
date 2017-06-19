@@ -215,7 +215,7 @@ pEffect SpellEffects[TOTAL_SPELL_EFFECTS]=
     &Spell::EffectCharge2,                                  //149 SPELL_EFFECT_CHARGE2                  swoop
     &Spell::EffectUnused,                                   //150 SPELL_EFFECT_150                      unused
     &Spell::EffectTriggerRitualOfSummoning,                 //151 SPELL_EFFECT_TRIGGER_SPELL_2
-    &Spell::EffectNULL,                                     //152 SPELL_EFFECT_152                      summon Refer-a-Friend
+    &Spell::EffectFriendSummon,                             //152 SPELL_EFFECT_FRIEND_SUMMON            summon Refer-a-Friend
     &Spell::EffectNULL,                                     //153 SPELL_EFFECT_CREATE_PET               misc value is creature entry
 };
 
@@ -8219,4 +8219,31 @@ void Spell::EffectPlayMusic(uint32 i)
     WorldPacket data(SMSG_PLAY_MUSIC, 4);
     data << uint32(soundid);
     ((Player*)unitTarget)->SendPacketToSelf(&data);
+}
+
+void Spell::EffectFriendSummon(uint32 eff_idx)
+{
+    if (m_caster->GetTypeId() != TYPEID_PLAYER)
+        return;
+
+    uint64 selection = ((Player*)m_caster)->GetSelection();
+    if (selection == NULL || !IS_PLAYER_GUID(selection))
+    {
+        DEBUG_LOG("Spell::EffectFriendSummon is called, but no selection or selection is not player");
+        return;
+    }
+
+    Player* target = ObjectAccessor::GetPlayer(selection);
+    if (target == nullptr)
+        return;
+
+    WorldLocation location;
+    location.mapid = m_caster->GetMapId();
+    location.coord_x = m_caster->GetPositionX();
+    location.coord_y = m_caster->GetPositionY();
+    location.coord_z = m_caster->GetPositionZ();
+    location.orientation = m_caster->GetOrientation();
+
+    target->InterruptTaxiFlying();
+    target->TeleportTo(location);
 }
