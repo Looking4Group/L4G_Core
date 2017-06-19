@@ -50,7 +50,7 @@ static Say PeonDies[]=
     {-1540008},
 };
 
-enum GrandWarlockNetherkurse
+enum GrandWarlockNethekurse
 {
     SAY_INTRO               = -1540000,
     SAY_TAUNT_1             = -1540009,
