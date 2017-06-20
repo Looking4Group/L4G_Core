@@ -1389,36 +1389,33 @@ UPDATE `creature_template` SET `npcflag`=`npcflag`|16 WHERE `entry` = 19186;
 -- Pattern: Cloak of Darkness
 -- Pattern: Shadowprowler's Chestguard
 DELETE FROM `npc_vendor` WHERE `item` IN (33209,33165,33124,33205);
--- INSERT INTO `npc_vendor` VALUES (18255, 33124, 0, 0, 0);
--- INSERT INTO `npc_vendor` VALUES (18255, 33165, 0, 0, 0);
--- INSERT INTO `npc_vendor` VALUES (18255, 33205, 0, 0, 0);
--- INSERT INTO `npc_vendor` VALUES (18255, 33209, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (18255, 33124, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (18255, 33165, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (18255, 33205, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (18255, 33209, 0, 0, 0);
 
 -- Ragesteel Shoulders
 DELETE FROM `creature_loot_template` WHERE `item` = 33174;
--- Fix Plans: Ragesteel Shoulders To Drop More Blizzlike - (Current Rates are wowhead and these only drop for Blacksmith Players)
--- UPDATE `creature_loot_template` SET `Chance` = 1 WHERE `item` = 33174 AND `entry` IN (21050,21061);
--- UPDATE `creature_loot_template` SET `Chance` = 0.5 WHERE `item` = 33174 AND `entry` IN (21059,21060);
--- INSERT INTO `creature_loot_template` VALUES (21050, 33174, 2.5, 0, 1, 1, 7, 164, 1);
--- INSERT INTO `creature_loot_template` VALUES (21059, 33174, 2.5, 0, 1, 1, 7, 164, 1);
--- INSERT INTO `creature_loot_template` VALUES (21060, 33174, 2.5, 0, 1, 1, 7, 164, 1);
--- INSERT INTO `creature_loot_template` VALUES (21061, 33174, 2.5, 0, 1, 1, 7, 164, 1);
+INSERT INTO `creature_loot_template` VALUES (21050, 33174, 2.5, 0, 1, 1, 7, 164, 1);
+INSERT INTO `creature_loot_template` VALUES (21059, 33174, 2.5, 0, 1, 1, 7, 164, 1);
+INSERT INTO `creature_loot_template` VALUES (21060, 33174, 2.5, 0, 1, 1, 7, 164, 1);
+INSERT INTO `creature_loot_template` VALUES (21061, 33174, 2.5, 0, 1, 1, 7, 164, 1);
 
 -- Design: Great Golden Draenite and similar
 DELETE FROM `creature_loot_template` WHERE `mincountOrRef` = -25030;
--- INSERT INTO `creature_loot_template` VALUES (18607, 25030, 25, 2, -25030, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (18607, 25030, 25, 2, -25030, 1, 0, 0, 0);
 
 -- Several new recipes for Jewelcrafter Gems
 DELETE FROM `npc_vendor` WHERE `item` IN (33159,33156,33305,33160,33157,33155);
--- INSERT INTO `npc_vendor` VALUES (20242, 33156, 0, 0, 0);
--- INSERT INTO `npc_vendor` VALUES (20242, 33305, 0, 0, 0);
--- INSERT INTO `npc_vendor` VALUES (21432, 33155, 0, 0, 0);
--- INSERT INTO `npc_vendor` VALUES (21432, 33159, 0, 0, 0);
--- INSERT INTO `npc_vendor` VALUES (21643, 33160, 0, 0, 0);
--- INSERT INTO `npc_vendor` VALUES (21655, 33157, 0, 0, 0);
--- INSERT INTO `npc_vendor` VALUES (23007, 33156, 0, 0, 0);
--- INSERT INTO `npc_vendor` VALUES (23007, 33305, 0, 0, 0);
--- INSERT INTO `npc_vendor` VALUES (21643, 33158, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (20242, 33156, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (20242, 33305, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (21432, 33155, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (21432, 33159, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (21643, 33160, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (21655, 33157, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (23007, 33156, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (23007, 33305, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (21643, 33158, 0, 0, 0);
 
 -- Formula: Enchant Cloak - Dodge
 -- Formula: Enchant Cloak - Stealth
@@ -1428,27 +1425,27 @@ DELETE FROM `npc_vendor` WHERE `item` IN (33159,33156,33305,33160,33157,33155);
 DELETE FROM `npc_vendor` WHERE `item` IN (33148,33149,33150,33151,33152,33153);
 INSERT INTO `npc_vendor` VALUES (17657, 33150, 0, 0, 0);
 INSERT INTO `npc_vendor` VALUES (17585, 33151, 0, 0, 0);
--- INSERT INTO `npc_vendor` VALUES (17904, 33149, 0, 0, 0);
--- INSERT INTO `npc_vendor` VALUES (21432, 33153, 0, 0, 0);
--- INSERT INTO `npc_vendor` VALUES (21643, 33152, 0, 0, 0);
--- INSERT INTO `npc_vendor` VALUES (21655, 33148, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (17904, 33149, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (21432, 33153, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (21643, 33152, 0, 0, 0);
+INSERT INTO `npc_vendor` VALUES (21655, 33148, 0, 0, 0);
 
 -- Steady Talasite
 DELETE FROM `npc_vendor` WHERE `item` IN (33783);
--- INSERT INTO `npc_vendor` VALUES (18821, 33783, 0, 0, 2236);
--- INSERT INTO `npc_vendor` VALUES (18822, 33783, 0, 0, 2236);
+INSERT INTO `npc_vendor` VALUES (18821, 33783, 0, 0, 2236);
+INSERT INTO `npc_vendor` VALUES (18822, 33783, 0, 0, 2236);
 
 -- Nexus Transformation
 -- Small Prismatic Shards
 DELETE FROM `npc_trainer` WHERE `spell` IN (42613,42615);
--- INSERT INTO `npc_trainer` VALUES (19540, 42613, 1000, 333, 300, 0);
--- INSERT INTO `npc_trainer` VALUES (18753, 42613, 1000, 333, 300, 0);
--- INSERT INTO `npc_trainer` VALUES (19252, 42613, 1000, 333, 300, 0);
--- INSERT INTO `npc_trainer` VALUES (18773, 42613, 1000, 333, 300, 0);
--- INSERT INTO `npc_trainer` VALUES (19540, 42615, 40000, 333, 335, 0);
--- INSERT INTO `npc_trainer` VALUES (18753, 42615, 40000, 333, 335, 0);
--- INSERT INTO `npc_trainer` VALUES (19252, 42615, 40000, 333, 335, 0);
--- INSERT INTO `npc_trainer` VALUES (18773, 42615, 40000, 333, 335, 0);
+INSERT INTO `npc_trainer` VALUES (19540, 42613, 1000, 333, 300, 0);
+INSERT INTO `npc_trainer` VALUES (18753, 42613, 1000, 333, 300, 0);
+INSERT INTO `npc_trainer` VALUES (19252, 42613, 1000, 333, 300, 0);
+INSERT INTO `npc_trainer` VALUES (18773, 42613, 1000, 333, 300, 0);
+INSERT INTO `npc_trainer` VALUES (19540, 42615, 40000, 333, 335, 0);
+INSERT INTO `npc_trainer` VALUES (18753, 42615, 40000, 333, 335, 0);
+INSERT INTO `npc_trainer` VALUES (19252, 42615, 40000, 333, 335, 0);
+INSERT INTO `npc_trainer` VALUES (18773, 42615, 40000, 333, 335, 0);
 
 -- =============================================================================================
 -- Patch 2.3.0
