@@ -650,3 +650,6 @@ INSERT INTO `waypoint_data` VALUES (71924, 11, 305.432, 1496.18, -12.9394, 5000,
 INSERT INTO `waypoint_data` VALUES (71924, 12, 285.516, 1479.27, -12.3245, 0, 0, 0, 0, 0);
 INSERT INTO `waypoint_data` VALUES (71924, 13, 279.035, 1471.86, -13.2647, 0, 0, 0, 0, 0);
 
+DELETE FROM `npc_vendor` WHERE `entry` = 10618;
+INSERT INTO `npc_vendor` VALUES (10618, 13086, 0, 0, 0);
+
