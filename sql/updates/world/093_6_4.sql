@@ -653,3 +653,9 @@ INSERT INTO `waypoint_data` VALUES (71924, 13, 279.035, 1471.86, -13.2647, 0, 0,
 DELETE FROM `npc_vendor` WHERE `entry` = 10618;
 INSERT INTO `npc_vendor` VALUES (10618, 13086, 0, 0, 0);
 
+DELETE FROM `creature` WHERE `guid` IN (381625,381165,379950,379841);
+DELETE FROM `creature_formations` WHERE `memberguid` IN (381625,381165,379950,379841);
+DELETE FROM `creature_linked_respawn` WHERE `guid` IN (381625,381165,379950,379841);
+DELETE FROM `creature_addon` WHERE `guid` IN (381625,381165,379950,379841);
+DELETE FROM `waypoint_data` WHERE `id` = 47443214;
+
