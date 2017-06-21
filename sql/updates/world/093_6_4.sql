@@ -659,3 +659,9 @@ DELETE FROM `creature_linked_respawn` WHERE `guid` IN (381625,381165,379950,3798
 DELETE FROM `creature_addon` WHERE `guid` IN (381625,381165,379950,379841);
 DELETE FROM `waypoint_data` WHERE `id` = 47443214;
 
+DELETE FROM `spell_linked_spell` WHERE `spell_trigger` = 31224 AND `spell_effect` = -44335;
+INSERT INTO `spell_linked_spell` VALUES (31224, -44335, 0, 'Cloak of Shadows - Despell Energy Feedback');
+
+DELETE FROM `spell_linked_spell` WHERE `spell_trigger` = 31224 AND `spell_effect` = -33572;
+INSERT INTO `spell_linked_spell` VALUES (31224, -33572, 0, 'Cloak of Shadows - Despell Gronn Lord\'s Grasp');
+
