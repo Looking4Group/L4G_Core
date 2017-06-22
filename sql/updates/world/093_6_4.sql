@@ -901,3 +901,24 @@ UPDATE `creature` SET `spawndist` = 0, `MovementType` = 0 WHERE `guid` = 73640;
 DELETE FROM `creature_formations` WHERE `leaderguid` = 73595;
 INSERT INTO `creature_formations` VALUES (73595, 73595, 0, 0, 2),(73595, 73640, 2, 4.71, 2);
 
+-- Wood Mite 22419
+-- http://www.wowhead.com/npc=22419/wood-mite#comments
+-- reqcreatureorgold1 = 22419
+UPDATE `creature_template` SET `flags_extra` = `flags_extra`|64 WHERE `entry` = 22419;
+
+-- Infested Root-Walker 22095
+-- http://www.wowhead.com/npc=22095/infested-root-walker#abilities
+UPDATE `creature_template` SET `AIName`='EventAI',`ScriptName`='' WHERE `entry` = 22095; -- mob_infested_root_walker
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 22095;
+INSERT INTO `creature_ai_scripts` VALUES
+('2209501','22095','2','0','100','1','50','0','15300','22900','11','39000','0','4','0','0','0','0','0','0','0','0','Infested Root-Walker - Cast Regrowth'),
+('2209502','22095','6','0','100','0','0','0','0','0','11','39130','0','7','0','0','0','0','0','0','0','0','Infested Root-Walker - Cast Summon Wood Mites on Death');
+
+-- Rotting Forest-Rager 22307
+-- http://www.wowhead.com/npc=22307/rotting-forest-rager#abilities
+UPDATE `creature_template` SET `AIName`='EventAI',`ScriptName`='' WHERE `entry` = 22307; -- mob_rotting_forest_rager
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 22307;
+INSERT INTO `creature_ai_scripts` VALUES
+('2230701','22307','9','0','100','1','0','5','12000','18000','11','15548','0','0','0','0','0','0','0','0','0','0','Rotting Forest-Rager - Cast Thunderclap'),
+('2230702','22307','6','0','100','0','0','0','0','0','11','39134','0','7','0','0','0','0','0','0','0','0','Rotting Forest-Rager - Cast Summon Lots of Wood Mights on Death');
+
