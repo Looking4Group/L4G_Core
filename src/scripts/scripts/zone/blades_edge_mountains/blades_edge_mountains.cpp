@@ -1217,7 +1217,7 @@ struct npc_simon_bunnyAI : public ScriptedAI
         if (large)
         {
             if (Player* player = me->GetPlayer(playerGUID))
-                if (Creature* guardian = me->SummonCreature(NPC_APEXIS_GUARDIAN, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ() - zCoordCorrection, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 20000))
+                if (Creature* guardian = me->SummonCreature(NPC_APEXIS_GUARDIAN, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ() - zCoordCorrection, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000))
                     guardian->AI()->AttackStart(player);
 
             ResetNode();
