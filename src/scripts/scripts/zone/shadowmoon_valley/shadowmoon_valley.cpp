@@ -176,7 +176,7 @@ CreatureAI* GetAI_mob_azaloth(Creature *_creature)
 
 enum 
 {
-    SPELL_SHADOWBOLT = 9613,
+    SPELL_SHADOWBOLT_9613 = 9613,
     SPELL_INCINERATE = 32707,
     SPELL_VISUAL_BANISH = 38722
 };
@@ -221,7 +221,7 @@ struct mob_sunfury_warlockAI : public ScriptedAI
             switch (urand(0, 1))
             {
             case 0:
-                DoCast(me->getVictim(), SPELL_SHADOWBOLT);
+                DoCast(me->getVictim(), SPELL_SHADOWBOLT_9613);
                 break;
             case 1:
                 DoCast(me->getVictim(), SPELL_INCINERATE);
@@ -1872,53 +1872,147 @@ CreatureAI* GetAI_mob_torloth_the_magnificent(Creature* c)
 # npc_enraged_spirits
 ####*/
 
-/* QUESTS */
-#define QUEST_ENRAGED_SPIRITS_FIRE_EARTH 10458
-#define QUEST_ENRAGED_SPIRITS_AIR 10481
-#define QUEST_ENRAGED_SPIRITS_WATER 10480
+enum EnragedSpirits
+{
+    QUEST_ENRAGED_SPIRITS_FIRE_EARTH    = 10458,
+    QUEST_ENRAGED_SPIRITS_AIR           = 10481,
+    QUEST_ENRAGED_SPIRITS_WATER         = 10480,
 
-/* Totem */
-#define ENTRY_TOTEM_OF_SPIRITS 21071
-#define RADIUS_TOTEM_OF_SPIRITS 15
+    ENTRY_TOTEM_OF_SPIRITS              = 21071,
+    RADIUS_TOTEM_OF_SPIRITS             = 15,
 
-/* SPIRITS */
-#define ENTRY_ENRAGED_EARTH_SPIRIT 21050
-#define ENTRY_ENRAGED_FIRE_SPIRIT 21061
-#define ENTRY_ENRAGED_AIR_SPIRIT 21060
-#define ENTRY_ENRAGED_WATER_SPIRIT 21059
+    ENTRY_ENRAGED_EARTH_SPIRIT          = 21050,
+    ENTRY_ENRAGED_FIRE_SPIRIT           = 21061,
+    ENTRY_ENRAGED_AIR_SPIRIT            = 21060,
+    ENTRY_ENRAGED_WATER_SPIRIT          = 21059,
 
-/* SOULS */
-#define ENTRY_EARTHEN_SOUL 21073
-#define ENTRY_FIERY_SOUL 21097
-#define ENTRY_ENRAGED_AIRY_SOUL 21116
-#define ENTRY_ENRAGED_WATERY_SOUL 21109  // wrong model
+    ENTRY_EARTHEN_SOUL                  = 21073,
+    ENTRY_FIERY_SOUL                    = 21097,
+    ENTRY_ENRAGED_AIRY_SOUL             = 21116,
+    ENTRY_ENRAGED_WATERY_SOUL           = 21109,  // wrong model
 
-/* SPELL KILLCREDIT - not working!?! - using KilledMonster */
-#define SPELL_EARTHEN_SOUL_CAPTURED_CREDIT 36108
-#define SPELL_FIERY_SOUL_CAPTURED_CREDIT 36117
-#define SPELL_AIRY_SOUL_CAPTURED_CREDIT 36182
-#define SPELL_WATERY_SOUL_CAPTURED_CREDIT 36171
+    /* SPELL KILLCREDIT - not working!?! - using KilledMonster */
+    SPELL_EARTHEN_SOUL_CAPTURED_CREDIT  = 36108,
+    SPELL_FIERY_SOUL_CAPTURED_CREDIT    = 36117,
+    SPELL_AIRY_SOUL_CAPTURED_CREDIT     = 36182,
+    SPELL_WATERY_SOUL_CAPTURED_CREDIT   = 36171,
 
-/* KilledMonster Workaround */
-#define CREDIT_FIRE 21094
-#define CREDIT_WATER 21095
-#define CREDIT_AIR 21096
-#define CREDIT_EARTH 21092
+    /* KilledMonster Workaround */
+    CREDIT_FIRE                         = 21094,
+    CREDIT_WATER                        = 21095,
+    CREDIT_AIR                          = 21096,
+    CREDIT_EARTH                        = 21092,
 
-/* Captured Spell/Buff */
-#define SPELL_SOUL_CAPTURED 36115
+    SPELL_SOUL_CAPTURED                 = 36115,
+    SPELL_LIGHTNING_CHAIN               = 12058,
+    SPELL_HURRICANE                     = 32717,
+    SPELL_ENRAGE                        = 8599,
+    SPELL_FIERY_BOULDER                 = 38498,
+    SPELL_SUMMON_ENRAGED_EARTH_SHARD    = 38365,
+    SPELL_FEL_FIREBALL_21061            = 36247,
+    SPELL_STORMBOLT                     = 38032,
 
-/* Factions */
-#define ENRAGED_SOUL_FRIENDLY 35
-#define ENRAGED_SOUL_HOSTILE 14
+    ENRAGED_SOUL_FRIENDLY               = 35,
+    ENRAGED_SOUL_HOSTILE                = 14
+};
+
 
 struct npc_enraged_spiritAI : public ScriptedAI
 {
     npc_enraged_spiritAI(Creature *c) : ScriptedAI(c) {}
 
-    void Reset()   { }
+    uint32 LightningChainTimer;
+    uint32 HurricaneTimer;
+    uint32 FieryBoulderTimer;
+    uint32 SummonEnragedEarthShardTimer;
+    uint32 FelFireballTimer;
+    uint32 StormboltTimer;
+
+    void Reset()
+    {
+        switch (m_creature->GetEntry())
+        {
+            case ENTRY_ENRAGED_FIRE_SPIRIT:
+                FelFireballTimer = urand(0, 500);
+            break;
+            case ENTRY_ENRAGED_EARTH_SPIRIT:
+                FieryBoulderTimer = urand(3500, 5500);
+                SummonEnragedEarthShardTimer = 8000;
+            break;
+            case ENTRY_ENRAGED_AIR_SPIRIT:
+                LightningChainTimer = 5500;
+                HurricaneTimer = 8000;
+            break;
+            case ENTRY_ENRAGED_WATER_SPIRIT:
+                StormboltTimer = urand(0, 500);
+            break;
+        }
+    }
 
     void EnterCombat(Unit *who){}
+
+    void UpdateAI(const uint32 diff)
+    {
+        switch (m_creature->GetEntry())
+            case ENTRY_ENRAGED_FIRE_SPIRIT:
+            {
+                if (FelFireballTimer <= diff)
+                {
+                    DoCast(m_creature->getVictim(), SPELL_FEL_FIREBALL_21061);
+                    FelFireballTimer = urand(3400, 4700);
+                }
+                else
+                    FelFireballTimer -= diff;
+            break;
+            case ENTRY_ENRAGED_EARTH_SPIRIT:
+            {
+                if (FieryBoulderTimer <= diff)
+                {
+                    DoCast(m_creature->getVictim(), SPELL_FIERY_BOULDER);
+                    FieryBoulderTimer = urand(10000, 12000);
+                }
+                else
+                    FieryBoulderTimer -= diff;
+
+                if (SummonEnragedEarthShardTimer <= diff)
+                {
+                    DoCast(m_creature, SPELL_SUMMON_ENRAGED_EARTH_SHARD);
+                    SummonEnragedEarthShardTimer = urand(15000, 18000);
+                }
+                else
+                    SummonEnragedEarthShardTimer -= diff;
+            break;
+            case ENTRY_ENRAGED_AIR_SPIRIT:
+            {
+                if (LightningChainTimer <= diff)
+                {
+                    DoCast(m_creature->getVictim(), SPELL_LIGHTNING_CHAIN);
+                    LightningChainTimer = urand(12000, 14000);
+                }
+                else
+                    LightningChainTimer -= diff;
+
+                if (HurricaneTimer <= diff)
+                {
+                    DoCast(m_creature, SPELL_HURRICANE);
+                    HurricaneTimer = urand(15000, 16000);
+                }
+                else
+                    HurricaneTimer -= diff;
+            break;
+            case ENTRY_ENRAGED_WATER_SPIRIT:
+            {
+                if (StormboltTimer <= diff)
+                {
+                    DoCast(m_creature->getVictim(), SPELL_STORMBOLT);
+                    StormboltTimer = urand(3400, 4700);
+                }
+                else
+                    StormboltTimer -= diff;
+            break;
+            }}}}
+        DoMeleeAttackIfReady();
+    }
 
     void JustDied(Unit* killer)
     {
@@ -1951,7 +2045,6 @@ struct npc_enraged_spiritAI : public ScriptedAI
           break;
         }
 
-        // Spawn Soul on Kill ALWAYS!
         Creature* Summoned = NULL;
         Unit* totemOspirits = NULL;
 
