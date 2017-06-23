@@ -586,10 +586,10 @@ struct mob_ember_of_alarAI : public ScriptedAI
             {
                 if((!((boss_alarAI*)Alar->AI())->Phase1) && Alar->isAlive())
                 {
-                    int AlarHealth = Alar->GetHealth() - Alar->GetMaxHealth()*0.03;
+                    int AlarHealth = Alar->GetHealth() - Alar->GetMaxHealth()*0.02;
 
                     if(AlarHealth > 0)
-                        Alar->ModifyHealth(-(int)Alar->GetMaxHealth()*0.03);
+                        Alar->ModifyHealth(-(int)Alar->GetMaxHealth()*0.02);
                     else
                         Alar->SetHealth(1);
                 }
