@@ -1878,6 +1878,14 @@ enum EnragedSpirits
     QUEST_ENRAGED_SPIRITS_AIR           = 10481,
     QUEST_ENRAGED_SPIRITS_WATER         = 10480,
 
+    SPELL_ELEMENTAL_SIEVE               = 36035,
+    SPELL_CALL_TO_THE_SPIRITS           = 36206,
+
+    SPELL_EARTH_CAPTURED                = 36025,            // dummies (having visual effects)
+    SPELL_FIERY_CAPTURED                = 36115,
+    SPELL_WATER_CAPTURED                = 36170,
+    SPELL_AIR_CAPTURED                  = 36181,
+
     ENTRY_TOTEM_OF_SPIRITS              = 21071,
     RADIUS_TOTEM_OF_SPIRITS             = 15,
 
@@ -1889,7 +1897,7 @@ enum EnragedSpirits
     ENTRY_EARTHEN_SOUL                  = 21073,
     ENTRY_FIERY_SOUL                    = 21097,
     ENTRY_ENRAGED_AIRY_SOUL             = 21116,
-    ENTRY_ENRAGED_WATERY_SOUL           = 21109,  // wrong model
+    ENTRY_ENRAGED_WATERY_SOUL           = 21109,
 
     /* SPELL KILLCREDIT - not working!?! - using KilledMonster */
     SPELL_EARTHEN_SOUL_CAPTURED_CREDIT  = 36108,
@@ -1928,23 +1936,27 @@ struct npc_enraged_spiritAI : public ScriptedAI
     uint32 FelFireballTimer;
     uint32 StormboltTimer;
 
+    bool Enraged;
+
     void Reset()
     {
         switch (m_creature->GetEntry())
         {
             case ENTRY_ENRAGED_FIRE_SPIRIT:
-                FelFireballTimer = urand(0, 500);
+                FelFireballTimer = urand(0, 1000);
+                Enraged = false;
             break;
             case ENTRY_ENRAGED_EARTH_SPIRIT:
-                FieryBoulderTimer = urand(3500, 5500);
-                SummonEnragedEarthShardTimer = 8000;
+                FieryBoulderTimer = urand(3500, 9000);
+                SummonEnragedEarthShardTimer = urand(8000, 16000);
             break;
             case ENTRY_ENRAGED_AIR_SPIRIT:
-                LightningChainTimer = 5500;
-                HurricaneTimer = 8000;
+                LightningChainTimer = urand(3500, 9000);
+                HurricaneTimer = urand(8000, 16000);
+                Enraged = false;
             break;
             case ENTRY_ENRAGED_WATER_SPIRIT:
-                StormboltTimer = urand(0, 500);
+                StormboltTimer = urand(0, 1000);
             break;
         }
     }
@@ -1953,6 +1965,9 @@ struct npc_enraged_spiritAI : public ScriptedAI
 
     void UpdateAI(const uint32 diff)
     {
+        if (!UpdateVictim())
+            return;
+
         switch (m_creature->GetEntry())
             case ENTRY_ENRAGED_FIRE_SPIRIT:
             {
@@ -1963,12 +1978,18 @@ struct npc_enraged_spiritAI : public ScriptedAI
                 }
                 else
                     FelFireballTimer -= diff;
+
+                if (!Enraged && (me->GetHealthPct() <= 30))
+                {
+                    DoCast(me, SPELL_ENRAGE, true);
+                    Enraged = true;
+                }
             break;
             case ENTRY_ENRAGED_EARTH_SPIRIT:
             {
                 if (FieryBoulderTimer <= diff)
                 {
-                    DoCast(m_creature->getVictim(), SPELL_FIERY_BOULDER);
+                    //DoCast(m_creature->getVictim(), SPELL_FIERY_BOULDER); targetflag issue
                     FieryBoulderTimer = urand(10000, 12000);
                 }
                 else
@@ -1999,6 +2020,12 @@ struct npc_enraged_spiritAI : public ScriptedAI
                 }
                 else
                     HurricaneTimer -= diff;
+
+                if (!Enraged && (me->GetHealthPct() <= 30))
+                {
+                    DoCast(me, SPELL_ENRAGE, true);
+                    Enraged = true;
+                }
             break;
             case ENTRY_ENRAGED_WATER_SPIRIT:
             {
