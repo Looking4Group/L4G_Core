@@ -922,3 +922,14 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('2230701','22307','9','0','100','1','0','5','12000','18000','11','15548','0','0','0','0','0','0','0','0','0','0','Rotting Forest-Rager - Cast Thunderclap'),
 ('2230702','22307','6','0','100','0','0','0','0','0','11','39134','0','7','0','0','0','0','0','0','0','0','Rotting Forest-Rager - Cast Summon Lots of Wood Mights on Death');
 
+UPDATE `creature_template` SET `faction_A` = 35, `faction_H` = 35, `unit_flags` = 33555200 WHERE `entry` IN (21073,21097,21109,21116);
+
+UPDATE `creature_template` SET `AIName` = 'EventAI' WHERE `entry` = 22115;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 22115;
+INSERT INTO `creature_ai_scripts` VALUES ('2211501','22115','1','0','100','0','15000','15000','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Enraged Earth Shard - Despawn OOC');
+INSERT INTO `creature_ai_scripts` VALUES ('2211502','22115','1','0','100','1','1000','1000','5000','5000','103','20','0','0','0','0','0','0','0','0','0','0','Enraged Earth Shard - Attack Start Pulse OOC');
+
+UPDATE `creature_template` SET `modelid_A` = 16946, `modelid_H` = 16946 WHERE `entry` = 21109;
+DELETE FROM `creature_template_addon` WHERE `entry` = 21109;
+INSERT INTO `creature_template_addon` VALUES (21109, 0, 0, 16908544, 0, 4097, 0, 0, '36169 0');
+
