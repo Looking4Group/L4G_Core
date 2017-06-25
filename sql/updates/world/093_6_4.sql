@@ -933,3 +933,30 @@ UPDATE `creature_template` SET `modelid_A` = 16946, `modelid_H` = 16946 WHERE `e
 DELETE FROM `creature_template_addon` WHERE `entry` = 21109;
 INSERT INTO `creature_template_addon` VALUES (21109, 0, 0, 16908544, 0, 4097, 0, 0, '36169 0');
 
+-- ReAdd pooling for Ethereum Jailor
+SET @pool_id=30041;
+SET @GUID=123771;
+DELETE FROM `pool_creature` WHERE `pool_entry` = 30041;
+INSERT INTO `pool_creature` (`guid`, `pool_entry`, `chance`, `description`) VALUES
+(@GUID+0, @pool_id, 0, 'Ethereum Jailor'),
+(@Guid+1, @pool_id, 0, 'Ethereum Jailor'),
+(@Guid+2, @pool_id, 0, 'Ethereum Jailor'),
+(@Guid+3, @pool_id, 0, 'Ethereum Jailor'),
+(@Guid+4, @pool_id, 0, 'Ethereum Jailor'),
+(@Guid+5, @pool_id, 0, 'Ethereum Jailor'),
+(@Guid+6, @pool_id, 0, 'Ethereum Jailor'),
+(@Guid+7, @pool_id, 0, 'Ethereum Jailor'),
+(@Guid+8, @pool_id, 0, 'Ethereum Jailor'),
+(@Guid+9, @pool_id, 0, 'Ethereum Jailor'),
+(@Guid+10, @pool_id, 0, 'Ethereum Jailor'),
+(@Guid+11, @pool_id, 0, 'Ethereum Jailor'),
+(@Guid+12, @pool_id, 0, 'Ethereum Jailor'),
+(@Guid+13, @pool_id, 0, 'Ethereum Jailor'),
+(@Guid+14, @pool_id, 0, 'Ethereum Jailor'),
+(@Guid+15, @pool_id, 0, 'Ethereum Jailor'),
+(@Guid+16, @pool_id, 0, 'Ethereum Jailor'),
+(@Guid+17, @pool_id, 0, 'Ethereum Jailor'),
+(@Guid+18, @pool_id, 0, 'Ethereum Jailor'),
+(@Guid+19, @pool_id, 0, 'Ethereum Jailor'),
+(@Guid+20, @pool_id, 0, 'Ethereum Jailor');
+
