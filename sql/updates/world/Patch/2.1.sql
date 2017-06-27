@@ -1630,12 +1630,12 @@ DELETE FROM `npc_vendor` WHERE `item` IN (35564,35566);
 
 -- Riding
 
--- Horde First Mount
--- UPDATE `item_template` SET `RequiredLevel` = 40, `BuyPrice` = 1 WHERE `entry` IN (2411,2414,5655,5656,5864,5872,5873,8563,8595,8629,8631,8632,13321,13322,28481,29743,29744); -- 30 100000
+-- Horde Mounts `RequiredSkill` = 762 AND `RequiredSkillRank` = 75
+-- UPDATE `item_template` SET `RequiredLevel` = 40, `BuyPrice` = 1 WHERE `entry` IN (1132,5665,5668,8588,8591,8592,13331,13332,13333,15277,15290,28927,29220,29221,29222,33224,33976,37012); -- 30 100000
 -- UPDATE `npc_trainer` SET `spellcost` = 1, `reqlevel` = 40 WHERE `entry` IN (3690,4752,4773,7953,16280,20500) AND `spell` = 33388; -- 350000 900000 prenerf 30
 
--- Alliance and other ReqSkill 762 Mounts
--- UPDATE `item_template` SET `RequiredLevel` = 40, `BuyPrice` = 100000 WHERE `entry` IN (1132,5665,5668,8588,8591,8592,13331,13332,13333,15277,15290,28927,29220,29221,29222,33224,33976,37012); -- 30 100000
+-- Alliance Mounts
+-- UPDATE `item_template` SET `RequiredLevel` = 40, `BuyPrice` = 100000 WHERE `entry` IN (2411,2414,5655,5656,5864,5872,5873,8563,8595,8629,8631,8632,13321,13322,28481,29743,29744); -- 30 100000
 -- UPDATE `npc_trainer` SET `spellcost` = 500000, `reqlevel` = 40 WHERE `entry` IN (4732,4753,4772,7954,20914,20511) AND `spell` = 33388; -- 350000 900000 prenerf 30
 
 -- Set Paladin and Warlock First Mount to 40
