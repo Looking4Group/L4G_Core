@@ -1917,7 +1917,7 @@ enum EnragedSpirits
     SPELL_ENRAGE                        = 8599,
     SPELL_FIERY_BOULDER                 = 38498,
     SPELL_SUMMON_ENRAGED_EARTH_SHARD    = 38365,
-    SPELL_FEL_FIREBALL_21061            = 36247,
+    SPELL_FEL_FIREBALL_36247            = 36247,
     SPELL_STORMBOLT                     = 38032,
 
     ENRAGED_SOUL_FRIENDLY               = 35,
@@ -1969,11 +1969,11 @@ struct npc_enraged_spiritAI : public ScriptedAI
             return;
 
         switch (m_creature->GetEntry())
+        {
             case ENTRY_ENRAGED_FIRE_SPIRIT:
-            {
                 if (FelFireballTimer <= diff)
                 {
-                    DoCast(m_creature->getVictim(), SPELL_FEL_FIREBALL_21061);
+                    DoCast(m_creature->getVictim(), SPELL_FEL_FIREBALL_36247);
                     FelFireballTimer = urand(3400, 4700);
                 }
                 else
@@ -1986,7 +1986,6 @@ struct npc_enraged_spiritAI : public ScriptedAI
                 }
             break;
             case ENTRY_ENRAGED_EARTH_SPIRIT:
-            {
                 if (FieryBoulderTimer <= diff)
                 {
                     //DoCast(m_creature->getVictim(), SPELL_FIERY_BOULDER); targetflag issue
@@ -2004,7 +2003,6 @@ struct npc_enraged_spiritAI : public ScriptedAI
                     SummonEnragedEarthShardTimer -= diff;
             break;
             case ENTRY_ENRAGED_AIR_SPIRIT:
-            {
                 if (LightningChainTimer <= diff)
                 {
                     DoCast(m_creature->getVictim(), SPELL_LIGHTNING_CHAIN);
@@ -2028,7 +2026,6 @@ struct npc_enraged_spiritAI : public ScriptedAI
                 }
             break;
             case ENTRY_ENRAGED_WATER_SPIRIT:
-            {
                 if (StormboltTimer <= diff)
                 {
                     DoCast(m_creature->getVictim(), SPELL_STORMBOLT);
@@ -2037,7 +2034,8 @@ struct npc_enraged_spiritAI : public ScriptedAI
                 else
                     StormboltTimer -= diff;
             break;
-            }}}}
+            }
+
         DoMeleeAttackIfReady();
     }
 
