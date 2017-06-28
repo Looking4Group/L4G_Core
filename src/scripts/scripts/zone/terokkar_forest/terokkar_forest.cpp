@@ -162,56 +162,6 @@ CreatureAI* GetAI_mob_unkor_the_ruthless(Creature *creature)
 }
 
 /*######
-## mob_infested_root_walker
-######*/
-
-struct mob_infested_root_walkerAI : public ScriptedAI
-{
-    mob_infested_root_walkerAI(Creature *creature) : ScriptedAI(creature) {}
-
-    void Reset() { }
-    void EnterCombat(Unit *who) { }
-
-    void DamageTaken(Unit *done_by, uint32 &damage)
-    {
-        if (done_by && done_by->GetTypeId() == TYPEID_PLAYER)
-            if (me->GetHealth() <= damage)
-                if (rand()%100 < 75)
-                    //Summon Wood Mites
-                    me->CastSpell(me,39130,true);
-    }
-};
-CreatureAI* GetAI_mob_infested_root_walker(Creature *creature)
-{
-    return new mob_infested_root_walkerAI (creature);
-}
-
-/*######
-## mob_rotting_forest_rager
-######*/
-
-struct mob_rotting_forest_ragerAI : public ScriptedAI
-{
-    mob_rotting_forest_ragerAI(Creature *creature) : ScriptedAI(creature) {}
-
-    void Reset() { }
-    void EnterCombat(Unit *who) { }
-
-    void DamageTaken(Unit *done_by, uint32 &damage)
-    {
-        if (done_by->GetTypeId() == TYPEID_PLAYER)
-            if (me->GetHealth() <= damage)
-                if (rand()%100 < 75)
-                    //Summon Lots of Wood Mights
-                    me->CastSpell(me,39134,true);
-    }
-};
-CreatureAI* GetAI_mob_rotting_forest_rager(Creature *creature)
-{
-    return new mob_rotting_forest_ragerAI (creature);
-}
-
-/*######
 ## mob_netherweb_victim
 ######*/
 
@@ -2565,16 +2515,6 @@ void AddSC_terokkar_forest()
     newscript = new Script;
     newscript->Name="mob_unkor_the_ruthless";
     newscript->GetAI = &GetAI_mob_unkor_the_ruthless;
-    newscript->RegisterSelf();
-
-    newscript = new Script;
-    newscript->Name="mob_infested_root_walker";
-    newscript->GetAI = &GetAI_mob_infested_root_walker;
-    newscript->RegisterSelf();
-
-    newscript = new Script;
-    newscript->Name="mob_rotting_forest_rager";
-    newscript->GetAI = &GetAI_mob_rotting_forest_rager;
     newscript->RegisterSelf();
 
     newscript = new Script;
