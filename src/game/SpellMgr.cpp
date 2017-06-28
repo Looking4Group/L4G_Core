@@ -3574,6 +3574,9 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->Attributes &= ~SPELL_ATTR_LEVEL_DAMAGE_CALCULATION;
                 spellInfo->AttributesEx4 |= SPELL_ATTR_EX4_DAMAGE_DOESNT_BREAK_AURAS;
                 break;
+            case 46264: // Void Zone Effect (Netherspite)
+                spellInfo->EffectRadiusIndex[0] = EFFECT_RADIUS_1_YARD;
+                break;
             case 29946: // Flame Wreath (Shade of Aran)
                 spellInfo->EffectRadiusIndex[0] = EFFECT_RADIUS_2_YARDS;
                 break;

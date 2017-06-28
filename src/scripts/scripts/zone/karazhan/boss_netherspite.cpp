@@ -9,35 +9,32 @@ EndScriptData */
 #include "def_karazhan.h"
 #include <vector>
 
-#define EMOTE_PHASE_PORTAL -1532089
-#define EMOTE_PHASE_BANISH -1532090
+enum Netherspite
+{
+    AGGRO_RANGE             = 40,
 
-#define SPELL_NETHERBURN_AURA 30522
-#define SPELL_VOIDZONE 37063
-#define SPELL_NETHER_INFUSION 38688
-#define SPELL_NETHERBREATH 38523
-#define SPELL_BANISH_VISUAL 39833
-#define SPELL_BANISH_ROOT 42716
-#define SPELL_EMPOWERMENT 38549
-#define SPELL_NETHERSPITE_ROAR 38684
-#define SPELL_VOID_ZONE_EFFECT 46264
+    RED_PORTAL              = 0, // Perseverence
+    GREEN_PORTAL            = 1, // Serenity
+    BLUE_PORTAL             = 2, // Dominance
+    
+    EMOTE_PHASE_PORTAL      = -1532089,
+    EMOTE_PHASE_BANISH      = -1532090,
 
-#define NETHER_PATROL_PATH 15689
-
-#define NPC_VOID_ZONE 16697
+    SPELL_NETHERBURN_AURA   = 30522,
+    SPELL_VOIDZONE          = 37063,
+    SPELL_NETHER_INFUSION   = 38688,
+    SPELL_NETHERBREATH      = 38523,
+    SPELL_BANISH_VISUAL     = 39833,
+    SPELL_BANISH_ROOT       = 42716,
+    SPELL_EMPOWERMENT       = 38549,
+    SPELL_NETHERSPITE_ROAR  = 38684
+};
 
 const float PortalCoord[3][3] =
 {
     {-11195.353516, -1613.237183, 278.237258}, // Left side
     {-11137.846680, -1685.607422, 278.239258}, // Right side
     {-11094.493164, -1591.969238, 279.949188} // Back side
-};
-
-enum Netherspite_Portal
-{
-    RED_PORTAL = 0, // Perseverence
-    GREEN_PORTAL = 1, // Serenity
-    BLUE_PORTAL = 2 // Dominance
 };
 
 const uint32 PortalID[3] = {17369, 17367, 17368};
@@ -52,6 +49,7 @@ struct boss_netherspiteAI : public ScriptedAI
     boss_netherspiteAI(Creature* c) : ScriptedAI(c)
     {
         pInstance = (c->GetInstanceData());
+        m_creature->SetAggroRange(AGGRO_RANGE);
     }
 
     ScriptedInstance* pInstance;
@@ -72,6 +70,7 @@ struct boss_netherspiteAI : public ScriptedAI
     void Reset()
     {
         ClearCastQueue();
+        me->GetMotionMaster()->Initialize();
 
         Berserk = false;
         NetherInfusionTimer = 540000;
@@ -87,9 +86,6 @@ struct boss_netherspiteAI : public ScriptedAI
             BeamTarget[i] = 0;
             BeamerGUID[i] = 0;
         }
-
-        //temporary commented out due to mysterious invisible bug
-        //m_creature->GetMotionMaster()->MovePath(NETHER_PATROL_PATH, true);
 
         if(pInstance && pInstance->GetData(DATA_NETHERSPITE_EVENT) != DONE)
             pInstance->SetData(DATA_NETHERSPITE_EVENT, NOT_STARTED);
@@ -223,13 +219,14 @@ struct boss_netherspiteAI : public ScriptedAI
         PortalTimer = 10000;
         EmpowermentTimer = 10000;
         DoScriptText(EMOTE_PHASE_PORTAL,m_creature);
-        AttackStart(m_creature->getVictim());
+        DoResetThreat();
+        m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
     }
 
     void SwitchToBanishPhase()
     {
         m_creature->RemoveAurasDueToSpell(SPELL_EMPOWERMENT);
-        m_creature->RemoveAurasDueToSpell(SPELL_NETHERBURN_AURA);
+        //m_creature->RemoveAurasDueToSpell(SPELL_NETHERBURN_AURA); prenerf
         DoCast(m_creature,SPELL_BANISH_VISUAL,true);
         DoCast(m_creature,SPELL_BANISH_ROOT,true);
         DestroyPortals();
@@ -252,9 +249,6 @@ struct boss_netherspiteAI : public ScriptedAI
         HandleDoors(false);
         SwitchToPortalPhase();
 
-        //m_creature->GetMotionMaster()->Clear();
-        //DoStartMovement(who);
-
         if (pInstance)
             pInstance->SetData(DATA_NETHERSPITE_EVENT, IN_PROGRESS);
     }
@@ -273,26 +267,18 @@ struct boss_netherspiteAI : public ScriptedAI
         if(!UpdateVictim())
             return;
 
-        //DoSpecialThings(diff, DO_EVERYTHING, 125.0f, 1.5f);
-        me->SetSpeed(MOVE_WALK, 1.5f, true);
-        me->SetSpeed(MOVE_RUN, 1.5f, true);
         DoZoneInCombat();
 
-        // Void Zone
-        if(VoidZoneTimer < diff)
+        if (VoidZoneTimer < diff)
         {
-            if(Unit *target = SelectUnit(SELECT_TARGET_RANDOM,1,GetSpellMaxRange(SPELL_VOIDZONE),true, m_creature->getVictimGUID()))
-            {
-                AddSpellToCast(target,SPELL_VOIDZONE,true); //Does work!
-                //Spawns Void-Zone as NPC with a 25 sec despawn
-                //m_creature->SummonCreature(NPC_VOID_ZONE, target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), target->GetOrientation(),TEMPSUMMON_TIMED_DESPAWN, 25000);
-            }
+            if (Unit *target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_VOIDZONE), true))
+                AddSpellToCast(target, SPELL_VOIDZONE, true);
+
             VoidZoneTimer = 15000;
         }
         else
             VoidZoneTimer -= diff;
 
-        // NetherInfusion Berserk
         if(!Berserk && NetherInfusionTimer < diff)
         {
             m_creature->AddAura(SPELL_NETHER_INFUSION, m_creature);
@@ -313,7 +299,6 @@ struct boss_netherspiteAI : public ScriptedAI
             else
                 PortalTimer -= diff;
 
-            // Empowerment & Nether Burn
             if(EmpowermentTimer < diff)
             {
                 ForceSpellCast(m_creature, SPELL_EMPOWERMENT);
@@ -344,13 +329,15 @@ struct boss_netherspiteAI : public ScriptedAI
                 m_creature->GetMotionMaster()->MoveIdle();
             }
 
-            // Netherbreath
             if(NetherbreathTimer < diff)
             {
-                if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM,0,GetSpellMaxRange(SPELL_NETHERBREATH),true))
-                    AddSpellToCast(target,SPELL_NETHERBREATH);
-
-                NetherbreathTimer = 5000+rand()%2000;
+                if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_NETHERBREATH), true))
+                {
+                    m_creature->SetSelection(target->GetGUID());
+                    m_creature->SetInFront(target);
+                    AddSpellToCast(target, SPELL_NETHERBREATH);
+                }
+                NetherbreathTimer = urand(4000, 5000);
             }
             else
                 NetherbreathTimer -= diff;
@@ -375,59 +362,6 @@ CreatureAI* GetAI_boss_netherspite(Creature *_Creature)
     return new boss_netherspiteAI(_Creature);
 }
 
-/**************
-* Void Zone - id 16697
-***************/
-
-struct mob_void_zoneAI : public Scripted_NoMovementAI
-{
-    mob_void_zoneAI(Creature* c) : Scripted_NoMovementAI(c)
-    {
-        pInstance = (c->GetInstanceData());
-    }
-
-    ScriptedInstance* pInstance;
-    uint32 checkTimer;
-    uint32 dieTimer;
-
-    void Reset()
-    {
-        m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-        checkTimer = 500;
-        dieTimer = 25000;
-    }
-
-    void UpdateAI(const uint32 diff)
-    {
-        if(checkTimer < diff)
-        {
-            if (pInstance && pInstance->GetData(DATA_NETHERSPITE_EVENT) == DONE)
-            {
-                m_creature->Kill(m_creature, false);
-                m_creature->RemoveCorpse();
-            }
-            const int32 dmg = frand(2000, 3000); //workaround here, no proper spell known
-            m_creature->CastCustomSpell(NULL, SPELL_VOID_ZONE_EFFECT, &dmg, NULL, NULL, false);
-            checkTimer = 2000;
-        }
-        else
-            checkTimer -= diff;
-
-        if(dieTimer < diff)
-        {
-            m_creature->Kill(m_creature, false);
-            m_creature->RemoveCorpse();
-            dieTimer = 25000;
-        }
-        else
-            dieTimer -= diff;
-    }
-};
-CreatureAI* GetAI_mob_void_zone(Creature *_Creature)
-{
-    return new mob_void_zoneAI(_Creature);
-}
-
 void AddSC_boss_netherspite()
 {
     Script *newscript;
@@ -435,10 +369,5 @@ void AddSC_boss_netherspite()
     newscript = new Script;
     newscript->Name="boss_netherspite";
     newscript->GetAI = GetAI_boss_netherspite;
-    newscript->RegisterSelf();
-
-    newscript = new Script;
-    newscript->Name="mob_void_zone";
-    newscript->GetAI = GetAI_mob_void_zone;
     newscript->RegisterSelf();
 }
