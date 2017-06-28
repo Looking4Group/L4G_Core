@@ -3965,6 +3965,9 @@ void SpellMgr::LoadSpellCustomAttr()
             case 30564: // Worgen's Spite has a duration of 1.1 seconds (Will fade once Transform fades)
                 spellInfo->DurationIndex = DURATION_MAX_1_1_SEC_1;
                 break;
+            case 32053: // Soul Charge (Archimonde)
+                spellInfo->DurationIndex = DURATION_MAX_6_SEC;
+                break;
             case 38759: // Dark Shell (Pandemonious HC)
                 spellInfo->DurationIndex = DURATION_MAX_8_SEC;
                 break;
