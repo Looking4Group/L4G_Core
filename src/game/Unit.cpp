@@ -9950,6 +9950,7 @@ bool Unit::canDetectStealthOf(Unit const* target, WorldObject const* viewPoint, 
     if (hasUnitState(UNIT_STAT_SIGHTLESS)) 
         return false;
 
+    if (target->HasAuraTypeWithFamilyFlags(SPELL_AURA_MOD_STEALTH, SPELLFAMILY_ROGUE, SPELLFAMILYFLAG_ROGUE_VANISH) && distance > 0.24f)
         return false;
 
     if (distance < 0.24f && HasInArc(M_PI, target)) //collision
