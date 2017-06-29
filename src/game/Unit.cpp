@@ -9942,67 +9942,6 @@ bool Unit::canDetectInvisibilityOf(Unit const* u, WorldObject const* viewPoint) 
     return false;
 }
 
-float Unit::GetStealthDetectionValue() const
-{
-    float level = 0;
-    if (HasAura(19480, 0) || HasAura(19885, 0)) // Paranoia, Track Hidden
-        level += 30;
-    if (HasAura(20600, 0)) // Perception (Racial
-        level += 50;
-    if (HasAura(30894, 1)) // Heightened Senses (Rank 1)
-        level += 3;
-    if (HasAura(30895, 1)) // Heightened Senses (Rank 2)
-        level += 6;
-    if (HasAura(40273, 1)) // Stealth Detection (googles)
-        level += 5;
-    if (HasAura(23217, 1)) // Bloodvine Lens
-        level += 10;
-    if (HasAura(12418, 1)) // Catseye Ultra Goggles
-        level += 18;
-    if (HasAura(12608, 0)) // Cats elixir
-        level += 10;
-    if (HasAura(30249, 0)) // Hyper-Vision Goggles
-        level += 30;
-    if (HasAura(28496, 0)) // Greater Stealth Detection
-        level += 15;
-    if (HasAura(38551, 0)) // Distilled Stalker Sight
-        level += 15;
-
-
-    return level;
-}
-
-float Unit::GetStealthModifierValue() const
-{
-    float level = 0;
-    if (HasAura(11327, 0)) // Vanish (Rank 1)
-        level += 170;
-    if (HasAura(11329, 0)) // Vanish (Rank 2)
-        level += 270;
-    if (HasAura(26888, 0)) // Vanish (Rank 3)
-        level += 370;
-    if (HasAura(13958, 1)) // Master of Deception (Rank 1)
-        level += 3;
-    if (HasAura(13970, 1)) // Master of Deception (Rank 2)
-        level += 6;
-    if (HasAura(13971, 1)) // Master of Deception (Rank 3)
-        level += 9;
-    if (HasAura(13972, 1)) // Master of Deception (Rank 4)
-        level += 12;
-    if (HasAura(13973, 1)) // Master of Deception (Rank 5)
-        level += 15;
-    if (HasAura(16947, 1)) // Feral Instinct (Rank 1)
-        level += 5;
-    if (HasAura(16948, 1)) // Feral Instinct (Rank 2)
-        level += 10;
-    if (HasAura(16949, 1)) // Feral Instinct (Rank 3)
-        level += 15;
-    if (HasAura(21009, 1)) // Shadowmeld Passive (Racial Passive)
-        level += 5;
-
-    return level;
-}
-
 bool Unit::canDetectStealthOf(Unit const* target, WorldObject const* viewPoint, float distance) const
 {
     if (!target)
@@ -10011,17 +9950,10 @@ bool Unit::canDetectStealthOf(Unit const* target, WorldObject const* viewPoint, 
     if (hasUnitState(UNIT_STAT_SIGHTLESS)) 
         return false;
 
-    if (GetTypeId() != TYPEID_PLAYER)
-    {
-        if (distance < 0.24f) //collision
-            return true;
-    }
+        return false;
 
-    if (GetTypeId() == TYPEID_PLAYER)
-    {
-        if (distance < 5.0f) //collision
-            return true;
-    }
+    if (distance < 0.24f && HasInArc(M_PI, target)) //collision
+        return true;
 
     if (HasAuraType(SPELL_AURA_DETECT_STEALTH))
         return true;
@@ -10034,15 +9966,15 @@ bool Unit::canDetectStealthOf(Unit const* target, WorldObject const* viewPoint, 
         if ((*iter)->GetCasterGUID() == GetGUID())
             return true;
 
-    //Visible distance based on stealth value (stealth hunter pet 300MOD, 10.5 - 3 = 7.5) new values for rogue stealth and druid prowl 400MOD 10.5 - 4 = 6.5f
-    float visibleDistance = 10.0f; // Default: 10.5f
-    //Visible distance is modified by -Level Diff (every level diff = 1.0f in visible distance)
+    //Visible distance based on stealth value (stealth rank 4 300MOD, 10.5 - 3 = 7.5)
+    float visibleDistance = 10.5f;
+    //Visible distance is modified by Stealth Rank
     visibleDistance -= target->GetTotalAuraModifier(SPELL_AURA_MOD_STEALTH) / 100.0f;
-
+    //Visible distance is modified by -Level Diff (every level diff = 1.0f in visible distance)
     visibleDistance += float(getLevel() - target->getLevel()); // every level difference will give you 1 yard detection or subtlety
                                                                // Stealth Mod(positive like Master of Deception) and Stealth Detection(negative like paranoia)
                                                                // based on wowwiki every 5 mod we have 1 more level diff in calculation
-    visibleDistance += (float)GetStealthDetectionValue() / 5.0f - target->GetTotalAuraModifier(SPELL_AURA_MOD_STEALTH_LEVEL) / 5.0f;
+    visibleDistance += (float)(GetTotalAuraModifierByMiscValue(SPELL_AURA_MOD_DETECT, 0) / 5.0f) - target->GetTotalAuraModifier(SPELL_AURA_MOD_STEALTH_LEVEL) / 5.0f;
     visibleDistance = visibleDistance > MAX_PLAYER_STEALTH_DETECT_RANGE ? MAX_PLAYER_STEALTH_DETECT_RANGE : visibleDistance;
 
     if (!HasInArc(M_PI, target))
