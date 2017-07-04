@@ -746,3 +746,5 @@ INSERT INTO `waypoint_data` VALUES (78222, 8, -4468.9, 1970.66, 121.295, 0, 0, 0
 INSERT INTO `waypoint_data` VALUES (78222, 9, -4486.36, 1927.62, 146.364, 0, 0, 0, 0, 0);
 INSERT INTO `waypoint_data` VALUES (78222, 10, -4450.83, 1884.11, 160.943, 0, 0, 0, 0, 0);
 
+UPDATE `creature_loot_template` SET `groupid` = 9 WHERE `item` = 23608; -- 0
+
