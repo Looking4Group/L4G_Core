@@ -1406,3 +1406,51 @@ INSERT INTO `waypoint_data` VALUES (96989, 4, 288.012, 1484.46, -13.3656, 2000, 
 INSERT INTO `waypoint_data` VALUES (96989, 5, 288.012, 1484.46, -13.3656, 60000, 1, 0, 0, 0);
 INSERT INTO `waypoint_data` VALUES (96989, 6, 288.012, 1484.46, -13.3656, 3000, 1, 0, 0, 0);
 
+DELETE FROM `creature_loot_template` WHERE `entry` = 21217;
+INSERT INTO `creature_loot_template` VALUES (21217, 29434, 0, 0, 2, 2, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (21217, 34052, 2, 2, -34052, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (21217, 34058, 100, 1, -34058, 2, 0, 0, 0);
+INSERT INTO `creature_loot_template` VALUES (21217, 90052, 10, 1, -34052, 1, 0, 0, 0);
+
+DELETE FROM `reference_loot_template` WHERE `entry` = 34052;
+INSERT INTO `reference_loot_template` VALUES (34052, 30280, 0, 1, 1, 1, 7, 197, 1);
+INSERT INTO `reference_loot_template` VALUES (34052, 30281, 0, 1, 1, 1, 7, 197, 1);
+INSERT INTO `reference_loot_template` VALUES (34052, 30282, 0, 2, 1, 1, 0, 0, 0);
+INSERT INTO `reference_loot_template` VALUES (34052, 30283, 0, 2, 1, 1, 0, 0, 0);
+INSERT INTO `reference_loot_template` VALUES (34052, 30301, 0, 1, 1, 1, 7, 165, 1);
+INSERT INTO `reference_loot_template` VALUES (34052, 30302, 0, 1, 1, 1, 7, 165, 1);
+INSERT INTO `reference_loot_template` VALUES (34052, 30303, 0, 1, 1, 1, 7, 165, 1);
+INSERT INTO `reference_loot_template` VALUES (34052, 30304, 0, 1, 1, 1, 7, 165, 1);
+INSERT INTO `reference_loot_template` VALUES (34052, 30305, 0, 2, 1, 1, 0, 0, 0);
+INSERT INTO `reference_loot_template` VALUES (34052, 30306, 0, 2, 1, 1, 0, 0, 0);
+INSERT INTO `reference_loot_template` VALUES (34052, 30307, 0, 2, 1, 1, 0, 0, 0);
+INSERT INTO `reference_loot_template` VALUES (34052, 30308, 0, 2, 1, 1, 0, 0, 0);
+INSERT INTO `reference_loot_template` VALUES (34052, 30321, 0, 1, 1, 1, 7, 164, 1);
+INSERT INTO `reference_loot_template` VALUES (34052, 30322, 0, 1, 1, 1, 7, 164, 1);
+INSERT INTO `reference_loot_template` VALUES (34052, 30323, 0, 2, 1, 1, 0, 0, 0);
+INSERT INTO `reference_loot_template` VALUES (34052, 30324, 0, 2, 1, 1, 0, 0, 0);
+
+DELETE FROM `reference_loot_template` WHERE `entry` = 34058;
+INSERT INTO `reference_loot_template` VALUES (34058, 30057, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `reference_loot_template` VALUES (34058, 30058, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `reference_loot_template` VALUES (34058, 30059, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `reference_loot_template` VALUES (34058, 30060, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `reference_loot_template` VALUES (34058, 30061, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `reference_loot_template` VALUES (34058, 30062, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `reference_loot_template` VALUES (34058, 30063, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `reference_loot_template` VALUES (34058, 30064, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `reference_loot_template` VALUES (34058, 30066, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `reference_loot_template` VALUES (34058, 30067, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `reference_loot_template` VALUES (34058, 33054, 0, 1, 1, 1, 0, 0, 0);
+INSERT INTO `reference_loot_template` VALUES (34058, 30665, 0, 1, 1, 1, 0, 0, 0);
+
+UPDATE `creature_loot_template` SET `maxcount` = 3 WHERE `entry` = 21216 AND `mincountOrRef` = -34057;
+
+UPDATE `creature_loot_template` SET `maxcount` = 3 WHERE `entry` = 21217 AND `mincountOrRef` = -34058;
+
+UPDATE `creature_loot_template` SET `maxcount` = 3 WHERE `entry` = 21213 AND `mincountOrRef` = -34061;
+
+UPDATE `creature_loot_template` SET `maxcount` = 3 WHERE `entry` = 19514 AND `mincountOrRef` = -34053;
+
+UPDATE `creature_loot_template` SET `maxcount` = 3 WHERE `entry` = 18805 AND `mincountOrRef` = -34055;
+
