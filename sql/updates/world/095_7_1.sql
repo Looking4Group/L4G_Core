@@ -1454,3 +1454,1711 @@ UPDATE `creature_loot_template` SET `maxcount` = 3 WHERE `entry` = 19514 AND `mi
 
 UPDATE `creature_loot_template` SET `maxcount` = 3 WHERE `entry` = 18805 AND `mincountOrRef` = -34055;
 
+-- https://github.com/Looking4Group/L4G_Core/issues/633
+-- =========
+-- Zul'Aman
+-- =========
+-- http://vignette4.wikia.nocookie.net/wowwiki/images/4/46/Armor.JPG
+-- https://web.archive.org/web/20100907205300/http://www.hordeguides.de/Schlachtzug/TBC/3805/ZulAman/index.htm
+
+-- ======================================================
+-- Texts & Scripts
+-- ======================================================
+
+-- -9711 - -9725
+DELETE FROM `creature_ai_texts` WHERE `entry` BETWEEN -1442 AND -1439;
+DELETE FROM `creature_ai_texts` WHERE `entry` BETWEEN -9731 AND -9730;
+INSERT INTO `creature_ai_texts` VALUES
+-- INSERT INTO `creature_ai_texts` VALUES
+-- (-1439,'I gonna make you into mojo!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Zul\'aman Trash'), -228
+-- (-1440,'Killing you be easy.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Zul\'aman Trash'), -229
+(-9730,'My weapon be thirsty!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Zul\'aman Trash'),
+(-9731,'More intruders! Sound da alarm!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Zul\'aman Trash');
+-- (-1442,'You be dead soon!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Zul\'aman Trash'); -230
+
+DELETE FROM `script_texts` WHERE `entry` BETWEEN -1568086 AND -1568067;
+DELETE FROM `script_texts` WHERE `entry` BETWEEN -1800509 AND -1800499;
+INSERT INTO `script_texts` VALUES (-1568086, 'absorbs the essence of the dragonhawk spirit!', NULL, NULL, 'absorbiert die Essenz des Drachenfalken!', NULL, NULL, NULL, NULL, NULL, 0, 2, 0, 0, 'zuljin EMOTE_DRAGONHAWK_SPIRIT');
+INSERT INTO `script_texts` VALUES (-1568085, 'absorbs the essence of the lynx spirit!', NULL, NULL, 'absorbiert die Essenz des Luchses!', NULL, NULL, NULL, NULL, NULL, 0, 2, 0, 0, 'zuljin EMOTE_LYNX_SPIRIT');
+INSERT INTO `script_texts` VALUES (-1568084, 'absorbs the essence of the eagle spirit!', NULL, NULL, 'absorbiert die Essenz des Adlers!', NULL, NULL, NULL, NULL, NULL, 0, 2, 0, 0, 'zuljin EMOTE_EAGLE_SPIRIT');
+INSERT INTO `script_texts` VALUES (-1568083, 'absorbs the essence of the bear spirit!', NULL, NULL, 'absorbiert die Essenz des Bären!', NULL, NULL, NULL, NULL, NULL, 0, 2, 0, 0, 'zuljin EMOTE_BEAR_SPIRIT');
+INSERT INTO `script_texts` VALUES (-1568082, 'In fact, It would be the best if you just stay here. You\'d only get in my way.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, 'harrison SAY_OPEN_GATE');
+INSERT INTO `script_texts` VALUES (-1568081, 'I\'ve researched this site extensively and i won\'t allow any dim-witted treasure hunters to swoop in and steal what belongs to in a museum. I\'ll lead this charge.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, 'harrison SAY_OPENING_ENTRANCE');
+INSERT INTO `script_texts` VALUES (-1568080, 'According to my calculations, if enough of us bang the gong at once the seal on these doors will break and we can enter.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, 'harrison SAY_AT_GONG');
+INSERT INTO `script_texts` VALUES (-1568079, 'Suit yourself. At least five of you must assist me if we\'re to get inside. Follow me.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, 'harrison SAY_START');
+INSERT INTO `script_texts` VALUES (-1568078, 'Watch now. Every offering gonna strengthen our ties to da spirit world. Soon, we gonna be unstoppable!', NULL, NULL, 'Seht genau hin. Unsere Verbindung zur Geisterwelt wird mit jeder Opferung stärker. Schon bald wird man uns nicht mehr aufhalten können!', NULL, NULL, NULL, NULL, NULL, 12065, 6, 0, 0, 'zulaman SAY_INST_COMPLETE');
+INSERT INTO `script_texts` VALUES (-1568077, 'Ya not do too bad. Ya efforts [...] for a small time. Come to me now. Ya prove yourself worthy offerings.', NULL, NULL, 'Nicht schlecht, aber eure Bemühungen zögern das Unvermeidliche nur hinaus. Kommt jetzt zu mir, ihr habt euch als würdige Opfer erwiesen.', NULL, NULL, NULL, NULL, NULL, 12062, 6, 0, 0, 'zulaman SAY_INST_SACRIF2');
+INSERT INTO `script_texts` VALUES (-1568076, 'Ya make a good try... but now you gonna join da ones who already fall.', NULL, NULL, 'Netter Versuch. Aber jetzt folgt ihr denen, die schon vor euch versagt haben.', NULL, NULL, NULL, NULL, NULL, 12061, 6, 0, 0, 'zulaman SAY_INST_SACRIF1');
+INSERT INTO `script_texts` VALUES (-1568075, 'Make haste, ma priests! Da rituals must not be interrupted!', NULL, NULL, 'Beeilt euch meine Priester! Nichts darf die Rituale unterbrechen.', NULL, NULL, NULL, NULL, NULL, 12060, 6, 0, 0, 'zulaman SAY_INST_WARN_4');
+INSERT INTO `script_texts` VALUES (-1568074, 'Time be running low, strangers. Soon you gonna join da souls of dem ya failed to save.', NULL, NULL, 'Euch bleibt nicht mehr viel Zeit, Fremde. Bald werdet ihr euch zu den Seelen gesellen, die ihr nicht zu retten vermochtet.', NULL, NULL, NULL, NULL, NULL, 12059, 6, 0, 0, 'zulaman SAY_INST_WARN_3');
+INSERT INTO `script_texts` VALUES (-1568073, 'Soon da cages gonna be empty, da sacrifices be complete, and you gonna take dere places.', NULL, NULL, 'Bald werden die Käfige leer und die Opfer vollbracht sein. Dann werdet ihr an ihre Stelle treten.', NULL, NULL, NULL, NULL, NULL, 12058, 6, 0, 0, 'zulaman SAY_INST_WARN_2');
+INSERT INTO `script_texts` VALUES (-1568072, 'Your efforts was in vain, trespassers. The rituals nearly be complete.', NULL, NULL, 'Ihr habt euch umsonst bemüht, Eindringlinge. Die Rituale sind fast abgeschlossen.', NULL, NULL, NULL, NULL, NULL, 12057, 6, 0, 0, 'zulaman SAY_INST_WARN_1');
+INSERT INTO `script_texts` VALUES (-1568071, 'Ya gonna fail, strangers. Many try before you, but dey only make us stronger!', NULL, NULL, 'Ihr werdet versagen, Fremde. Viele haben es vor euch versucht, aber dadurch werden wir nur noch stärker.', NULL, NULL, NULL, NULL, NULL, 12056, 6, 0, 0, 'zulaman SAY_INST_PROGRESS_3');
+INSERT INTO `script_texts` VALUES (-1568070, 'Don\'t be shy. Thousands have come before you. Ya not be alone in your service.', NULL, NULL, 'Nicht so schüchtern, vor euch waren schon tausende hier. Ihr werdet nicht allein sein.', NULL, NULL, NULL, NULL, NULL, 12055, 6, 0, 0, 'zulaman SAY_INST_PROGRESS_2');
+INSERT INTO `script_texts` VALUES (-1568069, 'Take your pick, trespassers! Any of ma priests be happy to accommodate ya.', NULL, NULL, 'Ihr habt die Wahl, Eindringlinge. Ein jeder meiner Priester wird euch mit Freuden entgegen kommen.', NULL, NULL, NULL, NULL, NULL, 12054, 6, 0, 0, 'zulaman SAY_INST_PROGRESS_1');
+INSERT INTO `script_texts` VALUES (-1568068, 'Da spirits gonna feast today! Begin da ceremonies, sacrifice da prisoners... make room for our new guests!', NULL, NULL, 'Die Geister werden sich heute gütlich tun, beginnt mit der Zeremonie. Opfert die Gefangenen, macht Platz für unsere neuen Gäste, ahahahaha..haha.', NULL, NULL, NULL, NULL, NULL, 12053, 6, 0, 0, 'zulaman SAY_INST_BEGIN');
+INSERT INTO `script_texts` VALUES (-1568067, 'Zul\'jin got a surprise for ya...', NULL, NULL, 'Seid ihr Wahnsinnig, ihr bringt uns alle noch um!', NULL, NULL, NULL, NULL, NULL, 12052, 6, 0, 0, 'zulaman SAY_INST_RELEASE');
+
+INSERT INTO `script_texts` VALUES (-1800509, 'Everybody always wanna take from us. Now we gonna start takin\' back. Anybody who get in our way...gonna drown in dey own blood! Da Amani empire be back now...seekin\' vengeance. And we gonna start wit\' you.', NULL, NULL, 'Alle wollen immer von uns nehmen. Jetzt werden wir anfangen uns etwas zurück zu holen. Wer sich uns in den Weg stellt, erseuft in seinem eigenen Blut. Das Imperium der Amani ist wieder da und sinnt nach Rache. Und mit euch werden wir anfangen!', NULL, NULL, NULL, NULL, NULL, 12090, 6, 0, 0, 'Zuljin YELL_INTRO');
+INSERT INTO `script_texts` VALUES (-1800508, 'Mebbe me fall...but da Amani empire...never gonna die...', NULL, NULL, 'Dies... ist mein Ende... aber das Imperium der Amani... wird niemals untergehen...', NULL, NULL, NULL, NULL, NULL, 12100, 6, 0, 0, 'Zuljin YELL_DEATH');
+INSERT INTO `script_texts` VALUES (-1800507, 'You too slow! Me too strong!', NULL, NULL, 'Ihr seid zu langsam! Ich zu stark!', NULL, NULL, NULL, NULL, NULL, 12097, 6, 0, 0, 'Zuljin YELL_BERSERK');
+INSERT INTO `script_texts` VALUES (-1800506, 'Nobody badduh dan me!', NULL, NULL, 'Keiner kann es mit mir aufnehmen!', NULL, NULL, NULL, NULL, NULL, 12091, 6, 0, 0, 'Zuljin YELL_AGGRO');
+INSERT INTO `script_texts` VALUES (-1800505, 'Fire kill you just as quick!', NULL, NULL, 'Das Feuer macht euch den Garaus!', NULL, NULL, NULL, NULL, NULL, 12096, 6, 0, 0, 'Zuljin YELL_FIRE_BREATH');
+INSERT INTO `script_texts` VALUES (-1800504, 'Lot more gonna fall like you!', NULL, NULL, 'Noch viele werden euer Schicksal erleiden!', NULL, NULL, NULL, NULL, NULL, 12099, 6, 0, 0, 'Zuljin YELL_KILL_TWO');
+INSERT INTO `script_texts` VALUES (-1800503, 'Da Amani de chuka!', NULL, NULL, 'Da Amani de chuka!', NULL, NULL, NULL, NULL, NULL, 12098, 6, 0, 0, 'Zuljin YELL_KILL_ONE');
+INSERT INTO `script_texts` VALUES (-1800502, 'Dere be no hidin\' from da eagle!', NULL, NULL, 'Niemand versteckt sich vor dem Adler!', NULL, NULL, NULL, NULL, NULL, 12093, 6, 0, 0, 'Zuljin YELL_TRANSFORM_TO_EAGLE');
+INSERT INTO `script_texts` VALUES (-1800501, 'Ya don\' have to look to da sky to see da dragonhawk!', NULL, NULL, 'Was starrt ihr in die Luft? Der Drachenfalke steht schon vor euch!', NULL, NULL, NULL, NULL, NULL, 12095, 6, 0, 0, 'Zuljin YELL_TRANSFORM_TO_DRAGONHAWK');
+INSERT INTO `script_texts` VALUES (-1800500, 'Got me some new tricks... like me brudda bear....', NULL, NULL, 'Sagt Hallo zu Bruder Bär!', NULL, NULL, NULL, NULL, NULL, 12092, 6, 0, 0, 'Zuljin YELL_TRANSFORM_TO_BEAR');
+INSERT INTO `script_texts` VALUES (-1800499, 'Let me introduce you to me new bruddas: fang and claw!', NULL, NULL, 'Lernt meine Brüder kennen: Reißzahn und Klaue!', NULL, NULL, NULL, NULL, NULL, 12094, 6, 0, 0, 'Zuljin YELL_TRANSFORM_TO_LYNX');
+
+UPDATE `script_texts` SET `content_loc3`='Mehr Eindringlinge! Gebt Alarm!' WHERE (`entry`='-1811003');
+UPDATE `script_texts` SET `content_loc3` = 'Der Schatten wird euch verschlingen!' WHERE `entry` = -1800493;
+UPDATE `script_texts` SET `content_loc3` = 'Eure Seele wird bluten!' WHERE `entry`  = -1800494;
+UPDATE `script_texts` SET `content_loc3` = 'Die Dunkelheit wird euch holen!' WHERE `entry` = -1800495;
+UPDATE `script_texts` SET `content_loc3` = 'Aus diesem Alptraum gibt es kein Erwachen!' WHERE `entry` = -1800496;
+UPDATE `script_texts` SET `content_loc3` = 'Das ist nicht... mein Ende...' WHERE `entry` = -1800498;
+UPDATE `script_texts` SET `content_loc3` = 'Der Schatten wird euch verschlingen!' WHERE `entry` = -1800512;
+UPDATE `script_texts` SET `content_loc3` = 'Wenn ihr mich jetzt nicht tötet, habt ihr eure letzte Chance verspielt!' WHERE `entry` = -1800513;
+UPDATE `script_texts` SET `content_loc3` = 'Ihr gehört jetzt mir!' WHERE `entry` = -1800514;
+UPDATE `script_texts` SET `content_loc3` = 'Das wird nichts ändern.' WHERE `entry` = -1800515;
+UPDATE `script_texts` SET `content_loc3` = 'Euer Tot wird noch grausamer.' WHERE `entry` = -1800516;
+UPDATE `script_texts` SET `content_loc3` = 'Das lässt mich kalt.' WHERE `entry` = -1800517;
+
+DELETE FROM `waypoint_scripts` WHERE `id` IN (220,221,222,225,8930801,8930301,8931301,8931201,8927801);		
+DELETE FROM `waypoint_scripts` WHERE `id` BETWEEN 401 AND 420;		
+DELETE FROM `waypoint_scripts` WHERE `id` BETWEEN 501 AND 520;		
+INSERT INTO `waypoint_scripts` VALUES 		
+(220, 0, 22, 0, 0, 0, 0, 0, 0, 0, 220, 'Creature - Visibilty OFF'),		
+(221, 0, 22, 1, 0, 0, 0, 0, 0, 0, 221, 'Creature - Visibilty ON'),		
+(222, 0, 22, 2, 0, 0, 0, 0, 0, 0, 222, 'Creature - Visibilty Group Stealth'),		
+(225, 0, 22, 5, 0, 0, 0, 0, 0, 0, 225, 'Creature - Visibilty Respawn'),		
+		
+(401, 0, 4, 46, 1, 0, 0, 0, 0, 0, 401, 'Creature - Add UNIT_FLAG_UNKNOWN7'),		
+(402, 0, 4, 46, 2, 0, 0, 0, 0, 0, 402, 'Creature - Add UNIT_FLAG_NON_ATTACKABLE'),		
+(403, 0, 4, 46, 4, 0, 0, 0, 0, 0, 403, 'Creature - Add UNIT_FLAG_DISABLE_MOVE'),		
+(404, 0, 4, 46, 8, 0, 0, 0, 0, 0, 404, 'Creature - Add UNIT_FLAG_PVP_ATTACKABLE'),		
+(405, 0, 4, 46, 16, 0, 0, 0, 0, 0, 405, 'Creature - Add UNIT_FLAG_RENAME'),		
+(406, 0, 4, 46, 32, 0, 0, 0, 0, 0, 406, 'Creature - Add UNIT_FLAG_RESTING'),		
+(407, 0, 4, 46, 64, 0, 0, 0, 0, 0, 407, 'Creature - Add UNIT_FLAG_UNKNOWN9'),		
+(408, 0, 4, 46, 128, 0, 0, 0, 0, 0, 408, 'Creature - Add UNIT_FLAG_NOT_ATTACKABLE_1'),		
+(409, 0, 4, 46, 256, 0, 0, 0, 0, 0, 409, 'Creature - Add UNIT_FLAG_NOT_ATTACKABLE_2'),		
+(410, 0, 4, 46, 512, 0, 0, 0, 0, 0, 410, 'Creature - Add UNIT_FLAG_PASSIVE'),		
+(411, 0, 4, 46, 1024, 0, 0, 0, 0, 0, 411, 'Creature - Add UNIT_FLAG_LOOTING'),		
+(412, 0, 4, 46, 2048, 0, 0, 0, 0, 0, 412, 'Creature - Add UNIT_FLAG_PET_IN_COMBAT'),		
+(413, 0, 4, 46, 4096, 0, 0, 0, 0, 0, 413, 'Creature - Add UNIT_FLAG_PVP'),		
+(414, 0, 4, 46, 8192, 0, 0, 0, 0, 0, 414, 'Creature - Add UNIT_FLAG_SILENCED'),		
+(415, 0, 4, 46, 16384, 0, 0, 0, 0, 0, 415, 'Creature - Add UNIT_FLAG_UNKNOWN4'),		
+(416, 0, 4, 46, 32768, 0, 0, 0, 0, 0, 416, 'Creature - Add UNIT_FLAG_UNKNOWN13'),		
+(417, 0, 4, 46, 65536, 0, 0, 0, 0, 0, 417, 'Creature - Add UNIT_FLAG_NOT_PL_SPELL_TARGET'),		
+(418, 0, 4, 46, 131072, 0, 0, 0, 0, 0, 418, 'Creature - Add UNIT_FLAG_PACIFIED'),		
+			
+(501, 0, 5, 46, 1, 0, 0, 0, 0, 0, 501, 'Creature - Remove UNIT_FLAG_UNKNOWN7'),		
+(502, 0, 5, 46, 2, 0, 0, 0, 0, 0, 502, 'Creature - Remove UNIT_FLAG_NON_ATTACKABLE'),		
+(503, 0, 5, 46, 4, 0, 0, 0, 0, 0, 503, 'Creature - Remove UNIT_FLAG_DISABLE_MOVE'),		
+(504, 0, 5, 46, 8, 0, 0, 0, 0, 0, 504, 'Creature - Remove UNIT_FLAG_PVP_ATTACKABLE'),		
+(505, 0, 5, 46, 16, 0, 0, 0, 0, 0, 505, 'Creature - Remove UNIT_FLAG_RENAME'),		
+(506, 0, 5, 46, 32, 0, 0, 0, 0, 0, 506, 'Creature - Remove UNIT_FLAG_RESTING'),		
+(507, 0, 5, 46, 64, 0, 0, 0, 0, 0, 507, 'Creature - Remove UNIT_FLAG_UNKNOWN9'),		
+(508, 0, 5, 46, 128, 0, 0, 0, 0, 0, 508, 'Creature - Remove UNIT_FLAG_NOT_ATTACKABLE_1'),		
+(509, 0, 5, 46, 256, 0, 0, 0, 0, 0, 509, 'Creature - Remove UNIT_FLAG_NOT_ATTACKABLE_2'),		
+(510, 0, 5, 46, 512, 0, 0, 0, 0, 0, 510, 'Creature - Remove UNIT_FLAG_PASSIVE'),		
+(511, 0, 5, 46, 1024, 0, 0, 0, 0, 0, 511, 'Creature - Remove UNIT_FLAG_LOOTING'),		
+(512, 0, 5, 46, 2048, 0, 0, 0, 0, 0, 512, 'Creature - Remove UNIT_FLAG_PET_IN_COMBAT'),		
+(513, 0, 5, 46, 4096, 0, 0, 0, 0, 0, 513, 'Creature - Remove UNIT_FLAG_PVP'),		
+(514, 0, 5, 46, 8192, 0, 0, 0, 0, 0, 514, 'Creature - Remove UNIT_FLAG_SILENCED'),		
+(515, 0, 5, 46, 16384, 0, 0, 0, 0, 0, 515, 'Creature - Remove UNIT_FLAG_UNKNOWN4'),		
+(516, 0, 5, 46, 32768, 0, 0, 0, 0, 0, 516, 'Creature - Remove UNIT_FLAG_UNKNOWN13'),		
+(517, 0, 5, 46, 65536, 0, 0, 0, 0, 0, 517, 'Creature - Remove UNIT_FLAG_NOT_PL_SPELL_TARGET'),		
+(518, 0, 5, 46, 131072, 0, 0, 0, 0, 0, 518, 'Creature - Remove UNIT_FLAG_PACIFIED');	
+			
+-- (8930801, 0, 6, 568, 1, 0, -181.2782, 1273.0632, 1.6089, 3.0394, 8930801, 'Teleport 89308'),
+-- (8930301, 0, 6, 568, 1, 0, -171.8750, 1213.3399, 0.1278, 0.7295, 8930301, 'Teleport 89303'),
+-- (8931301, 0, 6, 568, 1, 0, -163.5030, 1193.4367, 0.7938, 0.4123, 8931301, 'Teleport 89313');
+-- (8931201, 0, 6, 568, 1, 0, -114.6728, 1156.1302, 0.0009, 3.5556, 8931201, 'Teleport 89312');
+-- (8927801, 0, 6, 568, 1, 0, -212.178, 1161.06, -1.58448, 1.10716, 8927801, 'Teleport 89278');
+
+-- ======================================================
+-- Spawns
+-- ======================================================
+
+DELETE FROM `creature` WHERE `guid` IN (99685,99686,89291,16777029,16777030,16777031,16777032,16777033,86225,89119,89295,89296,89297,86194,86914,89272,89275,16777016,16777017,16777018,16777019,16777020,16777021,16777022,16777023,16777024,89280,89281,89282,89283,89273,89281,89282,89267,89266,16777015,99439,16777025,99689,99693,89224,89287,89288,89289,89290,89286,89288,99687,16800636,16777028,99438,16777027,99437,16777026,99436,5735903,86609,89250,89157,17636,20196,31753,31756,31834,33301,1354945,86177,86210,86479,86609,89207,89223,89244,89274,89278,89280,89293,89303,89312,89313,89329,16777193);
+INSERT INTO `creature` VALUES
+(17636, 24138, 568, 1, 0, 0, 273.399, 1054.89, 0.000612732, 5.66519, 7200, 0, 0, 40000, 0, 0, 0),
+(20196, 24138, 568, 1, 0, 0, 275.893, 1058.4, 0.00207663, 5.66519, 7200, 0, 0, 40000, 0, 0, 0),
+-- Reuseable
+-- INSERT INTO `creature` VALUES (28406, 24043, 568, 1, 0, 0, 425.254, 915.918, 1.42904, 4.27095, 7200, 10, 0, 53000, 0, 0, 1); -- too much cat
+-- INSERT INTO `creature` VALUES (29104, 24043, 568, 1, 0, 0, 444.624, 919.356, 0.000968, 4.37934, 7200, 10, 0, 53000, 0, 0, 1); -- too much cat
+-- INSERT INTO `creature` VALUES (29105, 24043, 568, 1, 0, 0, 444.713, 893.398, 0.424363, 3.86255, 7200, 10, 0, 53000, 0, 0, 1); -- too much cat
+-- INSERT INTO `creature` VALUES (29107, 24043, 568, 1, 0, 0, 452.123, 896.927, 0.470437, 3.24056, 7200, 10, 0, 53000, 0, 0, 1); -- too much cat
+-- INSERT INTO `creature` VALUES (29108, 24043, 568, 1, 0, 0, 436.483, 980.415, 0.0000249752, 5.43102, 7200, 10, 0, 53000, 0, 0, 1); -- too much cat
+-- INSERT INTO `creature` VALUES (29109, 24043, 568, 1, 0, 0, 454.153, 1002.42, 1.26073, 4.1948, 7200, 10, 0, 53000, 0, 0, 1); -- too much cat
+-- INSERT INTO `creature` VALUES (29441, 24043, 568, 1, 0, 0, 441.019, 993.681, 0.000042755, 5.43966, 7200, 10, 0, 53000, 0, 0, 1); -- too much cat
+-- INSERT INTO `creature` VALUES (29846, 24043, 568, 1, 0, 0, 450.493, 980.478, 0.0602788, 4.5231, 7200, 10, 0, 53000, 0, 0, 1); -- too much cat
+(31753, 24043, 568, 1, 0, 0, 396.0724, 868.7962, 0.7103, 5.95802, 7200, 10, 0, 53000, 0, 0, 1),
+(31756, 24043, 568, 1, 0, 0, 397.144, 897.193, 0.0827273, 3.57592, 7200, 10, 0, 53000, 0, 0, 1),
+(31834, 24043, 568, 1, 0, 0, 379.562, 879.276, -0.041181, 1.02023, 7200, 10, 0, 53000, 0, 0, 1),
+(33301, 24043, 568, 1, 0, 0, 398.69, 883.048, 0.000125858, 2.60674, 7200, 10, 0, 53000, 0, 0, 1),
+(86177, 24375, 568, 1, 0, 0, 120.687, 1674, 42.0217, 1.59044, 7200, 0, 0, 26000, 0, 0, 0),
+(86194, 23597, 568, 1, 0, 0, 138.816, 1587.09, 43.6489, 4.74729, 7200, 0, 0, 86000, 0, 0, 0),
+(86210, 24179, 568, 1, 0, 0, 111.692, 1417.37, -2.47524, 3.02313, 7200, 0, 0, 57000, 32310, 0, 0),
+(86225, 23746, 568, 1, 19595, 0, 120.857, 1605.62, 43.5857, 4.13643, 7200, 5, 0, 1, 0, 0, 1),
+(86479, 24325, 568, 1, 0, 0, 192.938, 1422.35, 15.7245, 5.91667, 300, 0, 0, 1, 0, 0, 0),
+(86609, 23576, 568, 1, 0, 0, 16.9616, 1414.6, 11.9265, 6.23082, 6048000, 0, 0, 1700000, 0, 0, 0),
+(86914, 23597, 568, 1, 0, 0, 101.955, 1588.22, 43.6776, 4.93928, 7200, 0, 0, 86000, 0, 0, 0),
+(89157, 24065, 568, 1, 0, 0, 277.8444, 1054.3112, 0.0000, 5.6494, 7200, 5, 0, 86000, 0, 0, 2),
+(89119, 23746, 568, 1, 19595, 0, 424.028, 1092.51, 6.35764, 0.0274122, 7200, 0, 0, 1, 0, 0, 0),
+(89207, 24065, 568, 1, 0, 0, 221.267, 1067.83, 0.375, 1.69092, 7200, 5, 0, 86000, 0, 0, 1),
+(89223, 23774, 568, 1, 0, 0, -213.016, 1159.9, -1.69267, 0.785406, 7200, 5, 0, 100000, 0, 0, 1), -- movement?
+(89224, 22515, 568, 1, 0, 0, -166.024, 1191.63, 0.925669, 2.80998, 7200, 0, 0, 881, 0, 0, 0),
+(89244, 23586, 568, 1, 0, 0, -198.805, 1227.37, 1.09097, 1.32645, 7200, 0, 0, 12000, 0, 0, 0),
+(89250, 22515, 568, 1, 0, 0, -127.3625, 1168.0448, 0.6862, 5.8765, 7200, 0, 0, 881, 0, 0, 0),
+(89272, 14881, 568, 1, 2536, 0, 91.6916, 1725.1, 42.0215, 2.8154, 7200, 5, 0, 8, 0, 0, 1),
+(89273, 23746, 568, 1, 19595, 0, 344.2582, 1084.6541, 7.72835, 6.2753, 7200, 0, 0, 1, 0, 0, 0), 
+(89274, 23746, 568, 1, 19595, 0, 316.036, 1083.1, 9.97774, 0.222981, 7200, 0, 0, 1, 0, 0, 0),  
+(89275, 23746, 568, 1, 0, 0, 423.573, 1142.57, 5.51217, 3.24004, 7200, 0, 0, 1, 0, 0, 0),
+(89278, 23586, 568, 1, 0, 0, -212.178, 1161.06, -1.58448, 1.10716, 7200, 0, 0, 12000, 0, 0, 2), -- confirmed moving in video
+(89286, 23586, 568, 1, 0, 0, -219.0938, 1380.5607, -0.0554, 1.1772, 7200, 0, 0, 12000, 0, 0, 0),
+(89291, 23746, 568, 1, 0, 0, 417.317, 1150.98, 5.26049, 4.8325, 7200, 0, 0, 1, 0, 0, 0),
+(89293, 23834, 568, 1, 0, 0, -96.6350, 1116.5039, 5.5939, 0.8997, 1500, 0, 0, 12000, 0, 0, 0),
+(89295, 23597, 568, 1, 0, 0, 396.7467, 1046.6815, 9.5216, 6.2792, 1500, 0, 0, 86000, 0, 0, 0), 
+(89296, 24065, 568, 1, 0, 0, 401.9991, 1051.1831, 9.5216, 4.6849, 1500, 0, 0, 86000, 0, 0, 0), 
+(89297, 23597, 568, 1, 0, 0, 405.0610, 1046.5765, 9.5202, 3.1534, 1500, 0, 0, 86000, 0, 0, 0),
+(89303, 23586, 568, 1, 0, 0, -171.875, 1213.34, 0.127825, 3.7951, 7200, 0, 0, 12000, 0, 0, 0), -- confirmed
+-- (89305, 23587, 568, 1, 0, 0, -158.279, 1213.58, 0.682461, 1.71346, 7200, 0, 0, 82950, 0, 0, 0); -- jan
+-- (89306, 23587, 568, 1, 0, 0, -161.563, 1212.92, 0.193758, 1.81578, 7200, 5, 0, 82950, 0, 0, 1); -- jan
+-- (89307, 23587, 568, 1, 0, 0, -161.297, 1190, 1.009, 2.80998, 7200, 0, 0, 82950, 0, 0, 0); -- jan
+-- (89309, 23587, 568, 1, 0, 0, -164.396, 1196.36, 1.009, 2.80998, 7200, 0, 0, 82950, 0, 0, 0); -- jan
+-- (89310, 23581, 568, 1, 0, 0, 132.874, 1410.11, -4.91132, 0.345519, 7200, 5, 0, 66000, 31550, 0, 1); -- akil
+-- (89311, 24179, 568, 1, 0, 0, 115.513, 1404.04, -7.85024, 1.6843, 7200, 0, 0, 57000, 32310, 0, 0); -- akil
+(89312, 23586, 568, 1, 0, 0, -107.676, 1154.55, 0.083333, 3.94444, 7200, 0, 0, 12000, 0, 0, 0),
+(89313, 23586, 568, 1, 0, 0, -167.522, 1194.68, 0.642452, 5.3058, 7200, 0, 0, 12000, 0, 0, 0),
+-- (89326, 24059, 568, 1, 22301, 0, 81.1417, 1147.26, 0.197549, 3.02961, 7200, 5, 0, 86000, 0, 0, 1); -- hala
+-- (89327, 23596, 568, 1, 22307, 0, 81.7096, 1144.18, 0.197549, 3.3227, 7200, 0, 0, 69000, 6462, 0, 0); -- hala
+-- (89329, 23586, 568, 1, 0, 0, -117.331, 1121.12, 0.0878, 2.26893, 7200, 0, 0, 12000, 0, 0, 0),
+-- (XXXXX, 23877, 568, 1, 0, 0, 149.657, 705.75, 45.1948, 3.10669, 604800, 0, 0, 5312, 0, 0, 0); -- static spawn zuljin god 99439
+-- (99440, 23878, 568, 1, 0, 0, 134.6, 724.341, 45.1947, 4.06662, 604800, 0, 0, 5312, 0, 0, 0); -- static spawn zuljin god
+-- (99441, 23879, 568, 1, 0, 0, 91.133, 705.753, 45.1947, 0.0174533, 604800, 0, 0, 13000, 0, 0, 0); -- static spawn zuljin god
+-- (99442, 23880, 568, 1, 0, 0, 105.526, 724.926, 45.1947, 5.35816, 604800, 0, 0, 5312, 0, 0, 0); -- static spawn zuljin god
+(99685, 24064, 568, 1, 0, 0, 187.3542, 1182.2142, 3.9117, 1.3901, 7200, 5, 0, 29000, 0, 0, 1),
+(99686, 24064, 568, 1, 0, 0, 178.8993, 1177.3803, 0.1803, 1.4372, 7200, 5, 0, 29000, 0, 0, 1),
+(99687, 75432, 568, 1, 0, 0, 120.407, 884.102, 33.4115, 1.56701, 300, 0, 0, 1, 0, 0, 0),
+-- (99689, 24043, 568, 1, 0, 0, 440.257, 908.198, 0.000133, 4.06911, 7200, 0, 0, 53000, 0, 0, 0),
+(99693, 23596, 568, 1, 0, 0, 403.8968, 1093.0825, 6.7059, 3.1537, 1500, 0, 0, 69000, 0, 0, 0);
+
+DELETE FROM `creature` WHERE `id` = 24047;
+INSERT INTO `creature` VALUES (86207, 24047, 568, 1, 0, 0, 334.262, 978.604, -2.50742, 5.63074, 7200, 5, 0, 28561, 0, 0, 1);
+INSERT INTO `creature` VALUES (86208, 24047, 568, 1, 0, 0, 317.741, 989.672, -5.39434, 2.02388, 7200, 5, 0, 28561, 0, 0, 1);
+INSERT INTO `creature` VALUES (89204, 24047, 568, 1, 0, 0, 284.695, 1033.79, -3.70402, 0.800363, 7200, 5, 0, 28561, 0, 0, 1);
+INSERT INTO `creature` VALUES (89205, 24047, 568, 1, 0, 0, 298.851, 1023.65, -1.39662, 5.41663, 7200, 5, 0, 28561, 0, 0, 1);
+INSERT INTO `creature` VALUES (89206, 24047, 568, 1, 0, 0, 303.241, 1008.27, -3.27641, 1.64086, 7200, 5, 0, 28561, 0, 0, 1);
+INSERT INTO `creature` VALUES (220871, 24047, 568, 1, 0, 0, 364.813, 874.984, -3.22653, 5.57733, 7200, 5, 0, 28561, 0, 0, 1);
+INSERT INTO `creature` VALUES (220870, 24047, 568, 1, 0, 0, 338.201, 957.958, -2.70258, 1.96847, 7200, 5, 0, 28561, 0, 0, 1);
+INSERT INTO `creature` VALUES (220869, 24047, 568, 1, 0, 0, 355.643, 923.712, -2.52614, 3.14159, 7200, 5, 0, 28561, 0, 0, 1);
+INSERT INTO `creature` VALUES (220868, 24047, 568, 1, 0, 0, 361.195, 899.191, -2.56194, 1.85005, 7200, 5, 0, 28561, 0, 0, 1);
+INSERT INTO `creature` VALUES (220867, 24047, 568, 1, 0, 0, 280.868, 889.955, -0.348142, 1.97222, 7200, 5, 0, 28561, 0, 0, 1);
+INSERT INTO `creature` VALUES (220866, 24047, 568, 1, 0, 0, 281.395, 902.082, 0.469923, 5.84685, 7200, 5, 0, 28561, 0, 0, 1);
+INSERT INTO `creature` VALUES (220865, 24047, 568, 1, 0, 0, 272.592, 875.328, -1.3365, 5.2709, 7200, 5, 0, 28561, 0, 0, 1);
+INSERT INTO `creature` VALUES (220864, 24047, 568, 1, 0, 0, 289.2145, 870.0304, -1.7992, 2.56563, 7200, 5, 0, 28561, 0, 0, 1);
+
+-- ==========
+-- ReGUID
+-- ==========
+
+-- Gauntlet
+-- INSERT INTO `creature` VALUES (89266, 24217, 568, 1, 0, 0, -92.281, 1418.93, 27.3781, 3.10991, 7200, 0, 0, 42000, 0, 0, 0); -- nalo
+INSERT INTO `creature` VALUES (89266, 24175, 568, 1, 0, 0, 208.943, 1466.58, 25.9168, 3.83307, 10800, 0, 0, 14000, 0, 0, 0);
+-- INSERT INTO `creature` VALUES (89267, 24217, 568, 1, 0, 0, -88.112, 1419.37, 27.3781, 2.53874, 7200, 0, 0, 42000, 0, 0, 0); -- nalo
+INSERT INTO `creature` VALUES (89267, 24549, 568, 1, 0, 0, 302.33, 1385.29, 57.4664, 3.5178, 1500, 0, 0, 140000, 0, 0, 0);
+-- (89280, 23586, 568, 1, 0, 0, -197.946, 1325.93, 1.25821, 1.76407, 7200, 5, 0, 12000, 0, 0, 1),
+INSERT INTO `creature` VALUES (89280, 24180, 568, 1, 0, 0, 224.54, 1427.66, 28.7058, 1.6481, 1500, 0, 0, 71000, 0, 0, 0);
+-- INSERT INTO `creature` VALUES (89281, 1412, 568, 1, 134, 0, -229.353, 1425.05, 0.94149, 0.488692, 7200, 0, 0, 8, 0, 0, 0); -- jan
+INSERT INTO `creature` VALUES (89281, 24180, 568, 1, 0, 0, 224.08, 1389.13, 41.9104, 1.65987, 1500, 0, 0, 71000, 0, 0, 0);
+-- (89282, 23587, 568, 1, 0, 0, -182.005, 1346.86, 0.629187, 5.46288, 7200, 0, 0, 82950, 0, 0, 0),
+INSERT INTO `creature` VALUES (89282, 24180, 568, 1, 0, 0, 246.103, 1368.09, 49.1573, 2.8309, 1500, 0, 0, 71000, 0, 0, 0);
+-- (89283, 23586, 568, 1, 0, 0, -219.0938, 1380.5607, -0.0554, 1.1772, 7200, 0, 0, 12000, 0, 0, 0),
+INSERT INTO `creature` VALUES (89283, 24180, 568, 1, 0, 0, 285.208, 1374.22, 49.3217, 3.40582, 1500, 0, 0, 71000, 0, 0, 0);
+-- INSERT INTO `creature` VALUES (89287, 23586, 568, 1, 0, 2172, -196.992, 1226.94, 0.808015, 1.82899, 10800, 5, 0, 12000, 0, 0, 1); -- jan
+INSERT INTO `creature` VALUES (89287, 24179, 568, 1, 0, 2179, 282.614, 1383.56, 49.3217, 3.40079, 1500, 0, 0, 57000, 32310, 0, 0);
+-- INSERT INTO `creature` VALUES (89288, 23586, 568, 1, 22983, 0, -170.374, 1239.39, 1.66798, 2.73909, 7200, 5, 0, 12000, 0, 1);
+INSERT INTO `creature` VALUES (89288, 24179, 568, 1, 0, 2179, 248.805, 1377.08, 49.3205, 2.85415, 1500, 0, 0, 57000, 32310, 0, 0);
+-- INSERT INTO `creature` VALUES (89289, 23586, 568, 1, 0, 0, -212.178, 1161.06, -1.58448, 1.10716, 7200, 5, 0, 12000, 0, 0, 1); -- jan
+INSERT INTO `creature` VALUES (89289, 24179, 568, 1, 0, 2179, 232.734, 1388.62, 42.659, 1.55509, 1500, 0, 0, 57000, 32310, 0, 0);
+-- INSERT INTO `creature` VALUES (89290, 23587, 568, 1, 0, 0, -114.15, 1164.14, 0.738333, 3.56047, 7200, 0, 0, 82950, 0, 0, 0); -- jan
+INSERT INTO `creature` VALUES (89290, 24179, 568, 1, 0, 2179, 232.856, 1427.8, 29.0465, 1.57787, 1500, 0, 0, 57000, 32310, 0, 0);
+-- Cage NPCs
+INSERT INTO `creature` VALUES (99436, 23999, 568, 1, 0, 0, 406.663, 1504.73, 81.6148, 4.24865, 604800, 0, 0, 11000, 0, 0, 0); -- cage npc
+-- (99436, 23999, 568, 1, 0, 0, 296.225, 1468.35, 81.5893, 5.37561, 604800, 0, 0, 11000, 0, 0, 0); Save
+-- INSERT INTO `creature` VALUES (16777026, 23999, 568, 1, 0, 0, 406.663, 1504.73, 81.6148, 4.24865, 604800, 0, 0, 4890, 0, 0, 0);
+INSERT INTO `creature` VALUES (99437, 24001, 568, 1, 0, 0, 400.589, 1146.05, 6.34083, 4.94645, 604800, 0, 0, 3260, 0, 0, 0); -- cage npc
+-- (99437, 24001, 568, 1, 0, 0, 383.776, 1082.97, 6.04766, 1.58825, 604800, 0, 0, 3260, 0, 0, 0); Save
+-- INSERT INTO `creature` VALUES (16777027, 24001, 568, 1, 0, 0, 400.589, 1146.05, 6.34083, 4.94645, 237000, 0, 0, 3260, 0, 0, 0);
+INSERT INTO `creature` VALUES (99438, 24024, 568, 1, 0, 0, -72.8802, 1176.6, 5.26225, 1.83072, 604800, 0, 0, 5624, 0, 0, 0); -- cage npc
+-- (99438, 24024, 568, 1, 0, 0, -73.8207, 1164.74, 5.28789, 4.59022, 604800, 0, 0, 5624, 0, 0, 0); Save
+-- INSERT INTO `creature` VALUES (16777028, 24024, 568, 1, 0, 0, -72.8802, 1176.6, 5.26225, 1.83072, 237000, 0, 0, 5624, 0, 0, 0);
+INSERT INTO `creature` VALUES (99439, 23790, 568, 1, 0, 0, -145.762, 1335.76, 48.174, 6.17758, 237000, 0, 0, 4890, 0, 0, 0); -- 89157
+-- left
+-- INSERT INTO `creature` VALUES (16800636, 75432, 568, 1, 0, 0, 120.407, 884.102, 33.4115, 1.56701, 300, 0, 0, 1, 0, 0, 0);
+
+-- ======================================================
+-- NPC Research
+-- ======================================================
+
+-- World Trigger (Not Immune PC) 21252
+UPDATE `creature_template` SET `InhabitType` = 7 WHERE `entry` = 21252;
+
+-- World Trigger 22515
+UPDATE `creature` SET `modelid` = 16925, `spawntimesecs` = 7200, `spawndist` = 0, `MovementType` = 0 WHERE `id` = 22515;
+UPDATE `creature` SET `spawnmask` = 0 WHERE `guid` IN (89224,89247,86907,89164,89188);
+
+-- Amani'shi Axe Thrower 23542
+-- axe volley about 2000-3500 on cloth roughly 1400 physical damage to cloth.
+-- http://wowwiki.wikia.com/wiki/Amani%27shi_Axe_Thrower?oldid=1530733
+-- http://www.wowhead.com/npc=23542/amanishi-axe-thrower#comments
+UPDATE `creature` SET `modelid` = 0, `spawntimesecs` = 1500 WHERE `id` = 23542;
+UPDATE `creature_template` SET `armor` = 6800, `speed` = 1.48, `mindmg` = 1400, `maxdmg` = 1800, `minrangedmg` = 1000, `maxrangedmg` = 2000 WHERE `entry` = 23542; -- 3200 1.15 -- 3,950 - 5,050
+DELETE FROM `creature_template_addon` WHERE `entry` = 23542;
+INSERT INTO `creature_template_addon` VALUES (23542,0,0,16777472,0,4097,0,0,'');
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 23542;
+INSERT INTO `creature_ai_scripts` VALUES (2354201, 23542, 9, 0, 100, 3, 0, 5, 12000, 12000, 11, 31566, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Axe Thrower - Cast Raptor Strike');
+INSERT INTO `creature_ai_scripts` VALUES (2354202, 23542, 0, 0, 100, 3, 0, 0, 7400, 7400, 11, 35011, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Axe Thrower - Cast Knockdown');
+INSERT INTO `creature_ai_scripts` VALUES (2354203, 23542, 0, 0, 100, 3, 5000, 15000, 27000, 60000, 11, 42359, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Axe Thrower - Cast Axe Volley');
+INSERT INTO `creature_ai_scripts` VALUES (2354204, 23542, 0, 0, 100, 3, 1000, 4000, 10000, 18000, 11, 42332, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Axe Thrower - Cast Throw Axe');
+
+-- Amani'shi Warbringer 23580
+-- http://www.wowhead.com/npc=23580/amanishi-warbringer#comments
+-- http://wowwiki.wikia.com/wiki/Amani%27shi_Warbringer
+UPDATE `creature` SET `modelid` = 0, `equipment_id` = 0, `spawntimesecs` = 1500 WHERE `id` = 23580;
+UPDATE `creature_template` SET `armor` = '6200',`speed` = '1.48',`mindmg` = '5833',`maxdmg` = '6167',`mechanic_immune_mask` = '646002547',`flags_extra` = '1073741824' WHERE `entry` = 23580; -- 4850 1,15 8000 10000 -- 4055 8109 -- 5833 6167-- 35000 37000
+DELETE FROM `creature_template_addon` WHERE `entry` = 23580;
+INSERT INTO `creature_template_addon` VALUES (23580,0,22467,16777472,0,4097,0,0,''); -- mount 22467
+UPDATE `creature_equip_template` SET `equipinfo1` = 218169346, `equipinfo2` = 218169346, `equipslot1` = 3, `equipslot2` = 3 WHERE `entry` = 2169; -- 4278190082 269
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 23580;
+INSERT INTO `creature_ai_scripts` VALUES (2358001, 23580, 4, 0, 100, 2, 0, 0, 0, 0, 11, 42459, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Warbringer - Cast Dual Wield on Aggro');
+INSERT INTO `creature_ai_scripts` VALUES (2358002, 23580, 2, 0, 100, 2, 33, 11, 0, 0, 11, 43274, 0, 0, 17, 154, 0, 0, 19, 134217728, 0, 0, 'Amani\'shi Warbringer - Summon Bear + Dismount Warbringer');
+INSERT INTO `creature_ai_scripts` VALUES (2358003, 23580, 0, 0, 100, 3, 3000, 6000, 12000, 12000, 11, 43273, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Warbringer - Cast Cleave');
+INSERT INTO `creature_ai_scripts` VALUES (2358004, 23580, 0, 0, 100, 3, 5000, 5000, 20000, 20000, 11, 42496, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Warbringer - Cast Furious Roar');
+INSERT INTO `creature_ai_scripts` VALUES (2358005, 23580, 2, 0, 100, 2, 30, 0, 0, 0, 11, 40743, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Warbringer - Cast Enrage at 30% HP');
+INSERT INTO `creature_ai_scripts` VALUES (2358006, 23580, 2, 0, 100, 2, 5, 0, 0, 0, 18, 134217728, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Warbringer - Set UNIT_FLAG_MOUNT');
+INSERT INTO `creature_ai_scripts` VALUES (2358007, 23580, 1, 0, 100, 2, 10000, 10000, 0, 0, 17, 154, 22467, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Warbringer - Mount OOC');
+-- INSERT INTO `creature_ai_scripts` VALUES (2358008, 23580, 11, 0, 100, 2, 0, 0, 0, 0, 18, 134217728, 0, 0, 17, 154, 22467, 0, 0, 0, 0, 0, 'Amani\'shi Warbringer - Mount on Spawn');
+INSERT INTO `creature_ai_scripts` VALUES (2358009, 23580, 7, 0, 100, 2, 0, 0, 0, 0, 43, 22467, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Warbringer - Mount on Reaching Spawnpoint');
+
+-- Amani'shi Medicine Man 23581
+-- http://wowwiki.wikia.com/wiki/Amani%27shi_Medicine_Man?direction=next&oldid=1329728
+-- http://www.wowhead.com/npc=23581/amanishi-medicine-man#comments
+UPDATE `creature` SET `modelid` = 0, `equipment_id` = 0, `spawntimesecs` = 1500 WHERE `id` = 23581;
+UPDATE `creature_template` SET `minhealth` = 67000, `armor` = 5950, `speed` = 1.48, `mindmg` = 3125, `maxdmg` = 4375, `flags_extra` = 4194304 WHERE `entry` = 23581; -- 66000 3887 1.15 625 3125 0 -- 6,250 - 8,750
+DELETE FROM `creature_template_addon` WHERE `entry` = 23581;
+INSERT INTO `creature_template_addon` VALUES (23581,0,0,512,0,4097,0,0,'');
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 23581;
+INSERT INTO `creature_ai_scripts` VALUES (2358101, 23581, 14, 0, 100, 3, 5000, 40, 8000, 16000, 11, 42477, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Medicine Man - Cast Chain Heal');
+INSERT INTO `creature_ai_scripts` VALUES (2358102, 23581, 0, 0, 100, 3, 6000, 15000, 10000, 30000, 11, 42478, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Medicine Man - Cast Protective Ward');
+INSERT INTO `creature_ai_scripts` VALUES (2358103, 23581, 0, 0, 100, 3, 3000, 15000, 10000, 30000, 11, 42376, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Medicine Man - Cast Powerful Healing Ward');
+INSERT INTO `creature_ai_scripts` VALUES (2358104, 23581, 9, 0, 66, 3, 0, 40, 8000, 16000, 11, 45075, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Medicine Man - Cast Lightning Bolt');
+
+-- Amani Protective Ward 23822
+-- Creates an immunity shield on nearby friendlies spell1 42480
+UPDATE `creature_template` SET `minlevel` = '71',`minhealth` = '2250',`maxhealth` = '2328' WHERE `entry` = 23822;
+
+-- Amani Healing Ward 23757
+-- Periodically casts Healing Aura to heal(835/tick) nearby friendlies 42375
+UPDATE `creature_template` SET `minlevel` = '71',`minhealth` = '2250',`maxhealth` = '2328', `flags_extra` = 64 WHERE `entry` = 23757;
+
+-- Amani'shi Tribesman 23582
+-- http://wowwiki.wikia.com/wiki/Amani%27shi_Tribesman
+-- http://www.wowhead.com/npc=23582/amanishi-tribesman#comments
+-- dual wield?
+UPDATE `creature` SET `modelid` = 0, `spawntimesecs` = 1500 WHERE `id` = 23582;
+UPDATE `creature_template` SET `armor` = '6800',`speed` = '1.48',`mindmg` = '5000',`maxdmg` = '6000',`dynamicflags` = '0'  WHERE `entry` = 23582; -- 4212 1.15 2187.5 4687.5 -- 12,500 - 15,000
+DELETE FROM `creature_template_addon` WHERE `entry` = 23582;
+INSERT INTO `creature_template_addon` VALUES (23582,0,0,16777472,0,4097,0,0,'');
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 23582;
+INSERT INTO `creature_ai_scripts` VALUES (2358201, 23582, 9, 0, 70, 3, 0, 6, 10000, 16000, 11, 42495, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Tribesman - Cast Cyclone Strike');
+INSERT INTO `creature_ai_scripts` VALUES (2358202, 23582, 13, 0, 100, 3, 9000, 12000, 0, 0, 11, 36033, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Tribesman - Cast Kick on Target Spell Cast');
+
+-- Amani Bear 23584
+-- http://wowwiki.wikia.com/wiki/Amani_Bear
+-- http://www.wowhead.com/npc=23584/amani-bear#abilities
+UPDATE `creature` SET `modelid` = 0, `spawntimesecs` = 1500 WHERE `id` = 23584;
+UPDATE `creature_template` SET `speed` = '1.48',`mindmg` = '4017',`maxdmg` = '4765' WHERE `entry` = 23584; -- 1.15 1801 3684 -- 10,029 - 11,912 /2.5
+DELETE FROM `creature_template_addon` WHERE `entry` = 23584;
+INSERT INTO `creature_template_addon` VALUES (23584,0,0,16777472,0,4097,0,0,'');
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 23584;
+INSERT INTO `creature_ai_scripts` VALUES (2358401, 23584, 0, 0, 100, 3, 1000, 1000, 20000, 30000, 11, 42745, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani Bear - Cast Frenzy');
+INSERT INTO `creature_ai_scripts` VALUES (2358402, 23584, 9, 0, 100, 3, 0, 5, 10000, 20000, 11, 42747, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani Bear - Cast Crunch Armor');
+
+-- Amani'shi Scout 23586- npc_amanishi_scout
+UPDATE `creature` SET `modelid` = 0, `equipment_id` = 0, `spawntimesecs` = 120, `spawndist` = 0 WHERE `id` = 23586;
+-- Static Group Spawns
+UPDATE `creature` SET `spawntimesecs` = 1500 WHERE `guid` IN (89191,89244,89284,89285,89286);
+UPDATE `creature_template` SET `faction_A` = 16, `faction_H` = 16, `armor` = '4800',`speed` = '1.20',`mindmg` = '282',`maxdmg` = '563', `mechanic_immune_mask` = '66049', `flags_extra` = '1073741824' WHERE `entry` = 23586; -- 1890 1760 1.15 150 450
+DELETE FROM `creature_template_addon` WHERE `entry` = 23586;
+INSERT INTO `creature_template_addon` VALUES (23586,0,0,16777472,0,4097,0,0,''); -- moveflags was 16384 falling
+-- (XXX,XXX,1,0,100,1,15000,20000,15000,20000,11,42350,0,0,0,0,0,0,0,0,0,0,'Amani\'shi Scout - Cast Throw Skull OOC Visual Event');
+-- ('2358601','23586','4','0','100','2','0','0','0','0','1','-141','0','0','4','12104','0','0','11','42177','0','0','Amani\'shi Scout - Yell and Sound and Cast Alert Drums on Aggro'),
+-- ('2358602','23586','0','0','100','3','2000','2000','4000','5000','11','16496','1','0','0','0','0','0','0','0','0','0','Amani\'shi Scout - Cast Shoot'),
+-- ('2358603','23586','0','0','100','3','6000','6000','20000','24000','11','43205','1','0','0','0','0','0','0','0','0','0','Amani\'shi Scout - Cast Multi-Shot'),
+
+-- Amani'shi Reinforcement 23587
+-- should be summoned in the huts from the triggers npcs in there?
+-- maybe they used spawnlocations for the spells
+-- http://www.wowhead.com/npc=23587/amanishi-reinforcement#comments
+-- http://wowwiki.wikia.com/wiki/Amani%27shi_Reinforcement
+UPDATE `creature_template` SET `faction_A` = 16, `faction_H` = 16, `speed` = '1.48',`mindmg` = '4179',`maxdmg` = '4963' WHERE `entry` = 23587; -- 1.15 2252.5 4605 -- 12,537 - 14,889
+DELETE FROM `creature_template_addon` WHERE `entry` = 23587;
+INSERT INTO `creature_template_addon` VALUES (23587,0,0,16777472,0,4097,0,0,'');
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 23587;
+INSERT INTO `creature_ai_scripts` VALUES (2358701, 23587, 9, 0, 50, 3, 0, 5, 8000, 8000, 11, 43298, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Reinforcement - Cast Strike');
+INSERT INTO `creature_ai_scripts` VALUES (2358702, 23587, 4, 0, 50, 2, 0, 0, 0, 0, 11, 32323, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Reinforcement - Cast Charge on Aggro');
+INSERT INTO `creature_ai_scripts` VALUES (2358703, 23587, 11, 0, 100, 2, 0, 0, 0, 0, 38, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Reinforcement - Combat Pulse on Spawn');
+INSERT INTO `creature_ai_scripts` VALUES (2358704, 23587, 1, 0, 100, 2, 15000, 15000, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Reinforcement - Despawn OOC');
+
+-- Amani'shi Flame Caster 23596
+-- interuptable vulnerable to Stun Sap, Sheep, Trap, Fear and can also be MC'ed
+UPDATE `creature` SET `modelid`='0',`equipment_id`='0',`spawntimesecs`='1500',`curhealth`='0',`curmana`='0', `curmana` = 6900, `curhealth` = 69000 WHERE `id` = 23596;
+UPDATE `creature` SET `id` = 23596, `modelid` = 0 WHERE `guid` = 89331;
+UPDATE `creature_template` SET `modelid_A2`='22308',`modelid_H2`='22308',`armor`='5700',`speed`='1.48',`mindmg` = '3750',`maxdmg` = '5250',`flags_extra` = '4194304' WHERE `entry` = 23596; -- 3887 1.15 375 1875 -- 3,750 - 5,250
+DELETE FROM `creature_template_addon` WHERE `entry` = 23596;
+INSERT INTO `creature_template_addon` VALUES (23596,0,0,512,0,4097,0,0,'18950 0 18950 1');
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 23596;
+INSERT INTO `creature_ai_scripts` VALUES (2359601, 23596, 0, 0, 100, 3, 1000, 4000, 15000, 30000, 11, 43242, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Flame Caster - Cast Haste');
+INSERT INTO `creature_ai_scripts` VALUES (2359602, 23596, 0, 0, 100, 3, 3000, 6000, 7000, 14000, 11, 43240, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Flame Caster - Cast Fireball Volley');
+INSERT INTO `creature_ai_scripts` VALUES (2359603, 23596, 0, 0, 100, 3, 1000, 6000, 5000, 9700, 11, 43245, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Flame Caster - Cast Fire Blast');
+INSERT INTO `creature_ai_scripts` VALUES (2359604, 23596, 1, 0, 100, 3, 15000, 45000, 60000, 120000, 11, 42220, 4, 32, 5, 11, -1, -1, 0, 0, 0, 0, 'Amani\'shi Flame Caster - Cast Conflagration on Friendly and Laugh OOC'); -- NEEDS TARGET SPELLWORK, TARGETS TROLLS NOT PLAYERS OR THIS IS THE OUT OF COMBAT SPELL THAT CAN BE SEEN IN POVS
+INSERT INTO `creature_ai_scripts` VALUES (2359605,23596,4,0,15,2,0,0,0,0,1,-228,-229,-230,0,0,0,0,0,0,0,0,'Amani\'shi Flame Caster - Text on Aggro');
+
+-- Amani'shi Guardian 23597
+-- http://www.wowhead.com/npc=23597/amanishi-guardian#comments
+-- http://wowwiki.wikia.com/wiki/Amani%27shi_Guardian
+UPDATE `creature` SET `modelid` = 0, `equipment_id` = 0, `spawntimesecs` = 1500 WHERE `id` = 23597;
+UPDATE `creature_template` SET `modelid_A2`='22309',`modelid_H2`='22309',`armor`='7100',`speed`='1.48',`mindmg` = '5000',`maxdmg` = '7000', `baseattacktime`='2000',`mechanic_immune_mask`='787169275',`flags_extra`='1073741824' WHERE `entry` = 23597; -- 6135 1.15 2000 612441851 -- 4501 4876 -- 6,000 - 7,500
+DELETE FROM `creature_template_addon` WHERE `entry` = 23597;
+INSERT INTO `creature_template_addon` VALUES (23597,0,0,16777472,0,4097,0,0,'18950 0 18950 1');
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 23597;
+INSERT INTO `creature_ai_scripts` VALUES (2359701, 23597, 0, 0, 100, 2, 2000, 6000, 8000, 16000, 11, 43249, 0, 0, 39, 10, 0, 0, 0, 0, 0, 0, 'Amani\'shi Guardian - Cast Startling Roar on Aggro'); -- Call for Help
+INSERT INTO `creature_ai_scripts` VALUES (2359702, 23597, 0, 0, 100, 3, 5000, 5000, 12000, 12000, 11, 43246, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Guardian - Cast Rend');
+INSERT INTO `creature_ai_scripts` VALUES (2359703,23597,4,0,15,2,0,0,0,0,1,-228,-229,-9730,0,0,0,0,0,0,0,0,'Amani\'shi Guardian - Text on Aggro');
+-- INSERT INTO `creature_ai_scripts` VALUES (2359704, 23597, 15, 0, 100, 3, 0, 30, 0, 0, 11, 23859, 6, 3, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Guardian - Cast Dispel Magic on Friendly CC'); -- 40 17201
+
+-- Zul'Aman Exterior InvisMan 23746
+-- DONT MOVE FROM ENTRANCE!
+UPDATE `creature` SET `position_x` = '332.5429', `position_y` = '1086.7421' WHERE `guid` = 89186;
+UPDATE `creature_template` SET `InhabitType` = 7, `AIName` = 'EventAI' WHERE `entry` = 23746;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 23746;
+INSERT INTO `creature_ai_scripts` VALUES (2374601, 23746, 8, 0, 100, 2, 43515, -1, 0, 0, 37, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Zul\'Aman Exterior InvisMan - Die Ashli\'s Fireball Spellhit');
+INSERT INTO `creature_ai_scripts` VALUES (2374602, 23746, 8, 0, 100, 2, 43520, -1, 0, 0, 37, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Zul\'Aman Exterior InvisMan - Die Ashli\'s Fireball Spellhit');
+INSERT INTO `creature_ai_scripts` VALUES (2374603, 23746, 8, 0, 100, 2, 43525, -1, 0, 0, 37, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Zul\'Aman Exterior InvisMan - Die Ashli\'s Fireball Spellhit');
+
+-- Amani'shi Trainer 23774
+-- http://wowwiki.wikia.com/wiki/Amani%27shi_Trainer?oldid=1475310
+-- http://www.wowhead.com/npc=23774/amanishi-trainer#comments
+UPDATE `creature` SET `id` = 23774, `modelid` = 0,  `spawndist` = 0 WHERE `guid` IN (89122, 89160);
+UPDATE `creature` SET `modelid` = 0, `spawntimesecs` = 1500, `curhealth` = 34000 WHERE `id` = 23774;
+UPDATE `creature_template` SET `minhealth` = 34000, `maxhealth` = 35000, `speed` = 1.30, `mindmg` = 4063, `maxdmg` = 5521 WHERE `entry` =  23774; -- 100000 1.15 1407.5 5782.5 -- 12,188 - 16,563
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 23774;
+INSERT INTO `creature_ai_scripts` VALUES (2377401, 23774, 4, 0, 15, 2, 0, 0, 0, 0, 1, -228, -229, -9730, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Trainer - Text on Aggro');
+INSERT INTO `creature_ai_scripts` VALUES (2377402, 23774, 9, 0, 100, 3, 0, 30, 4000, 8000, 11, 20989, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Trainer - Cast Sleep');
+INSERT INTO `creature_ai_scripts` VALUES (2377403, 23774, 16, 0, 100, 3, 43292, 100, 5000, 15000, 11, 43292, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Trainer - Cast Incite Rage');
+
+-- Dragonhawk God Invisman 23813- Quest
+-- flame breath is casted on this npc, change target selection for the spell
+UPDATE `creature_template` SET `flags_extra`='128' WHERE `entry` = 23813;
+
+-- Eagle God Invisman 23814- Quest
+UPDATE `creature_template` SET `flags_extra`='128' WHERE `entry` = 23814;
+
+-- Lynx God Invisman 23815- Quest
+-- if 128 makes the quest still completeable try for 23814 and 23813
+UPDATE `creature_template` SET `flags_extra`='128' WHERE `entry` = 23815;
+
+-- Amani Dragonhawk 23834
+-- http://wowwiki.wikia.com/wiki/Amani_Dragonhawk
+-- www.wowhead.com/npc=23834/amani-dragonhawk
+UPDATE `creature` SET `spawntimesecs` = 1500, `modelid` = 0 WHERE `id` = 23834;
+UPDATE `creature_template` SET `armor` = '5800',`speed` = '1.37',`mindmg` = '2000',`maxdmg` = '4000' WHERE `entry` = 23834; -- 1854 1.15 1000 3500 -- 
+DELETE FROM `creature_template_addon` WHERE `entry` = 23834;
+INSERT INTO `creature_template_addon` VALUES (23834, 0, 0, 16777472, 0, 4097, 0, 0, '18950 0 18950 1');
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 23834;
+INSERT INTO `creature_ai_scripts` VALUES
+('2383401','23834','0','0','100','3','4000','9000','10000','27500','11','43294','1','0','0','0','0','0','0','0','0','0','Amani Dragonhawk - Cast Flame Breath');
+
+-- Amani'shi Savage 23889
+-- http://wowwiki.wikia.com/wiki/Amani%27shi_Savage
+UPDATE `creature` SET `modelid` = 0, `spawntimesecs` = 3600 WHERE `id` = 23889;
+UPDATE `creature_template` SET `modelid_A` = '22322',`modelid_H` = '22322',`modelid_A2` = '22324',`modelid_H2` = '22324',`speed`='1.20',`mindmg` = '282',`maxdmg` = '329' WHERE `entry` = 23889; -- 1.15 160 240 -- 760 - 840
+DELETE FROM `creature_template_addon` WHERE `entry` = 23889;
+INSERT INTO `creature_template_addon` VALUES (23889,0, 0, 16777472, 0, 4097, 0, 0,'18950 0 18950 1');
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 23889;
+INSERT INTO `creature_ai_scripts` VALUES (2388901, 23889, 0, 0, 100, 3, 2000, 7000, 7000, 12000, 11, 9080, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Savage - Cast Hamstring');
+INSERT INTO `creature_ai_scripts` VALUES (2388902, 23889, 0, 0, 100, 3, 6000, 11000, 11000, 16000, 11, 12054, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Savage - Cast Rend'); -- 32
+INSERT INTO `creature_ai_scripts` VALUES (2388903, 23889, 9, 0, 100, 3, 0, 5, 5000, 9000, 11, 11971, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Savage - Cast Sunder Armor');
+
+-- Amani Lynx 24043
+-- stealthed
+-- http://wowwiki.wikia.com/wiki/Amani_Lynx
+-- http://www.wowhead.com/npc=24043/amani-lynx#comments
+UPDATE `creature` SET `spawntimesecs` = 7200, `spawndist` = 5 WHERE `id` =  24043;
+UPDATE `creature` SET `position_x` = '429.3981', `position_y` = '994.2989', `position_z` = '1.1951' WHERE `guid` = 235; 
+UPDATE `creature_template` SET `minlevel` = '70',`armor` = '5800',`maxdmg` = '4500' WHERE `entry` = 24043; -- 69 4125 2500 3500
+DELETE FROM `creature_template_addon` WHERE `entry` = 24043;
+INSERT INTO `creature_template_addon` VALUES (24043,0,0,16777472,0,4097,0,0,'18950 0 18950 1');
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 24043;
+INSERT INTO `creature_ai_scripts` VALUES (2404301, 24043, 4, 0, 100, 2, 0, 0, 0, 0, 28, 0, 42866, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani Lynx - Remove Stealth on Aggro');
+INSERT INTO `creature_ai_scripts` VALUES (2404302, 24043, 9, 0, 100, 3, 0, 5, 11000, 22000, 11, 43357, 4, 32, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani Lynx - Cast Feral Swipe');
+INSERT INTO `creature_ai_scripts` VALUES (2404303, 24043, 1, 0, 100, 2, 0, 0, 0, 0, 11, 42866, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani Lynx - Cast Stealth OOC');
+
+-- Amani Crocolisk 24047
+-- http://wowwiki.wikia.com/wiki/Amani_Crocolisk
+-- http://www.wowhead.com/npc=24047/amani-crocolisk#comments
+UPDATE `creature` SET `modelid` = 0, `spawntimesecs` = 7200, `curhealth` = 28561 WHERE `id` = 24047;
+UPDATE `creature_template` SET `minhealth` = '28561',`maxhealth` = '29561',`speed` = '1.20',`mindmg` = '1876',`maxdmg` = '2251', `AIName` = 'EventAI', `mechanic_immune_mask` = '8402000' WHERE `entry` = 24047; --  19561 1.15 1125 2625
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 24047;
+INSERT INTO `creature_ai_scripts` VALUES (2404701, 24047, 4, 0, 100, 2, 0, 0, 0, 0, 39, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani Crocolisk - Call for Help on Aggro');
+INSERT INTO `creature_ai_scripts` VALUES (2404702, 24047, 0, 0, 100, 3, 5000, 5000, 13000, 13000, 11, 43352, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani Crocolisk - Cast Tail Swip'); -- recheck spell
+INSERT INTO `creature_ai_scripts` VALUES (2404703, 24047, 0, 0, 100, 3, 1000, 1000, 24000, 24000, 11, 43353, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani Crocolisk - Cast Infected Bite');
+
+-- Amani'shi Beast Tamer 24059
+-- http://wowwiki.wikia.com/wiki/Amani%27shi_Beast_Tamer
+-- http://www.wowhead.com/npc=24059/amanishi-beast-tamer#comments
+UPDATE `creature` SET `id` = 24059, `modelid` = 0 WHERE `guid` IN (245,243);
+UPDATE `creature` SET `spawntimesecs` = 7200, `equipment_id` = 0 WHERE `id` = 24059;
+UPDATE `creature_template` SET `speed`='1.48',`mindmg`='4063',`maxdmg`='5521',`mechanic_immune_mask`='75498832' WHERE `entry` = 24059; -- 5000 7000
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 24059;
+INSERT INTO `creature_ai_scripts` VALUES (2405901, 24059, 0, 0, 100, 3, 3000, 9000, 9000, 18000, 11, 43361, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Beast Tamer - Cast Domesticate');
+INSERT INTO `creature_ai_scripts` VALUES (2405902, 24059, 0, 0, 100, 3, 5000, 10000, 10000, 15000, 11, 43359, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Beast Tamer - Cast Eye of The Beast');
+
+-- Amani Lynx Cub 24064
+-- not all are stealthed
+UPDATE `creature` SET `id` = 24064, `modelid` = 0 WHERE `guid` IN (169,171);
+UPDATE `creature` SET `modelid` = 0, `spawntimesecs` = 7200 WHERE `id`  = 24064;
+UPDATE `creature_addon` SET `auras` = '42943 0' WHERE `guid` IN (89135,89200,88652,89176,89141,86198,87043,86922,89172,89177,89175,89173,86921,89145);
+UPDATE `creature_template` SET `armor` = '4800',`speed` = '1.48' WHERE `entry` = 24064; -- 1850 2 -- 1500 2500 --
+DELETE FROM `creature_template_addon` WHERE `entry` = 24064;
+INSERT INTO `creature_template_addon` VALUES (24064, 0, 0, 16908544, 0, 4097, 0, 0, '');
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 24064;
+INSERT INTO `creature_ai_scripts` VALUES
+-- ('2406401','24064','1','0','100','2','0','0','1000','1000','11','42943','0','0','0','0','0','0','0','0','0','0','Amani Lynx Cub - Cast Stealth on Spawn'),
+('2406402','24064','4','0','100','2','0','0','0','0','28','0','42943','0','11','43317','0','0','0','0','0','0','Amani Lynx Cub - Remove Stealth Aura and Cast Dash on Aggro'),
+('2406403','24064','0','0','50','3','5000','15000','5000','15000','11','43358','1','0','0','0','0','0','0','0','0','0','Amani Lynx Cub - Cast Gut Rip');
+
+-- Amani'shi Handler 24065
+UPDATE `creature` SET `modelid` = 0, `equipment_id` = 0, `spawntimesecs` = 7200 WHERE `id` = 24065;
+UPDATE `creature_template` SET `armor`='7000',`speed`='1.48',`mindmg`='4063',`maxdmg`='5521',`baseattacktime`='1400',`mechanic_immune_mask`='612439667' WHERE `entry` = 24065; -- 4850 1.15 1250 6250 2000 70259 -- 12,500 - 17,500
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 24065;
+INSERT INTO `creature_ai_scripts` VALUES
+('2406501','24065','9','0','100','3','0','5','10200','23200','11','43364','4','32','0','0','0','0','0','0','0','0','Amani\'shi Handler - Cast Tranquilizing Poison'),
+('2406502','24065','9','0','100','3','0','35','9000','9000','11','43362','4','0','0','0','0','0','0','0','0','0','Amani\'shi Handler - Cast Electrified Net');
+
+DELETE FROM `spell_linked_spell` WHERE `spell_trigger` IN (-24002,-24003,-43364);
+INSERT INTO `spell_linked_spell` VALUES
+(-24002, 8064, 0, 'Sleepy on Tranquilizing Poison Expire'),
+(-24003, 8064, 0, 'Sleepy on Tranquilizing Poison Expire'),
+(-43364, 8064, 0, 'Sleepy on Tranquilizing Poison Expire');
+
+-- Tamed Amani Crocolisk 24138
+-- http://wow.gamepedia.com/index.php?title=Tamed_Amani_Crocolisk&oldid=1555913
+-- http://www.wowhead.com/npc=24138/tamed-amani-crocolisk#comments
+UPDATE `creature` SET `spawntimesecs` = 7200 WHERE `id` = 24138;
+UPDATE `creature_template` SET `armor`='6792',`speed`='1.48',`unit_flags`='32832',`lootid`='24138',`skinloot`='24138',`mingold`='0',`maxgold`='0' WHERE `entry` = 24138; -- 0 1 20000 40000
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 24138;
+INSERT INTO `creature_ai_scripts` VALUES
+(2413801,24138,9,0,100,3,0,5,10000,15000,11,43353,1,0,0,0,0,0,0,0,0,0,'Tamed Amani Crocolisk - Cast Infected Bite'),
+(2413802,24138,0,0,100,3,5000,5000,6000,15000,11,43352,5,0,0,0,0,0,0,0,0,0,'Tamed Amani Crocolisk - Cast Tail Swipe'); -- spell bugged should be behind only
+
+-- Amani'shi Wind Walker 24179 
+-- http://www.wowhead.com/npc=24179/amanishi-wind-walker#comments
+-- http://wowwiki.wikia.com/wiki/Amani%27shi_Wind_Walker
+UPDATE `creature` SET `equipment_id` = 2179, `spawntimesecs` = 1500 WHERE `guid` = 86210;
+UPDATE `creature_template` SET `armor` = '5714',`speed` = '1.48',`mindmg` = '3750',`maxdmg` = '4583' WHERE `entry` = 24179; -- 2480 1.15 1875 4375 -- 11,250 - 13,750
+DELETE FROM `creature_template_addon` WHERE `entry` = 24179;
+INSERT INTO `creature_template_addon` VALUES (24179, 0, 0, 512, 0, 4097, 0, 0, '18950 0 18950 1');
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 24179;
+INSERT INTO `creature_ai_scripts` VALUES (2417901, 24179, 4, 0, 15, 2, 0, 0, 0, 0, 1, -228, -229, -9730, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Wind Walker - Text on Aggro');
+INSERT INTO `creature_ai_scripts` VALUES (2417902, 24179, 2, 0, 100, 3, 80, 0, 8000, 16000, 11, 43527, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Wind Walker - Cast Chain Heal');
+INSERT INTO `creature_ai_scripts` VALUES (2417903, 24179, 9, 0, 100, 3, 0, 20, 4000, 8000, 11, 43524, 4, 32, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Wind Walker - Cast Frost Shock');
+INSERT INTO `creature_ai_scripts` VALUES (2417904, 24179, 0, 0, 100, 3, 5000, 5000, 9000, 17500, 11, 43526, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Wind Walker - Cast Lightning Bolt');
+
+-- Amani'shi Protector 24180
+-- http://wowwiki.wikia.com/wiki/Amani%27shi_Protector
+-- http://www.wowhead.com/npc=24180/amanishi-protector#abilities
+UPDATE `creature_template` SET `armor`='7100',`speed`='1.48',`mindmg` = '4771',`maxdmg` = '6813',`modelid_A2`='22264',`modelid_H2`='22263',`equipment_id`='8101' WHERE `entry` = 24180; --  3965 1 1282.5 7407.5 0 0 -- 14,313 - 20,438
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 24180;
+INSERT INTO `creature_ai_scripts` VALUES
+(2418001, 24180, 4, 0, 15, 2, 0, 0, 0, 0, 1, -228, -229, -9730, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Protector - Text on Aggro'),
+(2418002, 24180, 4, 0, 100, 2, 0, 0, 0, 0, 34, 24, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Protector - Set Instance Data on Aggro'),
+(2418003, 24180, 0, 0, 100, 3, 4000, 6000, 12000, 18000, 11, 15496, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Protector - Cast Cleave'),
+(2418004, 24180, 9, 0, 100, 3, 0, 5, 10000, 15000, 11, 43529, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Protector - Cast Mortal Strike'),
+(2418005, 24180, 0, 0, 100, 3, 10000, 20000, 20000, 40000, 11, 43530, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Protector - Cast Piercing Howl');
+DELETE FROM `creature_equip_template` WHERE `entry` = 8101;
+INSERT INTO `creature_equip_template` VALUES
+(8101,46789,32560,0,218171138,234948100,0,3,1038,0);
+
+-- Amani Bear Mount 24217
+-- http://www.wowhead.com/npc=24217/amani-bear-mount#comments
+-- http://wowwiki.wikia.com/wiki/Amani%27shi_Bear_Mount misleading
+UPDATE `creature_template` SET `armor` = '6200',`speed` = '1.48',`mindmg` = '4167',`maxdmg` = '5833',`mechanic_immune_mask` = '1029',`flags_extra` = '1073741824' WHERE `entry` = 24217; -- 0 1.15 1250 6250 -- 12,500 - 17,500
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 24217;
+INSERT INTO `creature_ai_scripts` VALUES (2421701, 24217, 0, 0, 100, 3, 1000, 2000, 10000, 15000, 11, 42747, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani Bear Mount - Cast Crunch Armor');
+INSERT INTO `creature_ai_scripts` VALUES (2421702, 24217, 0, 0, 100, 3, 10000, 15000, 15000, 25000, 11, 42745, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani Bear Mount - Cast Enrage');
+INSERT INTO `creature_ai_scripts` VALUES (2421703, 24217, 7, 0, 100, 2, 0, 0, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani Bear Mount - Despawn on Evade');
+INSERT INTO `creature_ai_scripts` VALUES (2421704, 24217, 1, 0, 100, 3, 0, 0, 1000, 1000, 103, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani Bear Mount - Aggro Pulse OOC');
+
+-- Dragonhawk Egg 24312
+-- http://www.wowhead.com/npc=24312/dragonhawk-egg
+-- doesnt work atm as dragon hawk hatchling is hardcoded for bossfight
+UPDATE `creature` SET `modelid` = 0, `spawntimesecs` = 1500 WHERE `id` = 24312;
+UPDATE `creature_template` SET `minlevel` = 70, `maxlevel` = 70, `faction_A` = '1890',`faction_H` = '1890',`unit_flags` = 33554692,`AIName` = 'EventAI' WHERE `entry` = 24312;
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 24312;
+-- INSERT INTO `creature_ai_scripts` VALUES (2431201, 24312, 4, 0, 100, 2, 0, 0, 0, 0, 11, 42493, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Dragonhawk Egg - Summon Dragonhawk Hatchling on Aggro');
+
+-- harrison jones #2
+UPDATE `creature_template` SET `flags_extra` = `flags_extra`|128 WHERE `entry` = 24358; -- not used npc harrison jones without hat
+
+-- Amani'shi Berserker 24374
+-- http://wowwiki.wikia.com/wiki/Amani%27shi_Berserker
+UPDATE `creature` SET `spawntimesecs`='3300' WHERE `id` = 24374;
+UPDATE `creature_template` SET `armor` = '6792',`speed`='1.48',`mindmg` = '8000',`maxdmg` = '12000',`mechanic_immune_mask`='787431423',`flags_extra` = `flags_extra`|1073741824 WHERE `entry` = 24374; -- 6000 1 612441851 6000 8500 -- 
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 24374;
+INSERT INTO `creature_ai_scripts` VALUES (2437401, 24374, 0, 0, 100, 3, 1000, 3000, 2000, 10000, 11, 43673, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Berserker - Cast Mighty Blow');
+INSERT INTO `creature_ai_scripts` VALUES (2437402, 24374, 2, 0, 100, 2, 30, 0, 0, 0, 11, 28747, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Berserker - Cast Enrage'); -- should be enrage 28747
+
+-- Amani Elder Lynx 24530
+-- http://wowwiki.wikia.com/wiki/Amani_Elder_Lynx
+-- http://www.wowhead.com/npc=24530/amani-elder-lynx#comments
+UPDATE `creature` SET `modelid` = 0, `spawntimesecs` = 7200 WHERE `id` = 24530;
+UPDATE `creature_template` SET `armor` = '6792',`mechanic_immune_mask` = '75578962',`flags_extra` = '1073741824' WHERE `entry` = 24530; -- 3580 3500 4500
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 24530;
+INSERT INTO `creature_ai_scripts` VALUES (2453001, 24530, 2, 0, 100, 3, 30, 0, 90000, 90000, 11, 34970, 0, 0, 1, -46, 0, 0, 0, 0, 0, 0, 'Amani Elder Lynx - Cast Enrage at 30% HP');
+INSERT INTO `creature_ai_scripts` VALUES (2453002, 24530, 9, 0, 100, 3, 0, 5, 5000, 15000, 11, 43357, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani Elder Lynx - Cast Feral Swipe');
+INSERT INTO `creature_ai_scripts` VALUES (2453003, 24530, 0, 0, 100, 3, 1500, 3500, 9000, 13000, 11, 43356, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani Elder Lynx - Cast Pounce');
+
+-- Zul'Aman Door Trigger
+UPDATE `creature_template` SET `InhabitType` = 7 WHERE `entry` = 25173;
+
+-- ==============
+-- Akilzon Gauntlet Event
+-- ==============
+
+-- Eagle Troll Spawn Target
+-- Used as Gauntlet Combat Trigger
+UPDATE `creature_template` SET `unit_flags`=`unit_flags`|4, `AIName`='EventAI' WHERE `entry` = 24325;
+DELETE FROM `creature_template_addon` WHERE `entry` = 24325;
+INSERT INTO `creature_template_addon` VALUES
+(24325,0,0,0,0,0,0,0,'18950 0 18950 1');
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 24325;
+INSERT INTO `creature_ai_scripts` VALUES
+('2432501','24325','4','0','100','2','0','0','0','0','20','0','0','0','0','0','0','0','0','0','0','0','Eagle Troll Spawn Target - Stop Melee on Aggro'),
+('2432502','24325','0','0','100','2','120000','120000','0','0','37','0','0','0','0','0','0','0','0','0','0','0','Eagle Troll Spawn Target - Despawn IC');
+-- ('2432501','24325','4','0','100','2','0','0','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Eagle Troll Spawn Target - Delayed Despawn on Aggro');
+
+-- Amani'shi Lookout 24175- npc_amanishi_lookout
+-- http://www.wowhead.com/npc=24175/amanishi-lookout#english-comments
+UPDATE `creature` SET `spawntimesecs` = 1 WHERE `id` = 24175;
+UPDATE `creature_template` SET `speed` = 1.48, `unit_flags` = 163906, `equipment_id` = 8100, `flags_extra` = 0 WHERE `entry` = 24175; -- uf 131074 ef 0
+DELETE FROM `creature_template_addon` WHERE `entry` = 24175;
+INSERT INTO `creature_template_addon` VALUES (24175,0,0,16777472,0,4097,0,0,'18950 0 18950 1');
+DELETE FROM `creature_equip_template` WHERE `entry` = 8100;
+INSERT INTO `creature_equip_template` VALUES
+(8100,40401,0,0,285279746,0,0,2,0,0);
+
+-- Amani Eagle 24159- npc_amani_eagle
+-- http://www.wowhead.com/npc=24159/amani-eagle#comments
+-- http://wowwiki.wikia.com/wiki/Amani_Eagle
+-- 5 or 6 or (8) are summoned every 10-15 Spell 43517
+UPDATE `creature_template` SET `speed` = '1.20' WHERE `entry` = 24159; -- 1
+
+-- Amani'shi Warrior 24225- npc_amanishi_warrior
+-- http://wowwiki.wikia.com/wiki/Amani%27shi_Warrior
+-- http://www.wowhead.com/npc=24225/amanishi-warrior#abilities 43518 43519
+UPDATE `creature_template` SET `minhealth` = '23116',`maxhealth` = '25116',`speed` = '1.48',`mindmg` = '2563',`maxdmg` = '3938' WHERE `entry` = 24225; -- 17116 1 500 6000 -- 10,250 - 15,750
+
+-- Amani'shi Tempest 24549
+-- http://wowwiki.wikia.com/wiki/Amani'shi_Tempest
+-- spawn 2 npcs on timer ic ~ 30secs or so then all ~ 20secs
+UPDATE `creature_template` SET `armor`='7100',`speed`='1.48',`mindmg`='3295',`maxdmg`='6589',`baseattacktime`='1500',`mechanic_immune_mask`='787169275',`flags_extra`='65536',`unit_flags`='0',`equipment_id`='8102' WHERE `entry` = 24549; -- dualwielder equipment_id fehlt  2600 1 1250 6250 2000 71283 0 0
+DELETE FROM `creature_equip_template` WHERE `entry` = 8102;
+INSERT INTO `creature_equip_template` VALUES
+(8102,46982,46982,0,218173186,218173186,0,3,3,0);
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 24549;
+INSERT INTO `creature_ai_scripts` VALUES
+(2454901,24549,4,0,100,2,0,0,0,0,34,24,11,0,11,29651,0,0,0,0,0,0,'Amani\'shi Tempest - Set Instance Data and Cast Dual Wield on Aggro'),
+(2454902,24549,6,0,100,2,0,0,0,0,34,24,12,0,0,0,0,0,0,0,0,0,'Amani\'shi Tempest - Set Instance Data on Death'),
+(2454903,24549,7,0,100,2,0,0,0,0,34,24,0,0,0,0,0,0,0,0,0,0,'Amani\'shi Tempest - Set Instance Data on Evade'),
+(2454904,24549,9,0,100,3,0,5,5000,10000,11,44033,0,0,0,0,0,0,0,0,0,0,'Amani\'shi Tempest - Cast Thunder Clap');
+
+-- ====================
+-- Time Event Npcs
+-- ====================
+
+-- Harkor 23999
+
+-- Harkor's Corpse 24443
+
+-- http://www.wowhead.com/object=186748/bakkalzus-brew-keg#comments
+
+-- Tanzar 23790
+
+-- Tanzar's Corpse 24442
+
+-- Ashli 24001- npc_ashli
+UPDATE `creature_template` SET `speed` = '1.20' WHERE `entry` = 24001; -- 2.75
+-- Ashli's Spells
+DELETE FROM `spell_script_target` WHERE `entry` IN (43520, 43525, 43515);
+INSERT INTO `spell_script_target` VALUES
+(43515, 1, 23746),
+(43520, 1, 23746),
+(43525, 1, 23746);
+
+-- Ashli's Corpse 24441
+
+-- Kraz 24024- npc_kraz
+UPDATE `creature_template` SET `speed` = '1.20' WHERE `entry` = 24024; -- 2.5
+
+-- Kraz's Corpse 24444
+
+-- 24851
+UPDATE `creature_template` SET `minlevel` = 70, `maxlevel` = 70, `minhealth` = 13337, `maxhealth` = 13337, `rank` = 1, `equipment_id` = 8103 WHERE `entry` = 24851;
+
+-- ====================
+-- Bosses
+-- ====================
+
+-- Akil'zon 23574- boss_akilzon
+-- http://wowwiki.wikia.com/wiki/Akil%27zon_(original)?oldid=1576590
+UPDATE `creature_template` SET `speed` = '2',`mindmg` = '6000',`maxdmg` = '7000',`mechanic_immune_mask` = '650854239' WHERE `entry` = 23574; -- 1.15 7000 8500 -- 
+
+DELETE FROM `spell_linked_spell` WHERE `spell_trigger` IN (43622, 44008, 45213);
+INSERT INTO `spell_linked_spell` VALUES
+-- (43648, 45213, 1, 'Storm Eye Visual'); not needed currently
+(43622, 44008, 0, 'Static Disruption Debuff'), 
+(43622, 45265, 1, 'Static Disruption Chaining Visual');
+
+-- Soaring Eagle 24858- mob_akilzon_eagle
+UPDATE `creature_template` SET `speed` = '1.2' WHERE `entry` = 24858; -- 1
+
+-- Nalorakk 23576- boss_nalorakk
+UPDATE `creature_template` SET `speed` = '2',`mindmg` = '6000',`maxdmg` = '9000',`mechanic_immune_mask` = '650854239' WHERE `entry` = 23576; -- 1.15 7500 9000 -- 4688 - 6563
+
+-- Jan'alai 23578- boss_janalai
+UPDATE `creature` SET `modelid`='0' WHERE `id` = 23578;
+UPDATE `creature_template` SET `speed`='2',`mechanic_immune_mask`='650854239',`mindmg` = '6000',`maxdmg` = '7000' WHERE `entry` = 23578; -- 5000 6500 -- 
+
+-- Amani'shi Hatcher 23818- mob_janalai_hatcher
+-- http://www.wowhead.com/npc=23818/amanishi-hatcher#english-comments
+-- http://wowwiki.wikia.com/wiki/Amani%27shi_Hatcher
+-- they both go to the same side when no eggs are left on one side
+UPDATE `creature_template` SET `armor`='6792',`speed`='1.20' WHERE `entry` = 23818;
+
+-- Amani Dragonhawk Hatchling 23598- mob_janalai_hatchling
+-- http://wow.gamepedia.com/index.php?title=Amani_Dragonhawk_Hatchling&oldid=1553570
+-- http://www.wowhead.com/npc=23598/amani-dragonhawk-hatchling#comments
+-- http://wowwiki.wikia.com/wiki/Amani_Dragonhawk_Hatchling
+UPDATE `creature_template` SET `maxhealth` = '8000',`speed` = '1.20',`AIName`='',`ScriptName`='mob_janalai_hatchling',`flags_extra` = '268435456' WHERE `entry` = 23598; -- 7800 1.15 1000 3100
+DELETE FROM `creature_template_addon` WHERE `entry` = 23598;
+INSERT INTO `creature_template_addon` VALUES (23598, 0, 0, 512, 0, 4097, 0, 1024, ''); -- moveflag 1024
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 23598;
+-- INSERT INTO `creature_ai_scripts` VALUES
+-- ('2359801','23598','1','0','100','3','1000','1000','2000','2000','38','0','0','0','0','0','0','0','0','0','0','0','Amani Dragonhawk Hatchling - DoZoneInCombat OOC'),
+-- ('2359801','23598','1','0','100','3','1000','1000','2000','2000','103','200','0','0','0','0','0','0','0','0','0','0','Amani Dragonhawk Hatchling - Aggro Pulse OOC'),
+-- ('2359802','23598','1','0','100','2','10000','10000','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Amani Dragonhawk Hatchling - Despawn OOC'),
+-- ('2359803','23598','0','0','100','3','7000','9000','7000','9000','11','43299','4','0','0','0','0','0','0','0','0','0','Amani Dragonhawk Hatchling - Cast Flame Buffet'),
+-- ('2359804','23598','7','0','100','2','0','0','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Amani Dragonhawk Hatchling - Despawn on Evade');
+
+-- Fire Bomb (Zul'Aman) 23920- mob_janalai_firebomb
+-- some firebombs dont despawn properly might be a problem when wiping
+
+-- Dragonhawk Egg 23817- mob_janalai_egg
+
+-- Halazzi 23577- boss_halazzi
+UPDATE `creature_template` SET `mindmg` = '7000',`maxdmg` = '9000', `speed` = '2' WHERE `entry` = 23577; -- 1.15 7500 9000 -- 3376 6751
+DELETE FROM `creature_equip_template` WHERE `entry` = 8103;
+INSERT INTO `creature_equip_template` VALUES (8103,32722,32581,0,218171138,218171138,0,3,3,0);
+
+-- Spirit of the Lynx 24143- (mob_halazzi_lynx outdated)
+UPDATE `creature_template` SET `mindmg` = '4459',`maxdmg` = '6329', `speed` = '1.48', `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = 24143; -- 1.3 1500 4500 -- 8.918 - 12.657
+DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 24143;
+INSERT INTO `creature_ai_scripts` VALUES
+('2414301','24143','11','0','100','2','0','0','0','0','42','1','1','0','0','0','0','0','0','0','0','0','Spirit of the Lynx - Set Invincible at 1% HP on Spawn'),
+('2414302','24143','0','0','100','3','10000','20000','20000','30000','11','43290','0','0','0','0','0','0','0','0','0','0','Spirit of the Lynx - Cast Lynx Flurry'),
+('2414303','24143','0','0','100','3','3000','4000','3000','4000','11','43243','1','0','0','0','0','0','0','0','0','0','Spirit of the Lynx - Cast Shred Armor');
+
+-- Corrupted Lightning Totem 24224 Spell 43302
+UPDATE `creature_template` SET `minhealth` = 9000, `maxhealth` = 9000, `mechanic_immune_mask` = '1073725439',`flags_extra` = '4194304' WHERE `entry` = 24224;
+UPDATE `creature_ai_scripts` SET `event_param3` = 1500, `event_param4` = 2000 WHERE `id` = 2422401; -- 2000 2000
+
+-- Hex Lord Malacrass 24239- boss_hexlord_malacrass
+-- http://wowwiki.wikia.com/wiki/Hex_Lord_Malacrass_(original)?direction=next&oldid=1533677
+UPDATE `creature` SET `modelid` = 0 WHERE `id` = 24239;
+UPDATE `creature_template` SET `speed` = 2, `mindmg` = '8000', `maxdmg` = '9000' WHERE `entry` = 24239; -- 1 5000 6500
+
+-- Alyson Antille 24240- boss_alyson_antille
+-- http://wowwiki.wikia.com/wiki/Alyson_Antille
+-- http://www.wowhead.com/npc=24240/alyson-antille#comments
+UPDATE `creature_template` SET `speed` = '1.48',`mindmg` = '833',`maxdmg` = '1167', `mechanic_immune_mask` = '1' WHERE `entry` = 24240; -- 250 1250 -- 2,500 - 3,500
+
+-- Thurg 24241- boss_thurg 
+-- http://wowwiki.wikia.com/wiki/Thurg 
+-- http://www.wowhead.com/npc=24241/thurg
+UPDATE `creature_template` SET `speed` = '1.48',`mindmg` = '1667',`maxdmg` = '2333',`mechanic_immune_mask` = '1', `resistance6` = '30' WHERE `entry` = 24241; -- 1 500 2500 -- 5,000 - 7,000
+
+-- Slither 24242- boss_slither
+-- http://www.wowhead.com/npc=24242/slither
+-- http://wowwiki.wikia.com/wiki/Slither
+UPDATE `creature_template` SET `speed` = '1.48',`mindmg` = '1000',`maxdmg` = '1667',`mechanic_immune_mask` = '1' WHERE `entry` = 24242; -- 1 0 2000 -- 3,000 - 5,000
+
+-- Lord Raadan 24243- boss_lord_raadan
+-- http://www.wowhead.com/npc=24243/lord-raadan
+-- http://wowwiki.wikia.com/wiki/Lord_Raadan
+UPDATE `creature_template` SET `speed` = '1.48',`mindmg` = '1500',`maxdmg` = '1833',`mechanic_immune_mask` = '1' WHERE `entry` = 24243; -- 1 750 1750 -- 4,500 - 5,500
+
+-- Gazakroth 24244- boss_gazakroth
+-- http://www.wowhead.com/npc=24244/gazakroth
+-- http://wowwiki.wikia.com/wiki/Gazakroth
+UPDATE `creature_template` SET `speed` = '1.48',`mindmg` = '210',`maxdmg` = '230',`mechanic_immune_mask` = '1' WHERE `entry` = 24244; -- 1 45 65 -- 210 - 230
+
+-- Fenstalker 24245- boss_fenstalker
+-- http://www.wowhead.com/npc=24245/fenstalker
+-- http://wowwiki.wikia.com/wiki/Fenstalker
+UPDATE `creature_template` SET `speed` = '1.48',`mindmg` = '1500',`maxdmg` = '1833', `mechanic_immune_mask` = '1' WHERE `entry` = 24245; -- 1 750 1750 -- 4,500 - 5,500
+
+-- Darkheart 24246- boss_darkheart
+-- http://www.wowhead.com/npc=24246/darkheart
+-- http://wowwiki.wikia.com/wiki/Darkheart
+UPDATE `creature_template` SET `speed` = '1.48',`mindmg` = '2492',`maxdmg` = '2942',`mechanic_immune_mask` = '8388625' WHERE `entry` = 24246; -- 1363 2713 -- 7,475 - 8,825
+
+-- Koragg 24247- boss_koragg
+-- http://www.wowhead.com/npc=24247/koragg
+-- http://wowwiki.wikia.com/wiki/Koragg
+UPDATE `creature_template` SET `speed` = '1.48',`mindmg` = '2200',`maxdmg` = '2600',`mechanic_immune_mask` = '8388625' WHERE `entry` = 24247; -- 1 1200 2400 -- 6,600 - 7,800
+
+-- Zul'jin 23863- boss_zuljin
+-- dmg calc with spell 15576
+-- Recheck Models of Spells 42594,42606,42607,42608 due to correct hitbox size
+-- Spell Changed Models dont change bounding_radius or combat_reach
+-- UPDATE `creature_model_info` SET `bounding_radius`='1',`combat_reach` = '1' WHERE `modelid`=21899; #Troll
+-- UPDATE `creature_model_info` SET `bounding_radius`='1',`combat_reach` = '1' WHERE `modelid`=21736; #Bear
+-- UPDATE `creature_model_info` SET `bounding_radius`='1',`combat_reach` = '1' WHERE `modelid`=22257; #Eagle
+-- UPDATE `creature_model_info` SET `bounding_radius`='2',`combat_reach` = '2' WHERE `modelid`=21907; #Lynx
+-- UPDATE `creature_model_info` SET `bounding_radius`='7',`combat_reach` = '7' WHERE `modelid`=21901; #Dragonhawk
+-- http://wowwiki.wikia.com/wiki/Zul%27jin_(raid_tactics)?direction=next&oldid=1299860
+UPDATE `creature` SET `curhealth` = 1700000 WHERE `id` = 23863;
+UPDATE `creature` SET `position_x` = '119.959000', `position_y` = '675.840942', `position_z` = '52.161823', `orientation` = '1.559990' WHERE `guid` = 89358; -- 120.132004 664.015015 51.702301 1.580600
+UPDATE `creature_template` SET `minhealth`='1700000', `maxhealth`='1700000', `speed`='2',`mindmg`='9000',`maxdmg`='10000' WHERE `entry` = 23863; -- 1600000 1 2000 6000 -- 5625 7275! -- 14,000 - 18,000
+
+-- Amani Lynx Spirit, Amani Bear Spirit, Amani Dragonhawk Spirit, Amani Eagle Spirit 23877,23878,23879,23880
+UPDATE `creature_template` SET `minlevel` = '73',`maxlevel` = '73',`minhealth` = '5312',`maxhealth` = '5312', `faction_A` = '1665',`faction_H` = '1665', `unit_flags` = 33554434 WHERE `entry` IN (23877,23878,23879,23880);
+
+DELETE FROM `spell_script_target` WHERE `entry` = 42542;
+INSERT INTO `spell_script_target` VALUES (42542, 1, 23863);
+
+-- Feather Vortex 24136- mob_zuljin_vortex
+UPDATE `creature_template` SET `minhealth` = '100000',`maxhealth` = '100000', `speed`='1.00', `unit_flags` = '33554432', `mechanic_immune_mask` = '1073741823', `flags_extra` = '524352', `AIName` = '', `ScriptName` = 'mob_zuljin_vortex' WHERE `entry` = 24136; -- 1 2 0 0 0
+DELETE FROM `creature_template_addon` WHERE `entry` = 24136;
+INSERT INTO `creature_template_addon` VALUES (24136, 0, 0, 0, 0, 0, 0, 0, '43120 0 43119 0');
+-- DELETE FROM `creature_ai_scripts` WHERE `entryOrGUID` = 24136;
+-- INSERT INTO `creature_ai_scripts` VALUES
+-- ('2413601','24136','4','0','100','2','0','0','0','0','13','100','4','0','20','0','0','0','0','0','0','0','Feather Vortex - Attack Random and Stop Melee on Aggro'),
+-- ('2413602','24136','9','0','100','3','0','5','10000','10000','14','-99','1','0','13','100','4','0','0','0','0','0','Feather Vortex - Drop Threath and Start Attack Random in Melee Range');
+
+-- Amani'shi Savage 75433- mob_amanshi_savage
+-- http://wowwiki.wikia.com/wiki/Amani%27shi_Savage
+UPDATE `creature_template` SET `modelid_A` = '22322',`modelid_H` = '22322',`modelid_A2` = '22324',`modelid_H2` = '22324',`speed`='1.20',`mindmg` = '282',`maxdmg` = '329' WHERE `entry` = 75433; -- 1.15 160 240 -- 760 - 840
+DELETE FROM `creature_template_addon` WHERE `entry` = 75433;
+INSERT INTO `creature_template_addon` VALUES (75433,0, 0, 16777472, 0, 4097, 0, 0,'18950 0 18950 1');
+
+-- ======================================================
+-- Visuals & Positioning & Movement
+-- ======================================================
+
+-- General
+UPDATE `creature` SET `MovementType` = 0, `spawndist` = 0 WHERE `guid` IN (89230, 89123, 89293);
+
+-- Halazzi Trash
+UPDATE `creature` SET `spawntimesecs` = 7200 WHERE `guid` IN (255,99693,251,253,89144,89143,89295,89297,86204,86205,89134,89133);
+
+UPDATE `creature` SET `orientation` = '5.8806' WHERE `guid` = 89254;
+UPDATE `creature` SET `orientation` = '3.5439' WHERE `guid` = 86909;
+UPDATE `creature` SET `orientation` = '5.3856' WHERE `guid` = 89222;
+
+UPDATE `creature` SET `position_x` = '-33.7911', `position_y` = '1122.1312', `position_z` = '18.7124' WHERE `guid` = 86474;
+UPDATE `creature` SET `position_x` = '-33.3260', `position_y` = '1177.7864', `position_z` = '18.7114' WHERE `guid` = 86477;
+UPDATE `creature` SET `position_x` = '-9.8241', `position_y` = '1149.7989', `position_z` = '18.7114' WHERE `guid` = 86478;
+UPDATE `creature` SET `position_x` = '-55.3117', `position_y` = '1150.0552', `position_z` = '18.7052' WHERE `guid` = 86475;
+UPDATE `creature` SET `position_x` = '343.9531', `position_y` = '1047.1018', `position_z` = '9.5199' WHERE `guid` = 86204;
+
+DELETE FROM `creature_addon` WHERE `guid` IN (251,86306,89131,89144,89168,89169,89196,89221,89233,89245,89246,89251);
+UPDATE `creature_addon` SET `auras`='18950 0 18950 1' WHERE `guid` = 89169;
+
+SET @GUID := 86308;
+SET @POINT := 0;
+UPDATE `creature` SET `MovementType`= 2, `spawndist` = 0 WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,NULL);
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@GUID,@POINT := @POINT + 1, XXX, YYY, ZZZ,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 238.0737, 1029.3819, 16.4899,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 232.7241, 1017.9666, 16.3869,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 240.2530, 1006.2888, 16.4477,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 254.5853, 1008.2086, 16.4742,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 259.1850, 1020.8645, 16.4193,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 247.3921, 1032.4918, 16.5432,0,0,0,100,0);
+
+SET @GUID := 86307;
+SET @POINT := 0;
+UPDATE `creature` SET `MovementType`= 2, `spawndist` = 0 WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,NULL);
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@GUID,@POINT := @POINT + 1, XXX, YYY, ZZZ,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 244.4358, 1026.0593, 3.4683,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 244.6288, 1025.2019, 3.4683,15000,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 254.5704, 1021.4236, 3.4684,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 254.3959, 1016.9506, 6.5766,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 250.6309, 1010.5523, 10.7040,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 248.1847, 1006.7416, 11.0891,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 249.5265, 999.6571, 10.9164,150000,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 248.1847, 1006.7416, 11.0891,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 250.6309, 1010.5523, 10.7040,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 254.3959, 1016.9506, 6.5766,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 254.5704, 1021.4236, 3.4684,0,0,0,100,0);
+
+SET @GUID := 89248;
+SET @POINT := 0;
+UPDATE `creature` SET `MovementType` = 2, `spawndist` = 0 WHERE `guid` = @GUID;
+UPDATE `creature` SET `MovementType` = 0, `spawndist` = 0 WHERE `guid` = 86867;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,NULL);
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@GUID,@POINT := @POINT + 1, XXX, YYY, ZZZ,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -198.0335, 1162.7864, -0.3906,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -197.3535, 1128.7833, -0.2768,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -187.2174, 1121.8016, 0.0000,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -187.6073, 1110.7960, 0.0000,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -212.3179, 1106.6700, -0.1009,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -228.3822, 1122.2513, 0.1154,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -232.2036, 1141.2053, -0.9500,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -230.1483, 1160.9539, -1.8820,0,0,0,100,0);
+
+SET @GUID := 89160;
+SET @POINT := 0;
+UPDATE `creature` SET `MovementType` = 2, `spawndist` = 0 WHERE `guid` = @GUID;
+UPDATE `creature` SET `MovementType` = 0, `spawndist` = 0 WHERE `guid` = 89163;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,NULL);
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@GUID,@POINT := @POINT + 1, XXX, YYY, ZZZ,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -212.3179, 1106.6700, -0.1009,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -228.3822, 1122.2513, 0.1154,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -232.2036, 1141.2053, -0.9500,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -230.1483, 1160.9539, -1.8820,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -198.0335, 1162.7864, -0.3906,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -197.3535, 1128.7833, -0.2768,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -187.2174, 1121.8016, 0.0000,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -187.6073, 1110.7960, 0.0000,0,0,0,100,0);
+
+SET @GUID := 89193;
+SET @POINT := 0;
+UPDATE `creature` SET `MovementType`= 2, `spawndist` = 0 WHERE `guid` = @GUID;
+UPDATE `creature` SET `MovementType`= 0, `spawndist` = 0 WHERE `guid` = 86903;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,NULL);
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@GUID,@POINT := @POINT + 1, XXX, YYY, ZZZ,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -203.5472, 1156.4801, -1.0473,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -201.6007, 1150.4677, -1.4257,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -204.9382, 1145.9350, -1.6790,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -211.7031, 1145.1348, -1.9070,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -214.4541, 1150.0476, -2.0609,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -214.3552, 1155.2484, -1.9893,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -208.9885, 1158.2601, -1.5696,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -205.7931, 1157.1260, -1.3524,0,0,0,100,0);
+
+SET @GUID := 89237;
+SET @POINT := 0;
+UPDATE `creature` SET `MovementType`= 2, `spawndist` = 0 WHERE `guid` = @GUID;
+UPDATE `creature` SET `MovementType`= 0, `spawndist` = 0 WHERE `guid` = 86904; 
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,NULL);
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@GUID,@POINT := @POINT + 1, XXX, YYY, ZZZ,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -226.1191, 1147.7078, -1.8788,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -231.3070, 1152.1437, -1.8956,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -228.1814, 1160.1099, -1.9557,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -221.2898, 1160.3408, -1.9310,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -218.8405, 1156.7766, -1.9696,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -219.6508, 1150.3697, -1.9589,0,0,0,100,0);
+
+SET @GUID := 89223;
+SET @POINT := 0;
+UPDATE `creature` SET `MovementType`= 2, `spawndist` = 0 WHERE `guid` = @GUID;
+UPDATE `creature` SET `MovementType`= 0, `spawndist` = 0 WHERE `guid` = 86902;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,NULL);
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@GUID,@POINT := @POINT + 1, XXX, YYY, ZZZ,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -227.5500, 1170.2030, -0.5678,10000,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -197.8925, 1170.5773, -0.5678,10000,0,0,100,0);
+
+SET @GUID := 89189;
+SET @POINT := 0;
+UPDATE `creature` SET `MovementType`= 2, `spawndist` = 0 WHERE `guid` = @GUID;
+UPDATE `creature` SET `MovementType`= 0, `spawndist` = 0 WHERE `guid` = 89162;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,NULL);
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@GUID,@POINT := @POINT + 1, XXX, YYY, ZZZ,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -214.0313, 1131.1123, -1.8925,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -216.7572, 1135.0898, -1.8358,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -224.4418, 1134.3134, -1.1852,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -225.0600, 1141.0803,-0.9861,0,0,0,100,0);
+
+SET @GUID := 89121;
+SET @POINT := 0;
+UPDATE `creature` SET `MovementType`= 2, `spawndist` = 0 WHERE `guid` = @GUID;
+UPDATE `creature` SET `MovementType`= 0, `spawndist` = 0 WHERE `guid` = 89161;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,NULL);
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@GUID,@POINT := @POINT + 1, XXX, YYY, ZZZ,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -203.6892, 1119.2899, -0.0642,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -203.9384, 1113.1306, -0.1852,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -207.8608, 1109.7000, -0.4540,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -212.7773, 1110.6180, -0.9615,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -216.6400, 1114.1215, -1.4225,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -216.2238, 1118.9251, -1.7741,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -211.8607, 1123.3919, -1.8337,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -206.9451, 1122.5347, -1.1313,0,0,0,100,0);
+
+-- 89131 steht falsch 
+UPDATE `creature` SET `position_x` = -84.1312, `position_y` = 1194.2934, `position_z` = 5.6570, `orientation` = 0.6667 WHERE `guid` = 89131;
+
+-- RESPAWNTIMERS CHECKEN BOSSDEPENDEND
+-- Akil'zon Trash Respawntimer 30min
+UPDATE `creature` SET `spawntimesecs`='1' WHERE `guid` IN (89266,89280,89281,89282,89283,89287,89288,89289,89290); -- ->5min
+UPDATE `creature` SET `spawntimesecs`='1500' WHERE `guid` = 89267; -- -> 30min
+DELETE FROM `creature_addon` WHERE `guid` IN (89287,89288,89289,89290,89280,89281,89282,89283,89286,89283,89267,89191,89284,89285,89287,89288,89286,89244,89331,89278,16777016,16777024,16777017,16777023,16777018,16777022,16777021,16777019,16777020);
+INSERT INTO `creature_addon` VALUES
+(89244,0,0,16777472,1,4097,0,0,''),
+(89286,0,0,16777472,1,4097,0,0,''),
+
+(89280,0,0,0,0,4097,333,0,''),
+(89290,0,0,0,0,4097,333,0,''),
+(89281,0,0,0,0,4097,333,0,''),
+(89289,0,0,0,0,4097,333,0,''),
+(89282,0,0,0,0,4097,333,0,''),
+(89288,0,0,0,0,4097,333,0,''),
+(89287,0,0,0,0,4097,333,0,''),
+(89283,0,0,0,0,4097,333,0,''),
+(89267,0,0,0,0,4097,333,0,'');
+
+UPDATE `creature` SET `position_x` = '-139.5014', `position_y` = '1164.5451', `position_z` = '3.2550', `orientation` = '1.7976', `MovementType` = '0' WHERE `guid` = 89284;
+-- UPDATE `creature` SET `position_x` = '-127.5309', `position_y` = '1168.0200', `position_z` = '0.6812', `orientation` = '5.8503' WHERE `guid` = 89224;
+
+UPDATE `creature` SET `id`='23596',`modelid`='0' WHERE `guid` = 89168;
+UPDATE `creature` SET `movementtype` ='0',`spawndist`='0',`spawntimesecs`='7200' WHERE `guid` = 86211;
+UPDATE `creature` SET `spawndist`='0',`modelid`='0',`spawntimesecs`='7200' WHERE `guid` = 86212;
+
+-- 2 grp at stairs
+UPDATE `creature` SET `position_x`='-76.1703', `position_y`='1378.2469', `position_z`='40.7942', `orientation`='1.5734' WHERE `guid` = 89264;
+UPDATE `creature` SET `position_x`='-84.8824', `position_y`='1378.2242', `position_z`='40.7934', `orientation`='1.5734' WHERE `guid` = 89263;
+
+SET @NPC := 86212;
+SET @PATH := @NPC * 10;  
+DELETE FROM `creature_addon` WHERE `guid`=@NPC;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@NPC,@PATH,0,512,0,4097,0,0,'18950 0 18950 1');
+DELETE FROM `waypoint_data` WHERE `id`=@PATH;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@PATH,1,'116.3167','1156.2285','-1.3304',0,0,0,0,0),
+(@PATH,2,'134.6540','1174.6312','-7.6658',0,0,0,0,0),
+(@PATH,3,'126.5884','1196.3280','-15.4215',0,0,0,0,0),
+(@PATH,4,'100.8596','1198.0642','-14.8360',0,0,0,0,0),
+(@PATH,5,'115.5575','1230.1401','-24.5541',0,0,0,0,0),
+(@PATH,6,'100.8596','1198.0642','-14.8360',0,0,0,0,0),
+(@PATH,7,'126.5884','1196.3280','-15.4215',0,0,0,0,0),
+(@PATH,8,'134.6540','1174.6312','-7.6658',0,0,0,0,0),
+(@PATH,9,'116.3167','1156.2285','-1.3304',0,0,0,0,0),
+(@PATH,10,'100.7675','1146.9780','1.4131',0,0,0,0,0);
+
+SET @GUID := 243;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,16777472,0,4097,0,0,'18950 0 18950 1'); -- old path 16004
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES (243, 1, 446.0509, 933.9879, 0.0006, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (243, 2, 442.129, 904.214, 0.000692, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (243, 3, 416.327, 888.693, 0.000035, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (243, 4, 404.5015, 885.7965, 0.0000,0,0,0,100,0);
+INSERT INTO `waypoint_data` VALUES (243, 5, 416.327, 888.693, 0.000035, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (243, 6, 442.129, 904.214, 0.000692, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (243, 7, 445.459, 962.963, 0.000075, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (243, 8, 425.408, 985.171, 0.000075, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (243, 9, 410.89, 986.49, 0.000075, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (243, 10, 425.408, 985.171, 0.000075, 0, 0, 0, 0, 0);
+INSERT INTO `waypoint_data` VALUES (243, 11, 445.459, 962.963, 0.000075, 0, 0, 0, 0, 0);
+
+-- Amani'shi Guardian missing Stealth Detection and Stats
+UPDATE `creature_addon` SET `bytes0` = 16777472, `bytes2` = 4097, `auras` = '18950 0 18950 1' WHERE `guid` = 245;
+UPDATE `creature_addon` SET `bytes0` = 16777472, `bytes2` = 4097, `auras` = '18950 0 18950 1' WHERE `guid` = 255;
+
+SET @GUID := 13755;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,16843008,0,4097,0,0,''); -- old path 243...
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` VALUES (13755, 1, -1543.41, -3904.05, 14.0485, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (13755, 2, -1558.45, -3906.93, 12.6675, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (13755, 3, -1570.63, -3908.8, 12.195, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (13755, 4, -1577.34, -3909.02, 12.2799, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (13755, 5, -1587.39, -3900.14, 12.5705, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (13755, 6, -1594.86, -3889.95, 14.4789, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (13755, 7, -1597.94, -3879.58, 15.6313, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (13755, 8, -1593.48, -3868.54, 15.7342, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (13755, 9, -1584.79, -3857.84, 16.3712, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (13755, 10, -1574.84, -3852.01, 17.71, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (13755, 11, -1563.51, -3854.24, 18.9286, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (13755, 12, -1555.01, -3861.42, 19.0928, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (13755, 13, -1548.29, -3872.14, 18.7169, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (13755, 14, -1544.44, -3882.65, 17.6808, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (13755, 15, -1544.53, -3895.72, 15.5314, 0, 0, 0, 100, 0);
+
+-- 213,217,215 nonexistant
+SET @GUID := 213;
+SET @POINT := 0;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'18950 0 18950 1'); -- path 16003
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@GUID,@POINT := @POINT + 1,XXX, YYY, ZZZ,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,372.7164, 934.8178, 0.0000,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,367.1250, 946.3226, 0.0000,2000,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,372.7164, 934.8178, 0.0000,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,380.684, 882.053, 0.011345,2000,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,380.2495, 884.9297, 0.0108,0,0,0,100,0);
+
+SET @GUID := 89157;
+SET @POINT := 0;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,'18950 0 18950 1');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@GUID,@POINT := @POINT + 1,XXX, YYY, ZZZ,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 290.4004, 1049.9591, 0.0008,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 308.1571, 1033.3675, 0.0008,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 317.4832, 1013.5916, 0.0071,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 342.7563, 996.0705, -0.0000,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 360.1288, 960.7166, 0.0001,5000,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 342.7563, 996.0705, -0.0000,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 317.4832, 1013.5916, 0.0071,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 308.1571, 1033.3675, 0.0008,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 290.4004, 1049.9591, 0.0008,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, 277.8444, 1054.3112, 0.0000,5000,0,0,100,0);
+
+SET @GUID := 86209;		
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;	
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,512,0,4097,0,0,'');		
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;		
+INSERT INTO `waypoint_data` VALUES (86209, 1, 94.0516, 1420.18, 0.768301, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (86209, 2, 105.468, 1420.02, -1.50645, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (86209, 3, 137.522, 1419.38, -0.302712, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (86209, 4, 149.003, 1418.53, 3.30319, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (86209, 5, 154.109, 1418.43, 3.30319, 2000, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (86209, 6, 148.596, 1418.59, 3.30319, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (86209, 7, 138.759, 1418.32, -0.325193, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (86209, 8, 103.892, 1419.73, -1.55035, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (86209, 9, 92.3991, 1420.26, 0.768636, 0, 0, 0, 100, 0);
+INSERT INTO `waypoint_data` VALUES (86209, 10, 82.9161, 1420.1, 0.768636, 2000, 0, 0, 100, 0);
+
+SET @GUID := 89308;		
+SET @POINT := 0;		
+UPDATE `creature` SET `position_x` = '-181.2782', `position_y` = '1273.0632', `position_z` = '1.6089', `orientation` = '3.0394', `MovementType` = '2' WHERE `guid` = @GUID;		
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;		
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,16777472,0,4097,0,0,'');		
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;		
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+(@GUID,@POINT := @POINT + 1, -181.2782, 1273.0632, 1.6089,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -181.2782, 1273.0632, 1.6089,0,0,221,100,0),
+(@GUID,@POINT := @POINT + 1, -181.2782, 1273.0632, 1.6089,0,0,502,100,0),		
+(@GUID,@POINT := @POINT + 1, -181.2782, 1273.0632, 1.6089,0,0,510,100,0),		 
+(@GUID,@POINT := @POINT + 1, -197.3252, 1276.5983, 1.1920,0,0,0,100,0),		
+(@GUID,@POINT := @POINT + 1, -199.2218, 1338.8071, 0.2291,0,0,0,100,0),		
+(@GUID,@POINT := @POINT + 1, -190.7081, 1345.4399, -0.1164,0,0,0,100,0),		
+(@GUID,@POINT := @POINT + 1, -184.6473, 1347.3172, -0.1083,0,0,0,100,0),		
+(@GUID,@POINT := @POINT + 1, -178.3489, 1350.2700, -0.0230,0,0,220,100,0),
+(@GUID,@POINT := @POINT + 1, -178.3489, 1350.2700, -0.0230,0,0,402,100,0),	
+(@GUID,@POINT := @POINT + 1, -178.3489, 1350.2700, -0.0230,0,0,410,100,0),
+(@GUID,@POINT := @POINT + 1, -161.8452, 1354.2738, 17.4233,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -162.1108, 1272.5865, 16.4045,17000,0,0,100,0);
+
+SET @GUID := 89303;		
+SET @POINT := 0;		
+UPDATE `creature` SET `MovementType` = '2' WHERE `guid` = @GUID;		
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;		
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,16777472,0,4097,0,0,'');		
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;		
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@GUID,@POINT := @POINT + 1,XXX, YYY, ZZZ,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,-171.8750, 1213.3399, 0.1278,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,-171.8750, 1213.3399, 0.1278,0,0,221,100,0),
+(@GUID,@POINT := @POINT + 1,-171.8750, 1213.3399, 0.1278,0,0,502,100,0),
+(@GUID,@POINT := @POINT + 1,-171.8750, 1213.3399, 0.1278,0,0,510,100,0),
+(@GUID,@POINT := @POINT + 1,-166.2432, 1218.8035, 0.0792,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,-161.6200, 1221.2172, 0.5074,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,-142.5437, 1201.9991, 1.3941,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,-129.0265, 1152.3684, 0.1531,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,-124.1406, 1152.1911, 0.2570,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,-114.6728, 1156.1302, 0.0009,0,0,220,100,0),
+(@GUID,@POINT := @POINT + 1,-114.6728, 1156.1302, 0.0009,0,0,402,100,0),
+(@GUID,@POINT := @POINT + 1,-114.6728, 1156.1302, 0.0009,0,0,410,100,0),
+(@GUID,@POINT := @POINT + 1, -94.6466, 1191.4406, 15.6773,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -153.9721, 1246.7384, 15.6775,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -165.9297, 1225.6486, 19.3436,2000,0,0,100,0);
+
+SET @GUID := 89313;		
+SET @POINT := 0;		
+UPDATE `creature` SET `MovementType` = '2' WHERE `guid` = @GUID;		
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;		
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,16777472,0,4097,0,0,'');		
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;		
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@GUID,@POINT := @POINT + 1,XXX, YYY, ZZZ,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,-163.5030, 1193.4367, 0.7938,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,-163.5030, 1193.4367, 0.7938,0,0,221,100,0),
+(@GUID,@POINT := @POINT + 1,-163.5030, 1193.4367, 0.7938,0,0,502,100,0),
+(@GUID,@POINT := @POINT + 1,-163.5030, 1193.4367, 0.7938,0,0,510,100,0),
+(@GUID,@POINT := @POINT + 1,-160.6187, 1194.7271, 0.5157,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,-151.4554, 1198.2204, 0.1018,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,-150.5681, 1202.1022, 0.2013,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,-165.7255, 1226.2877, 0.2412,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,-197.4094, 1251.1176, 0.2398,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,-197.3118, 1271.4202, 1.1483,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,-190.0849, 1274.0864, 1.0419,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,-181.2782, 1273.0632, 1.6089,0,0,220,100,0),
+(@GUID,@POINT := @POINT + 1, -181.2782, 1273.0632, 1.6089,0,0,402,100,0),
+(@GUID,@POINT := @POINT + 1, -181.2782, 1273.0632, 1.6089,0,0,410,100,0),
+(@GUID,@POINT := @POINT + 1, -162.1108, 1272.5865, 16.4045,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -153.9721, 1246.7384, 15.6775,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -166.0811, 1230.6322, 19.5207,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -188.8950, 1172.8701, 13.8768,3000,0,0,100,0);
+
+SET @GUID := 89312;		
+SET @POINT := 0;		
+UPDATE `creature` SET `MovementType` = '2' WHERE `guid` = @GUID;		
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;		
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,16777472,0,4097,0,0,'');		
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;		
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@GUID,@POINT := @POINT + 1,XXX, YYY, ZZZ,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,-114.6728, 1156.1302, 0.0009,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,-114.6728, 1156.1302, 0.0009,0,0,221,100,0),
+(@GUID,@POINT := @POINT + 1,-114.6728, 1156.1302, 0.0009,0,0,502,100,0),
+(@GUID,@POINT := @POINT + 1,-114.6728, 1156.1302, 0.0009,0,0,510,100,0),
+(@GUID,@POINT := @POINT + 1,-123.1707, 1152.6462, 0.1670,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,-129.4595, 1152.8106, 0.0985,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,-138.0689, 1192.0770, 0.0185,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,-165.7255, 1226.2877, 0.2412,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,-197.4094, 1251.1176, 0.2398,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,-197.3118, 1271.4202, 1.1483,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,-190.0849, 1274.0864, 1.0419,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1,-181.2782, 1273.0632, 1.6089,0,0,220,100,0),
+(@GUID,@POINT := @POINT + 1, -181.2782, 1273.0632, 1.6089,0,0,402,100,0),
+(@GUID,@POINT := @POINT + 1, -181.2782, 1273.0632, 1.6089,0,0,410,100,0),
+(@GUID,@POINT := @POINT + 1, -162.1108, 1272.5865, 16.4045,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -153.9721, 1246.7384, 15.6775,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -94.6466, 1191.4406, 15.6773,0,0,0,100,0);
+
+SET @GUID := 89278;
+SET @POINT := 0;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID,0,0,0,4097,0,0,NULL);
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@GUID,@POINT := @POINT + 1, XXX, YYY, ZZZ,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -212.178, 1161.06, -1.58448,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -212.178, 1161.06, -1.58448,0,0,221,100,0),
+(@GUID,@POINT := @POINT + 1, -212.178, 1161.06, -1.58448,0,0,502,100,0),
+(@GUID,@POINT := @POINT + 1, -212.178, 1161.06, -1.58448,0,0,510,100,0),
+(@GUID,@POINT := @POINT + 1, -208.4145, 1171.1068, -0.5677,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -206.5637, 1176.3857, -0.5677,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -206.5916, 1181.1059, -0.5677,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -204.9635, 1185.4606, -2.8645,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -192.0960, 1207.7651, 0.5354,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -197.4094, 1251.1176, 0.2398,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -197.3118, 1271.4202, 1.1483,0,0,0,100,0),	
+(@GUID,@POINT := @POINT + 1, -199.2218, 1338.8071, 0.2291,0,0,0,100,0),	
+(@GUID,@POINT := @POINT + 1, -206.4741, 1358.9240, -0.1075,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -206.4054, 1366.7082, 0.1034,20000,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -195.5092, 1344.8483, -0.1167,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -190.7081, 1345.4399, -0.1164,0,0,0,100,0),		
+(@GUID,@POINT := @POINT + 1, -184.6473, 1347.3172, -0.1083,0,0,0,100,0),		
+(@GUID,@POINT := @POINT + 1, -178.3489, 1350.2700, -0.0230,0,0,220,100,0),
+(@GUID,@POINT := @POINT + 1, -178.3489, 1350.2700, -0.0230,0,0,402,100,0),
+(@GUID,@POINT := @POINT + 1, -178.3489, 1350.2700, -0.0230,0,0,410,100,0),
+(@GUID,@POINT := @POINT + 1, -161.8452, 1354.2738, 17.4233,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -162.1108, 1272.5865, 16.4045,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -153.9721, 1246.7384, 15.6775,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -166.0811, 1230.6322, 19.5207,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -188.8950, 1172.8701, 13.8768,8000,0,0,100,0);
+
+SET @GUID := 89167;
+SET @POINT := 0;
+UPDATE `creature` SET `MovementType`= 2 WHERE `guid` = @GUID;
+DELETE FROM `creature_addon` WHERE `guid` = @GUID;
+INSERT INTO `creature_addon` (`guid`,`path_id`,`mount`,`bytes0`,`bytes1`,`bytes2`,`emote`,`moveflags`,`auras`) VALUES (@GUID,@GUID, 0, 16777472, 0, 4097, 0, 0, '18950 0 18950 1');
+DELETE FROM `waypoint_data` WHERE `id` = @GUID;
+INSERT INTO `waypoint_data` (`id`,`point`,`position_x`,`position_y`,`position_z`,`delay`,`move_type`,`action`,`action_chance`,`wpguid`) VALUES
+-- (@GUID,@POINT := @POINT + 1, XXX, YYY, ZZZ,0,0,0,100,0),
+(@GUID,@POINT := @POINT + 1, -140.3471, 1143.2023, 0.5762,0,1,0,100,0),
+(@GUID,@POINT := @POINT + 1, -139.6195, 1137.6429, 0.4367,0,1,0,100,0),
+(@GUID,@POINT := @POINT + 1, -135.2308, 1144.7722, 0.4381,0,1,0,100,0),
+(@GUID,@POINT := @POINT + 1, -132.1690, 1140.1400, 0.4630,0,1,0,100,0),
+(@GUID,@POINT := @POINT + 1, -139.6195, 1137.6429, 0.4367,0,1,0,100,0),
+(@GUID,@POINT := @POINT + 1, -132.1690, 1140.1400, 0.4630,0,1,0,100,0),
+(@GUID,@POINT := @POINT + 1, -140.3471, 1143.2023, 0.5762,0,1,0,100,0),
+(@GUID,@POINT := @POINT + 1, -139.6195, 1137.6429, 0.4367,0,1,0,100,0),
+(@GUID,@POINT := @POINT + 1, -135.2308, 1144.7722, 0.4381,0,1,0,100,0);
+
+-- ======================================================
+-- Linking
+-- ======================================================
+
+DELETE FROM `creature_formations` WHERE `leaderGUID` IN (89322,89140,86200,86201,86202,86203,87042,86199,89201,89202,89203,99685,99686,99693,255,89189,89162,89237,86904,89295,89296,89297,89278,86204,86205,86206,89248,86867,89193,86903,89223,86902,89237,86904,89189,89162,89121,89161,89160,89163,89284,89142,89174,86922,89172,89177,89175,89173,86921,89145,89168,89246,89165,89192,89233,89131,86910,86906,89273,89274,89275,89287,89288,89289,89290,89280,89281,89282,89283,89267,89266,31834,31756,33301,31753,89207,89199,89135,89200,88652,89176,89141,86198,87043,89286,89190,89244,86859,86750,86702,86701,89259,89260,89261,89262,86698,86699,86700,86479,89157,86209,86306,86280,86239,89264,89263,16777015,16777016,16777024,16777017,16777023,16777018,16777022,16777021,16777019,16777020,86914,86194,89170,89245,89191,89331,89285,89255,89241,89251,89167,89286);
+DELETE FROM `creature_formations` WHERE `memberGUID` IN (89322,89140,86200,86201,86202,86203,87042,86199,86201,86202,86203,99685,99686,99693,255,89189,89162,89237,86904,89293,89295,89296,89297,89278,86204,86205,86206,89248,86867,89193,86903,89223,86902,89237,86904,89189,89162,89121,89161,89160,89163,89284,89142,89174,86922,89172,89177,89175,89173,86921,89145,89168,89246,89165,89192,89233,89131,86910,86906,89273,89274,89275,89287,89288,89289,89290,89280,89281,89282,89283,89267,89266,31834,31756,33301,31753,89207,89199,89135,89200,88652,89176,89141,86198,87043,89286,89190,89244,86859,86750,86702,86701,89259,89260,89261,89262,86698,86699,86700,86479,89157,86209,86306,86280,86239,89264,89263,16777015,16777016,16777024,16777017,16777023,16777018,16777022,16777021,16777019,16777020,86914,86194,89170,89245,89191,89331,89285,89255,89241,89251,89167,89286);
+INSERT INTO `creature_formations` VALUES
+
+(89140,89140,100,360,2),
+(89140,86200,100,360,2),
+(89140,86201,100,360,2),
+(89140,86202,100,360,2),
+(89140,86203,100,360,2),
+(89140,87042,100,360,2),
+
+(86199,86199,100,360,2),
+(86199,89201,100,360,2),
+(86199,89202,100,360,2),
+(86199,89203,100,360,2),
+(86199,99685,100,360,2),
+(86199,99686,100,360,2),
+
+(255,255,100,360,2),
+(255,99693,3,0.50,2),
+
+(89189,89189,100,360,2),
+(89189,89162,4,3.14,2),
+
+(89237,89237,100,360,2),
+(89237,86904,4,3.14,2),
+
+(89122, 89293, 4, 3.93, 2),
+
+(86204,86204,100,360,2),
+(86204,86205,100,360,2),
+(86204,86206,100,360,2),
+
+(89223,89223,100,360,2),
+(89223,86902,4,3.14,2),
+
+(89193,89193,100,360,2),
+(89193,86903,4,3.14,2),
+
+(89121,89121,100,360,2),
+(89121,89161,4,3.14,2),
+
+(89160,89160,100,360,2),
+(89160,89163,4,3.14,2),
+
+(89248,89248,100,360,2),
+(89248,86867,4,3.14,2),
+
+(89142,89142,100,360,2),
+(89142,89174,100,360,2),
+(89142,86922,100,360,2),
+(89142,89172,100,360,2),
+(89142,89177,100,360,2),
+(89142,89175,100,360,2),
+(89142,89173,100,360,2),
+(89142,86921,100,360,2),
+(89142,89145,100,360,2),
+
+(89168,89168,100,360,2),
+(89168,89246,100,360,2),
+(89168,89165,100,360,2),
+(89168,89192,100,360,2),
+
+(89233,89233,100,360,2),
+(89233,89131,100,360,2),
+(89233,86910,100,360,2),
+(89233,86906,100,360,2),
+
+(89295,89295,100,360,2),
+(89295,89296,100,360,2),
+(89295,89297,100,360,2),
+
+(31834,31834,100,360,2),
+(31834,31753,100,360,2),
+(31834,31756,100,360,2),
+(31834,33301,100,360,2),
+
+(89207,89207,100,360,2),
+(89207,89199,100,360,2),
+(89207,89135,100,360,2),
+(89207,89200,100,360,2),
+(89207,88652,100,360,2),
+(89207,89176,100,360,2),
+(89207,89141,100,360,2),
+(89207,86198,100,360,2),
+(89207,87043,100,360,2),
+
+(89190,89190,100,360,2),
+(89190,89244,100,360,2),
+(89190,86859,100,360,2),
+(89190,86750,100,360,2),
+(89190,86702,100,360,2),
+(89190,86701,100,360,2),
+
+(89259,89259,100,360,2),
+(89259,89260,100,360,2),
+(89259,89261,100,360,2),
+(89259,89262,100,360,2),
+
+(86698,86698,100,360,2),
+(86698,86699,100,360,2),
+(86698,86700,100,360,2),
+
+(89157,89157,100,360,2),
+(89157,17636,4,0.7,2),
+(89157,20196,4,5.5,2),
+
+(86209,86209,0.467914,2.90974,2),
+(86209,86210,4.14516,4.52363,2),
+
+(86306,86306,100,360,2),
+(86306,86280,100,360,2),
+(86306,86239,100,360,2),
+
+(89264,89264,100,360,2),
+(89264,89263,100,360,2),
+
+(89267,89267,100,360,1),
+(89267,89266,100,360,0),
+-- (89267,86479,100,360,0),
+
+(89283,89283,100,360,1),
+(89283,89287,100,360,0),
+(89283,89288,100,360,0),
+(89283,89282,100,360,0),
+
+(89281,89289,100,360,0),
+(89281,89281,100,360,1),
+(89281,89290,100,360,0),
+(89281,89280,100,360,0),
+
+(86914,86914,100,360,2),
+(86914,86194,100,360,2),
+(86914,85580,100,360,2),
+(86914,86918,100,360,2),
+(86914,86913,100,360,2),
+(86914,86132,100,360,2),
+(86914,86916,100,360,2),
+(86914,86162,100,360,2),
+(86914,86920,100,360,2),
+(86914,86915,100,360,2),
+
+(89191,89191,100,360,2),
+(89191,89170,100,360,2),
+(89191,89245,100,360,2),
+(89191,89331,100,360,2),
+
+-- (89285,89284,100,360,2),
+(89285,89285,100,360,2),
+(89285,89255,100,360,2),
+(89285,89241,100,360,2),
+(89285,89251,100,360,2),
+(89285,89167,100,360,2),
+
+('89322','89322','120','360','2'),
+('89322','89228','120','360','0'),
+('89322','89320','120','360','0'),
+('89322','89301','120','360','0'),
+('89322','89317','120','360','0'),
+('89322','89302','120','360','0'),
+('89322','89316','120','360','0'),
+('89322','89321','120','360','0'),
+('89322','89328','120','360','0'),
+('89322','89348','120','360','0'),
+('89322','89353','120','360','0'),
+('89322','89343','120','360','0'),
+('89322','89351','120','360','0'),
+('89322','89354','120','360','0'),
+('89322','89352','120','360','0'),
+('89322','89350','120','360','0'),
+('89322','89346','120','360','0'),
+('89322','89347','120','360','0'),
+('89322','89344','120','360','0'),
+('89322','89349','120','360','0'),
+('89322','89345','120','360','0'),
+('89322','89355','120','360','0'),
+('89322','89356','120','360','0'),
+('89322','89337','120','360','0'),
+('89322','89342','120','360','0'),
+('89322','89335','120','360','0'),
+('89322','89338','120','360','0'),
+('89322','89340','120','360','0'),
+('89322','89333','120','360','0'),
+('89322','89341','120','360','0'),
+('89322','89339','120','360','0'),
+('89322','89336','120','360','0'),
+('89322','89334','120','360','0'),
+('89322','89315','120','360','0'),
+('89322','89300','120','360','0'),
+('89322','89226','120','360','0'),
+('89322','89319','120','360','0'),
+('89322','89332','120','360','0'),
+('89322','89227','120','360','0'),
+('89322','89323','120','360','0'),
+('89322','89314','120','360','0');
+
+UPDATE `creature_formations` SET `dist` = 3 WHERE `memberguid` = 239; -- 1.32088
+UPDATE `creature_formations` SET `dist` = 4 WHERE `memberguid` = 89123; -- 10.3757
+
+-- ======================================================
+-- Respawn
+-- ======================================================
+
+DELETE FROM `creature_linked_respawn` WHERE `guid` IN (89226,89227,89228,89300,89301,89302,89314,89315,89316,89317,89319,89320,89321,89323,89328,89332,89333,89334,89335,89336,89337,89338,89339,89340,89341,89342,89343,89344,89345,89346,89347,89348,89349,89350,89351,89352,89353,89354,89355,89356,99685,99686,89119,89213,89111,89273,89186,86375,89291,99693,89293,86194,86914,89297,89296,89295,31834,31753,33301,31756,17636,20196,89157,89267,89207,89223,89312,89313,89244,89303,89278,86866,86905,86908,86911,89124,89125,89126,89127,89128,89129,89130,89132,89166,89197,89198,89216,89217,89218,89225,89232,89234,89235,89236,89238,89239,89240,89242,89249,89252,89253,89273,89274,89275,89287,89288,89289,89290,89283,89282,89281,89280,89267,89266,86479,85580,86210,16777193,16777015,16777016,16777017,16777018,16777019,16777020,16777021,16777022,16777023,16777024);
+DELETE FROM `creature_linked_respawn` WHERE `linkedguid` IN (5735903,86609,89267);
+
+-- maybe linked to 23774s instead
+INSERT INTO `creature_linked_respawn` VALUES (86866, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (86905, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (86908, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (86911, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89124, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89125, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89126, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89127, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89128, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89129, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89130, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89132, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89166, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89197, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89198, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89216, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89217, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89218, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89225, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89232, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89234, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89235, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89236, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89238, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89239, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89240, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89242, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89249, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89252, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89253, 89322);
+
+-- Jan'alai
+INSERT INTO `creature_linked_respawn` VALUES (89293, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89278, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89303, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89312, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89313, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89244, 89322);
+INSERT INTO `creature_linked_respawn` VALUES (89223, 89322);
+INSERT INTO `creature_linked_respawn` VALUES 
+(89226, 89322),(89227, 89322),(89228, 89322),(89300, 89322),
+(89301, 89322),(89302, 89322),(89314, 89322),(89315, 89322),
+(89316, 89322),(89317, 89322),(89319, 89322),(89320, 89322),
+(89321, 89322),(89323, 89322),(89328, 89322),(89332, 89322),
+(89333, 89322),(89334, 89322),(89335, 89322),(89336, 89322),
+(89337, 89322),(89338, 89322),(89339, 89322),(89340, 89322),
+(89341, 89322),(89342, 89322),(89343, 89322),(89344, 89322),
+(89345, 89322),(89346, 89322),(89347, 89322),(89348, 89322),
+(89349, 89322),(89350, 89322),(89351, 89322),(89352, 89322),
+(89353, 89322),(89354, 89322),(89355, 89322),(89356, 89322);
+
+-- Nalorakk
+INSERT INTO `creature_linked_respawn` VALUES (86194, 86609);
+INSERT INTO `creature_linked_respawn` VALUES (86914, 86609);
+INSERT INTO `creature_linked_respawn` VALUES (85580, 86609);
+INSERT INTO `creature_linked_respawn` VALUES (86209, 86609);
+INSERT INTO `creature_linked_respawn` VALUES (86210, 86609);
+INSERT INTO `creature_linked_respawn` VALUES (86610, 86609);
+INSERT INTO `creature_linked_respawn` VALUES (86611, 86609);
+INSERT INTO `creature_linked_respawn` VALUES (86612, 86609);
+INSERT INTO `creature_linked_respawn` VALUES (86695, 86609);
+INSERT INTO `creature_linked_respawn` VALUES (86696, 86609);
+INSERT INTO `creature_linked_respawn` VALUES (86697, 86609);
+INSERT INTO `creature_linked_respawn` VALUES (86698, 86609);
+INSERT INTO `creature_linked_respawn` VALUES (86699, 86609);
+INSERT INTO `creature_linked_respawn` VALUES (86700, 86609);
+INSERT INTO `creature_linked_respawn` VALUES (86913, 86609);
+INSERT INTO `creature_linked_respawn` VALUES (86918, 86609);
+INSERT INTO `creature_linked_respawn` VALUES (89259, 86609);
+INSERT INTO `creature_linked_respawn` VALUES (89260, 86609);
+INSERT INTO `creature_linked_respawn` VALUES (89261, 86609);
+INSERT INTO `creature_linked_respawn` VALUES (89262, 86609);
+INSERT INTO `creature_linked_respawn` VALUES (89263, 86609);
+INSERT INTO `creature_linked_respawn` VALUES (89264, 86609);
+INSERT INTO `creature_linked_respawn` VALUES (89268, 86609);
+INSERT INTO `creature_linked_respawn` VALUES (89269, 86609);
+INSERT INTO `creature_linked_respawn` VALUES (89270, 86609);
+INSERT INTO `creature_linked_respawn` VALUES (89271, 86609);
+INSERT INTO `creature_linked_respawn` VALUES (86609, 86609);
+
+-- Amani'shi Tempest
+INSERT INTO `creature_linked_respawn` VALUES (86479, 89267);
+INSERT INTO `creature_linked_respawn` VALUES (89266, 89267);
+INSERT INTO `creature_linked_respawn` VALUES (89280, 89267);
+INSERT INTO `creature_linked_respawn` VALUES (89281, 89267);
+INSERT INTO `creature_linked_respawn` VALUES (89282, 89267);
+INSERT INTO `creature_linked_respawn` VALUES (89283, 89267);
+INSERT INTO `creature_linked_respawn` VALUES (89287, 89267);
+INSERT INTO `creature_linked_respawn` VALUES (89288, 89267);
+INSERT INTO `creature_linked_respawn` VALUES (89289, 89267);
+INSERT INTO `creature_linked_respawn` VALUES (89290, 89267);
+
+-- Akil'zon - Amani'shi Tempest
+INSERT INTO `creature_linked_respawn` VALUES (89267, 86494);
+
+-- Halazzi
+INSERT INTO `creature_linked_respawn` VALUES (99685, 86195);
+INSERT INTO `creature_linked_respawn` VALUES (99686, 86195);
+INSERT INTO `creature_linked_respawn` VALUES (89119, 86195);
+INSERT INTO `creature_linked_respawn` VALUES (89213, 86195);
+INSERT INTO `creature_linked_respawn` VALUES (89111, 86195);
+INSERT INTO `creature_linked_respawn` VALUES (89186, 86195);
+INSERT INTO `creature_linked_respawn` VALUES (86375, 86195);
+INSERT INTO `creature_linked_respawn` VALUES (89291, 86195);
+INSERT INTO `creature_linked_respawn` VALUES (99693, 86195);
+INSERT INTO `creature_linked_respawn` VALUES (31834, 86195);
+INSERT INTO `creature_linked_respawn` VALUES (33301, 86195);
+INSERT INTO `creature_linked_respawn` VALUES (31756, 86195);
+INSERT INTO `creature_linked_respawn` VALUES (31753, 86195);
+INSERT INTO `creature_linked_respawn` VALUES (17636, 86195);
+INSERT INTO `creature_linked_respawn` VALUES (20196, 86195);
+INSERT INTO `creature_linked_respawn` VALUES (89157, 86195);
+INSERT INTO `creature_linked_respawn` VALUES (89207, 86195);
+INSERT INTO `creature_linked_respawn` VALUES (89273, 86195);
+INSERT INTO `creature_linked_respawn` VALUES (89274, 86195);
+INSERT INTO `creature_linked_respawn` VALUES (89275, 86195);
+INSERT INTO `creature_linked_respawn` VALUES (89295, 86195);
+INSERT INTO `creature_linked_respawn` VALUES (89296, 86195);
+INSERT INTO `creature_linked_respawn` VALUES (89297, 86195);
+
+-- =====================
+-- Gameobjects
+-- =====================
+
+-- Research
+-- (187377,186648,187378,187021,186748,187379,186658,186667,187380,186338,186633,186671,187021,185438,185454,186482,185434);
+
+-- Gold Coins, maybe need c++ go script
+UPDATE `gameobject_template` SET `flags` = 64 WHERE `entry` IN (186633, 186634); -- 0
+
+DELETE FROM `gameobject` WHERE `guid` BETWEEN 55361 AND 55448;
+INSERT INTO `gameobject` VALUES (55361, 186633, 568, 1, -79.2179, 1125.98, 5.53967, -1.93732, 0, 0, 0, 0, -604800, 255, 1);
+INSERT INTO `gameobject` VALUES (55362, 186633, 568, 1, -80.7119, 1124.81, 5.59401, -1.95477, 0, 0, 0, 0, -604800, 255, 1);
+INSERT INTO `gameobject` VALUES (55363, 186633, 568, 1, 332.322, 1084.61, 6.23159, -0.872664, 0, 0, 0, 0, -604800, 255, 1);
+INSERT INTO `gameobject` VALUES (55364, 186633, 568, 1, 332.423, 1083.13, 6.30574, 2.46091, 0, 0, 0, 0, -604800, 255, 1);
+INSERT INTO `gameobject` VALUES (55365, 186633, 568, 1, 331.155, 1084.52, 6.2764, 0.750491, 0, 0, 0, 0, -604800, 255, 1);
+INSERT INTO `gameobject` VALUES (55366, 186633, 568, 1, 333.545, 1085.66, 6.32405, -0.733038, 0, 0, 0, 0, -604800, 255, 1);
+INSERT INTO `gameobject` VALUES (55367, 186633, 568, 1, 330.726, 1086.47, 6.22998, 0.767944, 0, 0, 0, 0, -604800, 255, 1);
+INSERT INTO `gameobject` VALUES (55368, 186633, 568, 1, 343.771, 1151.66, 6.34366, -2.87979, 0, 0, 0, 0, -604800, 255, 1);
+INSERT INTO `gameobject` VALUES (55369, 186633, 568, 1, 341.88, 1151.76, 6.34366, -0.820303, 0, 0, 0, 0, -604800, 255, 1);
+INSERT INTO `gameobject` VALUES (55370, 186633, 568, 1, 345.407, 1152.75, 6.34366, -1.309, 0, 0, 0, 0, -604800, 255, 1);
+INSERT INTO `gameobject` VALUES (55371, 186633, 568, 1, 343.2, 1150.49, 6.34366, 0.087266, 0, 0, 0, 0, -604800, 255, 1);
+INSERT INTO `gameobject` VALUES (55372, 186633, 568, 1, 424.528, 1081.66, 6.75976, 1.11701, 0, 0, 0, 0, -604800, 255, 1);
+INSERT INTO `gameobject` VALUES (55373, 186633, 568, 1, 425.217, 1085.2, 6.49234, -1.64061, 0, 0, 0, 0, -604800, 255, 1);
+INSERT INTO `gameobject` VALUES (55374, 186633, 568, 1, 423.058, 1082.9, 6.68479, -0.349065, 0, 0, 0, 0, -604800, 255, 1);
+INSERT INTO `gameobject` VALUES (55375, 186633, 568, 1, 305.952, 1466.29, 81.6448, -2.19912, 0, 0, 0, 0, -604800, 255, 1);
+INSERT INTO `gameobject` VALUES (55376, 186633, 568, 1, 304.405, 1465.53, 81.6934, -2.75761, 0, 0, 0, 0, -604800, 255, 1);
+INSERT INTO `gameobject` VALUES (55377, 186633, 568, 1, 305.355, 1467.36, 81.6934, 0.837757, 0, 0, 0, 0, -604800, 255, 1);
+INSERT INTO `gameobject` VALUES (55378, 186634, 568, 1, -79.5859, 1124.89, 5.57584, 0.90757, 0, 0, 0, 0, -604800, 255, 1);
+INSERT INTO `gameobject` VALUES (55379, 186634, 568, 1, -80.4313, 1126.02, 5.59401, -0.575957, 0, 0, 0, 0, -604800, 255, 1);
+INSERT INTO `gameobject` VALUES (55380, 186634, 568, 1, 304.023, 1467.73, 81.5893, 0.750491, 0, 0, 0, 0, -604800, 255, 1);
+-- 
+INSERT INTO `gameobject` VALUES (55382, 186658, 568, 1, -84.165802, 1177.880005, 5.635830, 1.283480, 0, 0, 0, 0, -604800, 255, 1);
+INSERT INTO `gameobject` VALUES (55383, 180771, 568, 1, 141.189, 717.505, 45.1114, -1.55334, 0, 0, 0, 0, -604800, 255, 1);
+INSERT INTO `gameobject` VALUES (55384, 180771, 568, 1, 99.5758, 717.845, 45.1114, 1.55334, 0, 0, 0, 0, -604800, 255, 1);
+INSERT INTO `gameobject` VALUES (55385, 180771, 568, 1, 119.808, 657.875, 51.679, 1.65806, 0, 0, 0, 0, -604800, 255, 1);
+--
+--
+-- INSERT INTO `gameobject` VALUES (55387, 186671, 568, 1, 343.357, 1152.03, 6.34366, -2.93214, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55388, 186671, 568, 1, 344.333, 1084.68, 6.96691, 2.96704, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55389, 186671, 568, 1, 316.036011, 1083.099976, 9.977740, 0.222981, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55390, 186671, 568, 1, 424.028015, 1092.510010, 6.357640, 0.027412, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55392, 186430, 568, 1, 251.429, 996.856, 10.912, 2.11185, 0, 0, 0, 0, 604800, 255, 1);
+INSERT INTO `gameobject` VALUES (55393, 185434, 568, 1, -146.864, 1332.22, 48.1739, -0.95993, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55394, 185434, 568, 1, -75.1178, 1137.77, 5.21104, 1.16937, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55395, 185434, 568, 1, 293.915, 1458.4, 81.5059, -1.25664, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55396, 185434, 568, 1, 343.361, 1311.33, 81.5876, 0.017452, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55397, 185434, 568, 1, -73.5284, 1139.15, 5.19407, -2.26892, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55398, 185434, 568, 1, -23.8944, 1332.41, 48.1739, 0.645772, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55399, 185434, 568, 1, 392.563, 1155.37, 6.34364, -1.81514, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55400, 185438, 568, 1, -150.023, 1350.04, 48.1739, -0.575957, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55401, 185438, 568, 1, 398.786, 1086.32, 5.35751, 2.84488, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55402, 185454, 568, 1, -28.1068, 1338.44, 48.1739, -1.53589, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55403, 185454, 568, 1, -132.61, 1341.92, 48.1739, 0.890117, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55404, 185454, 568, 1, 305.403, 1460.19, 81.5059, -1.18682, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55405, 185454, 568, 1, 297.778, 1461.44, 81.5059, -1.8675, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55406, 185454, 568, 1, 337.444, 1323.92, 81.5876, -2.89724, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55407, 185454, 568, 1, -150.251, 1337.35, 48.1739, 0.855211, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55408, 185454, 568, 1, 346.202, 1314.28, 81.5876, 1.95477, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55409, 185454, 568, 1, 396.143, 1148.68, 6.34339, 2.56563, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55410, 185454, 568, 1, 345.458, 1324.55, 81.5876, 0.837757, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55411, 185454, 568, 1, 411.937, 1123.93, 6.10051, -0.436332, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55412, 185455, 568, 1, -133.912, 1335.87, 48.1739, 0.226892, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55413, 185455, 568, 1, 341.998, 1320.82, 81.5876, -0.90757, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55414, 185455, 568, 1, 291.797, 1464.71, 81.506, 0.680677, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55415, 185455, 568, 1, -147.718, 1342.07, 48.1739, -0.541051, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55416, 185455, 568, 1, -24.0499, 1343.66, 48.1739, -0.069812, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55417, 185455, 568, 1, 298.285, 1454.72, 81.5059, 0.244346, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55418, 185455, 568, 1, 335.697, 1314.94, 81.5876, 0.314158, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55419, 185455, 568, 1, 300.462, 1470.83, 81.506, 1.88495, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55420, 186482, 568, 1, -74.6319, 1138.7, 5.20206, 0, 0, 0, 0, 0, 180, 255, 0);
+INSERT INTO `gameobject` VALUES (55421, 186482, 568, 1, 341.059, 1311.29, 81.5876, 0.017452, 0, 0, 0, 0, 180, 255, 0);
+INSERT INTO `gameobject` VALUES (55422, 186482, 568, 1, 383.488, 1152.29, 6.34366, 3.12412, 0, 0, 0, 0, 180, 255, 0);
+INSERT INTO `gameobject` VALUES (55423, 186482, 568, 1, 294.252, 1457.96, 81.5059, -1.3439, 0, 0, 0, 0, 180, 255, 0);
+-- INSERT INTO `gameobject` VALUES (55424, 186482, 568, 1, -149.09, 1349.99, 48.1739, -2.19912, 0, 0, 0, 0, 180, 255, 0);
+INSERT INTO `gameobject` VALUES (55425, 186482, 568, 1, -22.0915, 1350.19, 48.1739, 2.26892, 0, 0, 0, 0, 180, 255, 0);
+-- INSERT INTO `gameobject` VALUES (55426, 186745, 568, 1, 120.146, 665.572, 51.7082, -0.453785, 0, 0, 0, 0, -604800, 255, 1);
+INSERT INTO `gameobject` VALUES (55427, 186748, 568, 1, 99.8802, 694.349, 45.1114, 0.837757, 0, 0, 0, 0, -604800, 255, 1);
+INSERT INTO `gameobject` VALUES (55428, 186750, 568, 1, 140.644, 694.009, 45.1114, -2.00713, 0, 0, 0, 0, -604800, 255, 1);
+INSERT INTO `gameobject` VALUES (55430, 187035, 568, 1, 132.464, 1334.19, -9.37467, -2.53072, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55431, 187036, 568, 1, 98.8152, 1245.41, -9.49482, 1.43117, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55432, 187037, 568, 1, 132.373, 1244.41, -9.6476, 0.296705, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55436, 186338, 568, 1, 397.309, 1083.46, 5.41724, -0.017452, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55437, 186338, 568, 1, -23.4402, 1333.18, 48.1739, 0.017452, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55438, 186338, 568, 1, 398.437, 1152.45, 6.34364, 3.14159, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55441, 186860, 568, 1, 99.9827, 1333.95, -9.39569, 0.59341, 0, 0, 0, 0, 180, 255, 1);
+-- INSERT INTO `gameobject` VALUES (55442, 187377, 568, 1, -147.731, 1333.47, 48.1739, -0.872664, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55443, 186865, 568, 1, 92.7648, 707.518, 45.1114, 0.017452, 0, 0, 0, 0, -604800, 255, 1);
+INSERT INTO `gameobject` VALUES (55444, 187378, 568, 1, 296.334, 1468.37, 81.506, -2.51327, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55445, 187379, 568, 1, -73.7866, 1164.58, 5.2034, 3.14159, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55446, 187380, 568, 1, 383.674, 1083.18, 5.75323, 0.017452, 0, 0, 0, 0, 180, 255, 1);
+INSERT INTO `gameobject` VALUES (55448, 186623, 568, 1, 307.208, 1464.14, 81.6032, -0.104719, 0, 0, 0, 0, 180, 255, 1);
+
+DELETE FROM `gameobject` WHERE `guid` = 8794515;
+INSERT INTO `gameobject` VALUES (8794515, 186671, 568, 1, 316.036, 1083.1, 9.77774, 0.222981, 0, 0, 0.11126, 0.993791, 237000, 0, 1);
+
+UPDATE `gameobject` SET `spawnmask` = 0 WHERE `guid` = 8794517;
+-- INSERT INTO `gameobject` VALUES (8794517, 186671, 568, 1, 332.877, 1150.18, 6.34384, 1.62413, 0, 0, 0.72571, 0.688001, 237000, 0, 1);
+
+-- =====================
+-- Miscellaneous
+-- =====================
+
+UPDATE `waypoint_data` SET `action` = 219 WHERE `id` = 1756 AND `point` = 7;		
+UPDATE `waypoint_data` SET `action` = 223 WHERE `id` = 1780 AND `point` IN (1,2);		
+UPDATE `waypoint_data` SET `action` = 223 WHERE `id` = 1782 AND `point` = 1;
+
