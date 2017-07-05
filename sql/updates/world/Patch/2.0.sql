@@ -277,6 +277,17 @@ DELETE FROM `creature_loot_template` WHERE `item` IN (32672,32677,32676,32576,32
 -- Drop Motes of Shadow/Fire
 UPDATE `creature_loot_template` SET `item` = 22577 WHERE `item` = 22574 AND `entry` = 22323;
 
+-- T5 Bosses without Token drop 2 Items
+UPDATE `creature_loot_template` SET `maxcount` = 2 WHERE `entry` = 21216 AND `mincountOrRef` = -34057;
+
+UPDATE `creature_loot_template` SET `maxcount` = 2 WHERE `entry` = 21217 AND `mincountOrRef` = -34058;
+
+UPDATE `creature_loot_template` SET `maxcount` = 2 WHERE `entry` = 21213 AND `mincountOrRef` = -34061;
+
+UPDATE `creature_loot_template` SET `maxcount` = 2 WHERE `entry` = 19514 AND `mincountOrRef` = -34053;
+
+UPDATE `creature_loot_template` SET `maxcount` = 2 WHERE `entry` = 18805 AND `mincountOrRef` = -34055;
+
 -- Gem Patterns (Design: Rigid Star of Elune, Design: Shifting Nightseye, Design: Glinting Nightseye, Design: Veiled Nightseye, Design: Deadly Noble Topaz
 DELETE FROM `reference_loot_template` WHERE `entry` = 24092 AND `item` IN (31875,31876,31877,31878,31879);
 DELETE FROM `reference_loot_template` WHERE `entry` = 10006 AND `item` IN (31875,31876,31877);
