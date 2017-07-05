@@ -1447,6 +1447,17 @@ INSERT INTO `npc_trainer` VALUES (18753, 42615, 40000, 333, 335, 0);
 INSERT INTO `npc_trainer` VALUES (19252, 42615, 40000, 333, 335, 0);
 INSERT INTO `npc_trainer` VALUES (18773, 42615, 40000, 333, 335, 0);
 
+-- T5 Bosses without Token drop 3 Items
+UPDATE `creature_loot_template` SET `maxcount` = 3 WHERE `entry` = 21216 AND `mincountOrRef` = -34057;
+
+UPDATE `creature_loot_template` SET `maxcount` = 3 WHERE `entry` = 21217 AND `mincountOrRef` = -34058;
+
+UPDATE `creature_loot_template` SET `maxcount` = 3 WHERE `entry` = 21213 AND `mincountOrRef` = -34061;
+
+UPDATE `creature_loot_template` SET `maxcount` = 3 WHERE `entry` = 19514 AND `mincountOrRef` = -34053;
+
+UPDATE `creature_loot_template` SET `maxcount` = 3 WHERE `entry` = 18805 AND `mincountOrRef` = -34055;
+
 -- =============================================================================================
 -- Patch 2.3.0
 -- http://wowwiki.wikia.com/wiki/Patch_2.3.0
