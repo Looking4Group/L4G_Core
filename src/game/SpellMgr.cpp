@@ -3772,9 +3772,9 @@ void SpellMgr::LoadSpellCustomAttr()
                 spellInfo->Dispel = DISPEL_NONE;
                 spellInfo->InterruptFlags |= SPELL_INTERRUPT_FLAG_INTERRUPT;
                 break;
-            case 33671: // Gruul Shatter Radius Reduction (From 20 to 19 yards)
+            case 33671: // Gruul Shatter Radius Reduction (From 20 to 18 yards)
                 // There was a slight range issue with shatter
-                spellInfo->EffectRadiusIndex[0] = 49;
+                spellInfo->EffectRadiusIndex[0] = EFFECT_RADIUS_18_YARDS;
                 break;
             case 30567: // Tormet of worgen has 3% chance to proc Torment of the Worgen (Transform)
                 spellInfo->procChance = 3;
