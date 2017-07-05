@@ -1466,6 +1466,12 @@ UPDATE `creature_loot_template` SET `maxcount` = 3 WHERE `entry` = 18805 AND `mi
 -- ZA
 -- UPDATE `access_requirement` SET `level_min` = 70 WHERE `id` = 49;
 
+-- ZA Quests
+DELETE FROM `creature_questrelation` WHERE `quest` IN (11130,11164);
+-- INSERT INTO `creature_questrelation` VALUES
+-- (19227,11130),
+-- (23761,11164);
+
 -- Mad Alchemist's Potion
 DELETE FROM `npc_trainer` WHERE `spell` = 45061;
 -- INSERT INTO `npc_trainer` VALUES (18802, 45061, 30000, 171, 325, 0);
