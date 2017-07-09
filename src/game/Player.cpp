@@ -1479,7 +1479,7 @@ void Player::Update(uint32 update_diff, uint32 p_time)
         if (update_diff >= m_DetectInvTimer)
         {
             HandleStealthedUnitsDetection();
-            m_DetectInvTimer = InArena() ? 1000 : 3000;
+            m_DetectInvTimer = InArena() ? 1000 : 2000;
         }
         else
             m_DetectInvTimer -= update_diff;
@@ -2459,9 +2459,15 @@ bool Player::IsGroupVisiblefor (Player* p) const
 
 bool Player::IsInSameGroupWith(Player const* p) const
 {
-    return  p==this || GetGroup() != NULL &&
+    return  p == this || GetGroup() != nullptr && 
         GetGroup() == p->GetGroup() &&
         GetGroup()->SameSubGroup((Player*)this, (Player*)p);
+}
+
+bool Player::IsInSameRaidWith(Player const* p) const
+{
+    return p == this || (GetGroup() != nullptr &&
+        GetGroup() == p->GetGroup());
 }
 
 ///- If the player is invited, remove him. If the group if then only 1 person, disband the group.
