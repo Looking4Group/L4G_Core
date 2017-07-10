@@ -6,3 +6,5 @@ INSERT INTO creature_formations VALUES
 (12880,12872,100,360,2),
 (12880,12873,100,360,2);
 
+UPDATE `creature_template` SET `InhabitType` = 5 WHERE `entry` = 17260;
+
