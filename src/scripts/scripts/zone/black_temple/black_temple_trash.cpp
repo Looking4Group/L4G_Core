@@ -2884,31 +2884,34 @@ CreatureAI* GetAI_mob_shadowmoon_grunt(Creature *_Creature)
 * Shadowmoon Houndmaster - id 23018
 *****************/
 
-#define SPELL_FREEZING_TRAP                 41085
-#define SPELL_SHOOT_1                       41093
-#define SPELL_SILENCING_SHOT                41084
-#define SPELL_SUMMON_RIDING_WARHOUND        39906
-#define SPELL_VOLLEY                        41091
-#define SPELL_WING_CLIP                     32908
-#define SPELL_FLARE                         41094
+enum ShadowmoonHoundmaster
+{
+    SPELL_FREEZING_TRAP             = 41085,
+    SPELL_SHOOT_1                   = 41093,
+    SPELL_SILENCING_SHOT            = 41084,
+    SPELL_SUMMON_RIDING_WARHOUND    = 39906,
+    SPELL_VOLLEY                    = 41091,
+    SPELL_WING_CLIP                 = 32908,
+    SPELL_FLARE                     = 41094,
 
-#define MOB_SHADOWMOON_RIDING_HOUND         23083
+    MOB_SHADOWMOON_RIDING_HOUND     = 23083
+};
 
 struct mob_shadowmoon_houndmasterAI: public ScriptedAI
 {
     mob_shadowmoon_houndmasterAI(Creature *c) : ScriptedAI(c) { me->SetAggroRange(AGGRO_RANGE); }
 
-    uint32 Shoot;
-    uint32 FreezingTrap;
-    uint32 SilencingShot;
-    uint32 Volley;
-    uint32 WingClip;
-    uint32 Flare;
+    uint32 ShootTimer;
+    uint32 FreezingTrapTimer;
+    uint32 SilencingShotTimer;
+    uint32 VolleyTimer;
+    uint32 WingClipTimer;
+    uint32 FlareTimer;
 
     void Reset()
     {
         ClearCastQueue();
-	 me->GetMotionMaster()->Initialize();
+	    me->GetMotionMaster()->Initialize();
 
         if(Creature* Hound = GetClosestCreatureWithEntry(me, MOB_SHADOWMOON_RIDING_HOUND, 80))
         {
@@ -2916,12 +2919,12 @@ struct mob_shadowmoon_houndmasterAI: public ScriptedAI
             Hound->RemoveCorpse();
         }
         me->Mount(14334);
-        Shoot = 1000;
-        FreezingTrap = urand(5000, 8000);
-        SilencingShot = urand(8000, 12000);
-        Volley = urand(16000, 20000);
-        WingClip = urand(8000, 20000);
-        Flare = urand(2000, 20000);
+        ShootTimer = 1000;
+        FreezingTrapTimer = urand(5000, 8000);
+        SilencingShotTimer = urand(8000, 12000);
+        VolleyTimer = urand(16000, 20000);
+        WingClipTimer = urand(8000, 20000);
+        FlareTimer = urand(2000, 20000);
     }
 
     void EnterCombat(Unit *)
@@ -2933,9 +2936,7 @@ struct mob_shadowmoon_houndmasterAI: public ScriptedAI
 
     void AttackStart(Unit *who)
     {
-        ScriptedAI::AttackStartNoMove(who);
-
-        DoStartMovement(who, 30.0f);
+        ScriptedAI::AttackStartNoMove(who, CHECK_TYPE_SHOOTER);
     }
 
     void UpdateAI(const uint32 diff)
@@ -2943,72 +2944,78 @@ struct mob_shadowmoon_houndmasterAI: public ScriptedAI
         if(!UpdateVictim())
             return;
 
-        if (FreezingTrap < diff)
+        if (FreezingTrapTimer <= diff)
         {
             DoCast(me, SPELL_FREEZING_TRAP);
-            FreezingTrap = urand(25000, 35000);
+            FreezingTrapTimer = urand(25000, 35000);
         }
         else
-            FreezingTrap -= diff;
+            FreezingTrapTimer -= diff;
 
-        if (Volley < diff)
+        if (VolleyTimer <= diff)
         {
-            if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, 40.0f, true, 0.0f, 10.0f))
+            if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_VOLLEY), true))
             {
                 AddSpellToCast(target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), SPELL_VOLLEY);
-                Volley = urand(25000, 31000);
+                VolleyTimer = urand(25000, 31000);
             }
             else
-                Volley = 3000;
+                VolleyTimer = 3000;
         }
         else
-            Volley -= diff;
+            VolleyTimer -= diff;
 
-        if(Shoot < diff)
+        if(ShootTimer <= diff)
         {
-            if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, 100, true))
+            if (Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_SHOOT_1), true))
                 AddSpellToCast(target, SPELL_SHOOT_1);
 
-            Shoot = urand(3000, 4500);
+            ShootTimer = urand(3000, 4500);
         }
         else
-            Shoot -= diff;
+            ShootTimer -= diff;
 
-        if(SilencingShot < diff)
+        if(SilencingShotTimer <= diff)
         {
-            if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 1, 35.0f, true, 0 , 8.0f))
+            if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_SILENCING_SHOT), true, POWER_MANA))
             {
                 ForceSpellCast(target, SPELL_SILENCING_SHOT);
-                SilencingShot = urand(9000, 13000);
+                SilencingShotTimer = urand(9000, 13000);
             }
             else
-                SilencingShot = 4000;
+                SilencingShotTimer = 4000;
         }
         else
-            SilencingShot -= diff;
+            SilencingShotTimer -= diff;
 
-        if(WingClip < diff)
+        if(WingClipTimer <= diff)
         {
             if(me->IsWithinDistInMap(me->getVictim(), 5.0))
             {
                 AddSpellToCast(me->getVictim(), SPELL_WING_CLIP);
-                WingClip = urand(7000, 12000);
+
+                float x, y, z;
+                me->GetNearPoint(x, y, z, 0.0f, urand(10, 15), frand(0.0f, 2 * M_PI));
+                me->GetMotionMaster()->MovePoint(1, x, y, z);
+
+                WingClipTimer = urand(7000, 12000);
             }
             else
-                WingClip = 2500;
+                WingClipTimer = 2500;
         }
         else
-            WingClip -= diff;
+            WingClipTimer -= diff;
 
-        if(Flare < diff)
+        if(FlareTimer <= diff)
         {
-            if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, 100.0f, true))
+            if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_FLARE), true))
                 AddSpellToCast(target, SPELL_FLARE);
-            Flare = 20000;
+            FlareTimer = 20000;
         }
         else
-            Flare -= diff;
+            FlareTimer -= diff;
 
+        CheckShooterNoMovementInRange(diff, 30.0);
         CastNextSpellIfAnyAndReady();
         DoMeleeAttackIfReady();
     }
