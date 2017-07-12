@@ -282,7 +282,7 @@ int dtNavMesh::findConnectingPolys(const float* va, const float* vb,
         for (int j = 0; j < nv; ++j)
         {
             if (!poly->neis[j])
-                return 0;
+                continue;
 
             // Skip edges which do not point to the right side.
             if (poly->neis[j] != m) continue;
