@@ -2892,7 +2892,7 @@ enum ShadowmoonHoundmaster
     SPELL_SUMMON_RIDING_WARHOUND    = 39906,
     SPELL_VOLLEY                    = 41091,
     SPELL_WING_CLIP                 = 32908,
-    SPELL_FLARE                     = 41094,
+    //SPELL_FLARE                     = 41094, not confirmed
 
     MOB_SHADOWMOON_RIDING_HOUND     = 23083
 };
@@ -2906,7 +2906,6 @@ struct mob_shadowmoon_houndmasterAI: public ScriptedAI
     uint32 SilencingShotTimer;
     uint32 VolleyTimer;
     uint32 WingClipTimer;
-    uint32 FlareTimer;
 
     void Reset()
     {
@@ -2924,7 +2923,6 @@ struct mob_shadowmoon_houndmasterAI: public ScriptedAI
         SilencingShotTimer = urand(8000, 12000);
         VolleyTimer = urand(16000, 20000);
         WingClipTimer = urand(8000, 20000);
-        FlareTimer = urand(2000, 20000);
     }
 
     void EnterCombat(Unit *)
@@ -2947,6 +2945,14 @@ struct mob_shadowmoon_houndmasterAI: public ScriptedAI
         if (FreezingTrapTimer <= diff)
         {
             DoCast(me, SPELL_FREEZING_TRAP);
+
+            if (me->IsWithinDistInMap(me->getVictim(), 5.0))
+            {
+                float x, y, z;
+                me->GetNearPoint(x, y, z, 0.0f, urand(10, 15), frand(0.0f, 2 * M_PI));
+                me->GetMotionMaster()->MovePoint(1, x, y, z);
+            }
+
             FreezingTrapTimer = urand(25000, 35000);
         }
         else
@@ -3005,15 +3011,6 @@ struct mob_shadowmoon_houndmasterAI: public ScriptedAI
         }
         else
             WingClipTimer -= diff;
-
-        if(FlareTimer <= diff)
-        {
-            if(Unit* target = SelectUnit(SELECT_TARGET_RANDOM, 0, GetSpellMaxRange(SPELL_FLARE), true))
-                AddSpellToCast(target, SPELL_FLARE);
-            FlareTimer = 20000;
-        }
-        else
-            FlareTimer -= diff;
 
         CheckShooterNoMovementInRange(diff, 30.0);
         CastNextSpellIfAnyAndReady();
