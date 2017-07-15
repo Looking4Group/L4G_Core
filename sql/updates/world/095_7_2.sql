@@ -8,3 +8,7 @@ INSERT INTO creature_formations VALUES
 
 UPDATE `creature_template` SET `InhabitType` = 5 WHERE `entry` = 17260;
 
+DELETE FROM `creature` WHERE `guid` IN (38, 32343);
+INSERT INTO `creature` VALUES (38, 15763, 0, 1, 0, 0, -4811.98, -1264.85, 501.951, 3.05433, 300, 0, 0, 3000, 0, 0, 0);
+INSERT INTO `creature` VALUES (32343, 14887, 1, 1, 15364, 0, 3301.05, -3732.57, 173.544, 2.9147, 868400, 0, 0, 820000, 9852, 0, 0);
+
