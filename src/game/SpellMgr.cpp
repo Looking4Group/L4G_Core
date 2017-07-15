@@ -3252,6 +3252,9 @@ void SpellMgr::LoadSpellCustomAttr()
             case 40017: // If we can't adjust speed :P we spawn it in bigger periods
                 spellInfo->EffectAmplitude[1] = 1900;
                 break;
+            case 40946: // Rain of Chaos (Illidari Fearbringer)
+                spellInfo->EffectAmplitude[1] = 1500; // 1000 prenerf
+                break;
             case 40841:
                 spellInfo->EffectRadiusIndex[0] = 15;
                 break;
