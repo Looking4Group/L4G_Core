@@ -2956,7 +2956,7 @@ struct mob_shadowmoon_houndmasterAI: public ScriptedAI
             FreezingTrapTimer = urand(25000, 35000);
         }
         else
-        FreezingTrapTimer -= diff;
+            FreezingTrapTimer -= diff;
 
         if (VolleyTimer <= diff)
         {
@@ -2969,7 +2969,7 @@ struct mob_shadowmoon_houndmasterAI: public ScriptedAI
                 VolleyTimer = 3000;
         }
         else
-        VolleyTimer -= diff;
+            VolleyTimer -= diff;
 
         if(ShootTimer <= diff)
         {
@@ -2979,7 +2979,7 @@ struct mob_shadowmoon_houndmasterAI: public ScriptedAI
             ShootTimer = urand(3000, 4500);
         }
         else
-        ShootTimer -= diff;
+            ShootTimer -= diff;
 
         if(SilencingShotTimer <= diff)
         {
@@ -2992,7 +2992,7 @@ struct mob_shadowmoon_houndmasterAI: public ScriptedAI
                 SilencingShotTimer = 4000;
         }
         else
-        SilencingShotTimer -= diff;
+            SilencingShotTimer -= diff;
 
         if(WingClipTimer <= diff)
         {
@@ -3010,7 +3010,7 @@ struct mob_shadowmoon_houndmasterAI: public ScriptedAI
                 WingClipTimer = 2500;
         }
         else
-        WingClipTimer -= diff;
+            WingClipTimer -= diff;
 
         CheckShooterNoMovementInRange(diff, 30.0);
         CastNextSpellIfAnyAndReady();
