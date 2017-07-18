@@ -269,6 +269,7 @@ struct boss_shade_of_akamaAI : public ScriptedAI
 
         me->SetHealth(me->GetMaxHealth());
         DespawnChannelersAndSorcerers();
+        me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
 
         if (Unit *owner = me->GetCharmerOrOwner())
         {
@@ -311,6 +312,7 @@ struct boss_shade_of_akamaAI : public ScriptedAI
 
         me->SetSpeed(MOVE_WALK, 1);
         me->SetSpeed(MOVE_RUN, 1);
+        me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
 
         if (Creature *akama = me->GetCreature(*me, AkamaGUID))
         {
