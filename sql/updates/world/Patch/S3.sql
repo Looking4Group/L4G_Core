@@ -32,6 +32,14 @@ INSERT INTO `creature` VALUES (@GUID := @GUID + 1, 77777, 530, 1, 0, 0, 2890.403
 INSERT INTO `creature` VALUES (@GUID := @GUID + 1, 77778, 530, 1, 0, 0, -2161.66, 6658.46, -0.175319, 5.96662, 300, 0, 0, 1, 0, 0, 0);
 INSERT INTO `creature` VALUES (@GUID := @GUID + 1, 77777, 530, 1, 0, 0, -2163.7885, 6653.3735, -0.2625, 5.96662, 300, 0, 0, 1, 0, 0, 0);
 
+-- Battlemaster Trinkets Season 3
+DELETE FROM `npc_vendor` WHERE `entry` = 18525 AND `item` IN (33832,34049,34050,34162,34163);
+INSERT INTO `npc_vendor` VALUES (18525, 33832, 0, 0, 2049);
+INSERT INTO `npc_vendor` VALUES (18525, 34049, 0, 0, 2049);
+INSERT INTO `npc_vendor` VALUES (18525, 34050, 0, 0, 2049);
+INSERT INTO `npc_vendor` VALUES (18525, 34162, 0, 0, 2049);
+INSERT INTO `npc_vendor` VALUES (18525, 34163, 0, 0, 2049);
+
 -- ================
 -- Optional
 -- ================
