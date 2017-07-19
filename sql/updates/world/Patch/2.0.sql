@@ -120,6 +120,7 @@ INSERT INTO `creature` VALUES (78261, 22257, 530, 1, 0, 0, 3997.91, 6093.29, 260
 -- Creature Phase OUT
 -- ========
 
+UPDATE `creature` SET `spawnmask` = 0 WHERE `id` IN (15350,15351,18528,22861,22862,22863,22864,12270,12271,24937,22987,22982,23016,23415,23257,22967,22966,23473,23115,22919,24918,24933,24919,22980,23363,22941,24393,23383,23219,25580,24369,24370);
 UPDATE `creature` SET `spawnmask` = 0 WHERE `guid` IN (84715,79011,79033,44253,40444,8313,2126,2115,12235,12234,12177,12236,96669,79015,79031,79030,79013,79014,44255,44257,44254,48166,86834,44256,91786,91785,91781,91789,91792,91780,91784,91782,91783,91788,91787,91790,91791,91793);
 
 -- ========
@@ -689,9 +690,11 @@ DELETE FROM `reference_loot_template` WHERE `entry` = 10006 AND `item` = 33954;
 -- Daily fishing quests
 -- UPDATE `creature` SET `spawnmask` = 0 WHERE `id` = 25580;
 -- Daily dungeon quests
+-- UPDATE `creature` SET `spawnmask` = 0 WHERE `id` IN (24369,24370);
 -- Daily cooking quests
 -- UPDATE `creature` SET `spawnmask` = 0 WHERE `id` = 24393;
 -- Daily pvp quests
+-- UPDATE `creature` SET `spawnmask` = 0 WHERE `id` IN (15350,15351);
 UPDATE `quest_template` set `RewHonorableKills` = 20, `RewMoneyMaxLevel` = 0 where `entry` between 11335 and 11342; -- nonblizzlike 24 155999 blizzlike 20 75900
 
 -- PvP Turn in Quest
