@@ -27,44 +27,47 @@ EndScriptData */
 #include "hyjal_trash.h"
 
 //text id -1534018 are the text used when previous events complete. Not part of this script.
-#define SAY_AGGRO                   -1534019
-#define SAY_DOOMFIRE1               -1534020
-#define SAY_DOOMFIRE2               -1534021
-#define SAY_AIR_BURST1              -1534022
-#define SAY_AIR_BURST2              -1534023
-#define SAY_SLAY1                   -1534024
-#define SAY_SLAY2                   -1534025
-#define SAY_SLAY3                   -1534026
-#define SAY_ENRAGE                  -1534027
-#define SAY_DEATH                   -1534028
-#define SAY_SOUL_CHARGE1            -1534029
-#define SAY_SOUL_CHARGE2            -1534030
+enum Archimonde
+{
+    SAY_AGGRO                   = -1534019,
+    SAY_DOOMFIRE1               = -1534020,
+    SAY_DOOMFIRE2               = -1534021,
+    SAY_AIR_BURST1              = -1534022,
+    SAY_AIR_BURST2              = -1534023,
+    SAY_SLAY1                   = -1534024,
+    SAY_SLAY2                   = -1534025,
+    SAY_SLAY3                   = -1534026,
+    SAY_ENRAGE                  = -1534027,
+    SAY_DEATH                   = -1534028,
+    SAY_SOUL_CHARGE1            = -1534029,
+    SAY_SOUL_CHARGE2            = -1534030,
 
-#define SPELL_DENOUEMENT_WISP      32124
-#define SPELL_ANCIENT_SPARK        39349
-#define SPELL_PROTECTION_OF_ELUNE  38528
+    SPELL_DENOUEMENT_WISP       = 32124,
+    SPELL_ANCIENT_SPARK         = 39349,
+    SPELL_PROTECTION_OF_ELUNE   = 38528,
 
-#define SPELL_DRAIN_WORLD_TREE      39140
-#define SPELL_DRAIN_WORLD_TREE_2    39141
+    SPELL_DRAIN_WORLD_TREE      = 39140,
+    SPELL_DRAIN_WORLD_TREE_2    = 39141,
 
-#define SPELL_FINGER_OF_DEATH       31984
-#define SPELL_HAND_OF_DEATH         35354
-#define SPELL_AIR_BURST             32014
-#define SPELL_GRIP_OF_THE_LEGION    31972
-#define SPELL_DOOMFIRE_STRIKE       31903   // this spell seems to be working fine
-#define SPELL_DOOMFIRE_SPAWN        32074   // visual when Doomfire spawned
-#define SPELL_DOOMFIRE              31945
-#define SPELL_DOOMFIRE_DAMAGE       31944   // triggered by doomfire persistent aura
-#define SPELL_UNLEASH_SOUL_YELLOW   32054
-#define SPELL_UNLEASH_SOUL_GREEN    32057
-#define SPELL_UNLEASH_SOUL_RED      32053
-#define SPELL_FEAR                  31970
+    SPELL_FINGER_OF_DEATH       = 31984,
+    SPELL_HAND_OF_DEATH         = 35354,
+    SPELL_AIR_BURST             = 32014,
+    SPELL_GRIP_OF_THE_LEGION    = 31972,
+    SPELL_DOOMFIRE_STRIKE       = 31903, // this spell seems to be working fine
+    SPELL_DOOMFIRE_SPAWN        = 32074, // visual when Doomfire spawned
+    SPELL_DOOMFIRE              = 31945,
+    SPELL_DOOMFIRE_DAMAGE       = 31944, // triggered by doomfire persistent aura
+    SPELL_UNLEASH_SOUL_YELLOW   = 32054,
+    SPELL_UNLEASH_SOUL_GREEN    = 32057,
+    SPELL_UNLEASH_SOUL_RED      = 32053,
+    SPELL_FEAR                  = 31970,
 
-#define CREATURE_ARCHIMONDE             17968
-#define CREATURE_DOOMFIRE               18095
-#define CREATURE_DOOMFIRE_TARGETING     18104
-#define CREATURE_ANCIENT_WISP           17946
-#define CREATURE_CHANNEL_TARGET         22418
+    CREATURE_ARCHIMONDE         = 17968,
+    CREATURE_DOOMFIRE           = 18095,
+    CREATURE_DOOMFIRE_TARGETING = 18104,
+    CREATURE_ANCIENT_WISP       = 17946,
+    CREATURE_CHANNEL_TARGET     = 22418
+};
 
 #define NORDRASSIL_X        5503.713
 #define NORDRASSIL_Y       -3523.436
@@ -378,7 +381,7 @@ struct boss_archimondeAI : public hyjal_trashAI
 
     void MoveInLineOfSight(Unit *who)
     {
-        if (!me->isInCombat() && me->IsWithinDistInMap(who, 50) && me->IsHostileTo(who))
+        if (!me->isInCombat() && me->IsWithinDistInMap(who, 90) && me->IsHostileTo(who))
             me->AI()->AttackStart(who);
     }
 
