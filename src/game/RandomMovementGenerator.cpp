@@ -45,6 +45,9 @@ void RandomMovementGenerator<Creature>::_setRandomLocation(Creature &creature)
 
     static_cast<MovementGenerator*>(this)->_recalculateTravel = false;
     i_nextMoveTime.Reset(urand(500, 10000));
+
+    creature.SetNoCallAssistance(false);
+    creature.CallAssistance();
 }
 
 template<>

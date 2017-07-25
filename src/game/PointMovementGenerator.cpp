@@ -116,6 +116,12 @@ void AssistanceMovementGenerator::Finalize(Unit &unit)
     ((Creature*)&unit)->CallAssistance();
     if (unit.isAlive())
         unit.GetMotionMaster()->MoveSeekAssistanceDistract(sWorld.getConfig(CONFIG_CREATURE_FAMILY_ASSISTANCE_DELAY));
+
+    if (Creature *creature = unit.ToCreature())
+    {
+        creature->SetNoSearchAssistance(false);
+        creature->UpdateSpeed(MOVE_RUN, false);
+    }
 }
 
 bool EffectMovementGenerator::Update(Unit &unit, const uint32 &)
