@@ -133,3 +133,6 @@ INSERT INTO `creature_formations` VALUES (53048, 53048, 0, 0, 2),(53048, 53035, 
 DELETE FROM `creature_formations` WHERE `leaderguid` = 52917;
 INSERT INTO `creature_formations` VALUES (52917, 52917, 0, 0, 2),(52917, 52916, 0, 0, 2),(52917, 52915, 0, 0, 2),(52917, 52914, 0, 0, 2),(52917, 52913, 0, 0, 2),(52917, 52912, 0, 0, 2);
 
+-- Deathwhisperer 19299
+UPDATE creature_template SET `spell1` = 0, `spell2` = 0, `spell3` = 0 WHERE entry = 19299;
+
