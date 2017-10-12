@@ -26,7 +26,7 @@
 
 bool GossipHello_custom_gossip_codebox(Player *Player, Creature *Creature) {
     //Player->ADD_GOSSIP_ITEM(0, "continue", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
-    Player->ADD_GOSSIP_ITEM(0, "I want to get set to level 60!", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 10);
+    Player->ADD_GOSSIP_ITEM(0, "I want to get set to level 70!", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 11);
     Player->PlayerTalkClass->SendGossipMenu(30000, Creature->GetGUID());
     return true;
 }
@@ -350,23 +350,7 @@ bool GossipSelect_custom_gossip_codebox(Player* Player, Creature* Creature, uint
         case GOSSIP_ACTION_INFO_DEF + 31:
         {
             professions = 0;
-            QueryResultAutoPtr result = RealmDataDatabase.PQuery("SELECT guid FROM characters WHERE account in (SELECT account FROM characters WHERE guid = '%u')", GUID_LOPART(Player->GetGUID()));
-            Field *fields = NULL;
             uint32 maxchars = 0;
-
-            do
-            {
-                fields = result->Fetch();
-                QueryResultAutoPtr level = RealmDataDatabase.PQuery("SELECT level FROM characters WHERE guid = %u", fields->GetUInt32());
-                if (level->Fetch()->GetUInt32() >= 69)
-                    maxchars++;
-            } while (result->NextRow());
-            if (maxchars >= 2)
-            {
-                Player->ADD_GOSSIP_ITEM(0, "Take me to my class trainer", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 40);
-                Player->PlayerTalkClass->SendGossipMenu(30017, Creature->GetGUID());
-                break;
-            }
                 
             if (Player->HasSkill(SKILL_ALCHEMY))
                 professions++;

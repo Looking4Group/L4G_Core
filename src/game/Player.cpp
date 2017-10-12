@@ -21471,7 +21471,7 @@ bool Player::GetValidForPushSeventy()
 
 void Player::Push()
 {
-    GiveLevel(60);
+    GiveLevel(70);
     learnSpell(33392); //riding skill of 150
     SaveToDB();
 }
