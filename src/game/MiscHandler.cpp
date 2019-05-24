@@ -952,6 +952,7 @@ void WorldSession::HandleAreaTriggerOpcode(WorldPacket & recv_data)
 
     Guild* guild = sGuildMgr.GetGuildById(GetPlayer()->GetGuildId());
 
+    /* Comment out for now...
     if (guild)
     {
         if (at->target_mapId == 580 &&  sWorld.GetSwpStatus() < 1)
@@ -962,7 +963,7 @@ void WorldSession::HandleAreaTriggerOpcode(WorldPacket & recv_data)
     }
     else if (at->target_mapId == 580)
         return;
-
+     */
 
     GetPlayer()->TeleportTo(at->target_mapId,at->target_X,at->target_Y,at->target_Z,at->target_Orientation,TELE_TO_NOT_LEAVE_TRANSPORT);
 }
